@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tariff Calculator 2026 — Calculate Import Duties &amp; Tariffs by Country</title>
+    <meta name="description" content="Free tariff calculator for 2026. Calculate import duties, tariffs, and landed costs by country of origin, HS code category, and shipment value. US import data updated for 2026.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tariffcalculator2026.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Tariff Calculator 2026 — Free Import Duty Calculator">
+    <meta property="og:description" content="Calculate import duties and tariffs instantly. Updated US tariff rates for 2026 by country and product category.">
+    <meta property="og:url" content="https://tariffcalculator2026.com/">
+    <meta property="og:image" content="https://tariffcalculator2026.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tariff Calculator 2026 — Free Import Duty Calculator">
+    <meta name="twitter:description" content="Calculate import duties and tariffs instantly. Updated US tariff rates for 2026.">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Tariff Calculator 2026",
+        "url": "https://tariffcalculator2026.com",
+        "description": "Free import duty and tariff calculator for 2026 US tariffs",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript"
+    }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #222; background: #f8f9fa; }
+        
+        /* Header */
+        header { background: linear-gradient(135deg, #1a365d 0%, #2563eb 100%); color: white; padding: 40px 20px; text-align: center; }
+        header h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        header p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        
+        /* Calculator */
+        .calc-section { max-width: 780px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 10; }
+        .calculator { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
+        .form-row { margin-bottom: 20px; }
+        .form-row label { display: block; font-weight: 600; margin-bottom: 6px; color: #333; font-size: 0.95rem; }
+        .form-row select, .form-row input { width: 100%; padding: 12px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; background: #fff; transition: border-color 0.2s; }
+        .form-row select:focus, .form-row input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .calc-btn { width: 100%; padding: 14px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .calc-btn:hover { background: #1d4ed8; }
+        
+        /* Results */
+        .results { display: none; margin-top: 20px; }
+        .results.show { display: block; }
+        .result-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 20px; }
+        .result-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #dcfce7; }
+        .result-item:last-child { border-bottom: none; font-weight: 700; font-size: 1.1rem; }
+        .result-label { color: #555; }
+        .result-value { color: #16a34a; font-weight: 600; }
+        .result-value.total { color: #1a365d; font-size: 1.2rem; }
+        
+        /* Info section */
+        .info { max-width: 780px; margin: 40px auto; padding: 0 20px; }
+        .info h2 { font-size: 1.5rem; margin: 30px 0 15px; color: #1a365d; }
+        .info p { margin-bottom: 15px; color: #444; }
+        .info ul { margin: 0 0 15px 20px; }
+        .info li { margin-bottom: 8px; color: #444; }
+        
+        /* Blog links */
+        .blog-section { max-width: 780px; margin: 40px auto; padding: 0 20px; }
+        .blog-section h2 { font-size: 1.5rem; margin-bottom: 20px; color: #1a365d; }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+        .blog-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+        .blog-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+        .blog-card h3 { margin-bottom: 8px; }
+        .blog-card h3 a { color: #2563eb; text-decoration: none; }
+        .blog-card h3 a:hover { text-decoration: underline; }
+        .blog-card p { color: #666; font-size: 0.9rem; }
+        
+        footer { max-width: 780px; margin: 60px auto 40px; padding: 20px; text-align: center; color: #888; font-size: 0.85rem; border-top: 1px solid #eee; }
+        
+        /* Error */
+        .error-msg { color: #dc2626; font-size: 0.9rem; margin-top: 5px; display: none; }
+        
+        @media (max-width: 640px) {
+            header h1 { font-size: 1.6rem; }
+            .calculator { padding: 20px; }
+            .blog-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📦 Tariff Calculator 2026</h1>
+    <p>Calculate estimated import duties, tariffs, and total landed cost for shipments to the United States</p>
+</header>
+
+<section class="calc-section">
+    <div class="calculator">
+        <div class="form-row">
+            <label for="country">Country of Origin</label>
+            <select id="country">
+                <option value="">— Select country —</option>
+                <option value="china">China</option>
+                <option value="vietnam">Vietnam</option>
+                <option value="india">India</option>
+                <option value="japan">Japan</option>
+                <option value="south-korea">South Korea</option>
+                <option value="germany">Germany</option>
+                <option value="uk">United Kingdom</option>
+                <option value="mexico">Mexico</option>
+                <option value="canada">Canada</option>
+                <option value="brazil">Brazil</option>
+                <option value="taiwan">Taiwan</option>
+                <option value="thailand">Thailand</option>
+                <option value="italy">Italy</option>
+                <option value="france">France</option>
+                <option value="australia">Australia</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="category">Product Category</label>
+            <select id="category">
+                <option value="">— Select product category —</option>
+                <option value="electronics">Electronics & Machinery (avg 2.6%)</option>
+                <option value="textiles">Textiles & Apparel (avg 11.9%)</option>
+                <option value="footwear">Footwear (avg 13.2%)</option>
+                <option value="auto">Automotive (avg 4.5%)</option>
+                <option value="furniture">Furniture (avg 5.3%)</option>
+                <option value="steel">Steel & Metals (avg 3.2%)</option>
+                <option value="food">Food & Beverages (avg 6.4%)</option>
+                <option value="chemicals">Chemicals & Plastics (avg 3.8%)</option>
+                <option value="pharma">Pharmaceuticals (avg 0%)</option>
+                <option value="toys">Toys & Games (avg 4.2%)</option>
+                <option value="paper">Paper & Wood (avg 2.8%)</option>
+                <option value="ceramics">Ceramics & Glass (avg 5.8%)</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="value">Shipment Value (USD)</label>
+            <input type="number" id="value" min="1" step="100" placeholder="e.g. 10000">
+            <div class="error-msg" id="valueError">Please enter a valid shipment value</div>
+        </div>
+        <button class="calc-btn" onclick="calculate()">Calculate Estimated Duty</button>
+        
+        <div class="results" id="results">
+            <div class="result-card">
+                <div class="result-item">
+                    <span class="result-label">Product Value</span>
+                    <span class="result-value" id="resultValue">$0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Estimated Duty Rate</span>
+                    <span class="result-value" id="resultRate">0%</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Estimated Duty Due</span>
+                    <span class="result-value" id="resultDuty">$0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Estimated Total Landed Cost</span>
+                    <span class="result-value total" id="resultTotal">$0</span>
+                </div>
+            </div>
+            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates. Actual rates may vary based on HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database.</p>
+        </div>
+    </div>
+</section>
+
+<section class="info">
+    <h2>How to Use This Tariff Calculator</h2>
+    <p>Enter your shipment details — country of origin, product category, and shipment value — to get an <strong>estimated duty and total landed cost</strong> for importing into the United States. Our calculator uses average 2026 US tariff rates by country and HS code category.</p>
+    
+    <h2>About US Import Tariffs in 2026</h2>
+    <p>The United States applies tariffs on imported goods based on their Harmonized Tariff Schedule (HTS) classification. Rates vary significantly by product — from duty-free (pharmaceuticals, some electronics) to over 25% (certain textiles, footwear, and steel products). Country of origin also matters due to trade agreements, Section 301 tariffs on Chinese goods, and country-specific trade actions.</p>
+    
+    <h2>What Affects Your Tariff Rate?</h2>
+    <ul>
+        <li><strong>HS Code / HTS Classification</strong> — The specific product category determines the base duty rate</li>
+        <li><strong>Country of Origin</strong> — Trade agreements (USMCA, etc.) and country-specific tariffs change the effective rate</li>
+        <li><strong>Product Value (Customs Value)</strong> — Duties are calculated as a percentage of the customs value (typically the transaction price)</li>
+        <li><strong>Additional Duties</strong> — Section 301 (China), Section 232 (steel/aluminum), AD/CVD orders may add extra duties</li>
+        <li><strong>De Minimis Threshold</strong> — Shipments under $800 may enter duty-free under Section 321</li>
+    </ul>
+</section>
+
+<section class="blog-section">
+    <h2>📖 Tariff & Import Guides</h2>
+    <div class="blog-grid" id="blogGrid"></div>
+</section>
+
+<footer>
+    <p>&copy; 2026 <a href="https://tariffcalculator2026.com" style="color:#888;text-decoration:none;">TariffCalculator2026.com</a> — A property of ABD Legacy LLC. All rights reserved.</p>
+    <p style="margin-top:8px;">This tool provides estimates only. Consult a licensed customs broker for official duty determinations.</p>
+</footer>
+
+<script>
+// Average US tariff rates by country (2026 estimates including Section 301, trade agreements)
+const COUNTRY_RATES = {
+    china: { base: 0.195, name: "China", note: "Includes Section 301 tariffs" },
+    vietnam: { base: 0.045, name: "Vietnam", note: "Standard MFN rates" },
+    india: { base: 0.052, name: "India", note: "Standard MFN rates" },
+    japan: { base: 0.018, name: "Japan", note: "Limited trade agreement benefits" },
+    "south-korea": { base: 0.015, name: "South Korea", note: "KORUS FTA benefits" },
+    germany: { base: 0.017, name: "Germany", note: "Standard MFN rates" },
+    uk: { base: 0.016, name: "United Kingdom", note: "Standard MFN rates" },
+    mexico: { base: 0.008, name: "Mexico", note: "USMCA preferential rates" },
+    canada: { base: 0.005, name: "Canada", note: "USMCA preferential rates (mostly duty-free)" },
+    brazil: { base: 0.048, name: "Brazil", note: "Standard MFN rates" },
+    taiwan: { base: 0.032, name: "Taiwan", note: "Standard MFN rates" },
+    thailand: { base: 0.042, name: "Thailand", note: "Standard MFN rates" },
+    italy: { base: 0.017, name: "Italy", note: "Standard MFN rates" },
+    france: { base: 0.017, name: "France", note: "Standard MFN rates" },
+    australia: { base: 0.012, name: "Australia", note: "FTA benefits" },
+};
+
+// Category rate modifiers (multiply against country base rate, then add category-specific add-ons)
+const CATEGORY_MODIFIERS = {
+    electronics: { add: 0.008, name: "Electronics & Machinery" },
+    textiles: { add: 0.101, name: "Textiles & Apparel" },
+    footwear: { add: 0.114, name: "Footwear" },
+    auto: { add: 0.027, name: "Automotive" },
+    furniture: { add: 0.035, name: "Furniture" },
+    steel: { add: 0.014, name: "Steel & Metals" },
+    food: { add: 0.046, name: "Food & Beverages" },
+    chemicals: { add: 0.020, name: "Chemicals & Plastics" },
+    pharma: { add: 0, name: "Pharmaceuticals" },
+    toys: { add: 0.024, name: "Toys & Games" },
+    paper: { add: 0.010, name: "Paper & Wood" },
+    ceramics: { add: 0.040, name: "Ceramics & Glass" },
+};
+
+// China-specific Section 301 add-ons by category
+const CHINA_301 = {
+    electronics: 0.075,
+    textiles: 0.075,
+    furniture: 0.075,
+    steel: 0.25,
+    auto: 0.25,
+    chemicals: 0.075,
+    toys: 0.075,
+    ceramics: 0.075,
+};
+
+function calculate() {
+    const country = document.getElementById('country').value;
+    const category = document.getElementById('category').value;
+    const value = parseFloat(document.getElementById('value').value);
+    const errorMsg = document.getElementById('valueError');
+    const results = document.getElementById('results');
+    
+    if (!country || !category || !value || value <= 0) {
+        if (!value || value <= 0) {
+            errorMsg.style.display = 'block';
+        }
+        results.classList.remove('show');
+        return;
+    }
+    errorMsg.style.display = 'none';
+    
+    const countryData = COUNTRY_RATES[country];
+    const categoryData = CATEGORY_MODIFIERS[category];
+    
+    // Calculate effective rate
+    let effectiveRate = countryData.base + categoryData.add;
+    
+    // China Section 301 surcharge
+    if (country === 'china' && CHINA_301[category]) {
+        effectiveRate += CHINA_301[category];
+    }
+    
+    // Country-specific adjustments
+    if (country === 'canada') effectiveRate = Math.min(effectiveRate, 0.01); // USMCA mostly duty-free
+    if (country === 'mexico') effectiveRate = Math.min(effectiveRate, 0.02);
+    
+    // Cap at reasonable maximum
+    effectiveRate = Math.min(effectiveRate, 0.35);
+    
+    const duty = value * effectiveRate;
+    const total = value + duty;
+    
+    document.getElementById('resultValue').textContent = '$' + value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('resultRate').textContent = (effectiveRate * 100).toFixed(1) + '% (' + countryData.name + ' → ' + categoryData.name + ')';
+    document.getElementById('resultDuty').textContent = '$' + duty.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('resultTotal').textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    
+    results.classList.add('show');
+    
+    // Scroll to results on mobile
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Populate blog articles
+const BLOG_ARTICLES = [
+    { title: "US Tariff Rates 2026 by Country", file: "us-tariff-rates-2026-by-country.html", desc: "Complete guide to current US import tariff rates for every major trading partner." },
+    { title: "How Tariffs Affect Small Business Imports", file: "how-tariffs-affect-small-business-imports.html", desc: "Practical guide for small businesses navigating 2026 tariff changes." },
+    { title: "Tariff Classification Guide 2026", file: "tariff-classification-guide-2026.html", desc: "How to classify your products under the HTS (Harmonized Tariff Schedule)." },
+    { title: "Import Duty Calculation Explained", file: "import-duty-calculation-explained-2026.html", desc: "Step-by-step guide to calculating import duties for US customs." },
+    { title: "China Tariff Rates 2026 Explained", file: "china-tariff-rates-2026-explained.html", desc: "Current Section 301 tariff rates on Chinese imports and exemptions." },
+    { title: "How to Calculate Import Duties from China", file: "how-to-calculate-import-duties-from-china.html", desc: "Specific methodology for calculating duties on Chinese imports." },
+    { title: "Tariff Exemption List 2026", file: "tariff-exemption-list-2026-what-products-are-exempt.html", desc: "What products are exempt from US import tariffs in 2026." },
+];
+
+const grid = document.getElementById('blogGrid');
+BLOG_ARTICLES.forEach(art => {
+    const card = document.createElement('div');
+    card.className = 'blog-card';
+    card.innerHTML = '<h3><a href="' + art.file + '">' + art.title + '</a></h3><p>' + art.desc + '</p>';
+    grid.appendChild(card);
+});
+</script>
+
+</body>
+</html>
