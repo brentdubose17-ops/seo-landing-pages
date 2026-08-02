@@ -38,26 +38,50 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What is the current Section 301 tariff rate on my specific product from China in 2026?",
+      "name": "How much will I actually pay in import duties from China in 2026?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Section 301 rates fall into two main tiers: 25% on approximately $250 billion of goods (Lists 1\u20133) and 7.5% on approximately $120 billion (List 4A). Certain products have higher rates: EVs at 100%, solar cells at 50%, and semiconductors at 25%. To find your exact rate, look up your HS code in the HTSUS and check the USTR's Section 301 annexes \u2014 or use the Tariff Calculator 2026 tool, which automatically applies all applicable layers."
+        "text": "The average combined rate is 19.9%, but your specific rate depends on your HS code. You will pay the MFN rate plus the Section 301 rate (usually 25%), plus MPF (0.3464%) and HMF (0.125% for ocean). For a typical consumer product, budget for a total of <strong>25-30%</strong> on the CIF value. Check your specific HTSUS code and Section 301 list status before quoting a client."
       }
     },
     {
       "@type": "Question",
-      "name": "Can I legally avoid import duties by shipping in packages under $800?",
+      "name": "Can I avoid paying duties by shipping via DDP or using a freight forwarder?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, but only for genuine single shipments to a single consignee. The Section 321 de minimis exemption applies to shipments valued at $800 or less. You cannot split a larger order into multiple sub-$800 packages \u2014 CBP treats these as one shipment under the \"one shipment\" doctrine, and penalties reach up to $100,000 per violation. CBP has also proposed eliminating the exemption for Chinese imports entirely, so this loophole may close in late 2026."
+        "text": "No. DDP simply means the seller pays the duty on your behalf. You still pay for it in the product price. A freight forwarder is not a tax advisor; they are a logistics provider. You are ultimately liable for the accuracy of the entry. If the seller under-declares value to save money, CBP will hold <em>you</em> responsible, not the seller. Always insist on seeing the actual customs entry documentation."
       }
     },
     {
       "@type": "Question",
-      "name": "What's the difference between FOB and CIF, and which should I use to minimize duty?",
+      "name": "What's the difference between FOB and CIF, and which is cheaper for duties?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "FOB (Free On Board) means the seller delivers goods to the port of origin, and you handle freight and insurance from there. CIF (Cost, Insurance, Freight) means the seller includes those costs in the price. Since dutiable value includes freight and insurance, CIF shipments have a higher dutiable base. FOB gives you control over freight costs and documentation, potentially reducing your duty bill. Use FOB and document your freight and insurance separately."
+        "text": "FOB (Free on Board) means you own the goods at the port of origin and control freight. CIF (Cost, Insurance, Freight) means the seller includes insurance and freight in the price. FOB is almost always cheaper for duties because you can negotiate lower freight rates. Seller-quoted freight is often marked up 15-20%, which increases your CIF value and thus your duty. For a $10,000 shipment, choosing FOB can save you $150-$450 in duties."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will the $800 de minimis rule still exist in 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "As of May 2026, yes. However, a pending bill proposes a 20% tariff on goods over $250 and would eliminate de minimis for Chinese goods entirely. If this passes, small e-commerce importers will see their costs rise significantly. Do not base your business model on de minimis for the long term. Diversify your supply chain and consider US-based warehousing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I find the right HS code for my product?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the CBP's online search tool (HTSUS) and the CROSS database for binding rulings. Start with the material, then function, then use. If you are unsure, hire a licensed customs broker. The cost of a broker ($100-$200 per entry) is far less than the penalty for misclassification (up to 20% of duty value)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if I under-declare the value of my shipment from China?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You face penalties under 19 CFR Part 171: a penalty of up to 20% of the duty underpaid, plus interest at 4.5% per year. For fraud (intentional under-declaration), the penalty is the full value of the goods or the duty evaded, whichever is greater. CBP also has the authority to seize your shipment. \"Reasonable care\" is the legal standard\u2014you must make a genuine effort to declare accurately."
       }
     }
   ]
@@ -93,364 +117,304 @@
             <h1>How to Calculate Import Duties from China</h1>
             <div class="meta"><span>Published August 01, 2026</span><span>By ABD Legacy LLC</span></div>
         </header>
-        <h2>The Real Cost of Importing from China in 2026: A Complete Duty Calculation Guide</h2>
+        <h2>The Real Cost of Importing from China in 2026: A Total Landed Cost Breakdown</h2>
 
-<p>If you imported goods from China in 2025, you paid an average effective duty rate of <strong>19.9%</strong> — nearly six times the 3.4% average your competitors paid on goods from Europe or Southeast Asia. That gap isn't just a line item on your P&L; it's the difference between a viable margin and a losing product line.</p>
+<p>If you are importing goods from China in 2026, the single biggest mistake you can make is assuming the duty rate you find on a government website is what you will actually pay. The era of 3% tariffs on Chinese goods ended in 2018. Today, the average combined tariff rate on Chinese imports stands at <strong>19.9%</strong>—a staggering jump from just 3.1% in 2017. This is not a simple multiplication problem. It is a multi-layered calculation involving HS codes, Section 301 surcharges, valuation methods, and a half-dozen additional federal fees.</p>
 
-<p>Most importers don't actually know what they're paying. They rely on their freight forwarder's estimate, get surprised at customs clearance, and write it off as a cost of doing business. But the mechanics of duty calculation are precise, and the opportunities for legal savings are substantial — if you know where to look.</p>
+<p>This guide breaks down exactly how to calculate your import duties from China in 2026, using current data, real-world examples, and the legal strategies that separate profitable importers from those bleeding cash at the border. We will cover the formula, the hidden fees, the regulatory shifts that took effect this year, and how to use tools like <a href="https://tariffcalculator2026.com">Tariff Calculator 2026</a> to model your specific shipment.</p>
 
-<p>This guide breaks down the 2026 duty landscape for Chinese imports: the three-layer tariff structure, how to calculate your exact landed cost, and the legal strategies that can cut your effective rate by 10–25% without triggering a CBP audit.</p>
+<h2>The 2026 Tariff Landscape: Why Old Advice Will Cost You Money</h2>
 
-<h2>The Three-Layer Duty Structure on Chinese Imports</h2>
+<p>Before we dive into the math, you need to understand the current regulatory environment. Most online guides still reference pre-2018 tariff rates, which is dangerously misleading. In 2026, your goods face a three-tier tax structure: the standard Most Favored Nation (MFN) rate, the China-specific Section 301 tariffs, and potential anti-dumping or countervailing duties (AD/CVD).</p>
 
-<p>Unlike imports from most other countries, goods from China face a stacked tariff system. You don't pay a single rate; you pay a combination of three distinct layers, each with its own legal basis and calculation method.</p>
-
-<h3>Layer 1: MFN (Most Favored Nation) Base Rates</h3>
-
-<p>The first layer is the standard tariff rate applied to all WTO member countries. These rates, codified in the Harmonized Tariff Schedule of the United States (HTSUS), average <strong>3.4%</strong> across all product categories. For most consumer goods, MFN rates range from 0% (for raw materials like certain ores) to 10–15% (for apparel, footwear, and some electronics).</p>
-
-<p>These rates are stable and rarely change. They form the baseline upon which all other tariffs are stacked.</p>
-
-<h3>Layer 2: Section 301 Tariffs (China-Specific)</h3>
-
-<p>Under Section 301 of the Trade Act of 1974, the USTR has imposed four tranches of additional tariffs on Chinese goods since 2018. As of May 2026, the structure is:</p>
+<p>As of May 2026, the effective average duty rate on Chinese goods is <strong>19.9%</strong>. This is a weighted average across all categories. However, your specific product could be anywhere from 0% to 100%+ depending on its classification. The Section 301 tariffs, initially imposed under the Trump administration and largely retained under the Biden administration, now cover over <strong>$550 billion</strong> worth of Chinese imports annually. The current tiers are:</p>
 
 <ul>
-<li><strong>25%</strong> on approximately $250 billion of goods (Lists 1–3: machinery, electronics, furniture, plastics, and industrial inputs)</li>
-<li><strong>7.5%</strong> on approximately $120 billion of goods (List 4A: consumer electronics, toys, apparel)</li>
-<li><strong>100%</strong> on electric vehicles (imposed May 2024)</li>
-<li><strong>50%</strong> on solar cells and certain semiconductor devices</li>
-<li><strong>25%</strong> on steel, aluminum, lithium-ion batteries, and key minerals (phased in during 2024–2026)</li>
+<li><strong>25%:</strong> Most electronics, machinery, automotive parts, and consumer goods (Lists 1, 2, 3, and 4A).</li>
+<li><strong>50%:</strong> Semiconductors, EV batteries, certain medical supplies (added in 2024, expanded in 2025).</li>
+<li><strong>100%:</strong> Electric vehicles, certain solar panels, and specific strategic minerals.</li>
 </ul>
 
-<p>These rates are scheduled for a mandatory four-year review in 2026. Industry analysts expect increases on strategic sectors — particularly advanced semiconductors, medical devices, and renewable energy components — but decreases are unlikely given the current political climate.</p>
+<p>Additionally, there are <strong>130 active anti-dumping orders</strong> on Chinese goods as of 2026, with rates ranging from 2.4% to a crippling 376.67%. For example, wooden cabinets from China face AD rates between 4.9% and 262.2% on top of the standard duty. If you are importing anything that could be considered "dumped," you must check the AD/CVD database before you even contact a supplier.</p>
 
-<h3>Layer 3: Antidumping and Countervailing Duties (AD/CVD)</h3>
+<h2>Step 1: Master HS Code Classification (The Foundation of Your Calculation)</h2>
 
-<p>The third layer is product-specific and can dwarf the first two combined. There are currently <strong>700+ active AD/CVD orders</strong> on Chinese goods, covering everything from steel pipe fittings (duties of 90–200%) to wooden bedroom furniture (duties of 15–200%) to solar panels (combined duties reaching <strong>254%</strong>).</p>
+<p>Every duty calculation starts with the Harmonized System (HS) code. This is a 6-digit international classification, extended to 8-10 digits in the US (the HTSUS). Getting this wrong by a single digit can change your duty rate by 5% to 25%—or trigger a full customs audit. Misclassification is the #1 cause of penalties under <strong>19 CFR Part 171</strong>, with fines up to 20% of the duty value, plus interest at 4.5%.</p>
 
-<p>These rates are calculated based on the difference between the Chinese export price and the "normal value" (often the price in a surrogate market economy). They are reviewed annually and can be retroactively applied in some cases.</p>
+<h3>The 6-Step Classification Framework</h3>
 
-<h3>How the Three Layers Stack</h3>
-
-<p>Here's a concrete example. Suppose you're importing a lithium-ion battery pack with an MFN rate of 3.4%. Your total duty calculation would be:</p>
-
-<ul>
-<li>MFN: 3.4%</li>
-<li>Section 301: 25% (batteries were added to the 25% list in 2024)</li>
-<li>AD/CVD: 0% (unless your specific battery chemistry is subject to an order)</li>
-<li><strong>Total effective duty rate: 28.4%</strong></li>
-</ul>
-
-<p>Now consider a wooden bedroom set. MFN is 1.3%, Section 301 adds 25%, and the AD/CVD order on wooden bedroom furniture from China adds another 198.8%. Your total is <strong>225.1%</strong> — before you even factor in freight and insurance.</p>
-
-<h2>HS Code Classification: The #1 Source of Errors</h2>
-
-<p>Before you can calculate any duty, you need the correct HS code. This is a 10-digit number in the HTSUS that determines every rate you pay. And it's where most importers go wrong.</p>
-
-<p>CBP data shows that <strong>over 60% of customs audits</strong> flag HS misclassification as a primary issue. The penalties can be severe: negligence penalties of 20% of the duty underpaid, gross negligence at 40%, and fraud at 100% plus potential criminal charges.</p>
-
-<h3>How to Find Your Correct HS Code</h3>
-
-<p>The HTSUS is organized into 99 chapters, with goods classified by their physical characteristics, composition, and function — not by their name or common description. A "phone case" isn't simply a phone case; it's classified based on whether it's plastic, leather, or metal, and whether it has additional functions like a battery or keyboard.</p>
-
-<p>Here's the step-by-step process:</p>
+<p>Do not guess your HS code. Use this professional framework:</p>
 
 <ol>
-<li><strong>Start with the General Rules of Interpretation (GRIs)</strong> — these 6 rules determine classification order. GRI 1 states that classification is determined by the terms of the headings and any section or chapter notes.</li>
-<li><strong>Identify the 4-digit heading</strong> that most specifically describes your product.</li>
-<li><strong>Drill down to the 6-digit subheading</strong> — this is the international standard used by all WTO members.</li>
-<li><strong>Add the 8- to 10-digit statistical suffixes</strong> — these are U.S.-specific and determine exact duty rates.</li>
+<li><strong>Identify the Material:</strong> What is it made of? (Steel, plastic, cotton, silicon). This is the first determinant in the HS nomenclature.</li>
+<li><strong>Identify the Function:</strong> What does it do? (Cutting, fastening, transmitting, storing). The function often overrides the material.</li>
+<li><strong>Identify the Use:</strong> Where is it used? (Medical, automotive, industrial). Some codes are end-use specific.</li>
+<li><strong>Check Legal Exclusions:</strong> Review the Section Notes and Chapter Notes in the HTSUS. These notes exclude certain goods from specific chapters.</li>
+<li><strong>Search CBP Rulings:</strong> Use the Customs Rulings Online Search System (CROSS) to find binding rulings on similar products. This is free and authoritative.</li>
+<li><strong>Request a Binding Ruling:</strong> If your product is novel, request a ruling from CBP. It takes 30-90 days but provides legal certainty.</li>
 </ol>
 
-<p>For example, a basic plastic water bottle is classified under HS 3923.30.00. But if that bottle has an insulated metal exterior, it moves to HS 9617.00.00 (vacuum flasks) with a completely different duty rate. The distinction is technical, but the cost difference is real.</p>
+<p>For example, a "plastic bottle" could be classified as <strong>3923.30.00</strong> (carboys, bottles, and similar articles) at a duty rate of 3%. But if it is a "feeding bottle for infants," it falls under <strong>3924.90.50</strong> at 3.4%. The difference is small here. However, consider a "steel bracket" versus a "motor vehicle part." The former might be 0% duty, while the latter triggers 25% Section 301. A misclassification here is catastrophic.</p>
 
-<h3>HS Code Lookup Tools Compared</h3>
+<h2>Step 2: The Exact Duty Calculation Formula (2026 Edition)</h2>
+
+<p>Once you have your HS code, you can calculate your duties. The formula for US imports is more complex than a simple percentage. Here is the precise formula you must use:</p>
+
+<blockquote><strong>Total Landed Cost = (CIF Value × Duty Rate) + (CIF Value + Duty) × 0% VAT + MPF + HMF + Freight + Insurance + Compliance Fees</strong></blockquote>
+
+<p>Let's break down each component with a real-world example. We will use a <strong>$10,000 shipment</strong> of electronic components from Shenzhen to Los Angeles.</p>
+
+<h3>Component 1: CIF Value (The Taxable Base)</h3>
+
+<p>CIF stands for Cost, Insurance, and Freight. This is the value CBP uses to calculate your duty. It is NOT the price you paid for the goods alone. It includes the cost of the goods, the insurance to cover them, and the freight charges to get them to the US port. This is where your Incoterms matter enormously.</p>
+
+<ul>
+<li><strong>FOB (Free on Board):</strong> The seller pays for transport to the port and loading. You own the goods once they are on the vessel. Your CIF value = Product Cost + Insurance + Freight (you pay these separately).</li>
+<li><strong>CIF (Cost, Insurance, Freight):</strong> The seller pays for insurance and freight to the destination port. Your CIF value is the total invoice price, which already includes these costs.</li>
+<li><strong>DDP (Delivered Duty Paid):</strong> The seller pays everything, including duties. However, you still must declare the value to CBP, and if the seller under-declares it, you are liable.</li>
+</ul>
+
+<p>For our example, let's assume you buy goods at <strong>$8,000</strong> FOB Shenzhen. You pay <strong>$1,500</strong> in ocean freight and <strong>$500</strong> in insurance. Your CIF value is <strong>$10,000</strong>. If you bought the same goods CIF, the seller would quote you $10,000 total, including their freight and insurance (which might be higher than what you could negotiate). <strong>FOB almost always gives you a lower duty base</strong> because you control the freight cost.</p>
+
+<h3>Component 2: The Duty Rate (MFN + Section 301)</h3>
+
+<p>Electronic components (HS code 8542.31.00) have an MFN duty rate of 0%. However, they are on Section 301 List 1, so they face an additional <strong>25%</strong> tariff. Your total duty rate is 25%.</p>
+
+<p>Let's calculate: <strong>$10,000 (CIF) × 25% = $2,500</strong> in duty.</p>
+
+<h3>Component 3: VAT/GST (The US Advantage)</h3>
+
+<p>The US does not have a Value-Added Tax (VAT) or Goods and Services Tax (GST) at the federal level. This is a massive advantage for US importers. If you were importing into the EU, you would pay an additional 17-27% (average 21.5%) on the CIF value plus the duty. In the UK, it's 20%. In Canada, it's 5% GST plus up to 10% provincial tax. For this US example, VAT = $0.</p>
+
+<h3>Component 4: MPF (Merchandise Processing Fee)</h3>
+
+<p>This is a flat fee for processing your entry, regardless of value. As of 2026, the rate is <strong>0.3464%</strong> of the shipment value, with a minimum of <strong>$31.67</strong> and a maximum of <strong>$614.35</strong>.</p>
+
+<p>For our $10,000 shipment: $10,000 × 0.003464 = <strong>$34.64</strong>. This is above the minimum, so you pay $34.64.</p>
+
+<h3>Component 5: HMF (Harbor Maintenance Fee)</h3>
+
+<p>If your goods arrive by ocean vessel, you pay an HMF of <strong>0.125%</strong> of the cargo value. This funds harbor maintenance and dredging. For our shipment: $10,000 × 0.00125 = <strong>$12.50</strong>.</p>
+
+<h3>Component 6: The Total Calculation</h3>
 
 <table>
 <tr>
-<th>Tool</th>
-<th>Accuracy</th>
-<th>Cost</th>
-<th>Update Frequency</th>
-<th>Best For</th>
+<th>Cost Component</th>
+<th>Calculation</th>
+<th>Amount</th>
 </tr>
 <tr>
-<td>USITC HTS Search (official)</td>
-<td>High — authoritative source</td>
-<td>Free</td>
-<td>Real-time</td>
-<td>Confirming a known code</td>
+<td>CIF Value</td>
+<td>Goods + Freight + Insurance</td>
+<td>$10,000.00</td>
 </tr>
 <tr>
-<td>CBP eRulings Database</td>
-<td>High — actual ruling decisions</td>
-<td>Free</td>
-<td>Weekly</td>
-<td>Finding precedents for similar products</td>
+<td>Duty (25%)</td>
+<td>$10,000 × 0.25</td>
+<td>$2,500.00</td>
 </tr>
 <tr>
-<td>Tariff Calculator 2026 AI Tool</td>
-<td>High — trained on 500k+ rulings</td>
-<td>Free basic / $29/mo pro</td>
-<td>Daily</td>
-<td>Fast classification with duty calculation</td>
+<td>MPF</td>
+<td>0.3464% (min $31.67)</td>
+<td>$34.64</td>
 </tr>
 <tr>
-<td>Commercial databases (Descartes, Amber Road)</td>
-<td>Medium-High — depends on vendor</td>
-<td>$200–$500/mo</td>
-<td>Varies</td>
-<td>High-volume importers with ERP integration</td>
+<td>HMF</td>
+<td>0.125% of value</td>
+<td>$12.50</td>
+</tr>
+<tr>
+<td><strong>Total Duties & Fees</strong></td>
+<td></td>
+<td><strong>$2,547.14</strong></td>
+</tr>
+<tr>
+<td><strong>Total Landed Cost</strong></td>
+<td>Product + Freight + Insurance + Duties</td>
+<td><strong>$12,547.14</strong></td>
 </tr>
 </table>
 
-<p>If you're unsure about your code, the safest approach is to request a <strong>Binding Ruling</strong> from CBP. It takes 30–90 days, costs nothing, and legally protects you from penalties if the ruling is later found to be incorrect. For a one-time shipment, this is overkill. For a recurring product line, it's essential.</p>
+<p>Your effective duty rate is <strong>25.47%</strong>, not 25%. This 0.47% difference is the MPF and HMF. While it seems small, on a $500,000 shipment, that is an extra $2,350 in fees you didn't budget for.</p>
 
-<h2>Calculating Dutiable Value: The Transaction Value Method</h2>
+<h2>Step 3: The De Minimis Rule and Section 321 (The $800 Loophole)</h2>
 
-<p>Once you have your HS code and know your applicable rates, you need to calculate the <em>dutiable value</em> — the base number to which those rates apply. Under U.S. law (19 CFR 152.103), the primary method is <strong>Transaction Value</strong>, which is the price actually paid or payable for the merchandise, plus certain additions.</p>
+<p>The de minimis provision under <strong>Section 321</strong> allows shipments valued at <strong>$800 or less</strong> to enter the US duty-free and without formal entry. This is a massive advantage for e-commerce sellers. However, in 2026, this rule is under threat. A reform bill pending in Congress proposes a <strong>20% tariff on goods over $250</strong> and would close the de minimis exemption for all Chinese goods.</p>
 
-<h3>What's Included in Dutiable Value</h3>
+<p>As of May 2026, the $800 threshold is still active, but you must use it legally. The law is clear: <strong>you cannot split a single order into multiple shipments to stay under $800</strong>. This is considered a "split shipment" and is fraudulent under 19 U.S.C. 1321. CBP uses advanced data analytics to flag importers who receive multiple packages from the same Chinese supplier on the same day or week.</p>
 
-<p>This is where FOB vs. CIF matters enormously. The dutiable value includes:</p>
-
-<ul>
-<li><strong>The price paid for the goods</strong> (the invoice value)</li>
-<li><strong>Freight costs to the U.S. port of entry</strong> (not the full international freight, but the cost to get the goods to the first U.S. port)</li>
-<li><strong>Insurance</strong> on the shipment</li>
-<li><strong>Packing costs</strong> (including containers and labor)</li>
-<li><strong>Assists</strong> — any goods or services you provided to the manufacturer for free or at reduced cost (molds, tooling, engineering work)</li>
-<li><strong>Royalties and license fees</strong> related to the imported goods</li>
-<li><strong>Proceeds from resale</strong> that flow back to the seller</li>
-</ul>
-
-<h3>What's Excluded</h3>
+<p>However, you <em>can</em> structure your business to utilize de minimis legally:</p>
 
 <ul>
-<li><strong>International freight beyond the U.S. port</strong> (e.g., inland transportation from Long Beach to your warehouse in Ohio)</li>
-<li><strong>U.S. customs duties and fees</strong> themselves</li>
-<li><strong>Discounted amounts</strong> — if you receive a legitimate quantity discount, it reduces the dutiable value</li>
-<li><strong>Post-importation charges</strong> for assembly, installation, or maintenance</li>
+<li><strong>Different Suppliers:</strong> If you source from separate, unrelated suppliers, each shipment is independent.</li>
+<li><strong>Different Products:</strong> If the products are distinct and ordered by different customers, they are separate entries.</li>
+<li><strong>Different Days:</strong> Staggering shipments across days is a gray area—CBP looks at the "totality of circumstances."</li>
 </ul>
 
-<h3>The Cost of Getting This Wrong</h3>
+<p>For high-value goods, the de minimis rule is often irrelevant. But for small consumer items (phone cases, accessories, small parts), it can save you the 25% Section 301 tariff entirely. Just remember: the risk of a penalty (up to $10,000 per violation plus seizure) far outweighs the $200 you save in duties on a split shipment.</p>
 
-<p>Here's a real-world example of how freight and insurance inflate your duty bill. Say you're importing $10,000 FOB (Free On Board) of goods from Shanghai. The freight to Long Beach is $1,500, and insurance is $150. Your dutiable value is now $11,650 — a <strong>16.5% increase</strong> over the FOB price.</p>
+<h2>Step 4: Incoterms 2026 and Their Impact on Your Duty Base</h2>
 
-<p>At a 19.9% average effective duty rate, that adds roughly <strong>$328 in additional duty</strong> on a single $10,000 shipment. Over a year with 12 shipments, that's nearly $4,000 in avoidable costs — if you structure your Incoterms correctly.</p>
-
-<h3>FOB vs. CIF vs. EXW vs. DDP: A Duty Comparison</h3>
-
-<p>Your choice of Incoterm doesn't change the total cost of the shipment, but it changes where costs appear in your calculation — and that affects your dutiable value.</p>
+<p>The Incoterms you choose directly affect your taxable base. This is where you can legally save 3-7% on your total landed cost. Let's compare the three most common Incoterms for a $10,000 product cost.</p>
 
 <table>
 <tr>
 <th>Incoterm</th>
-<th>Dutiable Value Basis</th>
-<th>Duty on $25,000 Shipment (at 19.9%)</th>
-<th>Hidden Costs</th>
+<th>Taxable Base (CIF Value)</th>
+<th>Duty at 25%</th>
+<th>Total Duties & Fees</th>
 </tr>
 <tr>
-<td>EXW (Ex Works)</td>
-<td>Goods value only ($25,000)</td>
-<td>$4,975</td>
-<td>You arrange all freight; freight costs added at import</td>
+<td>FOB (You pay freight/insurance)</td>
+<td>$10,000 (Product only) + $2,000 (freight/insurance)</td>
+<td>$3,000</td>
+<td>$3,047.14</td>
 </tr>
 <tr>
-<td>FOB (Free On Board)</td>
-<td>Goods + inland freight to port + loading ($25,300)</td>
-<td>$5,035</td>
-<td>Ocean freight and insurance still added</td>
+<td>CIF (Seller pays freight/insurance)</td>
+<td>$12,000 (All-inclusive price)</td>
+<td>$3,000</td>
+<td>$3,047.14</td>
 </tr>
 <tr>
-<td>CIF (Cost, Insurance, Freight)</td>
-<td>Goods + freight + insurance ($28,000)</td>
-<td>$5,572</td>
-<td>Full transparency; highest dutiable value</td>
-</tr>
-<tr>
-<td>DDP (Delivered Duty Paid)</td>
-<td>Seller handles everything; duty is baked into price</td>
-<td>Unknown — often inflated by seller</td>
-<td>Seller may overcharge duty; no visibility</td>
+<td>DDP (Seller pays everything)</td>
+<td>$12,500 (Includes seller's markup on logistics)</td>
+<td>$3,125</td>
+<td>$3,172.14</td>
 </tr>
 </table>
 
-<p>The takeaway is counterintuitive: <strong>FOB is often the sweet spot</strong>. You control the freight and insurance costs, you can document them accurately, and you avoid the markups that sellers build into CIF and DDP prices. However, you must be meticulous about documenting your freight and insurance costs — CBP will use the full CIF value if you can't prove otherwise.</p>
+<p>Notice the FOB vs. CIF example above shows the same duty because we assumed the same freight cost. However, in reality, <strong>sellers often inflate freight costs by 15-20%</strong> when they handle it. If you buy CIF, you are paying their markup, which increases your duty base. By buying FOB and arranging your own freight, you control the cost. A $2,000 freight quote from your forwarder might be $2,600 from the seller. That $600 difference is now subject to 25% duty, costing you an extra $150.</p>
 
-<h2>The De Minimis Threshold: The $800 Loophole That Isn't</h2>
+<p>For DDP, the risk is even greater. The seller includes their profit margin on logistics in the price. If they quote you $12,500 DDP, you are paying $500 extra in "logistics handling" that is now part of your CIF value. You pay 25% duty on that $500, which is $125 you could have avoided. <strong>Always buy FOB and control your own logistics</strong> to minimize your duty base.</p>
 
-<p>Under Section 321 of the Tariff Act, shipments valued at <strong>$800 or less</strong> enter the U.S. duty-free and without formal entry. In 2023, <strong>1.1 billion packages</strong> entered under this provision — up from 300 million in 2019. Roughly <strong>31% of all U.S. imports from China</strong> now qualify.</p>
+<h2>Step 5: Tariff Engineering – Legal Strategies to Reduce Your 2026 Duty Bill</h2>
 
-<p>The temptation is obvious: split your order into $800 packages and avoid all duties. But this is where importers get into serious trouble.</p>
+<p>Most articles stop at the calculation. This one will show you how to reduce it legally. In 2026, with tariffs this high, "tariff engineering" is not optional—it's a survival strategy.</p>
 
-<h3>The "One Shipment" Doctrine</h3>
+<h3>Strategy 1: The First Sale Rule (Save 20-40%)</h3>
 
-<p>CBP has a clear rule: de minimis applies to <em>one shipment</em> of <em>one item</em> to <em>one consignee</em> on <em>one day</em>. If you ship 10 packages of $800 each to the same address on the same day, CBP treats it as one $8,000 shipment — and you owe duty on the full amount.</p>
+<p>Under <strong>19 CFR 152.103</strong>, you can declare the "first sale" price of goods if you import through a middleman. Here's how it works: You buy from a US trading company that sources from a Chinese factory. The US company pays the factory $6,000, then sells to you for $10,000. Under the First Sale Rule, you can declare the $6,000 as the transaction value to CBP, not the $10,000 you paid.</p>
 
-<p>The penalties are severe. CBP can fine up to <strong>$100,000 per violation</strong> for fraudulent split shipments. In 2024, CBP increased enforcement, targeting e-commerce sellers who systematically abused Section 321. The agency has also proposed eliminating the de minimis exemption entirely for Chinese imports — a change that could take effect in late 2026.</p>
+<p>This is completely legal and has been upheld by the US Supreme Court. It can reduce your duty base by 20-40%. For our $10,000 shipment, if the first sale price is $7,000, your duty drops from $2,500 to $1,750. That's a $750 saving. You need documentation: the factory invoice to the middleman, proof of payment, and a clear paper trail.</p>
 
-<h3>When Splitting Shipments Actually Makes Sense</h3>
+<h3>Strategy 2: Section 301 Exclusion Reinstatement</h3>
 
-<p>There are legitimate scenarios for using Section 321:</p>
+<p>In late 2025 and early 2026, the USTR reinstated and created <strong>15 new exclusion categories</strong> for Section 301 tariffs. These cover specific medical devices, industrial components, and certain chemicals. If your product falls into one of these categories, you can apply for a retroactive exclusion and receive a refund for duties paid since the exclusion's effective date. Check the USTR website monthly—these exclusions are time-limited and often extended.</p>
 
-<ul>
-<li><strong>Direct-to-consumer sales</strong>: If you sell on Amazon or Shopify and ship individual orders to different customers, each order under $800 qualifies.</li>
-<li><strong>Sample shipments</strong>: Sending product samples to potential buyers.</li>
-<li><strong>Low-value prototypes</strong>: Testing a product before committing to a full container.</li>
-</ul>
+<h3>Strategy 3: The Duty Drawback (Recover 99% of Duties)</h3>
 
-<p>What you cannot do is split a single commercial order into multiple packages to the same recipient. This is fraud, not optimization.</p>
+<p>If you import goods and later export them—either as finished products or after repackaging—you can recover up to <strong>99% of the duties paid</strong> under <strong>19 USC 1313</strong>. This is a massive opportunity for manufacturers who assemble products in the US and export them. The drawback claim must be filed within 5 years of import. Most small importers don't know this exists, leaving millions in unclaimed refunds.</p>
 
-<h2>Duty Reduction Strategies That Work in 2026</h2>
+<h3>Strategy 4: Understand China's Export VAT Rebate</h3>
 
-<p>With effective rates averaging 19.9%, finding legal ways to reduce your duty burden is no longer optional — it's a competitive necessity. Here are the strategies that actually work in 2026.</p>
+<p>In December 2024, China suspended the 13% export VAT rebate on <strong>59 product categories</strong>, including certain metals, chemicals, and solar products. This means your Chinese supplier's cost increased by 13%. If they passed that cost to you, your product price went up even before US duties. In 2026, many suppliers have adjusted their pricing. You must ask your supplier if they are claiming the export rebate. If they are not, you are overpaying. Some suppliers will reduce their FOB price if you help them navigate the rebate process.</p>
 
-<h3>1. The First Sale Rule (10–25% Savings)</h3>
+<h3>Strategy 5: Avoid "Light-Touch" Transshipment</h3>
 
-<p>The First Sale Rule allows you to declare the <em>first sale price</em> in a multi-tier transaction as the transaction value, rather than the price you pay to your middleman. If you buy from a Hong Kong trading company that sources from a factory in Shenzhen, the "first sale" is the factory-to-trader price — which is typically 10–25% lower than the trader-to-you price.</p>
+<p>Shipping goods from China to Vietnam, doing minimal assembly, and then importing as "Made in Vietnam" to avoid Section 301 tariffs is a dangerous game. CBP has ramped up enforcement in 2026, and penalties for transshipment fraud can reach <strong>300% of the goods' value</strong>. To legally use Vietnam, your goods must undergo a "substantial transformation" there, requiring at least <strong>30% local value-added</strong>. If you are merely repackaging or doing simple assembly, you are at high risk of seizure and criminal prosecution.</p>
 
-<p>This is fully legal, but it requires documentation: a complete audit trail showing the first sale transaction, including the factory invoice, the trading company's markup, and proof that the goods were destined for the U.S. CBP has tightened enforcement here, but the rule remains valid for legitimate transactions.</p>
+<h2>Comparing Total Landed Costs: US vs. EU vs. UK vs. Canada</h2>
 
-<p><strong>Compliance checklist for First Sale:</strong></p>
-
-<ol>
-<li>Obtain the factory's commercial invoice to the trading company</li>
-<li>Document the relationship between factory, trader, and your company</li>
-<li>Maintain records for 5 years (CBP requires this)</li>
-<li>Ensure the factory price is genuinely arm's-length</li>
-<li>Use a customs broker experienced with First Sale filings</li>
-</ol>
-
-<h3>2. Tariff Engineering (Legal HS Reclassification)</h3>
-
-<p>Tariff engineering means modifying your product's design or composition to shift it into a lower-duty HS code. This is legal when the modification is genuine and functional — not when it's a sham to avoid duties.</p>
-
-<p>Example: A plastic toy with electronic components might be classified as an "electronic toy" at 4.9% duty, while a "toy incorporating a motor" is at 6.8%. If you remove the motor and add a hand-crank, you save 1.9% per unit — legally.</p>
-
-<p>The key is that the product must genuinely function in its new form. CBP will inspect and test products suspected of tariff engineering. If your "plastic container" is actually a battery case, you'll face penalties.</p>
-
-<h3>3. Chapter 98 Provisions (Repairs and Returns)</h3>
-
-<p>HTSUS Chapter 98 allows duty-free entry for U.S. goods returned after being repaired or altered abroad. If you send a U.S.-made component to China for repair and re-import it, you pay duty only on the <em>value of the repair</em>, not the full value of the goods.</p>
-
-<p>This is particularly useful for industrial equipment, machinery parts, and electronics. The documentation requirements are strict: you must prove the goods were originally exported from the U.S., and the repair must not be a "processing" that changes the fundamental character of the goods.</p>
-
-<h3>4. Duty Drawback (Up to 99% Refund)</h3>
-
-<p>If you import goods and later export them (either as-is or incorporated into another product), you may be eligible for a duty drawback refund. The drawback program refunds up to 99% of duties paid on goods that are subsequently exported within 5 years.</p>
-
-<p>This is underutilized because it requires meticulous record-keeping. But for importers who re-export, it's essentially free money. In 2024, CBP processed over $1.2 billion in drawback claims.</p>
-
-<h3>5. Strategic Sourcing Shifts</h3>
-
-<p>Sometimes the best duty strategy is to change your sourcing origin. The U.S. has free trade agreements with 20 countries, and many Southeast Asian nations (Vietnam, Thailand, Malaysia) have significantly lower duty rates than China for the same goods.</p>
-
-<p>However, you must be careful about <strong>substantial transformation</strong> rules. Simply shipping Chinese components through Vietnam and assembling them there doesn't qualify for Vietnamese origin — the goods must be <em>substantially transformed</em> in the FTA country. CBP has cracked down on "origin laundering" with significant penalties.</p>
-
-<h2>The 2026 "Tariff Cliff": What to Watch For</h2>
-
-<p>Several scheduled tariff changes take effect in 2026, and importers who don't plan ahead will face sudden cost increases.</p>
+<p>If you are selling globally, you need to know which market is most profitable. Here is a comparison for the same $10,000 shipment of electronic components (25% US Section 301, but 0% MFN in EU/UK/Canada):</p>
 
 <table>
 <tr>
-<th>Product Category</th>
-<th>Current Rate</th>
-<th>Scheduled 2026 Rate</th>
-<th>Effective Date</th>
+<th>Country</th>
+<th>Duty Rate</th>
+<th>VAT/GST</th>
+<th>Total Duties & Fees</th>
+<th>Total Landed Cost</th>
 </tr>
 <tr>
-<td>Lithium-ion batteries (EV)</td>
-<td>7.5% + 25% Section 301 = 32.5%</td>
-<td>7.5% + 25% + additional 25% = 57.5%</td>
-<td>January 2026</td>
+<td>United States</td>
+<td>25% + MPF + HMF</td>
+<td>0%</td>
+<td>$2,547.14</td>
+<td>$12,547.14</td>
 </tr>
 <tr>
-<td>Semiconductors (advanced)</td>
-<td>25% Section 301</td>
-<td>50% Section 301</td>
-<td>TBD (USTR review)</td>
+<td>European Union</td>
+<td>0% (MFN)</td>
+<td>21.5% (avg)</td>
+<td>$2,150.00 + handling</td>
+<td>$12,150.00</td>
 </tr>
 <tr>
-<td>Medical devices (syringes, PPE)</td>
-<td>7.5% + 25% = 32.5%</td>
-<td>7.5% + 50% = 57.5%</td>
-<td>June 2026</td>
+<td>United Kingdom</td>
+<td>0% (MFN)</td>
+<td>20%</td>
+<td>$2,000.00</td>
+<td>$12,000.00</td>
 </tr>
 <tr>
-<td>Solar cells</td>
-<td>50% Section 301</td>
-<td>60% Section 301</td>
-<td>Q3 2026</td>
-</tr>
-<tr>
-<td>EVs from China</td>
-<td>100% Section 301</td>
-<td>100% (unchanged)</td>
-<td>—</td>
+<td>Canada</td>
+<td>0% (MFN)</td>
+<td>5% GST (Ontario: +8%)</td>
+<td>$500.00 - $1,300.00</td>
+<td>$10,500.00 - $11,300.00</td>
 </tr>
 </table>
 
-<p>The USTR's four-year review, mandated by law, is currently underway. Expect announcements in Q3 2026. If your products are in the semiconductor, medical device, or renewable energy categories, <strong>pre-position inventory before the effective dates</strong>. A 25% tariff increase on a $500,000 shipment is $125,000 in additional duty — worth planning around.</p>
+<p>As you can see, the US is the most expensive market for Chinese goods in 2026 due to Section 301. This is driving many importers to focus on the EU and UK, where the duty is 0% but the VAT is high. However, the VAT is recoverable for businesses, while US Section 301 duties are not. If you are a business, the EU/UK might actually be cheaper once you reclaim the VAT.</p>
 
-<h2>The "Duty-Plus" Hidden Costs: What Most Guides Miss</h2>
+<h2>Common Mistakes That Trigger CBP Penalties</h2>
 
-<p>Most articles about import duties stop at the tariff rate. But your <em>true landed cost</em> includes a range of additional fees that can add 3–7% to your shipment value. Here's the full picture:</p>
+<p>Avoid these errors to keep your shipment moving and your compliance record clean:</p>
 
 <ul>
-<li><strong>Customs bond fees</strong>: $150–$500 per year for a continuous bond (required for all commercial entries)</li>
-<li><strong>Customs broker charges</strong>: $75–$150 per entry</li>
-<li><strong>Merchandise Processing Fee (MPF)</strong>: 0.3464% of declared value, minimum $30.66, maximum $590.10</li>
-<li><strong>Harbor Maintenance Fee (HMF)</strong>: 0.125% of the value of cargo moved through U.S. ports</li>
-<li><strong>Demurrage and detention</strong>: $200–$800 per container per day if you don't clear cargo on time</li>
-<li><strong>CBP audit costs</strong>: $5,000–$50,000+ if you're selected for a compliance review</li>
+<li><strong>Under-declaring value:</strong> Declaring $5,000 for a $10,000 shipment to reduce duties. CBP uses artificial intelligence to flag value anomalies. Penalties are 20% of the duty underpaid, plus interest, plus potential seizure.</li>
+<li><strong>Mis-describing goods:</strong> Calling an EV battery a "power supply unit" to avoid the 50% tariff. This is fraud. CBP laboratories test random samples.</li>
+<li><strong>Incorrect country of origin:</strong> Marking your goods as "Made in Vietnam" when they are assembled in China. CBP requires substantial transformation, not just final assembly.</li>
+<li><strong>Ignoring AD/CVD orders:</strong> If your product is on an active AD/CVD order, you must pay the cash deposit rate. Failure to do so results in immediate shipment holds and penalties.</li>
 </ul>
 
-<p>Let's put this in perspective with a 12-month scenario. You import $50,000 of goods per month from China. Your effective duty rate is 19.9%, which works out to $119,400 in annual duties. But the "duty-plus" costs add another $15,000–$35,000 per year in fees, bond charges, and potential audit costs. That's the real cost of doing business with China in 2026.</p>
+<h2>FAQ: Your 2026 Import Duty Questions Answered</h2>
 
-<h2>Reverse Engineering Your Competitor's Duty Rate</h2>
+<div class="faq-item">
+<h3>Q: How much will I actually pay in import duties from China in 2026?</h3>
+<p>A: The average combined rate is 19.9%, but your specific rate depends on your HS code. You will pay the MFN rate plus the Section 301 rate (usually 25%), plus MPF (0.3464%) and HMF (0.125% for ocean). For a typical consumer product, budget for a total of <strong>25-30%</strong> on the CIF value. Check your specific HTSUS code and Section 301 list status before quoting a client.</p>
+</div>
 
-<p>Here's a strategy that most importers overlook. Instead of starting with your own HS code and calculating forward, start with your competitor's retail price and reverse-engineer what duty rate they're paying. This reveals whether you're at a cost disadvantage and what strategies they're likely using.</p>
+<div class="faq-item">
+<h3>Q: Can I avoid paying duties by shipping via DDP or using a freight forwarder?</h3>
+<p>A: No. DDP simply means the seller pays the duty on your behalf. You still pay for it in the product price. A freight forwarder is not a tax advisor; they are a logistics provider. You are ultimately liable for the accuracy of the entry. If the seller under-declares value to save money, CBP will hold <em>you</em> responsible, not the seller. Always insist on seeing the actual customs entry documentation.</p>
+</div>
 
-<p><strong>The method:</strong></p>
+<div class="faq-item">
+<h3>Q: What's the difference between FOB and CIF, and which is cheaper for duties?</h3>
+<p>A: FOB (Free on Board) means you own the goods at the port of origin and control freight. CIF (Cost, Insurance, Freight) means the seller includes insurance and freight in the price. FOB is almost always cheaper for duties because you can negotiate lower freight rates. Seller-quoted freight is often marked up 15-20%, which increases your CIF value and thus your duty. For a $10,000 shipment, choosing FOB can save you $150-$450 in duties.</p>
+</div>
+
+<div class="faq-item">
+<h3>Q: Will the $800 de minimis rule still exist in 2026?</h3>
+<p>A: As of May 2026, yes. However, a pending bill proposes a 20% tariff on goods over $250 and would eliminate de minimis for Chinese goods entirely. If this passes, small e-commerce importers will see their costs rise significantly. Do not base your business model on de minimis for the long term. Diversify your supply chain and consider US-based warehousing.</p>
+</div>
+
+<div class="faq-item">
+<h3>Q: How do I find the right HS code for my product?</h3>
+<p>A: Use the CBP's online search tool (HTSUS) and the CROSS database for binding rulings. Start with the material, then function, then use. If you are unsure, hire a licensed customs broker. The cost of a broker ($100-$200 per entry) is far less than the penalty for misclassification (up to 20% of duty value).</p>
+</div>
+
+<div class="faq-item">
+<h3>Q: What happens if I under-declare the value of my shipment from China?</h3>
+<p>A: You face penalties under 19 CFR Part 171: a penalty of up to 20% of the duty underpaid, plus interest at 4.5% per year. For fraud (intentional under-declaration), the penalty is the full value of the goods or the duty evaded, whichever is greater. CBP also has the authority to seize your shipment. "Reasonable care" is the legal standard—you must make a genuine effort to declare accurately.</p>
+</div>
+
+<h2>Final Checklist for Your Next Shipment</h2>
+
+<p>Before you place your next order from China, run through this checklist to ensure you are not overpaying:</p>
 
 <ol>
-<li>Find your competitor's retail price for a comparable product</li>
-<li>Subtract estimated retail margins (typically 40–60% for consumer goods)</li>
-<li>Subtract estimated shipping and warehousing costs ($2–$5 per unit for most goods)</li>
-<li>The remainder is their approximate landed cost</li>
-<li>Compare that to your own landed cost</li>
-</ol>
-
-<p>If your competitor's landed cost is 15% lower than yours, they're likely using the First Sale Rule, sourcing from a different country, or have achieved a better HS classification. Reverse engineering this gap gives you a target for your own cost reduction efforts.</p>
-
-<h2>Should You Hire a Customs Broker?</h2>
-
-<p>For a single shipment per month, a customs broker is a smart investment. At $75–$150 per entry, the cost is trivial compared to the risk of misclassification or documentation errors. For high-volume importers, the decision is more nuanced.</p>
-
-<p>Self-filing through the ACE (Automated Commercial Environment) system costs nothing in broker fees but requires: a customs bond, ACE portal access, and the expertise to classify and value goods correctly. One mistake on a $100,000 shipment can cost more than a year of broker fees. Unless you have dedicated trade compliance staff, a broker is the safer choice.</p>
-
-<h2>FAQ: Import Duties from China in 2026</h2>
-
-<div class="faq-item">
-<h3>Q: What is the current Section 301 tariff rate on my specific product from China in 2026?</h3>
-<p>A: Section 301 rates fall into two main tiers: 25% on approximately $250 billion of goods (Lists 1–3) and 7.5% on approximately $120 billion (List 4A). Certain products have higher rates: EVs at 100%, solar cells at 50%, and semiconductors at 25%. To find your exact rate, look up your HS code in the HTSUS and check the USTR's Section 301 annexes — or use the Tariff Calculator 2026 tool, which automatically applies all applicable layers.</p>
-</div>
-
-<div class="faq-item">
-<h3>Q: Can I legally avoid import duties by shipping in packages under $800?</h3>
-<p>A: Yes, but only for genuine single shipments to a single consignee. The Section 321 de minimis exemption applies to shipments valued at $800 or less. You cannot split a larger order into multiple sub-$800 packages — CBP treats these as one shipment under the "one shipment" doctrine, and penalties reach up to $100,000 per violation. CBP has also proposed eliminating the exemption for Chinese imports entirely, so this loophole may close in late 2026.</p>
-</div>
-
-<div class="faq-item">
-<h3>Q: What's the difference between FOB and CIF, and which should I use to minimize duty?</h3>
-<p>A: FOB (Free On Board) means the seller delivers goods to the port of origin, and you handle freight and insurance from there. CIF (Cost, Insurance, Freight) means the seller includes those costs in the price. Since dutiable value includes freight and insurance, CIF shipments have a higher dutiable base. FOB gives you control over freight costs and documentation, potentially reducing your duty bill. Use FOB and document your freight and insurance separately.</p>
-</div>
-
-<div class="faq-item">
-<h3>Q: How do I find my product's HS code, and what happens if I get it wrong?</h3>
-<p>A: Start with the USITC HTS Search tool (free and authoritative), then cross-reference with CBP's eRulings database for similar products. If you're still uncertain, request a Binding Ruling from CBP — it's free and protects you from penalties. Getting it wrong can trigger penalties of 20% (negligence) to 100% (fraud) of the underpaid duty, plus potential criminal charges. Over 60% of CBP audits flag HS
+<li><strong>Verify your HS code</strong> with a licensed broker or the CBP ruling database.</li>
+<li><strong>Check the Section 301 list</strong> to confirm your product's surcharge tier (25%, 50%, or 100%).</li>
+<li><strong>Check the AD/CVD database</strong> for any active orders on your product.</li>
+<li><strong>Negotiate FOB pricing</strong> and arrange your own freight to control the duty base.</li>
+<li><strong>Ask your supplier about China's export VAT rebate</strong>—ensure they are claiming it.</li>
+<li><strong>Consider the First Sale Rule</strong> if you use a middleman.</li>
+<li><strong>Review the 15 new Section 301 exclusions</strong> to see if your product qualifies.</li>
+<li><strong>Budget for MPF and HMF</strong>—do not forget these fees in your pricing model.</
     </article>
     <footer>
         <p>&copy; 2026 <a href="https://tariffcalculator2026.com">Tariffcalculator2026</a> &mdash; All rights reserved.</p>
