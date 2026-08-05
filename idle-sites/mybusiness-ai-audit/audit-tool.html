@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI Audit Tool — My Business AI Audit</title>
+    <meta name="description" content="Free AI readiness audit tool for small business: a 10-minute checklist covering tool inventory, permissions, approval gates, vendors, and data access.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mybusinessaiaudit.com/audit-tool.html">
+    <meta property="og:title" content="Free AI Audit Tool — My Business AI Audit">
+    <meta property="og:description" content="Free AI readiness audit tool for small business: a 10-minute checklist covering tool inventory, permissions, approval gates, vendors, and data access.">
+    <meta property="og:url" content="https://mybusinessaiaudit.com/audit-tool.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="My Business AI Audit">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Free AI Audit Tool",
+  "url": "https://mybusinessaiaudit.com/audit-tool.html",
+  "description": "Free AI readiness audit tool for small business: a 10-minute checklist covering tool inventory, permissions, approval gates, vendors, and data access.",
+  "publisher": {"@type": "Organization", "name": "ABD Legacy LLC"}
+}
+</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.7; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        .panel { background: #fff; padding: 36px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 8px; line-height: 1.25; }
+        .sub { color: #666; margin-bottom: 28px; }
+        label.q { display: block; padding: 16px 0; border-bottom: 1px solid #f0f0f5; font-size: 1.05rem; cursor: pointer; }
+        label.q input { margin-right: 10px; transform: scale(1.15); }
+        label.q .risk { display: block; color: #666; font-size: 0.85rem; margin-top: 4px; }
+        .btn { display: inline-block; background: #2563eb; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; margin: 24px 0 8px; border: none; font-size: 1rem; cursor: pointer; }
+        #result { display: none; background: #eef2ff; border-radius: 12px; padding: 24px; margin-top: 24px; }
+        #result h2 { margin-bottom: 8px; }
+        #result .score { font-size: 2rem; font-weight: 800; color: #2563eb; }
+        #result ul { margin: 12px 0 0 20px; }
+        #result li { margin-bottom: 6px; }
+        footer { margin-top: 28px; color: #888; font-size: 0.85rem; text-align: center; }
+        nav.site { margin-bottom: 20px; font-size: 0.9rem; }
+        nav.site a { margin-right: 16px; text-decoration: none; color: #2563eb; }
+        a { color: #2563eb; }
+    </style>
+</head>
+<body>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a></nav>
+    <div class="panel">
+        <h1>Free AI Audit Tool</h1>
+        <p class="sub">Ten questions, about ten minutes. Tick the boxes that are <strong>true</strong> for your business today. When you're done, you'll get a score and a prioritized fix list.</p>
+
+        <form id="audit">
+            <label class="q"><input type="checkbox" name="q" data-risk="10"> We can list every AI tool the business uses, including free trials and tools individual staff installed.
+                <span class="risk">If you can't tick this, the inventory is your first fix. See <a href="/articles/ai-readiness-audit-guide.html">the readiness audit guide</a>.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="10"> For each AI tool, we know what data it can read or copy (customer data, financial data, credentials).
+                <span class="risk">Data access you can't account for is an exfiltration path.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="10"> No AI tool can send messages, edit records, trigger payments, or approve anything without a human.
+                <span class="risk">Irreversible actions need a human gate — the AISI test was stopped by one human refusing code.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="8"> Every AI tool runs with the minimum permissions it needs (least-privilege), and we review permissions at least quarterly.
+                <span class="risk">Permission creep is the most common finding in real audits.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="8"> We have asked every vendor what AI tools they run and what those tools connect to.
+                <span class="risk">An agent you never met can reach you through a vendor you never audited.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="8"> We have a named person responsible for reviewing AI tool audit logs and alerts.
+                <span class="risk">Monitoring only works if someone is responsible for reading it.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="6"> We treat AI-generated output as untrusted until a human verifies it.
+                <span class="risk">Agents have fabricated "independent reviewers" to vouch for their own work.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="6"> We know which of our tools train on our data, and we've accepted or changed that.
+                <span class="risk">Training-data policies change; re-check them at least yearly.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="6"> Contracts with AI vendors include incident-response commitments and testing evidence.
+                <span class="risk">Treat AI vendors like any supplier with access to your systems.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="6"> We re-run this checklist at least quarterly.
+                <span class="risk">The AI tool list changes faster than any other part of your stack.</span></label>
+
+            <button type="button" class="btn" onclick="scoreAudit()">Score my audit</button>
+        </form>
+
+        <div id="result">
+            <h2>Your AI audit score</h2>
+            <p><span class="score" id="scoreVal">0</span>/78 — <span id="grade"></span></p>
+            <p id="verdict"></p>
+            <ul id="fixes"></ul>
+            <p>Next steps: read <a href="/articles/ai-readiness-audit-guide.html">how to run a full readiness audit</a>, check the <a href="/articles/ai-agent-security-risks.html">AI agent security risks</a> you should know about, and see <a href="/articles/5-signs-need-ai-audit.html">whether you need an audit at all</a>.</p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+    <script>
+        function scoreAudit() {
+            var boxes = document.querySelectorAll('#audit input[name=q]');
+            var score = 0;
+            var unchecked = [];
+            boxes.forEach(function(b) {
+                var risk = parseInt(b.getAttribute('data-risk'), 10);
+                if (b.checked) { score += risk; } else { unchecked.push(b.parentElement.textContent.trim().split('\n')[0]); }
+            });
+            var max = 78;
+            document.getElementById('scoreVal').textContent = score;
+            var grade, verdict;
+            if (score >= 65) { grade = 'Strong'; verdict = 'Your AI controls are in good shape. Keep the quarterly cadence.'; }
+            else if (score >= 45) { grade = 'Moderate'; verdict = 'You have real gaps. Close the unchecked items in priority order — start with anything marked irreversible or data-related.'; }
+            else if (score >= 25) { grade = 'Weak'; verdict = 'Your AI usage is running ahead of your controls. Treat this like a security review, this week.'; }
+            else { grade = 'Exposed'; verdict = 'Your business is running AI tools without meaningful controls. Do the readiness audit now — this is exactly the setup that leads to incidents.'; }
+            document.getElementById('grade').textContent = grade;
+            document.getElementById('verdict').textContent = verdict;
+            var fixes = document.getElementById('fixes');
+            fixes.innerHTML = '';
+            unchecked.slice(0, 5).forEach(function(t) {
+                var li = document.createElement('li');
+                li.textContent = t;
+                fixes.appendChild(li);
+            });
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
