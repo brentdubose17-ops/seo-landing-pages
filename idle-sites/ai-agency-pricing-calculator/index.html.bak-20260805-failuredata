@@ -932,16 +932,6 @@
           <option value="frontier">Paid frontier only (Claude, GPT) — premium API spend</option>
         </select>
       </div>
-
-      <div class="form-group">
-        <label for="deliveryRisk">Delivery Risk (Failure / Retry)</label>
-        <select id="deliveryRisk">
-          <option value="low" selected>Low — mature stack, few retries (1.0×)</option>
-          <option value="moderate">Moderate — occasional retry loops (1.15×)</option>
-          <option value="high">High — agentic fan-out, retry storms (1.35×)</option>
-          <option value="levelsio">levelsio-style — $500/failed loop (2.0×)</option>
-        </select>
-      </div>
     </div>
 
     <div class="slider-wrap" style="margin-bottom: 24px;">
@@ -1083,72 +1073,6 @@
       </table>
     </div>
     <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary);">* Ranges reflect 2026 US market rates. Final pricing depends on complexity, client size, and your experience level. Model strategy affects margins more than list prices: open-weight stacks (Kimi K3, GLM-5.2) cut the compute line vs. paid frontier APIs.</p>
-  </section>
-
-  <!-- Agent Failure & Retry Cost Estimator -->
-  <section class="section" id="failure-estimator">
-    <div class="section-title">Agent Failure &amp; <span class="g">Retry Cost</span> Estimator</div>
-    <div class="card">
-      <div class="card-title">🔁 What a Failed Loop Really Costs</div>
-      <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:20px; line-height:1.7;">
-        Agent workflows rarely run clean the first time. On Aug 5, 2026, <strong style="color:var(--white)">levelsio (Pieter Levels)</strong> reported burning <strong style="color:var(--white)">$500 per Gauntlet Loop run</strong> — an AI-coding method that fans out subagents and loops until "utterly perfect" — then corrected it to <strong style="color:var(--white)">$900 total with 95% of generated code removed</strong>. Measured baselines are ~$0.06 per request and "a few dollars per task"; failure modes (retry storms, subagent fan-out, silent misconfiguration) turn that into <strong style="color:var(--white)">$500 loops and $2,000 overnight bills</strong>. Use this estimator to model what retries actually add to your spend.
-      </p>
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="failScenario">Scenario Preset</label>
-          <select id="failScenario" onchange="applyFailScenario()">
-            <option value="levelsio" selected>levelsio Gauntlet Loop (real-world, Aug 5 2026)</option>
-            <option value="fanout">Typical agentic build — subagent fan-out + retries</option>
-            <option value="simple">Simple automation — few retries</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="failBaseCost">Base Cost per Loop Attempt ($)</label>
-          <input type="number" id="failBaseCost" min="1" max="5000" value="500" step="10" />
-        </div>
-        <div class="form-group">
-          <label for="failRetries">Failed Loop Attempts (Retries)</label>
-          <input type="number" id="failRetries" min="0" max="20" value="0" step="1" />
-        </div>
-        <div class="form-group">
-          <label for="failCleanup">Cleanup / Rework Cost ($)</label>
-          <input type="number" id="failCleanup" min="0" max="10000" value="400" step="25" />
-        </div>
-      </div>
-      <button class="btn-calculate" onclick="calculateFailure()">🔁 Estimate Total Spend With Retries</button>
-      <div id="failure-results" style="display:none; margin-top:20px;">
-        <div class="results-grid">
-          <div class="result-card">
-            <div class="result-label">Naive Estimate (No Retries)</div>
-            <div class="result-value" id="f-naive">—</div>
-            <div class="result-sub">1 loop attempt, no cleanup</div>
-          </div>
-          <div class="result-card">
-            <div class="result-label">Retry Loops Burned</div>
-            <div class="result-value" id="f-retries">—</div>
-            <div class="result-sub" id="f-retries-sub">—</div>
-          </div>
-          <div class="result-card">
-            <div class="result-label">Cleanup / Rework</div>
-            <div class="result-value" id="f-cleanup">—</div>
-            <div class="result-sub">Manual rework after failure</div>
-          </div>
-          <div class="result-card primary">
-            <div class="result-label">Total Including Retries</div>
-            <div class="result-value" id="f-total">—</div>
-            <div class="result-sub" id="f-total-sub">—</div>
-          </div>
-        </div>
-        <div class="insight-box roi">
-          <div class="box-label">📌 How to read this</div>
-          <div class="box-text" id="f-note">—</div>
-        </div>
-        <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary); line-height:1.7;">
-          Model: total = base cost per loop attempt × (1 + failed attempts) + cleanup/rework. Source: levelsio, Aug 5 2026 — "$500 per Gauntlet Loop run", corrected to "$900 total… remove 95% of what it made" (<a href="https://x.com/levelsio/status/2084997902632390981" target="_blank" rel="noopener" style="color:var(--cyan-light);">@levelsio on X</a>); baselines from Systima token-overhead analysis (<a href="https://systima.ai/blog/claude-code-vs-opencode-token-overhead" target="_blank" rel="noopener" style="color:var(--cyan-light);">systima.ai, Jul 12 2026</a>), HN Cursor usage analytics ($0.06/req avg, <a href="https://news.ycombinator.com/item?id=45931825" target="_blank" rel="noopener" style="color:var(--cyan-light);">HN #45931825</a>), and AgentGuard infinite-loop tooling (~$2,000 overnight, <a href="https://github.com/dipampaul17/AgentGuard" target="_blank" rel="noopener" style="color:var(--cyan-light);">github.com/dipampaul17/AgentGuard</a>). Directional estimate — substitute your own observed retry rates.
-        </p>
-      </div>
-    </div>
   </section>
 
   <!-- Gemini API Cost & Model Routing Savings Calculator -->
@@ -1483,24 +1407,6 @@ const BASE_MARGIN = {
 const MODEL_COMPUTE_FACTOR = { open: 0.95, hybrid: 1.0, frontier: 1.1 };
 const MODEL_MARGIN_BONUS = { open: 5, hybrid: 0, frontier: -2 };
 
-// Delivery risk / failure-retry multiplier (verified Aug 2026). Real-world agent
-// workflows routinely burn far more than the naive token estimate when retry loops,
-// subagent fan-out, or cache misses kick in. levelsio reported burning $500 per
-// Gauntlet Loop run (and $900 total with 95% of generated code removed) on Aug 5 2026
-// (https://x.com/levelsio/status/2084997902632390981); Systima measured subagent
-// fan-out at 4.2x token cost (121k -> 513k) on the same task
-// (https://systima.ai/blog/claude-code-vs-opencode-token-overhead); OpenClaw users
-// hit $141 overnight from a misconfigured heartbeat (https://clawsnewsletter.substack.com/p/how-to-stop-burning-money-on-openclaw).
-// Agencies should price delivery risk into retainers — failed loops are a cost, not
-// a bug. Default (low = 1.0) leaves outputs unchanged.
-const DELIVERY_RISK_FACTOR = { low: 1.0, moderate: 1.15, high: 1.35, levelsio: 2.0 };
-const DELIVERY_RISK_LABEL = {
-  low: 'a mature stack with few retries',
-  moderate: 'occasional retry loops',
-  high: 'agentic fan-out with retry storms',
-  levelsio: 'levelsio-style failure loops (~$500 per failed loop)'
-};
-
 const SIZE_MULT = {
   solopreneur: 0.65, small: 0.85, medium: 1.0, large: 1.35, enterprise: 1.8
 };
@@ -1527,7 +1433,6 @@ function calculatePricing() {
   const experience = document.getElementById('experience').value;
   const timeline = document.getElementById('timeline').value;
   const modelStrategy = document.getElementById('modelStrategy').value;
-  const deliveryRisk = document.getElementById('deliveryRisk').value;
   const hoursSaved = parseInt(document.getElementById('hoursSaved').value);
 
   if (!service || !bizSize) {
@@ -1552,9 +1457,7 @@ function calculatePricing() {
   const setupFee = Math.round(setupMid * combined / 500) * 500;
   const mcf = MODEL_COMPUTE_FACTOR[modelStrategy] || 1.0;
   const mmb = MODEL_MARGIN_BONUS[modelStrategy] || 0;
-  const drf = DELIVERY_RISK_FACTOR[deliveryRisk] || 1.0;
-  const drl = DELIVERY_RISK_LABEL[deliveryRisk] || DELIVERY_RISK_LABEL.low;
-  const monthlyRetainer = Math.round(retainerMid * combined * mcf * drf / 50) * 50;
+  const monthlyRetainer = Math.round(retainerMid * combined * mcf / 50) * 50;
   const margin = Math.min(82, Math.max(40, BASE_MARGIN[service] + (em - 1) * 10 + mmb));
   const acv = setupFee + (monthlyRetainer * 12);
 
@@ -1578,8 +1481,7 @@ function calculatePricing() {
     `or $${annualSavings.toLocaleString()}/year in recovered productivity. ` +
     `Your annual contract value is ${fmt(acv)}, giving the client a ${roi}× ROI in year one. ` +
     `Frame it this way: "For every $1 you invest in this automation, you get $${roi} back." ` +
-    `This quote assumes ${modelLabel} — open-weight models (Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium. ` +
-    `Pricing also bakes in a delivery-risk buffer for ${drl} — real agent workflows burn money on failed loops and retries, so don't under-price the build.`;
+    `This quote assumes ${modelLabel} — open-weight models (Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium.`;
 
   // Build pitch
   const netMonthly = monthlySavings - monthlyRetainer;
@@ -1713,78 +1615,6 @@ function calculateRouting() {
   document.getElementById('r-note').textContent = note;
   document.getElementById('routing-results').style.display = 'block';
   document.getElementById('routing-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-// ── Agent Failure & Retry Cost Estimator ──
-// Model: total = base cost per loop attempt x (1 + failed attempts) + cleanup/rework.
-// Evidence (Aug 5 2026): levelsio reported burning $500 per Gauntlet Loop run, corrected
-// to $900 total with 95% of generated code removed (https://x.com/levelsio/status/2084997902632390981).
-// Systima measured Claude Code subagent fan-out at 4.2x token cost on the same task
-// (https://systima.ai/blog/claude-code-vs-opencode-token-overhead). Baselines: ~$0.06/req
-// average (https://news.ycombinator.com/item?id=45931825), "a few $ per task" for normal
-// Claude Code sessions. Failure presets reflect these real-world scenarios.
-const FAIL_PRESETS = {
-  levelsio: { base: 500, retries: 0, cleanup: 400, label: 'levelsio Gauntlet Loop' },
-  fanout:   { base: 120, retries: 2, cleanup: 150, label: 'subagent fan-out build' },
-  simple:   { base: 20,  retries: 1, cleanup: 15,  label: 'simple automation build' },
-  custom:   { base: 500, retries: 0, cleanup: 400, label: 'custom scenario' }
-};
-
-function applyFailScenario() {
-  const key = document.getElementById('failScenario').value;
-  const preset = FAIL_PRESETS[key] || FAIL_PRESETS.custom;
-  document.getElementById('failBaseCost').value = preset.base;
-  document.getElementById('failRetries').value = preset.retries;
-  document.getElementById('failCleanup').value = preset.cleanup;
-  calculateFailure();
-}
-
-function calculateFailure() {
-  const base = parseFloat(document.getElementById('failBaseCost').value) || 0;
-  const retries = parseInt(document.getElementById('failRetries').value) || 0;
-  const cleanup = parseFloat(document.getElementById('failCleanup').value) || 0;
-
-  if (base <= 0) {
-    alert('Enter a base cost per loop attempt greater than zero.');
-    return;
-  }
-
-  const naive = base;                       // one clean loop, no cleanup
-  const retryCost = base * retries;         // burned retry loops
-  const total = base * (1 + retries) + cleanup;
-  const multiple = total > 0 ? Math.round((total / naive) * 10) / 10 : 1;
-
-  const key = document.getElementById('failScenario').value;
-  const label = (FAIL_PRESETS[key] || FAIL_PRESETS.custom).label;
-
-  document.getElementById('f-naive').textContent = fmt(naive);
-  document.getElementById('f-retries').textContent = fmt(retryCost);
-  document.getElementById('f-retries-sub').textContent = retries + ' retry loop(s) × ' + fmt(base);
-  document.getElementById('f-cleanup').textContent = fmt(cleanup);
-  document.getElementById('f-total').textContent = fmt(total);
-  document.getElementById('f-total-sub').textContent = multiple + '× vs naive estimate';
-
-  let note;
-  if (key === 'levelsio') {
-    note = 'This preset reproduces levelsio\u2019s reported failure: a Gauntlet Loop run that burns $500 and produces unusable output (' +
-      'he later corrected the total to $900 with 95% of generated code removed). At the preset values, total = ' + fmt(base) + ' × (1 + ' +
-      retries + ') + ' + fmt(cleanup) + ' cleanup = ' + fmt(total) + ' — ' + multiple + '× the naive ' + fmt(naive) +
-      ' estimate. The lesson for agencies: when retry loops are possible, quote delivery risk explicitly or the failed loops come out of your margin.';
-  } else if (key === 'fanout') {
-    note = 'This preset models a typical agentic build with subagent fan-out and retry storms. Systima measured fan-out at 4.2× token cost on ' +
-      'the same task (121k → 513k tokens). At these values, total = ' + fmt(total) + ' vs ' + fmt(naive) + ' naive — ' + multiple +
-      '× your original estimate. Subagent fan-out is the single most common agent cost amplifier.';
-  } else if (key === 'simple') {
-    note = 'A simple automation build with occasional retries: total = ' + fmt(total) + ' vs ' + fmt(naive) + ' naive (' + multiple +
-      '×). Keep workflows small and sequential — the data shows controlled, step-by-step builds avoid the failure multiplier almost entirely.';
-  } else {
-    note = 'Custom scenario: total = ' + fmt(base) + ' × (1 + ' + retries + ') + ' + fmt(cleanup) + ' cleanup = ' + fmt(total) +
-      ', which is ' + multiple + '× the naive ' + fmt(naive) + ' estimate. Use this to model your own observed retry rates.';
-  }
-  document.getElementById('f-note').textContent = note;
-
-  document.getElementById('failure-results').style.display = 'block';
-  document.getElementById('failure-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 </script>
 
