@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Agency Pricing Calculator — Instantly Calculate Your Rate</title>
-  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with open-weight (Kimi K3, GLM-5.2) vs paid frontier model options." />
-  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, open-weight AI models, Kimi K3 pricing, GLM-5.2" />
+  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with open-weight (Kimi K3, GLM-5.2) vs paid frontier model options including GPT-5.6 Sol (Instant + deep reasoning)." />
+  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, open-weight AI models, Kimi K3 pricing, GLM-5.2, GPT-5.6 Sol pricing, GPT-5.6 Luna" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://aiagencycalculator.com/" />
 
@@ -928,9 +928,13 @@
         <label for="modelStrategy">Model Strategy (API Cost Profile)</label>
         <select id="modelStrategy">
           <option value="hybrid" selected>Hybrid — open-weight + frontier mix</option>
+          <option value="sol">GPT-5.6 Sol (frontier, Instant + deep reasoning) — premium API spend (estimate)</option>
           <option value="open">Open-weight first (Kimi K3, GLM-5.2) — lowest API spend</option>
           <option value="frontier">Paid frontier only (Claude, GPT) — premium API spend</option>
         </select>
+        <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
+          GPT-5.6 Sol now powers both Instant and deep reasoning for ChatGPT Plus/Pro (one consistent model, reasoning-effort slider). OpenAI has not published per-token API pricing for GPT-5.6 Sol yet — this option uses a marked estimate. <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">See OpenAI pricing →</a>
+        </div>
       </div>
 
       <div class="form-group">
@@ -1082,7 +1086,7 @@
         </tbody>
       </table>
     </div>
-    <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary);">* Ranges reflect 2026 US market rates. Final pricing depends on complexity, client size, and your experience level. Model strategy affects margins more than list prices: open-weight stacks (Kimi K3, GLM-5.2) cut the compute line vs. paid frontier APIs.</p>
+    <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary);">* Ranges reflect 2026 US market rates. Final pricing depends on complexity, client size, and your experience level. Model strategy affects margins more than list prices: open-weight stacks (Kimi K3, GLM-5.2) cut the compute line vs. paid frontier APIs. GPT-5.6 Sol (Aug 6, 2026) now powers both Instant and deep reasoning for ChatGPT Plus/Pro — one consistent model with a reasoning-effort slider; GPT-5.6 Luna is the new default for Free/Go users (unlimited text chats rolling out this week/next week). OpenAI has not published per-token API pricing for the new models, so the GPT-5.6 Sol option in this calculator is a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI pricing</a> before quoting.</p>
   </section>
 
   <!-- Agent Failure & Retry Cost Estimator -->
@@ -1254,6 +1258,9 @@
       </ul>
       <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:10px;">Changelog</div>
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-08-06:</strong> Added GPT-5.6 Sol as a selectable model strategy (frontier, Instant + deep reasoning) with a clearly marked estimate and link to OpenAI's pricing page — OpenAI announced Sol now powers both Instant and deep reasoning for Plus/Pro, and GPT-5.6 Luna becomes the default for Free/Go users (unlimited text chats rolling out this week/next week). No official per-token API pricing published for either model; assumptions date/source now included in calculator output.
+      </p>
+      <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
         <strong>2026-08-05:</strong> Added Gemini API cost &amp; model routing savings estimator and explainer (Google Cloud managed model routing, Public Preview Aug 3, 2026). Pricing sourced from Google's published Vertex AI / API Gateway list prices; scenario figures are illustrative (directional).
       </p>
     </div>
@@ -1382,6 +1389,18 @@
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
+          Do the new GPT-5.6 Sol / GPT-5.6 Luna models change what I should charge?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Not the list price — the cost profile. On Aug 6, 2026 OpenAI announced that <strong>GPT-5.6 Sol</strong> now powers both Instant and deep reasoning for ChatGPT Plus/Pro users (one consistent model with a new reasoning-effort slider), and <strong>GPT-5.6 Luna</strong> becomes the default for Free/Go users with unlimited text chats rolling out this week/next week. The same model now covers both speed modes, so agencies running ChatGPT-based client workflows get more consistent output — and the slider turns reasoning effort (and therefore cost) into a per-task dial. OpenAI has <strong>not published per-token API pricing</strong> for Sol or Luna yet, so this calculator treats the GPT-5.6 Sol option as a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI's pricing page</a> before quoting. Agency takeaway: price stays value-based, but re-run your eval suites against the new defaults and re-check any published content that references older GPT-5.5 behavior.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
           How many clients do I need to make $10,000/month as an AI agency?
           <span class="faq-icon">+</span>
         </button>
@@ -1480,8 +1499,12 @@ const BASE_MARGIN = {
 // open-weight stacks carry a smaller token bill; frontier-only stacks carry a premium.
 // MODEL_COMPUTE_FACTOR scales the retainer by model strategy (hybrid = 1.0, so default
 // outputs are unchanged); MODEL_MARGIN_BONUS reflects the margin lift from cheaper tokens.
-const MODEL_COMPUTE_FACTOR = { open: 0.95, hybrid: 1.0, frontier: 1.1 };
-const MODEL_MARGIN_BONUS = { open: 5, hybrid: 0, frontier: -2 };
+const MODEL_COMPUTE_FACTOR = { open: 0.95, hybrid: 1.0, frontier: 1.1, sol: 1.15 };
+const MODEL_MARGIN_BONUS = { open: 5, hybrid: 0, frontier: -2, sol: -3 };
+// GPT-5.6 Sol (added 2026-08-06): OpenAI's announcement (openai.com/index/improving-gpt-5-6-sol-in-chatgpt/)
+// confirms Sol now powers both Instant and deep reasoning for Plus/Pro (one model, reasoning
+// slider). NO official per-token API pricing has been published — "sol" uses a marked ESTIMATE
+// (premium tier, slightly above generic frontier to reflect reasoning-effort dial).
 
 // Delivery risk / failure-retry multiplier (verified Aug 2026). Real-world agent
 // workflows routinely burn far more than the naive token estimate when retry loops,
@@ -1569,17 +1592,25 @@ function calculatePricing() {
   const bizLabel = document.getElementById('bizSize').options[document.getElementById('bizSize').selectedIndex].text;
   const modelLabel = modelStrategy === 'open'
     ? 'an open-weight stack (Kimi K3 / GLM-5.2 class)'
-    : modelStrategy === 'frontier'
-      ? 'a paid frontier stack (Claude / GPT class)'
-      : 'a hybrid open-weight + frontier stack';
+    : modelStrategy === 'sol'
+      ? 'GPT-5.6 Sol (frontier — Instant + deep reasoning; ESTIMATE — OpenAI has not published per-token API pricing)'
+      : modelStrategy === 'frontier'
+        ? 'a paid frontier stack (Claude / GPT class)'
+        : 'a hybrid open-weight + frontier stack';
+
+  const modelAssumptionNote = modelStrategy === 'sol'
+    ? ' GPT-5.6 Sol API pricing is not yet public, so this quote treats it as an estimate (see https://openai.com/api/pricing/).'
+    : '';
 
   const roiText = `Your ${serviceLabel} saves this client approximately ${hoursSaved} hours/month. ` +
     `At an estimated labor rate of $${laborRate}/hour for a ${bizLabel}, that's $${monthlySavings.toLocaleString()}/month — ` +
     `or $${annualSavings.toLocaleString()}/year in recovered productivity. ` +
     `Your annual contract value is ${fmt(acv)}, giving the client a ${roi}× ROI in year one. ` +
     `Frame it this way: "For every $1 you invest in this automation, you get $${roi} back." ` +
-    `This quote assumes ${modelLabel} — open-weight models (Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium. ` +
-    `Pricing also bakes in a delivery-risk buffer for ${drl} — real agent workflows burn money on failed loops and retries, so don't under-price the build.`;
+    `This quote assumes ${modelLabel} — open-weight models (Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium.` +
+    `${modelAssumptionNote} ` +
+    `Pricing also bakes in a delivery-risk buffer for ${drl} — real agent workflows burn money on failed loops and retries, so don't under-price the build. ` +
+    `Assumptions verified Aug 6, 2026 (OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates).`;
 
   // Build pitch
   const netMonthly = monthlySavings - monthlyRetainer;

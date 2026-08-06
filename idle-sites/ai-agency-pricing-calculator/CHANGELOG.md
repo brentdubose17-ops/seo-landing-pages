@@ -2,6 +2,14 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-06 — GPT-5.6 Sol/Luna model options added (verified via parent research brief t_aaa3397a)
+
+- **New model option:** "GPT-5.6 Sol (frontier, Instant + deep reasoning)" added to the Model Strategy selector. OpenAI's Aug 6, 2026 announcement confirms Sol now powers both Instant and deep reasoning for ChatGPT Plus/Pro (one consistent model + reasoning-effort slider); GPT-5.6 Luna becomes the default for Free/Go users with unlimited text chats rolling out this week/next week.
+- **Estimate flag (no official pricing):** OpenAI has NOT published per-token API pricing for Sol/Luna — the option is clearly marked ESTIMATE, `MODEL_COMPUTE_FACTOR.sol = 1.15` / `MODEL_MARGIN_BONUS.sol = -3` (premium tier, slightly above generic frontier to reflect the reasoning-effort dial), with a link to OpenAI's pricing page (https://openai.com/api/pricing/).
+- **Assumption sourcing:** Calculator output (ROI justification text) now includes the assumptions date/source: "Assumptions verified Aug 6, 2026 (OpenAI GPT-5.6 Sol/Luna announcement…)". Sol-specific estimate note appended when the Sol option is selected.
+- **Copy:** Pricing Reference Table footnote and a new FAQ item ("Do the new GPT-5.6 Sol / GPT-5.6 Luna models change what I should charge?") explain the update; meta description/keywords extended (GPT-5.6 Sol pricing, GPT-5.6 Luna). No deprecated model versions referenced anywhere in user-facing copy.
+- **Sources:** OpenAI announcement page (https://openai.com/index/improving-gpt-5-6-sol-in-chatgpt/) + @OpenAI X thread (https://x.com/OpenAI/status/2085434712429052386), both Aug 6, 2026, via fact sheet t_aaa3397a.
+
 ## 2026-08-05 — Agent failure / retry cost model added (levelsio Gauntlet Loop data)
 
 - **New section:** "Agent Failure & Retry Cost Estimator" — models the real cost of failed/retried agent loops. Scenario presets: levelsio Gauntlet Loop (real-world, Aug 5 2026), typical agentic build (subagent fan-out + retries), simple automation, custom.
