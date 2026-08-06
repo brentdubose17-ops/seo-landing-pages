@@ -2,6 +2,16 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-06 — Qwen 3.8 Max open-weight coverage added (verified via parent research brief t_de2f9115)
+
+- **New model in open-weight strategy:** Qwen 3.8 Max added to the Model Strategy selector's "Open-weight first" option and to all open-weight explanatory copy. Verified specs: GA Aug 2–3, 2026; 2.4T-parameter MoE, ~95B active; 1M-token context; API $2/$6 per 1M tokens (input/output) — the cheapest open frontier-class API on the page; open weights promised ~Aug 10 (not yet downloadable as of Aug 6, 2026).
+- **Real-world usage section (performance claims refreshed):** New "Real-world agency usage so far" paragraph covers the Aug 6, 2026 field report (45 real projects: games, RPGs, websites, full OS, promo video, autonomous workflows) with explicit caveats — self-reported, no linked artifacts, no independent replication; the tester's own follow-up walked back the "destroyed Fable 5" framing (Qwen strong on fast/multimodal/image-guided builds; Fable 5 on huge long-running projects). "Autonomous coding over 10+ days" flagged as an official marketing claim not yet independently replicated; Fable 5-beating ranking disputed by independent benchmark testing. No stale claim that Qwen "beats" or "destroys" the frontier.
+- **Transparent cost-variability note:** New paragraph under the open-weight section explains that published API list prices are real but total cost depends on run method — weights not downloadable until ~Aug 10, self-hosted cost varies by hardware (DGX Spark-class vs cloud GPUs), quantization (MXPF4 vs full precision), context length, and utilization; treat self-hosted cost as a range until you benchmark your own workloads.
+- **Copy:** Model Strategy helper note, Pricing Reference Table footnote, margin/tools FAQs, and the open-weight FAQ all updated to include Qwen 3.8 Max at $2/$6. Calculator output (ROI text) names Qwen 3.8 Max in the open-weight stack label and assumption string; assumptions date/source updated to Aug 6, 2026 (Qwen 3.8 Max GA + OpenAI GPT-5.6 Sol/Luna).
+- **SEO:** Meta description/keywords extended (Qwen 3.8 Max pricing).
+- **Sources added:** Alibaba Qwen 3.8 Max blog, QwenCloud pricing page, and the verified 45-project field report X post.
+- **No pricing defaults changed:** MODEL_COMPUTE_FACTOR.open (0.95) and MODEL_MARGIN_BONUS.open (+5) unchanged — Qwen 3.8 Max slots into the existing open-weight compute profile, so default outputs are unchanged.
+
 ## 2026-08-06 — GPT-5.6 Sol/Luna model options added (verified via parent research brief t_aaa3397a)
 
 - **New model option:** "GPT-5.6 Sol (frontier, Instant + deep reasoning)" added to the Model Strategy selector. OpenAI's Aug 6, 2026 announcement confirms Sol now powers both Instant and deep reasoning for ChatGPT Plus/Pro (one consistent model + reasoning-effort slider); GPT-5.6 Luna becomes the default for Free/Go users with unlimited text chats rolling out this week/next week.

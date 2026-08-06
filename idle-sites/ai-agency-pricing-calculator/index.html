@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Agency Pricing Calculator — Instantly Calculate Your Rate</title>
-  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with open-weight (Kimi K3, GLM-5.2) vs paid frontier model options including GPT-5.6 Sol (Instant + deep reasoning)." />
-  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, open-weight AI models, Kimi K3 pricing, GLM-5.2, GPT-5.6 Sol pricing, GPT-5.6 Luna" />
+  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with open-weight (Qwen 3.8 Max, Kimi K3, GLM-5.2) vs paid frontier model options including GPT-5.6 Sol (Instant + deep reasoning)." />
+  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, open-weight AI models, Qwen 3.8 Max pricing, Kimi K3 pricing, GLM-5.2, GPT-5.6 Sol pricing, GPT-5.6 Luna" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://aiagencycalculator.com/" />
 
@@ -929,11 +929,14 @@
         <select id="modelStrategy">
           <option value="hybrid" selected>Hybrid — open-weight + frontier mix</option>
           <option value="sol">GPT-5.6 Sol (frontier, Instant + deep reasoning) — premium API spend (estimate)</option>
-          <option value="open">Open-weight first (Kimi K3, GLM-5.2) — lowest API spend</option>
+          <option value="open">Open-weight first (Qwen 3.8 Max, Kimi K3, GLM-5.2) — lowest API spend</option>
           <option value="frontier">Paid frontier only (Claude, GPT) — premium API spend</option>
         </select>
         <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
           GPT-5.6 Sol now powers both Instant and deep reasoning for ChatGPT Plus/Pro (one consistent model, reasoning-effort slider). OpenAI has not published per-token API pricing for GPT-5.6 Sol yet — this option uses a marked estimate. <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">See OpenAI pricing →</a>
+        </div>
+        <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
+          Open-weight option: Alibaba's Qwen 3.8 Max (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; 1M context) lists at <strong>$2/$6 per 1M tokens</strong> — open weights promised ~Aug 10, so self-hosted cost is not yet knowable and varies by hardware/quantization. Kimi K3 ($3/$15) and GLM-5.2 (MIT) round out the open-weight class. <a href="#open-weight" style="color:var(--cyan-light);">See the open-weight section ↓</a>
         </div>
       </div>
 
@@ -1086,7 +1089,7 @@
         </tbody>
       </table>
     </div>
-    <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary);">* Ranges reflect 2026 US market rates. Final pricing depends on complexity, client size, and your experience level. Model strategy affects margins more than list prices: open-weight stacks (Kimi K3, GLM-5.2) cut the compute line vs. paid frontier APIs. GPT-5.6 Sol (Aug 6, 2026) now powers both Instant and deep reasoning for ChatGPT Plus/Pro — one consistent model with a reasoning-effort slider; GPT-5.6 Luna is the new default for Free/Go users (unlimited text chats rolling out this week/next week). OpenAI has not published per-token API pricing for the new models, so the GPT-5.6 Sol option in this calculator is a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI pricing</a> before quoting.</p>
+    <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary);">* Ranges reflect 2026 US market rates. Final pricing depends on complexity, client size, and your experience level. Model strategy affects margins more than list prices: open-weight stacks (Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3, GLM-5.2) cut the compute line vs. paid frontier APIs. GPT-5.6 Sol (Aug 6, 2026) now powers both Instant and deep reasoning for ChatGPT Plus/Pro — one consistent model with a reasoning-effort slider; GPT-5.6 Luna is the new default for Free/Go users (unlimited text chats rolling out this week/next week). OpenAI has not published per-token API pricing for the new models, so the GPT-5.6 Sol option in this calculator is a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI pricing</a> before quoting.</p>
   </section>
 
   <!-- Agent Failure & Retry Cost Estimator -->
@@ -1258,6 +1261,9 @@
       </ul>
       <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:10px;">Changelog</div>
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-08-06:</strong> Added Qwen 3.8 Max to the open-weight model strategy (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; $2/$6 per 1M tokens; 1M context; open weights promised ~Aug 10). Real-world usage section added with the Aug 6, 2026 45-project field report — self-reported, no artifacts; the "destroyed Fable 5" claim was walked back by the tester (Qwen strong on fast/multimodal builds; Fable 5 on huge long-running projects). Transparent cost-variability note added: API list prices are public, but self-hosted cost is hardware/quantization-dependent and not yet knowable until weights drop.
+      </p>
+      <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
         <strong>2026-08-06:</strong> Added GPT-5.6 Sol as a selectable model strategy (frontier, Instant + deep reasoning) with a clearly marked estimate and link to OpenAI's pricing page — OpenAI announced Sol now powers both Instant and deep reasoning for Plus/Pro, and GPT-5.6 Luna becomes the default for Free/Go users (unlimited text chats rolling out this week/next week). No official per-token API pricing published for either model; assumptions date/source now included in calculator output.
       </p>
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
@@ -1271,13 +1277,19 @@
     <div class="section-title">Open-Weight Models: <span class="g">The New Cost Lever for Agencies</span></div>
     <div style="background:var(--gradient-soft);border:1px solid var(--border-glow);border-radius:12px;padding:24px;margin-bottom:16px;">
       <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
-        <strong>Open-weight models are now a real alternative to paid frontier APIs.</strong> Moonshot's <strong>Kimi K3</strong> — a 2.8T-parameter open-weight mixture-of-experts model (~104B active, 1M-token context, weights live on Hugging Face since July 27, 2026) — prices at <strong>$3 per 1M input tokens and $15 per 1M output tokens</strong>, a fraction of flagship paid APIs, while scoring within a few points of Claude Fable 5 and GPT-5.6 Sol on vendor-run coding benchmarks. Zhipu's <strong>GLM-5.2</strong> (open weights, MIT license, 1M-token context) is the strongest open-source coding model on Terminal-Bench 2.1. A rumored <strong>GLM 5.3 has not been officially confirmed</strong> as of August 2026 — build on GLM-5.2 / Kimi K3 today, not on an unannounced model.
+        <strong>Open-weight models are now a real alternative to paid frontier APIs.</strong> Alibaba's <strong>Qwen 3.8 Max</strong> (GA Aug 2–3, 2026; 2.4T-parameter MoE, ~95B active, 1M-token context) prices at <strong>$2 per 1M input tokens and $6 per 1M output tokens</strong> — the cheapest open frontier-class API on this page — with open weights promised around Aug 10. Moonshot's <strong>Kimi K3</strong> — a 2.8T-parameter open-weight mixture-of-experts model (~104B active, 1M-token context, weights live on Hugging Face since July 27, 2026) — prices at <strong>$3 per 1M input tokens and $15 per 1M output tokens</strong>, a fraction of flagship paid APIs, while scoring within a few points of Claude Fable 5 and GPT-5.6 Sol on vendor-run coding benchmarks. Zhipu's <strong>GLM-5.2</strong> (open weights, MIT license, 1M-token context) is the strongest open-source coding model on Terminal-Bench 2.1. A rumored <strong>GLM 5.3 has not been officially confirmed</strong> as of August 2026 — build on GLM-5.2 / Kimi K3 / Qwen 3.8 Max today, not on an unannounced model.
+      </p>
+      <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
+        <strong>Real-world agency usage so far:</strong> Qwen 3.8 Max's headline marketing claim — "autonomous coding over 10+ days" — is an <strong>official claim, not yet independently replicated</strong>, and its Fable 5-beating ranking has been disputed by independent benchmark testing. The most-cited hands-on test so far (Aug 6, 2026, an agency-community builder with ~172K followers) reports building <strong>45 real projects</strong> while ignoring benchmarks — 3D racing games, RPGs, websites, a full OS, a promo video, and autonomous workflows — with mixed results: some demos were poor, several builds looked better than Fable 5, and every project took only a few hours. The same tester's follow-up explicitly walked back the "destroyed Fable 5" framing: Qwen 3.8 Max shone on <strong>fast, multimodal, image-guided builds</strong> (including a single-file premium landing page), while <strong>Claude Fable 5 stayed stronger on huge, long-running projects</strong> that need consistency across massive contexts. Treat these as first-person, self-reported results with no linked artifacts or independent replication — useful as a delivery-speed datapoint, not as a benchmark.
+      </p>
+      <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
+        <strong>Cost variability for open-weight models:</strong> published API list prices (Qwen 3.8 Max $2/$6, Kimi K3 $3/$15 per 1M tokens) are real, but total cost depends heavily on how you run the model. Qwen 3.8 Max's weights are not downloadable until ~Aug 10, so self-hosting cost is not yet knowable and will vary with hardware (DGX Spark-class vs cloud GPUs), quantization (MXPF4 vs full precision), context length, and utilization. Agencies that self-host trade a variable per-token bill for fixed hardware cost — the crossover point depends on your monthly token volume. Until you benchmark your own workloads, treat self-hosted cost as a range, not a fixed number.
       </p>
       <p style="color:var(--text-secondary);font-size:0.9rem;margin:0 0 8px;">
         What this means for agencies: model strategy is now a pricing lever. The calculator's <strong>Model Strategy</strong> selector reflects it — open-weight stacks trim the compute line (and lift margins ~5 pts), frontier-only stacks carry a premium. Keep workflows model-portable across at least two providers, benchmark on your own workloads (vendor tables are not your client's workload), and treat AI spend as a managed line item, not a fixed cost. <a href="https://findaiagency.com/open-weight-coding-models-agency-margins.html" target="_blank" rel="noopener" style="color:var(--cyan-light);">Read the full analysis of what open-weight models mean for agency margins →</a>
       </p>
       <p style="color:var(--text-secondary);font-size:0.78rem;margin:0;">
-        Sources: <a href="https://www.kimi.com/blog/kimi-k3" target="_blank" rel="noopener" style="color:var(--cyan-light);">Moonshot — Kimi K3 blog</a> · <a href="https://platform.kimi.ai/docs/pricing/chat-k3" target="_blank" rel="noopener" style="color:var(--cyan-light);">Kimi K3 API pricing</a> · <a href="https://huggingface.co/moonshotai/Kimi-K3" target="_blank" rel="noopener" style="color:var(--cyan-light);">HF model card — moonshotai/Kimi-K3</a> · <a href="https://github.com/zai-org/GLM-5" target="_blank" rel="noopener" style="color:var(--cyan-light);">zai-org/GLM-5</a>
+        Sources: <a href="https://qwen.ai/blog?id=qwen3.8" target="_blank" rel="noopener" style="color:var(--cyan-light);">Alibaba — Qwen 3.8 Max blog</a> · <a href="https://www.qwencloud.com/models/qwen3.8-max" target="_blank" rel="noopener" style="color:var(--cyan-light);">QwenCloud — Qwen 3.8 Max pricing</a> · <a href="https://x.com/JulianGoldieSEO/status/2085470978432512107" target="_blank" rel="noopener" style="color:var(--cyan-light);">45-project field report (X, Aug 6 2026)</a> · <a href="https://www.kimi.com/blog/kimi-k3" target="_blank" rel="noopener" style="color:var(--cyan-light);">Moonshot — Kimi K3 blog</a> · <a href="https://platform.kimi.ai/docs/pricing/chat-k3" target="_blank" rel="noopener" style="color:var(--cyan-light);">Kimi K3 API pricing</a> · <a href="https://huggingface.co/moonshotai/Kimi-K3" target="_blank" rel="noopener" style="color:var(--cyan-light);">HF model card — moonshotai/Kimi-K3</a> · <a href="https://github.com/zai-org/GLM-5" target="_blank" rel="noopener" style="color:var(--cyan-light);">zai-org/GLM-5</a>
       </p>
     </div>
   </section>
@@ -1334,7 +1346,7 @@
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            AI automation agencies typically operate at 55–80% net profit margins because the primary cost is your time, with minimal overhead. Your main expenses are: (1) software tools/subscriptions ($100–$500/month for platforms like Make, n8n, Zapier, GoHighLevel, OpenAI API — API usage is the fastest-growing line item; open-weight alternatives like Kimi K3 at $3/$15 per 1M tokens and GLM-5.2 with open weights are the counter-lever — agencies that run them keep more of the margin), (2) time for builds and client calls, and (3) any subcontractors or specialized help. Chatbot and social media automation services tend to have the highest margins (70–82%) because they're templated. Full office automation has lower margins (45–65%) due to higher custom build time.
+            AI automation agencies typically operate at 55–80% net profit margins because the primary cost is your time, with minimal overhead. Your main expenses are: (1) software tools/subscriptions ($100–$500/month for platforms like Make, n8n, Zapier, GoHighLevel, OpenAI API — API usage is the fastest-growing line item; open-weight alternatives like Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3 at $3/$15 per 1M tokens, and GLM-5.2 with open weights are the counter-lever — agencies that run them keep more of the margin), (2) time for builds and client calls, and (3) any subcontractors or specialized help. Chatbot and social media automation services tend to have the highest margins (70–82%) because they're templated. Full office automation has lower margins (45–65%) due to higher custom build time.
           </div>
         </div>
       </div>
@@ -1370,19 +1382,19 @@
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            The most common AI agency tool stack in 2026 includes: Make.com ($10–$100+/mo), n8n (self-hosted free or $50+/mo cloud), Zapier ($20–$600+/mo), GoHighLevel ($97–$497/mo), OpenAI API ($5–$200+/mo), Voiceflow or Botpress for chatbots ($20–$100+/mo). Open-weight model APIs (Kimi K3 at $3/$15 per 1M tokens, GLM-5.2 with open weights) now offer a lower-cost alternative to premium flagship pricing — so you can cap your tool-stack spend even while frontier API prices firm. Your tool costs should be built into your pricing — either passed through to clients as add-ons or bundled into your retainer (preferred for simplicity). A typical tool stack runs $200–$500/month, which should be factored into your margin calculations.
+            The most common AI agency tool stack in 2026 includes: Make.com ($10–$100+/mo), n8n (self-hosted free or $50+/mo cloud), Zapier ($20–$600+/mo), GoHighLevel ($97–$497/mo), OpenAI API ($5–$200+/mo), Voiceflow or Botpress for chatbots ($20–$100+/mo). Open-weight model APIs (Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3 at $3/$15 per 1M tokens, GLM-5.2 with open weights) now offer a lower-cost alternative to premium flagship pricing — so you can cap your tool-stack spend even while frontier API prices firm. Your tool costs should be built into your pricing — either passed through to clients as add-ons or bundled into your retainer (preferred for simplicity). A typical tool stack runs $200–$500/month, which should be factored into your margin calculations.
           </div>
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          Do open-weight models like Kimi K3 or GLM-5.2 change what I should charge?
+          Do open-weight models like Qwen 3.8 Max, Kimi K3, or GLM-5.2 change what I should charge?
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            Not the price you charge — the margin you keep. Client pricing is value-based: if your automation saves a client $2,000/month in labor, a $1,500 retainer is justified regardless of the model underneath. What open-weight models change is your cost side. Moonshot's Kimi K3 is a 2.8T-parameter open-weight model with a 1M-token context priced at $3/$15 per 1M tokens, and Zhipu's GLM-5.2 ships open weights under MIT — both within striking distance of paid frontier models on vendor-run coding benchmarks, though neither matches them everywhere. Benchmark on your own workloads before promising anything, keep workflows model-portable, and treat the cheaper token bill as margin, not as a reason to discount. Treat the rumored GLM 5.3 as unconfirmed until Zhipu officially announces it.
+            Not the price you charge — the margin you keep. Client pricing is value-based: if your automation saves a client $2,000/month in labor, a $1,500 retainer is justified regardless of the model underneath. What open-weight models change is your cost side. Alibaba's Qwen 3.8 Max (2.4T-parameter MoE, 1M context) prices at $2/$6 per 1M tokens with open weights promised ~Aug 10; Moonshot's Kimi K3 is a 2.8T-parameter open-weight model with a 1M-token context priced at $3/$15 per 1M tokens, and Zhipu's GLM-5.2 ships open weights under MIT — all within striking distance of paid frontier models on vendor-run coding benchmarks, though none matches them everywhere. Early real-world reports on Qwen 3.8 Max (Aug 6, 2026) are promising on fast, multimodal builds but are self-reported with no independent replication — benchmark on your own workloads before promising anything. Keep workflows model-portable, and treat the cheaper token bill as margin, not as a reason to discount. Treat the rumored GLM 5.3 as unconfirmed until Zhipu officially announces it.
           </div>
         </div>
       </div>
@@ -1492,7 +1504,10 @@ const BASE_MARGIN = {
   content_auto: 72, full_office: 55, custom_agent: 60, social_media: 76
 };
 
-// Open-weight model economics (verified Aug 2026): Moonshot's Kimi K3 is a 2.8T-param
+// Open-weight model economics (verified Aug 2026): Alibaba's Qwen 3.8 Max (GA Aug 2-3,
+// 2026; 2.4T-param MoE, ~95B active, 1M context) lists at $2/$6 per 1M tokens — the
+// cheapest open frontier-class API — with open weights promised ~Aug 10 (self-host cost
+// not yet knowable, hardware/quantization dependent). Moonshot's Kimi K3 is a 2.8T-param
 // open-weight MoE (104B active, 1M context; weights on HF since 2026-07-27) priced at
 // $3/$15 per 1M tokens (input cache-miss / output) — a fraction of paid frontier APIs —
 // and Zhipu's GLM-5.2 ships open weights under MIT with 1M context. Agencies running
@@ -1591,7 +1606,7 @@ function calculatePricing() {
   const serviceLabel = SERVICE_LABELS[service];
   const bizLabel = document.getElementById('bizSize').options[document.getElementById('bizSize').selectedIndex].text;
   const modelLabel = modelStrategy === 'open'
-    ? 'an open-weight stack (Kimi K3 / GLM-5.2 class)'
+    ? 'an open-weight stack (Qwen 3.8 Max / Kimi K3 / GLM-5.2 class)'
     : modelStrategy === 'sol'
       ? 'GPT-5.6 Sol (frontier — Instant + deep reasoning; ESTIMATE — OpenAI has not published per-token API pricing)'
       : modelStrategy === 'frontier'
@@ -1607,10 +1622,10 @@ function calculatePricing() {
     `or $${annualSavings.toLocaleString()}/year in recovered productivity. ` +
     `Your annual contract value is ${fmt(acv)}, giving the client a ${roi}× ROI in year one. ` +
     `Frame it this way: "For every $1 you invest in this automation, you get $${roi} back." ` +
-    `This quote assumes ${modelLabel} — open-weight models (Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium.` +
+    `This quote assumes ${modelLabel} — open-weight models (Qwen 3.8 Max, Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium.` +
     `${modelAssumptionNote} ` +
     `Pricing also bakes in a delivery-risk buffer for ${drl} — real agent workflows burn money on failed loops and retries, so don't under-price the build. ` +
-    `Assumptions verified Aug 6, 2026 (OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates).`;
+    `Assumptions verified Aug 6, 2026 (Qwen 3.8 Max GA Aug 2–3, 2026 — $2/$6 per 1M tokens, open weights ~Aug 10; OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates).`;
 
   // Build pitch
   const netMonthly = monthlySavings - monthlyRetainer;
