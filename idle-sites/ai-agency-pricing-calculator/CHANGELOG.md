@@ -2,6 +2,14 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-07 — News update published: Cloudflare Wallets (AI agent costs)
+
+- **New article:** /cloudflare-wallets — "Cloudflare Wallets Give AI Agencies Real Budget Rails for Agent Spend" (409-word body, Article + FAQPage JSON-LD, 'AI agent costs' tag). Published live 2026-08-07 (deploy 26d6892b, git 0071b6c).
+- **Content:** two-wallet model explainer, why creator-set caps resemble client retainer caps, practical takeaway list (model the cap, reserve handles, wait for pricing), 3 FAQ, 4 internal links (all verified 200), 5 external sources (all verified 200). No unsupported pricing claims — fees/stablecoins/timing marked undisclosed per research brief t_6e67321b.
+- **Sitemap regenerated:** 21 URLs (added cloudflare-wallets + gemini-model-availability-risk-agencies which was live but missing); sitemap.xml + robots.txt restored to the deployment (the prior source-dir deploy had dropped them — edge cache was masking the gap).
+- **Deploy hygiene:** published via clean stage dir rebuild (dropped junk paths the prior deploy published: deploy_main/, full/, .wrangler, index.html.bak). All top-level .html md5s now match source; wallet estimator intact on homepage.
+- **Tracking:** 4 cluster keywords added to rank-tracker.py + keywords.json; weekly KPI cron 92436d3cd6d6 (Mon 9am); baseline + dashboard + tracking setup in ~/reports/cloudflare-wallets-*.md.
+
 ## 2026-08-07 — Agent Wallet & Spend Cap Estimator added (Cloudflare Wallets / x402 payment rails, verified via parent research brief t_6e67321b)
 
 - **New section:** "Agent Wallet & Spend Cap Estimator" (`#wallet-estimator`) — models monthly AI spend under agent payment rails with optional wallet fees, per-agent spend, and creator-set caps. Outputs: uncapped monthly spend, wallet fee (uncapped), capped monthly spend, wallet fee on actual (capped) spend, and overage blocked by the cap — a direct capped-vs-uncapped comparison.
