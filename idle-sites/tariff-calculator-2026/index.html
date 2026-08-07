@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tariff Calculator 2026 — Canada 50% Tariff &amp; Import Duties by Country</title>
-    <meta name="description" content="Free tariff calculator for 2026 with the new 50% US duty on Canadian goods effective August 19, 2026. Calculate import duties, tariffs, and landed costs by country of origin, HS code category, and shipment value.">
+    <title>Tariff Calculator 2026 — Section 301 Tariffs on 60 Countries | Calculate Import Duties</title>
+    <meta name="description" content="Free 2026 tariff calculator with the new Section 301 forced-labor rates: 10% or 12.5% additional duty on goods from 60 countries, effective July 24 2026. Includes the 50% Canada Section 338 duty (Aug 19, 2026). Calculate import duties and landed cost by country, product category, and shipment value.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://tariffcalculator2026.com/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Tariff Calculator 2026 — Canada 50% Tariff &amp; Free Import Duty Calculator">
-    <meta property="og:description" content="Calculate import duties and tariffs instantly, including the new 50% US duty on affected Canadian products effective August 19, 2026.">
+    <meta property="og:title" content="Tariff Calculator 2026 — Free Import Duty Calculator (60-Country Section 301)">
+    <meta property="og:description" content="Calculate import duties with the new Section 301 forced-labor tariffs covering 60 countries, effective July 24 2026 — plus the Canada 50% Section 338 duty on Aug 19.">
     <meta property="og:url" content="https://tariffcalculator2026.com/">
     <meta property="og:image" content="https://tariffcalculator2026.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Tariff Calculator 2026 — Canada 50% Tariff &amp; Free Import Duty Calculator">
-    <meta name="twitter:description" content="Calculate import duties and tariffs instantly, including the new 50% US duty on affected Canadian products effective August 19, 2026.">
+    <meta name="twitter:title" content="Tariff Calculator 2026 — Free Import Duty Calculator">
+    <meta name="twitter:description" content="Calculate import duties instantly with 2026 Section 301 tariff rates for 60 countries.">
     <meta name="dateModified" content="2026-08-07">
     <script type="application/ld+json">
     {
@@ -22,7 +22,7 @@
         "@type": "WebApplication",
         "name": "Tariff Calculator 2026",
         "url": "https://tariffcalculator2026.com",
-        "description": "Free import duty and tariff calculator for 2026 US tariffs, including the new 50% Section 338 duty on Canadian goods effective August 19, 2026",
+        "description": "Free import duty and tariff calculator for 2026 US tariffs including the Section 301 forced-labor framework covering 60 countries and the Canada Section 338 50% duty",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript",
@@ -32,13 +32,11 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #222; background: #f8f9fa; }
-        
-        /* Header */
+
         header { background: linear-gradient(135deg, #1a365d 0%, #2563eb 100%); color: white; padding: 40px 20px; text-align: center; }
         header h1 { font-size: 2.2rem; margin-bottom: 10px; }
-        header p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
-        
-        /* Calculator */
+        header p { font-size: 1.1rem; opacity: 0.9; max-width: 660px; margin: 0 auto; }
+
         .calc-section { max-width: 780px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 10; }
         .calculator { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
         .form-row { margin-bottom: 20px; }
@@ -47,8 +45,11 @@
         .form-row select:focus, .form-row input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
         .calc-btn { width: 100%; padding: 14px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
         .calc-btn:hover { background: #1d4ed8; }
-        
-        /* Results */
+
+        .checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+        .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; }
+        .checkbox-row label { margin: 0; font-weight: 500; }
+
         .results { display: none; margin-top: 20px; }
         .results.show { display: block; }
         .result-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 20px; }
@@ -57,15 +58,28 @@
         .result-label { color: #555; }
         .result-value { color: #16a34a; font-weight: 600; }
         .result-value.total { color: #1a365d; font-size: 1.2rem; }
-        
-        /* Info section */
+
+        .flag { margin-top: 16px; border-radius: 10px; padding: 14px 16px; font-size: 0.9rem; }
+        .flag.warn { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+        .flag.info { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+        .flag strong { display: block; margin-bottom: 4px; }
+
+        .notice-banner { max-width: 780px; margin: 30px auto 0; padding: 0 20px; }
+        .notice-banner .inner { background: #fef2c7; border: 1px solid #f59e0b; border-left: 6px solid #d97706; border-radius: 10px; padding: 18px 20px; }
+        .notice-banner h2 { font-size: 1.15rem; margin-bottom: 8px; color: #78350f; }
+        .notice-banner .deadline { display: inline-block; background: #d97706; color: #fff; font-size: 0.8rem; font-weight: 700; padding: 2px 10px; border-radius: 12px; vertical-align: middle; margin-left: 6px; }
+        .notice-banner p { font-size: 0.95rem; color: #78350f; margin-bottom: 8px; }
+        .notice-banner a { color: #92400e; }
+
         .info { max-width: 780px; margin: 40px auto; padding: 0 20px; }
         .info h2 { font-size: 1.5rem; margin: 30px 0 15px; color: #1a365d; }
         .info p { margin-bottom: 15px; color: #444; }
         .info ul { margin: 0 0 15px 20px; }
         .info li { margin-bottom: 8px; color: #444; }
-        
-        /* Blog links */
+        .info table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem; }
+        .info th, .info td { border: 1px solid #e5e7eb; padding: 8px 10px; text-align: left; }
+        .info th { background: #f3f4f6; }
+
         .blog-section { max-width: 780px; margin: 40px auto; padding: 0 20px; }
         .blog-section h2 { font-size: 1.5rem; margin-bottom: 20px; color: #1a365d; }
         .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
@@ -75,51 +89,31 @@
         .blog-card h3 a { color: #2563eb; text-decoration: none; }
         .blog-card h3 a:hover { text-decoration: underline; }
         .blog-card p { color: #666; font-size: 0.9rem; }
-        
+
         footer { max-width: 780px; margin: 60px auto 40px; padding: 20px; text-align: center; color: #888; font-size: 0.85rem; border-top: 1px solid #eee; }
-        
-        /* Error */
+
         .error-msg { color: #dc2626; font-size: 0.9rem; margin-top: 5px; display: none; }
 
-        /* Canada 50% notice banner */
-        .notice-banner {
-            background: #fef2c7; border: 1px solid #f59e0b; border-left: 6px solid #d97706;
-            border-radius: 10px; padding: 16px 20px; margin: 24px 0;
-            max-width: 780px; margin-left: auto; margin-right: auto;
-        }
-        .notice-banner h2 { font-size: 1.05rem; color: #92400e; margin-bottom: 6px; }
-        .notice-banner p { font-size: 0.92rem; color: #78350f; margin-bottom: 8px; }
-        .notice-banner p:last-child { margin-bottom: 0; }
-        .notice-banner strong { color: #92400e; }
-        .notice-banner .deadline { display: inline-block; background: #d97706; color: #fff; font-weight: 700; border-radius: 6px; padding: 2px 10px; margin-left: 4px; font-size: 0.85rem; }
-
-        /* Old vs new rate row */
-        .rate-old-new { font-size: 0.85rem; color: #555; margin-top: 6px; }
-        .rate-old-new .old { color: #999; text-decoration: line-through; }
-        .rate-old-new .arrow { color: #d97706; font-weight: 700; }
-        .rate-old-new .new { color: #16a34a; font-weight: 700; }
-        .s338-note { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 0.85rem; color: #78350f; }
-        .s338-note strong { color: #92400e; }
-        
         @media (max-width: 640px) {
             header h1 { font-size: 1.6rem; }
             .calculator { padding: 20px; }
             .blog-grid { grid-template-columns: 1fr; }
         }
     </style>
-<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
 </head>
 <body>
 
 <header>
     <h1>📦 Tariff Calculator 2026</h1>
-    <p>Calculate estimated import duties, tariffs, and total landed cost for shipments to the United States</p>
+    <p>Calculate estimated import duties, tariffs, and total landed cost for shipments to the United States — including the new Section 301 forced-labor tariffs on 60 countries (effective July 24, 2026) and the Canada Section 338 50% duty (effective August 19, 2026)</p>
 </header>
 
 <div class="notice-banner" role="note">
-    <h2>⚠️ New: 50% US Tariff on Canadian Goods <span class="deadline">Effective Aug 19, 2026</span></h2>
-    <p>On July 20, 2026, President Trump signed three proclamations under <strong>Section 338 of the Tariff Act of 1930</strong> imposing an <strong>additional 50% duty</strong> on ~500–569 categories of Canadian goods — motor vehicles, alcoholic beverages, dairy, furniture, textiles &amp; apparel, footwear, sporting goods, plywood &amp; paper, cement, and more.</p>
-    <p><strong>Applies to all covered goods regardless of USMCA/CUSMA status.</strong> Exempt: energy, potash, Section 232 goods (steel/aluminum), fish, and critical minerals. Duties take effect <strong>12:01 a.m. ET on August 19, 2026</strong> — select <strong>Canada</strong> and a covered product category to see your old vs new rate.</p>
+    <div class="inner">
+        <h2>⚠️ New: 50% US Tariff on Canadian Goods <span class="deadline">Effective Aug 19, 2026</span></h2>
+        <p>President Trump signed three proclamations under <strong>Section 338 of the Tariff Act of 1930</strong> on July 20, 2026, imposing an <strong>additional 50% duty</strong> on ~500–569 categories of Canadian goods — motor vehicles, alcoholic beverages, dairy, furniture, textiles &amp; apparel, footwear, sporting goods, plywood &amp; paper, cement, and more.</p>
+        <p><strong>Applies even to USMCA/CUSMA-qualifying goods.</strong> Exempt: energy, potash, Section 232 goods (steel/aluminum), fish, and critical minerals. Select <strong>Canada</strong> and a covered product category to see the flag on your estimate. Read the <a href="section-301-tariff-expansion-60-countries.html">full 60-country Section 301 expansion explainer</a>.</p>
+    </div>
 </div>
 
 <section class="calc-section">
@@ -128,39 +122,12 @@
             <label for="country">Country of Origin</label>
             <select id="country">
                 <option value="">— Select country —</option>
-                <option value="china">China</option>
-                <option value="vietnam">Vietnam</option>
-                <option value="india">India</option>
-                <option value="japan">Japan</option>
-                <option value="south-korea">South Korea</option>
-                <option value="germany">Germany</option>
-                <option value="uk">United Kingdom</option>
-                <option value="mexico">Mexico</option>
-                <option value="canada">Canada (50% Section 338 duty on covered goods)</option>
-                <option value="brazil">Brazil</option>
-                <option value="taiwan">Taiwan</option>
-                <option value="thailand">Thailand</option>
-                <option value="italy">Italy</option>
-                <option value="france">France</option>
-                <option value="australia">Australia</option>
             </select>
         </div>
         <div class="form-row">
             <label for="category">Product Category</label>
             <select id="category">
                 <option value="">— Select product category —</option>
-                <option value="electronics">Electronics &amp; Machinery (avg 2.6%)</option>
-                <option value="textiles">Textiles &amp; Apparel (avg 11.9%)</option>
-                <option value="footwear">Footwear (avg 13.2%)</option>
-                <option value="auto">Automotive (avg 4.5%)</option>
-                <option value="furniture">Furniture (avg 5.3%)</option>
-                <option value="steel">Steel &amp; Metals (avg 3.2%)</option>
-                <option value="food">Food &amp; Beverages (avg 6.4%)</option>
-                <option value="chemicals">Chemicals &amp; Plastics (avg 3.8%)</option>
-                <option value="pharma">Pharmaceuticals (avg 0%)</option>
-                <option value="toys">Toys &amp; Games (avg 4.2%)</option>
-                <option value="paper">Paper &amp; Wood (avg 2.8%)</option>
-                <option value="ceramics">Ceramics &amp; Glass (avg 5.8%)</option>
             </select>
         </div>
         <div class="form-row">
@@ -168,8 +135,12 @@
             <input type="number" id="value" min="1" step="100" placeholder="e.g. 10000">
             <div class="error-msg" id="valueError">Please enter a valid shipment value</div>
         </div>
+        <div class="checkbox-row" id="usmcaRow" style="display:none;">
+            <input type="checkbox" id="usmca" checked>
+            <label for="usmca">Goods qualify as originating under USMCA (Section 301 exempt)</label>
+        </div>
         <button class="calc-btn" onclick="calculate()">Calculate Estimated Duty</button>
-        
+
         <div class="results" id="results">
             <div class="result-card">
                 <div class="result-item">
@@ -180,10 +151,6 @@
                     <span class="result-label">Estimated Duty Rate</span>
                     <span class="result-value" id="resultRate">0%</span>
                 </div>
-                <div class="result-item" id="rateCompareRow" style="display:none;">
-                    <span class="result-label">Old → New Rate</span>
-                    <span class="rate-old-new" id="rateCompare"><span class="old">0%</span> <span class="arrow">→</span> <span class="new">0%</span></span>
-                </div>
                 <div class="result-item">
                     <span class="result-label">Estimated Duty Due</span>
                     <span class="result-value" id="resultDuty">$0</span>
@@ -193,110 +160,122 @@
                     <span class="result-value total" id="resultTotal">$0</span>
                 </div>
             </div>
-            <div class="s338-note" id="s338Note" style="display:none;"></div>
-            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates. The 50% Canada Section 338 duty (effective Aug 19, 2026) is included in the new rate for covered product categories. Actual rates may vary based on HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database.</p>
+            <div id="flags"></div>
+            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates including Section 301 (forced labor). The 50% Canada Section 338 duty (effective Aug 19, 2026) is shown as a flag for covered product categories and is not included in the default rate. Actual rates vary by HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database and USTR Chapter 99 headings 9903.05.20–9903.06.21.</p>
         </div>
     </div>
 </section>
 
 <section class="info">
-    <h2>How to Use This Tariff Calculator</h2>
-    <p>Enter your shipment details — country of origin, product category, and shipment value — to get an <strong>estimated duty and total landed cost</strong> for importing into the United States. Our calculator uses average 2026 US tariff rates by country and HS code category.</p>
-    
-    <h2>About US Import Tariffs in 2026</h2>
-    <p>The United States applies tariffs on imported goods based on their Harmonized Tariff Schedule (HTS) classification. Rates vary significantly by product — from duty-free (pharmaceuticals, some electronics) to over 25% (certain textiles, footwear, and steel products). Country of origin also matters due to trade agreements, Section 301 tariffs on Chinese goods, and country-specific trade actions.</p>
+    <h2>What Changed: Section 301 Tariffs Now Cover 60 Countries</h2>
+    <p>The across-the-board Section 122 tariff (10% global rate) expired <strong>July 24, 2026 at 12:01 a.m. ET</strong> and was replaced the same day by a new <strong>Section 301 forced-labor framework</strong> covering <strong>60 economies</strong>. Goods from those countries now face an <strong>additional 10% or 12.5% duty</strong> on top of existing Column-1/MFN rates. USMCA-qualified goods (Canada, Mexico) and Section 232-covered articles are exempt. Read the full <a href="section-301-tariff-expansion-60-countries.html">Section 301 60-country expansion explainer</a>.</p>
 
-    <h2>New: 50% Tariff on Canadian Goods (Effective August 19, 2026)</h2>
-    <p>On July 20, 2026, the U.S. invoked <strong>Section 338 of the Tariff Act of 1930</strong> — its first use for tariffs — signing three proclamations that impose an <strong>additional 50% ad valorem duty</strong> on a wide range of Canadian goods: motor vehicles, alcoholic beverages, dairy, furniture, textiles &amp; apparel, footwear, sporting goods (including hockey equipment), plywood &amp; paper, cement, plastics, jewelry, and more. The duties cover roughly <strong>500–569 product categories</strong> (about $24 billion, ~5.5% of annual Canadian exports to the U.S.).</p>
-    <p><strong>Key rules:</strong> The 50% duty stacks on top of standard tariffs and applies to all covered goods <strong>whether or not they qualify under USMCA/CUSMA</strong>. Exempt categories include energy, potash, goods already subject to Section 232 tariffs (steel/aluminum), fish, and critical minerals. The duties take effect <strong>12:01 a.m. ET on August 19, 2026</strong> and carry <strong>no statutory expiration date</strong> — they remain until modified or revoked by presidential action.</p>
-    <p style="font-size:0.85rem; color:#666;">Sources: White House fact sheet (July 20, 2026); Federal Register Proclamations 11046 (alcoholic beverages), 11047 (dairy), 11048 (motor vehicles); Chicago Fed Insights (July 2026).</p>
-    
+    <h2>How to Use This Tariff Calculator</h2>
+    <p>Select your country of origin, product category, and shipment value to get an <strong>estimated duty and total landed cost</strong>. The calculator applies the average 2026 MFN rate for the country, adds the product-category modifier, then adds the Section 301 forced-labor rate where it applies.</p>
+
+    <h2>60-Economy Section 301 Rate Matrix (Effective July 24, 2026)</h2>
+    <table id="rateMatrix">
+        <thead><tr><th>Rate</th><th>Economies</th></tr></thead>
+        <tbody></tbody>
+    </table>
+    <p><strong>MFN-capped economies:</strong> European Union and Taiwan are capped at a 10% combined MFN + Section 301 rate; Japan, South Korea, and Switzerland at 12.5%. If the product's normal MFN rate is at or above the cap, no additional Section 301 duty applies.</p>
+
     <h2>What Affects Your Tariff Rate?</h2>
     <ul>
         <li><strong>HS Code / HTS Classification</strong> — The specific product category determines the base duty rate</li>
-        <li><strong>Country of Origin</strong> — Trade agreements (USMCA, etc.) and country-specific tariffs change the effective rate</li>
+        <li><strong>Country of Origin</strong> — Trade agreements (USMCA, FTAs) and the new Section 301 matrix change the effective rate</li>
         <li><strong>Product Value (Customs Value)</strong> — Duties are calculated as a percentage of the customs value (typically the transaction price)</li>
-        <li><strong>Additional Duties</strong> — Section 301 (China), Section 232 (steel/aluminum), AD/CVD orders, and the new Section 338 Canada 50% duty (effective Aug 19, 2026) may add extra duties</li>
+        <li><strong>Additional Duties</strong> — Section 301 (China), Section 338 (Canada), Section 232 (steel/aluminum), AD/CVD orders may add extra duties</li>
         <li><strong>De Minimis Threshold</strong> — Shipments under $800 may enter duty-free under Section 321</li>
+    </ul>
+
+    <h2>Exemptions &amp; Proposed Tariffs</h2>
+    <ul>
+        <li><strong>USMCA:</strong> Canada and Mexico are exempt from Section 301 when goods qualify as originating — the calculator applies this by default. USMCA is now in annual review; interim arrangements are targeted by end of 2026.</li>
+        <li><strong>Section 232:</strong> Steel, aluminum, copper, vehicles, wood, and semiconductors are exempt from Section 301 (no stacking).</li>
+        <li><strong>Canada Section 338 (proposed):</strong> A separate 50% tariff on Canadian autos, alcohol, and dairy takes effect <strong>August 19, 2026</strong> — it applies even to USMCA-qualifying goods. Not yet in effect. See the <a href="canada-50-percent-tariff-august-19-explainer.html">Canada 50% tariff explainer</a>.</li>
+        <li><strong>EU digital-services-tax response (threatened):</strong> A 25% Section 301 tariff on selected EU imports is threatened but not in effect.</li>
+        <li><strong>In-transit exception:</strong> Goods loaded before July 24 and entered before July 28, 2026 are exempt from the new duty.</li>
+        <li><strong>Pharmaceuticals</strong> (9903.05.89) and <strong>civil aircraft</strong> (9903.05.88) are exempt.</li>
     </ul>
 </section>
 
 <section class="blog-section">
-    <h2>📖 Tariff & Import Guides</h2>
+    <h2>📖 Tariff &amp; Import Guides</h2>
     <div class="blog-grid" id="blogGrid"></div>
 </section>
 
 <footer>
     <p>&copy; 2026 <a href="https://tariffcalculator2026.com" style="color:#888;text-decoration:none;">TariffCalculator2026.com</a> — A property of ABD Legacy LLC. All rights reserved.</p>
     <p style="margin-top:8px;">This tool provides estimates only. Consult a licensed customs broker for official duty determinations.</p>
-    <p style="margin-top:8px;">Rates last updated: August 7, 2026 (includes new 50% Canada Section 338 duty effective August 19, 2026).</p>
 </footer>
 
+<script src="tariff-data.js"></script>
 <script>
-// Average US tariff rates by country (2026 estimates including Section 301, trade agreements)
-const COUNTRY_RATES = {
-    china: { base: 0.195, name: "China", note: "Includes Section 301 tariffs" },
-    vietnam: { base: 0.045, name: "Vietnam", note: "Standard MFN rates" },
-    india: { base: 0.052, name: "India", note: "Standard MFN rates" },
-    japan: { base: 0.018, name: "Japan", note: "Limited trade agreement benefits" },
-    "south-korea": { base: 0.015, name: "South Korea", note: "KORUS FTA benefits" },
-    germany: { base: 0.017, name: "Germany", note: "Standard MFN rates" },
-    uk: { base: 0.016, name: "United Kingdom", note: "Standard MFN rates" },
-    mexico: { base: 0.008, name: "Mexico", note: "USMCA preferential rates" },
-    canada: { base: 0.005, name: "Canada", note: "50% Section 338 duty applies to covered categories from Aug 19, 2026" },
-    brazil: { base: 0.048, name: "Brazil", note: "Standard MFN rates" },
-    taiwan: { base: 0.032, name: "Taiwan", note: "Standard MFN rates" },
-    thailand: { base: 0.042, name: "Thailand", note: "Standard MFN rates" },
-    italy: { base: 0.017, name: "Italy", note: "Standard MFN rates" },
-    france: { base: 0.017, name: "France", note: "Standard MFN rates" },
-    australia: { base: 0.012, name: "Australia", note: "FTA benefits" },
-};
+(function () {
+    var T = window.TARIFF_DATA;
+    var countrySel = document.getElementById('country');
+    var catSel = document.getElementById('category');
 
-// Category rate modifiers (multiply against country base rate, then add category-specific add-ons)
-const CATEGORY_MODIFIERS = {
-    electronics: { add: 0.008, name: "Electronics & Machinery" },
-    textiles: { add: 0.101, name: "Textiles & Apparel" },
-    footwear: { add: 0.114, name: "Footwear" },
-    auto: { add: 0.027, name: "Automotive" },
-    furniture: { add: 0.035, name: "Furniture" },
-    steel: { add: 0.014, name: "Steel & Metals" },
-    food: { add: 0.046, name: "Food & Beverages" },
-    chemicals: { add: 0.020, name: "Chemicals & Plastics" },
-    pharma: { add: 0, name: "Pharmaceuticals" },
-    toys: { add: 0.024, name: "Toys & Games" },
-    paper: { add: 0.010, name: "Paper & Wood" },
-    ceramics: { add: 0.040, name: "Ceramics & Glass" },
-};
+    // Populate country select from Section 301 matrix (sorted by name)
+    var keys = Object.keys(T.SECTION_301);
+    keys.sort(function (a, b) { return T.SECTION_301[a].name.localeCompare(T.SECTION_301[b].name); });
+    keys.forEach(function (k) {
+        var opt = document.createElement('option');
+        opt.value = k;
+        opt.textContent = T.SECTION_301[k].name + (T.SECTION_301[k].type === 'mfn_cap' ? ' (' + (T.SECTION_301[k].cap * 100) + '% cap)' : '');
+        countrySel.appendChild(opt);
+    });
 
-// China-specific Section 301 add-ons by category
-const CHINA_301 = {
-    electronics: 0.075,
-    textiles: 0.075,
-    furniture: 0.075,
-    steel: 0.25,
-    auto: 0.25,
-    chemicals: 0.075,
-    toys: 0.075,
-    ceramics: 0.075,
-};
+    // Populate categories
+    Object.keys(T.CATEGORY_MODIFIERS).forEach(function (k) {
+        var opt = document.createElement('option');
+        opt.value = k;
+        opt.textContent = T.CATEGORY_MODIFIERS[k].name + ' (avg ' + (T.CATEGORY_MODIFIERS[k].add * 100).toFixed(1) + '%)';
+        catSel.appendChild(opt);
+    });
 
-// Canada Section 338 — additional 50% duty on covered goods, signed July 20, 2026, effective Aug 19, 2026.
-// Covers ~500-569 HTSUS categories across three proclamations (9903.03.12 alcohol, 9903.03.13 dairy, 9903.03.14 motor vehicles).
-// Applies regardless of USMCA/CUSMA status. Exempt: energy, potash, Section 232 goods (steel/aluminum), fish, critical minerals.
-const CANADA_S338 = {
-    duty: 0.50,
-    effectiveDate: "Aug 19, 2026",
-    affected: ['auto', 'food', 'textiles', 'footwear', 'furniture', 'toys', 'paper', 'ceramics', 'chemicals'],
-    exemptNote: "Exempt from the 50% duty: energy, potash, Section 232 goods (steel/aluminum), fish, and critical minerals."
-};
+    // USMCA checkbox visibility
+    countrySel.addEventListener('change', function () {
+        var isUSMCA = T.USMCA.exempt_from_301.indexOf(countrySel.value) !== -1;
+        document.getElementById('usmcaRow').style.display = isUSMCA ? 'flex' : 'none';
+    });
+
+    // Build rate matrix table
+    var groups = {
+        '10% additional': [],
+        '12.5% additional': [],
+        '10% combined cap': [],
+        '12.5% combined cap': []
+    };
+    keys.forEach(function (k) {
+        var c = T.SECTION_301[k];
+        if (c.type === 'flat' && c.rate === 0.10) groups['10% additional'].push(c.name);
+        else if (c.type === 'flat') groups['12.5% additional'].push(c.name);
+        else if (c.cap === 0.10) groups['10% combined cap'].push(c.name);
+        else groups['12.5% combined cap'].push(c.name);
+    });
+    var tbody = document.querySelector('#rateMatrix tbody');
+    Object.keys(groups).forEach(function (g) {
+        var tr = document.createElement('tr');
+        var td1 = document.createElement('td');
+        td1.innerHTML = '<strong>' + g + '</strong> (' + groups[g].length + ')';
+        var td2 = document.createElement('td');
+        td2.textContent = groups[g].join(', ');
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tbody.appendChild(tr);
+    });
+})();
 
 function calculate() {
-    const country = document.getElementById('country').value;
-    const category = document.getElementById('category').value;
-    const value = parseFloat(document.getElementById('value').value);
-    const errorMsg = document.getElementById('valueError');
-    const results = document.getElementById('results');
-    
+    var T = window.TARIFF_DATA;
+    var country = document.getElementById('country').value;
+    var category = document.getElementById('category').value;
+    var value = parseFloat(document.getElementById('value').value);
+    var errorMsg = document.getElementById('valueError');
+    var results = document.getElementById('results');
+
     if (!country || !category || !value || value <= 0) {
         if (!value || value <= 0) {
             errorMsg.style.display = 'block';
@@ -305,90 +284,81 @@ function calculate() {
         return;
     }
     errorMsg.style.display = 'none';
-    
-    const countryData = COUNTRY_RATES[country];
-    const categoryData = CATEGORY_MODIFIERS[category];
-    
-    // Calculate effective rate
-    let effectiveRate = countryData.base + categoryData.add;
-    
-    // China Section 301 surcharge
-    if (country === 'china' && CHINA_301[category]) {
-        effectiveRate += CHINA_301[category];
-    }
-    
-    // Country-specific adjustments
-    if (country === 'mexico') effectiveRate = Math.min(effectiveRate, 0.02);
-    
-    // Canada Section 338 — additional 50% duty on covered categories effective Aug 19, 2026
-    let canadaOldRate = null;
-    let canadaS338Affected = false;
-    if (country === 'canada') {
-        // Pre-Aug 19 rate: USMCA preferential (mostly duty-free, capped at ~1% in this model)
-        canadaOldRate = Math.min(countryData.base + categoryData.add, 0.01);
-        canadaS338Affected = CANADA_S338.affected.includes(category);
-        effectiveRate = canadaS338Affected
-            ? canadaOldRate + CANADA_S338.duty
-            : canadaOldRate;
-    }
-    
-    // Cap at reasonable maximum (raised to accommodate 50% Section 338 stacking)
-    effectiveRate = Math.min(effectiveRate, 0.65);
-    
-    const duty = value * effectiveRate;
-    const total = value + duty;
-    
+
+    var usmcaQualified = document.getElementById('usmca').checked;
+    var res = T.effectiveRate(country, category, { usmcaQualified: usmcaQualified });
+    if (!res) return;
+
+    var effectiveRate = res.rate;
+    var duty = value * effectiveRate;
+    var total = value + duty;
+
     document.getElementById('resultValue').textContent = '$' + value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    document.getElementById('resultRate').textContent = (effectiveRate * 100).toFixed(1) + '% (' + countryData.name + ' → ' + categoryData.name + ')';
-    
-    // Old vs new rate row + Section 338 note (Canada affected categories only)
-    const rateCompareRow = document.getElementById('rateCompareRow');
-    const rateCompare = document.getElementById('rateCompare');
-    const s338Note = document.getElementById('s338Note');
-    if (country === 'canada' && canadaS338Affected) {
-        rateCompareRow.style.display = 'flex';
-        rateCompare.innerHTML = '<span class="old">' + (canadaOldRate * 100).toFixed(1) + '%</span> <span class="arrow">→</span> <span class="new">' + (effectiveRate * 100).toFixed(1) + '%</span>';
-        s338Note.style.display = 'block';
-        s338Note.innerHTML = '<strong>Includes the new 50% Section 338 duty (effective ' + CANADA_S338.effectiveDate + ').</strong> ' + CANADA_S338.exemptNote;
-    } else {
-        rateCompareRow.style.display = 'none';
-        s338Note.style.display = 'none';
-    }
-    
+    document.getElementById('resultRate').textContent = (effectiveRate * 100).toFixed(1) + '% (' + T.SECTION_301[country].name + ' → ' + T.CATEGORY_MODIFIERS[category].name + ')';
     document.getElementById('resultDuty').textContent = '$' + duty.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('resultTotal').textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    
+
+    // Breakdown + flags
+    var flags = document.getElementById('flags');
+    flags.innerHTML = '';
+    var b = res.breakdown;
+    var breakdownParts = [];
+    breakdownParts.push('MFN base: ' + (b.mfn * 100).toFixed(1) + '%');
+    breakdownParts.push('Category: +' + (b.categoryAdd * 100).toFixed(1) + '%');
+    if (b.section301 > 0) {
+        breakdownParts.push('Section 301 (forced labor): +' + (b.section301 * 100).toFixed(1) + '%');
+    } else if (b.usmcaQualified) {
+        breakdownParts.push('Section 301: exempt (USMCA)');
+    }
+    if (b.chinaExisting301 > 0) {
+        breakdownParts.push('China pre-existing 301: +' + (b.chinaExisting301 * 100).toFixed(1) + '%');
+    }
+
+    var info = document.createElement('div');
+    info.className = 'flag info';
+    info.innerHTML = '<strong>Rate breakdown</strong>' + breakdownParts.join(' · ');
+    flags.appendChild(info);
+
+    // Proposed tariff warnings
+    T.PROPOSED_FLAGS.forEach(function (f) {
+        if (f.country === country && (!f.categories || f.categories.indexOf(category) !== -1)) {
+            var w = document.createElement('div');
+            w.className = 'flag warn';
+            w.innerHTML = '<strong>⚠️ ' + f.label + (f.effective ? ' — effective ' + f.effective : '') + '</strong>' + f.note;
+            flags.appendChild(w);
+        }
+    });
+
+    if (country === 'china') {
+        var cn = document.createElement('div');
+        cn.className = 'flag info';
+        cn.innerHTML = '<strong>China note</strong>China faces the 12.5% Section 301 forced-labor rate ON TOP of pre-existing China Section 301 tariffs and other duties. Brazil is separately subject to a distinct 25% Section 301 action — do not confuse the two.';
+        flags.appendChild(cn);
+    }
+
     results.classList.add('show');
-    
-    // Scroll to results on mobile
     results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // Populate blog articles
-const BLOG_ARTICLES = [
-    { title: "Section 301 Tariff Expansion 2026: 60 Countries Covered", file: "section-301-tariff-expansion-60-countries.html", desc: "The 10% global tariff ended July 24, 2026. New Section 301 forced-labor tariffs cover 60 countries — with Canada's 50% duties arriving Aug 19." },
-    { title: "Pharma Tariffs 2026: How 200% Duties Affect Drug Import Costs", file: "pharma-tariffs-2026.html", desc: "200% generic drug tariffs, the 100% patented framework, GLP-1 exposure, and how to estimate your pharma import duty." },
+var BLOG_ARTICLES = [
+    { title: "Section 301 Tariff Expansion: 60 Countries Now Covered", file: "section-301-tariff-expansion-60-countries.html", desc: "The 10% global tariff is gone. Here's what the new 60-country forced-labor tariff framework means for importers, plus proposed Canada and EU actions.", featured: true },
+    { title: "Canada 50% Tariffs: What Lands August 19", file: "canada-50-percent-tariff-august-19-explainer.html", desc: "50% Section 338 duties on Canadian autos, alcohol, and dairy take effect August 19 — with no USMCA exemption." },
     { title: "US Tariff Rates 2026 by Country", file: "us-tariff-rates-2026-by-country.html", desc: "Complete guide to current US import tariff rates for every major trading partner." },
     { title: "How Tariffs Affect Small Business Imports", file: "how-tariffs-affect-small-business-imports.html", desc: "Practical guide for small businesses navigating 2026 tariff changes." },
     { title: "Tariff Classification Guide 2026", file: "tariff-classification-guide-2026.html", desc: "How to classify your products under the HTS (Harmonized Tariff Schedule)." },
     { title: "Import Duty Calculation Explained", file: "import-duty-calculation-explained-2026.html", desc: "Step-by-step guide to calculating import duties for US customs." },
     { title: "China Tariff Rates 2026 Explained", file: "china-tariff-rates-2026-explained.html", desc: "Current Section 301 tariff rates on Chinese imports and exemptions." },
     { title: "How to Calculate Import Duties from China", file: "how-to-calculate-import-duties-from-china.html", desc: "Specific methodology for calculating duties on Chinese imports." },
-    { title: "Tariff Exemption List 2026", file: "tariff-exemption-list-2026-what-products-are-exempt.html", desc: "What products are exempt from US import tariffs in 2026." },
-    { title: "Section 301 Tariffs on China: Latest Updates", file: "section-301-tariffs-on-china-latest-updates-2026.html", desc: "Current state of Section 301 tariffs, exclusions, and what importers should track." },
-    { title: "Tariff Impact on US Manufacturing Supply Chains", file: "tariff-impact-on-us-manufacturing-supply-chains-2026.html", desc: "How 2026 tariff escalation is rewriting US manufacturing supply chains." },
-    { title: "Customs Valuation Methods", file: "customs-valuation-methods-for-import-duty-calculation.html", desc: "How customs value is determined and why it drives your duty bill." },
-    { title: "De Minimis Rule Changes 2026", file: "de-minimis-rule-changes-2026-impact-on-ecommerce.html", desc: "What the de minimis threshold changes mean for e-commerce importers." },
-    { title: "How to Apply for Tariff Exclusion or Drawback", file: "how-to-apply-for-tariff-exclusion-or-drawback.html", desc: "Application process for exclusions and duty drawback recovery." },
-    { title: "Tariffs on Electronics Imports from Asia", file: "tariffs-on-electronics-imports-from-asia-2026.html", desc: "Current electronics tariff rates and Asia supply-chain considerations." },
-    { title: "USMCA Tariff Benefits & Qualification", file: "usmca-tariff-benefits-qualification-requirements-2026.html", desc: "How to qualify for USMCA preferential rates and claim the benefits." },
+    { title: "Tariff Exemption List 2026", file: "tariff-exemption-list-2026-what-products-are-exempt.html", desc: "What products are exempt from US import tariffs in 2026." }
 ];
 
-const grid = document.getElementById('blogGrid');
-BLOG_ARTICLES.forEach(art => {
-    const card = document.createElement('div');
+var grid = document.getElementById('blogGrid');
+BLOG_ARTICLES.forEach(function (art) {
+    var card = document.createElement('div');
     card.className = 'blog-card';
-    card.innerHTML = '<h3><a href="' + art.file + '">' + art.title + '</a></h3><p>' + art.desc + '</p>';
+    var badge = art.featured ? '<span style="display:inline-block;background:#2563eb;color:#fff;font-size:0.7rem;padding:2px 8px;border-radius:10px;margin-bottom:6px;">NEW</span><br>' : '';
+    card.innerHTML = badge + '<h3><a href="' + art.file + '">' + art.title + '</a></h3><p>' + art.desc + '</p>';
     grid.appendChild(card);
 });
 </script>
