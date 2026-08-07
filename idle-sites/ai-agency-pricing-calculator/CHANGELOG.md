@@ -2,6 +2,18 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-07 — Agent Wallet & Spend Cap Estimator added (Cloudflare Wallets / x402 payment rails, verified via parent research brief t_6e67321b)
+
+- **New section:** "Agent Wallet & Spend Cap Estimator" (`#wallet-estimator`) — models monthly AI spend under agent payment rails with optional wallet fees, per-agent spend, and creator-set caps. Outputs: uncapped monthly spend, wallet fee (uncapped), capped monthly spend, wallet fee on actual (capped) spend, and overage blocked by the cap — a direct capped-vs-uncapped comparison.
+- **New inputs (all optional, fallback defaults preserve previous behavior):** Number of Agents (default 5), Monthly AI Spend per Agent (default $200), Wallet Fee % (default 0% = no wallet fee — Cloudflare has not disclosed fees), Creator-Set Cap per Agent/Month (blank = uncapped).
+- **Model:** uncapped = agents × per-agent spend; fee = spend × fee%; capped = agents × min(per-agent spend, cap); overage = uncapped − capped. Cap enforcement is at the wallet's API layer (x402 / Cloudflare Wallets), so prompt injection cannot lift it; over-cap requests route to a human for manual override (never auto-approved).
+- **Edge cases handled:** no wallet fee (0% → $0 fee rows, "No wallet fee configured"), exceeded cap (spend clamps at cap, overage labeled "blocked until manual override"), no cap set (capped == uncapped), cap above spend (no clamp), zero spend, cap == spend boundary. Verified via 8-scenario node harness (S1–S8, all pass).
+- **Explainer:** new "Cloudflare Wallets & Agent Payment Rails: Budget Ceilings for AI Spend" section (`#wallet-rails`) — two-wallet model (Account → Virtual), creator-set guardrails (spending cap, merchant allow-list, max transaction size, manual override), x402 protocol, micropayment economics (~$0.0001/tx stablecoin vs 1.5–3.5% card interchange), undisclosed-fees caveat, and 4 agency implications (cap-constrained forecasting, programmable client billing caps, handle reservation, prompt-injection immunity). Sources linked (Cloudflare blog, press release, Help Net Security, crypto.news, TechTimes).
+- **Copy:** Pricing Reference Table footnote and a new FAQ item ("What are Cloudflare Wallets and how do wallet spend caps change my cost forecasts?"); meta description/keywords extended (Cloudflare Wallets, agent wallet spend cap, x402, capped vs uncapped AI spend).
+- **Regression:** main pricing calculator, Agent Plugins portability, routing, and failure estimators all re-tested — unchanged outputs.
+- **Spec:** `CALCULATOR-API-SPEC.md` added documenting all four estimators, the wallet model, constants, and edge cases; sample output generated from live JS at `wallet-sample-output.md`.
+- **Defaults preserved:** wallet fee 0% and uncapped-by-default mean existing cost assumptions are unchanged when the new fields are left at defaults.
+
 ## 2026-08-07 — Agent Plugins portability factor added (verified via parent research brief t_5e6ed1df)
 
 - **New input:** "Portability / Agent Plugins" selector on the main calculator — Single platform (no plugin, 1.0×), Agent Plugin — 2–3 compatible clients (setup −15%), Agent Plugin — 4+ clients / resellable (setup −30%). Default is Single, so existing outputs are unchanged.
