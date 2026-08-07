@@ -149,18 +149,18 @@
             <label for="category">Product Category</label>
             <select id="category">
                 <option value="">— Select product category —</option>
-                <option value="electronics">Electronics & Machinery (avg 2.6%)</option>
-                <option value="textiles">Textiles & Apparel (avg 11.9%)</option>
+                <option value="electronics">Electronics &amp; Machinery (avg 2.6%)</option>
+                <option value="textiles">Textiles &amp; Apparel (avg 11.9%)</option>
                 <option value="footwear">Footwear (avg 13.2%)</option>
                 <option value="auto">Automotive (avg 4.5%)</option>
                 <option value="furniture">Furniture (avg 5.3%)</option>
-                <option value="steel">Steel & Metals (avg 3.2%)</option>
-                <option value="food">Food & Beverages (avg 6.4%)</option>
-                <option value="chemicals">Chemicals & Plastics (avg 3.8%)</option>
+                <option value="steel">Steel &amp; Metals (avg 3.2%)</option>
+                <option value="food">Food &amp; Beverages (avg 6.4%)</option>
+                <option value="chemicals">Chemicals &amp; Plastics (avg 3.8%)</option>
                 <option value="pharma">Pharmaceuticals (avg 0%)</option>
-                <option value="toys">Toys & Games (avg 4.2%)</option>
-                <option value="paper">Paper & Wood (avg 2.8%)</option>
-                <option value="ceramics">Ceramics & Glass (avg 5.8%)</option>
+                <option value="toys">Toys &amp; Games (avg 4.2%)</option>
+                <option value="paper">Paper &amp; Wood (avg 2.8%)</option>
+                <option value="ceramics">Ceramics &amp; Glass (avg 5.8%)</option>
             </select>
         </div>
         <div class="form-row">
@@ -318,17 +318,43 @@ function calculate() {
     }
     
     // Country-specific adjustments
-    if (country === 'canada') effectiveRate = Math.min(effectiveRate, 0.01); // USMCA mostly duty-free
     if (country === 'mexico') effectiveRate = Math.min(effectiveRate, 0.02);
     
-    // Cap at reasonable maximum
-    effectiveRate = Math.min(effectiveRate, 0.35);
+    // Canada Section 338 — additional 50% duty on covered categories effective Aug 19, 2026
+    let canadaOldRate = null;
+    let canadaS338Affected = false;
+    if (country === 'canada') {
+        // Pre-Aug 19 rate: USMCA preferential (mostly duty-free, capped at ~1% in this model)
+        canadaOldRate = Math.min(countryData.base + categoryData.add, 0.01);
+        canadaS338Affected = CANADA_S338.affected.includes(category);
+        effectiveRate = canadaS338Affected
+            ? canadaOldRate + CANADA_S338.duty
+            : canadaOldRate;
+    }
+    
+    // Cap at reasonable maximum (raised to accommodate 50% Section 338 stacking)
+    effectiveRate = Math.min(effectiveRate, 0.65);
     
     const duty = value * effectiveRate;
     const total = value + duty;
     
     document.getElementById('resultValue').textContent = '$' + value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('resultRate').textContent = (effectiveRate * 100).toFixed(1) + '% (' + countryData.name + ' → ' + categoryData.name + ')';
+    
+    // Old vs new rate row + Section 338 note (Canada affected categories only)
+    const rateCompareRow = document.getElementById('rateCompareRow');
+    const rateCompare = document.getElementById('rateCompare');
+    const s338Note = document.getElementById('s338Note');
+    if (country === 'canada' && canadaS338Affected) {
+        rateCompareRow.style.display = 'flex';
+        rateCompare.innerHTML = '<span class="old">' + (canadaOldRate * 100).toFixed(1) + '%</span> <span class="arrow">→</span> <span class="new">' + (effectiveRate * 100).toFixed(1) + '%</span>';
+        s338Note.style.display = 'block';
+        s338Note.innerHTML = '<strong>Includes the new 50% Section 338 duty (effective ' + CANADA_S338.effectiveDate + ').</strong> ' + CANADA_S338.exemptNote;
+    } else {
+        rateCompareRow.style.display = 'none';
+        s338Note.style.display = 'none';
+    }
+    
     document.getElementById('resultDuty').textContent = '$' + duty.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('resultTotal').textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     
