@@ -3,28 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tariff Calculator 2026 — Calculate Import Duties &amp; Tariffs by Country</title>
-    <meta name="description" content="Free tariff calculator for 2026. Calculate import duties, tariffs, and landed costs by country of origin, HS code category, and shipment value. US import data updated for 2026.">
+    <title>Tariff Calculator 2026 — Canada 50% Tariff &amp; Import Duties by Country</title>
+    <meta name="description" content="Free tariff calculator for 2026 with the new 50% US duty on Canadian goods effective August 19, 2026. Calculate import duties, tariffs, and landed costs by country of origin, HS code category, and shipment value.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://tariffcalculator2026.com/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Tariff Calculator 2026 — Free Import Duty Calculator">
-    <meta property="og:description" content="Calculate import duties and tariffs instantly. Updated US tariff rates for 2026 by country and product category.">
+    <meta property="og:title" content="Tariff Calculator 2026 — Canada 50% Tariff &amp; Free Import Duty Calculator">
+    <meta property="og:description" content="Calculate import duties and tariffs instantly, including the new 50% US duty on affected Canadian products effective August 19, 2026.">
     <meta property="og:url" content="https://tariffcalculator2026.com/">
     <meta property="og:image" content="https://tariffcalculator2026.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Tariff Calculator 2026 — Free Import Duty Calculator">
-    <meta name="twitter:description" content="Calculate import duties and tariffs instantly. Updated US tariff rates for 2026.">
+    <meta name="twitter:title" content="Tariff Calculator 2026 — Canada 50% Tariff &amp; Free Import Duty Calculator">
+    <meta name="twitter:description" content="Calculate import duties and tariffs instantly, including the new 50% US duty on affected Canadian products effective August 19, 2026.">
+    <meta name="dateModified" content="2026-08-07">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Tariff Calculator 2026",
         "url": "https://tariffcalculator2026.com",
-        "description": "Free import duty and tariff calculator for 2026 US tariffs",
+        "description": "Free import duty and tariff calculator for 2026 US tariffs, including the new 50% Section 338 duty on Canadian goods effective August 19, 2026",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "All",
-        "browserRequirements": "Requires JavaScript"
+        "browserRequirements": "Requires JavaScript",
+        "dateModified": "2026-08-07"
     }
     </script>
     <style>
@@ -78,6 +80,26 @@
         
         /* Error */
         .error-msg { color: #dc2626; font-size: 0.9rem; margin-top: 5px; display: none; }
+
+        /* Canada 50% notice banner */
+        .notice-banner {
+            background: #fef2c7; border: 1px solid #f59e0b; border-left: 6px solid #d97706;
+            border-radius: 10px; padding: 16px 20px; margin: 24px 0;
+            max-width: 780px; margin-left: auto; margin-right: auto;
+        }
+        .notice-banner h2 { font-size: 1.05rem; color: #92400e; margin-bottom: 6px; }
+        .notice-banner p { font-size: 0.92rem; color: #78350f; margin-bottom: 8px; }
+        .notice-banner p:last-child { margin-bottom: 0; }
+        .notice-banner strong { color: #92400e; }
+        .notice-banner .deadline { display: inline-block; background: #d97706; color: #fff; font-weight: 700; border-radius: 6px; padding: 2px 10px; margin-left: 4px; font-size: 0.85rem; }
+
+        /* Old vs new rate row */
+        .rate-old-new { font-size: 0.85rem; color: #555; margin-top: 6px; }
+        .rate-old-new .old { color: #999; text-decoration: line-through; }
+        .rate-old-new .arrow { color: #d97706; font-weight: 700; }
+        .rate-old-new .new { color: #16a34a; font-weight: 700; }
+        .s338-note { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 10px 12px; margin-top: 10px; font-size: 0.85rem; color: #78350f; }
+        .s338-note strong { color: #92400e; }
         
         @media (max-width: 640px) {
             header h1 { font-size: 1.6rem; }
@@ -94,6 +116,12 @@
     <p>Calculate estimated import duties, tariffs, and total landed cost for shipments to the United States</p>
 </header>
 
+<div class="notice-banner" role="note">
+    <h2>⚠️ New: 50% US Tariff on Canadian Goods <span class="deadline">Effective Aug 19, 2026</span></h2>
+    <p>On July 20, 2026, President Trump signed three proclamations under <strong>Section 338 of the Tariff Act of 1930</strong> imposing an <strong>additional 50% duty</strong> on ~500–569 categories of Canadian goods — motor vehicles, alcoholic beverages, dairy, furniture, textiles &amp; apparel, footwear, sporting goods, plywood &amp; paper, cement, and more.</p>
+    <p><strong>Applies to all covered goods regardless of USMCA/CUSMA status.</strong> Exempt: energy, potash, Section 232 goods (steel/aluminum), fish, and critical minerals. Duties take effect <strong>12:01 a.m. ET on August 19, 2026</strong> — select <strong>Canada</strong> and a covered product category to see your old vs new rate.</p>
+</div>
+
 <section class="calc-section">
     <div class="calculator">
         <div class="form-row">
@@ -108,7 +136,7 @@
                 <option value="germany">Germany</option>
                 <option value="uk">United Kingdom</option>
                 <option value="mexico">Mexico</option>
-                <option value="canada">Canada</option>
+                <option value="canada">Canada (50% Section 338 duty on covered goods)</option>
                 <option value="brazil">Brazil</option>
                 <option value="taiwan">Taiwan</option>
                 <option value="thailand">Thailand</option>
@@ -152,6 +180,10 @@
                     <span class="result-label">Estimated Duty Rate</span>
                     <span class="result-value" id="resultRate">0%</span>
                 </div>
+                <div class="result-item" id="rateCompareRow" style="display:none;">
+                    <span class="result-label">Old → New Rate</span>
+                    <span class="rate-old-new" id="rateCompare"><span class="old">0%</span> <span class="arrow">→</span> <span class="new">0%</span></span>
+                </div>
                 <div class="result-item">
                     <span class="result-label">Estimated Duty Due</span>
                     <span class="result-value" id="resultDuty">$0</span>
@@ -161,7 +193,8 @@
                     <span class="result-value total" id="resultTotal">$0</span>
                 </div>
             </div>
-            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates. Actual rates may vary based on HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database.</p>
+            <div class="s338-note" id="s338Note" style="display:none;"></div>
+            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates. The 50% Canada Section 338 duty (effective Aug 19, 2026) is included in the new rate for covered product categories. Actual rates may vary based on HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database.</p>
         </div>
     </div>
 </section>
@@ -172,13 +205,18 @@
     
     <h2>About US Import Tariffs in 2026</h2>
     <p>The United States applies tariffs on imported goods based on their Harmonized Tariff Schedule (HTS) classification. Rates vary significantly by product — from duty-free (pharmaceuticals, some electronics) to over 25% (certain textiles, footwear, and steel products). Country of origin also matters due to trade agreements, Section 301 tariffs on Chinese goods, and country-specific trade actions.</p>
+
+    <h2>New: 50% Tariff on Canadian Goods (Effective August 19, 2026)</h2>
+    <p>On July 20, 2026, the U.S. invoked <strong>Section 338 of the Tariff Act of 1930</strong> — its first use for tariffs — signing three proclamations that impose an <strong>additional 50% ad valorem duty</strong> on a wide range of Canadian goods: motor vehicles, alcoholic beverages, dairy, furniture, textiles &amp; apparel, footwear, sporting goods (including hockey equipment), plywood &amp; paper, cement, plastics, jewelry, and more. The duties cover roughly <strong>500–569 product categories</strong> (about $24 billion, ~5.5% of annual Canadian exports to the U.S.).</p>
+    <p><strong>Key rules:</strong> The 50% duty stacks on top of standard tariffs and applies to all covered goods <strong>whether or not they qualify under USMCA/CUSMA</strong>. Exempt categories include energy, potash, goods already subject to Section 232 tariffs (steel/aluminum), fish, and critical minerals. The duties take effect <strong>12:01 a.m. ET on August 19, 2026</strong> and carry <strong>no statutory expiration date</strong> — they remain until modified or revoked by presidential action.</p>
+    <p style="font-size:0.85rem; color:#666;">Sources: White House fact sheet (July 20, 2026); Federal Register Proclamations 11046 (alcoholic beverages), 11047 (dairy), 11048 (motor vehicles); Chicago Fed Insights (July 2026).</p>
     
     <h2>What Affects Your Tariff Rate?</h2>
     <ul>
         <li><strong>HS Code / HTS Classification</strong> — The specific product category determines the base duty rate</li>
         <li><strong>Country of Origin</strong> — Trade agreements (USMCA, etc.) and country-specific tariffs change the effective rate</li>
         <li><strong>Product Value (Customs Value)</strong> — Duties are calculated as a percentage of the customs value (typically the transaction price)</li>
-        <li><strong>Additional Duties</strong> — Section 301 (China), Section 232 (steel/aluminum), AD/CVD orders may add extra duties</li>
+        <li><strong>Additional Duties</strong> — Section 301 (China), Section 232 (steel/aluminum), AD/CVD orders, and the new Section 338 Canada 50% duty (effective Aug 19, 2026) may add extra duties</li>
         <li><strong>De Minimis Threshold</strong> — Shipments under $800 may enter duty-free under Section 321</li>
     </ul>
 </section>
@@ -191,6 +229,7 @@
 <footer>
     <p>&copy; 2026 <a href="https://tariffcalculator2026.com" style="color:#888;text-decoration:none;">TariffCalculator2026.com</a> — A property of ABD Legacy LLC. All rights reserved.</p>
     <p style="margin-top:8px;">This tool provides estimates only. Consult a licensed customs broker for official duty determinations.</p>
+    <p style="margin-top:8px;">Rates last updated: August 7, 2026 (includes new 50% Canada Section 338 duty effective August 19, 2026).</p>
 </footer>
 
 <script>
@@ -204,7 +243,7 @@ const COUNTRY_RATES = {
     germany: { base: 0.017, name: "Germany", note: "Standard MFN rates" },
     uk: { base: 0.016, name: "United Kingdom", note: "Standard MFN rates" },
     mexico: { base: 0.008, name: "Mexico", note: "USMCA preferential rates" },
-    canada: { base: 0.005, name: "Canada", note: "USMCA preferential rates (mostly duty-free)" },
+    canada: { base: 0.005, name: "Canada", note: "50% Section 338 duty applies to covered categories from Aug 19, 2026" },
     brazil: { base: 0.048, name: "Brazil", note: "Standard MFN rates" },
     taiwan: { base: 0.032, name: "Taiwan", note: "Standard MFN rates" },
     thailand: { base: 0.042, name: "Thailand", note: "Standard MFN rates" },
@@ -239,6 +278,16 @@ const CHINA_301 = {
     chemicals: 0.075,
     toys: 0.075,
     ceramics: 0.075,
+};
+
+// Canada Section 338 — additional 50% duty on covered goods, signed July 20, 2026, effective Aug 19, 2026.
+// Covers ~500-569 HTSUS categories across three proclamations (9903.03.12 alcohol, 9903.03.13 dairy, 9903.03.14 motor vehicles).
+// Applies regardless of USMCA/CUSMA status. Exempt: energy, potash, Section 232 goods (steel/aluminum), fish, critical minerals.
+const CANADA_S338 = {
+    duty: 0.50,
+    effectiveDate: "Aug 19, 2026",
+    affected: ['auto', 'food', 'textiles', 'footwear', 'furniture', 'toys', 'paper', 'ceramics', 'chemicals'],
+    exemptNote: "Exempt from the 50% duty: energy, potash, Section 232 goods (steel/aluminum), fish, and critical minerals."
 };
 
 function calculate() {
@@ -291,6 +340,7 @@ function calculate() {
 
 // Populate blog articles
 const BLOG_ARTICLES = [
+    { title: "Section 301 Tariff Expansion 2026: 60 Countries Covered", file: "section-301-tariff-expansion-60-countries.html", desc: "The 10% global tariff ended July 24, 2026. New Section 301 forced-labor tariffs cover 60 countries — with Canada's 50% duties arriving Aug 19." },
     { title: "Pharma Tariffs 2026: How 200% Duties Affect Drug Import Costs", file: "pharma-tariffs-2026.html", desc: "200% generic drug tariffs, the 100% patented framework, GLP-1 exposure, and how to estimate your pharma import duty." },
     { title: "US Tariff Rates 2026 by Country", file: "us-tariff-rates-2026-by-country.html", desc: "Complete guide to current US import tariff rates for every major trading partner." },
     { title: "How Tariffs Affect Small Business Imports", file: "how-tariffs-affect-small-business-imports.html", desc: "Practical guide for small businesses navigating 2026 tariff changes." },
