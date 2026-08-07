@@ -145,3 +145,14 @@ test('No duplicate country names in matrix', () => {
   const names = Object.values(T.SECTION_301).map(c => c.name);
   assert.equal(new Set(names).size, names.length, 'duplicate country names found');
 });
+
+test('Calculator page links to the published tariff expansion article', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.ok(html.includes('section-301-tariff-expansion-60-countries.html'),
+    'index.html must link to the Section 301 expansion article');
+  const article = fs.readFileSync(path.join(__dirname, '..', 'section-301-tariff-expansion-60-countries.html'), 'utf8');
+  assert.ok(article.length > 5000, 'expansion article should be substantive');
+  assert.ok(article.includes('Section 301'), 'article should mention Section 301');
+});
