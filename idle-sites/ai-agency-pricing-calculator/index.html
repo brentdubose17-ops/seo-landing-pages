@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Agency Pricing Calculator — Instantly Calculate Your Rate</title>
-  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with AI coding agent cost transparency (3 billing models, 6 cost variables), open-weight (Qwen 3.8 Max, Kimi K3, GLM-5.2) vs paid frontier model options including GPT-5.6 Sol (Instant + deep reasoning)." />
-  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, open-weight AI models, Qwen 3.8 Max pricing, Kimi K3 pricing, GLM-5.2, GPT-5.6 Sol pricing, GPT-5.6 Luna, AI coding agent pricing, AI coding agent cost, agent cost transparency" />
+  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with Agent Plugins portability pricing (build once, run across Codex, ChatGPT, Cursor, Copilot, Kiro, VS Code), AI coding agent cost transparency (3 billing models, 6 cost variables), open-weight (Qwen 3.8 Max, Kimi K3, GLM-5.2) vs paid frontier model options including GPT-5.6 Sol (Instant + deep reasoning)." />
+  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, Agent Plugins pricing, agent plugin portability discount, build once run anywhere, open-weight AI models, Qwen 3.8 Max pricing, Kimi K3 pricing, GLM-5.2, GPT-5.6 Sol pricing, GPT-5.6 Luna, AI coding agent pricing, AI coding agent cost, agent cost transparency" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://aiagencycalculator.com/" />
 
@@ -965,6 +965,18 @@
           <option value="levelsio">levelsio-style — $500/failed loop (2.0×)</option>
         </select>
       </div>
+
+      <div class="form-group">
+        <label for="portability">Portability / Agent Plugins</label>
+        <select id="portability">
+          <option value="single" selected>Single platform — no plugin (1.0×)</option>
+          <option value="plugin_2">Agent Plugin — 2–3 compatible clients (setup −15%)</option>
+          <option value="plugin_many">Agent Plugin — 4+ clients / resellable (setup −30%)</option>
+        </select>
+        <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
+          Agent Plugins 1.0.0 (Aug 6, 2026) is the open standard for packaging Agent Skills + MCP servers into one portable plugin that runs across Codex, ChatGPT, Cursor, GitHub Copilot, Kiro, and VS Code. Build once, then apply a <strong>portability discount</strong> for each additional compatible client instead of charging full per-platform adaptation — and price <strong>plugin packaging &amp; distribution</strong> as its own deliverable. <a href="#agent-plugins" style="color:var(--cyan-light);">How this changes pricing ↓</a>
+        </div>
+      </div>
     </div>
 
     <div class="slider-wrap" style="margin-bottom: 24px;">
@@ -994,6 +1006,11 @@
             <div class="result-label">Setup Fee</div>
             <div class="result-value" id="res-setup">—</div>
             <div class="result-sub">One-time</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Plugin Packaging &amp; Distribution</div>
+            <div class="result-value" id="res-packaging">—</div>
+            <div class="result-sub" id="res-packaging-sub">Priced deliverable</div>
           </div>
           <div class="result-card primary">
             <div class="result-label">Monthly Retainer</div>
@@ -1105,7 +1122,7 @@
         </tbody>
       </table>
     </div>
-    <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary);">* Ranges reflect 2026 US market rates. Final pricing depends on complexity, client size, and your experience level. Model strategy affects margins more than list prices: open-weight stacks (Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3, GLM-5.2) cut the compute line vs. paid frontier APIs. GPT-5.6 Sol (Aug 6, 2026) now powers both Instant and deep reasoning for ChatGPT Plus/Pro — one consistent model with a reasoning-effort slider; GPT-5.6 Luna is the new default for Free/Go users (unlimited text chats rolling out this week/next week). OpenAI has not published per-token API pricing for the new models, so the GPT-5.6 Sol option in this calculator is a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI pricing</a> before quoting.</p>
+    <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary);">* Ranges reflect 2026 US market rates. Final pricing depends on complexity, client size, and your experience level. Model strategy affects margins more than list prices: open-weight stacks (Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3, GLM-5.2) cut the compute line vs. paid frontier APIs. GPT-5.6 Sol (Aug 6, 2026) now powers both Instant and deep reasoning for ChatGPT Plus/Pro — one consistent model with a reasoning-effort slider; GPT-5.6 Luna is the new default for Free/Go users (unlimited text chats rolling out this week/next week). OpenAI has not published per-token API pricing for the new models, so the GPT-5.6 Sol option in this calculator is a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI pricing</a> before quoting. Agent Plugins 1.0.0 (Aug 6, 2026) adds a portability lever: one plugin package serves Codex, ChatGPT, Cursor, GitHub Copilot, Kiro, and VS Code, so setup fees carry a build-once discount and plugin packaging &amp; distribution is priced as its own deliverable (see the Portability selector and <a href="#agent-plugins" style="color:var(--cyan-light);">Agent Plugins section ↓</a>).</p>
   </section>
 
   <!-- Agent Failure & Retry Cost Estimator -->
@@ -1359,6 +1376,33 @@
   <!-- ADSENSE_SLOT_BOTTOM: Replace with your AdSense ad unit code -->
   <div class="ad-slot">[ Advertisement — Google AdSense Unit (728×90 Leaderboard) ]</div>
 
+  <!-- Agent Plugins & Portability: Build Once, Run Anywhere -->
+  <section class="section" id="agent-plugins">
+    <div class="section-title">Agent Plugins: <span class="g">Build Once, Run Anywhere</span></div>
+    <div style="background:var(--gradient-soft);border:1px solid var(--border-glow);border-radius:12px;padding:24px;margin-bottom:16px;">
+      <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
+        On <strong>August 6, 2026</strong>, an open, vendor-neutral specification called <strong>Agent Plugins 1.0.0</strong> was published for packaging Agent Skills and MCP servers into portable plugins — announced by OpenAI's developer account alongside <strong>AWS, Cursor, GitHub, and Vercel</strong>. A plugin is a directory: a minimal <code style="color:var(--cyan-light)">plugin.json</code> manifest, a <code style="color:var(--cyan-light)">skills/</code> folder, an optional <code style="color:var(--cyan-light)">mcp.json</code>, and reverse-domain client-extension namespaces. Six clients support the format at launch: <strong>Codex, ChatGPT, Cursor, GitHub Copilot, Kiro (AWS), and VS Code</strong> — with AWS's Agent Toolkit compatible (30+ curated skills) and Google's Agents CLI / Data Agent Kit already shipping it. The Technical Steering Committee comprises Amazon, Cursor, Microsoft, OpenAI, and Vercel; Google is joining as a Core Maintainer. The spec is v1.0.0 but labeled a <strong>Working Draft</strong>, and it deliberately leaves out installation, distribution, permissions, sandboxing, and trust/provenance — all flagged for future versions.
+      </p>
+      <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
+        <strong>What changes for your pricing:</strong> the old cost model assumed a fixed per-platform adaptation cost — the same skill repackaged, re-configured, and re-maintained for every client platform. With one portable plugin, that per-client reimplementation cost collapses. The calculator's <strong>Portability / Agent Plugins</strong> selector models the shift three ways:
+      </p>
+      <ul style="color:var(--text-primary);font-size:0.9rem;line-height:1.8;padding-left:20px;margin-bottom:16px;">
+        <li><strong>Build-once amortization (setup discount).</strong> One package serves 2–3 compatible clients at ~15% off setup, or 4+ clients / resellable at ~30% off — instead of charging full adaptation per platform. The brief's suggested range is a ~60–90% discount off the adaptation slice per additional client; these factors apply the discount to the whole setup midpoint conservatively.</li>
+        <li><strong>Shared maintenance stream (retainer factor).</strong> One package + optional per-client extensions replaces N drifting forks, so retainers scale slightly down (0.97× for 2–3 clients, 0.94× for 4+).</li>
+        <li><strong>New revenue line (plugin packaging &amp; distribution).</strong> Packaging the deliverable as a branded plugin bundle — and distributing it across the compatible-client market — is a priced deliverable, shown in its own result card ($750 for a 2–3 client bundle, $1,500 for a resellable plugin). Resellable plugin lines also lift margins ~3 pts.</li>
+      </ul>
+      <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
+        <strong>One caution before you ship plugins:</strong> Agent Plugins v1.0.0 has <strong>no permission model, no sandboxing, no provenance verification, and no secrets handling</strong>. Agencies selling plugins should self-impose signing, code review, and least-privilege practices — and agencies buying plugins must vet them. That trust layer is itself a sellable compliance service, and the calculator's quote notes it whenever a plugin option is selected.
+      </p>
+      <p style="color:var(--text-secondary);font-size:0.9rem;margin:0 0 8px;">
+        Client portability cuts both ways: lower switching costs are great for client trust, but they weaken "sticky" platform-based retainers — lock-in risk moves from the package format to the marketplace/install layer. Price the build once, but keep the retainer tied to ongoing value delivered, not to platform lock-in.
+      </p>
+      <p style="color:var(--text-secondary);font-size:0.78rem;margin:0;">
+        Sources: <a href="https://developers.googleblog.com/agent-plugins-package-your-skills-tools-and-more" target="_blank" rel="noopener" style="color:var(--cyan-light);">Google Developers Blog — Agent Plugins (Aug 6, 2026)</a> · <a href="https://x.com/OpenAIDevs/status/2085398373511918022" target="_blank" rel="noopener" style="color:var(--cyan-light);">@OpenAIDevs announcement (X)</a> · <a href="https://agent-plugins.org/specification" target="_blank" rel="noopener" style="color:var(--cyan-light);">Agent Plugins Specification 1.0.0</a> · <a href="https://agent-plugins.org/compatible-clients" target="_blank" rel="noopener" style="color:var(--cyan-light);">Compatible Clients</a> · <a href="https://aws.amazon.com/blogs/opensource/aws-supports-agent-plugins-an-open-standard-for-portable-agent-extensions" target="_blank" rel="noopener" style="color:var(--cyan-light);">AWS Open Source Blog</a> · <a href="https://vercel.com/blog/introducing-agent-plugins" target="_blank" rel="noopener" style="color:var(--cyan-light);">Vercel blog</a> · <a href="https://findaiagency.com/agent-plugins-for-ai-agencies" target="_blank" rel="noopener" style="color:var(--cyan-light);">Read the full agency guide on Find AI Agency →</a>
+      </p>
+    </div>
+  </section>
+
   <!-- FAQ -->
   <section class="section">
     <div class="section-title">FAQ — <span class="g">AI Agency Pricing</span></div>
@@ -1468,6 +1512,18 @@
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Not the list price — the cost profile. On Aug 6, 2026 OpenAI announced that <strong>GPT-5.6 Sol</strong> now powers both Instant and deep reasoning for ChatGPT Plus/Pro users (one consistent model with a new reasoning-effort slider), and <strong>GPT-5.6 Luna</strong> becomes the default for Free/Go users with unlimited text chats rolling out this week/next week. The same model now covers both speed modes, so agencies running ChatGPT-based client workflows get more consistent output — and the slider turns reasoning effort (and therefore cost) into a per-task dial. OpenAI has <strong>not published per-token API pricing</strong> for Sol or Luna yet, so this calculator treats the GPT-5.6 Sol option as a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI's pricing page</a> before quoting. Agency takeaway: price stays value-based, but re-run your eval suites against the new defaults and re-check any published content that references older GPT-5.5 behavior.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What does the Agent Plugins standard mean for how I price agency work?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Agent Plugins 1.0.0 (published Aug 6, 2026) lets you package Agent Skills and MCP servers into one portable plugin that runs across Codex, ChatGPT, Cursor, GitHub Copilot, Kiro, and VS Code. The old cost model — charging a fixed per-platform adaptation fee and maintaining N client-specific forks — now overstates work for plugin-based deliverables. Apply a portability discount (roughly 60–90% off adaptation cost per additional compatible client), treat plugin packaging &amp; distribution as its own priced deliverable, and keep one maintenance stream instead of N. Because v1.0.0 leaves out permissions, sandboxing, and provenance, budget plugin vetting/signing as a compliance service — it's a sellable differentiator, and it protects you when you buy third-party plugins for client environments. <a href="#agent-plugins" style="color:var(--cyan-light);">See the Agent Plugins section above ↓</a>
           </div>
         </div>
       </div>
@@ -1624,6 +1680,31 @@ const DELIVERY_RISK_LABEL = {
   levelsio: 'levelsio-style failure loops (~$500 per failed loop)'
 };
 
+// Agent Plugins / portability factor (verified Aug 7, 2026 via parent research brief
+// t_5e6ed1df). Agent Plugins 1.0.0 (published Aug 6, 2026) is an open, vendor-neutral
+// spec for packaging Agent Skills + MCP servers into a single portable plugin that runs
+// across six clients at launch: Codex, ChatGPT, Cursor, GitHub Copilot, Kiro (AWS), and
+// VS Code (source: agent-plugins.org/specification + compatible-clients). One package
+// serves all compatible clients, so per-client reimplementation cost collapses: the
+// brief's suggested calculator change is a ~60-90% portability discount off adaptation
+// cost for each additional compatible client, one shared maintenance stream instead of
+// N drifting forks, plugin packaging & distribution priced as its own deliverable, and a
+// vetting/signing service line because v1 leaves out permissions/sandboxing/provenance.
+// PORTABILITY_SETUP_FACTOR scales the setup fee (build-once amortization): single = no
+// discount (1.0), 2-3 clients = 0.85, 4+ clients / resellable = 0.70. The retainer gets a
+// modest shared-maintenance factor (single 1.0, 2-3 0.97, 4+ 0.94) and margins get a
+// small lift for resellable plugin lines. PORTABILITY_PACKAGING_FEE adds a priced
+// deliverable line (plugin packaging & distribution) to the setup fee.
+const PORTABILITY_SETUP_FACTOR = { single: 1.0, plugin_2: 0.85, plugin_many: 0.70 };
+const PORTABILITY_RETAINER_FACTOR = { single: 1.0, plugin_2: 0.97, plugin_many: 0.94 };
+const PORTABILITY_MARGIN_BONUS = { single: 0, plugin_2: 1, plugin_many: 3 };
+const PORTABILITY_PACKAGING_FEE = { single: 0, plugin_2: 750, plugin_many: 1500 };
+const PORTABILITY_LABEL = {
+  single: 'a single client platform (no plugin packaging)',
+  plugin_2: 'an Agent Plugin packaged for 2–3 compatible clients (Codex / ChatGPT / Cursor / Copilot / Kiro / VS Code)',
+  plugin_many: 'a resellable Agent Plugin for 4+ compatible clients (Codex / ChatGPT / Cursor / Copilot / Kiro / VS Code)'
+};
+
 const SIZE_MULT = {
   solopreneur: 0.65, small: 0.85, medium: 1.0, large: 1.35, enterprise: 1.8
 };
@@ -1651,6 +1732,7 @@ function calculatePricing() {
   const timeline = document.getElementById('timeline').value;
   const modelStrategy = document.getElementById('modelStrategy').value;
   const deliveryRisk = document.getElementById('deliveryRisk').value;
+  const portability = document.getElementById('portability').value;
   const hoursSaved = parseInt(document.getElementById('hoursSaved').value);
 
   if (!service || !bizSize) {
@@ -1672,13 +1754,18 @@ function calculatePricing() {
   const setupMid = (setupBase.min + setupBase.max) / 2;
   const retainerMid = (retainerBase.min + retainerBase.max) / 2;
 
-  const setupFee = Math.round(setupMid * combined / 500) * 500;
   const mcf = MODEL_COMPUTE_FACTOR[modelStrategy] || 1.0;
   const mmb = MODEL_MARGIN_BONUS[modelStrategy] || 0;
   const drf = DELIVERY_RISK_FACTOR[deliveryRisk] || 1.0;
   const drl = DELIVERY_RISK_LABEL[deliveryRisk] || DELIVERY_RISK_LABEL.low;
-  const monthlyRetainer = Math.round(retainerMid * combined * mcf * drf / 50) * 50;
-  const margin = Math.min(82, Math.max(40, BASE_MARGIN[service] + (em - 1) * 10 + mmb));
+  const psf = PORTABILITY_SETUP_FACTOR[portability] || 1.0;
+  const prf = PORTABILITY_RETAINER_FACTOR[portability] || 1.0;
+  const pmb = PORTABILITY_MARGIN_BONUS[portability] || 0;
+  const packagingFee = PORTABILITY_PACKAGING_FEE[portability] || 0;
+  const monthlyRetainer = Math.round(retainerMid * combined * mcf * drf * prf / 50) * 50;
+  const setupWithPortability = Math.round(setupMid * combined * psf / 500) * 500;
+  const setupFee = setupWithPortability + packagingFee;
+  const margin = Math.min(82, Math.max(40, BASE_MARGIN[service] + (em - 1) * 10 + mmb + pmb));
   const acv = setupFee + (monthlyRetainer * 12);
 
   // ROI calc
@@ -1702,6 +1789,11 @@ function calculatePricing() {
     ? ' GPT-5.6 Sol API pricing is not yet public, so this quote treats it as an estimate (see https://openai.com/api/pricing/).'
     : '';
 
+  const portabilityLabel = PORTABILITY_LABEL[portability] || PORTABILITY_LABEL.single;
+  const portabilityNote = portability === 'single'
+    ? ''
+    : ` This quote applies the Agent Plugins portability discount: one plugin package serves ${portability === 'plugin_2' ? '2–3' : '4+'} compatible clients (Codex, ChatGPT, Cursor, GitHub Copilot, Kiro, VS Code), so the setup fee reflects build-once amortization instead of full per-platform adaptation, and plugin packaging & distribution is priced as its own deliverable. Because Agent Plugins v1.0.0 leaves out permissions, sandboxing, and provenance verification, budget for plugin vetting/signing as a compliance service before shipping.`;
+
   const roiText = `Your ${serviceLabel} saves this client approximately ${hoursSaved} hours/month. ` +
     `At an estimated labor rate of $${laborRate}/hour for a ${bizLabel}, that's $${monthlySavings.toLocaleString()}/month — ` +
     `or $${annualSavings.toLocaleString()}/year in recovered productivity. ` +
@@ -1710,7 +1802,8 @@ function calculatePricing() {
     `This quote assumes ${modelLabel} — open-weight models (Qwen 3.8 Max, Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium.` +
     `${modelAssumptionNote} ` +
     `Pricing also bakes in a delivery-risk buffer for ${drl} — real agent workflows burn money on failed loops and retries, so don't under-price the build. ` +
-    `Assumptions verified Aug 6, 2026 (Qwen 3.8 Max GA Aug 2–3, 2026 — $2/$6 per 1M tokens, open weights ~Aug 10; OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates).`;
+    `The deliverable is ${portabilityLabel}.${portabilityNote} ` +
+    `Assumptions verified Aug 7, 2026 (Agent Plugins 1.0.0 published Aug 6, 2026 — agent-plugins.org; Qwen 3.8 Max GA Aug 2–3, 2026 — $2/$6 per 1M tokens, open weights ~Aug 10; OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates).`;
 
   // Build pitch
   const netMonthly = monthlySavings - monthlyRetainer;
@@ -1723,6 +1816,10 @@ function calculatePricing() {
     `I've done this for ${Math.floor(Math.random() * 20) + 8} businesses just like yours. Ready to get started?"`;
 
   document.getElementById('res-setup').textContent = fmt(setupFee);
+  document.getElementById('res-packaging').textContent = packagingFee > 0 ? fmt(packagingFee) : '—';
+  document.getElementById('res-packaging-sub').textContent = packagingFee > 0
+    ? (portability === 'plugin_2' ? '2–3 client plugin bundle' : '4+ client / resellable plugin')
+    : 'Not applicable (single platform)';
   document.getElementById('res-retainer').textContent = fmt(monthlyRetainer) + '/mo';
   document.getElementById('res-margin').textContent = Math.round(margin) + '%';
   document.getElementById('res-acv').textContent = fmt(acv);

@@ -2,6 +2,16 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-07 — Agent Plugins portability factor added (verified via parent research brief t_5e6ed1df)
+
+- **New input:** "Portability / Agent Plugins" selector on the main calculator — Single platform (no plugin, 1.0×), Agent Plugin — 2–3 compatible clients (setup −15%), Agent Plugin — 4+ clients / resellable (setup −30%). Default is Single, so existing outputs are unchanged.
+- **Logic:** `PORTABILITY_SETUP_FACTOR` (single 1.0, plugin_2 0.85, plugin_many 0.70) scales the setup fee for build-once amortization; `PORTABILITY_RETAINER_FACTOR` (1.0 / 0.97 / 0.94) models one shared maintenance stream instead of N drifting forks; `PORTABILITY_MARGIN_BONUS` (0 / +1 / +3 pts) reflects resale margin on plugin lines; `PORTABILITY_PACKAGING_FEE` ($0 / $750 / $1,500) adds "Plugin packaging & distribution" as its own priced deliverable.
+- **New result card:** "Plugin Packaging & Distribution" shows the packaging line (or "Not applicable (single platform)").
+- **ROI output:** now names the deliverable's portability profile; plugin options append the Agent Plugins portability-discount explanation (build once across Codex / ChatGPT / Cursor / GitHub Copilot / Kiro / VS Code) and flag the v1.0.0 security/trust gap (no permissions, sandboxing, or provenance — budget vetting/signing as a compliance service). Assumptions date bumped to Aug 7, 2026.
+- **Copy:** New "Agent Plugins: Build Once, Run Anywhere" section (what the Aug 6, 2026 1.0.0 spec is, launch clients, TSC, Working Draft status, the three pricing levers, lock-in/trust caveats, sources); FAQ item "What does the Agent Plugins standard mean for how I price agency work?"; Pricing Reference Table footnote extended; meta description/keywords extended (Agent Plugins pricing, portability discount, build once run anywhere).
+- **Sources:** Google Developers Blog (Aug 6, 2026), @OpenAIDevs announcement, agent-plugins.org/specification + /compatible-clients, AWS Open Source Blog, Vercel blog — via parent research brief t_5e6ed1df (13 primary sources). Companion article live on findaiagency.com: /agent-plugins-for-ai-agencies.
+- **Verified:** JS syntax clean; manual + browser-driven calculation checks for single / plugin_2 / plugin_many with realistic inputs (custom agent, medium biz, 4–5 workflows → $15K/$14K/$12K setup, packaging $0/$750/$1,500, margins 60/61/63%).
+
 ## 2026-08-06 — Qwen 3.8 Max open-weight coverage added (verified via parent research brief t_de2f9115)
 
 - **New model in open-weight strategy:** Qwen 3.8 Max added to the Model Strategy selector's "Open-weight first" option and to all open-weight explanatory copy. Verified specs: GA Aug 2–3, 2026; 2.4T-parameter MoE, ~95B active; 1M-token context; API $2/$6 per 1M tokens (input/output) — the cheapest open frontier-class API on the page; open weights promised ~Aug 10 (not yet downloadable as of Aug 6, 2026).
