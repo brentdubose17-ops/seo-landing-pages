@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agency Pricing Calculator — Instantly Calculate Your Rate</title>
+  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with open-weight (Qwen 3.8 Max, Kimi K3, GLM-5.2) vs paid frontier model options including GPT-5.6 Sol (Instant + deep reasoning)." />
+  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, open-weight AI models, Qwen 3.8 Max pricing, Kimi K3 pricing, GLM-5.2, GPT-5.6 Sol pricing, GPT-5.6 Luna" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://aiagencycalculator.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AI Agency Pricing Calculator — Instantly Calculate Your Rate" />
+  <meta property="og:description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aiagencycalculator.com/" />
+  <meta property="og:image" content="https://aiagencycalculator.com/og-image.png" />
+  <meta property="og:site_name" content="AI Agency Pricing Calculator" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI Agency Pricing Calculator — Instantly Calculate Your Rate" />
+  <meta name="twitter:description" content="Free AI agency pricing calculator. Get your setup fee, retainer, and profit margin in 60 seconds." />
+  <meta name="twitter:image" content="https://aiagencycalculator.com/og-image.png" />
+
+  <!-- Schema.org WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AI Agency Pricing Calculator",
+    "description": "Calculate the right pricing for your AI automation agency — setup fees, monthly retainers, profit margins, and client ROI justification.",
+    "url": "https://aiagencycalculator.com/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "ABD Legacy Automation",
+      "url": "https://abdlegacyautomation.com"
+    },
+    "featureList": [
+      "AI agency setup fee calculator",
+      "Monthly retainer recommendation",
+      "Profit margin estimator",
+      "Client ROI justification generator",
+      "Sales pitch script generator",
+      "Service-specific pricing by business size"
+    ]
+  }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much should I charge for AI automation services in 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AI automation pricing in 2026 ranges from $1,500–$5,000 setup fees for basic chatbots to $10,000–$50,000+ for full office automation packages. Monthly retainers typically run $500–$5,000+ depending on complexity and client size."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a fair monthly retainer for an AI agency?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Fair AI agency monthly retainers in 2026 range from $750/mo for basic single-workflow bots to $4,000–$8,000/mo for enterprise multi-workflow automation packages. The key is tying your price to measurable client ROI."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google AdSense Placeholder -->
+  <!-- ADSENSE_HEAD_TAG_HERE -->
+
+  <style>
+    :root {
+      --bg: #0d0d1a;
+      --bg-card: #13132a;
+      --bg-input: #0a0a1f;
+      --purple: #7c3aed;
+      --purple-light: #9d5cff;
+      --purple-dark: #5b21b6;
+      --cyan: #06b6d4;
+      --cyan-light: #22d3ee;
+      --cyan-dark: #0891b2;
+      --gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
+      --gradient-soft: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.08));
+      --white: #ffffff;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --border: #1e1e40;
+      --border-glow: rgba(124,58,237,0.3);
+      --success: #10b981;
+      --warning: #f59e0b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* ── Animated background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(6,182,212,0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main, header, footer { position: relative; z-index: 1; }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,26,0.95);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--gradient);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .logo-text h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .logo-text span {
+      font-size: 0.72rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .badge {
+      background: var(--gradient-soft);
+      border: 1px solid var(--border-glow);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      color: var(--cyan-light);
+      font-weight: 600;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 72px 20px 48px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--gradient-soft);
+      border: 1px solid var(--border-glow);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      color: var(--purple-light);
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    .hero h2 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .hero h2 .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 1.7rem;
+      font-weight: 900;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-stat span {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Main ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── Ad Slot ── */
+    .ad-slot {
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed rgba(255,255,255,0.08);
+      border-radius: 8px;
+      text-align: center;
+      padding: 22px;
+      margin: 24px 0;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 20px;
+      background: var(--gradient);
+      border-radius: 2px;
+    }
+
+    /* ── Form ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-group select,
+    .form-group input[type="number"],
+    .form-group input[type="text"] {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .form-group select:focus,
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.12);
+    }
+
+    .form-group select option { background: var(--bg-card); }
+
+    /* ── Slider ── */
+    .slider-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slider-header label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .slider-value {
+      font-size: 1rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      background: linear-gradient(to right, var(--purple), var(--cyan));
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 3px solid var(--purple);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    /* ── CTA ── */
+    .btn-calculate {
+      width: 100%;
+      background: var(--gradient);
+      border: none;
+      border-radius: 10px;
+      padding: 16px 24px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--white);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 24px rgba(124,58,237,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-calculate::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.4s;
+    }
+
+    .btn-calculate:hover::before { left: 100%; }
+    .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,0.5); }
+
+    /* ── Results Gate ── */
+    .results-gate {
+      position: relative;
+    }
+
+    .results-blur {
+      filter: blur(8px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .results-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(13,13,26,0.85);
+      backdrop-filter: blur(4px);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 24px;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .lock-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 16px;
+    }
+
+    .results-overlay h4 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .results-overlay p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+      max-width: 380px;
+    }
+
+    .email-form {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 440px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .email-form input[type="email"] {
+      flex: 1;
+      min-width: 210px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+
+    .email-form input[type="email"]:focus {
+      outline: none;
+      border-color: var(--purple);
+    }
+
+    .btn-unlock {
+      background: var(--gradient);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+    }
+
+    .btn-unlock:hover { opacity: 0.9; transform: translateY(-1px); }
+    .privacy-note { font-size: 0.73rem; color: var(--text-secondary); margin-top: 10px; }
+
+    /* ── Results Cards ── */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .result-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .result-card:hover { border-color: var(--border-glow); }
+
+    .result-card.primary {
+      background: var(--gradient-soft);
+      border-color: var(--border-glow);
+    }
+
+    .result-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .result-value {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .result-card.primary .result-value {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .result-sub {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* ── ROI & Pitch Box ── */
+    .insight-box {
+      border-radius: 12px;
+      padding: 22px;
+      margin-top: 16px;
+    }
+
+    .insight-box.roi {
+      background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.04));
+      border: 1px solid rgba(16,185,129,0.3);
+    }
+
+    .insight-box.pitch {
+      background: var(--gradient-soft);
+      border: 1px solid var(--border-glow);
+      margin-top: 12px;
+    }
+
+    .insight-box .box-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .insight-box.roi .box-label { color: var(--success); }
+    .insight-box.pitch .box-label { color: var(--purple-light); }
+
+    .insight-box .box-text {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+
+    .btn-print {
+      background: transparent;
+      border: 1px solid var(--purple);
+      border-radius: 8px;
+      padding: 10px 22px;
+      color: var(--purple-light);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: all 0.2s;
+    }
+
+    .btn-print:hover { background: rgba(124,58,237,0.1); }
+
+    /* ── Pricing Reference Table ── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    thead { background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(6,182,212,0.1)); }
+    th {
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    th:nth-child(1) { color: var(--text-secondary); }
+    th:not(:first-child) { color: var(--cyan-light); }
+
+    td {
+      padding: 13px 16px;
+      border-top: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .pill {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+
+    .pill-purple { background: rgba(124,58,237,0.15); color: var(--purple-light); }
+    .pill-cyan { background: rgba(6,182,212,0.12); color: var(--cyan-light); }
+    .pill-green { background: rgba(16,185,129,0.12); color: var(--success); }
+
+    /* ── Section ── */
+    .section { margin: 52px 0; }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .section-title .g {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item:hover { border-color: var(--border-glow); }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 18px 22px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--white);
+      font-size: 0.97rem;
+      font-weight: 600;
+    }
+
+    .faq-icon {
+      min-width: 24px;
+      height: 24px;
+      background: var(--gradient-soft);
+      border: 1px solid var(--border-glow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--purple-light);
+      font-size: 1rem;
+      font-weight: 800;
+      transition: transform 0.2s;
+    }
+
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq-answer-inner {
+      padding: 0 22px 18px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.75;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: rgba(13,13,26,0.98);
+      border-top: 1px solid var(--border);
+      padding: 48px 20px 28px;
+      margin-top: 60px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 36px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .footer-col p, .footer-col a {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.9;
+      text-decoration: none;
+      display: block;
+    }
+
+    .footer-col a:hover { color: var(--purple-light); }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 28px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-brand {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .card { padding: 20px 16px; }
+      .hero { padding: 48px 16px 32px; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media print {
+      header, footer, .ad-slot, .btn-calculate, .btn-print { display: none !important; }
+      body { background: white; color: black; }
+    }
+  </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+<div style="background:#13132a;border:1px solid #7c3aed;border-radius:12px;padding:20px 24px;margin:24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+  <div>
+    <p style="color:#7c3aed;font-size:0.8rem;margin:0 0 4px;text-transform:uppercase;letter-spacing:1px;font-weight:600">🎁 Free Resource</p>
+    <p style="color:#fff;font-weight:700;margin:0 0 4px;font-size:1rem">Free: AI Agency Launch Checklist</p>
+    <p style="color:#94a3b8;margin:0;font-size:0.85rem">Land your first $3K+ client in 30 days</p>
+  </div>
+  <a href="/free-checklist.html" style="background:#7c3aed;color:#000;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.9rem;white-space:nowrap">Get Free Checklist →</a>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🤖</div>
+      <div class="logo-text">
+        <h1>AI Agency Pricing Calculator</h1>
+        <span>2026 Rate Intelligence Tool</span>
+      </div>
+    </div>
+    <div class="badge">✨ <span id="userCount">9,312</span> agencies priced</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-tag">🚀 Updated for 2026 Market Rates</div>
+  <h2>Stop Guessing. <span class="gradient-text">Price Your AI Services Right.</span></h2>
+  <p>The AI automation market is exploding. This calculator gives you the exact setup fee, monthly retainer, and profit margins to charge — and the pitch to close the deal.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>$127B</strong><span>AI Services Market</span></div>
+    <div class="hero-stat"><strong>$3K–$15K</strong><span>Avg Setup Fee</span></div>
+    <div class="hero-stat"><strong>68%</strong><span>Avg Profit Margin</span></div>
+    <div class="hero-stat"><strong>12×</strong><span>Avg Client ROI</span></div>
+  </div>
+</section>
+
+<main>
+
+  <!-- AdSense Top -->
+  <!-- ADSENSE_SLOT_TOP: Replace with your AdSense ad unit code -->
+  <div class="ad-slot">[ Advertisement — Google AdSense Unit (728×90 Leaderboard) ]</div>
+
+  <!-- Calculator Form -->
+  <div class="card">
+    <div class="card-title">AI Pricing Calculator</div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="serviceType">Service Type</label>
+        <select id="serviceType">
+          <option value="">— Select Service —</option>
+          <option value="chatbot">💬 Chatbot / Website Assistant</option>
+          <option value="email_auto">📧 Email Automation</option>
+          <option value="lead_gen">🎯 Lead Generation Bot</option>
+          <option value="content_auto">✍️ Content Automation</option>
+          <option value="full_office">🏢 Full Office Automation</option>
+          <option value="custom_agent">⚙️ Custom AI Agent</option>
+          <option value="social_media">📱 Social Media Automation</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="bizSize">Client Business Size</label>
+        <select id="bizSize">
+          <option value="">— Select Size —</option>
+          <option value="solopreneur">Solopreneur / Freelancer</option>
+          <option value="small">Small Business (1–10 employees)</option>
+          <option value="medium">Medium Business (11–50 employees)</option>
+          <option value="large">Large Business (51–200 employees)</option>
+          <option value="enterprise">Enterprise (200+ employees)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="numWorkflows">Number of Workflows / Automations</label>
+        <select id="numWorkflows">
+          <option value="1">1 workflow</option>
+          <option value="2">2–3 workflows</option>
+          <option value="4" selected>4–5 workflows</option>
+          <option value="6">6–10 workflows</option>
+          <option value="11">11+ workflows</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="experience">Your Experience Level</label>
+        <select id="experience">
+          <option value="beginner">Beginner (0–6 months)</option>
+          <option value="intermediate" selected>Intermediate (6mo–2yr)</option>
+          <option value="advanced">Advanced (2–5 years)</option>
+          <option value="expert">Expert / Agency (5+ years)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="timeline">Project Timeline</label>
+        <select id="timeline">
+          <option value="rush">Rush (under 2 weeks)</option>
+          <option value="standard" selected>Standard (2–6 weeks)</option>
+          <option value="extended">Extended (6–12 weeks)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="modelStrategy">Model Strategy (API Cost Profile)</label>
+        <select id="modelStrategy">
+          <option value="hybrid" selected>Hybrid — open-weight + frontier mix</option>
+          <option value="sol">GPT-5.6 Sol (frontier, Instant + deep reasoning) — premium API spend (estimate)</option>
+          <option value="open">Open-weight first (Qwen 3.8 Max, Kimi K3, GLM-5.2) — lowest API spend</option>
+          <option value="frontier">Paid frontier only (Claude, GPT) — premium API spend</option>
+        </select>
+        <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
+          GPT-5.6 Sol now powers both Instant and deep reasoning for ChatGPT Plus/Pro (one consistent model, reasoning-effort slider). OpenAI has not published per-token API pricing for GPT-5.6 Sol yet — this option uses a marked estimate. <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">See OpenAI pricing →</a>
+        </div>
+        <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
+          Open-weight option: Alibaba's Qwen 3.8 Max (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; 1M context) lists at <strong>$2/$6 per 1M tokens</strong> — open weights promised ~Aug 10, so self-hosted cost is not yet knowable and varies by hardware/quantization. Kimi K3 ($3/$15) and GLM-5.2 (MIT) round out the open-weight class. <a href="#open-weight" style="color:var(--cyan-light);">See the open-weight section ↓</a>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="deliveryRisk">Delivery Risk (Failure / Retry)</label>
+        <select id="deliveryRisk">
+          <option value="low" selected>Low — mature stack, few retries (1.0×)</option>
+          <option value="moderate">Moderate — occasional retry loops (1.15×)</option>
+          <option value="high">High — agentic fan-out, retry storms (1.35×)</option>
+          <option value="levelsio">levelsio-style — $500/failed loop (2.0×)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="slider-wrap" style="margin-bottom: 24px;">
+      <div class="slider-header">
+        <label for="hoursSaved">Monthly Hours Saved for Client</label>
+        <span class="slider-value" id="hoursDisplay">40 hrs/mo</span>
+      </div>
+      <input type="range" id="hoursSaved" min="5" max="300" value="40" step="5"
+        oninput="document.getElementById('hoursDisplay').textContent = this.value + ' hrs/mo'" />
+      <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-top:4px;">
+        <span>5 hrs</span><span>150 hrs</span><span>300 hrs</span>
+      </div>
+    </div>
+
+    <button class="btn-calculate" onclick="calculatePricing()">
+      🚀 Calculate My Pricing
+    </button>
+  </div>
+
+  <!-- Results -->
+  <div id="results-section" style="display:none;">
+    <div class="results-gate">
+      <div id="results-content" class="card">
+        <div class="card-title">Your Recommended Pricing</div>
+        <div class="results-grid">
+          <div class="result-card primary">
+            <div class="result-label">Setup Fee</div>
+            <div class="result-value" id="res-setup">—</div>
+            <div class="result-sub">One-time</div>
+          </div>
+          <div class="result-card primary">
+            <div class="result-label">Monthly Retainer</div>
+            <div class="result-value" id="res-retainer">—</div>
+            <div class="result-sub">Per month</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Estimated Profit Margin</div>
+            <div class="result-value" id="res-margin">—</div>
+            <div class="result-sub">Net margin</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Annual Contract Value</div>
+            <div class="result-value" id="res-acv">—</div>
+            <div class="result-sub">Setup + 12mo retainer</div>
+          </div>
+        </div>
+        <div class="insight-box roi">
+          <div class="box-label">📈 Client ROI Justification</div>
+          <div class="box-text" id="res-roi">—</div>
+        </div>
+        <div class="insight-box pitch">
+          <div class="box-label">🎯 Sales Pitch Script</div>
+          <div class="box-text" id="res-pitch">—</div>
+        </div>
+        <button class="btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
+      </div>
+      <div class="results-overlay" id="results-overlay">
+        <div class="lock-icon">🔐</div>
+        <h4>Your Pricing Is Ready</h4>
+        <p>Enter your email to unlock your recommended setup fee, retainer, profit margin, and a ready-to-send sales pitch script.</p>
+        <div class="email-form">
+          <input type="email" id="email-input" placeholder="your@email.com" />
+          <button class="btn-unlock" onclick="unlockResults()">Unlock Pricing →</button>
+        </div>
+        <div class="privacy-note">🔒 No spam ever. Used only to send your pricing report.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AdSense Mid -->
+  <!-- ADSENSE_SLOT_MID: Replace with your AdSense ad unit code -->
+  <div class="ad-slot">[ Advertisement — Google AdSense Unit (336×280 Rectangle) ]</div>
+
+  <!-- Pricing Reference Table -->
+  <section class="section">
+    <div class="section-title">AI Agency <span class="g">Pricing Reference</span> Table 2026</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Service Type</th>
+            <th>Setup Fee Range</th>
+            <th>Monthly Retainer</th>
+            <th>Avg Margin</th>
+            <th>Best For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>💬 Chatbot / Assistant</td>
+            <td><span class="pill pill-purple">$1,500–$5,000</span></td>
+            <td><span class="pill pill-cyan">$500–$1,500/mo</span></td>
+            <td><span class="pill pill-green">65–75%</span></td>
+            <td>SMBs, e-commerce, service cos</td>
+          </tr>
+          <tr>
+            <td>📧 Email Automation</td>
+            <td><span class="pill pill-purple">$2,000–$6,000</span></td>
+            <td><span class="pill pill-cyan">$750–$2,000/mo</span></td>
+            <td><span class="pill pill-green">60–72%</span></td>
+            <td>Coaches, SaaS, agencies</td>
+          </tr>
+          <tr>
+            <td>🎯 Lead Generation Bot</td>
+            <td><span class="pill pill-purple">$3,000–$8,000</span></td>
+            <td><span class="pill pill-cyan">$1,000–$3,000/mo</span></td>
+            <td><span class="pill pill-green">55–70%</span></td>
+            <td>Real estate, insurance, finance</td>
+          </tr>
+          <tr>
+            <td>✍️ Content Automation</td>
+            <td><span class="pill pill-purple">$2,500–$7,500</span></td>
+            <td><span class="pill pill-cyan">$800–$2,500/mo</span></td>
+            <td><span class="pill pill-green">65–80%</span></td>
+            <td>Content creators, media, blogs</td>
+          </tr>
+          <tr>
+            <td>🏢 Full Office Automation</td>
+            <td><span class="pill pill-purple">$8,000–$35,000</span></td>
+            <td><span class="pill pill-cyan">$2,500–$7,500/mo</span></td>
+            <td><span class="pill pill-green">45–65%</span></td>
+            <td>Mid-market, growing teams</td>
+          </tr>
+          <tr>
+            <td>⚙️ Custom AI Agent</td>
+            <td><span class="pill pill-purple">$5,000–$25,000</span></td>
+            <td><span class="pill pill-cyan">$1,500–$5,000/mo</span></td>
+            <td><span class="pill pill-green">50–70%</span></td>
+            <td>Tech cos, SaaS, operations</td>
+          </tr>
+          <tr>
+            <td>📱 Social Media Automation</td>
+            <td><span class="pill pill-purple">$1,500–$4,500</span></td>
+            <td><span class="pill pill-cyan">$600–$1,800/mo</span></td>
+            <td><span class="pill pill-green">70–82%</span></td>
+            <td>Brands, coaches, ecommerce</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary);">* Ranges reflect 2026 US market rates. Final pricing depends on complexity, client size, and your experience level. Model strategy affects margins more than list prices: open-weight stacks (Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3, GLM-5.2) cut the compute line vs. paid frontier APIs. GPT-5.6 Sol (Aug 6, 2026) now powers both Instant and deep reasoning for ChatGPT Plus/Pro — one consistent model with a reasoning-effort slider; GPT-5.6 Luna is the new default for Free/Go users (unlimited text chats rolling out this week/next week). OpenAI has not published per-token API pricing for the new models, so the GPT-5.6 Sol option in this calculator is a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI pricing</a> before quoting.</p>
+  </section>
+
+  <!-- Agent Failure & Retry Cost Estimator -->
+  <section class="section" id="failure-estimator">
+    <div class="section-title">Agent Failure &amp; <span class="g">Retry Cost</span> Estimator</div>
+    <div class="card">
+      <div class="card-title">🔁 What a Failed Loop Really Costs</div>
+      <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:20px; line-height:1.7;">
+        Agent workflows rarely run clean the first time. On Aug 5, 2026, <strong style="color:var(--white)">levelsio (Pieter Levels)</strong> reported burning <strong style="color:var(--white)">$500 per Gauntlet Loop run</strong> — an AI-coding method that fans out subagents and loops until "utterly perfect" — then corrected it to <strong style="color:var(--white)">$900 total with 95% of generated code removed</strong>. Measured baselines are ~$0.06 per request and "a few dollars per task"; failure modes (retry storms, subagent fan-out, silent misconfiguration) turn that into <strong style="color:var(--white)">$500 loops and $2,000 overnight bills</strong>. Use this estimator to model what retries actually add to your spend.
+      </p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="failScenario">Scenario Preset</label>
+          <select id="failScenario" onchange="applyFailScenario()">
+            <option value="levelsio" selected>levelsio Gauntlet Loop (real-world, Aug 5 2026)</option>
+            <option value="fanout">Typical agentic build — subagent fan-out + retries</option>
+            <option value="simple">Simple automation — few retries</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="failBaseCost">Base Cost per Loop Attempt ($)</label>
+          <input type="number" id="failBaseCost" min="1" max="5000" value="500" step="10" />
+        </div>
+        <div class="form-group">
+          <label for="failRetries">Failed Loop Attempts (Retries)</label>
+          <input type="number" id="failRetries" min="0" max="20" value="0" step="1" />
+        </div>
+        <div class="form-group">
+          <label for="failCleanup">Cleanup / Rework Cost ($)</label>
+          <input type="number" id="failCleanup" min="0" max="10000" value="400" step="25" />
+        </div>
+      </div>
+      <button class="btn-calculate" onclick="calculateFailure()">🔁 Estimate Total Spend With Retries</button>
+      <div id="failure-results" style="display:none; margin-top:20px;">
+        <div class="results-grid">
+          <div class="result-card">
+            <div class="result-label">Naive Estimate (No Retries)</div>
+            <div class="result-value" id="f-naive">—</div>
+            <div class="result-sub">1 loop attempt, no cleanup</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Retry Loops Burned</div>
+            <div class="result-value" id="f-retries">—</div>
+            <div class="result-sub" id="f-retries-sub">—</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Cleanup / Rework</div>
+            <div class="result-value" id="f-cleanup">—</div>
+            <div class="result-sub">Manual rework after failure</div>
+          </div>
+          <div class="result-card primary">
+            <div class="result-label">Total Including Retries</div>
+            <div class="result-value" id="f-total">—</div>
+            <div class="result-sub" id="f-total-sub">—</div>
+          </div>
+        </div>
+        <div class="insight-box roi">
+          <div class="box-label">📌 How to read this</div>
+          <div class="box-text" id="f-note">—</div>
+        </div>
+        <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary); line-height:1.7;">
+          Model: total = base cost per loop attempt × (1 + failed attempts) + cleanup/rework. Source: levelsio, Aug 5 2026 — "$500 per Gauntlet Loop run", corrected to "$900 total… remove 95% of what it made" (<a href="https://x.com/levelsio/status/2084997902632390981" target="_blank" rel="noopener" style="color:var(--cyan-light);">@levelsio on X</a>); baselines from Systima token-overhead analysis (<a href="https://systima.ai/blog/claude-code-vs-opencode-token-overhead" target="_blank" rel="noopener" style="color:var(--cyan-light);">systima.ai, Jul 12 2026</a>), HN Cursor usage analytics ($0.06/req avg, <a href="https://news.ycombinator.com/item?id=45931825" target="_blank" rel="noopener" style="color:var(--cyan-light);">HN #45931825</a>), and AgentGuard infinite-loop tooling (~$2,000 overnight, <a href="https://github.com/dipampaul17/AgentGuard" target="_blank" rel="noopener" style="color:var(--cyan-light);">github.com/dipampaul17/AgentGuard</a>). Directional estimate — substitute your own observed retry rates.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gemini API Cost & Model Routing Savings Calculator -->
+  <section class="section">
+    <div class="section-title">Gemini API Cost &amp; <span class="g">Model Routing</span> Savings</div>
+    <div class="card">
+      <div class="card-title">🚦 Route Cheaper, Spend Less</div>
+      <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:20px; line-height:1.7;">
+        Google Cloud's new <strong style="color:var(--white)">managed model routing</strong> (API Gateway, Public Preview since Aug 3, 2026) accepts your existing OpenAI-compatible chat requests, inspects the <code style="color:var(--cyan-light)">model</code> name in each payload, and routes the call to a cheaper foundation model — <strong style="color:var(--white)">with no client-side code changes</strong>. This estimator shows the potential token-cost savings from routing simple traffic to Gemini Flash-Lite instead of paying Flash/Pro rates for everything.
+      </p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="routeInputTokens">Monthly Input Tokens (millions)</label>
+          <input type="number" id="routeInputTokens" min="1" max="2000" value="50" step="1" />
+        </div>
+        <div class="form-group">
+          <label for="routeOutputTokens">Monthly Output Tokens (millions)</label>
+          <input type="number" id="routeOutputTokens" min="1" max="2000" value="10" step="1" />
+        </div>
+        <div class="form-group">
+          <label for="routeCurrentModel">Current Model</label>
+          <select id="routeCurrentModel">
+            <option value="flash">Gemini 3.5 Flash</option>
+            <option value="pro">Gemini 2.5 Pro</option>
+          </select>
+        </div>
+      </div>
+      <div class="slider-wrap" style="margin-bottom: 24px;">
+        <div class="slider-header">
+          <label for="routePct">% of traffic routed to Flash-Lite</label>
+          <span class="slider-value" id="routePctDisplay">80%</span>
+        </div>
+        <input type="range" id="routePct" min="0" max="100" value="80" step="5"
+          oninput="document.getElementById('routePctDisplay').textContent = this.value + '%'" />
+        <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-secondary); margin-top:4px;">
+          <span>0% (no routing)</span><span>50%</span><span>100% (all to Flash-Lite)</span>
+        </div>
+      </div>
+      <button class="btn-calculate" onclick="calculateRouting()">💰 Estimate Routing Savings</button>
+      <div id="routing-results" style="display:none; margin-top:20px;">
+        <div class="results-grid">
+          <div class="result-card">
+            <div class="result-label">Current Monthly Cost</div>
+            <div class="result-value" id="r-current">—</div>
+            <div class="result-sub">All traffic on current model</div>
+          </div>
+          <div class="result-card primary">
+            <div class="result-label">Routed Monthly Cost</div>
+            <div class="result-value" id="r-routed">—</div>
+            <div class="result-sub" id="r-routed-sub">—</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Monthly Savings</div>
+            <div class="result-value" id="r-savings">—</div>
+            <div class="result-sub" id="r-savings-pct">—</div>
+          </div>
+        </div>
+        <div class="insight-box roi">
+          <div class="box-label">📌 How to read this</div>
+          <div class="box-text" id="r-note">—</div>
+        </div>
+        <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary); line-height:1.7;">
+          Directional estimate. Token prices are Google's published list prices (global tier, Aug 2026): Flash-Lite $0.30/1M input · $2.50/1M output; Flash $1.50/1M input · $9.00/1M output; 2.5 Pro $1.25/1M input (≤200K) · $10/1M output (≤200K). No model-routing-specific fee has been published — gateway calls bill at standard API Gateway rates (free under 2M calls/mo, then ~$3/1M), so savings are almost entirely from model selection. Your real numbers depend on your traffic mix and the model versions you route to. <a href="#routing-sources" style="color:var(--cyan-light);">Sources ↓</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Google Cloud Model Routing Explainer -->
+  <section class="section" id="routing-sources">
+    <div class="section-title">Google Cloud Model Routing: <span class="g">Cutting Gemini API Costs</span></div>
+    <div class="card" style="padding:28px; margin-bottom:16px;">
+      <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--purple-light); margin-bottom:10px;">What changed</div>
+      <p style="color:var(--text-primary); font-size:0.95rem; line-height:1.7; margin-bottom:16px;">
+        On <strong>August 3, 2026</strong> Google Cloud added <strong>managed model routing</strong> to API Gateway (Public Preview). It accepts OpenAI-compatible chat requests, transcodes them in-flight, and dispatches them to Gemini, Anthropic Claude, or OpenAI models hosted in Vertex AI Model Garden. Google positions it as a managed replacement for self-hosted proxies like LiteLLM — no proxy server to host, scale, or maintain.
+      </p>
+      <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--purple-light); margin-bottom:10px;">How the savings work</div>
+      <p style="color:var(--text-primary); font-size:0.95rem; line-height:1.7; margin-bottom:16px;">
+        Routing is driven by the <code style="color:var(--cyan-light)">model</code> name in each request payload. You define a router with a <strong>default model</strong> plus rules mapping client model strings to cheaper backends — unmatched traffic falls back to the default. Example: send all traffic to Flash, set the default to Flash-Lite, and route only complex/agentic requests to Flash. Google's own examples use <code style="color:var(--cyan-light)">google/gemini-3.5-flash-lite</code>, <code style="color:var(--cyan-light)">google/gemini-2.5-pro</code>, <code style="color:var(--cyan-light)">anthropic/claude-opus-4-7</code>, and <code style="color:var(--cyan-light)">openai/gpt-oss-120b-maas</code>.
+      </p>
+      <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--purple-light); margin-bottom:10px;">Illustrative scenarios (directional)</div>
+      <p style="color:var(--text-primary); font-size:0.95rem; line-height:1.7; margin-bottom:16px;">
+        Using Google's published list prices: a content agency sending 50M input + 10M output tokens/mo to Flash at $165/mo could route 80% to Flash-Lite and drop to ~$65/mo — <strong style="color:var(--success)">≈ $100/mo (~61%) saved</strong>. A multi-tier client setup on 2.5 Pro at $212.50/mo with 70% budget-tier traffic could drop to ~$100.85/mo — <strong style="color:var(--success)">≈ $111.65/mo (~53%) saved</strong>. A 5% fallback-traffic leak onto Flash-Lite instead of Flash saves ~$16/mo on that slice alone. Token volumes and split percentages are assumptions; substitute your own usage.
+      </p>
+      <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--warning); margin-bottom:10px;">Caveats before you build on it</div>
+      <ul style="color:var(--text-primary); font-size:0.9rem; line-height:1.8; padding-left:20px; margin-bottom:16px;">
+        <li><strong>Public Preview:</strong> text-only, name-based routing to MaaS models in Model Garden; request-side streaming, gRPC, WebSockets, Gemini Live, VPC-SC, and Private Service Connect unsupported.</li>
+        <li><strong>One-way mode:</strong> you cannot retrofit routing onto an existing gateway or remove it — switching requires a new API config + gateway.</li>
+        <li><strong>Single-host constraint:</strong> all models in one router must share the same hostname (global or one regional endpoint).</li>
+        <li><strong>Pricing gap:</strong> no model-routing-specific fee was found in the reviewed sources; confirm your exact model versions and region before quoting a client.</li>
+        <li><strong>No per-request observability yet:</strong> routing decisions aren't attributed per request in logs during preview.</li>
+      </ul>
+      <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--purple-light); margin-bottom:10px;">Sources</div>
+      <ul style="color:var(--text-secondary); font-size:0.85rem; line-height:1.9; padding-left:20px; margin-bottom:16px;">
+        <li><a href="https://cloud.google.com/api-gateway/docs/model-routing-overview" target="_blank" rel="noopener" style="color:var(--cyan-light);">API Gateway — Overview of model routing (Google Cloud docs)</a></li>
+        <li><a href="https://cloud.google.com/api-gateway/docs/model-routing-configure" target="_blank" rel="noopener" style="color:var(--cyan-light);">API Gateway — Configure model routing (Google Cloud docs)</a></li>
+        <li><a href="https://developers.googleblog.com/a-unified-api-for-ai-model-routing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Google Developers Blog — A unified API for AI model routing</a></li>
+        <li><a href="https://cloud.google.com/vertex-ai/generative-ai/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">Vertex AI — Generative AI pricing (Gemini token rates)</a></li>
+        <li><a href="https://cloud.google.com/api-gateway/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">API Gateway pricing (per-call tiers)</a></li>
+        <li><a href="https://docs.cloud.google.com/release-notes" target="_blank" rel="noopener" style="color:var(--cyan-light);">Google Cloud release notes (Aug 3, 2026)</a></li>
+        <li><a href="https://tldr.tech/ai/2026-08-05" target="_blank" rel="noopener" style="color:var(--cyan-light);">TLDR AI — Aug 5, 2026 issue</a></li>
+        <li><a href="https://cloud.google.com/api-gateway/docs/quotas" target="_blank" rel="noopener" style="color:var(--cyan-light);">API Gateway quotas and limits</a></li>
+      </ul>
+      <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:10px;">Changelog</div>
+      <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-08-06:</strong> Added Qwen 3.8 Max to the open-weight model strategy (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; $2/$6 per 1M tokens; 1M context; open weights promised ~Aug 10). Real-world usage section added with the Aug 6, 2026 45-project field report — self-reported, no artifacts; the "destroyed Fable 5" claim was walked back by the tester (Qwen strong on fast/multimodal builds; Fable 5 on huge long-running projects). Transparent cost-variability note added: API list prices are public, but self-hosted cost is hardware/quantization-dependent and not yet knowable until weights drop.
+      </p>
+      <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-08-06:</strong> Added GPT-5.6 Sol as a selectable model strategy (frontier, Instant + deep reasoning) with a clearly marked estimate and link to OpenAI's pricing page — OpenAI announced Sol now powers both Instant and deep reasoning for Plus/Pro, and GPT-5.6 Luna becomes the default for Free/Go users (unlimited text chats rolling out this week/next week). No official per-token API pricing published for either model; assumptions date/source now included in calculator output.
+      </p>
+      <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-08-05:</strong> Added Gemini API cost &amp; model routing savings estimator and explainer (Google Cloud managed model routing, Public Preview Aug 3, 2026). Pricing sourced from Google's published Vertex AI / API Gateway list prices; scenario figures are illustrative (directional).
+      </p>
+    </div>
+  </section>
+
+  <!-- Open-Weight Models: The New Cost Lever -->
+  <section class="section" id="open-weight">
+    <div class="section-title">Open-Weight Models: <span class="g">The New Cost Lever for Agencies</span></div>
+    <div style="background:var(--gradient-soft);border:1px solid var(--border-glow);border-radius:12px;padding:24px;margin-bottom:16px;">
+      <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
+        <strong>Open-weight models are now a real alternative to paid frontier APIs.</strong> Alibaba's <strong>Qwen 3.8 Max</strong> (GA Aug 2–3, 2026; 2.4T-parameter MoE, ~95B active, 1M-token context) prices at <strong>$2 per 1M input tokens and $6 per 1M output tokens</strong> — the cheapest open frontier-class API on this page — with open weights promised around Aug 10. Moonshot's <strong>Kimi K3</strong> — a 2.8T-parameter open-weight mixture-of-experts model (~104B active, 1M-token context, weights live on Hugging Face since July 27, 2026) — prices at <strong>$3 per 1M input tokens and $15 per 1M output tokens</strong>, a fraction of flagship paid APIs, while scoring within a few points of Claude Fable 5 and GPT-5.6 Sol on vendor-run coding benchmarks. Zhipu's <strong>GLM-5.2</strong> (open weights, MIT license, 1M-token context) is the strongest open-source coding model on Terminal-Bench 2.1. A rumored <strong>GLM 5.3 has not been officially confirmed</strong> as of August 2026 — build on GLM-5.2 / Kimi K3 / Qwen 3.8 Max today, not on an unannounced model.
+      </p>
+      <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
+        <strong>Real-world agency usage so far:</strong> Qwen 3.8 Max's headline marketing claim — "autonomous coding over 10+ days" — is an <strong>official claim, not yet independently replicated</strong>, and its Fable 5-beating ranking has been disputed by independent benchmark testing. The most-cited hands-on test so far (Aug 6, 2026, an agency-community builder with ~172K followers) reports building <strong>45 real projects</strong> while ignoring benchmarks — 3D racing games, RPGs, websites, a full OS, a promo video, and autonomous workflows — with mixed results: some demos were poor, several builds looked better than Fable 5, and every project took only a few hours. The same tester's follow-up explicitly walked back the "destroyed Fable 5" framing: Qwen 3.8 Max shone on <strong>fast, multimodal, image-guided builds</strong> (including a single-file premium landing page), while <strong>Claude Fable 5 stayed stronger on huge, long-running projects</strong> that need consistency across massive contexts. Treat these as first-person, self-reported results with no linked artifacts or independent replication — useful as a delivery-speed datapoint, not as a benchmark.
+      </p>
+      <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
+        <strong>Cost variability for open-weight models:</strong> published API list prices (Qwen 3.8 Max $2/$6, Kimi K3 $3/$15 per 1M tokens) are real, but total cost depends heavily on how you run the model. Qwen 3.8 Max's weights are not downloadable until ~Aug 10, so self-hosting cost is not yet knowable and will vary with hardware (DGX Spark-class vs cloud GPUs), quantization (MXPF4 vs full precision), context length, and utilization. Agencies that self-host trade a variable per-token bill for fixed hardware cost — the crossover point depends on your monthly token volume. Until you benchmark your own workloads, treat self-hosted cost as a range, not a fixed number.
+      </p>
+      <p style="color:var(--text-secondary);font-size:0.9rem;margin:0 0 8px;">
+        What this means for agencies: model strategy is now a pricing lever. The calculator's <strong>Model Strategy</strong> selector reflects it — open-weight stacks trim the compute line (and lift margins ~5 pts), frontier-only stacks carry a premium. Keep workflows model-portable across at least two providers, benchmark on your own workloads (vendor tables are not your client's workload), and treat AI spend as a managed line item, not a fixed cost.
+      </p>
+      <p style="color:var(--text-secondary);font-size:0.78rem;margin:0;">
+        Sources: <a href="https://qwen.ai/blog?id=qwen3.8" target="_blank" rel="noopener" style="color:var(--cyan-light);">Alibaba — Qwen 3.8 Max blog</a> · <a href="https://www.qwencloud.com/models/qwen3.8-max" target="_blank" rel="noopener" style="color:var(--cyan-light);">QwenCloud — Qwen 3.8 Max pricing</a> · <a href="https://x.com/JulianGoldieSEO/status/2085470978432512107" target="_blank" rel="noopener" style="color:var(--cyan-light);">45-project field report (X, Aug 6 2026)</a> · <a href="https://www.kimi.com/blog/kimi-k3" target="_blank" rel="noopener" style="color:var(--cyan-light);">Moonshot — Kimi K3 blog</a> · <a href="https://platform.kimi.ai/docs/pricing/chat-k3" target="_blank" rel="noopener" style="color:var(--cyan-light);">Kimi K3 API pricing</a> · <a href="https://huggingface.co/moonshotai/Kimi-K3" target="_blank" rel="noopener" style="color:var(--cyan-light);">HF model card — moonshotai/Kimi-K3</a> · <a href="https://github.com/zai-org/GLM-5" target="_blank" rel="noopener" style="color:var(--cyan-light);">zai-org/GLM-5</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- AdSense Bottom -->
+  <!-- ADSENSE_SLOT_BOTTOM: Replace with your AdSense ad unit code -->
+  <div class="ad-slot">[ Advertisement — Google AdSense Unit (728×90 Leaderboard) ]</div>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="section-title">FAQ — <span class="g">AI Agency Pricing</span></div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How much should I charge for AI automation services in 2026?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            In 2026, AI automation services command premium pricing due to strong market demand and measurable business ROI. Basic chatbot services start at $1,500–$5,000 setup and $500–$1,500/month. Full office automation packages for medium businesses can run $10,000–$35,000 setup with $2,500–$7,500/month retainers. The key is always to anchor your price to client ROI — if your automation saves a client $10,000/month in labor, charging $2,000/month is an easy sell.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What is a typical monthly retainer for an AI agency client?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Typical AI agency monthly retainers in 2026 range from $500/month for a basic single-workflow bot (e.g., a website chatbot for a solopreneur) up to $5,000–$8,000/month for enterprise-grade multi-workflow packages with ongoing optimization and reporting. Most successful AI agencies target $1,500–$3,000/month as a sweet spot for small-to-medium business clients — high enough to generate strong recurring revenue, low enough to be a no-brainer relative to the value delivered.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Should I charge an upfront setup fee plus monthly, or just monthly?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            The setup fee + monthly retainer model is the industry standard for good reason: the setup fee covers your time to build and configure the automation, while the retainer covers ongoing maintenance, optimization, and support. This model also increases client commitment (they've invested upfront) and reduces churn. Avoid charging only monthly — it undervalues the significant build time and creates financial pressure if a client churns in month 2 after you've done all the heavy lifting.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What profit margins should I expect as an AI automation agency?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            AI automation agencies typically operate at 55–80% net profit margins because the primary cost is your time, with minimal overhead. Your main expenses are: (1) software tools/subscriptions ($100–$500/month for platforms like Make, n8n, Zapier, GoHighLevel, OpenAI API — API usage is the fastest-growing line item; open-weight alternatives like Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3 at $3/$15 per 1M tokens, and GLM-5.2 with open weights are the counter-lever — agencies that run them keep more of the margin), (2) time for builds and client calls, and (3) any subcontractors or specialized help. Chatbot and social media automation services tend to have the highest margins (70–82%) because they're templated. Full office automation has lower margins (45–65%) due to higher custom build time.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How do I justify my AI agency pricing to skeptical clients?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            The best way to justify AI agency pricing is to convert your service value into dollars. Calculate: (1) Hours saved per month × average hourly cost of the work being automated. For example, if your automation saves 40 hours/month and the equivalent labor costs $25/hour, that's $1,000/month in savings — making a $1,500/month retainer look expensive. But if that 40 hours is a $50/hour admin position ($2,000/month), your pricing looks like a bargain. Always quantify the ROI before the sales conversation.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Should I offer a free trial or discovery call for AI services?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            A free 30-minute discovery call (not a free trial of the service) is the industry standard and highly recommended. During the call, you diagnose the client's workflow pain points, identify automation opportunities, and present a clear ROI case before quoting. Free service trials, however, are generally discouraged — they create expectations of free work and attract clients who don't value the service. Instead, offer a "pilot project" at a reduced rate (50–75% of normal) with a 30-day guarantee if you want to reduce friction with skeptical prospects.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What tools do AI agencies use, and how do they affect pricing?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            The most common AI agency tool stack in 2026 includes: Make.com ($10–$100+/mo), n8n (self-hosted free or $50+/mo cloud), Zapier ($20–$600+/mo), GoHighLevel ($97–$497/mo), OpenAI API ($5–$200+/mo), Voiceflow or Botpress for chatbots ($20–$100+/mo). Open-weight model APIs (Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3 at $3/$15 per 1M tokens, GLM-5.2 with open weights) now offer a lower-cost alternative to premium flagship pricing — so you can cap your tool-stack spend even while frontier API prices firm. Your tool costs should be built into your pricing — either passed through to clients as add-ons or bundled into your retainer (preferred for simplicity). A typical tool stack runs $200–$500/month, which should be factored into your margin calculations.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Do open-weight models like Qwen 3.8 Max, Kimi K3, or GLM-5.2 change what I should charge?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Not the price you charge — the margin you keep. Client pricing is value-based: if your automation saves a client $2,000/month in labor, a $1,500 retainer is justified regardless of the model underneath. What open-weight models change is your cost side. Alibaba's Qwen 3.8 Max (2.4T-parameter MoE, 1M context) prices at $2/$6 per 1M tokens with open weights promised ~Aug 10; Moonshot's Kimi K3 is a 2.8T-parameter open-weight model with a 1M-token context priced at $3/$15 per 1M tokens, and Zhipu's GLM-5.2 ships open weights under MIT — all within striking distance of paid frontier models on vendor-run coding benchmarks, though none matches them everywhere. Early real-world reports on Qwen 3.8 Max (Aug 6, 2026) are promising on fast, multimodal builds but are self-reported with no independent replication — benchmark on your own workloads before promising anything. Keep workflows model-portable, and treat the cheaper token bill as margin, not as a reason to discount. Treat the rumored GLM 5.3 as unconfirmed until Zhipu officially announces it.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Do the new GPT-5.6 Sol / GPT-5.6 Luna models change what I should charge?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Not the list price — the cost profile. On Aug 6, 2026 OpenAI announced that <strong>GPT-5.6 Sol</strong> now powers both Instant and deep reasoning for ChatGPT Plus/Pro users (one consistent model with a new reasoning-effort slider), and <strong>GPT-5.6 Luna</strong> becomes the default for Free/Go users with unlimited text chats rolling out this week/next week. The same model now covers both speed modes, so agencies running ChatGPT-based client workflows get more consistent output — and the slider turns reasoning effort (and therefore cost) into a per-task dial. OpenAI has <strong>not published per-token API pricing</strong> for Sol or Luna yet, so this calculator treats the GPT-5.6 Sol option as a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI's pricing page</a> before quoting. Agency takeaway: price stays value-based, but re-run your eval suites against the new defaults and re-check any published content that references older GPT-5.5 behavior.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How many clients do I need to make $10,000/month as an AI agency?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            At an average retainer of $1,500/month, you need 7 clients. At $2,000/month average retainer, just 5 clients. At $3,000/month, only 4 clients. This is why positioning for medium-to-large clients (who can afford $2,000–$5,000/month) dramatically reduces client load while increasing revenue. Niching down into high-ROI industries like real estate, insurance, legal, or medical also lets you charge premium rates because the value of automation in those sectors is especially high.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is it better to niche down or offer all AI services?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Niche down — at least initially. Specializing in one industry (e.g., "AI automation for real estate agents" or "email automation for e-commerce brands") makes your marketing dramatically more effective, allows you to charge premium rates as a specialist, and lets you build productized service packages that you can deliver faster and at higher margins. Once you have a proven playbook in one niche, expanding to adjacent industries becomes much easier and less risky than starting as a generalist.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          When should I raise my rates as an AI agency owner?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            You should raise rates when: (1) You're consistently closing 80%+ of prospects — demand exceeds supply of your time. (2) You have 3+ strong case studies showing measurable client ROI. (3) You've been at the same rate for 6+ months. (4) Competitors are charging more for similar work. A simple strategy: raise rates by 20–30% on all new clients, then grandfather existing clients at old rates for 6 months before gradual increases. Many agency owners undercharge for years out of fear — but higher prices often attract better, more committed clients.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>AI Agency Pricing Calculator</h4>
+      <p>The go-to free tool for AI automation agency owners to price their services with confidence, justify their rates, and close more deals.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#results-section">Calculate Your Pricing</a>
+      <a href="https://abdlegacyautomation.com" target="_blank" rel="noopener">ABD Legacy Automation</a>
+      <a href="#faq">Pricing FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#privacy">Privacy Policy</a>
+      <a href="#terms">Terms of Use</a>
+      <p style="margin-top:8px; font-size:0.76rem; line-height:1.6;">Pricing estimates are for reference only. Actual rates depend on your market, experience, and client needs. Not financial advice.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 All rights reserved.</span>
+    <span>Powered by <a href="https://abdlegacyautomation.com" target="_blank" rel="noopener" class="footer-brand">ABD Legacy Automation — abdlegacyautomation.com</a></span>
+  </div>
+</footer>
+
+<script>
+// ── Pricing Data ──
+const BASE_SETUP = {
+  chatbot:       { min: 1500,  max: 5000  },
+  email_auto:    { min: 2000,  max: 6000  },
+  lead_gen:      { min: 3000,  max: 8000  },
+  content_auto:  { min: 2500,  max: 7500  },
+  full_office:   { min: 8000,  max: 35000 },
+  custom_agent:  { min: 5000,  max: 25000 },
+  social_media:  { min: 1500,  max: 4500  }
+};
+
+const BASE_RETAINER = {
+  chatbot:       { min: 500,   max: 1500  },
+  email_auto:    { min: 750,   max: 2000  },
+  lead_gen:      { min: 1000,  max: 3000  },
+  content_auto:  { min: 800,   max: 2500  },
+  full_office:   { min: 2500,  max: 7500  },
+  custom_agent:  { min: 1500,  max: 5000  },
+  social_media:  { min: 600,   max: 1800  }
+};
+
+const BASE_MARGIN = {
+  chatbot: 70, email_auto: 66, lead_gen: 62,
+  content_auto: 72, full_office: 55, custom_agent: 60, social_media: 76
+};
+
+// Open-weight model economics (verified Aug 2026): Alibaba's Qwen 3.8 Max (GA Aug 2-3,
+// 2026; 2.4T-param MoE, ~95B active, 1M context) lists at $2/$6 per 1M tokens — the
+// cheapest open frontier-class API — with open weights promised ~Aug 10 (self-host cost
+// not yet knowable, hardware/quantization dependent). Moonshot's Kimi K3 is a 2.8T-param
+// open-weight MoE (104B active, 1M context; weights on HF since 2026-07-27) priced at
+// $3/$15 per 1M tokens (input cache-miss / output) — a fraction of paid frontier APIs —
+// and Zhipu's GLM-5.2 ships open weights under MIT with 1M context. Agencies running
+// open-weight stacks carry a smaller token bill; frontier-only stacks carry a premium.
+// MODEL_COMPUTE_FACTOR scales the retainer by model strategy (hybrid = 1.0, so default
+// outputs are unchanged); MODEL_MARGIN_BONUS reflects the margin lift from cheaper tokens.
+const MODEL_COMPUTE_FACTOR = { open: 0.95, hybrid: 1.0, frontier: 1.1, sol: 1.15 };
+const MODEL_MARGIN_BONUS = { open: 5, hybrid: 0, frontier: -2, sol: -3 };
+// GPT-5.6 Sol (added 2026-08-06): OpenAI's announcement (openai.com/index/improving-gpt-5-6-sol-in-chatgpt/)
+// confirms Sol now powers both Instant and deep reasoning for Plus/Pro (one model, reasoning
+// slider). NO official per-token API pricing has been published — "sol" uses a marked ESTIMATE
+// (premium tier, slightly above generic frontier to reflect reasoning-effort dial).
+
+// Delivery risk / failure-retry multiplier (verified Aug 2026). Real-world agent
+// workflows routinely burn far more than the naive token estimate when retry loops,
+// subagent fan-out, or cache misses kick in. levelsio reported burning $500 per
+// Gauntlet Loop run (and $900 total with 95% of generated code removed) on Aug 5 2026
+// (https://x.com/levelsio/status/2084997902632390981); Systima measured subagent
+// fan-out at 4.2x token cost (121k -> 513k) on the same task
+// (https://systima.ai/blog/claude-code-vs-opencode-token-overhead); OpenClaw users
+// hit $141 overnight from a misconfigured heartbeat (https://clawsnewsletter.substack.com/p/how-to-stop-burning-money-on-openclaw).
+// Agencies should price delivery risk into retainers — failed loops are a cost, not
+// a bug. Default (low = 1.0) leaves outputs unchanged.
+const DELIVERY_RISK_FACTOR = { low: 1.0, moderate: 1.15, high: 1.35, levelsio: 2.0 };
+const DELIVERY_RISK_LABEL = {
+  low: 'a mature stack with few retries',
+  moderate: 'occasional retry loops',
+  high: 'agentic fan-out with retry storms',
+  levelsio: 'levelsio-style failure loops (~$500 per failed loop)'
+};
+
+const SIZE_MULT = {
+  solopreneur: 0.65, small: 0.85, medium: 1.0, large: 1.35, enterprise: 1.8
+};
+
+const WORKFLOW_MULT = { '1': 0.7, '2': 0.9, '4': 1.0, '6': 1.3, '11': 1.6 };
+const EXP_MULT = { beginner: 0.7, intermediate: 1.0, advanced: 1.3, expert: 1.6 };
+const TIMELINE_MULT = { rush: 1.35, standard: 1.0, extended: 0.9 };
+
+const SERVICE_LABELS = {
+  chatbot: 'chatbot', email_auto: 'email automation', lead_gen: 'lead generation',
+  content_auto: 'content automation', full_office: 'full office automation',
+  custom_agent: 'custom AI agent', social_media: 'social media automation'
+};
+
+function fmt(n) {
+  if (n >= 10000) return '$' + Math.round(n / 1000) + 'K';
+  return '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+}
+
+function calculatePricing() {
+  const service = document.getElementById('serviceType').value;
+  const bizSize = document.getElementById('bizSize').value;
+  const numWorkflows = document.getElementById('numWorkflows').value;
+  const experience = document.getElementById('experience').value;
+  const timeline = document.getElementById('timeline').value;
+  const modelStrategy = document.getElementById('modelStrategy').value;
+  const deliveryRisk = document.getElementById('deliveryRisk').value;
+  const hoursSaved = parseInt(document.getElementById('hoursSaved').value);
+
+  if (!service || !bizSize) {
+    alert('Please select a service type and client business size.');
+    return;
+  }
+
+  const sm = SIZE_MULT[bizSize];
+  const wm = WORKFLOW_MULT[numWorkflows];
+  const em = EXP_MULT[experience];
+  const tm = TIMELINE_MULT[timeline];
+
+  const combined = sm * wm * em * tm;
+
+  const setupBase = BASE_SETUP[service];
+  const retainerBase = BASE_RETAINER[service];
+
+  // Take midpoint then apply multiplier
+  const setupMid = (setupBase.min + setupBase.max) / 2;
+  const retainerMid = (retainerBase.min + retainerBase.max) / 2;
+
+  const setupFee = Math.round(setupMid * combined / 500) * 500;
+  const mcf = MODEL_COMPUTE_FACTOR[modelStrategy] || 1.0;
+  const mmb = MODEL_MARGIN_BONUS[modelStrategy] || 0;
+  const drf = DELIVERY_RISK_FACTOR[deliveryRisk] || 1.0;
+  const drl = DELIVERY_RISK_LABEL[deliveryRisk] || DELIVERY_RISK_LABEL.low;
+  const monthlyRetainer = Math.round(retainerMid * combined * mcf * drf / 50) * 50;
+  const margin = Math.min(82, Math.max(40, BASE_MARGIN[service] + (em - 1) * 10 + mmb));
+  const acv = setupFee + (monthlyRetainer * 12);
+
+  // ROI calc
+  const laborRate = bizSize === 'enterprise' ? 65 : bizSize === 'large' ? 45 : bizSize === 'medium' ? 35 : 25;
+  const monthlySavings = hoursSaved * laborRate;
+  const annualSavings = monthlySavings * 12;
+  const roi = Math.round((annualSavings / acv) * 10) / 10;
+
+  // Build ROI text
+  const serviceLabel = SERVICE_LABELS[service];
+  const bizLabel = document.getElementById('bizSize').options[document.getElementById('bizSize').selectedIndex].text;
+  const modelLabel = modelStrategy === 'open'
+    ? 'an open-weight stack (Qwen 3.8 Max / Kimi K3 / GLM-5.2 class)'
+    : modelStrategy === 'sol'
+      ? 'GPT-5.6 Sol (frontier — Instant + deep reasoning; ESTIMATE — OpenAI has not published per-token API pricing)'
+      : modelStrategy === 'frontier'
+        ? 'a paid frontier stack (Claude / GPT class)'
+        : 'a hybrid open-weight + frontier stack';
+
+  const modelAssumptionNote = modelStrategy === 'sol'
+    ? ' GPT-5.6 Sol API pricing is not yet public, so this quote treats it as an estimate (see https://openai.com/api/pricing/).'
+    : '';
+
+  const roiText = `Your ${serviceLabel} saves this client approximately ${hoursSaved} hours/month. ` +
+    `At an estimated labor rate of $${laborRate}/hour for a ${bizLabel}, that's $${monthlySavings.toLocaleString()}/month — ` +
+    `or $${annualSavings.toLocaleString()}/year in recovered productivity. ` +
+    `Your annual contract value is ${fmt(acv)}, giving the client a ${roi}× ROI in year one. ` +
+    `Frame it this way: "For every $1 you invest in this automation, you get $${roi} back." ` +
+    `This quote assumes ${modelLabel} — open-weight models (Qwen 3.8 Max, Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium.` +
+    `${modelAssumptionNote} ` +
+    `Pricing also bakes in a delivery-risk buffer for ${drl} — real agent workflows burn money on failed loops and retries, so don't under-price the build. ` +
+    `Assumptions verified Aug 6, 2026 (Qwen 3.8 Max GA Aug 2–3, 2026 — $2/$6 per 1M tokens, open weights ~Aug 10; OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates).`;
+
+  // Build pitch
+  const netMonthly = monthlySavings - monthlyRetainer;
+  const paybackMonths = netMonthly > 0 ? Math.ceil(setupFee / netMonthly) : 12;
+  const pitchText = `"[Client Name], right now your team is spending ${hoursSaved} hours a month on work that a custom AI system can handle automatically — ` +
+    `that's ${Math.round(hoursSaved / (document.getElementById('bizSize').value === 'enterprise' ? 8 : 5))} full weeks of human time per year. ` +
+    `Our ${serviceLabel} solution will reclaim that time immediately. ` +
+    `Based on what I've seen in your business, I'd recommend we start with a ${fmt(setupFee)} setup investment and a ${fmt(monthlyRetainer)}/month retainer — ` +
+    `which, given the $${monthlySavings.toLocaleString()}/month in time savings, means this system pays for itself in ${paybackMonths} months. After that, it's pure profit. ` +
+    `I've done this for ${Math.floor(Math.random() * 20) + 8} businesses just like yours. Ready to get started?"`;
+
+  document.getElementById('res-setup').textContent = fmt(setupFee);
+  document.getElementById('res-retainer').textContent = fmt(monthlyRetainer) + '/mo';
+  document.getElementById('res-margin').textContent = Math.round(margin) + '%';
+  document.getElementById('res-acv').textContent = fmt(acv);
+  document.getElementById('res-roi').textContent = roiText;
+  document.getElementById('res-pitch').textContent = pitchText;
+
+  document.getElementById('results-section').style.display = 'block';
+  document.getElementById('results-content').classList.add('results-blur');
+
+  const savedEmail = localStorage.getItem('ai_calc_email');
+  if (savedEmail) unlockResultsImmediate();
+
+  document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function unlockResults() {
+  const email = document.getElementById('email-input').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert('Please enter a valid email address to unlock your pricing.');
+    return;
+  }
+  localStorage.setItem('ai_calc_email', email);
+
+  let count = parseInt(localStorage.getItem('ai_user_count') || '9312');
+  count++;
+  localStorage.setItem('ai_user_count', count);
+  document.getElementById('userCount').textContent = count.toLocaleString();
+
+  unlockResultsImmediate();
+}
+
+function unlockResultsImmediate() {
+  
+  fetch('https://abd-email-capture.abdlegacyllc.workers.dev', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({email: email, source: 'aiagencycalculator.com'})
+  }).catch(function(){});
+  document.getElementById('results-content').classList.remove('results-blur');
+  document.getElementById('results-overlay').style.display = 'none';
+}
+
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const answer = item.querySelector('.faq-answer');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => {
+    el.classList.remove('open');
+    el.querySelector('.faq-answer').style.maxHeight = '0';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const stored = localStorage.getItem('ai_user_count');
+  if (stored) document.getElementById('userCount').textContent = parseInt(stored).toLocaleString();
+});
+
+// ── Google Cloud Model Routing Savings Calculator ──
+// Prices from Google's published list prices (global tier, Aug 2026):
+//   Gemini 3.5 Flash-Lite: $0.30/1M input, $2.50/1M output
+//   Gemini 3.5 Flash:      $1.50/1M input, $9.00/1M output
+//   Gemini 2.5 Pro:        $1.25/1M input (<=200K), $10/1M output (<=200K)
+// Sources: cloud.google.com/vertex-ai/generative-ai/pricing,
+//          cloud.google.com/api-gateway/pricing
+const ROUTE_PRICES = {
+  flashLite: { in: 0.30, out: 2.50 },
+  flash:     { in: 1.50, out: 9.00 },
+  pro:       { in: 1.25, out: 10.00 }
+};
+
+function fmtMoney(n) {
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M';
+  if (n >= 1000) return '$' + (n / 1000).toFixed(1) + 'K';
+  return '$' + n.toFixed(2);
+}
+
+function calculateRouting() {
+  const inTok = parseFloat(document.getElementById('routeInputTokens').value) || 0;
+  const outTok = parseFloat(document.getElementById('routeOutputTokens').value) || 0;
+  const model = document.getElementById('routeCurrentModel').value;
+  const pct = parseInt(document.getElementById('routePct').value) || 0;
+
+  if (inTok <= 0 && outTok <= 0) {
+    alert('Enter token volumes greater than zero to estimate routing savings.');
+    return;
+  }
+
+  const cur = ROUTE_PRICES[model];
+  const fl = ROUTE_PRICES.flashLite;
+  const r = pct / 100;
+
+  const currentCost = inTok * cur.in + outTok * cur.out;
+  const routedCost = (inTok * (1 - r) * cur.in + inTok * r * fl.in) +
+                     (outTok * (1 - r) * cur.out + outTok * r * fl.out);
+  const savings = currentCost - routedCost;
+  const savingsPct = currentCost > 0 ? Math.round((savings / currentCost) * 100) : 0;
+
+  const modelLabel = model === 'pro' ? 'Gemini 2.5 Pro' : 'Gemini 3.5 Flash';
+
+  document.getElementById('r-current').textContent = fmtMoney(currentCost) + '/mo';
+  document.getElementById('r-routed').textContent = fmtMoney(routedCost) + '/mo';
+  document.getElementById('r-routed-sub').textContent = pct + '% on Flash-Lite';
+  document.getElementById('r-savings').textContent = fmtMoney(savings) + '/mo';
+  document.getElementById('r-savings-pct').textContent = '~' + savingsPct + '% lower bill';
+
+  const note =
+    'Routing ' + pct + '% of your ' + inTok + 'M input / ' + outTok + 'M output tokens from ' +
+    modelLabel + ' to Gemini 3.5 Flash-Lite drops the token bill from ' + fmtMoney(currentCost) +
+    ' to ' + fmtMoney(routedCost) + ' per month — about ' + savingsPct + '% — before gateway call fees. ' +
+    'Routing is driven by the model name in each request payload (e.g. "gemini-3.5-flash-lite"); ' +
+    'unmatched traffic falls back to the router default. Gateway calls bill at standard API Gateway ' +
+    'rates (free under 2M calls/mo), so the savings are almost entirely from model selection. ' +
+    'This is a directional estimate — your real numbers depend on your traffic mix and model versions.';
+
+  document.getElementById('r-note').textContent = note;
+  document.getElementById('routing-results').style.display = 'block';
+  document.getElementById('routing-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── Agent Failure & Retry Cost Estimator ──
+// Model: total = base cost per loop attempt x (1 + failed attempts) + cleanup/rework.
+// Evidence (Aug 5 2026): levelsio reported burning $500 per Gauntlet Loop run, corrected
+// to $900 total with 95% of generated code removed (https://x.com/levelsio/status/2084997902632390981).
+// Systima measured Claude Code subagent fan-out at 4.2x token cost on the same task
+// (https://systima.ai/blog/claude-code-vs-opencode-token-overhead). Baselines: ~$0.06/req
+// average (https://news.ycombinator.com/item?id=45931825), "a few $ per task" for normal
+// Claude Code sessions. Failure presets reflect these real-world scenarios.
+const FAIL_PRESETS = {
+  levelsio: { base: 500, retries: 0, cleanup: 400, label: 'levelsio Gauntlet Loop' },
+  fanout:   { base: 120, retries: 2, cleanup: 150, label: 'subagent fan-out build' },
+  simple:   { base: 20,  retries: 1, cleanup: 15,  label: 'simple automation build' },
+  custom:   { base: 500, retries: 0, cleanup: 400, label: 'custom scenario' }
+};
+
+function applyFailScenario() {
+  const key = document.getElementById('failScenario').value;
+  const preset = FAIL_PRESETS[key] || FAIL_PRESETS.custom;
+  document.getElementById('failBaseCost').value = preset.base;
+  document.getElementById('failRetries').value = preset.retries;
+  document.getElementById('failCleanup').value = preset.cleanup;
+  calculateFailure();
+}
+
+function calculateFailure() {
+  const base = parseFloat(document.getElementById('failBaseCost').value) || 0;
+  const retries = parseInt(document.getElementById('failRetries').value) || 0;
+  const cleanup = parseFloat(document.getElementById('failCleanup').value) || 0;
+
+  if (base <= 0) {
+    alert('Enter a base cost per loop attempt greater than zero.');
+    return;
+  }
+
+  const naive = base;                       // one clean loop, no cleanup
+  const retryCost = base * retries;         // burned retry loops
+  const total = base * (1 + retries) + cleanup;
+  const multiple = total > 0 ? Math.round((total / naive) * 10) / 10 : 1;
+
+  const key = document.getElementById('failScenario').value;
+  const label = (FAIL_PRESETS[key] || FAIL_PRESETS.custom).label;
+
+  document.getElementById('f-naive').textContent = fmt(naive);
+  document.getElementById('f-retries').textContent = fmt(retryCost);
+  document.getElementById('f-retries-sub').textContent = retries + ' retry loop(s) × ' + fmt(base);
+  document.getElementById('f-cleanup').textContent = fmt(cleanup);
+  document.getElementById('f-total').textContent = fmt(total);
+  document.getElementById('f-total-sub').textContent = multiple + '× vs naive estimate';
+
+  let note;
+  if (key === 'levelsio') {
+    note = 'This preset reproduces levelsio\u2019s reported failure: a Gauntlet Loop run that burns $500 and produces unusable output (' +
+      'he later corrected the total to $900 with 95% of generated code removed). At the preset values, total = ' + fmt(base) + ' × (1 + ' +
+      retries + ') + ' + fmt(cleanup) + ' cleanup = ' + fmt(total) + ' — ' + multiple + '× the naive ' + fmt(naive) +
+      ' estimate. The lesson for agencies: when retry loops are possible, quote delivery risk explicitly or the failed loops come out of your margin.';
+  } else if (key === 'fanout') {
+    note = 'This preset models a typical agentic build with subagent fan-out and retry storms. Systima measured fan-out at 4.2× token cost on ' +
+      'the same task (121k → 513k tokens). At these values, total = ' + fmt(total) + ' vs ' + fmt(naive) + ' naive — ' + multiple +
+      '× your original estimate. Subagent fan-out is the single most common agent cost amplifier.';
+  } else if (key === 'simple') {
+    note = 'A simple automation build with occasional retries: total = ' + fmt(total) + ' vs ' + fmt(naive) + ' naive (' + multiple +
+      '×). Keep workflows small and sequential — the data shows controlled, step-by-step builds avoid the failure multiplier almost entirely.';
+  } else {
+    note = 'Custom scenario: total = ' + fmt(base) + ' × (1 + ' + retries + ') + ' + fmt(cleanup) + ' cleanup = ' + fmt(total) +
+      ', which is ' + multiple + '× the naive ' + fmt(naive) + ' estimate. Use this to model your own observed retry rates.';
+  }
+  document.getElementById('f-note').textContent = note;
+
+  document.getElementById('failure-results').style.display = 'block';
+  document.getElementById('failure-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+
+
+<footer style="margin-top:60px;padding:20px 0;border-top:1px solid #eee;font-size:0.85em;color:#888;text-align:center">
+  <p>More free tools from ABD Legacy:</p>
+  <p><a href="https://tariffcalculator2026.com" style="color:#6366f1">Tariff Calculator</a> &nbsp;|&nbsp; <a href="https://aiagencycalculator.com" style="color:#6366f1">AI Agency Pricing</a> &nbsp;|&nbsp; <a href="https://findaiagency.com" style="color:#6366f1">Find AI Agency</a> &nbsp;|&nbsp; <a href="https://mybusinessaiaudit.com" style="color:#6366f1">AI Business Audit</a> &nbsp;|&nbsp; <a href="https://ozempicproviders.com" style="color:#6366f1">GLP-1 Providers</a></p>
+</footer>
+
+<div style="background:#13132a;border:1px solid #7c3aed;border-radius:12px;padding:24px;margin:32px 0;text-align:center">
+  <p style="color:#7c3aed;font-size:0.85rem;margin:0 0 8px;text-transform:uppercase;letter-spacing:1px">Recommended Platform</p>
+  <h3 style="color:#fff;margin:0 0 12px;font-size:1.3rem">Build Your AI Agency with HighLevel</h3>
+  <p style="color:#94a3b8;margin:0 0 16px;font-size:0.9rem">The #1 platform for AI agencies. Automate client campaigns, CRM, and billing in one place.</p>
+  <a href="https://www.gohighlevel.com/?fp_ref=abdlegacy" 
+     target="_blank" rel="noopener sponsored"
+     style="background:#7c3aed;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;display:inline-block">
+    Start Free 14-Day Trial →
+  </a>
+  <p style="color:#64748b;font-size:0.75rem;margin:12px 0 0">Affiliate link — we may earn a commission if you sign up.</p>
+</div>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9f07b04ea5ea4c5c8d7ab7cab49db954","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
+<div class="related">
+<p><strong>Related reading:</strong></p>
+<ul>
+<li><a href="/ai-agency-pricing-models-explained">AI Agency Pricing Models Explained</a> — More on ai agency pricing models explained.</li>
+</ul>
+</div>
