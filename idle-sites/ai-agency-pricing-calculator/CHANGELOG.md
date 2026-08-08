@@ -2,6 +2,23 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-08 — DeepSeek V4 strategy added with PROVISIONAL pricing flag (verified via parent research brief t_05a34bf3)
+
+- **New model strategy:** `DeepSeek V4` added to the Model Strategy selector (V4-Flash / V4-Pro) — the lowest published list rates on the page (V4-Flash $0.14/$0.28, V4-Pro $0.435/$0.87 per 1M tokens), but explicitly flagged **PROVISIONAL**.
+- **Why:** DeepSeek announced (Aug 6, 2026, footnote 2 of its official pricing page) that it plans to raise overall API pricing "in the near future, with a significant increase expected" — no new rates, no percentage, no effective date disclosed as of 2026-08-08 (verified live; covered by TNW, SCMP, Dataconomy/Bloomberg, TechNode).
+- **Conservative modeling:** the strategy is deliberately NOT given the full cheapest-stack discount — `MODEL_COMPUTE_FACTOR.deepseek = 0.92` (vs open 0.95) and `MODEL_MARGIN_BONUS.deepseek = +6` (vs open +5) — so the calculator does not over-state a discount that may evaporate once official rates land. Output text carries an explicit verify-before-quoting note with the DeepSeek pricing URL.
+- **Touch points:** red warning banner at the top of the open-weight section (footnote-2 quote, current rates, sources, self-host escape hatch), Model Strategy selector warning box, Pricing Reference Table footnote, new FAQ item ("Is DeepSeek still the cheapest option after its announced API price increase?") + matching FAQPage JSON-LD, page changelog entry, meta description/keywords extended (DeepSeek pricing, DeepSeek API price increase), assumptions date bumped to Aug 8, 2026.
+- **Regression:** no default-output changes — `hybrid` remains the default strategy (factor 1.0, unchanged); only the new deepseek branch is added.
+- **Sources:** https://api-docs.deepseek.com/quick_start/pricing (live 2026-08-08) · TNW Aug 6 · SCMP Aug 6 · Dataconomy/Bloomberg Aug 6 · TechNode Aug 6 · HF model cards (MIT weights).
+
+## 2026-08-08 — Qwen 3.8 Max revenue-share alert added (verified via signal t_672a18e1)
+
+- **New alert (monitor pending final terms):** prominent amber alert box at the top of the open-weight section — "Qwen 3.8 Max revenue share with Alibaba required for qualifying model-as-a-service use; rates TBD, effective date TBD." Reuters (Aug 7, 2026) reports Alibaba plans to ask major commercial users offering Qwen 3.8 Max as a service for a share of revenue (a first for the Qwen Max line; similar measure reportedly planned as soon as next week; rate not finalized). The cost model no longer presents Qwen 3.8 Max as free/unrestricted at scale.
+- **Kimi K3 precedent verified from source:** Moonshot's Kimi K3 license requires anyone offering the model for sale as a service generating **more than $20M in annual sales** to work out a commercial agreement with Moonshot (reportedly up to a 30% revenue share). Note: the original signal showed this as "0M" — verified as $20M against the Reuters text (via Economic Times full-text mirror, ETtech).
+- **Touch points:** Model Strategy selector helper note (warning inline), Pricing Reference Table footnote, open-weight section alert + source line (Reuters added), open-weight FAQ answer caveat, new dedicated FAQ item ("Does Alibaba's Qwen 3.8 Max revenue-share plan change open-weight model costs?") + matching FAQPage JSON-LD schema entry, page changelog entry, meta description/keywords extended (Qwen 3.8 Max revenue share, Alibaba open model revenue share).
+- **No pricing defaults changed:** MODEL_COMPUTE_FACTOR.open (0.95) and MODEL_MARGIN_BONUS.open (+5) unchanged — this is a notice/tag, not a rate change; default calculator outputs are unchanged.
+- **Source:** Reuters Aug 7, 2026 — https://www.reuters.com/business/retail-consumer/alibaba-plans-charge-big-users-its-next-open-source-ai-model-sources-say-2026-08-07/
+
 ## 2026-08-07 — News update published: Cloudflare Wallets (AI agent costs)
 
 - **New article:** /cloudflare-wallets — "Cloudflare Wallets Give AI Agencies Real Budget Rails for Agent Spend" (409-word body, Article + FAQPage JSON-LD, 'AI agent costs' tag). Published live 2026-08-07 (deploy 26d6892b, git 0071b6c).

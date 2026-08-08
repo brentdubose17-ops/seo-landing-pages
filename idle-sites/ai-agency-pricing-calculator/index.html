@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Agency Pricing Calculator — Instantly Calculate Your Rate</title>
-  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with Agent Plugins portability pricing (build once, run across Codex, ChatGPT, Cursor, Copilot, Kiro, VS Code), agent wallet spend caps (Cloudflare Wallets / x402 — capped vs uncapped monthly AI spend), AI coding agent cost transparency (3 billing models, 6 cost variables), open-weight (Qwen 3.8 Max, Kimi K3, GLM-5.2) vs paid frontier model options including GPT-5.6 Sol (Instant + deep reasoning)." />
-  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, Agent Plugins pricing, agent plugin portability discount, build once run anywhere, Cloudflare Wallets, agent wallet spend cap, agent spending limit, x402 payments, AI agent budget, capped vs uncapped AI spend, open-weight AI models, Qwen 3.8 Max pricing, Kimi K3 pricing, GLM-5.2, GPT-5.6 Sol pricing, GPT-5.6 Luna, AI coding agent pricing, AI coding agent cost, agent cost transparency" />
+  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with Agent Plugins portability pricing (build once, run across Codex, ChatGPT, Cursor, Copilot, Kiro, VS Code), agent wallet spend caps (Cloudflare Wallets / x402 — capped vs uncapped monthly AI spend), AI coding agent cost transparency (3 billing models, 6 cost variables), open-weight (Qwen 3.8 Max, Kimi K3, GLM-5.2) vs paid frontier model options including GPT-5.6 Sol (Instant + deep reasoning). ⚠ DeepSeek has announced a significant API price increase — current V4 rates are PROVISIONAL pre-hike pricing, and the calculator's DeepSeek V4 option is flagged accordingly. Note: Alibaba plans a revenue-share requirement for qualifying Qwen 3.8 Max model-as-a-service use — rates and effective date pending (monitor)." />
+  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, Agent Plugins pricing, agent plugin portability discount, build once run anywhere, Cloudflare Wallets, agent wallet spend cap, agent spending limit, x402 payments, AI agent budget, capped vs uncapped AI spend, open-weight AI models, Qwen 3.8 Max pricing, Qwen 3.8 Max revenue share, Alibaba open model revenue share, Kimi K3 pricing, GLM-5.2, GPT-5.6 Sol pricing, GPT-5.6 Luna, DeepSeek pricing, DeepSeek API price increase, DeepSeek V4 pricing, DeepSeek price hike, AI coding agent pricing, AI coding agent cost, agent cost transparency" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://aiagencycalculator.com/" />
 
@@ -90,6 +90,22 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "On credit plans, premium models can burn credits up to 8x faster than standard ones — a task that costs one credit unit on a standard model might cost eight on a frontier model (TrueFoundry, Aug 6, 2026). Annual billing typically discounts 15–20%, and free/entry tiers often carry quotas teams exceed within weeks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is DeepSeek still the cheapest option after its announced API price increase?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not safely — DeepSeek's current rates are provisional. On Aug 6, 2026 DeepSeek announced on its official pricing page (footnote 2) that it plans to raise overall API pricing in the near future with a significant increase expected, and has not published the new rates, any percentage, or an effective date as of Aug 8, 2026. Current list prices (V4-Flash $0.14/$0.28, V4-Pro $0.435/$0.87 per 1M tokens) are the pre-hike schedule. Keep DeepSeek as a model option but verify api-docs.deepseek.com/quick_start/pricing before quoting, keep workflows portable across a second provider, and note V4 weights are MIT-licensed so sustained workloads can be self-hosted."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Alibaba's Qwen 3.8 Max revenue-share plan change open-weight model costs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Possibly — monitor pending final terms. Reuters (Aug 7, 2026) reports Alibaba plans to ask major commercial users offering Qwen 3.8 Max as a service for a share of revenue (rates TBD, effective date TBD), mirroring Moonshot's Kimi K3 license, which triggers a commercial agreement above $20M in annual sales (reportedly up to 30% revenue share). Do not model Qwen 3.8 Max as free/unrestricted at scale."
         }
       }
     ]
@@ -944,15 +960,19 @@
         <label for="modelStrategy">Model Strategy (API Cost Profile)</label>
         <select id="modelStrategy">
           <option value="hybrid" selected>Hybrid — open-weight + frontier mix</option>
+          <option value="deepseek">DeepSeek V4 (V4-Flash / V4-Pro) — PROVISIONAL pricing, price increase announced</option>
           <option value="sol">GPT-5.6 Sol (frontier, Instant + deep reasoning) — premium API spend (estimate)</option>
           <option value="open">Open-weight first (Qwen 3.8 Max, Kimi K3, GLM-5.2) — lowest API spend</option>
           <option value="frontier">Paid frontier only (Claude, GPT) — premium API spend</option>
         </select>
+        <div style="font-size:0.72rem; color:var(--warning); margin-top:4px; line-height:1.5; border:1px solid rgba(239,68,68,0.4); border-radius:8px; padding:8px 10px; background:rgba(239,68,68,0.08);">
+          ⚠ <strong>DeepSeek price increase announced (Aug 6, 2026):</strong> DeepSeek says it plans to raise overall API pricing "in the near future, with a significant increase expected" — new rates, percentage, and effective date are <strong>NOT yet disclosed</strong>. Current rates (V4-Flash $0.14/$0.28, V4-Pro $0.435/$0.87 per 1M tokens) are <strong>PROVISIONAL pre-hike pricing</strong> and may not survive the increase. Do not quote "DeepSeek is cheapest" as a stable assumption. <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">DeepSeek pricing page →</a> · <a href="https://thenextweb.com/news/deepseek-significant-api-price-increase" target="_blank" rel="noopener" style="color:var(--cyan-light);">TNW coverage →</a>
+        </div>
         <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
           GPT-5.6 Sol now powers both Instant and deep reasoning for ChatGPT Plus/Pro (one consistent model, reasoning-effort slider). OpenAI has not published per-token API pricing for GPT-5.6 Sol yet — this option uses a marked estimate. <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">See OpenAI pricing →</a>
         </div>
         <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
-          Open-weight option: Alibaba's Qwen 3.8 Max (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; 1M context) lists at <strong>$2/$6 per 1M tokens</strong> — open weights promised ~Aug 10, so self-hosted cost is not yet knowable and varies by hardware/quantization. Kimi K3 ($3/$15) and GLM-5.2 (MIT) round out the open-weight class. <a href="#open-weight" style="color:var(--cyan-light);">See the open-weight section ↓</a>
+          Open-weight option: Alibaba's Qwen 3.8 Max (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; 1M context) lists at <strong>$2/$6 per 1M tokens</strong> — open weights promised ~Aug 10, so self-hosted cost is not yet knowable and varies by hardware/quantization. <strong style="color:var(--warning);">⚠ Monitor pending final terms:</strong> Alibaba plans a revenue-share requirement for qualifying model-as-a-service use of Qwen 3.8 Max (rates TBD, effective date TBD) — do not model it as free/unrestricted at scale. Kimi K3 ($3/$15) and GLM-5.2 (MIT) round out the open-weight class. <a href="#open-weight" style="color:var(--cyan-light);">See the open-weight section ↓</a>
         </div>
       </div>
 
@@ -1122,7 +1142,7 @@
         </tbody>
       </table>
     </div>
-    <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary);">* Ranges reflect 2026 US market rates. Final pricing depends on complexity, client size, and your experience level. Model strategy affects margins more than list prices: open-weight stacks (Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3, GLM-5.2) cut the compute line vs. paid frontier APIs. GPT-5.6 Sol (Aug 6, 2026) now powers both Instant and deep reasoning for ChatGPT Plus/Pro — one consistent model with a reasoning-effort slider; GPT-5.6 Luna is the new default for Free/Go users (unlimited text chats rolling out this week/next week). OpenAI has not published per-token API pricing for the new models, so the GPT-5.6 Sol option in this calculator is a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI pricing</a> before quoting. Agent Plugins 1.0.0 (Aug 6, 2026) adds a portability lever: one plugin package serves Codex, ChatGPT, Cursor, GitHub Copilot, Kiro, and VS Code, so setup fees carry a build-once discount and plugin packaging &amp; distribution is priced as its own deliverable (see the Portability selector and <a href="#agent-plugins" style="color:var(--cyan-light);">Agent Plugins section ↓</a>). <strong style="color:var(--white);">New (Aug 2026):</strong> agent payment rails like Cloudflare Wallets (announced Aug 4, 2026) add a creator-set spending cap at the wallet layer — the same rails that make the <a href="#wallet-estimator" style="color:var(--cyan-light);">capped vs uncapped spend</a> comparison in this calculator worth running before you quote a retainer.</p>
+    <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary);">* Ranges reflect 2026 US market rates. Final pricing depends on complexity, client size, and your experience level. Model strategy affects margins more than list prices: open-weight stacks (Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3, GLM-5.2) cut the compute line vs. paid frontier APIs — <strong style="color:var(--warning);">but monitor pending final terms: Qwen 3.8 Max revenue share with Alibaba required for qualifying model-as-a-service use (rates TBD, effective date TBD)</strong>, mirroring Moonshot's Kimi K3 license, which triggers a commercial agreement above $20M in annual sales (up to 30% revenue share). <strong style="color:#f87171;">⚠ DeepSeek V4 (V4-Flash $0.14/$0.28, V4-Pro $0.435/$0.87 per 1M tokens) currently lists the lowest rates on this page, but those rates are PROVISIONAL — DeepSeek announced (Aug 6, 2026) a significant API price increase with no new schedule published yet; verify <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">api-docs.deepseek.com/quick_start/pricing</a> before quoting.</strong> GPT-5.6 Sol (Aug 6, 2026) now powers both Instant and deep reasoning for ChatGPT Plus/Pro — one consistent model with a reasoning-effort slider; GPT-5.6 Luna is the new default for Free/Go users (unlimited text chats rolling out this week/next week). OpenAI has not published per-token API pricing for the new models, so the GPT-5.6 Sol option in this calculator is a marked estimate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI pricing</a> before quoting. Agent Plugins 1.0.0 (Aug 6, 2026) adds a portability lever: one plugin package serves Codex, ChatGPT, Cursor, GitHub Copilot, Kiro, and VS Code, so setup fees carry a build-once discount and plugin packaging &amp; distribution is priced as its own deliverable (see the Portability selector and <a href="#agent-plugins" style="color:var(--cyan-light);">Agent Plugins section ↓</a>). <strong style="color:var(--white);">New (Aug 2026):</strong> agent payment rails like Cloudflare Wallets (announced Aug 4, 2026) add a creator-set spending cap at the wallet layer — the same rails that make the <a href="#wallet-estimator" style="color:var(--cyan-light);">capped vs uncapped spend</a> comparison in this calculator worth running before you quote a retainer.</p>
   </section>
 
   <!-- Agent Failure & Retry Cost Estimator -->
@@ -1366,6 +1386,12 @@
       </ul>
       <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:10px;">Changelog</div>
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-08-08:</strong> Added <strong>DeepSeek V4 (V4-Flash / V4-Pro)</strong> as a selectable model strategy with a <strong>PROVISIONAL pricing flag</strong> — DeepSeek announced (Aug 6, 2026, footnote 2 of its official pricing page) that it plans to raise overall API pricing "in the near future, with a significant increase expected," and has NOT disclosed new rates, a percentage, or an effective date as of 2026-08-08. Current list prices (V4-Flash $0.14/$0.28, V4-Pro $0.435/$0.87 per 1M tokens) are treated as pre-hike/provisional: the strategy is deliberately given a smaller discount than the pure open-weight stack so the calculator does not over-state "DeepSeek is cheapest," and the output carries an explicit verify-before-quoting note. New prominent red warning banner in the Open-Weight section, FAQ item + FAQPage schema entry, meta tags extended, sources linked (DeepSeek pricing page live 2026-08-08, TNW, SCMP, Dataconomy/Bloomberg, TechNode). Open-weight self-host escape hatch noted (MIT weights).
+      </p>
+      <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-08-08:</strong> Added a <strong>monitor pending final terms</strong> alert for Qwen 3.8 Max: Alibaba (Reuters, Aug 7) plans a revenue-share requirement for qualifying model-as-a-service use (rates TBD, effective date TBD) — the cost model no longer presents Qwen 3.8 Max as free/unrestricted at scale. Kimi K3 precedent verified at &gt;$20M annual sales for a commercial agreement (up to 30% revenue share). New FAQ item + FAQPage schema entry; meta tags extended. Source: Reuters Aug 7, 2026.
+      </p>
+      <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
         <strong>2026-08-06:</strong> Added Qwen 3.8 Max to the open-weight model strategy (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; $2/$6 per 1M tokens; 1M context; open weights promised ~Aug 10). Real-world usage section added with the Aug 6, 2026 45-project field report — self-reported, no artifacts; the "destroyed Fable 5" claim was walked back by the tester (Qwen strong on fast/multimodal builds; Fable 5 on huge long-running projects). Transparent cost-variability note added: API list prices are public, but self-hosted cost is hardware/quantization-dependent and not yet knowable until weights drop.
       </p>
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
@@ -1381,6 +1407,16 @@
   <section class="section" id="open-weight">
     <div class="section-title">Open-Weight Models: <span class="g">The New Cost Lever for Agencies</span></div>
     <div style="background:var(--gradient-soft);border:1px solid var(--border-glow);border-radius:12px;padding:24px;margin-bottom:16px;">
+      <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.45);border-radius:12px;padding:16px 20px;margin:0 0 16px;">
+        <p style="color:var(--warning);font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin:0 0 8px;">⚠ Monitor pending final terms</p>
+        <p style="color:var(--text-primary);font-size:0.9rem;margin:0 0 8px;"><strong>Qwen 3.8 Max revenue share with Alibaba required for qualifying model-as-a-service use; rates TBD, effective date TBD.</strong> Reuters (Aug 7, 2026) reports Alibaba plans to ask major commercial users who offer Qwen 3.8 Max as a service for a share of the revenue they generate — a first for the Qwen Max line — with plans to implement a similar measure as soon as next week; the rate is not finalized. This follows Moonshot's Kimi K3 license, which requires anyone offering the model for sale as a service with more than <strong>$20M in annual sales</strong> to work out a commercial agreement with Moonshot (reportedly up to a 30% revenue share). Until Alibaba publishes final terms, do <strong>not</strong> model Qwen 3.8 Max as free/unrestricted at scale — treat it as open-weight <em>with a pending commercial-licensing cost layer</em> that could change the compute line for agencies reselling model-as-a-service.</p>
+        <p style="color:var(--text-secondary);font-size:0.78rem;margin:0;">Source: <a href="https://www.reuters.com/business/retail-consumer/alibaba-plans-charge-big-users-its-next-open-source-ai-model-sources-say-2026-08-07/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Reuters — Alibaba plans to charge big users of its next open-source AI model (Aug 7, 2026)</a></p>
+      </div>
+      <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.5);border-radius:12px;padding:16px 20px;margin:0 0 16px;">
+        <p style="color:#f87171;font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin:0 0 8px;">⚠ Price increase announced — DeepSeek rates are PROVISIONAL</p>
+        <p style="color:var(--text-primary);font-size:0.9rem;margin:0 0 8px;"><strong>DeepSeek has announced it plans to raise overall API pricing "in the near future, with a significant increase expected" — but has NOT published the new rates, any percentage, or an effective date.</strong> Current list prices (V4-Flash $0.14 input / $0.28 output, V4-Pro $0.435 input / $0.87 output per 1M tokens) are the <strong>pre-hike schedule and are provisional</strong>. The warning sits as footnote (2) on DeepSeek's official pricing page, live as of 2026-08-08, and was reported Aug 6, 2026 by The Next Web, SCMP, Dataconomy (via Bloomberg), and TechNode. Until official numbers land, do not treat "DeepSeek is the cheapest option" as a stable assumption — the calculator's <strong>DeepSeek V4</strong> model strategy carries a provisional flag, and re-verify <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">api-docs.deepseek.com/quick_start/pricing</a> before quoting it to a client. Self-hosting remains an escape hatch: V4 weights are MIT-licensed open weights (1.6T Pro / 284B Flash), so agencies with sustained workloads can serve them directly via vLLM-class tooling instead of paying whatever the new API rate turns out to be.</p>
+        <p style="color:var(--text-secondary);font-size:0.78rem;margin:0;">Sources: <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">DeepSeek API pricing (footnote 2, live 2026-08-08)</a> · <a href="https://thenextweb.com/news/deepseek-significant-api-price-increase" target="_blank" rel="noopener" style="color:var(--cyan-light);">TNW — DeepSeek warns of a 'significant' price rise (Aug 6, 2026)</a> · <a href="https://www.scmp.com/tech/tech-trends/article/3363129/deepseek-signals-significant-price-hike-amid-surge-demand-low-cost-ai-models" target="_blank" rel="noopener" style="color:var(--cyan-light);">SCMP (Aug 6, 2026)</a> · <a href="https://dataconomy.com/2026/08/06/deepseek-significant-api-price-increase-2026" target="_blank" rel="noopener" style="color:var(--cyan-light);">Dataconomy/Bloomberg (Aug 6, 2026)</a></p>
+      </div>
       <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
         <strong>Open-weight models are now a real alternative to paid frontier APIs.</strong> Alibaba's <strong>Qwen 3.8 Max</strong> (GA Aug 2–3, 2026; 2.4T-parameter MoE, ~95B active, 1M-token context) prices at <strong>$2 per 1M input tokens and $6 per 1M output tokens</strong> — the cheapest open frontier-class API on this page — with open weights promised around Aug 10. Moonshot's <strong>Kimi K3</strong> — a 2.8T-parameter open-weight mixture-of-experts model (~104B active, 1M-token context, weights live on Hugging Face since July 27, 2026) — prices at <strong>$3 per 1M input tokens and $15 per 1M output tokens</strong>, a fraction of flagship paid APIs, while scoring within a few points of Claude Fable 5 and GPT-5.6 Sol on vendor-run coding benchmarks. Zhipu's <strong>GLM-5.2</strong> (open weights, MIT license, 1M-token context) is the strongest open-source coding model on Terminal-Bench 2.1. A rumored <strong>GLM 5.3 has not been officially confirmed</strong> as of August 2026 — build on GLM-5.2 / Kimi K3 / Qwen 3.8 Max today, not on an unannounced model.
       </p>
@@ -1394,7 +1430,7 @@
         What this means for agencies: model strategy is now a pricing lever. The calculator's <strong>Model Strategy</strong> selector reflects it — open-weight stacks trim the compute line (and lift margins ~5 pts), frontier-only stacks carry a premium. Keep workflows model-portable across at least two providers, benchmark on your own workloads (vendor tables are not your client's workload), and treat AI spend as a managed line item, not a fixed cost. <a href="https://findaiagency.com/open-weight-coding-models-agency-margins.html" target="_blank" rel="noopener" style="color:var(--cyan-light);">Read the full analysis of what open-weight models mean for agency margins →</a>
       </p>
       <p style="color:var(--text-secondary);font-size:0.78rem;margin:0;">
-        Sources: <a href="https://qwen.ai/blog?id=qwen3.8" target="_blank" rel="noopener" style="color:var(--cyan-light);">Alibaba — Qwen 3.8 Max blog</a> · <a href="https://www.qwencloud.com/models/qwen3.8-max" target="_blank" rel="noopener" style="color:var(--cyan-light);">QwenCloud — Qwen 3.8 Max pricing</a> · <a href="https://x.com/JulianGoldieSEO/status/2085470978432512107" target="_blank" rel="noopener" style="color:var(--cyan-light);">45-project field report (X, Aug 6 2026)</a> · <a href="https://www.kimi.com/blog/kimi-k3" target="_blank" rel="noopener" style="color:var(--cyan-light);">Moonshot — Kimi K3 blog</a> · <a href="https://platform.kimi.ai/docs/pricing/chat-k3" target="_blank" rel="noopener" style="color:var(--cyan-light);">Kimi K3 API pricing</a> · <a href="https://huggingface.co/moonshotai/Kimi-K3" target="_blank" rel="noopener" style="color:var(--cyan-light);">HF model card — moonshotai/Kimi-K3</a> · <a href="https://github.com/zai-org/GLM-5" target="_blank" rel="noopener" style="color:var(--cyan-light);">zai-org/GLM-5</a>
+        Sources: <a href="https://qwen.ai/blog?id=qwen3.8" target="_blank" rel="noopener" style="color:var(--cyan-light);">Alibaba — Qwen 3.8 Max blog</a> · <a href="https://www.qwencloud.com/models/qwen3.8-max" target="_blank" rel="noopener" style="color:var(--cyan-light);">QwenCloud — Qwen 3.8 Max pricing</a> · <a href="https://x.com/JulianGoldieSEO/status/2085470978432512107" target="_blank" rel="noopener" style="color:var(--cyan-light);">45-project field report (X, Aug 6 2026)</a> · <a href="https://www.kimi.com/blog/kimi-k3" target="_blank" rel="noopener" style="color:var(--cyan-light);">Moonshot — Kimi K3 blog</a> · <a href="https://platform.kimi.ai/docs/pricing/chat-k3" target="_blank" rel="noopener" style="color:var(--cyan-light);">Kimi K3 API pricing</a> · <a href="https://huggingface.co/moonshotai/Kimi-K3" target="_blank" rel="noopener" style="color:var(--cyan-light);">HF model card — moonshotai/Kimi-K3</a> · <a href="https://github.com/zai-org/GLM-5" target="_blank" rel="noopener" style="color:var(--cyan-light);">zai-org/GLM-5</a> · <a href="https://www.reuters.com/business/retail-consumer/alibaba-plans-charge-big-users-its-next-open-source-ai-model-sources-say-2026-08-07/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Reuters — Alibaba Qwen revenue-share plan (Aug 7, 2026)</a>
       </p>
     </div>
   </section>
@@ -1611,7 +1647,31 @@
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            Not the price you charge — the margin you keep. Client pricing is value-based: if your automation saves a client $2,000/month in labor, a $1,500 retainer is justified regardless of the model underneath. What open-weight models change is your cost side. Alibaba's Qwen 3.8 Max (2.4T-parameter MoE, 1M context) prices at $2/$6 per 1M tokens with open weights promised ~Aug 10; Moonshot's Kimi K3 is a 2.8T-parameter open-weight model with a 1M-token context priced at $3/$15 per 1M tokens, and Zhipu's GLM-5.2 ships open weights under MIT — all within striking distance of paid frontier models on vendor-run coding benchmarks, though none matches them everywhere. Early real-world reports on Qwen 3.8 Max (Aug 6, 2026) are promising on fast, multimodal builds but are self-reported with no independent replication — benchmark on your own workloads before promising anything. Keep workflows model-portable, and treat the cheaper token bill as margin, not as a reason to discount. Treat the rumored GLM 5.3 as unconfirmed until Zhipu officially announces it.
+            Not the price you charge — the margin you keep. Client pricing is value-based: if your automation saves a client $2,000/month in labor, a $1,500 retainer is justified regardless of the model underneath. What open-weight models change is your cost side. Alibaba's Qwen 3.8 Max (2.4T-parameter MoE, 1M context) prices at $2/$6 per 1M tokens with open weights promised ~Aug 10; Moonshot's Kimi K3 is a 2.8T-parameter open-weight model with a 1M-token context priced at $3/$15 per 1M tokens, and Zhipu's GLM-5.2 ships open weights under MIT — all within striking distance of paid frontier models on vendor-run coding benchmarks, though none matches them everywhere. Early real-world reports on Qwen 3.8 Max (Aug 6, 2026) are promising on fast, multimodal builds but are self-reported with no independent replication — benchmark on your own workloads before promising anything. Keep workflows model-portable, and treat the cheaper token bill as margin, not as a reason to discount. Treat the rumored GLM 5.3 as unconfirmed until Zhipu officially announces it. <strong style="color:var(--warning);">One caveat to watch:</strong> Qwen 3.8 Max revenue share with Alibaba required for qualifying model-as-a-service use (rates TBD, effective date TBD) — so the "cheap open-weight" assumption at scale may carry a new licensing cost once final terms land.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is DeepSeek still the cheapest option after its announced API price increase?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Not safely — DeepSeek's current rates are <strong>provisional</strong>. On Aug 6, 2026 DeepSeek announced on its official pricing page (footnote 2) that it "plan[s] to raise the overall pricing for DeepSeek API services in the near future, with a significant increase expected," and it has <strong>not published the new rates, any percentage, or an effective date</strong> (confirmed live 2026-08-08; covered by The Next Web, SCMP, Dataconomy/Bloomberg, and TechNode). Today's list prices — V4-Flash $0.14/$0.28, V4-Pro $0.435/$0.87 per 1M tokens — are the pre-hike schedule and could rise materially. What to do: keep DeepSeek in your model options (this calculator's <strong>DeepSeek V4</strong> strategy is flagged provisional and is deliberately not given the full "cheapest stack" discount), but verify <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">api-docs.deepseek.com/quick_start/pricing</a> before you quote a retainer that assumes DeepSeek pricing, keep your workflows portable across a second provider, and remember the open-weight escape hatch: V4 weights are MIT-licensed, so sustained workloads can be self-hosted (vLLM-class serving) rather than paying whatever the new API rate turns out to be.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Does Alibaba's Qwen 3.8 Max revenue-share plan change open-weight model costs?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Possibly — this is a <strong>monitor pending final terms</strong> item. Reuters (Aug 7, 2026) reports Alibaba plans to ask major commercial users who offer Qwen 3.8 Max as a service for a share of revenue, with a similar measure reportedly planned as soon as next week; rates and effective date are not finalized. The precedent is Moonshot's Kimi K3 license, which requires anyone offering the model for sale as a service with more than $20M in annual sales to negotiate a commercial agreement with Moonshot (reportedly up to a 30% revenue share). Practical take: keep the $2/$6 per 1M token API list price in your model, but do not assume Qwen 3.8 Max is free/unrestricted at scale — a revenue-share layer could raise the effective compute line for agencies reselling model-as-a-service once final terms land. <a href="https://www.reuters.com/business/retail-consumer/alibaba-plans-charge-big-users-its-next-open-source-ai-model-sources-say-2026-08-07/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Reuters source →</a>
           </div>
         </div>
       </div>
@@ -1783,8 +1843,15 @@ const BASE_MARGIN = {
 // confirms Sol now powers both Instant and deep reasoning for Plus/Pro (one model, reasoning
 // slider). NO official per-token API pricing has been published — "sol" uses a marked ESTIMATE
 // (premium tier, slightly above generic frontier to reflect reasoning-effort dial).
-const MODEL_COMPUTE_FACTOR = { open: 0.95, hybrid: 1.0, frontier: 1.1, sol: 1.15 };
-const MODEL_MARGIN_BONUS = { open: 5, hybrid: 0, frontier: -2, sol: -3 };
+// DeepSeek V4 (added 2026-08-08): V4-Flash $0.14/$0.28 and V4-Pro $0.435/$0.87 per 1M tokens
+// are the lowest published list prices on this page, BUT DeepSeek announced (Aug 6, 2026) a
+// planned "significant" overall API price increase with NO new rates/percentage/effective date
+// disclosed — the deepseek factor is therefore PROVISIONAL and is intentionally kept only
+// slightly below the open-weight stack (0.92 vs 0.95) so the calculator does not over-state a
+// discount that may evaporate. Verify https://api-docs.deepseek.com/quick_start/pricing before
+// quoting. Source: DeepSeek pricing page footnote (live 2026-08-08), TNW 2026-08-06, SCMP.
+const MODEL_COMPUTE_FACTOR = { open: 0.95, deepseek: 0.92, hybrid: 1.0, frontier: 1.1, sol: 1.15 };
+const MODEL_MARGIN_BONUS = { open: 5, deepseek: 6, hybrid: 0, frontier: -2, sol: -3 };
 
 // Delivery risk / failure-retry multiplier (verified Aug 2026). Real-world agent
 // workflows routinely burn far more than the naive token estimate when retry loops,
@@ -1903,15 +1970,19 @@ function calculatePricing() {
   const bizLabel = document.getElementById('bizSize').options[document.getElementById('bizSize').selectedIndex].text;
   const modelLabel = modelStrategy === 'open'
     ? 'an open-weight stack (Qwen 3.8 Max / Kimi K3 / GLM-5.2 class)'
-    : modelStrategy === 'sol'
-      ? 'GPT-5.6 Sol (frontier — Instant + deep reasoning; ESTIMATE — OpenAI has not published per-token API pricing)'
-      : modelStrategy === 'frontier'
-        ? 'a paid frontier stack (Claude / GPT class)'
-        : 'a hybrid open-weight + frontier stack';
+    : modelStrategy === 'deepseek'
+      ? 'a DeepSeek V4 stack (V4-Flash / V4-Pro — PROVISIONAL pre-hike pricing; price increase announced Aug 6, 2026)'
+      : modelStrategy === 'sol'
+        ? 'GPT-5.6 Sol (frontier — Instant + deep reasoning; ESTIMATE — OpenAI has not published per-token API pricing)'
+        : modelStrategy === 'frontier'
+          ? 'a paid frontier stack (Claude / GPT class)'
+          : 'a hybrid open-weight + frontier stack';
 
   const modelAssumptionNote = modelStrategy === 'sol'
     ? ' GPT-5.6 Sol API pricing is not yet public, so this quote treats it as an estimate (see https://openai.com/api/pricing/).'
-    : '';
+    : modelStrategy === 'deepseek'
+      ? ' ⚠ DeepSeek has announced a significant API price increase (Aug 6, 2026) with new rates, percentage, and effective date NOT yet disclosed — current rates (V4-Flash $0.14/$0.28, V4-Pro $0.435/$0.87 per 1M tokens) are PROVISIONAL pre-hike pricing and this quote may understate post-hike costs. Verify https://api-docs.deepseek.com/quick_start/pricing before quoting.'
+      : '';
 
   const portabilityLabel = PORTABILITY_LABEL[portability] || PORTABILITY_LABEL.single;
   const portabilityNote = portability === 'single'
@@ -1923,11 +1994,11 @@ function calculatePricing() {
     `or $${annualSavings.toLocaleString()}/year in recovered productivity. ` +
     `Your annual contract value is ${fmt(acv)}, giving the client a ${roi}× ROI in year one. ` +
     `Frame it this way: "For every $1 you invest in this automation, you get $${roi} back." ` +
-    `This quote assumes ${modelLabel} — open-weight models (Qwen 3.8 Max, Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium.` +
+    `This quote assumes ${modelLabel} — ${modelStrategy === 'deepseek' ? 'DeepSeek V4 currently lists the lowest per-1M-token rates on this page, but those rates are PROVISIONAL because DeepSeek announced a significant price increase with no published schedule' : 'open-weight models (Qwen 3.8 Max, Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium'}.` +
     `${modelAssumptionNote} ` +
     `Pricing also bakes in a delivery-risk buffer for ${drl} — real agent workflows burn money on failed loops and retries, so don't under-price the build. ` +
     `The deliverable is ${portabilityLabel}.${portabilityNote} ` +
-    `Assumptions verified Aug 7, 2026 (Agent Plugins 1.0.0 published Aug 6, 2026 — agent-plugins.org; Qwen 3.8 Max GA Aug 2–3, 2026 — $2/$6 per 1M tokens, open weights ~Aug 10; OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates).`;
+    `Assumptions verified Aug 8, 2026 (DeepSeek V4 provisional pre-hike rates — price increase announced Aug 6, 2026, no schedule published; Qwen 3.8 Max GA Aug 2–3, 2026 — $2/$6 per 1M tokens, open weights ~Aug 10, Alibaba revenue-share monitor; Agent Plugins 1.0.0 published Aug 6, 2026 — agent-plugins.org; OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates and https://api-docs.deepseek.com/quick_start/pricing for DeepSeek rates).`;
 
   // Build pitch
   const netMonthly = monthlySavings - monthlyRetainer;

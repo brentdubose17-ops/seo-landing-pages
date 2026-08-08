@@ -107,7 +107,7 @@ opened Aug 4–5, 2026. Sources linked in section `#wallet-rails`.
 | `numWorkflows` | select (1/2/4/6/11) | `4` |
 | `experience` | select (beginner/intermediate/advanced/expert) | `intermediate` |
 | `timeline` | select (rush/standard/extended) | `standard` |
-| `modelStrategy` | select (hybrid/open/sol/frontier) | `hybrid` |
+| `modelStrategy` | select (hybrid/deepseek/open/sol/frontier) | `hybrid` |
 | `deliveryRisk` | select (low/moderate/high/levelsio) | `low` |
 | `portability` | select (single/plugin_2/plugin_many) | `single` |
 | `hoursSaved` | range 5–300 | `40` |
@@ -120,8 +120,8 @@ SIZE_MULT     0.65 / 0.85 / 1.0 / 1.35 / 1.8
 WORKFLOW_MULT 0.7 / 0.9 / 1.0 / 1.3 / 1.6
 EXP_MULT      0.7 / 1.0 / 1.3 / 1.6
 TIMELINE_MULT 1.35 / 1.0 / 0.9
-MODEL_COMPUTE_FACTOR  open 0.95 · hybrid 1.0 · frontier 1.1 · sol 1.15 (estimate)
-MODEL_MARGIN_BONUS    open +5 · hybrid 0 · frontier −2 · sol −3
+MODEL_COMPUTE_FACTOR  open 0.95 · deepseek 0.92 (PROVISIONAL — hike announced) · hybrid 1.0 · frontier 1.1 · sol 1.15 (estimate)
+MODEL_MARGIN_BONUS    open +5 · deepseek +6 · hybrid 0 · frontier −2 · sol −3
 DELIVERY_RISK_FACTOR  low 1.0 · moderate 1.15 · high 1.35 · levelsio 2.0
 PORTABILITY_SETUP_FACTOR   single 1.0 · plugin_2 0.85 · plugin_many 0.70
 PORTABILITY_RETAINER_FACTOR single 1.0 · plugin_2 0.97 · plugin_many 0.94
@@ -173,6 +173,16 @@ Prices (per 1M tokens): Flash-Lite $0.30/$2.50 · Flash $1.50/$9.00 · 2.5 Pro $
 
 ## 6. Changelog
 
+- **2026-08-08** — DeepSeek V4 strategy added (V4-Flash $0.14/$0.28, V4-Pro
+  $0.435/$0.87 per 1M tokens) flagged **PROVISIONAL**: DeepSeek announced a
+  significant API price increase (Aug 6, 2026) with no new rates/percentage/
+  effective date disclosed (verified live 2026-08-08, footnote 2 of the official
+  pricing page). Compute factor intentionally conservative (0.92, margin +6) so
+  the calculator does not over-state "DeepSeek is cheapest"; output carries an
+  explicit verify-before-quoting note; red warning banner in the open-weight
+  section; new FAQ + FAQPage schema entry; meta tags extended. Sources: DeepSeek
+  pricing page (live), TNW, SCMP, Dataconomy/Bloomberg, TechNode. Parent brief
+  t_05a34bf3.
 - **2026-08-07** — Wallet & Spend Cap Estimator added (Cloudflare Wallets /
   x402 agent payment rails): optional wallet fee %, per-agent spend, creator-set
   cap; capped vs uncapped output; edge cases (no fee, exceeded cap, no cap).
