@@ -135,6 +135,10 @@
             <input type="number" id="value" min="1" step="100" placeholder="e.g. 10000">
             <div class="error-msg" id="valueError">Please enter a valid shipment value</div>
         </div>
+        <div class="form-row">
+            <label for="entryDate">Import / Entry Date <span style="font-weight:400;color:#888;">(default: today)</span></label>
+            <input type="date" id="entryDate">
+        </div>
         <div class="checkbox-row" id="usmcaRow" style="display:none;">
             <input type="checkbox" id="usmca" checked>
             <label for="usmca">Goods qualify as originating under USMCA (Section 301 exempt)</label>
@@ -198,6 +202,21 @@
         <li><strong>In-transit exception:</strong> Goods loaded before July 24 and entered before July 28, 2026 are exempt from the new duty.</li>
         <li><strong>Pharmaceuticals</strong> (9903.05.89) and <strong>civil aircraft</strong> (9903.05.88) are exempt.</li>
     </ul>
+
+    <h2>🆕 Section 232: Polysilicon &amp; Solar Tariff (Effective Dec 4, 2026)</h2>
+    <p>President Trump signed a <strong>15% ad valorem Section 232 tariff</strong> on imported polysilicon ingots and derivatives (solar cells, modules, ingots, and wafers) on <strong>August 6, 2026</strong>. It takes effect <strong>December 4, 2026, 12:01 a.m. ET</strong> and includes <strong>Minimum Import Price (MIP) floors</strong> — importers must certify the first arm's-length U.S. sale is at or above the MIP. This replaces the Section 201 solar safeguard that expired in February 2026.</p>
+    <p><strong>Select "Polysilicon &amp; Solar (Section 232)" from the product category dropdown</strong> and set your import date to December 4, 2026 or later to see the new rate and MIP floors in the calculator.</p>
+    <table>
+        <thead><tr><th>MIP Floor</th><th>Value</th></tr></thead>
+        <tbody>
+            <tr><td>Polysilicon</td><td><strong>$21/kg</strong></td></tr>
+            <tr><td>Ingots / Wafers</td><td><strong>$100/kg</strong></td></tr>
+            <tr><td>Solar Cells</td><td><strong>$0.22/W</strong></td></tr>
+            <tr><td>Solar Modules</td><td><strong>$0.38/W</strong></td></tr>
+        </tbody>
+    </table>
+    <p><strong>Country carve-outs:</strong> Japan, South Korea, Taiwan, Switzerland, and the EU have a combined Column 1 + Section 232 total of 15% (reduced additional duty). The UK faces a 10% additional duty. All other countries face the full 15% ad valorem additional.</p>
+    <p style="margin-top:12px;"><strong>Sources:</strong> White House Proclamation (Aug 6, 2026), NYT, TaiyangNews, KPMG TaxNewsFlash, GHY International, AAEI Tariff Timeline. For official rates, consult the USITC HTS database or a licensed customs broker.</p>
 </section>
 
 <section class="blog-section">
@@ -268,6 +287,12 @@
     });
 })();
 
+// Set default entry date to today
+(function () {
+    var d = document.getElementById('entryDate');
+    if (d) d.value = new Date().toISOString().split('T')[0];
+})();
+
 function calculate() {
     var T = window.TARIFF_DATA;
     var country = document.getElementById('country').value;
@@ -275,6 +300,7 @@ function calculate() {
     var value = parseFloat(document.getElementById('value').value);
     var errorMsg = document.getElementById('valueError');
     var results = document.getElementById('results');
+    var entryDate = document.getElementById('entryDate').value;
 
     if (!country || !category || !value || value <= 0) {
         if (!value || value <= 0) {
@@ -286,7 +312,9 @@ function calculate() {
     errorMsg.style.display = 'none';
 
     var usmcaQualified = document.getElementById('usmca').checked;
-    var res = T.effectiveRate(country, category, { usmcaQualified: usmcaQualified });
+    var opts = { usmcaQualified: usmcaQualified };
+    if (entryDate) opts.asOfDate = entryDate;
+    var res = T.effectiveRate(country, category, opts);
     if (!res) return;
 
     var effectiveRate = res.rate;
@@ -313,6 +341,9 @@ function calculate() {
     if (b.chinaExisting301 > 0) {
         breakdownParts.push('China pre-existing 301: +' + (b.chinaExisting301 * 100).toFixed(1) + '%');
     }
+    if (b.s232 && b.s232.applies) {
+        breakdownParts.push('Section 232 (polysilicon): +' + (b.s232.rate * 100).toFixed(1) + '%');
+    }
 
     var info = document.createElement('div');
     info.className = 'flag info';
@@ -329,6 +360,29 @@ function calculate() {
         }
     });
 
+    // Section 232 polysilicon status + MIP floors
+    if (res.breakdown.s232) {
+        var s2 = res.breakdown.s232;
+        if (!s2.applies) {
+            var nye = document.createElement('div');
+            nye.className = 'flag warn';
+            nye.innerHTML = '<strong>⚠️ Section 232 Polysilicon Tariff — Not Yet In Effect</strong>The 15% Section 232 tariff on polysilicon and solar derivatives is <strong>not yet in effect</strong> for this import date (effective ' + s2.effective + '). The rate shown above does NOT include the Section 232 duty. Select a date on or after December 4, 2026 to see the new rate and MIP floors.';
+            flags.appendChild(nye);
+        } else {
+            var mip = document.createElement('div');
+            mip.className = 'flag info';
+            var floorLines = [];
+            Object.keys(s2.mip_floors).forEach(function (k) {
+                floorLines.push(s2.mip_floors[k].label);
+            });
+            mip.innerHTML = '<strong>Section 232 — Polysilicon & Solar Derivatives</strong>'
+                + '15% ad valorem additional duty applied. <strong>Minimum Import Price Floors:</strong><br>'
+                + floorLines.join('<br>')
+                + '<br><small>Effective ' + s2.effective + '. Applies to ' + s2.scope + '. Importers must certify first arm\'s-length U.S. sale at or above MIP.</small>';
+            flags.appendChild(mip);
+        }
+    }
+
     if (country === 'china') {
         var cn = document.createElement('div');
         cn.className = 'flag info';
@@ -342,7 +396,8 @@ function calculate() {
 
 // Populate blog articles
 var BLOG_ARTICLES = [
-    { title: "Section 301 Tariff Expansion: 60 Countries Now Covered", file: "section-301-tariff-expansion-60-countries.html", desc: "The 10% global tariff is gone. Here's what the new 60-country forced-labor tariff framework means for importers, plus proposed Canada and EU actions.", featured: true },
+    { title: "Polysilicon Section 232 Tariff: 15% Duty + Price Floors Effective Dec 4, 2026", file: "polysilicon-section-232-tariff-advisory.html", desc: "The U.S. imposed a 15% Section 232 tariff on polysilicon and derivatives with MIP floors of $21/kg, $100/kg, $0.22/W, and $0.38/W — effective December 4, 2026. What importers need to know.", featured: true },
+    { title: "Section 301 Tariff Expansion: 60 Countries Now Covered", file: "section-301-tariff-expansion-60-countries.html", desc: "The 10% global tariff is gone. Here's what the new 60-country forced-labor tariff framework means for importers, plus proposed Canada and EU actions." },
     { title: "Canada 50% Tariffs: What Lands August 19", file: "canada-50-percent-tariff-august-19-explainer.html", desc: "50% Section 338 duties on Canadian autos, alcohol, and dairy take effect August 19 — with no USMCA exemption." },
     { title: "US Tariff Rates 2026 by Country", file: "us-tariff-rates-2026-by-country.html", desc: "Complete guide to current US import tariff rates for every major trading partner." },
     { title: "How Tariffs Affect Small Business Imports", file: "how-tariffs-affect-small-business-imports.html", desc: "Practical guide for small businesses navigating 2026 tariff changes." },

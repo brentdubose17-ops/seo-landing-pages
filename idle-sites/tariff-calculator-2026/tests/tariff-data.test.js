@@ -156,3 +156,117 @@ test('Calculator page links to the published tariff expansion article', () => {
   assert.ok(article.length > 5000, 'expansion article should be substantive');
   assert.ok(article.includes('Section 301'), 'article should mention Section 301');
 });
+
+// --- Section 232 Polysilicon tariff tests ---
+
+test('SECTION_232_POLYSILICON is exported with correct values', () => {
+  const s = T.SECTION_232_POLYSILICON;
+  assert.ok(s, 'SECTION_232_POLYSILICON should be present');
+  assert.equal(s.category, 'polysilicon');
+  assert.equal(s.rate, 0.15);
+  assert.equal(s.effective, '2026-12-04 12:01 AM ET');
+  assert.equal(s.signature, '2026-08-06');
+  assert.ok(s.mip_floors);
+  assert.equal(s.mip_floors.polysilicon.value, 21);
+  assert.equal(s.mip_floors.polysilicon.unit, 'USD/kg');
+  assert.equal(s.mip_floors.solar_module.value, 0.38);
+  assert.equal(s.mip_floors.solar_module.unit, 'USD/W');
+  // carve-out arrays
+  assert.ok(Array.isArray(s.carve_outs.combined_15));
+  assert.ok(Array.isArray(s.carve_outs.uk_10));
+  assert.equal(s.carve_outs.uk_10.length, 1);
+  assert.equal(s.carve_outs.uk_10[0], 'united-kingdom');
+});
+
+test('polysilicon category available in CATEGORY_MODIFIERS', () => {
+  const cat = T.CATEGORY_MODIFIERS['polysilicon'];
+  assert.ok(cat, 'polysilicon category should exist');
+  assert.equal(cat.add, 0, 'polysilicon base add is 0 — rate comes from Section 232');
+  assert.ok(cat.name.includes('Section 232'));
+});
+
+test('polysilicon tariff applies on Dec 4 2026 (effective date)', () => {
+  // China polysilicon: MFN 0.195 + cat 0 + 301 0.125 + chinaExisting 0 + s232 0.15 = 0.47
+  const res = T.effectiveRate('china', 'polysilicon', {
+    usmcaQualified: false,
+    asOfDate: '2026-12-04'
+  });
+  assert.ok(res);
+  assert.ok(res.breakdown.s232, 's232 details should be present');
+  assert.equal(res.breakdown.s232.applies, true);
+  assert.ok(Math.abs(res.breakdown.s232.rate - 0.15) < 0.0001,
+    `s232 rate should be 0.15 for China, got ${res.breakdown.s232.rate}`);
+  // 0.195 + 0.125 + 0.15 = 0.47
+  assert.ok(Math.abs(res.rate - 0.47) < 0.0001,
+    `expected rate 0.47, got ${res.rate}`);
+  // MIP floors present
+  assert.ok(res.breakdown.s232.mip_floors);
+  assert.equal(res.breakdown.s232.mip_floors.polysilicon.value, 21);
+  assert.equal(res.breakdown.s232.mip_floors.solar_module.value, 0.38);
+});
+
+test('polysilicon tariff does NOT apply before Dec 4 2026', () => {
+  const res = T.effectiveRate('china', 'polysilicon', {
+    usmcaQualified: false,
+    asOfDate: '2026-12-03'
+  });
+  assert.ok(res);
+  assert.ok(res.breakdown.s232, 's232 details should always be present');
+  assert.equal(res.breakdown.s232.applies, false);
+  assert.equal(res.breakdown.s232.rate, 0);
+  // Rate should be only MFN + 301 = 0.195 + 0.125 = 0.32
+  assert.ok(Math.abs(res.rate - 0.32) < 0.0001,
+    `expected rate 0.32 (no s232), got ${res.rate}`);
+});
+
+test('polysilicon tariff does NOT apply with today\'s date (before Dec 4 2026)', () => {
+  // Default (no asOfDate) = today. Aug 2026 < Dec 4, so should NOT apply.
+  const res = T.effectiveRate('china', 'polysilicon', { usmcaQualified: false });
+  assert.ok(res);
+  assert.ok(res.breakdown.s232);
+  assert.equal(res.breakdown.s232.applies, false,
+    's232 should not apply by default (today < Dec 4)');
+  assert.equal(res.breakdown.s232.rate, 0);
+});
+
+test('polysilicon — EU carve-out: S232 + Column 1 = 15% total', () => {
+  // EU: MFN 0.017 → s232 = 0.15 - 0.017 = 0.133 (combined 15%)
+  const res = T.effectiveRate('european-union', 'polysilicon', {
+    asOfDate: '2026-12-15'
+  });
+  assert.ok(res);
+  assert.equal(res.breakdown.s232.applies, true);
+  assert.ok(Math.abs(res.breakdown.s232.rate - (0.15 - 0.017)) < 0.0001,
+    `EU s232 should be ${0.15 - 0.017}, got ${res.breakdown.s232.rate}`);
+});
+
+test('polysilicon — UK carve-out: 10% additional', () => {
+  // UK: 10% additional (not the full 15%)
+  const res = T.effectiveRate('united-kingdom', 'polysilicon', {
+    asOfDate: '2026-12-15'
+  });
+  assert.ok(res);
+  assert.equal(res.breakdown.s232.applies, true);
+  assert.ok(Math.abs(res.breakdown.s232.rate - 0.10) < 0.0001,
+    `UK s232 should be 0.10, got ${res.breakdown.s232.rate}`);
+});
+
+test('polysilicon — non-carve-out country (Vietnam): full 15%', () => {
+  // Vietnam is NOT in combined_15 or uk_10 → full 15%
+  const res = T.effectiveRate('vietnam', 'polysilicon', {
+    asOfDate: '2027-01-01'
+  });
+  assert.ok(res);
+  assert.equal(res.breakdown.s232.applies, true);
+  assert.ok(Math.abs(res.breakdown.s232.rate - 0.15) < 0.0001);
+});
+
+test('polysilicon — effective-date edge: Dec 4 2026 date-only comparison', () => {
+  // date-only comparison: any time on Dec 4 = effective
+  const res = T.effectiveRate('vietnam', 'polysilicon', {
+    asOfDate: '2026-12-04T00:00:00Z'
+  });
+  assert.ok(res);
+  assert.equal(res.breakdown.s232.applies, true,
+    'Dec 4 in any timezone = effective (date-only comparison)');
+});

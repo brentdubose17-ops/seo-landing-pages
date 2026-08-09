@@ -1,10 +1,13 @@
 /*
  * Tariff Calculator 2026 — canonical tariff data
  * -------------------------------------------------
- * Updated 2026-08-07 with the Section 301 forced-labor framework
- * (effective 2026-07-24 12:01 AM ET, replacing expired Section 122).
- * Verified against USTR FRN (pre-publication 7-23-26), USTR press
- * release + fact sheet, White House, C.H. Robinson Edge Report Aug 2026.
+ * Updated 2026-08-08: Section 232 polysilicon + solar tariff added
+ * (15% ad valorem, MIP floors, effective 2026-12-04).
+ * Section 301 forced-labor framework (effective 2026-07-24 12:01 AM ET,
+ * replacing expired Section 122) verified against USTR FRN, White House,
+ * C.H. Robinson Edge Report Aug 2026.
+ * Philippines rate RE-VERIFIED at 12.5% on 2026-08-07: relief request
+ * pending at USTR, no reduction announced — rate unchanged.
  * Works in browser (window.TARIFF_DATA) and Node (module.exports).
  */
 (function (root, factory) {
@@ -124,18 +127,19 @@
    * from the original calculator's average 2026 US tariff by HS group.
    */
   var CATEGORY_MODIFIERS = {
-    electronics: { add: 0.008, name: 'Electronics & Machinery' },
-    textiles:    { add: 0.101, name: 'Textiles & Apparel' },
-    footwear:    { add: 0.114, name: 'Footwear' },
-    auto:        { add: 0.027, name: 'Automotive' },
-    furniture:   { add: 0.035, name: 'Furniture' },
-    steel:       { add: 0.014, name: 'Steel & Metals' },
-    food:        { add: 0.046, name: 'Food & Beverages' },
-    chemicals:   { add: 0.020, name: 'Chemicals & Plastics' },
-    pharma:      { add: 0,     name: 'Pharmaceuticals' },
-    toys:        { add: 0.024, name: 'Toys & Games' },
-    paper:       { add: 0.010, name: 'Paper & Wood' },
-    ceramics:    { add: 0.040, name: 'Ceramics & Glass' }
+    electronics:  { add: 0.008, name: 'Electronics & Machinery' },
+    textiles:     { add: 0.101, name: 'Textiles & Apparel' },
+    footwear:     { add: 0.114, name: 'Footwear' },
+    auto:         { add: 0.027, name: 'Automotive' },
+    furniture:    { add: 0.035, name: 'Furniture' },
+    steel:        { add: 0.014, name: 'Steel & Metals' },
+    food:         { add: 0.046, name: 'Food & Beverages' },
+    chemicals:    { add: 0.020, name: 'Chemicals & Plastics' },
+    pharma:       { add: 0,     name: 'Pharmaceuticals' },
+    toys:         { add: 0.024, name: 'Toys & Games' },
+    paper:        { add: 0.010, name: 'Paper & Wood' },
+    ceramics:     { add: 0.040, name: 'Ceramics & Glass' },
+    polysilicon:  { add: 0,     name: 'Polysilicon & Solar (Section 232)' }
   };
 
   /*
@@ -178,6 +182,53 @@
   ];
 
   /*
+   * Section 232 — Polysilicon and derivatives tariff
+   * -------------------------------------------------
+   * Signed: 2026-08-06. Effective: 2026-12-04 12:01 AM ET.
+   * 15% ad valorem additional duty on imported polysilicon ingots
+   * and derivatives (Annexes I & II), with Minimum Import Price floors.
+   * Country carve-outs: JP, KR, TW, CH, LI, EU = S232 + Column 1 = 15% total;
+   * UK = 10% additional.
+   * Verified 2026-08-08 against White House proclamation, NYT, AAEI,
+   * TaiyangNews, KPMG, GHY (7 sources, 26 verbatim quotes, HIGH confidence).
+   * Replaces the Section 201 safeguard on solar cells/modules that expired
+   * February 2026.
+   *   Task body stated "$1/kg polysilicon floor" — CORRECTED to $21/kg per
+   *   all 7 sources (proclamation §1(a)(i), KPMG, GHY). Brief typo.
+   */
+  var SECTION_232_POLYSILICON = {
+    category: 'polysilicon',
+    rate: 0.15,
+    effective: '2026-12-04 12:01 AM ET',
+    signature: '2026-08-06',
+    authority: 'Section 232, Trade Expansion Act of 1962 (19 U.S.C. 1862)',
+    scope: 'Polysilicon ingots and polysilicon derivatives (Annexes I & II)',
+    mip_floors: {
+      polysilicon:    { value: 21,    unit: 'USD/kg',  label: 'Polysilicon MIP floor: $21/kg' },
+      ingot_wafer:    { value: 100,   unit: 'USD/kg',  label: 'Ingot/wafer MIP floor: $100/kg' },
+      solar_cell:     { value: 0.22,  unit: 'USD/W',   label: 'Solar cell MIP floor: $0.22/W' },
+      solar_module:   { value: 0.38,  unit: 'USD/W',   label: 'Solar module MIP floor: $0.38/W' }
+    },
+    // carve_outs: countries where the effective Section 232 additional is
+    // capped so that Column 1 + Section 232 = 15% total (or 10% for UK).
+    // For all OTHER countries: full 15% ad valorem additional.
+    carve_outs: {
+      combined_15: ['japan', 'south-korea', 'taiwan', 'switzerland', 'european-union'],
+      uk_10: ['united-kingdom']
+    },
+    status: 'Signed August 6, 2026. Effective December 4, 2026, 12:01 a.m. ET. MIP certification required for first arm\'s-length U.S. sale at or above MIP. No MIP documentation → specific tariff equal to applicable MIP. Entered value below MIP → specific tariff equal to the difference. DOC onshoring program available (construction start by Jan 20, 2029).',
+    source_citations: [
+      'White House proclamation: Adjusting Imports of Polysilicon and its Derivatives (Aug 6, 2026)',
+      'NYT: Trump Issues Tariffs on Key Ingredient for Electronics and Solar Panels (Aug 6, 2026)',
+      'TaiyangNews: US Announces 15% Tariff On Imported Polysilicon Under Section 232',
+      'KPMG TaxNewsFlash: US adopts minimum import prices, duties, and incentives for polysilicon',
+      'GHY International: U.S. Imposes 15% Section 232 Tariff on Polysilicon and Its Derivatives',
+      'AAEI Tariff Actions Timeline and Customs Service Messages',
+      'White House Fact Sheet: Tariffs on Polysilicon and its Derivatives'
+    ]
+  };
+
+  /*
    * USMCA status and Section 301 exemptions.
    */
   var USMCA = {
@@ -201,7 +252,9 @@
    * @param countrySlug  e.g. 'vietnam'
    * @param category     e.g. 'electronics'
    * @param opts { usmcaQualified: bool (default true for CA/MX),
-   *              includeProposed: bool (default false) }
+   *              includeProposed: bool (default false),
+   *              asOfDate: Date|string (default today) — controls
+   *                        Section 232 effective-date gating }
    * Returns { rate, breakdown: {...} } where rate is the estimated
    * effective duty rate (decimal).
    */
@@ -224,7 +277,6 @@
       if (c.type === 'flat') {
         s301Add = c.rate;
       } else if (c.type === 'mfn_cap') {
-        // combined MFN + 301 = cap; 301 = max(0, cap - mfn)
         s301Add = Math.max(0, c.cap - mfn);
       }
     }
@@ -242,7 +294,51 @@
       });
     }
 
-    var rate = base + s301Add + chinaExisting + proposedAdd;
+    // Section 232 polysilicon — date-gated, effective 2026-12-04 12:01 AM ET
+    var s232Add = 0;
+    var s232Details = null;
+    if (category === 'polysilicon') {
+      var s232 = SECTION_232_POLYSILICON;
+      var s232EffectiveDay = '2026-12-04';
+
+      // Resolve asOfDate to an ISO date string for date-only comparison.
+      // The tariff applies to the ENTIRE day of Dec 4, 2026 (any timezone).
+      var qDateStr;
+      if (opts.asOfDate) {
+        qDateStr = String(opts.asOfDate).slice(0, 10);
+      } else {
+        qDateStr = new Date().toISOString().slice(0, 10); // today
+      }
+      var s232Applies = qDateStr >= s232EffectiveDay;
+
+      if (s232Applies) {
+        // Carve-out: combined_15 — S232 + Column 1 = 15% total
+        if (s232.carve_outs.combined_15.indexOf(countrySlug) !== -1) {
+          s232Add = Math.max(0, 0.15 - mfn);
+        }
+        // Carve-out: UK — 10% additional
+        else if (s232.carve_outs.uk_10.indexOf(countrySlug) !== -1) {
+          s232Add = 0.10;
+        }
+        // All other countries: full 15%
+        else {
+          s232Add = 0.15;
+        }
+      }
+
+      s232Details = {
+        applies: s232Applies,
+        rate: s232Add,
+        effective: s232.effective,
+        askedDate: qDateStr,
+        mip_floors: s232.mip_floors,
+        scope: s232.scope,
+        status: s232.status,
+        source_citations: s232.source_citations
+      };
+    }
+
+    var rate = base + s301Add + chinaExisting + proposedAdd + s232Add;
     rate = Math.min(rate, 0.60);
 
     return {
@@ -255,7 +351,8 @@
         proposed: proposedAdd,
         usmcaQualified: usmcaQualified,
         type: c.type,
-        cap: c.type === 'mfn_cap' ? c.cap : null
+        cap: c.type === 'mfn_cap' ? c.cap : null,
+        s232: s232Details
       }
     };
   }
@@ -268,6 +365,7 @@
     CATEGORY_MODIFIERS: CATEGORY_MODIFIERS,
     CHINA_301: CHINA_301,
     PROPOSED_FLAGS: PROPOSED_FLAGS,
+    SECTION_232_POLYSILICON: SECTION_232_POLYSILICON,
     USMCA: USMCA,
     EXEMPTION_NOTES: EXEMPTION_NOTES,
     effectiveRate: effectiveRate
