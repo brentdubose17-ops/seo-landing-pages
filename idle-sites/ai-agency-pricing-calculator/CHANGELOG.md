@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-11 — Meta Muse Glimmer local self-host strategy added (verified via parent research brief t_df8c39e4)
+
+- **New model strategy:** `Local / self-hosted (Meta Muse Glimmer)` added to the Model Strategy selector — the cheapest compute factor on this page (`MODEL_COMPUTE_FACTOR.local = 0.85` vs open 0.95 / deepseek 0.92; `MODEL_MARGIN_BONUS.local = +8` vs open +5 / deepseek +6).
+- **Why:** Meta released Muse Glimmer on Aug 10, 2026 — 30B dense (~29.6B total), Apache 2.0, 131,072+ context, official 4-bit K-Quant-17GB GGUF = 16,756,681,056 bytes (~15.6 GiB, under 20 GB), single consumer GPU (24 GB VRAM class), >200 tok/s on RTX 5090 with DFlash (233.4 vs 74.9 baseline). Once the one-time GPU capex is amortized, marginal inference cost collapses to electricity — undercutting every hosted API at sustained volume. The cheapest-model answer is no longer just "which API."
+- **Conservative modeling:** local is NOT zero — the model needs a real 24 GB-class card, the 17 GB quant carries ~1.0% benchmark degradation, full 131K context + vision encoder + DFlash drafter needs the 24–32 GB envelope, and the agency owns uptime/ops/security. Framing is explicitly "cheapest per workload," not a blanket "cheapest model."
+- **Touch points:** new dedicated `#muse-glimmer-local` cost-scenario section (verified specs table, local-vs-API break-even framing vs DeepSeek V4 PROVISIONAL $0.14/$0.28, Qwen 3.8 Max $2/$6, Kimi K3 $3/$15, caveats, 7 source links), Model Strategy selector helper note, open-weight section narrative + closing paragraph, Pricing Reference Table footnote, new FAQ item ("Is self-hosting Meta Muse Glimmer cheaper than every API?") + FAQPage JSON-LD entry, meta description/keywords extended, page changelog entry, assumptions date bumped to Aug 11, 2026.
+- **Regression:** no default-output changes — `hybrid` remains the default strategy (factor 1.0, unchanged); only the new local branch is added.
+- **Sources:** https://huggingface.co/meta-models/Muse-Glimmer-30B (Meta model card) · GGUF repo · HF blog · NVIDIA blog · TechStartups (Aug 10, 2026) · AMD blog · explainx deep dive.
+
 ## 2026-08-08 — DeepSeek V4 strategy added with PROVISIONAL pricing flag (verified via parent research brief t_05a34bf3)
 
 - **New model strategy:** `DeepSeek V4` added to the Model Strategy selector (V4-Flash / V4-Pro) — the lowest published list rates on the page (V4-Flash $0.14/$0.28, V4-Pro $0.435/$0.87 per 1M tokens), but explicitly flagged **PROVISIONAL**.
