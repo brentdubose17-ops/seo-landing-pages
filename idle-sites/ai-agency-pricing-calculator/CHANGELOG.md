@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-11 — Microsoft MAI-Image-2.6 coverage added (verified via parent research brief t_f6fbd82d)
+
+- **New model context:** MAI-Image-2.6 (announced Aug 10, 2026) is now **#2 on the Arena text-to-image leaderboard** (`mai-image-2.6-preview`, Elo 1336 ±11, 3,488 votes) — ahead of xAI grok-imagine-image-2.0 (#3), Meta muse-image (#5), Google gemini-3.1-flash-image / nano-banana-2 (#7), and behind only OpenAI GPT-Image-2 (1381). +79 Elo overall vs MAI-Image-2.5, +91 Elo on text rendering.
+- **Agency fit:** strongest gain is text rendering (packaging, signage, social ad overlays, localized marketing assets) plus commercial/photorealistic strength across product, branding, and cinematic use cases; multi-reference + richer grounding supports client-brand consistency. Positioned as the new premium Microsoft option for Content Automation image deliverables.
+- **Availability:** Arena now (free testing/proposals), MAI Playground this week, Microsoft Foundry + other products rolling out soon. **Foundry pricing for 2.6 NOT published** — prior-gen MAI-Image-2.5 (~$48/1k images, Artificial Analysis) used as explicit reference placeholder; no 2.6 price asserted anywhere. Labeled provisional like DeepSeek V4 / GPT-5.6-Cyber governed-access terms.
+- **Touch points:** Pricing Reference Table footnote + meta description/keywords (index.html), new "Routing image generation separately: MAI-Image-2.6 is a different lane" H2 + FAQ item + FAQPage JSON-LD + sources + related link (model-selection-muse-spark), dated update-box + meta + sources (gemini-model-availability-risk-agencies — Google's nano-banana-2 now #7), provisional-pricing parallel note + related link (gpt-5.6-cyber-model-cost-risk-calculations), new AI Image Generation row in SMB/Enterprise pricing matrix + image-generation note with 3 source links + related links + dateModified (ai-automation-pricing-guide-2026).
+- **No calculator logic change:** image-gen is a content-service overlay, not a new token profile — Model Strategy dropdown and pricing defaults untouched; default outputs unchanged.
+- **Sources:** Microsoft AI launch post · Arena text-to-image leaderboard (fetched Aug 11, 2026) · Artificial Analysis text-to-image leaderboard (prior-gen pricing reference) · AI Intel Report · tochka.by · thecommunity.ru — via parent research brief t_f6fbd82d (9 sources, evidence ledger green).
+
 ## 2026-08-11 — Meta Muse Glimmer local self-host strategy added (verified via parent research brief t_df8c39e4)
 
 - **New model strategy:** `Local / self-hosted (Meta Muse Glimmer)` added to the Model Strategy selector — the cheapest compute factor on this page (`MODEL_COMPUTE_FACTOR.local = 0.85` vs open 0.95 / deepseek 0.92; `MODEL_MARGIN_BONUS.local = +8` vs open +5 / deepseek +6).
