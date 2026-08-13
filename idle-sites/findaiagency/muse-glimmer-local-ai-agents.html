@@ -24,7 +24,7 @@
       "headline": "Muse Glimmer: The 30B Open Model Agencies Can Run on One GPU",
       "description": "Meta's Muse Glimmer: a 30B open-weight model on a single consumer GPU — Apache 2.0, 120K+ context, under 20GB. When should your agency go local vs API?",
       "datePublished": "2026-08-11",
-      "dateModified": "2026-08-11",
+      "dateModified": "2026-08-12",
       "author": {"@type": "Organization", "name": "Find AI Agency"},
       "publisher": {"@type": "Organization", "name": "Find AI Agency"},
       "mainEntityOfPage": "https://findaiagency.com/muse-glimmer-local-ai-agents",
@@ -57,6 +57,16 @@
           "@type": "Question",
           "name": "Is Muse Glimmer free to use commercially?",
           "acceptedAnswer": {"@type": "Answer", "text": "Yes. Muse Glimmer is released under the Apache 2.0 license, covering the weights and all artifacts including the BF16 model, 4-bit quantizations, the DFlash drafter, and the perception encoder. Apache 2.0 permits commercial use, modification, and redistribution with attribution."}
+        },
+        {
+          "@type": "Question",
+          "name": "How do I run Muse Glimmer locally with Ollama?",
+          "acceptedAnswer": {"@type": "Answer", "text": "One command: ollama run muse-glimmer. The official Ollama build is about 18GB with a 128K context window and text + image input, and it works offline. On Apple Silicon, use the MLX build (ollama run muse-glimmer:30b-mlx, ~21GB) for DFlash speculative decoding and image input. Ollama's launcher can wire the model into Claude Code, Codex, OpenCode, GitHub Copilot, Pi, OpenClaw, and Hermes Agent with commands like ollama launch claude --model muse-glimmer. The model also supports controllable reasoning strength (low / medium / high / xhigh)."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a hosted API for Muse Glimmer?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Meta does not publish a first-party API price, but third-party hosts already serve the model: Together AI lists $0.35 per million input tokens and $1.50 per million output tokens ($0.04/M cached input), and OpenRouter lists $0.30/$1.20 per million. That is roughly 10x cheaper than frontier API pricing — useful for testing or burst workloads, while sustained volume still favors running the model locally."}
         }
       ]
     }
@@ -105,11 +115,11 @@
     <article>
         <header>
             <h1>Muse Glimmer: The 30B Open Model Agencies Can Run on One GPU</h1>
-            <div class="meta"><span>Published August 11, 2026</span><span>Updated August 11, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="meta"><span>Published August 11, 2026</span><span>Updated August 12, 2026</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>AI models / local vs API</span></div>
         </header>
 
-        <p>On August 10, 2026, Meta released <strong>Muse Glimmer</strong> — a 30-billion-parameter, dense, open-weight model built by Meta Superintelligence Lab and distilled from the closed frontier model Muse Spark. <a href="https://techstartups.com/2026/08/10/meta-launches-new-ai-model-muse-glimmer-as-zuckerberg-urges-u-s-to-remove-barriers-to-open-source-ai" rel="noopener">TechStartups reports</a> Zuckerberg paired the launch with a 14-page essay urging the U.S. to remove barriers to open-source AI, and says Meta will open-source Muse Spark 1.2 next. For agencies, the interesting part is not the politics — it is that a model with competitive agentic and coding scores now runs on a single consumer GPU, with weights under the Apache 2.0 license.</p>
+        <p>On August 10, 2026, Meta released <strong>Muse Glimmer</strong> — a 30-billion-parameter, dense, open-weight model built by Meta Superintelligence Lab — the division led by former Scale AI CEO Alexandr Wang — and its first open-weights release. It is distilled from the closed frontier model Muse Spark. <a href="https://techstartups.com/2026/08/10/meta-launches-new-ai-model-muse-glimmer-as-zuckerberg-urges-u-s-to-remove-barriers-to-open-source-ai" rel="noopener">TechStartups reports</a> Zuckerberg paired the launch with a 14-page essay urging the U.S. to remove barriers to open-source AI, and says Meta will open-source Muse Spark 1.2 next. For agencies, the interesting part is not the politics — it is that a model with competitive agentic and coding scores now runs on a single consumer GPU, with weights under the Apache 2.0 license.</p>
 
         <p>That combination changes a core agency-stack assumption: that every agent run, eval pass, and code edit accrues per-token API charges. Muse Glimmer is the strongest signal yet that <strong>"local" is now a real option for agency workloads</strong> — with real trade-offs. Here is what's verified, when to go local vs hosted, and what it costs.</p>
 
@@ -148,6 +158,20 @@
         </ul>
         <p>None of this means "frontier on a budget." Muse Glimmer is not frontier-grade on the hardest reasoning (HLE 22.0, GPQA 83.5 — roughly size-class parity), and the official 17GB quant carries about 1.0% benchmark degradation vs full precision. It competes with <a href="/open-weight-coding-models-agency-margins">the open-weight models already reshaping agency margins</a> — not with GPT-5.6 Sol or Claude Opus 5 on deep reasoning.</p>
 
+        <h2>Run it today: one command with Ollama</h2>
+        <p>The fastest way for an agency to test the local claim is <a href="https://ollama.com/library/muse-glimmer" rel="noopener">Ollama's official build</a>, which launched the same day as the model. On a machine with ~18GB free, one command downloads the 30B model (128K context, text + image input) and serves it on localhost:</p>
+        <pre style="background:#f4f4f8;padding:14px 18px;border-radius:8px;overflow-x:auto;font-size:0.9rem;">ollama run muse-glimmer</pre>
+        <p>On Apple Silicon, the <strong>MLX engine build</strong> (<code>muse-glimmer:30b-mlx</code>, ~21GB) adds DFlash speculative decoding and image input — Ollama reports 1.5&times;–1.8&times; faster on Apple Silicon than without. Both builds work offline: no cloud infrastructure or network access required.</p>
+        <p>Where it gets interesting for agencies: Ollama's one-command launcher wires the model into the coding and agent tools your team already uses:</p>
+        <ul>
+            <li><strong>Claude Code:</strong> <code>ollama launch claude --model muse-glimmer</code></li>
+            <li><strong>Codex / OpenCode / GitHub Copilot:</strong> <code>ollama launch codex --model muse-glimmer</code> (and the equivalent for the others)</li>
+            <li><strong>Personal-agent scaffolds:</strong> <code>ollama launch openclaw --model muse-glimmer</code> and <code>ollama launch hermes --model muse-glimmer</code></li>
+            <li><strong>Pi</strong> for a lighter-weight coding agent: <code>ollama launch pi --model muse-glimmer</code></li>
+        </ul>
+        <p>Muse Glimmer also exposes <strong>controllable reasoning strength</strong> — low / medium / high / xhigh — so you can spend compute on complex coding and agentic tasks (high or xhigh) and drop to lower strengths when speed matters more. That dial matters for agency cost engineering: it is a per-request quality/speed trade-off you control, not a fixed API tier.</p>
+        <p>Two more operational facts worth knowing before you quote it to a client: the model is trained on data from <strong>100+ languages</strong>, and the model card's intended uses (local agents, function calling, local coding, LLM-as-a-judge) name OpenClaw and Hermes Agent scaffolds explicitly. Meta's full evaluation methodology is published at <a href="https://research.meta.ai/static/muse-glimmer-methodology" rel="noopener">research.meta.ai/static/muse-glimmer-methodology</a>.</p>
+
         <h2>Local vs hosted API: when to choose which</h2>
         <p>The decision is workload-shaped, not model-shaped. Use this as a starting framework:</p>
         <table>
@@ -172,6 +196,7 @@
             <li><strong>Break-even math:</strong> an agency running sustained agent/eval/coding volume amortizes the GPU capex against per-token spend. If your monthly API bill for eval and batch work is material, model the crossover on your own workload before buying.</li>
             <li><strong>The operational cost:</strong> local means you own uptime, model updates, security patching, and hardware failure. That is a real line item — an hour of an engineer's time buys a lot of hosted tokens.</li>
         </ul>
+        <p>There is also a <strong>hosted fallback for bursts</strong>. Meta publishes no first-party API price for Glimmer, but third-party hosts already list the model: <a href="https://www.together.ai/models/muse-glimmer" rel="noopener">Together AI lists $0.35 per million input tokens and $1.50 per million output tokens</a> ($0.04/M for cached input), and <a href="https://openrouter.ai/meta/muse-glimmer-30b" rel="noopener">OpenRouter lists $0.30/$1.20 per million</a>. That is roughly 10&times; cheaper than frontier API pricing — a reasonable "test it before you buy hardware" path, and a sensible burst lane for spiky workloads. The break-even math still favors local for sustained volume; hosted just removes the hardware commitment for evaluation.</p>
         <p>There is also a strategic angle: agencies that run high-volume agent and eval workloads can cut OpEx and either improve margins or undercut competitors on price. If you resell tokens or bill hourly, this is the same margin story as <a href="/open-weight-coding-models-agency-margins">open-weight coding models</a> — the cost basis of the work just collapsed, and the play is to route, not rip out.</p>
 
         <p>One honest caveat on the market: Muse Glimmer launched the same week as NVIDIA's Nemotron 3.5 Lightning (30B MoE) and alongside Qwen3.6-27B and Gemma4-31B as its benchmark comparison set. Four credible local 30B-class options in one week means downward pressure on what "cheap" means — locally and in API pricing. Do not make hardware decisions on one model; benchmark your own workloads.</p>
@@ -213,6 +238,14 @@
             <h3>Is Muse Glimmer free to use commercially?</h3>
             <p>Yes. Muse Glimmer is released under the Apache 2.0 license, covering the weights and all artifacts including the BF16 model, 4-bit quantizations, the DFlash drafter, and the perception encoder. Apache 2.0 permits commercial use, modification, and redistribution with attribution.</p>
         </div>
+        <div class="faq-item">
+            <h3>How do I run Muse Glimmer locally with Ollama?</h3>
+            <p>One command: <code>ollama run muse-glimmer</code>. The official Ollama build is about 18GB with a 128K context window and text + image input, and it works offline. On Apple Silicon, use the MLX build (<code>ollama run muse-glimmer:30b-mlx</code>, ~21GB) for DFlash speculative decoding and image input. Ollama's launcher can wire the model into Claude Code, Codex, OpenCode, GitHub Copilot, Pi, OpenClaw, and Hermes Agent with commands like <code>ollama launch claude --model muse-glimmer</code>. The model also supports controllable reasoning strength (low / medium / high / xhigh) so you can trade speed for quality per request.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is there a hosted API for Muse Glimmer?</h3>
+            <p>Meta does not publish a first-party API price, but third-party hosts already serve the model: Together AI lists $0.35 per million input tokens and $1.50 per million output tokens ($0.04/M cached input), and OpenRouter lists $0.30/$1.20 per million. That is roughly 10x cheaper than frontier API pricing — useful for testing or burst workloads, while sustained volume still favors running the model locally.</p>
+        </div>
 
         <div class="related">
             <h3>Related reading</h3>
@@ -234,6 +267,12 @@
             <li>NVIDIA blog, "Local AI open source models &amp; agents": <a href="https://blogs.nvidia.com/blog/local-ai-open-source-models-agents-nemotron">blogs.nvidia.com</a></li>
             <li>TechStartups, "Meta launches new AI model Muse Glimmer" (Aug 10, 2026): <a href="https://techstartups.com/2026/08/10/meta-launches-new-ai-model-muse-glimmer-as-zuckerberg-urges-u-s-to-remove-barriers-to-open-source-ai">techstartups.com</a></li>
             <li>Hugging Face blog, "Muse Glimmer": <a href="https://huggingface.co/blog/muse-glimmer">huggingface.co/blog/muse-glimmer</a></li>
+            <li>Ollama blog, "Muse Glimmer from Meta Superintelligence Labs is now available" (Aug 10, 2026): <a href="https://ollama.com/blog/muse-glimmer">ollama.com/blog/muse-glimmer</a></li>
+            <li>Ollama library — muse-glimmer model page (18GB / 128K / text+image; MLX build): <a href="https://ollama.com/library/muse-glimmer">ollama.com/library/muse-glimmer</a></li>
+            <li>Meta — Muse Glimmer methodology report: <a href="https://research.meta.ai/static/muse-glimmer-methodology">research.meta.ai/static/muse-glimmer-methodology</a></li>
+            <li>Together AI — Muse Glimmer model page (hosted pricing $0.35/$1.50 per 1M): <a href="https://www.together.ai/models/muse-glimmer">together.ai/models/muse-glimmer</a></li>
+            <li>OpenRouter — Muse Glimmer 30B (hosted pricing $0.30/$1.20 per 1M): <a href="https://openrouter.ai/meta/muse-glimmer-30b">openrouter.ai/meta/muse-glimmer-30b</a></li>
+            <li>Business Insider, "Meta launches Muse Glimmer, an open-weight model that can run on a laptop" (Aug 2026): <a href="https://www.businessinsider.com/meta-muse-glimmer-new-open-weight-model-spark-mark-zuckerberg-2026-8">businessinsider.com</a></li>
         </ul>
     </article>
     <footer>
