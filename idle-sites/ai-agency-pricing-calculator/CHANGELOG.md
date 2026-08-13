@@ -2,6 +2,23 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-13 — Umami model-selection tracking + UTM cross-link (kanban t_622a9a4b)
+
+- **New Umami events (analytics):** `model_selected {strategy}` fires on Model Strategy select change; `routing_model_selected {model}` fires on Gemini routing estimator model change; `calculator_run {strategy, service}` fires inside `calculatePricing()` when a quote is computed. All guarded (`typeof umami !== 'undefined'`) — analytics can never break the calculator. Lets the team see which strategies visitors select and which strategies actually get priced (Gemini 3.7 Flash adoption = `model_selected`/`calculator_run` where strategy=gemini37).
+- **UTM cross-link:** Gemini 3.7 Flash note row now links "Agency impact analysis →" to findaiagency.com/muse-spark-for-small-agent-tasks with `utm_campaign=gemini-3-7-flash&utm_source=aiagencycalculator&utm_medium=referral` (mirrors the Grok 4.6 row), so calculator referral traffic to the FIA analysis page is attributable.
+- **No calculator math changed** — outputs byte-identical to the t_b531e770 deploy; only the note-row link and event wiring were added.
+
+## 2026-08-13 — Gemini 3.7 Flash model strategy added (kanban t_b531e770)
+
+- **New selectable model strategy:** Gemini 3.7 Flash (Google, released Aug 13, 2026) added to the Model Strategy selector — Google's most intelligent workhorse Flash model yet for coding and agents, based on Gemini 3.6 Flash (released ~3 weeks earlier).
+- **Pricing (canonical, verified via research brief t_7ea3f430):** INTRO **$0.75/$3.75 per 1M tokens** (input/output; output price includes thinking tokens) valid through **2026-12-31**, then **$1.50/$7.50** from Jan 1, 2027 (post-intro equals 3.6 Flash's launch price; intro is exactly half). 1M-token context, 64K max output, free tier, 5,000 free search requests/mo shared across Gemini 3.x, 50% batch discount.
+- **Benchmarks vs Gemini 3.6 Flash:** FrontierCode 1.1 Main 43.6% (vs 34.4%), DeepSWE v1.1 65.3% (vs 49.0%), WebDev Arena Elo 1588 (vs 1538).
+- **Calculator modeling (conservative):** `MODEL_COMPUTE_FACTOR.gemini37 = 0.93` (slightly below open-weight 0.95) and `MODEL_MARGIN_BONUS.gemini37 = +4` — intro pricing undercuts Qwen 3.8 Max / Grok 4.6 ($2/$6) on both axes, but the rate expires 2026-12-31 and post-intro output ($7.50) is above open-weight ($6), and it is a hosted frontier API with no open-weight/self-host upside. Default (hybrid) outputs unchanged; no other strategy factors touched.
+- **Routing Estimator:** Gemini 3.7 Flash added as a routable current model (`ROUTE_PRICES.gemini37 = {in: 0.75, out: 3.75}`; Gemini API model ID `gemini-3-7-flash`), with helper + footnote + source links updated.
+- **Touch points (index.html — the live homepage):** selector option + helper note, model label + assumption note + ROI text branches, FAQ item + FAQPage JSON-LD entry, meta description + keywords, Pricing Reference Table footnote, assumptions footer (date → Aug 13, 2026), on-page changelog entry, routing-sources list (+3 links). `CALCULATOR-API-SPEC.md` updated (inputs, constants, routing prices, changelog).
+- **Verified:** node harness ran the real inline script — gemini37 retainer $700/mo (0.93 factor applied vs hybrid $750), ROI text carries intro pricing + expiry, routing estimator displays $2.63/mo for 1M input / 500K output ($0.75 + $1.875 = $2.625), all 8 strategies compute with hybrid unchanged, source URLs embedded. 25/25 checks pass.
+- **Sources:** https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/ · https://ai.google.dev/gemini-api/docs/pricing · https://deepmind.google/models/model-cards/gemini-3-7-flash (primary); 9to5Google + MarkTechPost (secondary).
+
 ## 2026-08-12 — Qwen 3.8 Max license terms finalized (kanban t_2e56e452)
 
 - **Open weights + official license landed:** `Qwen/Qwen3.8-2.4T-A95B` (2.4T params, 95B active) and `Qwen/Qwen3.8-2.4T-A95B-FP8` published on Hugging Face ~2026-08-12T10:24 UTC with the official **Qwen3.8-Max License** (verified verbatim from https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B/resolve/main/LICENSE).
