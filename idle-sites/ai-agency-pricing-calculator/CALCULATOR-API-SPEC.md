@@ -2,7 +2,7 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-08-12 (Grok Bot subscription-bundled agent access in coding-agent comparison, task t_03977e01)
+**Last updated:** 2026-08-12 (Grok 4.6 model strategy — verified $2/$6 per 1M API pricing + 500k context, task t_c7e3e912)
 
 ---
 
@@ -120,8 +120,8 @@ SIZE_MULT     0.65 / 0.85 / 1.0 / 1.35 / 1.8
 WORKFLOW_MULT 0.7 / 0.9 / 1.0 / 1.3 / 1.6
 EXP_MULT      0.7 / 1.0 / 1.3 / 1.6
 TIMELINE_MULT 1.35 / 1.0 / 0.9
-MODEL_COMPUTE_FACTOR  open 0.95 · deepseek 0.92 (PROVISIONAL — hike announced) · local 0.85 (Meta Muse Glimmer self-host, cheapest — hardware-amortized, per-workload) · hybrid 1.0 · frontier 1.1 · sol 1.15 (estimate)
-MODEL_MARGIN_BONUS    open +5 · deepseek +6 · local +8 · hybrid 0 · frontier −2 · sol −3
+MODEL_COMPUTE_FACTOR  open 0.95 · deepseek 0.92 (PROVISIONAL — hike announced) · local 0.85 (Meta Muse Glimmer self-host, cheapest — hardware-amortized, per-workload) · grok46 1.0 (Grok 4.6 SpaceXAI, $2/$6 verified — neutral, matches open-weight tier price but hosted frontier) · hybrid 1.0 · frontier 1.1 · sol 1.15 (estimate)
+MODEL_MARGIN_BONUS    open +5 · deepseek +6 · local +8 · grok46 +2 · hybrid 0 · frontier −2 · sol −3
 DELIVERY_RISK_FACTOR  low 1.0 · moderate 1.15 · high 1.35 · levelsio 2.0
 PORTABILITY_SETUP_FACTOR   single 1.0 · plugin_2 0.85 · plugin_many 0.70
 PORTABILITY_RETAINER_FACTOR single 1.0 · plugin_2 0.97 · plugin_many 0.94
@@ -173,6 +173,17 @@ Prices (per 1M tokens): Flash-Lite $0.30/$2.50 · Flash $1.50/$9.00 · 2.5 Pro $
 
 ## Changelog
 
+- **2026-08-12** — Grok 4.6 model strategy added (SpaceXAI, released Aug 12, 2026; API
+  $2/$6 per 1M input/output, fast variant 2x, cache hit $0.50 (−75%); 500k context window
+  and Intelligence Index 61 = GPT-5.6 Sol max per Artificial Analysis — x.ai announcement
+  silent on context). Conservative modeling: `MODEL_COMPUTE_FACTOR.grok46 = 1.0`,
+  `MODEL_MARGIN_BONUS.grok46 = +2` (verified price matches open-weight tier but hosted
+  frontier, so no discount/premium over the hybrid baseline). Selector option + helper,
+  model label/assumption note/ROI text branches, FAQ + FAQPage JSON-LD, Pricing Reference
+  Table footnote, meta tags, assumptions note. No other strategy factors changed; default
+  (hybrid) outputs unchanged. Sanity check: 50k input / 2k output run = $0.112 (vs
+  GPT-5.6 Sol $0.31 → 64% cheaper, consistent with AA "60%+ below"). Sources: x.ai, 9to5Mac,
+  Artificial Analysis (research brief t_a87cfcc9). Task t_c7e3e912.
 - **2026-08-12** — Grok Bot added as a fourth coding-agent billing model
   (subscription-bundled agent access) in the cost-transparency comparison on the
   homepage (`#coding-agent-transparency`). No standalone price announced —

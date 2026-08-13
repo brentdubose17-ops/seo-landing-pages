@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-12 — Grok 4.6 model strategy added with verified pricing + context (kanban t_c7e3e912)
+
+- **New model strategy:** `Grok 4.6 (SpaceXAI frontier — $2/$6 per 1M tokens, 500k context)` added to the Model Strategy selector. Verified from primary sources (parent research brief t_a87cfcc9): released **Aug 12, 2026**; API **$2.00 / $6.00 per 1M** input/output tokens (fast variant 2x; cache hit $0.50 per 1M input, −75%); **500k-token context window** and **Artificial Analysis Intelligence Index 61** (matching GPT-5.6 Sol max) — both AA-reported, the x.ai announcement does not state context length. vs GPT-5.6 Sol $5/$30 per 1M (AA): **60%+ cheaper on input tokens, 80% cheaper on output tokens** (AA's canonical phrasing; no primary source states a blanket "80% discount").
+- **Conservative modeling:** `MODEL_COMPUTE_FACTOR.grok46 = 1.0` (neutral vs hybrid baseline — no premium, no discount) and `MODEL_MARGIN_BONUS.grok46 = +2` (modest). Rationale: the verified list price equals the open-weight tier (Qwen 3.8 Max $2/$6), but Grok 4.6 is a hosted frontier API with no open-weight licensing or self-host upside, so the calculator does not over-state a savings. No other strategy factors/margins touched.
+- **Touch points (index.html — the live homepage):** selector option + helper box (pricing, 500k context w/ AA attribution, fast variant, cache hit, availability + 2 source links), model label + assumption note (flags 500k context as AA-reported) + ROI text branch, new FAQ item + FAQPage JSON-LD entry ("What is Grok 4.6 and how does its API pricing compare to GPT-5.6 Sol?"), Pricing Reference Table footnote, meta description/keywords, assumptions footer note (Aug 12 date, sources + research brief id), on-page changelog entry.
+- **No other model entries modified** except adding the new key to the two constant maps (comparison-consistency only); all existing strategies/factors/margins unchanged.
+- **Sanity checks re-run:** JS syntax clean; 50k-input / 2k-output run = 50,000 × $2/1M + 2,000 × $6/1M = **$0.112/run** (vs GPT-5.6 Sol $0.31/run at $5/$30 → 64% cheaper, consistent with AA's "60%+ below" claim); cache-hit run $0.037; fast-variant run $0.224. Default (hybrid) outputs unchanged.
+- **Sources:** https://x.ai/news/grok-4-6 (primary, Aug 12 2026) · https://9to5mac.com/2026/08/12/spacexai-releases-grok-4-6/ · https://artificialanalysis.ai/models/grok-4-6 + AA Grok 4.6 analysis — verified in parent research brief t_a87cfcc9 (6 sources, 14 verbatim quotes).
+
 ## 2026-08-12 — Grok Bot added as fourth coding-agent billing model (kanban t_03977e01)
 
 - **New comparison row:** Grok Bot (SpaceXAI) added to the homepage's AI Coding Agent Cost Transparency table as the fourth billing model — **subscription-bundled agent access** (no per-token meter, no standalone price; bundled with SuperGrok Heavy, Cursor Ultra, Cursor Teams Premium; beta on desktop (macOS) + iOS; enterprise waitlist). Mirrors the bundled-vs-metered note on `ai-agency-pricing-models-explained.html` (t_45bcdaa0) and the findaiagency ai-coding-agent-pricing row.
