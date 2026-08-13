@@ -75,6 +75,14 @@
           "@type": "Answer",
           "text": "Fair AI agency monthly retainers in 2026 range from $750/mo for basic single-workflow bots to $4,000–$8,000/mo for enterprise multi-workflow automation packages. The key is tying your price to measurable client ROI."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "What are ChatGPT Business Premium seats and how do they change client-side costs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "OpenAI announced ChatGPT Business Premium seats on Aug 10, 2026: $125/user/month (or $100/user/month billed annually), 5x the usage of Standard seats, no five-hour usage limit, and mixable with Standard seats ($25/$20) in the same workspace. GA date and regional pricing are not yet published. This calculator models API/token and project pricing, not seat-based subscriptions, so Premium seat costs are not a calculator input — budget them separately (source: https://openai.com/index/premium-seats-chatgpt-business/)."
+        }
       }
     ]
   }
@@ -936,7 +944,7 @@
           GPT-5.6 Sol now powers both Instant and deep reasoning for ChatGPT Plus/Pro (one consistent model, reasoning-effort slider). OpenAI has not published per-token API pricing for GPT-5.6 Sol yet — this option uses a marked estimate. <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">See OpenAI pricing →</a>
         </div>
         <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
-          Open-weight option: Alibaba's Qwen 3.8 Max (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; 1M context) lists at <strong>$2/$6 per 1M tokens</strong> — open weights promised ~Aug 10, so self-hosted cost is not yet knowable and varies by hardware/quantization. Kimi K3 ($3/$15) and GLM-5.2 (MIT) round out the open-weight class. <a href="#open-weight" style="color:var(--cyan-light);">See the open-weight section ↓</a>
+          Open-weight option: Alibaba's Qwen 3.8 Max (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; 1M context) lists at <strong>$2/$6 per 1M tokens</strong> — open weights live on Hugging Face since Aug 12, 2026, so self-hosted cost varies by hardware/quantization. Note the Qwen3.8-Max License: a separate Qwen license is required before commercial use only for Model-as-a-Service or AI Work Assistant businesses above US$50M/12mo aggregate revenue (no % rate — negotiated; internal use exempt). Kimi K3 ($3/$15) and GLM-5.2 (MIT) round out the open-weight class. <a href="#open-weight" style="color:var(--cyan-light);">See the open-weight section ↓</a>
         </div>
       </div>
 
@@ -1277,13 +1285,13 @@
     <div class="section-title">Open-Weight Models: <span class="g">The New Cost Lever for Agencies</span></div>
     <div style="background:var(--gradient-soft);border:1px solid var(--border-glow);border-radius:12px;padding:24px;margin-bottom:16px;">
       <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
-        <strong>Open-weight models are now a real alternative to paid frontier APIs.</strong> Alibaba's <strong>Qwen 3.8 Max</strong> (GA Aug 2–3, 2026; 2.4T-parameter MoE, ~95B active, 1M-token context) prices at <strong>$2 per 1M input tokens and $6 per 1M output tokens</strong> — the cheapest open frontier-class API on this page — with open weights promised around Aug 10. Moonshot's <strong>Kimi K3</strong> — a 2.8T-parameter open-weight mixture-of-experts model (~104B active, 1M-token context, weights live on Hugging Face since July 27, 2026) — prices at <strong>$3 per 1M input tokens and $15 per 1M output tokens</strong>, a fraction of flagship paid APIs, while scoring within a few points of Claude Fable 5 and GPT-5.6 Sol on vendor-run coding benchmarks. Zhipu's <strong>GLM-5.2</strong> (open weights, MIT license, 1M-token context) is the strongest open-source coding model on Terminal-Bench 2.1. A rumored <strong>GLM 5.3 has not been officially confirmed</strong> as of August 2026 — build on GLM-5.2 / Kimi K3 / Qwen 3.8 Max today, not on an unannounced model.
+        <strong>Open-weight models are now a real alternative to paid frontier APIs.</strong> Alibaba's <strong>Qwen 3.8 Max</strong> (GA Aug 2–3, 2026; 2.4T-parameter MoE, ~95B active, 1M-token context) prices at <strong>$2 per 1M input tokens and $6 per 1M output tokens</strong> — the cheapest open frontier-class API on this page — with open weights live on Hugging Face since Aug 12, 2026 (Qwen/Qwen3.8-2.4T-A95B, plus an FP8 variant; official Qwen3.8-Max License: separate license required only for MaaS or AI Work Assistant businesses above $50M/12mo aggregate revenue). Moonshot's <strong>Kimi K3</strong> — a 2.8T-parameter open-weight mixture-of-experts model (~104B active, 1M-token context, weights live on Hugging Face since July 27, 2026) — prices at <strong>$3 per 1M input tokens and $15 per 1M output tokens</strong>, a fraction of flagship paid APIs, while scoring within a few points of Claude Fable 5 and GPT-5.6 Sol on vendor-run coding benchmarks. Zhipu's <strong>GLM-5.2</strong> (open weights, MIT license, 1M-token context) is the strongest open-source coding model on Terminal-Bench 2.1. A rumored <strong>GLM 5.3 has not been officially confirmed</strong> as of August 2026 — build on GLM-5.2 / Kimi K3 / Qwen 3.8 Max today, not on an unannounced model.
       </p>
       <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
         <strong>Real-world agency usage so far:</strong> Qwen 3.8 Max's headline marketing claim — "autonomous coding over 10+ days" — is an <strong>official claim, not yet independently replicated</strong>, and its Fable 5-beating ranking has been disputed by independent benchmark testing. The most-cited hands-on test so far (Aug 6, 2026, an agency-community builder with ~172K followers) reports building <strong>45 real projects</strong> while ignoring benchmarks — 3D racing games, RPGs, websites, a full OS, a promo video, and autonomous workflows — with mixed results: some demos were poor, several builds looked better than Fable 5, and every project took only a few hours. The same tester's follow-up explicitly walked back the "destroyed Fable 5" framing: Qwen 3.8 Max shone on <strong>fast, multimodal, image-guided builds</strong> (including a single-file premium landing page), while <strong>Claude Fable 5 stayed stronger on huge, long-running projects</strong> that need consistency across massive contexts. Treat these as first-person, self-reported results with no linked artifacts or independent replication — useful as a delivery-speed datapoint, not as a benchmark.
       </p>
       <p style="color:var(--text-primary);font-size:0.95rem;margin:0 0 12px;">
-        <strong>Cost variability for open-weight models:</strong> published API list prices (Qwen 3.8 Max $2/$6, Kimi K3 $3/$15 per 1M tokens) are real, but total cost depends heavily on how you run the model. Qwen 3.8 Max's weights are not downloadable until ~Aug 10, so self-hosting cost is not yet knowable and will vary with hardware (DGX Spark-class vs cloud GPUs), quantization (MXPF4 vs full precision), context length, and utilization. Agencies that self-host trade a variable per-token bill for fixed hardware cost — the crossover point depends on your monthly token volume. Until you benchmark your own workloads, treat self-hosted cost as a range, not a fixed number.
+        <strong>Cost variability for open-weight models:</strong> published API list prices (Qwen 3.8 Max $2/$6, Kimi K3 $3/$15 per 1M tokens) are real, but total cost depends heavily on how you run the model. Qwen 3.8 Max's weights are now downloadable (live on Hugging Face since Aug 12, 2026), so self-hosting cost varies with hardware (DGX Spark-class vs cloud GPUs), quantization (MXPF4 vs full precision), context length, and utilization — plus the Qwen3.8-Max License layer (separate license only above $50M/12mo for MaaS or AI Work Assistant businesses). Agencies that self-host trade a variable per-token bill for fixed hardware cost — the crossover point depends on your monthly token volume. Until you benchmark your own workloads, treat self-hosted cost as a range, not a fixed number.
       </p>
       <p style="color:var(--text-secondary);font-size:0.9rem;margin:0 0 8px;">
         What this means for agencies: model strategy is now a pricing lever. The calculator's <strong>Model Strategy</strong> selector reflects it — open-weight stacks trim the compute line (and lift margins ~5 pts), frontier-only stacks carry a premium. Keep workflows model-portable across at least two providers, benchmark on your own workloads (vendor tables are not your client's workload), and treat AI spend as a managed line item, not a fixed cost.
@@ -1394,7 +1402,7 @@
         </button>
         <div class="faq-answer">
           <div class="faq-answer-inner">
-            Not the price you charge — the margin you keep. Client pricing is value-based: if your automation saves a client $2,000/month in labor, a $1,500 retainer is justified regardless of the model underneath. What open-weight models change is your cost side. Alibaba's Qwen 3.8 Max (2.4T-parameter MoE, 1M context) prices at $2/$6 per 1M tokens with open weights promised ~Aug 10; Moonshot's Kimi K3 is a 2.8T-parameter open-weight model with a 1M-token context priced at $3/$15 per 1M tokens, and Zhipu's GLM-5.2 ships open weights under MIT — all within striking distance of paid frontier models on vendor-run coding benchmarks, though none matches them everywhere. Early real-world reports on Qwen 3.8 Max (Aug 6, 2026) are promising on fast, multimodal builds but are self-reported with no independent replication — benchmark on your own workloads before promising anything. Keep workflows model-portable, and treat the cheaper token bill as margin, not as a reason to discount. Treat the rumored GLM 5.3 as unconfirmed until Zhipu officially announces it.
+            Not the price you charge — the margin you keep. Client pricing is value-based: if your automation saves a client $2,000/month in labor, a $1,500 retainer is justified regardless of the model underneath. What open-weight models change is your cost side. Alibaba's Qwen 3.8 Max (2.4T-parameter MoE, 1M context) prices at $2/$6 per 1M tokens with open weights live on Hugging Face since Aug 12, 2026 (official Qwen3.8-Max License: separate license only above $50M/12mo for MaaS or AI Work Assistant businesses); Moonshot's Kimi K3 is a 2.8T-parameter open-weight model with a 1M-token context priced at $3/$15 per 1M tokens, and Zhipu's GLM-5.2 ships open weights under MIT — all within striking distance of paid frontier models on vendor-run coding benchmarks, though none matches them everywhere. Early real-world reports on Qwen 3.8 Max (Aug 6, 2026) are promising on fast, multimodal builds but are self-reported with no independent replication — benchmark on your own workloads before promising anything. Keep workflows model-portable, and treat the cheaper token bill as margin, not as a reason to discount. Treat the rumored GLM 5.3 as unconfirmed until Zhipu officially announces it.
           </div>
         </div>
       </div>
@@ -1443,6 +1451,17 @@
         <div class="faq-answer">
           <div class="faq-answer-inner">
             You should raise rates when: (1) You're consistently closing 80%+ of prospects — demand exceeds supply of your time. (2) You have 3+ strong case studies showing measurable client ROI. (3) You've been at the same rate for 6+ months. (4) Competitors are charging more for similar work. A simple strategy: raise rates by 20–30% on all new clients, then grandfather existing clients at old rates for 6 months before gradual increases. Many agency owners undercharge for years out of fear — but higher prices often attract better, more committed clients.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What are ChatGPT Business Premium seats and how do they change client-side costs?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            OpenAI announced ChatGPT Business Premium seats on Aug 10, 2026: $125/user/month (or $100/user/month billed annually), 5× the usage of Standard seats, no five-hour usage limit, and mixable with Standard seats ($25/$20) in the same workspace. GA date and regional pricing are not yet published. This calculator models API/token and project pricing, not seat-based subscriptions, so Premium seat costs are not a calculator input — budget them separately at <a href="https://openai.com/index/premium-seats-chatgpt-business/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI's announcement</a>.
           </div>
         </div>
       </div>
@@ -1506,8 +1525,10 @@ const BASE_MARGIN = {
 
 // Open-weight model economics (verified Aug 2026): Alibaba's Qwen 3.8 Max (GA Aug 2-3,
 // 2026; 2.4T-param MoE, ~95B active, 1M context) lists at $2/$6 per 1M tokens — the
-// cheapest open frontier-class API — with open weights promised ~Aug 10 (self-host cost
-// not yet knowable, hardware/quantization dependent). Moonshot's Kimi K3 is a 2.8T-param
+// cheapest open frontier-class API — with open weights live on HF since 2026-08-12
+// (Qwen/Qwen3.8-2.4T-A95B + FP8) under the Qwen3.8-Max License: separate Qwen license
+// required before commercial use only for MaaS or AI Work Assistant businesses above
+// $50M/12mo aggregate revenue (no % rate — negotiated; internal use exempt). Moonshot's Kimi K3 is a 2.8T-param
 // open-weight MoE (104B active, 1M context; weights on HF since 2026-07-27) priced at
 // $3/$15 per 1M tokens (input cache-miss / output) — a fraction of paid frontier APIs —
 // and Zhipu's GLM-5.2 ships open weights under MIT with 1M context. Agencies running
@@ -1625,7 +1646,7 @@ function calculatePricing() {
     `This quote assumes ${modelLabel} — open-weight models (Qwen 3.8 Max, Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium.` +
     `${modelAssumptionNote} ` +
     `Pricing also bakes in a delivery-risk buffer for ${drl} — real agent workflows burn money on failed loops and retries, so don't under-price the build. ` +
-    `Assumptions verified Aug 6, 2026 (Qwen 3.8 Max GA Aug 2–3, 2026 — $2/$6 per 1M tokens, open weights ~Aug 10; OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates).`;
+    `Assumptions verified Aug 6, 2026 (Qwen 3.8 Max GA Aug 2–3, 2026 — $2/$6 per 1M tokens, open weights ~Aug 10; OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates. NEW Aug 10, 2026: OpenAI announced ChatGPT Business Premium seats — $125/user/mo monthly or $100/user/mo annual, 5x Standard usage, no 5-hour limit; Standard Business seats remain $25/$20. This calculator models API/token and project pricing, not seat-based subscriptions, so ChatGPT Business seat costs are not a calculator input — budget them separately at openai.com/index/premium-seats-chatgpt-business/; GA date and regional pricing not yet published).`;
 
   // Build pitch
   const netMonthly = monthlySavings - monthlyRetainer;
