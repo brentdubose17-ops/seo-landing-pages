@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-12 — Grok Bot added as fourth coding-agent billing model (kanban t_03977e01)
+
+- **New comparison row:** Grok Bot (SpaceXAI) added to the homepage's AI Coding Agent Cost Transparency table as the fourth billing model — **subscription-bundled agent access** (no per-token meter, no standalone price; bundled with SuperGrok Heavy, Cursor Ultra, Cursor Teams Premium; beta on desktop (macOS) + iOS; enterprise waitlist). Mirrors the bundled-vs-metered note on `ai-agency-pricing-models-explained.html` (t_45bcdaa0) and the findaiagency ai-coding-agent-pricing row.
+- **Metadata (per task brief):** monthly pricing = **unknown / contact sales** placeholder (no standalone price announced as of 2026-08-12); supported platforms = macOS (desktop app) + iOS; always-on / cloud execution = yes (bots share a cloud computer, jobs keep running 24/7 even when the laptop is closed); usage caps = not disclosed (no per-token meter, no published tier quotas).
+- **Estimate assumption documented:** Grok Bot is NOT usage-metered, so it is not a calculator input — no per-token cost model, no seat/credit selector added. Agencies should budget the eligible subscription as the line item. Explicit "unknown / contact sales" placeholder per task body.
+- **Touch points (index.html only — the live homepage):** 4th table row in `#coding-agent-transparency`, agent-option metadata block + 3 source links (x.ai primary, MacRumors, Oflight), FAQ item + FAQPage JSON-LD entry ("How much does Grok Bot cost?"), meta description ("4 billing models") + keywords, assumptions footer note, on-page changelog entry.
+- **No calculator logic change:** constants, factors, and default outputs untouched; sanity checks re-run (JS syntax + default and edge-case totals identical to baseline).
+- **Sources:** https://x.ai/news/introducing-grok-bot (primary, Aug 11 2026) · https://www.macrumors.com/2026/08/11/grok-bot-macos-ios/ · https://www.oflight.co.jp/en/columns/grok-bot-xai-always-on-agents-2026 — all verified in parent research brief t_e203f6d1 (4 sources, 21 verbatim quotes, verdict REAL).
+
 ## 2026-08-12 — Muse Glimmer local option fleshed out with Ollama runtime + verified hosted benchmark (kanban t_1fee5a3a)
 
 - **Ollama runtime added (official, verified live 2026-08-12):** `ollama run muse-glimmer` — official 18 GB build / 128K context / text+image; Apple Silicon MLX build `muse-glimmer:30b-mlx` (21 GB) with DFlash + image input; `ollama launch` integrations (Claude Code, Codex, Pi, OpenCode, GitHub Copilot, OpenClaw, Hermes Agent). Source: https://ollama.com/library/muse-glimmer.

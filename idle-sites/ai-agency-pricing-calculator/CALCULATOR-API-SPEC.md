@@ -2,7 +2,7 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-08-11 (Meta Muse Glimmer local self-host strategy, task t_0042b950)
+**Last updated:** 2026-08-12 (Grok Bot subscription-bundled agent access in coding-agent comparison, task t_03977e01)
 
 ---
 
@@ -171,8 +171,20 @@ Prices (per 1M tokens): Flash-Lite $0.30/$2.50 · Flash $1.50/$9.00 · 2.5 Pro $
 
 ---
 
-## 6. Changelog
+## Changelog
 
+- **2026-08-12** — Grok Bot added as a fourth coding-agent billing model
+  (subscription-bundled agent access) in the cost-transparency comparison on the
+  homepage (`#coding-agent-transparency`). No standalone price announced —
+  recorded as "unknown / contact sales" placeholder per task brief; bundled with
+  SuperGrok Heavy, Cursor Ultra, Cursor Teams Premium (beta); desktop (macOS) +
+  iOS; always-on agents run 24/7 on their own cloud computer; no usage caps
+  disclosed; enterprise waitlist. Grok Bot is NOT usage-metered, so it is not a
+  calculator input (no per-token model, no seat/credit selectors added). Agent
+  metadata block, FAQ item + FAQPage JSON-LD, meta description/keywords, and
+  assumptions footer note added; no calculator logic or constants changed.
+  Sources: x.ai/news/introducing-grok-bot (primary), MacRumors, Oflight —
+  verified via research brief t_e203f6d1. Task t_03977e01.
 - **2026-08-11** — Local / self-hosted (Meta Muse Glimmer) strategy added:
   Meta released Muse Glimmer Aug 10, 2026 — 30B dense (~29.6B total), Apache
   2.0, 131,072+ context, official 4-bit K-Quant-17GB GGUF = 16,756,681,056 bytes
