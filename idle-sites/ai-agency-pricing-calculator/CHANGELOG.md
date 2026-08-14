@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-13 — Claude Sonnet 5 model strategy added, $2/$10 PERMANENT (kanban t_f62457f5)
+
+- **New selectable model strategy:** Claude Sonnet 5 (Anthropic) added to the Model Strategy selector — API pricing made **PERMANENT on Aug 10, 2026**: **$2.00 per 1M input tokens / $10.00 per 1M output tokens** (cache hit $0.20 per 1M input; cache write $2.50 for 5m / $4 for 1h per 1M).
+- **Scheduled increase REMOVED/SUPPRESSED:** the previously scheduled **Sept 1, 2026 increase to $3/$15 is CANCELLED** — the page explicitly states no scheduled price change is pending (per Anthropic's Aug 10, 2026 announcement + official Claude Platform pricing docs; research brief t_735f2ef6, verified against 3 primary sources). API-only change; subscription prices unchanged.
+- **Calculator modeling (conservative):** `MODEL_COMPUTE_FACTOR.sonnet5 = 0.97`, `MODEL_MARGIN_BONUS.sonnet5 = +3` — input at open-weight parity (Qwen 3.8 Max $2/$6), output above open-weight ($10 vs $6) but well below premium frontier (GPT-5.6 Sol $5/$30 estimate), hosted frontier API with no open-weight/self-host upside. Default (hybrid) outputs unchanged; no other strategy factors touched.
+- **Touch points (index.html — the live homepage):** selector option + helper note, model label + assumption note + ROI text branches, FAQ item + FAQPage JSON-LD entry, meta description + keywords, Pricing Reference Table footnote, assumptions footer, on-page changelog entry. `CALCULATOR-API-SPEC.md` updated (inputs, constants, changelog).
+- **Verified:** node harness ran the real inline script — sonnet5 computes retainer $600/mo (0.97 factor applied vs hybrid $600, rounds to nearest $50), margin 73% (70 + 3 bonus), ROI text carries "$2/$10 PERMANENT" + "Sept 1, 2026 increase to $3/$15 cancelled" + "no scheduled price change", JSON-LD intact (8+ FAQ questions), all 21 checks pass, `node --check` on extracted inline script clean.
+- **Sources:** https://www.anthropic.com/news/claude-sonnet-5 · https://platform.claude.com/docs/en/about-claude/pricing (primary; verified via research brief t_735f2ef6).
+
 ## 2026-08-13 — Umami model-selection tracking + UTM cross-link (kanban t_622a9a4b)
 
 - **New Umami events (analytics):** `model_selected {strategy}` fires on Model Strategy select change; `routing_model_selected {model}` fires on Gemini routing estimator model change; `calculator_run {strategy, service}` fires inside `calculatePricing()` when a quote is computed. All guarded (`typeof umami !== 'undefined'`) — analytics can never break the calculator. Lets the team see which strategies visitors select and which strategies actually get priced (Gemini 3.7 Flash adoption = `model_selected`/`calculator_run` where strategy=gemini37).

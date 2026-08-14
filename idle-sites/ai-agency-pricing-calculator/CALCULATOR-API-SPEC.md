@@ -2,7 +2,7 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-08-12 (Grok 4.6 model strategy — verified $2/$6 per 1M API pricing + 500k context, task t_c7e3e912)
+**Last updated:** 2026-08-13 (Claude Sonnet 5 model strategy — verified $2/$10 per 1M API pricing PERMANENT Aug 10 2026, task t_f62457f5)
 
 ---
 
@@ -107,7 +107,7 @@ opened Aug 4–5, 2026. Sources linked in section `#wallet-rails`.
 | `numWorkflows` | select (1/2/4/6/11) | `4` |
 | `experience` | select (beginner/intermediate/advanced/expert) | `intermediate` |
 | `timeline` | select (rush/standard/extended) | `standard` |
-| `modelStrategy` | select (hybrid/deepseek/local/open/sol/frontier) | `hybrid` |
+| `modelStrategy` | select (hybrid/deepseek/grok46/gemini37/sonnet5/local/open/sol/frontier) | `hybrid` |
 | `deliveryRisk` | select (low/moderate/high/levelsio) | `low` |
 | `portability` | select (single/plugin_2/plugin_many) | `single` |
 | `hoursSaved` | range 5–300 | `40` |
@@ -120,8 +120,8 @@ SIZE_MULT     0.65 / 0.85 / 1.0 / 1.35 / 1.8
 WORKFLOW_MULT 0.7 / 0.9 / 1.0 / 1.3 / 1.6
 EXP_MULT      0.7 / 1.0 / 1.3 / 1.6
 TIMELINE_MULT 1.35 / 1.0 / 0.9
-MODEL_COMPUTE_FACTOR  open 0.95 · deepseek 0.92 (PROVISIONAL — hike announced) · local 0.85 (Meta Muse Glimmer self-host, cheapest — hardware-amortized, per-workload) · grok46 1.0 (Grok 4.6 SpaceXAI, $2/$6 verified — neutral, matches open-weight tier price but hosted frontier) · hybrid 1.0 · frontier 1.1 · sol 1.15 (estimate)
-MODEL_MARGIN_BONUS    open +5 · deepseek +6 · local +8 · grok46 +2 · hybrid 0 · frontier −2 · sol −3
+MODEL_COMPUTE_FACTOR  open 0.95 · deepseek 0.92 (PROVISIONAL — hike announced) · local 0.85 (Meta Muse Glimmer self-host, cheapest — hardware-amortized, per-workload) · grok46 1.0 (Grok 4.6 SpaceXAI, $2/$6 verified — neutral, matches open-weight tier price but hosted frontier) · gemini37 0.93 (Gemini 3.7 Flash Google, intro $0.75/$3.75 verified through 2026-12-31 then $1.50/$7.50 — slightly below open because intro undercuts it, conservative due to expiry + hosted) · sonnet5 0.97 (Claude Sonnet 5 Anthropic, $2/$10 verified PERMANENT Aug 10 2026 — Sept 1 $3/$15 increase CANCELLED; input at open-weight parity, output above open but below premium frontier; hosted frontier no self-host upside) · hybrid 1.0 · frontier 1.1 · sol 1.15 (estimate)
+MODEL_MARGIN_BONUS    open +5 · deepseek +6 · local +8 · grok46 +2 · gemini37 +4 · sonnet5 +3 · hybrid 0 · frontier −2 · sol −3
 DELIVERY_RISK_FACTOR  low 1.0 · moderate 1.15 · high 1.35 · levelsio 2.0
 PORTABILITY_SETUP_FACTOR   single 1.0 · plugin_2 0.85 · plugin_many 0.70
 PORTABILITY_RETAINER_FACTOR single 1.0 · plugin_2 0.97 · plugin_many 0.94
@@ -167,12 +167,49 @@ routedCost  = (inTok×(1−r)×cur.in + inTok×r×flashLite.in)
 savings     = currentCost − routedCost
 ```
 
-Prices (per 1M tokens): Flash-Lite $0.30/$2.50 · Flash $1.50/$9.00 · 2.5 Pro $1.25/$10.00.
+Prices (per 1M tokens): Gemini 3.7 Flash intro $0.75/$3.75 (through 2026-12-31, then
+$1.50/$7.50) · Flash-Lite $0.30/$2.50 · Flash $1.50/$9.00 · 2.5 Pro $1.25/$10.00.
 
 ---
 
 ## Changelog
 
+- **2026-08-13** — Claude Sonnet 5 model strategy added (Anthropic; API pricing made
+  PERMANENT Aug 10, 2026: $2.00/$10.00 per 1M input/output tokens; the previously
+  scheduled Sept 1, 2026 increase to $3/$15 is CANCELLED — no scheduled change pending;
+  cache hit $0.20 per 1M input, cache write $2.50 (5m) / $4 (1h) per 1M; API-only
+  change, subscription prices unchanged). Conservative modeling:
+  `MODEL_COMPUTE_FACTOR.sonnet5 = 0.97`, `MODEL_MARGIN_BONUS.sonnet5 = +3` — input at
+  open-weight parity ($2 vs Qwen 3.8 Max), output above open-weight ($10 vs $6) but
+  well below premium frontier (GPT-5.6 Sol $5/$30 estimate), hosted frontier API with
+  no open-weight/self-host upside. Selector option + helper, model label/assumption
+  note/ROI text branches, FAQ + FAQPage JSON-LD, Pricing Reference Table footnote, meta
+  tags, assumptions note. No other strategy factors changed; default (hybrid) outputs
+  unchanged. Sanity check: chatbot/small/intermediate/standard/low/single → sonnet5
+  retainer $600/mo (0.97 factor applied vs hybrid $600 — rounds to nearest $50), margin
+  73% (70 + 3 bonus). Sources: anthropic.com/news/claude-sonnet-5 +
+  platform.claude.com/docs/en/about-claude/pricing (research brief t_735f2ef6).
+  Task t_f62457f5.
+- **2026-08-13** — Gemini 3.7 Flash model strategy added (Google, released Aug 13, 2026;
+  based on Gemini 3.6 Flash). INTRO pricing $0.75/$3.75 per 1M input/output tokens
+  (output includes thinking tokens) valid through 2026-12-31, then $1.50/$7.50 from
+  Jan 1, 2027 (post-intro equals 3.6 Flash launch price; intro exactly half). 1M-token
+  context, 64K max output; free tier, 5,000 free search requests/mo shared across
+  Gemini 3.x, 50% batch discount. Benchmarks vs 3.6 Flash: FrontierCode 1.1 Main 43.6%
+  (vs 34.4%), DeepSWE v1.1 65.3% (vs 49.0%), WebDev Arena Elo 1588 (vs 1538).
+  Conservative modeling: `MODEL_COMPUTE_FACTOR.gemini37 = 0.93`,
+  `MODEL_MARGIN_BONUS.gemini37 = +4` — intro pricing undercuts the open-weight tier
+  (Qwen 3.8 Max / Grok 4.6 $2/$6) on both axes, but the rate expires 2026-12-31 and
+  post-intro output ($7.50) is above open-weight ($6), and it is a hosted frontier API
+  with no open-weight/self-host upside. Also added to the Routing Estimator as a
+  routable current model (`gemini-3-7-flash`; ROUTE_PRICES.gemini37 = {in: 0.75,
+  out: 3.75}). Selector option + helper, model label/assumption note/ROI text branches,
+  FAQ + FAQPage JSON-LD, Pricing Reference Table footnote, meta tags, assumptions note
+  (date → Aug 13, 2026). No other strategy factors changed; default (hybrid) outputs
+  unchanged. Sanity check: 1M input / 500K output on gemini37 = $2.625 → displays
+  $2.63/mo. Sources: blog.google, ai.google.dev/gemini-api/docs/pricing, DeepMind model
+  card (primary); 9to5Google + MarkTechPost (secondary) — research brief t_7ea3f430.
+  Task t_b531e770.
 - **2026-08-12** — Grok 4.6 model strategy added (SpaceXAI, released Aug 12, 2026; API
   $2/$6 per 1M input/output, fast variant 2x, cache hit $0.50 (−75%); 500k context window
   and Intelligence Index 61 = GPT-5.6 Sol max per Artificial Analysis — x.ai announcement
