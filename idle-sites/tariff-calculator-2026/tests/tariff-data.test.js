@@ -270,3 +270,84 @@ test('polysilicon — effective-date edge: Dec 4 2026 date-only comparison', () 
   assert.equal(res.breakdown.s232.applies, true,
     'Dec 4 in any timezone = effective (date-only comparison)');
 });
+
+// --- De Minimis Suspension tests (CIT ruling Aug 13, 2026) ---
+// The $800 de minimis duty exemption is suspended. Every package over $0
+// must be assessed duty; no parcel value may be treated as 'de minimis exempt'.
+// Scenario used for landed-cost assertions: China / electronics (non-USMCA),
+// which has a stable known rate stack: MFN 0.195 + cat 0.008 + S301 0.125 +
+// China pre-existing 301 0.075 = 0.403.
+
+const LANDED_SCENARIO = { country: 'china', category: 'electronics', opts: { usmcaQualified: false } };
+const PARCEL_VALUES = [1, 50, 799, 800, 801];
+
+function landedCost(value, rate) {
+  const duty = value * rate;
+  return { value: value, rate: rate, duty: duty, total: value + duty };
+}
+
+test('de minimis suspended: every parcel value over $0 is assessed duty (no exemption)', () => {
+  PARCEL_VALUES.forEach(v => {
+    const res = T.effectiveRate(LANDED_SCENARIO.country, LANDED_SCENARIO.category, LANDED_SCENARIO.opts);
+    assert.ok(res, `effectiveRate failed for value $${v}`);
+    assert.ok(res.rate > 0, `rate should be > 0 for $${v}, got ${res.rate}`);
+    const lc = landedCost(v, res.rate);
+    assert.ok(lc.duty > 0, `duty should be > 0 for $${v}, got $${lc.duty.toFixed(2)}`);
+    assert.ok(lc.total > v, `landed cost should exceed value for $${v}`);
+  });
+});
+
+test('de minimis suspended: landed-cost results for $1, $50, $799, $800, $801 (China/electronics @ 40.3%)', () => {
+  // Expected rate for China/electronics = 0.403 (see test above).
+  const res = T.effectiveRate(LANDED_SCENARIO.country, LANDED_SCENARIO.category, LANDED_SCENARIO.opts);
+  const expectedRate = 0.403;
+  assert.ok(Math.abs(res.rate - expectedRate) < 0.0001, `expected rate ${expectedRate}, got ${res.rate}`);
+
+  const expected = {
+    1:   { duty: 0.40, total: 1.40 },
+    50:  { duty: 20.15, total: 70.15 },
+    799: { duty: 321.997, total: 1120.997 },
+    800: { duty: 322.40, total: 1122.40 },
+    801: { duty: 322.803, total: 1123.803 }
+  };
+
+  PARCEL_VALUES.forEach(v => {
+    const lc = landedCost(v, res.rate);
+    const exp = expected[v];
+    assert.ok(Math.abs(lc.duty - exp.duty) < 0.01, `$${v}: duty ${lc.duty.toFixed(4)} != expected ${exp.duty}`);
+    assert.ok(Math.abs(lc.total - exp.total) < 0.01, `$${v}: landed ${lc.total.toFixed(4)} != expected ${exp.total}`);
+  });
+});
+
+test('de minimis suspended: USMCA-qualified Canada still pays duty on low-value parcels (no $800 exemption)', () => {
+  // Even a USMCA-qualified parcel is no longer exempt below $800 — only the
+  // Section 301 add is waived, MFN+category still apply.
+  const res = T.effectiveRate('canada', 'auto', { usmcaQualified: true });
+  assert.ok(res.rate > 0, `Canada USMCA rate should be > 0, got ${res.rate}`);
+  PARCEL_VALUES.forEach(v => {
+    const lc = landedCost(v, res.rate);
+    assert.ok(lc.duty > 0, `Canada USMCA $${v} should still owe duty, got $${lc.duty.toFixed(2)}`);
+  });
+});
+
+test('de minimis suspended: UI copy no longer claims low-value packages are exempt', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  // Old claim must be gone
+  assert.ok(!html.includes('may enter duty-free under Section 321'),
+    'index.html must not claim the Section 321 duty-free threshold still exists');
+  assert.ok(!/Shipments under \$800 may enter duty-free/i.test(html),
+    'index.html must not claim low-value shipments enter duty-free');
+  // New copy must be present
+  assert.ok(/De Minimis Exemption Suspended/i.test(html),
+    'index.html should announce the de minimis suspension');
+  assert.ok(html.includes('every package'), 'index.html should state duty applies to every package');
+  // Calculator still accepts low values (min=1)
+  assert.ok(/min="1"/.test(html), 'calculator input should still accept values as low as $1');
+});
+
+test('de minimis suspended: data layer exports no de minimis threshold constant', () => {
+  assert.equal(T.DE_MINIMIS_THRESHOLD, undefined, 'no de minimis threshold constant should be exported');
+  assert.equal(T.DE_MINIMIS_EXEMPT, undefined, 'no de minimis exempt flag should be exported');
+});
