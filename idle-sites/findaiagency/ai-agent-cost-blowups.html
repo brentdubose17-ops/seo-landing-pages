@@ -122,7 +122,7 @@
             <li><strong>Subagent fan-out multiplies the bill.</strong> A small task that cost 121,000 tokens done directly cost 513,000 tokens fanned out to two subagents, a 4.2x jump. Each subagent re-reads its own context on every turn.</li>
             <li><strong>Retry loops re-pay full context each pass.</strong> "Let me try something else" loops fail to converge, and infinite loops have racked up roughly $2,000 in API charges overnight, often enough that a budget-kill tool category now exists.</li>
             <li><strong>Overhead bills before the work starts.</strong> Claude Code sends about 33,000 tokens of system prompt and tool schemas before your prompt arrives, and 75,000 to 85,000 with a real-world config.</li>
-            <li><strong>Effort settings scale cost directly.</strong> Max-effort mode on Claude Sonnet 5 uses up to 6x the agentic turns of low effort, and the measured cost is $2.29 per benchmark task.</li>
+            <li><strong>Effort settings scale cost directly.</strong> Max-effort mode on Claude Sonnet 5 uses up to 6x the agentic turns of low effort, and the measured cost is $2.29 per benchmark task (benchmark cost, not list price — Sonnet 5's API pricing is $2 per 1M input / $10 per 1M output tokens, made PERMANENT Aug 10, 2026; the scheduled Sept 1 increase to $3/$15 was CANCELLED).</li>
             <li><strong>No budget rails.</strong> A developer's normal coding-agent workflow produced a $37,901.73 AWS bill from a prompt-caching miss, with no hard limit anywhere in the stack. His own framing: "This was not a leaked key. This was not crypto mining. This was not an infinite loop."</li>
         </ul>
 
@@ -212,7 +212,7 @@
             <li>GitHub Copilot metered-billing backlash ($6 one request, 8% quota in 2 hours): <a href="https://www.theregister.com/ai-and-ml/2026/06/02/github-copilot-users-threaten-exit-as-metered-billing-kicks-in/5249826">theregister.com</a></li>
             <li>Copilot model multipliers (GPT-5.5 = 57x, legacy): <a href="https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans">docs.github.com</a></li>
             <li>OpenClaw cost shock ($141 overnight, $800/month): <a href="https://clawsnewsletter.substack.com/p/how-to-stop-burning-money-on-openclaw">clawsnewsletter.substack.com</a></li>
-            <li>Claude Sonnet 5, $2.29 per benchmark task: <a href="https://artificialanalysis.ai/articles/claude-sonnet-5-agentic-cost">artificialanalysis.ai</a></li>
+            <li>Claude Sonnet 5, $2.29 per benchmark task (benchmark cost; API list price is $2/$10 per 1M tokens, PERMANENT — Sept 1 $3/$15 increase CANCELLED): <a href="https://artificialanalysis.ai/articles/claude-sonnet-5-agentic-cost">artificialanalysis.ai</a> · <a href="https://www.anthropic.com/news/claude-sonnet-5">Anthropic announcement</a></li>
             <li>"Let me try something else" retry loop: <a href="https://cimons.com/article/saving-tokens-let-me-try-something-else-infinite-loop-in-coding-agents">cimons.com</a></li>
         </ul>
     </article>
