@@ -2,6 +2,10 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-15 — New article: OpenAI $40B run-rate pricing re-baseline (kanban t_13ecade3)
+
+- **New article:** `openai-40b-run-rate-agency-pricing.html` (live at https://aiagencycalculator.com/openai-40b-run-rate-agency-pricing) — "OpenAI's $40B Run Rate Changes Your Cost Estimates: How Agencies Should Re-Baseline Pricing" (847-word body, Article JSON-LD, 'AI industry' tag). OpenAI $40B annualized run-rate signal (Aug 14, 2026): run-rate framing only (never "revenue of $40B"); enterprise-crossover attributed to CFO Friar's Aug 14 disclosure; ads ~$1B annualized per Brockman's July breakdown; July +20% MoM (Brockman) and +32% business customers attributed; "moving toward IPO" with S-1 dates only; Cognition $40B valuation explicitly separated; pricing re-baseline framed as editorial (no claim OpenAI is raising prices). CTA to calculator (umami `click_to_calculator` event), internal links to enterprise-ai-integration-pricing-tiers, monthly-retainer-vs-project-pricing-ai, ai-automation-pricing-guide-2026, cost-of-hiring-an-ai-agency-2026, index_calculator, 5 source links. Sitemap updated (24 URLs). Deployed to Cloudflare Pages (ai-agency-pricing-calculator, deploy 3979172c).
+
 ## 2026-08-13 — Claude Sonnet 5 model strategy added, $2/$10 PERMANENT (kanban t_f62457f5)
 
 - **New selectable model strategy:** Claude Sonnet 5 (Anthropic) added to the Model Strategy selector — API pricing made **PERMANENT on Aug 10, 2026**: **$2.00 per 1M input tokens / $10.00 per 1M output tokens** (cache hit $0.20 per 1M input; cache write $2.50 for 5m / $4 for 1h per 1M).
