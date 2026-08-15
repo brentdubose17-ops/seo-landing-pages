@@ -351,3 +351,186 @@ test('de minimis suspended: data layer exports no de minimis threshold constant'
   assert.equal(T.DE_MINIMIS_THRESHOLD, undefined, 'no de minimis threshold constant should be exported');
   assert.equal(T.DE_MINIMIS_EXEMPT, undefined, 'no de minimis exempt flag should be exported');
 });
+
+// --- Section 232 UAS / Drones tariff tests ---
+// Verified 2026-08-15 against White House proclamation (Aug 13 2026),
+// Annexes I-IV, fact sheet, KPMG, EY (fact-sheet-drone-tariff-section-232.md).
+
+test('SECTION_232_UAS is exported with correct values', () => {
+  const u = T.SECTION_232_UAS;
+  assert.ok(u, 'SECTION_232_UAS should be present');
+  assert.equal(u.category, 'drones');
+  assert.equal(u.signature, '2026-08-13');
+  assert.equal(u.effective_main, '2026-09-03 12:01 AM ET');
+  assert.equal(u.effective_components, '2027-02-09 12:01 AM ET');
+  assert.ok(u.tiers, 'tiers should be present');
+  // 100% Annex I tier
+  assert.equal(u.tiers.annex_i.rate, 1.00);
+  assert.equal(u.tiers.annex_i.applies_from, '2026-09-03');
+  // 25% Annex II tier
+  assert.equal(u.tiers.annex_ii.rate, 0.25);
+  assert.equal(u.tiers.annex_ii.applies_from, '2026-09-03');
+  // 25% Annex III components tier (effective 2027)
+  assert.equal(u.tiers.annex_iii.rate, 0.25);
+  assert.equal(u.tiers.annex_iii.applies_from, '2027-02-09');
+  // carve-outs
+  assert.deepEqual(u.carve_outs.combined_15, ['japan', 'south-korea', 'taiwan', 'switzerland', 'european-union']);
+  assert.deepEqual(u.carve_outs.uk_10, ['united-kingdom']);
+  assert.ok(u.source_citations.length >= 5, 'should have source citations');
+});
+
+test('drones category available in CATEGORY_MODIFIERS with searchable name', () => {
+  const cat = T.CATEGORY_MODIFIERS['drones'];
+  assert.ok(cat, 'drones category should exist');
+  assert.equal(cat.add, 0, 'drones base add is 0 — rate comes from Section 232');
+  assert.ok(cat.name.includes('Section 232'));
+  // Importers must be able to find the category by 'drone', 'UAS', 'unmanned aircraft'
+  const lower = cat.name.toLowerCase();
+  assert.ok(lower.includes('drone'), 'category name should contain "drone"');
+  assert.ok(lower.includes('uas'), 'category name should contain "UAS"');
+  assert.ok(lower.includes('unmanned aircraft'), 'category name should contain "unmanned aircraft"');
+});
+
+test('drone tariff applies on Sept 3 2026 (effective date) — 100% Annex I tier', () => {
+  // China drones (Annex I default): MFN 0.195 + drone 1.00 = 1.195 (no S301 stacking — 232 exempt)
+  const res = T.effectiveRate('china', 'drones', {
+    usmcaQualified: false,
+    asOfDate: '2026-09-03'
+  });
+  assert.ok(res);
+  assert.ok(res.breakdown.drone, 'drone details should be present');
+  assert.equal(res.breakdown.drone.applies, true);
+  assert.equal(res.breakdown.drone.tier, 'annex_i');
+  assert.ok(Math.abs(res.breakdown.drone.rate - 1.00) < 0.0001,
+    `drone rate should be 1.00 for China, got ${res.breakdown.drone.rate}`);
+  assert.equal(res.breakdown.section301, 0, 'Section 301 must NOT stack on Section 232 drones');
+  // 0.195 + 1.00 = 1.195
+  assert.ok(Math.abs(res.rate - 1.195) < 0.0001,
+    `expected rate 1.195, got ${res.rate}`);
+  assert.equal(res.breakdown.drone.effective, '2026-09-03');
+});
+
+test('drone tariff does NOT apply before Sept 3 2026', () => {
+  const res = T.effectiveRate('china', 'drones', {
+    usmcaQualified: false,
+    asOfDate: '2026-09-02'
+  });
+  assert.ok(res);
+  assert.ok(res.breakdown.drone, 'drone details should always be present');
+  assert.equal(res.breakdown.drone.applies, false);
+  assert.equal(res.breakdown.drone.rate, 0);
+  // Rate should be only MFN = 0.195 (no drone duty yet)
+  assert.ok(Math.abs(res.rate - 0.195) < 0.0001,
+    `expected rate 0.195 (no drone duty), got ${res.rate}`);
+});
+
+test('drone tariff does NOT apply with today\'s date (before Sept 3 2026)', () => {
+  // Default (no asOfDate) = today. Aug 2026 < Sept 3, so should NOT apply.
+  const res = T.effectiveRate('china', 'drones', { usmcaQualified: false });
+  assert.ok(res);
+  assert.ok(res.breakdown.drone);
+  assert.equal(res.breakdown.drone.applies, false,
+    'drone tariff should not apply by default (today < Sept 3)');
+});
+
+test('drone tariff — Annex II tier: 25% for UAS <= 25 kg (no thermal imaging)', () => {
+  const res = T.effectiveRate('china', 'drones', {
+    usmcaQualified: false,
+    asOfDate: '2026-10-01',
+    droneTier: 'annex_ii'
+  });
+  assert.ok(res);
+  assert.equal(res.breakdown.drone.applies, true);
+  assert.equal(res.breakdown.drone.tier, 'annex_ii');
+  assert.ok(Math.abs(res.breakdown.drone.rate - 0.25) < 0.0001);
+  // 0.195 + 0.25 = 0.445
+  assert.ok(Math.abs(res.rate - 0.445) < 0.0001, `expected 0.445, got ${res.rate}`);
+});
+
+test('drone tariff — Annex III components: 25% but NOT effective until Feb 9 2027', () => {
+  // Before Feb 9 2027: not in effect
+  const before = T.effectiveRate('china', 'drones', {
+    usmcaQualified: false,
+    asOfDate: '2026-12-15',
+    droneTier: 'annex_iii'
+  });
+  assert.equal(before.breakdown.drone.applies, false);
+  assert.equal(before.breakdown.drone.rate, 0);
+  // On/after Feb 9 2027: 25%
+  const after = T.effectiveRate('china', 'drones', {
+    usmcaQualified: false,
+    asOfDate: '2027-02-09',
+    droneTier: 'annex_iii'
+  });
+  assert.equal(after.breakdown.drone.applies, true);
+  assert.ok(Math.abs(after.breakdown.drone.rate - 0.25) < 0.0001);
+});
+
+test('drone tariff — EU carve-out: total (incl. Column 1) capped at 15%', () => {
+  // EU: MFN 0.017 → drone add = 0.15 - 0.017 = 0.133 (combined 15% total)
+  const res = T.effectiveRate('european-union', 'drones', {
+    asOfDate: '2026-09-10'
+  });
+  assert.ok(res);
+  assert.equal(res.breakdown.drone.applies, true);
+  assert.equal(res.breakdown.drone.carve_out, 'combined_15');
+  assert.ok(Math.abs(res.breakdown.drone.rate - (0.15 - 0.017)) < 0.0001,
+    `EU drone add should be ${0.15 - 0.017}, got ${res.breakdown.drone.rate}`);
+  assert.ok(Math.abs(res.rate - 0.15) < 0.0001,
+    `EU total should be capped at 0.15, got ${res.rate}`);
+});
+
+test('drone tariff — UK carve-out: total (incl. Column 1) capped at 10%', () => {
+  const res = T.effectiveRate('united-kingdom', 'drones', {
+    asOfDate: '2026-09-10'
+  });
+  assert.ok(res);
+  assert.equal(res.breakdown.drone.applies, true);
+  assert.equal(res.breakdown.drone.carve_out, 'uk_10');
+  assert.ok(Math.abs(res.breakdown.drone.rate - (0.10 - 0.016)) < 0.0001,
+    `UK drone add should be ${0.10 - 0.016}, got ${res.breakdown.drone.rate}`);
+  assert.ok(Math.abs(res.rate - 0.10) < 0.0001,
+    `UK total should be capped at 0.10, got ${res.rate}`);
+});
+
+test('drone tariff — non-carve-out country (Vietnam): full 100% Annex I', () => {
+  const res = T.effectiveRate('vietnam', 'drones', {
+    asOfDate: '2026-09-10'
+  });
+  assert.ok(res);
+  assert.equal(res.breakdown.drone.applies, true);
+  assert.equal(res.breakdown.drone.carve_out, null);
+  assert.ok(Math.abs(res.breakdown.drone.rate - 1.00) < 0.0001,
+    `Vietnam should pay full 100%, got ${res.breakdown.drone.rate}`);
+});
+
+test('drone tariff — USMCA Canada/Mexico do NOT get a carve-out (full rate applies)', () => {
+  const ca = T.effectiveRate('canada', 'drones', { usmcaQualified: true, asOfDate: '2026-09-10' });
+  assert.ok(ca);
+  assert.equal(ca.breakdown.drone.applies, true);
+  assert.equal(ca.breakdown.drone.carve_out, null);
+  assert.ok(Math.abs(ca.breakdown.drone.rate - 1.00) < 0.0001,
+    'Canada should pay full 100% (no allied carve-out)');
+});
+
+test('drone tariff — index.html renders the category, tier selector, effective date, and source links', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  // Searchable category language
+  assert.ok(/Drones \/ UAS \(Unmanned Aircraft\)/.test(html), 'index.html should mention the Drones / UAS category');
+  assert.ok(/Section 232: Drones \/ UAS Tariff/.test(html), 'index.html should have a drone tariff section');
+  assert.ok(/September 3, 2026/.test(html), 'index.html should show the Sept 3 2026 effective date');
+  assert.ok(/100%/.test(html), 'index.html should show the 100% rate');
+  assert.ok(/25%/.test(html), 'index.html should show the 25% rate');
+  // Tier selector present
+  assert.ok(html.includes('droneTier'), 'index.html should have the drone tier selector');
+  // Source link visible
+  assert.ok(html.includes('whitehouse.gov/presidential-actions/2026/08/adjusting-imports-of-unmanned-aircraft-systems'),
+    'index.html should link to the White House proclamation');
+  assert.ok(html.includes('whitehouse.gov/fact-sheets/2026/08/fact-sheet-president-donald-j-trump'),
+    'index.html should link to the White House fact sheet');
+  // Transshipment caveat — must NOT conflate the 40+ countries claim with the drone proclamation
+  assert.ok(/Transshipment note/.test(html), 'index.html should carry the transshipment caveat');
+  assert.ok(/The Great Transshipment Scam/.test(html), 'index.html should attribute the 40+ countries claim to the separate report');
+});

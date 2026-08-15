@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tariff Calculator 2026 — Section 301 Tariffs on 60 Countries | Calculate Import Duties</title>
-    <meta name="description" content="Free 2026 tariff calculator with the new Section 301 forced-labor rates: 10% or 12.5% additional duty on goods from 60 countries, effective July 24 2026. Includes the 50% Canada Section 338 duty (Aug 19, 2026). Calculate import duties and landed cost by country, product category, and shipment value.">
+    <meta name="description" content="Free 2026 tariff calculator with the new Section 301 forced-labor rates: 10% or 12.5% additional duty on goods from 60 countries, effective July 24 2026. Includes the 50% Canada Section 338 duty (Aug 19, 2026) and the Section 232 drone/UAS tariff (100% on drones over 25 kg or with thermal imaging, 25% on other unmanned aircraft, effective Sept 3 2026). Calculate import duties and landed cost by country, product category, and shipment value.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://tariffcalculator2026.com/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Tariff Calculator 2026 — Free Import Duty Calculator (60-Country Section 301)">
-    <meta property="og:description" content="Calculate import duties with the new Section 301 forced-labor tariffs covering 60 countries, effective July 24 2026 — plus the Canada 50% Section 338 duty on Aug 19.">
+    <meta property="og:description" content="Calculate import duties with the new Section 301 forced-labor tariffs covering 60 countries, effective July 24 2026 — plus the Canada 50% Section 338 duty on Aug 19 and the new 100% Section 232 drone/UAS tariff effective Sept 3.">
     <meta property="og:url" content="https://tariffcalculator2026.com/">
     <meta property="og:image" content="https://tariffcalculator2026.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -22,7 +22,7 @@
         "@type": "WebApplication",
         "name": "Tariff Calculator 2026",
         "url": "https://tariffcalculator2026.com",
-        "description": "Free import duty and tariff calculator for 2026 US tariffs including the Section 301 forced-labor framework covering 60 countries and the Canada Section 338 50% duty",
+        "description": "Free import duty and tariff calculator for 2026 US tariffs including the Section 301 forced-labor framework covering 60 countries, the Canada Section 338 50% duty, and the Section 232 drone/UAS tariff (100% / 25%, effective Sept 3 2026)",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript",
@@ -34,6 +34,30 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is the 2026 US tariff rate on drones and unmanned aircraft (UAS)?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Effective September 3, 2026, the US imposes a 100% Section 232 tariff on drones with a maximum take-off weight over 25 kg, drones with thermal imaging, docking stations, and certain critical components (Annex I). Drones of 25 kg or less without thermal imaging face a 25% tariff (Annex II). Additional UAS components face 25% from February 9, 2027 (Annex III). Products of the EU, Japan, Korea, Taiwan, Switzerland, and Liechtenstein are capped at 15% total (10% for the UK), if substantially all hardware, software, and technology originates there or in the US. The 100% tariff on heavier or thermal-imaging drones, docking stations, and Annex I critical components is the headline rate of the Aug 13, 2026 proclamation."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I calculate the landed cost of a drone or UAS import under the Section 232 tariff?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Select 'Drones / UAS (Unmanned Aircraft) — Section 232' as the product category, choose your tier (100% for UAS over 25 kg, thermal-imaging UAS, docking stations, or Annex I components; 25% for UAS of 25 kg or less; 25% for Annex III components), your country of origin, and your import date. The calculator applies the Section 232 rate on top of the base duty and shows the effective date (September 3, 2026 for Annexes I and II, February 9, 2027 for Annex III), allied carve-outs, and total landed cost."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does the drone tariff apply to components and parts?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. The 100% Annex I rate covers certain critical components (including static converters HTS 8504.40.9580, electric control boards 8537.10.9170, and scope-limited parts for UAS over 25 kg under HTS 8807). A separate 25% rate applies from February 9, 2027 to additional UAS components (propellers/rotors, undercarriages, other aircraft parts under the 8807 series) imported for use in UAS."
+                }
+            },
             {
                 "@type": "Question",
                 "name": "I ship steel by rail between Canadian provinces — do I qualify for the 50% rebate?",
@@ -137,7 +161,7 @@
 
 <header>
     <h1>📦 Tariff Calculator 2026</h1>
-    <p>Calculate estimated import duties, tariffs, and total landed cost for shipments to the United States — including the new Section 301 forced-labor tariffs on 60 countries (effective July 24, 2026) and the Canada Section 338 50% duty (effective August 19, 2026)</p>
+    <p>Calculate estimated import duties, tariffs, and total landed cost for shipments to the United States — including the new Section 301 forced-labor tariffs on 60 countries (effective July 24, 2026), the Canada Section 338 50% duty (effective August 19, 2026), and the Section 232 drone / UAS tariff (100% on drones over 25 kg or with thermal imaging, 25% on other unmanned aircraft, effective September 3, 2026)</p>
 </header>
 
 <div class="notice-banner" role="note">
@@ -177,6 +201,14 @@
                 <option value="">— Select product category —</option>
             </select>
         </div>
+        <div class="form-row" id="droneTierRow" style="display:none;">
+            <label for="droneTier">UAS / Drone Tier (Section 232)</label>
+            <select id="droneTier">
+                <option value="annex_i">100% tier — UAS &gt;25 kg, thermal-imaging UAS, docking stations, Annex I critical components (effective Sept 3, 2026)</option>
+                <option value="annex_ii">25% tier — UAS ≤25 kg, no thermal imaging (effective Sept 3, 2026)</option>
+                <option value="annex_iii">25% tier — Additional UAS components, Annex III (effective Feb 9, 2027)</option>
+            </select>
+        </div>
         <div class="form-row">
             <label for="value">Shipment Value (USD)</label>
             <input type="number" id="value" min="1" step="100" placeholder="e.g. 10000">
@@ -212,7 +244,7 @@
                 </div>
             </div>
             <div id="flags"></div>
-            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates including Section 301 (forced labor). The 50% Canada Section 338 duty (effective Aug 19, 2026) is shown as a flag for covered product categories and is not included in the default rate. Actual rates vary by HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database and USTR Chapter 99 headings 9903.05.20–9903.06.21.</p>
+            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates including Section 301 (forced labor) and Section 232 (polysilicon, drones/UAS). The 50% Canada Section 338 duty (effective Aug 19, 2026) is shown as a flag for covered product categories and is not included in the default rate. The 100%/25% drone/UAS Section 232 duty (effective Sept 3, 2026) is applied when the Drones / UAS category is selected. Actual rates vary by HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database and USTR Chapter 99 headings 9903.05.20–9903.06.21.</p>
         </div>
     </div>
 </section>
@@ -264,6 +296,26 @@
     </table>
     <p><strong>Country carve-outs:</strong> Japan, South Korea, Taiwan, Switzerland, and the EU have a combined Column 1 + Section 232 total of 15% (reduced additional duty). The UK faces a 10% additional duty. All other countries face the full 15% ad valorem additional.</p>
     <p style="margin-top:12px;"><strong>Sources:</strong> White House Proclamation (Aug 6, 2026), NYT, TaiyangNews, KPMG TaxNewsFlash, GHY International, AAEI Tariff Timeline. For official rates, consult the USITC HTS database or a licensed customs broker.</p>
+</section>
+
+<section class="info" id="drone-uas-tariff">
+    <h2>🆕 Section 232: Drones / UAS Tariff (Effective Sept 3, 2026)</h2>
+    <p>President Trump signed a proclamation on <strong>August 13, 2026</strong> under <strong>Section 232 of the Trade Expansion Act of 1962 (19 U.S.C. 1862)</strong> imposing new ad valorem tariffs on imports of <strong>unmanned aircraft systems (UAS, i.e. drones)</strong> and UAS components. The main duties take effect <strong>September 3, 2026 at 12:01 a.m. ET</strong> (21 days after signing); duties on additional components (Annex III) take effect <strong>February 9, 2027</strong> (180 days after signing). The duties apply in addition to any other duties, taxes, fees, exactions, and charges.</p>
+    <p><strong>Select "Drones / UAS (Unmanned Aircraft) — Section 232" from the product category dropdown</strong> (a tier selector will appear), choose your import date, and see the drone tariff rate in your landed-cost calculation.</p>
+    <table>
+        <thead><tr><th>Category</th><th>Rate</th><th>Effective</th><th>HTS Ch. 99</th></tr></thead>
+        <tbody>
+            <tr><td><strong>100% tier (Annex I)</strong> — UAS with max take-off weight &gt;25 kg; UAS that integrate thermal imagers; UAS docking stations; certain critical components</td><td><strong>100%</strong></td><td><strong>Sept 3, 2026</strong></td><td>9903.08.21</td></tr>
+            <tr><td><strong>25% tier (Annex II)</strong> — UAS with max take-off weight ≤25 kg, no thermal imaging</td><td><strong>25%</strong></td><td><strong>Sept 3, 2026</strong></td><td>9903.08.22</td></tr>
+            <tr><td><strong>25% components (Annex III)</strong> — additional UAS components (propellers/rotors, undercarriages, other aircraft parts) imported for use in UAS</td><td><strong>25%</strong></td><td><strong>Feb 9, 2027</strong></td><td>9903.08.2x</td></tr>
+            <tr><td><strong>UK products</strong> (origin-conditional)</td><td><strong>≤10%</strong> total incl. Column 1</td><td>Sept 3, 2026</td><td>9903.08.23</td></tr>
+            <tr><td><strong>EU / Japan / Korea / Taiwan / Switzerland / Liechtenstein</strong> (origin-conditional)</td><td><strong>≤15%</strong> total incl. Column 1</td><td>Sept 3, 2026</td><td>9903.08.24</td></tr>
+        </tbody>
+    </table>
+    <p><strong>Allied caps are origin-conditional:</strong> the 15% / 10% caps apply only if substantially all hardware, software, and technology is certified by importers to originate in those countries (or the US). Otherwise the full 100% / 25% rate applies. Onshoring program: companies committing to build or expand US facilities before Jan 20, 2029 may import covered products duty-free while construction is underway. Covered products admitted to foreign trade zones must be admitted as privileged foreign status.</p>
+    <p><strong>HS codes covered:</strong> 8504.40.9580, 8537.10.9170, 8806.21–8806.99 (remote- and non-remote-controlled UAS), 8807.10/.20/.30/.90 parts (scope-limited to parts for UAS &gt;25 kg, except retail-delivery, agricultural, or Department of War sales).</p>
+    <p style="margin-top:12px;"><strong>Transshipment note:</strong> the drone proclamation itself names no transshipment countries. The "more than 40 countries" transshipment claim comes from a <strong>separate same-day White House report, "The Great Transshipment Scam" (Office of Trade and Manufacturing Policy, Aug 13, 2026)</strong> — a distinct document from the drone tariff order. Verify origin documentation carefully; importers routing drone components through third countries remain exposed to the full Section 232 rate.</p>
+    <p style="margin-top:12px;"><strong>Sources:</strong> <a href="https://www.whitehouse.gov/presidential-actions/2026/08/adjusting-imports-of-unmanned-aircraft-systems-and-unmanned-aircraft-systems-components-into-the-united-states" target="_blank" rel="noopener">White House Proclamation (Aug 13, 2026)</a> · <a href="https://www.whitehouse.gov/fact-sheets/2026/08/fact-sheet-president-donald-j-trump-bolsters-national-security-and-strengthens-u-s-supply-chains-by-imposing-tariffs-on-drones-and-their-parts-and-components" target="_blank" rel="noopener">White House Fact Sheet</a> · <a href="https://www.whitehouse.gov/wp-content/uploads/2026/08/ANNEX-I-1.pdf" target="_blank" rel="noopener">Annex I</a> · <a href="https://www.whitehouse.gov/wp-content/uploads/2026/08/Annex-II-1.pdf" target="_blank" rel="noopener">Annex II</a> · <a href="https://www.whitehouse.gov/wp-content/uploads/2026/08/Annex-III.pdf" target="_blank" rel="noopener">Annex III</a> · <a href="https://www.whitehouse.gov/wp-content/uploads/2026/08/Annex-IV-1.pdf" target="_blank" rel="noopener">Annex IV</a> · <a href="https://kpmg.com/us/en/taxnewsflash/news/2026/08/united-states-section-232-tariffs-drones-components.html" target="_blank" rel="noopener">KPMG TaxNewsFlash</a> · <a href="https://taxnews.ey.com/news/2026-1756-new-section-232-poclamation-on-drones-and-drone-components-discussed" target="_blank" rel="noopener">EY Tax News</a>. Rates verified against the White House proclamation and annexes (Aug 2026). For official rates, consult the USITC HTS database or a licensed customs broker.</p>
 </section>
 
 <section class="info" id="cssp-steel-rebate">
@@ -407,6 +459,11 @@ function estimateCssp() {
         document.getElementById('usmcaRow').style.display = isUSMCA ? 'flex' : 'none';
     });
 
+    // UAS / drone tier selector visibility
+    catSel.addEventListener('change', function () {
+        document.getElementById('droneTierRow').style.display = catSel.value === 'drones' ? 'block' : 'none';
+    });
+
     // Build rate matrix table
     var groups = {
         '10% additional': [],
@@ -461,6 +518,9 @@ function calculate() {
     var usmcaQualified = document.getElementById('usmca').checked;
     var opts = { usmcaQualified: usmcaQualified };
     if (entryDate) opts.asOfDate = entryDate;
+    if (category === 'drones') {
+        opts.droneTier = document.getElementById('droneTier').value;
+    }
     var res = T.effectiveRate(country, category, opts);
     if (!res) return;
 
@@ -530,11 +590,37 @@ function calculate() {
         }
     }
 
-    if (country === 'china') {
+    if (country === 'china' && category !== 'drones') {
         var cn = document.createElement('div');
         cn.className = 'flag info';
         cn.innerHTML = '<strong>China note</strong>China faces the 12.5% Section 301 forced-labor rate ON TOP of pre-existing China Section 301 tariffs and other duties. Brazil is separately subject to a distinct 25% Section 301 action — do not confuse the two.';
         flags.appendChild(cn);
+    }
+
+    // Section 232 UAS / drones — status + rate tier
+    if (res.breakdown.drone) {
+        var dr = res.breakdown.drone;
+        if (!dr.applies) {
+            var nd = document.createElement('div');
+            nd.className = 'flag warn';
+            nd.innerHTML = '<strong>⚠️ Section 232 Drone / UAS Tariff — Not Yet In Effect</strong>The ' + (dr.baseRate * 100) + '% Section 232 tariff on ' + dr.tierLabel.toLowerCase() + ' is <strong>not yet in effect</strong> for this import date (effective ' + dr.effective + '). The rate shown above does NOT include the Section 232 duty. Select a date on or after ' + dr.effective + ' to see the new rate.';
+            flags.appendChild(nd);
+        } else {
+            var d = document.createElement('div');
+            d.className = 'flag info';
+            var carveNote = '';
+            if (dr.carve_out === 'combined_15') {
+                carveNote = '<br><small>⚠️ Allied carve-out: total duty (incl. Column 1) capped at <strong>15%</strong> — applies only if substantially all hardware, software, and technology is certified to originate in the EU, Japan, Korea, Taiwan, Switzerland, Liechtenstein, or the US (HTS 9903.08.24).</small>';
+            } else if (dr.carve_out === 'uk_10') {
+                carveNote = '<br><small>⚠️ UK carve-out: total duty (incl. Column 1) capped at <strong>10%</strong> — applies only if substantially all hardware, software, and technology is certified to originate in the UK or the US (HTS 9903.08.23).</small>';
+            }
+            d.innerHTML = '<strong>Section 232 — Drones / UAS Tariff</strong>'
+                + dr.tierLabel + ': <strong>' + (dr.baseRate * 100) + '%</strong> additional duty applied (HTS ' + dr.heading + ').'
+                + '<br><small>Effective ' + dr.effective + '. Signed Aug 13, 2026 under Section 232 (19 U.S.C. 1862). Applies in addition to other duties. ' + dr.scope + '.</small>'
+                + carveNote
+                + '<br><small>Source: <a href="https://www.whitehouse.gov/presidential-actions/2026/08/adjusting-imports-of-unmanned-aircraft-systems-and-unmanned-aircraft-systems-components-into-the-united-states" target="_blank" rel="noopener">White House Proclamation (Aug 13, 2026)</a> · <a href="https://www.whitehouse.gov/fact-sheets/2026/08/fact-sheet-president-donald-j-trump-bolsters-national-security-and-strengthens-u-s-supply-chains-by-imposing-tariffs-on-drones-and-their-parts-and-components" target="_blank" rel="noopener">Fact Sheet</a></small>';
+            flags.appendChild(d);
+        }
     }
 
     results.classList.add('show');

@@ -1,6 +1,10 @@
 /*
  * Tariff Calculator 2026 — canonical tariff data
  * -------------------------------------------------
+ * Updated 2026-08-15: Section 232 UAS / drone tariff added
+ * (100% Annex I / 25% Annex II + Annex III, effective 2026-09-03,
+ * Annex III components 2027-02-09, allied 15%/10% carve-outs,
+ * verified vs fact-sheet-drone-tariff-section-232.md, t_65e08fc6).
  * Updated 2026-08-08: Section 232 polysilicon + solar tariff added
  * (15% ad valorem, MIP floors, effective 2026-12-04).
  * Section 301 forced-labor framework (effective 2026-07-24 12:01 AM ET,
@@ -139,7 +143,8 @@
     toys:         { add: 0.024, name: 'Toys & Games' },
     paper:        { add: 0.010, name: 'Paper & Wood' },
     ceramics:     { add: 0.040, name: 'Ceramics & Glass' },
-    polysilicon:  { add: 0,     name: 'Polysilicon & Solar (Section 232)' }
+    polysilicon:  { add: 0,     name: 'Polysilicon & Solar (Section 232)' },
+    drones:       { add: 0,     name: 'Drones / UAS (Unmanned Aircraft) — Section 232' }
   };
 
   /*
@@ -229,6 +234,61 @@
   };
 
   /*
+   * Section 232 — UAS / Drones tariff
+   * -------------------------------------------------
+   * Signed: 2026-08-13. Effective: 2026-09-03 12:01 AM ET (Annexes I & II),
+   * 2027-02-09 12:01 AM ET (Annex III components).
+   * 100% ad valorem on UAS > 25 kg MTOW, thermal-imaging UAS, UAS docking
+   * stations, and Annex I critical components (HTS 9903.08.21).
+   * 25% ad valorem on UAS <= 25 kg (no thermal imaging) (Annex II, 9903.08.22).
+   * 25% ad valorem on certain additional UAS components (Annex III, 2027).
+   * Allied carve-outs (origin-conditional): EU, JP, KR, TW, CH, LI total
+   * (incl. Column 1) <= 15% (9903.08.24); UK <= 10% (9903.08.23).
+   * Annex IV chapter 99 headings 9903.08.20-9903.08.26.
+   * Verified 2026-08-15 against White House proclamation + 4 annex PDFs +
+   * fact sheet, Bloomberg (swissinfo syndication), indoneo, KPMG, EY, BBC
+   * (14 sources, fact-sheet-drone-tariff-section-232.md, t_65e08fc6).
+   * NOTE: the "40+ transshipment countries" claim is NOT part of this
+   * proclamation — it comes from the separate same-day White House report
+   * "The Great Transshipment Scam" (Aug 13, 2026). Do not conflate.
+   */
+  var SECTION_232_UAS = {
+    category: 'drones',
+    authority: 'Section 232, Trade Expansion Act of 1962 (19 U.S.C. 1862)',
+    effective_main: '2026-09-03 12:01 AM ET',
+    effective_components: '2027-02-09 12:01 AM ET',
+    signature: '2026-08-13',
+    scope: 'Unmanned aircraft systems (UAS / drones) and UAS components',
+    tiers: {
+      annex_i:  { rate: 1.00, label: 'UAS >25 kg, thermal-imaging UAS, docking stations, Annex I critical components', heading: '9903.08.21', effective: '2026-09-03', applies_from: '2026-09-03' },
+      annex_ii: { rate: 0.25, label: 'UAS <=25 kg (no thermal imaging)', heading: '9903.08.22', effective: '2026-09-03', applies_from: '2026-09-03' },
+      annex_iii:{ rate: 0.25, label: 'Additional UAS components (Annex III)', heading: '9903.08.2x', effective: '2027-02-09', applies_from: '2027-02-09' }
+    },
+    // default tier used by the calculator when the importer does not
+    // specify; heaviest exposure (100%) — Annex I.
+    default_tier: 'annex_i',
+    carve_outs: {
+      // "substantially all" hardware/software/technology must originate in
+      // these countries (or the US): total (incl. Column 1) <= 15%
+      combined_15: ['japan', 'south-korea', 'taiwan', 'switzerland', 'european-union'],
+      // UK: total (incl. Column 1) <= 10%
+      uk_10: ['united-kingdom']
+    },
+    status: 'Signed August 13, 2026. Main duties (Annex I 100%, Annex II 25%) effective September 3, 2026 12:01 a.m. ET (21 days after signing). Annex III component duties (25%) effective February 9, 2027 (180 days after signing). Duties apply in addition to other duties, taxes, fees, exactions, and charges. Onshoring program available (construction committed before Jan 20, 2029); Blue UAS / FCC Conditional Approval products get the 180-day effective date; FTZ admissions must be privileged foreign status; drawback limited to Trade Agreement Partners with >=85% content.',
+    source_citations: [
+      'White House Proclamation: Adjusting Imports of Unmanned Aircraft Systems and UAS Components (Aug 13, 2026)',
+      'White House Fact Sheet: Bolstering National Security and Strengthening U.S. Supply Chains by Imposing Tariffs on Drones and Their Parts and Components',
+      'Proclamation Annex I (100% list) — HTS 8504.40.9580, 8537.10.9170, 8806.21-8806.99, 8807 parts',
+      'Proclamation Annex II (25% UAS list) — HTS 8806.21.00-8806.93.00',
+      'Proclamation Annex III (25% components, effective Feb 9 2027) — HTS 8807 series',
+      'Proclamation Annex IV — HTS chapter 99 headings 9903.08.20-9903.08.26',
+      'KPMG TaxNewsFlash: Section 232 tariffs on drones and components (Aug 14, 2026)',
+      'EY Tax News 2026-1756: New Section 232 proclamation on drones and drone components',
+      'Bloomberg via swissinfo.ch: Trump\'s 100% Tariff on Drones Deepens US-China Tech Decoupling'
+    ]
+  };
+
+  /*
    * USMCA status and Section 301 exemptions.
    */
   var USMCA = {
@@ -273,7 +333,9 @@
       USMCA.exempt_from_301.indexOf(countrySlug) !== -1;
 
     var s301Add = 0;
-    if (!usmcaQualified) {
+    // Section 232-covered articles (incl. UAS/drones) are exempt from
+    // Section 301 — no stacking (EXEMPTION_NOTES['232']).
+    if (!usmcaQualified && category !== 'drones') {
       if (c.type === 'flat') {
         s301Add = c.rate;
       } else if (c.type === 'mfn_cap') {
@@ -338,8 +400,61 @@
       };
     }
 
-    var rate = base + s301Add + chinaExisting + proposedAdd + s232Add;
-    rate = Math.min(rate, 0.60);
+    // Section 232 UAS / drones — date-gated, effective 2026-09-03 (main)
+    // and 2027-02-09 (Annex III components). Tier is selectable via
+    // opts.droneTier ('annex_i' | 'annex_ii' | 'annex_iii'), default Annex I.
+    // Allied carve-outs cap the TOTAL rate (incl. Column 1): EU/JP/KR/TW/CH
+    // <= 15%, UK <= 10% — origin-conditional ("substantially all" components
+    // and tech certified to originate there or in the US).
+    var droneAdd = 0;
+    var droneDetails = null;
+    if (category === 'drones') {
+      var uas = SECTION_232_UAS;
+      var tierKey = opts.droneTier && uas.tiers[opts.droneTier] ? opts.droneTier : uas.default_tier;
+      var tier = uas.tiers[tierKey];
+
+      var droneQDateStr;
+      if (opts.asOfDate) {
+        droneQDateStr = String(opts.asOfDate).slice(0, 10);
+      } else {
+        droneQDateStr = new Date().toISOString().slice(0, 10);
+      }
+      var droneApplies = droneQDateStr >= tier.applies_from;
+
+      if (droneApplies) {
+        if (uas.carve_outs.combined_15.indexOf(countrySlug) !== -1) {
+          // total (incl. Column 1) <= 15%
+          droneAdd = Math.max(0, 0.15 - mfn - categoryAdd);
+        } else if (uas.carve_outs.uk_10.indexOf(countrySlug) !== -1) {
+          // total (incl. Column 1) <= 10%
+          droneAdd = Math.max(0, 0.10 - mfn - categoryAdd);
+        } else {
+          droneAdd = tier.rate;
+        }
+      }
+
+      droneDetails = {
+        applies: droneApplies,
+        tier: tierKey,
+        tierLabel: tier.label,
+        rate: droneAdd,
+        baseRate: tier.rate,
+        heading: tier.heading,
+        effective: tier.effective,
+        askedDate: droneQDateStr,
+        scope: uas.scope,
+        authority: uas.authority,
+        status: uas.status,
+        source_citations: uas.source_citations,
+        carve_out: uas.carve_outs.combined_15.indexOf(countrySlug) !== -1 ? 'combined_15'
+          : (uas.carve_outs.uk_10.indexOf(countrySlug) !== -1 ? 'uk_10' : null)
+      };
+    }
+
+    var rate = base + s301Add + chinaExisting + proposedAdd + s232Add + droneAdd;
+    // Section 232 drone tariffs legitimately exceed 60% (100% Annex I tier),
+    // so the safety clamp is raised for the drones category only.
+    rate = Math.min(rate, category === 'drones' ? 1.50 : 0.60);
 
     return {
       rate: rate,
@@ -352,7 +467,8 @@
         usmcaQualified: usmcaQualified,
         type: c.type,
         cap: c.type === 'mfn_cap' ? c.cap : null,
-        s232: s232Details
+        s232: s232Details,
+        drone: droneDetails
       }
     };
   }
@@ -366,6 +482,7 @@
     CHINA_301: CHINA_301,
     PROPOSED_FLAGS: PROPOSED_FLAGS,
     SECTION_232_POLYSILICON: SECTION_232_POLYSILICON,
+    SECTION_232_UAS: SECTION_232_UAS,
     USMCA: USMCA,
     EXEMPTION_NOTES: EXEMPTION_NOTES,
     effectiveRate: effectiveRate
