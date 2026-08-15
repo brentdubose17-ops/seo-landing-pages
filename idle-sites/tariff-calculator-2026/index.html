@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tariff Calculator 2026 — Free Import Duty Calculator">
     <meta name="twitter:description" content="Calculate import duties instantly with 2026 Section 301 tariff rates for 60 countries.">
-    <meta name="dateModified" content="2026-08-13">
+    <meta name="dateModified" content="2026-08-15">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -26,7 +26,39 @@
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript",
-        "dateModified": "2026-08-13"
+        "dateModified": "2026-08-15"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "I ship steel by rail between Canadian provinces — do I qualify for the 50% rebate?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "If your shipment is Canadian-origin steel in interprovincial carload service, starts and ends in Canada, is invoiced on or after August 10, 2026, and does not originate at the Port of Vancouver, Prince Rupert, or Montreal, it's in scope. The program rebates 50% of eligible freight costs (after discounts), up to $50M cumulative per shipper, first-come-first-served until the $100M is claimed (Transport Canada says the program runs until summer 2027 or until funds are exhausted). Apply via the Commodities Sectoral Support Program portal with a mill certification per shipment."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does the steel transport rebate apply to trucking?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. The Commodities Sectoral Support Program covers rail (interprovincial carload) and marine (non-containerized/breakbulk) only. The Canadian Trucking Alliance called the exclusion 'extremely disappointing' and says it puts truckers at a competitive disadvantage. As of this update, Transport Canada has not responded to the protest or explained the exclusion."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "I ship steel from Canada to the US — does the new rebate lower my cost?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. The rebate covers domestic interprovincial rail and marine moves only — a cross-border shipment must start and end in Canada to qualify. Your US-bound steel still faces US Section 232 steel tariffs (the calculator does not currently model 232 steel rates, so its steel estimate is a lower bound). Steel is exempt from the August 19 Section 338 50% duty. If you buy Canadian steel for a Canadian destination, the rail/marine rebate can cut that leg's freight cost by 50%."
+                }
+            }
+        ]
     }
     </script>
     <style>
@@ -121,6 +153,13 @@
         <h2>⚠️ New: 50% US Tariff on Canadian Goods <span class="deadline">Effective Aug 19, 2026</span></h2>
         <p>President Trump signed three proclamations under <strong>Section 338 of the Tariff Act of 1930</strong> on July 20, 2026, imposing an <strong>additional 50% duty</strong> on ~500–569 categories of Canadian goods — motor vehicles, alcoholic beverages, dairy, furniture, textiles &amp; apparel, footwear, sporting goods, plywood &amp; paper, cement, and more.</p>
         <p><strong>Applies even to USMCA/CUSMA-qualifying goods.</strong> Exempt: energy, potash, Section 232 goods (steel/aluminum), fish, and critical minerals. Select <strong>Canada</strong> and a covered product category to see the flag on your estimate. Read the <a href="section-301-tariff-expansion-60-countries.html">full 60-country Section 301 expansion explainer</a>.</p>
+    </div>
+</div>
+
+<div class="notice-banner" role="note">
+    <div class="inner">
+        <h2>🆕 Canada: $100M Steel Transport Rebate (CSSP) — 50% off interprovincial rail &amp; marine steel freight. Trucking excluded.</h2>
+        <p>Transport Canada launched the <strong>$100M Commodities Sectoral Support Program</strong> on August 10, 2026: a <strong>50% rebate</strong> on rail or marine freight for Canadian steel moving between provinces. <strong>Trucking is excluded</strong> — the Canadian Trucking Alliance has protested. See <a href="#cssp-steel-rebate">who qualifies and estimate your rebate below</a>.</p>
     </div>
 </div>
 
@@ -226,6 +265,106 @@
     <p><strong>Country carve-outs:</strong> Japan, South Korea, Taiwan, Switzerland, and the EU have a combined Column 1 + Section 232 total of 15% (reduced additional duty). The UK faces a 10% additional duty. All other countries face the full 15% ad valorem additional.</p>
     <p style="margin-top:12px;"><strong>Sources:</strong> White House Proclamation (Aug 6, 2026), NYT, TaiyangNews, KPMG TaxNewsFlash, GHY International, AAEI Tariff Timeline. For official rates, consult the USITC HTS database or a licensed customs broker.</p>
 </section>
+
+<section class="info" id="cssp-steel-rebate">
+    <h2>Canada Steel Transport Rebate (CSSP): 50% Rebate for Rail &amp; Marine — Trucking Excluded</h2>
+    <p>On August 10, 2026, Transport Canada launched the <strong>$100M Commodities Sectoral Support Program (CSSP)</strong>: a 50% rebate on rail or marine freight for Canadian steel moving between provinces. It's a direct response to U.S. tariffs on Canadian steel — and it covers <strong>rail and marine only</strong>. If your shipment is Canadian-origin steel in interprovincial carload rail service or non-containerized marine service, starts and ends in Canada, and is invoiced on or after August 10, 2026, you're in scope. Apply through the CSSP portal; funds are first-come, first-served up to $50M per shipper.</p>
+
+    <h3>Estimate your CSSP rebate</h3>
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:20px;margin-bottom:20px;">
+        <div class="form-row">
+            <label for="csspFreight">Eligible rail/marine freight cost (CAD) — after discounts/incentives</label>
+            <input type="number" id="csspFreight" min="0" step="100" placeholder="e.g. 50000">
+        </div>
+        <div class="checkbox-row">
+            <input type="checkbox" id="csspExcludedPort">
+            <label for="csspExcludedPort">Rail origin is Port of Vancouver / Prince Rupert / Montreal (excluded as origin)</label>
+        </div>
+        <button class="calc-btn" onclick="estimateCssp()">Estimate Rebate</button>
+        <div class="results" id="csspResults" style="display:none;margin-top:16px;">
+            <div class="result-card">
+                <div class="result-item"><span class="result-label">Estimated rebate (50%)</span><span class="result-value" id="csspRebate">$0</span></div>
+                <div class="result-item"><span class="result-label">Cumulative cap</span><span class="result-value">$50M per shipper</span></div>
+                <div class="result-item"><span class="result-label">Program envelope</span><span class="result-value">$100M, first-come-first-served</span></div>
+            </div>
+            <p style="margin-top:12px;font-size:0.85rem;color:#888;" id="csspNote">* Static estimate: 50% of eligible freight cost. Subject to fund availability and Transport Canada eligibility rules — application details to be confirmed per Transport Canada. Does not account for the program's ~1-year window ("until summer 2027, or until all available funding is claimed").</p>
+        </div>
+    </div>
+
+    <h3>Which mode gets the rebate?</h3>
+    <table>
+        <thead><tr><th>Mode</th><th>Rebate</th><th>Scope note</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Rail</strong></td><td><strong>50% rebate</strong></td><td>Interprovincial carload service; rail shipments originating at Port of Vancouver, Prince Rupert, or Montreal are <strong>not</strong> eligible (ending there is eligible).</td></tr>
+            <tr><td><strong>Marine</strong></td><td><strong>50% rebate</strong></td><td>Non-containerized / breakbulk service.</td></tr>
+            <tr><td><strong>Trucking</strong></td><td><strong>0% — excluded</strong></td><td>Not an eligible mode. The Canadian Trucking Alliance protested the exclusion on August 10, 2026.</td></tr>
+        </tbody>
+    </table>
+    <p>Who gets the rebate? <strong>Rail (interprovincial carload) — 50% rebate · Marine (non-containerized/breakbulk) — 50% rebate · Trucking — excluded.</strong> The Canadian Trucking Alliance protested the exclusion on August 10, 2026, saying it leaves truckers hauling steel at a competitive disadvantage and puts family-run steel haulers at risk of losing freight to subsidized modes. Transport Canada has not yet responded. Use the table above to estimate the rail/marine rebate on a lane — and remember trucking gets none of it.</p>
+
+    <h3>Cross-border steel moves are outside the rebate</h3>
+    <p>Cross-border steel moves are outside the rebate. The CSSP requires shipments to start AND end in Canada — US-bound steel from a Canadian mill cannot claim it. On the US side, steel is exempt from the August 19 Section 338 duty (Section 232 goods), but it remains subject to Section 232 tariffs. The calculator's steel estimate uses average MFN rates and does not currently add Section 232 steel duties — treat the result as a lower-bound estimate for steel. Verified context (Aug 2026): steel articles carry a <strong>+50% Section 232 duty</strong> (HTS 9903.82.02, Proclamation 11021, effective April 6, 2026 — USMCA does not reduce it), while USMCA-qualifying Canadian derivative steel faces <strong>25% on non-US content / 0% on US content</strong> (HTS 9903.82.20/.21, Proclamation 11032, effective June 8, 2026 through December 31, 2027); a safe modeling range is 15–50%.</p>
+
+    <div class="cta" style="margin:20px 0;padding:16px 20px;background:#eff6ff;border:1px solid #bfdbfe;border-left:6px solid #2563eb;border-radius:10px;">
+        <strong>Apply at the CSSP portal:</strong> <a href="https://tc.canada.ca/en/programs/commodities-sectoral-support-program" rel="noopener">tc.canada.ca/en/programs/commodities-sectoral-support-program</a> — shippers need a business number, Canadian operating address, direct deposit, a $2.10 test payment, and a Mill Certification PDF per shipment.
+    </div>
+
+    <h3>Steel transport rebate — FAQ</h3>
+    <div style="background:#f8f9ff;border-radius:10px;padding:16px 20px;margin-bottom:14px;">
+        <p><strong>Q: I ship steel by rail between Canadian provinces — do I qualify for the 50% rebate?</strong></p>
+        <p>A: If your shipment is Canadian-origin steel in interprovincial carload service, starts and ends in Canada, is invoiced on or after August 10, 2026, and does not originate at the Port of Vancouver, Prince Rupert, or Montreal, it's in scope. The program rebates 50% of eligible freight costs (after discounts), up to $50M cumulative per shipper, first-come-first-served until the $100M is claimed (Transport Canada says the program runs until summer 2027 or until funds are exhausted). Apply via the Commodities Sectoral Support Program portal with a mill certification per shipment.</p>
+    </div>
+    <div style="background:#f8f9ff;border-radius:10px;padding:16px 20px;margin-bottom:14px;">
+        <p><strong>Q: Does the steel transport rebate apply to trucking?</strong></p>
+        <p>A: No. The Commodities Sectoral Support Program covers rail (interprovincial carload) and marine (non-containerized/breakbulk) only. The Canadian Trucking Alliance called the exclusion "extremely disappointing" and says it puts truckers at a competitive disadvantage. As of this update, Transport Canada has not responded to the protest or explained the exclusion.</p>
+    </div>
+    <div style="background:#f8f9ff;border-radius:10px;padding:16px 20px;margin-bottom:14px;">
+        <p><strong>Q: I ship steel from Canada to the US — does the new rebate lower my cost?</strong></p>
+        <p>A: No. The rebate covers domestic interprovincial rail and marine moves only — a cross-border shipment must start and end in Canada to qualify. Your US-bound steel still faces US Section 232 steel tariffs (the calculator does not currently model 232 steel rates, so its steel estimate is a lower bound). Steel is exempt from the August 19 Section 338 50% duty. If you buy Canadian steel for a Canadian destination, the rail/marine rebate can cut that leg's freight cost by 50%.</p>
+    </div>
+
+    <h3>Sources</h3>
+    <table>
+        <thead><tr><th>#</th><th>Source</th><th>Used for</th></tr></thead>
+        <tbody>
+            <tr><td>[1]</td><td><a href="https://www.canada.ca/en/transport-canada/news/2026/08/government-of-canada-strengthens-canadas-steel-industry-through-stronger-interprovincial-trade.html" rel="noopener">Transport Canada news release</a></td><td>Program launch, $100M, 50%, duration</td></tr>
+            <tr><td>[2]</td><td><a href="https://tc.canada.ca/en/programs/commodities-sectoral-support-program" rel="noopener">TC Commodities Sectoral Support Program</a></td><td>Eligibility, exclusions, portal, application requirements</td></tr>
+            <tr><td>[3]</td><td><a href="https://cantruck.ca/federal-government-steel-program-leaves-trucking-industry-in-the-lurch/" rel="noopener">Canadian Trucking Alliance statement</a></td><td>CTA position, Laskowski quotes</td></tr>
+            <tr><td>[4]</td><td><a href="https://www.trucknews.com/transportation/trucking-excluded-from-100m-steel-transport-rebate/1003219766/" rel="noopener">TruckNews coverage</a></td><td>Trucking exclusion, CTA quotes</td></tr>
+            <tr><td>[5]</td><td><a href="https://www.ctvnews.ca/politics/article/ottawa-to-rebate-100m-in-freight-costs-to-ship-steel-across-canada/" rel="noopener">CTV News</a></td><td>$50M cap</td></tr>
+            <tr><td>[6]</td><td><a href="https://www.cbc.ca/news/politics/steel-rail-marine-rebate-9.7301721" rel="noopener">CBC News</a></td><td>Tariff context 10–50%, stakeholder reactions</td></tr>
+            <tr><td>[7]</td><td><a href="https://ca.finance.yahoo.com/news/ottawa-offers-cover-50-cost-122508184.html" rel="noopener">Yahoo Finance Canada</a></td><td>Import quotas (20%/75%), 50% steel tariff 2025</td></tr>
+            <tr><td>[8]</td><td><a href="https://www.pm.gc.ca/en/news/news-releases/2025/11/26/prime-minister-carney-announces-new-measures-protect-and-transform" rel="noopener">PM Carney Nov 26, 2025 announcement</a></td><td>Program lineage</td></tr>
+        </tbody>
+    </table>
+    <p style="font-size:0.85rem;color:#888;">All 8 sources verified live August 2026. The CSSP is first-come, first-served — program status, remaining funds, and application details are subject to change; confirm current details on the Transport Canada portal before relying on this estimate.</p>
+</section>
+
+<script>
+function estimateCssp() {
+    var freight = parseFloat(document.getElementById('csspFreight').value);
+    var excluded = document.getElementById('csspExcludedPort').checked;
+    var results = document.getElementById('csspResults');
+    var rebateEl = document.getElementById('csspRebate');
+    var noteEl = document.getElementById('csspNote');
+    if (!freight || freight <= 0) {
+        results.style.display = 'block';
+        rebateEl.textContent = '$0';
+        noteEl.innerHTML = 'Please enter a positive freight cost in CAD.';
+        return;
+    }
+    if (excluded) {
+        results.style.display = 'block';
+        rebateEl.textContent = '$0';
+        noteEl.innerHTML = '<strong>Excluded origin:</strong> rail shipments originating at the Port of Vancouver, Prince Rupert, or Montreal are not eligible for the CSSP rebate (ending there is eligible). Trucking is not an eligible mode regardless.';
+        return;
+    }
+    var rebate = freight * 0.5;
+    results.style.display = 'block';
+    rebateEl.textContent = '$' + rebate.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    noteEl.innerHTML = '* Static estimate: 50% of eligible freight cost. Subject to fund availability and Transport Canada eligibility rules — application details to be confirmed per Transport Canada. Does not account for the program\'s ~1-year window ("until summer 2027, or until all available funding is claimed").';
+}
+</script>
 
 <section class="blog-section">
     <h2>📖 Tariff &amp; Import Guides</h2>
