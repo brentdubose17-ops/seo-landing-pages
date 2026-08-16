@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Workload Routing: When to Pay for Premium Models vs Cache-Priced Loops</title>
+    <meta name="description" content="Long AI agent runs cost 45–276x more than headline per-token prices suggest because agents re-read context on every step. See the verified DeepSeek vs Fable 5 cache gap and a workload-to-model decision table for agencies.">
+    <meta name="keywords" content="AI agent cost, model cost routing, DeepSeek V4 Pro pricing, Fable 5 pricing, cache read pricing, prompt caching, AI agency model selection, agent workload routing, long agent runs, AI pricing calculator">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://findaiagency.com/ai-agent-workload-routing">
+    <meta property="og:title" content="AI Agent Workload Routing: When to Pay for Premium Models vs Cache-Priced Loops">
+    <meta property="og:description" content="Long AI agent runs cost 45–276x more than headline per-token prices suggest because agents re-read context on every step. See the verified DeepSeek vs Fable 5 cache gap and a workload-to-model decision table for agencies.">
+    <meta property="og:url" content="https://findaiagency.com/ai-agent-workload-routing">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Find AI Agency">
+    <meta property="og:image" content="https://findaiagency.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "AI Agent Workload Routing: When to Pay for Premium Models vs Cache-Priced Loops",
+      "description": "Long AI agent runs cost far more than headline per-token prices suggest because agents re-read context on every step. Verified DeepSeek vs Fable 5 cache-gap math, a workload-to-model decision table, and pricing-calculator guidance for AI agencies.",
+      "datePublished": "2026-08-16",
+      "dateModified": "2026-08-16",
+      "author": {"@type": "Organization", "name": "Find AI Agency"},
+      "publisher": {"@type": "Organization", "name": "Find AI Agency"},
+      "mainEntityOfPage": "https://findaiagency.com/ai-agent-workload-routing",
+      "image": "https://findaiagency.com/og-image.png",
+      "keywords": "AI agent cost, model cost routing, DeepSeek V4 Pro pricing, Fable 5 pricing, cache read pricing, prompt caching, AI agency model selection"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do long AI agent runs cost more than per-token prices suggest?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Because agents re-read their instructions and context on every step of a run. A 100-step run can re-read the same 50K-token context 100 times, so cache-read pricing — not headline input/output price — dominates the bill. A 45x gap in cache-read price turns into a 45x gap in the per-step cost of every loop."}
+        },
+        {
+          "@type": "Question",
+          "name": "What is the 276x cache-cost comparison?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Julian Goldie (@JulianGoldieSEO) posted on Aug 16, 2026 that DeepSeek V4 Pro cache reads cost ~276x less than Anthropic Claude Fable 5's. The arithmetic checks out on DeepSeek's launch pricing ($1.00 / $0.003625 = 275.9x). DeepSeek raised prices the same day (16:00 UTC Aug 16, 2026), so the current gap is ~45x off-peak and ~23x peak — still enormous, but not 276x."}
+        },
+        {
+          "@type": "Question",
+          "name": "When should an agency use a premium model like Fable 5?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Use premium models for high-value, low-frequency steps where quality changes the outcome: architecture decisions, security reviews, client-facing deliverables, and final code review. Fable 5 leads DeepSeek V4 Pro by 7 points on the independent DeepSWE benchmark (70% vs 63%) but costs ~90x more per task ($21.63 vs $0.24)."}
+        },
+        {
+          "@type": "Question",
+          "name": "When should an agency use a cache-priced model like DeepSeek V4 Pro?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Use cache-priced models for routine, high-volume agent loops: boilerplate generation, test scaffolding, log triage, data extraction, formatting, and re-runs where context is re-read every step. At $0.022 per 1M cache-read tokens off-peak (vs Fable 5's $1.00), DeepSeek V4 Pro makes long loops dramatically cheaper with a modest quality tradeoff."}
+        },
+        {
+          "@type": "Question",
+          "name": "How should an agency price long agent runs for clients?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Price the run, not the token: estimate steps per run, context size per step, and cache hit rate, then apply three price lines — cache read, cache miss, and output. Model the workload on the cheapest adequate tier, use premium tiers only for the high-value steps, and state the hit-rate assumption (92% is an author claim, not a verified metric)."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>AI Agent Workload Routing: When to Pay for Premium Models vs Cache-Priced Loops</h1>
+            <div class="meta"><span>Published August 16, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>AI pricing / model selection</span></div>
+        </header>
+
+        <p><strong>The number nobody quotes is the cache read, and it is the number that sets your agent bill.</strong> A 100-step agent run does not pay the headline input price 100 times — it pays the <em>cache-read</em> price 100 times, because the agent re-reads its instructions and context on every step. Compare Anthropic Claude Fable 5's $1.00 per 1M cache-read tokens against DeepSeek V4 Pro's $0.022 off-peak, and the same loop is roughly <strong>45x cheaper</strong> before the model has written a single new token. On DeepSeek's launch pricing the gap was <strong>276x</strong> — the figure that went around on August 16, 2026 — before a same-day price change cut it to ~45x. Either way: for long agent runs, model choice moves the bill by orders of magnitude, and the per-token headline price barely explains why.</p>
+
+        <p>This guide gives agencies a practical routing rule: <strong>pay premium prices for the high-value steps where quality decides the outcome, and run the routine loops on cache-priced models where the context is re-read every step.</strong> It uses the verified DeepSeek vs Fable 5 comparison from <a href="https://x.com/JulianGoldieSEO/status/2089064335717159410" rel="noopener">Julian Goldie's August 16, 2026 post</a>, and it is built to feed directly into an agency pricing calculator.</p>
+
+        <h2>Why long agent runs ignore the headline price</h2>
+        <p>Headline pricing is one read: $X per 1M input tokens, $Y per 1M output tokens. Agent economics are different. An agent holds a system prompt plus accumulated context — often 50,000 tokens or more — and re-sends that context to the model on <strong>every step</strong>. The cost model is not "input + output." It is:</p>
+        <ul>
+            <li><strong>Cache reads</strong> — re-reading unchanged context at each step. This line dominates long runs.</li>
+            <li><strong>Cache misses</strong> — the first time new context enters the cache (or whenever the prefix changes).</li>
+            <li><strong>Output</strong> — new tokens the model writes each step.</li>
+        </ul>
+        <p>That is why two models with similar per-token prices can produce wildly different agent bills: their cache-read prices are the real lever, and they differ by one to two orders of magnitude.</p>
+
+        <h2>The 276x cache-read gap (and the same-day caveat)</h2>
+        <p>On August 16, 2026, <a href="https://x.com/JulianGoldieSEO/status/2089064335717159410" rel="noopener">@JulianGoldieSEO posted</a>: "the number nobody's talking about is 276. Not the intelligence score. The cache read gap. Agents re-read your instructions on EVERY step... DeepSeek's cache reads cost ~276x less than Fable 5's. With a 92% hit rate..." The arithmetic is correct on DeepSeek's launch pricing:</p>
+        <blockquote>$1.00 (Fable 5 cache read) ÷ $0.003625 (DeepSeek V4 Pro cache hit) = <strong>275.9x ≈ 276x</strong></blockquote>
+        <p><strong>The caveat that matters:</strong> DeepSeek raised prices the same day. Its GA release note (<a href="https://api-docs.deepseek.com/news/news260813" rel="noopener">news260813</a>) took effect <strong>16:00 UTC on August 16, 2026</strong>. Under current official pricing the cache-read gap is ~<strong>45x off-peak</strong> ($1.00 ÷ $0.022) and ~<strong>23x peak</strong> ($1.00 ÷ $0.044) — still an enormous gap, roughly one-sixth of the original 276x. Any proposal quoting 276x without the date is already stale.</p>
+        <table>
+            <thead>
+                <tr><th>Model</th><th>Input (miss)</th><th>Cache read</th><th>Output</th><th>Effective as of</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Claude Fable 5</strong></td><td>$10.00</td><td>$1.00</td><td>$50.00</td><td>Anthropic official pricing, Aug 16, 2026</td></tr>
+                <tr><td><strong>DeepSeek V4 Pro</strong> (off-peak)</td><td>$0.66</td><td>$0.022</td><td>$1.98</td><td>DeepSeek official pricing, Aug 16, 2026 16:00 UTC</td></tr>
+                <tr><td><strong>DeepSeek V4 Pro</strong> (peak)</td><td>$1.32</td><td>$0.044</td><td>$3.96</td><td>DeepSeek official pricing, Aug 16, 2026 16:00 UTC</td></tr>
+                <tr><td><strong>DeepSeek V4 Pro</strong> (launch, for reference)</td><td>$0.435</td><td>$0.003625</td><td>$0.87</td><td>Until Aug 16, 2026 16:00 UTC</td></tr>
+                <tr><td><strong>Grok 4.6</strong></td><td>$2.00</td><td>—</td><td>$6.00</td><td>Artificial Analysis, Aug 16, 2026</td></tr>
+            </tbody>
+        </table>
+        <p class="note" style="font-size:0.85rem;color:#666;">All prices USD per 1M tokens. The 92% cache hit rate cited in the original post is an author claim that is not exposed on public OpenRouter surfaces — treat it as a planning assumption, not a verified metric.</p>
+
+        <h2>What the premium actually buys: the verified gap</h2>
+        <p>The premium tier is not a marketing difference. On the independent DeepSWE leaderboard (<a href="https://deepswe.datacurve.ai/" rel="noopener">deepswe.datacurve.ai</a>, v1.1, 113 tasks, updated Aug 13, 2026):</p>
+        <ul>
+            <li><strong>Claude Fable 5 [max]: 70% ± 4</strong>, at an average cost of <strong>$21.63 per task</strong>.</li>
+            <li><strong>DeepSeek V4 Pro [max]: 63% ± 6</strong>, at an average cost of <strong>$0.24 per task</strong>.</li>
+            <li>That is exactly <strong>7 points</strong> of pass rate for roughly <strong>90x the cost per task</strong> (margin-of-error bands overlap, so the spread is directional, not definitive — but the magnitude is real).</li>
+        </ul>
+        <p>Grok 4.6 sits between them: 67% ± 2 at $5.50 per task on DeepSWE, and Artificial Analysis' Intelligence Index jumped it from 56 (Grok 4.5) to <strong>61 in a month</strong> — the frontier is moving fast, and today's "cheap enough" answer may not be tomorrow's. The routing decision is not static; it is a monthly re-check.</p>
+
+        <h2>Workload-to-model decision table</h2>
+        <p>Route by <strong>frequency × value</strong>. High-value, low-frequency steps justify premium pricing because one bad answer costs the engagement. High-frequency, routine steps multiply whatever price you pay — run those on the cheapest adequate tier, and cache pricing decides the winner.</p>
+        <table>
+            <thead>
+                <tr><th>Workload type</th><th>Examples</th><th>Model cost tier</th><th>Why</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Architecture &amp; planning</td><td>System design, integration strategy, client solution architecture</td><td><strong>Premium</strong> (Fable 5 / frontier)</td><td>One wrong call propagates through every downstream step; 7-pt DeepSWE lead shows up exactly here</td></tr>
+                <tr><td>Security &amp; compliance review</td><td>Vulnerability review, access-control audit, client data handling</td><td><strong>Premium</strong> (Fable 5 / frontier)</td><td>False negatives are expensive; premium tier's reasoning margin is worth $1.00/M cache reads</td></tr>
+                <tr><td>Final deliverable &amp; client-facing output</td><td>Generated reports, proposals, demo configuration</td><td><strong>Premium</strong> (Fable 5 / frontier)</td><td>Quality is perceived directly; the client sees this output, not the loop that made it</td></tr>
+                <tr><td>Feature implementation (clear spec)</td><td>Coding against a defined ticket with tests</td><td><strong>Mid</strong> (Grok 4.6 / DeepSeek peak)</td><td>Grok 4.6: 67% DeepSWE at $5.50/task — 3 pts below Fable 5 at a quarter of the cost</td></tr>
+                <tr><td>Routine agent loops</td><td>Boilerplate, scaffolding, test generation, log triage, retries</td><td><strong>Budget / cache-priced</strong> (DeepSeek V4 Pro off-peak)</td><td>Context re-read every step; $0.022 vs $1.00 cache read is the 45x that shows up in the bill</td></tr>
+                <tr><td>High-volume extraction / RAG</td><td>Document parsing, metadata extraction, chunked retrieval passes</td><td><strong>Budget / cache-priced</strong> (DeepSeek V4 Pro off-peak)</td><td>Long runs of re-reads; cache-hit pricing decides the total, not the headline rate</td></tr>
+            </tbody>
+        </table>
+        <p>The operating rule: <strong>premium for the decision points, cache-priced for the loops.</strong> An agency that runs the whole job on Fable 5 pays 90x for steps where DeepSeek would have delivered the same routine output, and an agency that runs the whole job on DeepSeek risks the architecture step where the 7-point gap lives.</p>
+
+        <h2>Building this into an agency pricing calculator</h2>
+        <p>For agencies that price AI-assisted delivery — or build calculators for their clients — the honest math has four inputs and three price lines:</p>
+        <ol>
+            <li><strong>Estimate the run, not the token.</strong> Steps per run, context tokens per step, output tokens per step, and cache hit rate (assume 85–92%, and label it as an assumption).</li>
+            <li><strong>Apply three price lines per model tier:</strong> cache read × hit share, cache miss × miss share, output × steps. Sum them per run, then multiply by runs per month.</li>
+            <li><strong>Route per step, not per job.</strong> Split the job into premium steps and loop steps, price each tier separately, and add them. A blended single-model number hides the 45x.</li>
+            <li><strong>Parameterize peak/off-peak.</strong> DeepSeek V4 Pro's off-peak cache read is $0.022/M vs $0.044/M peak — a 2x swing in the loop line depending on when the run executes.</li>
+        </ol>
+        <p>A sanity example: a 100-step run with 50K tokens of context re-read each step. On Fable 5 the cache-read line alone is 100 × $1.00 × 0.05M = <strong>$5.00</strong> per run. On DeepSeek V4 Pro off-peak the same line is 100 × $0.022 × 0.05M = <strong>$0.11</strong> — a 45x difference before output tokens. At 200 runs a month that is $1,000 vs $22 on the re-read line alone. This is why "which model" is a pricing question, not a quality question, for long agent workloads.</p>
+
+        <h2>Model selection rules for agencies</h2>
+        <ul>
+            <li><strong>Never quote a per-token price for agent work.</strong> Quote a per-run or per-task number built from cache-read, miss, and output lines.</li>
+            <li><strong>Re-check pricing monthly.</strong> DeepSeek's own price change cut a headline gap from 276x to 45x in one day. The same can happen to any model in either direction.</li>
+            <li><strong>Verify benchmarks before you sell on them.</strong> The 7-point DeepSWE lead and the Grok 4.6 +5 jump are independently verified; the 92% hit rate is not — do not build a client guarantee on it.</li>
+            <li><strong>Keep a premium path for escalations.</strong> Even a cache-priced default workflow should fall back to the premium tier for security, architecture, and final review steps.</li>
+        </ul>
+
+        <div class="cta">
+            <p><strong>Price agent runs the way they actually run — cache reads included</strong></p>
+            <a class="btn" href="/best-ai-agencies-for-small-business" data-umami-event="click_to_directory">Browse Vetted AI Agencies →</a>
+            <p style="margin-top:12px;font-size:0.9rem;">Or <a href="https://aiagencycalculator.com" rel="noopener" data-umami-event="click_to_calculator">model the engagement with the AI agency pricing calculator</a> first.</p>
+        </div>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>Why do long AI agent runs cost more than per-token prices suggest?</h3>
+            <p>Because agents re-read their instructions and context on every step of a run. A 100-step run can re-read the same 50K-token context 100 times, so cache-read pricing — not headline input/output price — dominates the bill. A 45x gap in cache-read price turns into a 45x gap in the per-step cost of every loop.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is the 276x cache-cost comparison?</h3>
+            <p>Julian Goldie (@JulianGoldieSEO) posted on Aug 16, 2026 that DeepSeek V4 Pro cache reads cost ~276x less than Anthropic Claude Fable 5's. The arithmetic checks out on DeepSeek's launch pricing ($1.00 / $0.003625 = 275.9x). DeepSeek raised prices the same day (16:00 UTC Aug 16, 2026), so the current gap is ~45x off-peak and ~23x peak — still enormous, but not 276x.</p>
+        </div>
+        <div class="faq-item">
+            <h3>When should an agency use a premium model like Fable 5?</h3>
+            <p>Use premium models for high-value, low-frequency steps where quality changes the outcome: architecture decisions, security reviews, client-facing deliverables, and final code review. Fable 5 leads DeepSeek V4 Pro by 7 points on the independent DeepSWE benchmark (70% vs 63%) but costs ~90x more per task ($21.63 vs $0.24).</p>
+        </div>
+        <div class="faq-item">
+            <h3>When should an agency use a cache-priced model like DeepSeek V4 Pro?</h3>
+            <p>Use cache-priced models for routine, high-volume agent loops: boilerplate generation, test scaffolding, log triage, data extraction, formatting, and re-runs where context is re-read every step. At $0.022 per 1M cache-read tokens off-peak (vs Fable 5's $1.00), DeepSeek V4 Pro makes long loops dramatically cheaper with a modest quality tradeoff.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How should an agency price long agent runs for clients?</h3>
+            <p>Price the run, not the token: estimate steps per run, context size per step, and cache hit rate, then apply three price lines — cache read, cache miss, and output. Model the workload on the cheapest adequate tier, use premium tiers only for the high-value steps, and state the hit-rate assumption (92% is an author claim, not a verified metric).</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/ai-agent-cost-blowups">AI Agent Costs: Blowups, Loops, and Real Estimates</a></li>
+                <li><a href="/ai-coding-agent-pricing">AI Coding Agent Pricing: Billing Models, Cost Variables, and How to Budget</a></li>
+                <li><a href="/open-weight-coding-models-agency-margins">Open-Weight Coding Models and Agency Margins</a></li>
+                <li><a href="/how-much-does-an-ai-agency-cost-in-2026">How Much Does an AI Agency Cost in 2026?</a></li>
+                <li><a href="/grok-4-6-500k-context-agent-model">Grok 4.6 Ships: 500K-Context Model Matches GPT-5.6 Sol at 60%+ Lower Price</a></li>
+                <li><a href="/grok-bot-vs-claude-code">Grok Bot vs Claude Code (2026): Which AI Agent Should Agencies Use?</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>Julian Goldie (@JulianGoldieSEO), X post Aug 16, 2026: <a href="https://x.com/JulianGoldieSEO/status/2089064335717159410" rel="noopener">x.com/JulianGoldieSEO/status/2089064335717159410</a> — source of the 276x cache-gap claim; full mirror: <a href="https://juliangoldie.com/deepseek-v4-pro-vs-fable-5-vs-grok-4-6/" rel="noopener">juliangoldie.com/deepseek-v4-pro-vs-fable-5-vs-grok-4-6/</a></li>
+            <li>DeepSeek GA release note (price change effective 2026-08-16 16:00 UTC): <a href="https://api-docs.deepseek.com/news/news260813" rel="noopener">api-docs.deepseek.com/news/news260813</a></li>
+            <li>DeepSeek official pricing (off-peak $0.66/$0.022/$1.98, peak $1.32/$0.044/$3.96): <a href="https://api-docs.deepseek.com/quick_start/pricing" rel="noopener">api-docs.deepseek.com/quick_start/pricing</a></li>
+            <li>Anthropic official pricing (Fable 5: $10/$50, cache reads &amp; refreshes $1.00): <a href="https://platform.claude.com/docs/en/about-claude/pricing" rel="noopener">platform.claude.com/docs/en/about-claude/pricing</a></li>
+            <li>DeepSWE leaderboard v1.1 (Fable 5 70% ± 4 / $21.63, DeepSeek V4 Pro 63% ± 6 / $0.24, Grok 4.6 67% ± 2 / $5.50; 113 tasks, updated 2026-08-13): <a href="https://deepswe.datacurve.ai/" rel="noopener">deepswe.datacurve.ai</a></li>
+            <li>Artificial Analysis Intelligence Index (Fable 5 = 62 #3/188, Grok 4.6 = 61 #6/188, Grok 4.5 = 56 #18/188): <a href="https://artificialanalysis.ai/models/claude-fable-5" rel="noopener">claude-fable-5</a> · <a href="https://artificialanalysis.ai/models/grok-4-6" rel="noopener">grok-4-6</a> · <a href="https://artificialanalysis.ai/models/grok-4-5" rel="noopener">grok-4-5</a></li>
+            <li>OpenRouter model catalog (DeepSeek V4 Pro mirrors official off-peak pricing): <a href="https://openrouter.ai/api/v1/models" rel="noopener">openrouter.ai/api/v1/models</a></li>
+            <li>DeepSeek V4 Pro launch pricing coverage: <a href="https://kie.ai/blog/deepseek-v4-pro-release" rel="noopener">kie.ai/blog/deepseek-v4-pro-release</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: All pricing figures were verified against official DeepSeek and Anthropic pricing pages on Aug 16, 2026 (23:08 UTC), after DeepSeek's price change took effect at 16:00 UTC that day. The 276x figure is arithmetically correct on DeepSeek's launch pricing but is stale after the Aug 16 price increase — current gaps are ~45x off-peak / ~23x peak. The 92% cache hit rate is an author claim and could not be verified from public OpenRouter data. DeepSWE margins of error overlap (Fable 5 ±4, DeepSeek ±6), so the 7-point lead is directional. Model prices and benchmark scores change frequently — re-verify before building client proposals on them.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
