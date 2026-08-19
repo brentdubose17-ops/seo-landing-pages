@@ -2,6 +2,19 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-19 — New article: Anthropic $65B run-rate market note (kanban t_7081cc7e, verified via parent research brief t_4b656a95)
+
+- **New article:** `anthropic-65b-run-rate-agency-pricing.html` (live at https://aiagencycalculator.com/anthropic-65b-run-rate-agency-pricing) — "Anthropic's $65B Run Rate: What It Signals for AI Agency Cost Assumptions" (Article JSON-LD, 'Anthropic run rate' / 'Claude pricing' / 'Vendor stability' tags). Anthropic's annualized revenue run rate surpassed **$65B as of end of July 2026** (Bloomberg, Aug 17, 2026, people familiar), up from **~$9B at end-2025** and **$47B in May 2026** — ~7x in ~7 months; Q2 2026 preliminary revenue >$11.5B vs $787M in Q2 2025; positive adjusted operating income; $965B post-money valuation (May 2026); confidential SEC filing June 2026 with Morgan Stanley/Goldman/JPMorgan; fall 2026 IPO expected ahead of OpenAI (~$40B run rate) and DeepSeek. Run-rate framing only (never "audited revenue"); no unsupported claims — platform-risk example (June 2026 Fable 5 / Mythos 5 export-control disablement) attributed to the brief's verified coverage. Four agency signals (vendor stability + IPO caveat, model pricing pressure, platform risk, customer confidence) tied back to calculator inputs: no price change, verify-before-quoting on Claude rates (Fable 5 $10/$50, Sonnet 5 $2/$10 permanent), fallback-path pricing in the Model Strategy selector, watch for post-IPO restructures. Signal→calculator-input table, CTA to calculator (umami `click_to_calculator`), internal links to openai-40b-run-rate-agency-pricing, ai-model-cost-per-task-2026, gemini-model-availability-risk-agencies, ai-agency-profit-margin-2026, ai-automation-pricing-guide-2026, deepseek-v4-api-price-increase-2026, index_calculator; 5 source links (Bloomberg primary). Sitemap updated (29 URLs). Deployed to Cloudflare Pages (ai-agency-pricing-calculator).
+
+## 2026-08-19 — AI supplier risk note + FAQ entry added (kanban t_48810e22, verified via parent research brief t_bb45d771)
+
+- **AI supplier risk note added** to the homepage (index.html) and index_calculator.html: FAQ item + FAQPage JSON-LD entry ("What is AI supplier risk and should it change my cost estimates?"), on-page changelog entries, and an assumptions-footer clause.
+- **Content:** On Aug 18, 2026 OpenAI announced a two-week pause in reinforcement-learning training on its latest deployment-bound models and held its largest planned frontier RL run on hold, after internal evaluations flagged its upcoming Astra model at the "Critical" cyber-capability threshold under its Preparedness Framework (Aug 7 flag). Core Astra training continued and no model was cancelled; no published API prices changed, so **calculator math is unchanged**. Monitoring overhead (~20% of monitored inference compute) may add modest price pressure over time.
+- **Guidance tip added:** when evaluating AI costs and risks, include fallback AI models in your stack and review each provider's tooling roadmap before locking in long-term pricing or client deliverables.
+- **Source:** https://openai.com/index/pacing-model-development-cyber-capabilities/ (Aug 18, 2026) — verified via research brief t_bb45d771 (6 sources evidence-quoted).
+- **Touch points:** FAQ item + FAQPage schema entry (index.html + index_calculator.html), assumptions footer (index.html), on-page changelog (both pages), site CHANGELOG.
+- **Verified:** FAQPage JSON-LD valid (14 Q on index.html, 5 on index_calculator.html), inline JS syntax clean (node --check), no calculator-logic changes.
+
 ## 2026-08-16 — DeepSeek V4 Pro cache-aware pricing tier + Claude Fable 5 comparison added (kanban t_5d613dbf, verified via parent research brief t_40deadfe)
 
 - **Two new selectable model strategies** in the Model Strategy selector:
