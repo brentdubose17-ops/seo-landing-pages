@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code Sessions Can Now Message Each Other: What Audited Businesses Should Check</title>
+    <meta name="description" content="Claude Code v2.1.224 lets AI sessions message each other. The permission boundaries — crossSessionInbound, isolatePeerMachines, session naming — are exactly the questions an AI audit should check. What small businesses should monitor.">
+    <meta name="keywords" content="Claude Code cross-session messaging, AI sessions message each other, AI audit checklist, crossSessionInbound, isolatePeerMachines, multi-agent AI coordination, AI vendor audit, small business AI">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mybusinessaiaudit.com/articles/claude-code-cross-session-messaging-audit">
+    <meta property="og:title" content="Claude Code Sessions Can Now Message Each Other: What Audited Businesses Should Check">
+    <meta property="og:description" content="Claude Code v2.1.224 lets AI sessions message each other. The permission boundaries — crossSessionInbound, isolatePeerMachines, session naming — are exactly the questions an AI audit should check.">
+    <meta property="og:url" content="https://mybusinessaiaudit.com/articles/claude-code-cross-session-messaging-audit">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="My Business AI Audit">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Claude Code Sessions Can Now Message Each Other: What Audited Businesses Should Check",
+      "description": "Claude Code v2.1.224 lets AI sessions message each other. The permission boundaries — crossSessionInbound, isolatePeerMachines, session naming — are exactly the questions an AI audit should check. What small businesses should monitor.",
+      "datePublished": "2026-08-16",
+      "dateModified": "2026-08-16",
+      "author": {"@type": "Organization", "name": "My Business AI Audit"},
+      "publisher": {"@type": "Organization", "name": "My Business AI Audit"},
+      "mainEntityOfPage": "https://mybusinessaiaudit.com/articles/claude-code-cross-session-messaging-audit",
+      "keywords": "Claude Code cross-session messaging, AI audit checklist, multi-agent AI coordination, AI vendor audit"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can AI sessions approve actions for each other?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. A note from another Claude Code session never counts as consent and cannot answer a permission prompt. Commands sent in message text arrive as text and never execute; permission prompts still fire on the receiving side."}
+        },
+        {
+          "@type": "Question",
+          "name": "Do messages between AI sessions leave the machine?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Same-machine messages stay on-device over a per-session socket and never touch Anthropic's servers. Only cross-machine messages transit Anthropic servers, via Remote Control; the isolatePeerMachines control can force human approval before any message leaves the machine."}
+        },
+        {
+          "@type": "Question",
+          "name": "How do I audit whether my vendor's AI sessions can message each other?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Ask whether cross-session messaging is enabled and who can message whom (crossSessionInbound: accept / hold / refuse), whether any session traffic can leave the machine (isolatePeerMachines), how session names map to client ownership, and what still requires human permission. All four are documented, checkable control points in Claude Code v2.1.224+."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; }
+        .cta { display: inline-block; background: #2563eb; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; margin: 8px 0; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; color: #1a1a2e; }
+        .update-box { margin: 32px 0; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 8px; }
+        .update-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .update-box .update-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 24px; color: #888; font-size: 0.85rem; text-align: center; }
+        nav.site { margin-bottom: 20px; font-size: 0.9rem; }
+        nav.site a { margin-right: 16px; text-decoration: none; }
+        code { background: #f0f0f5; padding: 2px 6px; border-radius: 4px; font-size: 0.92em; }
+    </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
+    <article>
+        <h1>Claude Code Sessions Can Now Message Each Other: What Audited Businesses Should Check</h1>
+        <div class="meta"><span>Published August 16, 2026</span><span>By ABD Legacy LLC</span></div>
+
+        <p><strong>What happened.</strong> Claude Code &mdash; the agentic coding tool many agencies and vendors use to build business automations &mdash; now lets its sessions message each other. Version 2.1.224, shipped in August 2026, added cross-session messaging: any Claude Code session on your machines can send short plain-text notes to any other, with <code>ListAgents</code> to discover reachable sessions and <code>SendMessage</code> to deliver a note by name. It's documented by Anthropic and listed in the GitHub changelog, and applies on macOS and Linux (including WSL2); native Windows, Bedrock, and cloud agent platforms are not covered.</p>
+
+        <p>The news hook was a widely shared post by Julian Goldie on August 16, 2026, framing this as "your AI windows can finally talk to each other." The feature is real and verified against Anthropic's docs &mdash; the post's anecdote about one user hand-copying context for "TWO YEARS" is a claim we could not confirm.</p>
+
+        <h2>What the feature actually does</h2>
+        <p>Three capabilities matter in practice:</p>
+        <ol>
+            <li><strong>Sessions send each other short plain-text notes.</strong> A message is a piece of text one Claude writes to another &mdash; never conversation history, never files. This is deliberately lossy: a peer acts on a summary, not your full context.</li>
+            <li><strong>Handoffs can be automatic.</strong> When one session discovers a breaking change or makes a decision that affects another session's area, Claude summarizes it for the affected session instead of a human re-explaining it there. Claude can decide to send without being asked, or you can prompt one.</li>
+            <li><strong>Breakage gets caught before you see it.</strong> If a change in one session breaks what another is building on, the receiving Claude can be warned mid-turn &mdash; before the failure surfaces in your interface.</li>
+        </ol>
+
+        <h2>The limits, stated plainly</h2>
+        <ul>
+            <li><strong>Messages cannot approve actions.</strong> A note from another session never counts as your consent and cannot answer a permission prompt.</li>
+            <li><strong>Messages cannot change settings.</strong> The receiving Claude is instructed never to alter permission settings, CLAUDE.md, or other configuration because another session asked.</li>
+            <li><strong>Same-machine messages stay on-device.</strong> Delivery on one machine runs over a per-session socket and never touches Anthropic's servers. Only cross-machine messages transit Anthropic servers, via Remote Control.</li>
+            <li><strong>Plain text only.</strong> Commands sent in message text arrive as text and never execute. Permission prompts still fire on the receiving side.</li>
+        </ul>
+
+        <h2>What audited businesses should monitor</h2>
+        <p>The permission boundaries are exactly the questions an AI audit should check:</p>
+        <ul>
+            <li><strong>Is cross-session messaging enabled, and who can message whom?</strong> Controls exist: <code>crossSessionInbound</code> (accept / hold / refuse) and deny rules on <code>SendMessage</code> and <code>ListAgents</code>.</li>
+            <li><strong>Does any session traffic leave the machine?</strong> Same-machine notes stay on-device; cross-machine messages go through Anthropic's servers. For client work split across machines, <code>isolatePeerMachines</code> can force human approval before any message leaves the machine &mdash; verify it's set.</li>
+            <li><strong>Session names are message addresses.</strong> Renaming sessions in ways that blur client ownership creates a data-hygiene risk across engagements.</li>
+            <li><strong>Permissions still gate everything.</strong> A compromised high-permission session is still a high-permission peer, because the receiving session's prompts still fire. Session isolation by trust level is now a design decision.</li>
+        </ul>
+
+        <p>Not sure where your business stands? <a class="cta" href="/audit-tool" data-umami-event="click_to_audit_tool">Run a free AI audit of your business</a> &mdash; a ten-minute check of your vendors, data access, permissions, and spend.</p>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>Can AI sessions approve actions for each other?</h3>
+            <p>No. A note from another Claude Code session never counts as consent and cannot answer a permission prompt. Commands sent in message text arrive as text and never execute; permission prompts still fire on the receiving side.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Do messages between AI sessions leave the machine?</h3>
+            <p>Same-machine messages stay on-device over a per-session socket and never touch Anthropic's servers. Only cross-machine messages transit Anthropic servers, via Remote Control; the <code>isolatePeerMachines</code> control can force human approval before any message leaves the machine.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I audit whether my vendor's AI sessions can message each other?</h3>
+            <p>Ask whether cross-session messaging is enabled and who can message whom (<code>crossSessionInbound</code>: accept / hold / refuse), whether any session traffic can leave the machine (<code>isolatePeerMachines</code>), how session names map to client ownership, and what still requires human permission. All four are documented, checkable control points in Claude Code v2.1.224+.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/articles/ai-agent-permissions-audit">AI Agent Permissions Audit: Three Labs, Three Weeks — Lock Down Yours</a></li>
+                <li><a href="/articles/ai-agent-security-risks">AI Agent Security Risks: What the AISI Fake-Identity Incident Means for Your Business</a></li>
+                <li><a href="/articles/claude-watermark-smb-audit-guide">Claude Now Watermarks AI Text: How to Audit AI Content From Your Vendors</a></li>
+                <li><a href="/articles/ai-safety-compliance-audit">AI Safety Compliance Audit: What Small Businesses Actually Need to Check</a></li>
+                <li><a href="https://findaiagency.com/claude-code-cross-session-messaging-agencies" rel="noopener">Claude Code Sessions Can Now Message Each Other: What It Means for AI Agencies (Find AI Agency)</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>Anthropic, Claude Code Docs — "Message your other Claude Code sessions" (accessed August 16, 2026): <a href="https://code.claude.com/docs/en/cross-session-messaging" rel="noopener">code.claude.com/docs/en/cross-session-messaging</a></li>
+            <li>anthropics/claude-code changelog, v2.1.224 — "Added cross-session SendMessage": <a href="https://github.com/anthropics/claude-code/releases" rel="noopener">github.com/anthropics/claude-code/releases</a></li>
+            <li>Practicaly AI, "Claude Code Sessions Can Now Message Each Other": <a href="https://practicaly.ai/p/claude-code-meta-muse-gpt-sol" rel="noopener">practicaly.ai/p/claude-code-meta-muse-gpt-sol</a></li>
+            <li>@JulianGoldieSEO on X, August 16, 2026 (signal source; anecdotal claims not independently verified): <a href="https://x.com/JulianGoldieSEO/status/2089066584325431763" rel="noopener">x.com/JulianGoldieSEO/status/2089066584325431763</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: Capabilities and limitations are confirmed against Anthropic's official documentation and the Claude Code changelog. The "TWO YEARS manual handoff" anecdote from the X post is a claim, not verified. Version/platform scope (v2.1.224+, macOS/Linux incl. WSL2; no native Windows, Bedrock, or cloud agent platforms) is per Anthropic docs. The audit checklist is editorial guidance built on the documented controls, not a vendor claim.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; All rights reserved.</p>
+    </footer>
+</body>
+</html>
