@@ -159,9 +159,14 @@
   /*
    * Proposed / threatened retaliatory tariff flags (NOT currently
    * in effect — shown as warnings, not added to the rate).
-   * canada_s338: Section 338, signed 2026-07-20, effective 2026-08-19,
-   *   50% on Canadian motor vehicles / alcoholic beverages / dairy,
-   *   applies EVEN to USMCA-qualifying goods.
+   * canada_s338: Section 338, signed 2026-07-20, originally effective
+   *   2026-08-19, 50% on Canadian motor vehicles / alcoholic beverages /
+   *   dairy, applies EVEN to USMCA-qualifying goods.
+   *   STATUS: SUSPENDED Aug 18, 2026 (3-day suspension; new effective
+   *   date 12:01 a.m. ET Sat Aug 22, 2026) while U.S.–Canada deal talks
+   *   continue — NOT in effect and NOT cancelled; the three proclamations
+   *   remain legally in force and the duty could take effect Aug 22 if
+   *   talks collapse.
    * eu_dst: 25% Section 301 threatened over digital-services taxes,
    *   activation uncertain.
    */
@@ -169,11 +174,13 @@
     {
       key: 'canada_s338',
       country: 'canada',
-      label: 'Canada Section 338 (proposed, effective Aug 19 2026)',
+      label: 'Canada Section 338 50% duty (SUSPENDED until Aug 22, 2026)',
       rate: 0.50,
       categories: ['auto', 'food'],
-      effective: '2026-08-19 12:01 AM ET',
-      note: '50% additional duty on Canadian motor vehicles, alcoholic beverages, and dairy. Applies even to USMCA-qualifying goods. Exempt: energy, potash, Section 232 goods, fish, critical minerals. Not yet in effect.'
+      effective: '2026-08-22 12:01 AM ET',
+      status: 'suspended',
+      paused_until: '2026-08-21 11:59 PM ET',
+      note: '50% additional duty on Canadian motor vehicles, alcoholic beverages, and dairy under Section 338 of the Tariff Act of 1930 — SUSPENDED Aug 18, 2026 for 3 days while U.S.–Canada deal talks continue. New effective date: 12:01 a.m. ET Saturday, August 22, 2026 if no deal is finalized — paused until Aug 22. Not in effect and not cancelled: the proclamations remain legally in force. Applies even to USMCA-qualifying goods. Exempt: energy, potash, Section 232 goods, fish, critical minerals. Sources: CNBC (Aug 18, 2026), C.H. Robinson client advisory (Aug 19, 2026), NPR (Aug 19, 2026).'
     },
     {
       key: 'eu_dst',
@@ -295,7 +302,7 @@
     exempt_from_301: ['canada', 'mexico'],
     status: 'Annual review (July 1 2026 renewal deadline passed). Interim arrangements targeted by end of 2026; US–Mexico round 4 in Washington in September. Automotive rules of origin unresolved.',
     notes: {
-      canada: 'USMCA-qualified Canadian goods are EXEMPT from Section 301 (0% 301). Canada has a separate 10% Section 301 rate when NOT USMCA-qualified, plus the proposed 50% Section 338 (autos/alcohol/dairy) that applies regardless of USMCA status.',
+      canada: 'USMCA-qualified Canadian goods are EXEMPT from Section 301 (0% 301). Canada has a separate 10% Section 301 rate when NOT USMCA-qualified, plus the 50% Section 338 (autos/alcohol/dairy) — PAUSED Aug 18, 2026 through Aug 21 while a US–Canada deal is finalized — that applies regardless of USMCA status if it takes effect.',
       mexico: 'USMCA-qualified Mexican goods are EXEMPT from Section 301 (0% 301). Mexico has a separate 10% Section 301 rate when NOT USMCA-qualified.'
     }
   };

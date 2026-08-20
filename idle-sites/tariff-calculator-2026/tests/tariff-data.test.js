@@ -96,7 +96,12 @@ test('Proposed tariff flags present: Canada S338 + EU DST', () => {
   assert.equal(s338.rate, 0.50);
   assert.equal(s338.country, 'canada');
   assert.deepEqual(s338.categories, ['auto', 'food']);
-  assert.equal(s338.effective, '2026-08-19 12:01 AM ET');
+  assert.equal(s338.effective, '2026-08-22 12:01 AM ET');
+  // Canada S338 is SUSPENDED until Aug 22 (Aug 18, 2026) — not in effect, not cancelled
+  assert.equal(s338.status, 'suspended');
+  assert.equal(s338.paused_until, '2026-08-21 11:59 PM ET');
+  assert.ok(s338.note.includes('SUSPENDED'), 'note should state suspended status');
+  assert.ok(s338.note.includes('August 22, 2026'), 'note should state the Aug 22 effective date');
   // EU DST is threatened, not in effect
   const eu = T.PROPOSED_FLAGS.find(f => f.key === 'eu_dst');
   assert.equal(eu.effective, null);
