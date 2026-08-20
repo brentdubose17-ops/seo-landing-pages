@@ -91,6 +91,14 @@
           "@type": "Answer",
           "text": "For long agent runs that re-read context on every step, DeepSeek V4 Pro's cache-read price is dramatically cheaper than Claude Fable 5's: Fable 5 cache reads cost $1.00 per 1M tokens (Anthropic official), while DeepSeek V4 Pro cache reads cost $0.022 per 1M off-peak (current official pricing) — a ~45x gap. The widely-shared '276x' figure from @JulianGoldieSEO compared Fable 5's $1.00 to DeepSeek's launch cache-read price of $0.003625 — arithmetically correct (275.9x) but stale after DeepSeek's peak/off-peak price increase effective 2026-08-16 16:00 UTC (current gap ~45x off-peak / ~23x peak). The 92% cache hit rate cited for agent workloads is an assumption, not a published OpenRouter statistic. See aiagencycalculator.com for the full cache-aware scenario."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "What is AI supplier risk and should it change my cost estimates?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AI supplier risk is the chance that a model provider's release timeline, safety posture, or roadmap shifts in ways that affect your stack's cost or availability. Real-world example: on Aug 18, 2026, OpenAI announced a two-week pause in reinforcement-learning training on its latest deployment-bound models and held its largest planned frontier RL run on hold, after internal evaluations flagged its upcoming Astra model at the 'Critical' cyber-capability threshold under its Preparedness Framework — core Astra training continued and no model was cancelled. No published API prices changed, so this calculator's math stands, but provider roadmaps can shift and the ~20% monitoring overhead on frontier inference may add modest price pressure over time. Guidance: when evaluating AI costs and risks, include fallback AI models in your stack and review each provider's tooling roadmap before locking in long-term pricing or client deliverables. Separately, OpenAI has committed to a public listing by 2027 (CFO Sarah Friar, Aug 19, CNBC), which de-risks the vendor-longevity question on a known timeline. (Dated Aug 19, 2026; source: OpenAI, 'Pacing model development in an era of cyber-critical capabilities.')"
+        }
       }
     ]
   }
@@ -1277,6 +1285,7 @@
       </ul>
       <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:10px;">Changelog</div>
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-08-19:</strong> Added an <strong>AI supplier risk</strong> note + FAQ entry: on Aug 18, 2026 OpenAI announced a <strong>two-week pause in RL training</strong> on its latest deployment-bound models and held its <strong>largest planned frontier RL run on hold</strong> after internal evaluations flagged its upcoming Astra model at the <strong>"Critical" cyber-capability threshold</strong> under its Preparedness Framework (core training continued; no model cancelled; no API price changes — calculator math unchanged). <strong>Guidance:</strong> include fallback AI models and review provider tooling roadmaps when evaluating AI costs/risks. FAQ item + FAQPage schema entry, changelog entry. Source: <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI (Aug 18, 2026)</a> (verified via research brief t_bb45d771). <strong>Updated Aug 19 (eve):</strong> supplier-risk FAQ now also notes OpenAI's committed 2027 public listing (CFO Sarah Friar, CNBC Aug 19) de-risks vendor longevity on a known timeline; new explainer <a href="/openai-2027-ipo-pricing-risk" style="color:var(--cyan-light);">OpenAI's 2027 IPO Window: Re-Baseline Your Cost Assumptions</a>.
         <strong>2026-08-16:</strong> Added the <strong>DeepSeek V4 Pro vs Claude Fable 5 cache-read comparison</strong> — DeepSeek's official peak/off-peak pricing landed 16:00 UTC Aug 16 (off-peak V4 Pro: $0.022 cache read / $0.66 miss / $1.98 output per 1M; peak: $0.044/$1.32/$3.96), superseding the pre-hike schedule. Fable 5 (Anthropic): $10/$50 per 1M with $1.00 cache reads. The ~276x cache-read gap from <a href="https://x.com/JulianGoldieSEO/status/2089064335717159410" target="_blank" rel="noopener" style="color:var(--cyan-light);">@JulianGoldieSEO</a> was correct on DeepSeek launch pricing ($1.00/$0.003625) but is stale after the increase — current gap ~45x off-peak / ~23x peak; the 92% cache hit rate is an assumption, not a published OpenRouter statistic. Full interactive scenario on the main calculator page (verified via research brief t_40deadfe).
         <strong>2026-08-06:</strong> Added Qwen 3.8 Max to the open-weight model strategy (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; $2/$6 per 1M tokens; 1M context; open weights promised ~Aug 10). Real-world usage section added with the Aug 6, 2026 45-project field report — self-reported, no artifacts; the "destroyed Fable 5" claim was walked back by the tester (Qwen strong on fast/multimodal builds; Fable 5 on huge long-running projects). Transparent cost-variability note added: API list prices are public, but self-hosted cost is hardware/quantization-dependent and not yet knowable until weights drop.
       </p>
@@ -1483,6 +1492,18 @@
         <div class="faq-answer">
           <div class="faq-answer-inner">
             OpenAI announced ChatGPT Business Premium seats on Aug 10, 2026: $125/user/month (or $100/user/month billed annually), 5× the usage of Standard seats, no five-hour usage limit, and mixable with Standard seats ($25/$20) in the same workspace. GA date and regional pricing are not yet published. This calculator models API/token and project pricing, not seat-based subscriptions, so Premium seat costs are not a calculator input — budget them separately at <a href="https://openai.com/index/premium-seats-chatgpt-business/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI's announcement</a>.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What is AI supplier risk and should it change my cost estimates?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <strong>AI supplier risk</strong> is the chance that a model provider's release timeline, safety posture, or roadmap shifts in ways that affect your stack's cost or availability. Real-world example: on <strong>Aug 18, 2026</strong>, OpenAI announced a <strong>two-week pause in reinforcement-learning training</strong> on its latest deployment-bound models and held its <strong>largest planned frontier RL run on hold</strong>, after internal evaluations flagged its upcoming Astra model at the <strong>"Critical" cyber-capability threshold</strong> under its Preparedness Framework — core Astra training continued and no model was cancelled. No published API prices changed, so this calculator's math stands, but provider roadmaps can shift and the <strong>~20% monitoring overhead</strong> on frontier inference may add modest price pressure over time. <strong>Guidance:</strong> when evaluating AI costs and risks, include <strong>fallback AI models</strong> in your stack and review each provider's <strong>tooling roadmap</strong> before locking in long-term pricing or client deliverables. Separately, OpenAI has committed to a public listing by 2027 (CFO Sarah Friar, Aug 19, CNBC), which de-risks the vendor-longevity question on a known timeline. <em>(Dated Aug 19, 2026; source: <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI — Pacing model development in an era of cyber-critical capabilities</a>.)</em>
           </div>
         </div>
       </div>
