@@ -2,7 +2,7 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-08-13 (Claude Sonnet 5 model strategy — verified $2/$10 per 1M API pricing PERMANENT Aug 10 2026, task t_f62457f5)
+**Last updated:** 2026-08-20 (OpenAI safety-monitoring overhead stress-test toggle — verified via research brief t_b34197c5, task t_72a68f53)
 
 ---
 
@@ -111,6 +111,14 @@ opened Aug 4–5, 2026. Sources linked in section `#wallet-rails`.
 | `deliveryRisk` | select (low/moderate/high/levelsio) | `low` |
 | `portability` | select (single/plugin_2/plugin_many) | `single` |
 | `hoursSaved` | range 5–300 | `40` |
+| `openaiOverhead` | checkbox (NEW 2026-08-20) | `false` (OFF — OpenAI not billing customers; what-if stress only) |
+
+`openaiOverhead` is a visible toggle in the Model Strategy section. It applies a
+**+20% multiplier (×1.20) to OpenAI-based strategies only** — `sol` (GPT-5.6 Sol,
+pure OpenAI) and `frontier` (Paid frontier Claude+GPT — full 20% is an
+upper-bound stress test since the split is undisclosed). All other strategies
+(Anthropic, Google, DeepSeek, open-weight, local, hybrid, Grok) are unaffected.
+Default OFF preserves every prior output byte-for-byte.
 
 ### 3.2 Key constants
 
@@ -135,7 +143,8 @@ PORTABILITY_PACKAGING_FEE  single $0 · plugin_2 $750 · plugin_many $1,500
 combined        = SIZE_MULT × WORKFLOW_MULT × EXP_MULT × TIMELINE_MULT
 setupFee        = round(setupMid × combined × PORTABILITY_SETUP_FACTOR / 500) × 500
                 + PORTABILITY_PACKAGING_FEE
-monthlyRetainer = round(retainerMid × combined × MODEL_COMPUTE_FACTOR
+OVERHEAD_MULT   = (openaiOverhead && strategy ∈ {sol, frontier}) ? 1.20 : 1.0
+monthlyRetainer = round(retainerMid × combined × MODEL_COMPUTE_FACTOR × OVERHEAD_MULT
                 × DELIVERY_RISK_FACTOR × PORTABILITY_RETAINER_FACTOR / 50) × 50
 margin          = clamp(40..82, BASE_MARGIN + (EXP_MULT−1)×10 + MODEL_MARGIN_BONUS
                 + PORTABILITY_MARGIN_BONUS)
@@ -144,6 +153,21 @@ monthlySavings  = hoursSaved × laborRate(25/35/45/65 by bizSize)
 roi             = annualSavings / acv
 paybackMonths   = ceil(setupFee / max(netMonthly, tiny)) fallback 12
 ```
+
+`OVERHEAD_MULT` is the OpenAI safety-monitoring overhead stress multiplier
+(2026-08-20). When the toggle is ON and the strategy is OpenAI-based, the
+retainer scales by exactly ×1.20 (matching OpenAI's "roughly 20% of the
+inference compute being monitored" estimate); the margin and setup fee are
+unchanged. Output text carries an explanatory note when the toggle is ON —
+either "applied +20% to this OpenAI-based strategy" or "toggle ON but not
+applicable to this strategy" (non-OpenAI strategies). Fact basis (research brief
+t_b34197c5): OpenAI official post Aug 18, 2026 (openai.com/index/pacing-model-
+development-cyber-capabilities) — ~20% overhead estimate, scope = Sol-class+
+tool-enabled RL training/eval + all Astra inference with tools; NOT billed to
+customers (OpenAI spokesperson via The Register, Aug 19, 2026; corroborated TNW);
+Anthropic: pause "would not be required" if 186-page Risk Report safeguards
+followed (Axios, Aug 19, 2026). Umami `calculator_run` event gains
+`openai_overhead: true|false`.
 
 ---
 
@@ -174,6 +198,22 @@ $1.50/$7.50) · Flash-Lite $0.30/$2.50 · Flash $1.50/$9.00 · 2.5 Pro $1.25/$10
 
 ## Changelog
 
+- **2026-08-20** — OpenAI safety-monitoring overhead stress-test toggle added
+  (task t_72a68f53; fact basis research brief t_b34197c5). New visible checkbox
+  `openaiOverhead` in the Model Strategy section (OFF by default). When ON, a
+  ×1.20 `OVERHEAD_MULT` applies to OpenAI-based strategies only (`sol`, `frontier`);
+  all other strategies unchanged and the output note explains either the applied
+  +20% or the not-applicable case. OpenAI estimates safety monitoring adds roughly
+  20% overhead to the inference compute it monitors (official post Aug 18, 2026 —
+  Sol-class+ tool-enabled RL training/eval, plus all Astra inference with tools);
+  OpenAI is NOT billing customers for it (spokesperson via The Register, Aug 19,
+  2026; corroborated TNW); Anthropic says a pause would not be required if its
+  186-page Risk Report safeguards are followed (Axios, Aug 19, 2026). FAQ +
+  FAQPage JSON-LD, meta description/keywords, assumptions footer, page changelog,
+  Umami `openai_overhead` flag on `calculator_run`. Default (OFF) outputs
+  byte-identical to prior deploy. Sources: openai.com/index/pacing-model-
+  development-cyber-capabilities · theregister.com (Aug 19) · thenextweb.com
+  (Aug 19) · axios.com (Aug 19).
 - **2026-08-13** — Claude Sonnet 5 model strategy added (Anthropic; API pricing made
   PERMANENT Aug 10, 2026: $2.00/$10.00 per 1M input/output tokens; the previously
   scheduled Sept 1, 2026 increase to $3/$15 is CANCELLED — no scheduled change pending;

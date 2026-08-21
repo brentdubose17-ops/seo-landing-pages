@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Agency Pricing Calculator — Instantly Calculate Your Rate</title>
-  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with open-weight (Qwen 3.8 Max, Kimi K3, GLM-5.2) vs paid frontier model options including GPT-5.6 Sol (Instant + deep reasoning), plus the DeepSeek V4 Pro cache-aware vs Claude Fable 5 cache-read cost comparison (~45x off-peak gap today; the ~276x figure from @JulianGoldieSEO was correct on DeepSeek launch pricing before the Aug 16, 2026 increase)." />
-  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, open-weight AI models, Qwen 3.8 Max pricing, Kimi K3 pricing, GLM-5.2, GPT-5.6 Sol pricing, GPT-5.6 Luna, DeepSeek V4 Pro pricing, DeepSeek cache read, Claude Fable 5 pricing, Fable 5 cache read, 276x cache gap, DeepSeek vs Fable 5" />
+  <meta name="description" content="Free AI agency pricing calculator 2026. Instantly calculate your recommended setup fee, monthly retainer, and profit margin for chatbot and automation services — with open-weight (Qwen 3.8 Max, Kimi K3, GLM-5.2) vs paid frontier model options including GPT-5.6 Sol (Instant + deep reasoning), plus the DeepSeek V4 Pro cache-aware vs Claude Fable 5 cache-read cost comparison (~45x off-peak gap today; the ~276x figure from @JulianGoldieSEO was correct on DeepSeek launch pricing before the Aug 16, 2026 increase). NEW Aug 20, 2026: OpenAI safety-monitoring overhead stress-test toggle — OpenAI estimates safety monitoring adds ~20% overhead to monitored inference compute (Sol-class tool-enabled RL training/eval + Astra tool-use inference; Aug 18, 2026) — apply that +20% multiplier to OpenAI-based strategies as a what-if, while noting OpenAI is not currently billing customers for it and Anthropic says its safeguards make a similar slowdown unnecessary." />
+  <meta name="keywords" content="AI agency pricing calculator, how much to charge for AI services, AI automation pricing 2026, chatbot agency pricing, AI retainer pricing, AI agency rates, how to price AI services, open-weight AI models, Qwen 3.8 Max pricing, Kimi K3 pricing, GLM-5.2, GPT-5.6 Sol pricing, GPT-5.6 Luna, DeepSeek V4 Pro pricing, DeepSeek cache read, Claude Fable 5 pricing, Fable 5 cache read, 276x cache gap, DeepSeek vs Fable 5, OpenAI safety-monitoring overhead, OpenAI monitoring overhead 20 percent, OpenAI inference overhead, OpenAI safety monitoring cost, OpenAI compute overhead, Anthropic no slowdown, OpenAI Astra monitoring" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://aiagencycalculator.com/" />
 
@@ -98,6 +98,14 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "AI supplier risk is the chance that a model provider's release timeline, safety posture, or roadmap shifts in ways that affect your stack's cost or availability. Real-world example: on Aug 18, 2026, OpenAI announced a two-week pause in reinforcement-learning training on its latest deployment-bound models and held its largest planned frontier RL run on hold, after internal evaluations flagged its upcoming Astra model at the 'Critical' cyber-capability threshold under its Preparedness Framework — core Astra training continued and no model was cancelled. No published API prices changed, so this calculator's math stands, but provider roadmaps can shift and the ~20% monitoring overhead on frontier inference may add modest price pressure over time. Guidance: when evaluating AI costs and risks, include fallback AI models in your stack and review each provider's tooling roadmap before locking in long-term pricing or client deliverables. Separately, OpenAI has committed to a public listing by 2027 (CFO Sarah Friar, Aug 19, CNBC), which de-risks the vendor-longevity question on a known timeline. (Dated Aug 19, 2026; source: OpenAI, 'Pacing model development in an era of cyber-critical capabilities.')"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the OpenAI safety-monitoring overhead toggle on this calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It is a stress-test switch (OFF by default) that applies a +20% multiplier to OpenAI-based model strategies (GPT-5.6 Sol and Paid frontier) to model what would happen if OpenAI's safety-monitoring compute overhead were priced into API costs. On Aug 18, 2026, OpenAI estimated its expanded chain-of-thought safety monitoring adds roughly 20% overhead to the inference compute it monitors — required for all RL training and evaluations involving tools for models of Sol capability or higher, plus all Astra inference with tools after its Aug 7 Critical cyber-capability determination. OpenAI is not currently billing customers for this overhead (spokesperson via The Register, Aug 19, 2026; corroborated by TNW — the official post does not mention billing), and Anthropic says a pause on its most capable models would not be required if its 186-page Risk Report safeguards are followed (Axios, Aug 19, 2026) — so the toggle has no effect on Anthropic, Google, DeepSeek, open-weight, or local strategies. Treat the +20% as a what-if cost stress, not today's API price. Sources: openai.com/index/pacing-model-development-cyber-capabilities (Aug 18, 2026); The Register and TNW (Aug 19, 2026); Axios (Aug 19, 2026)."
         }
       }
     ]
@@ -956,6 +964,17 @@
           <option value="open">Open-weight first (Qwen 3.8 Max, Kimi K3, GLM-5.2) — lowest API spend</option>
           <option value="frontier">Paid frontier only (Claude, GPT) — premium API spend</option>
         </select>
+        <div style="margin-top:6px; border:1px solid rgba(34,211,238,0.35); border-radius:8px; padding:8px 10px; background:rgba(34,211,238,0.06);">
+          <label for="openaiOverhead" style="display:flex; align-items:flex-start; gap:8px; cursor:pointer; font-size:0.8rem; line-height:1.5; color:var(--text-secondary);">
+            <input type="checkbox" id="openaiOverhead" style="margin-top:3px; width:15px; height:15px; accent-color:#22d3ee;" />
+            <span>
+              <strong style="color:var(--text-primary);">OpenAI safety-monitoring overhead (~20%)</strong> — stress-test what happens if OpenAI's estimated <strong>~20% overhead on monitored inference compute</strong> (Sol-class tool-enabled RL training/eval and Astra tool-use inference) were priced into API costs. Applies a <strong>+20% multiplier to OpenAI-based strategies</strong> (GPT-5.6 Sol, Paid frontier). <strong>OpenAI is not currently billing customers for this overhead</strong> (spokesperson via The Register, Aug 19, 2026), and <strong>Anthropic says its safeguards make a similar slowdown unnecessary</strong> — so this toggle is <strong>OFF by default</strong> and does not affect Anthropic / Google / DeepSeek / open-weight / local strategies.
+            </span>
+          </label>
+          <div style="font-size:0.7rem; color:var(--text-secondary); margin-top:6px; line-height:1.5;">
+            Sources: <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI — "Pacing model development in an era of cyber-critical capabilities" (Aug 18, 2026)</a> · <a href="https://www.theregister.com/ai-and-ml/2026/08/19/openais-overhead-will-rise-20-percent-for-some-workloads-as-it-hardens-security/5289303" target="_blank" rel="noopener" style="color:var(--cyan-light);">The Register (Aug 19, 2026)</a> · <a href="https://thenextweb.com/news/openai-20-percent-compute-overhead-safety-monitoring" target="_blank" rel="noopener" style="color:var(--cyan-light);">TNW (Aug 19, 2026)</a> · <a href="https://www.axios.com/2026/08/19/openai-astra-safety-altman-anthropic" target="_blank" rel="noopener" style="color:var(--cyan-light);">Axios (Aug 19, 2026)</a> — verified via research brief t_b34197c5.
+          </div>
+        </div>
         <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
           GPT-5.6 Sol now powers both Instant and deep reasoning for ChatGPT Plus/Pro (one consistent model, reasoning-effort slider). OpenAI has not published per-token API pricing for GPT-5.6 Sol yet — this option uses a marked estimate. <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">See OpenAI pricing →</a>
         </div>
@@ -1285,6 +1304,7 @@
       </ul>
       <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:10px;">Changelog</div>
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-08-20:</strong> Added the <strong>OpenAI safety-monitoring overhead stress-test toggle</strong> — a visible checkbox in the Model Strategy section (OFF by default) that applies a <strong>+20% multiplier to OpenAI-based strategies</strong> (GPT-5.6 Sol, Paid frontier). Basis (verified via research brief t_b34197c5): OpenAI's official post (Aug 18, 2026) estimates its expanded chain-of-thought safety monitoring adds <strong>roughly 20% overhead to the inference compute it monitors</strong> — required for all RL training/eval involving tools for models of Sol capability or higher, plus all Astra inference with tools after the Aug 7 Critical-cyber determination; OpenAI is <strong>NOT currently billing customers</strong> for this overhead (spokesperson via The Register, Aug 19, 2026; corroborated TNW — not stated in the official post), and <strong>Anthropic says its safeguards make a similar slowdown unnecessary</strong> (Axios, Aug 19, 2026). The toggle is a what-if cost stress, not a price change: no default outputs change (OFF by default); the output note explains when it applies vs. not; FAQ item + FAQPage schema entry, meta description/keywords, assumptions footer (date → Aug 20), changelog entry. Sources: <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI (Aug 18, 2026)</a> · <a href="https://www.theregister.com/ai-and-ml/2026/08/19/openais-overhead-will-rise-20-percent-for-some-workloads-as-it-hardens-security/5289303" target="_blank" rel="noopener" style="color:var(--cyan-light);">The Register (Aug 19, 2026)</a> · <a href="https://thenextweb.com/news/openai-20-percent-compute-overhead-safety-monitoring" target="_blank" rel="noopener" style="color:var(--cyan-light);">TNW (Aug 19, 2026)</a> · <a href="https://www.axios.com/2026/08/19/openai-astra-safety-altman-anthropic" target="_blank" rel="noopener" style="color:var(--cyan-light);">Axios (Aug 19, 2026)</a>.
         <strong>2026-08-19:</strong> Added an <strong>AI supplier risk</strong> note + FAQ entry: on Aug 18, 2026 OpenAI announced a <strong>two-week pause in RL training</strong> on its latest deployment-bound models and held its <strong>largest planned frontier RL run on hold</strong> after internal evaluations flagged its upcoming Astra model at the <strong>"Critical" cyber-capability threshold</strong> under its Preparedness Framework (core training continued; no model cancelled; no API price changes — calculator math unchanged). <strong>Guidance:</strong> include fallback AI models and review provider tooling roadmaps when evaluating AI costs/risks. FAQ item + FAQPage schema entry, assumptions footer, changelog entry. Source: <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI (Aug 18, 2026)</a> (verified via research brief t_bb45d771). <strong>Updated Aug 19 (eve):</strong> supplier-risk FAQ now also notes OpenAI's committed 2027 public listing (CFO Sarah Friar, CNBC Aug 19) de-risks vendor longevity on a known timeline; new explainer <a href="/openai-2027-ipo-pricing-risk" style="color:var(--cyan-light);">OpenAI's 2027 IPO Window: Re-Baseline Your Cost Assumptions</a>. <strong>Updated Aug 20:</strong> Anthropic now expects to match or top SpaceX's record IPO (~$75B outset / $86.2B w/ overallotment) and could file by end of August at a valuation just under $1T (Bloomberg Aug 20) — the pre-IPO window is the Claude pricing-risk zone; new explainer <a href="/anthropic-ipo-pricing-impact" style="color:var(--cyan-light);">Anthropic's Record IPO: Stress-Test Your Claude Cost Assumptions</a>.
         <strong>2026-08-16:</strong> Added the <strong>DeepSeek V4 Pro vs Claude Fable 5 cache-read comparison</strong> — DeepSeek's official peak/off-peak pricing landed 16:00 UTC Aug 16 (off-peak V4 Pro: $0.022 cache read / $0.66 miss / $1.98 output per 1M; peak: $0.044/$1.32/$3.96), superseding the pre-hike schedule. Fable 5 (Anthropic): $10/$50 per 1M with $1.00 cache reads. The ~276x cache-read gap from <a href="https://x.com/JulianGoldieSEO/status/2089064335717159410" target="_blank" rel="noopener" style="color:var(--cyan-light);">@JulianGoldieSEO</a> was correct on DeepSeek launch pricing ($1.00/$0.003625) but is stale after the increase — current gap ~45x off-peak / ~23x peak; the 92% cache hit rate is an assumption, not a published OpenRouter statistic. Full interactive scenario on the main calculator page (verified via research brief t_40deadfe).
         <strong>2026-08-06:</strong> Added Qwen 3.8 Max to the open-weight model strategy (GA Aug 2–3, 2026; 2.4T-param MoE, ~95B active; $2/$6 per 1M tokens; 1M context; open weights promised ~Aug 10). Real-world usage section added with the Aug 6, 2026 45-project field report — self-reported, no artifacts; the "destroyed Fable 5" claim was walked back by the tester (Qwen strong on fast/multimodal builds; Fable 5 on huge long-running projects). Transparent cost-variability note added: API list prices are public, but self-hosted cost is hardware/quantization-dependent and not yet knowable until weights drop.
@@ -1508,6 +1528,18 @@
         </div>
       </div>
 
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What is the OpenAI safety-monitoring overhead toggle and should I turn it on?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            The toggle is a <strong>stress-test switch (OFF by default)</strong> in the Model Strategy section. When ON, it applies a <strong>+20% multiplier to OpenAI-based strategies</strong> — <strong>GPT-5.6 Sol</strong> and <strong>Paid frontier only (Claude, GPT)</strong> — to model what would happen if OpenAI's safety-monitoring compute overhead were priced into API costs. The basis: on <strong>Aug 18, 2026</strong>, OpenAI estimated its expanded chain-of-thought safety monitoring adds <strong>roughly 20% overhead to the inference compute it monitors</strong> — required for all RL training and evaluations involving tools for models of <strong>Sol capability or higher</strong>, plus <strong>all Astra inference with tools</strong> after its Aug 7 Critical cyber-capability determination. Two things keep this a what-if, not a price change: <strong>OpenAI is not currently billing customers for the overhead</strong> (spokesperson via <a href="https://www.theregister.com/ai-and-ml/2026/08/19/openais-overhead-will-rise-20-percent-for-some-workloads-as-it-hardens-security/5289303" target="_blank" rel="noopener" style="color:var(--cyan-light);">The Register</a>, Aug 19, 2026; corroborated by <a href="https://thenextweb.com/news/openai-20-percent-compute-overhead-safety-monitoring" target="_blank" rel="noopener" style="color:var(--cyan-light);">TNW</a>), and <strong>Anthropic says its safeguards make a similar slowdown unnecessary</strong> (<a href="https://www.axios.com/2026/08/19/openai-astra-safety-altman-anthropic" target="_blank" rel="noopener" style="color:var(--cyan-light);">Axios</a>, Aug 19, 2026). The toggle has <strong>no effect on Anthropic (Claude), Google (Gemini), DeepSeek, open-weight, or local strategies</strong> — use it to stress-test an OpenAI-heavy quote, then leave it OFF for today's pricing. <em>(Source: <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI — Pacing model development in an era of cyber-critical capabilities</a>, Aug 18, 2026; verified via research brief t_b34197c5.)</em>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1631,6 +1663,13 @@ function calculatePricing() {
   const deliveryRisk = document.getElementById('deliveryRisk').value;
   const hoursSaved = parseInt(document.getElementById('hoursSaved').value);
 
+  // OpenAI safety-monitoring overhead stress test (OFF by default — OpenAI is not
+  // billing customers for this; see https://openai.com/index/pacing-model-development-cyber-capabilities/).
+  // Applies a +20% multiplier to OpenAI-based strategies only (GPT-5.6 Sol = pure OpenAI;
+  // Paid frontier mixes Claude+GPT, so the full 20% there is an upper-bound stress test).
+  const openaiOverhead = document.getElementById('openaiOverhead') ? document.getElementById('openaiOverhead').checked : false;
+  const overheadMultiplier = (openaiOverhead && (modelStrategy === 'sol' || modelStrategy === 'frontier')) ? 1.20 : 1.0;
+
   if (!service || !bizSize) {
     alert('Please select a service type and client business size.');
     return;
@@ -1655,7 +1694,7 @@ function calculatePricing() {
   const mmb = MODEL_MARGIN_BONUS[modelStrategy] || 0;
   const drf = DELIVERY_RISK_FACTOR[deliveryRisk] || 1.0;
   const drl = DELIVERY_RISK_LABEL[deliveryRisk] || DELIVERY_RISK_LABEL.low;
-  const monthlyRetainer = Math.round(retainerMid * combined * mcf * drf / 50) * 50;
+  const monthlyRetainer = Math.round(retainerMid * combined * mcf * overheadMultiplier * drf / 50) * 50;
   const margin = Math.min(82, Math.max(40, BASE_MARGIN[service] + (em - 1) * 10 + mmb));
   const acv = setupFee + (monthlyRetainer * 12);
 
@@ -1680,6 +1719,13 @@ function calculatePricing() {
     ? ' GPT-5.6 Sol API pricing is not yet public, so this quote treats it as an estimate (see https://openai.com/api/pricing/).'
     : '';
 
+  let overheadNote = '';
+  if (openaiOverhead) {
+    overheadNote = overheadMultiplier > 1.0
+      ? ' ⚠ This quote includes the OpenAI safety-monitoring overhead stress test: OpenAI\'s estimated ~20% overhead on monitored inference compute (Sol-class tool-enabled RL training/eval and Astra tool-use inference) is applied as a +20% multiplier to this OpenAI-based strategy. OpenAI is NOT currently billing customers for this overhead (spokesperson via The Register, Aug 19, 2026) — treat this as a what-if cost stress, not today\'s API price. Anthropic says its safeguards make a similar slowdown unnecessary (Axios, Aug 19, 2026).'
+      : ' Note: the OpenAI safety-monitoring overhead toggle is ON but does not apply to this strategy — it only multiplies OpenAI-based stacks (GPT-5.6 Sol, Paid frontier); Anthropic has no analogous slowdown, and OpenAI is not currently billing customers for the ~20% monitored-inference overhead.';
+  }
+
   const roiText = `Your ${serviceLabel} saves this client approximately ${hoursSaved} hours/month. ` +
     `At an estimated labor rate of $${laborRate}/hour for a ${bizLabel}, that's $${monthlySavings.toLocaleString()}/month — ` +
     `or $${annualSavings.toLocaleString()}/year in recovered productivity. ` +
@@ -1687,8 +1733,9 @@ function calculatePricing() {
     `Frame it this way: "For every $1 you invest in this automation, you get $${roi} back." ` +
     `This quote assumes ${modelLabel} — open-weight models (Qwen 3.8 Max, Kimi K3, GLM-5.2) trim the compute line, frontier-only stacks carry a premium.` +
     `${modelAssumptionNote} ` +
+    `${overheadNote} ` +
     `Pricing also bakes in a delivery-risk buffer for ${drl} — real agent workflows burn money on failed loops and retries, so don't under-price the build. ` +
-    `Assumptions verified Aug 6, 2026 (Qwen 3.8 Max GA Aug 2–3, 2026 — $2/$6 per 1M tokens, open weights ~Aug 10; OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates. NEW Aug 10, 2026: OpenAI announced ChatGPT Business Premium seats — $125/user/mo monthly or $100/user/mo annual, 5x Standard usage, no 5-hour limit; Standard Business seats remain $25/$20. This calculator models API/token and project pricing, not seat-based subscriptions, so ChatGPT Business seat costs are not a calculator input — budget them separately at openai.com/index/premium-seats-chatgpt-business/; GA date and regional pricing not yet published).`;
+    `Assumptions verified Aug 6, 2026 (Qwen 3.8 Max GA Aug 2–3, 2026 — $2/$6 per 1M tokens, open weights ~Aug 10; OpenAI GPT-5.6 Sol/Luna announcement; see https://openai.com/api/pricing/ for official OpenAI rates. NEW Aug 10, 2026: OpenAI announced ChatGPT Business Premium seats — $125/user/mo monthly or $100/user/mo annual, 5x Standard usage, no 5-hour limit; Standard Business seats remain $25/$20. This calculator models API/token and project pricing, not seat-based subscriptions, so ChatGPT Business seat costs are not a calculator input — budget them separately at openai.com/index/premium-seats-chatgpt-business/; GA date and regional pricing not yet published). NEW Aug 20, 2026: OpenAI safety-monitoring overhead stress-test toggle — OpenAI's official post (Aug 18, 2026) estimates safety monitoring adds roughly 20% to the inference compute it monitors (required for all RL training/eval involving tools for models of Sol capability or higher, plus all Astra inference with tools after the Aug 7 Critical-cyber determination); OpenAI is NOT currently billing customers for this overhead (spokesperson via The Register, Aug 19, 2026; corroborated by TNW — not stated in the official post), and Anthropic says a pause on its most capable models would not be required if its 186-page Risk Report safeguards are followed (Axios, Aug 19, 2026). The toggle applies a +20% multiplier to OpenAI-based strategies only (GPT-5.6 Sol, Paid frontier) and is OFF by default — it is a what-if cost stress, not a price change. Sources: openai.com/index/pacing-model-development-cyber-capabilities + theregister.com/ai-and-ml/2026/08/19 + thenextweb.com/news/openai-20-percent-compute-overhead-safety-monitoring + axios.com/2026/08/19/openai-astra-safety-altman-anthropic (verified via research brief t_b34197c5).`;
 
   // Build pitch
   const netMonthly = monthlySavings - monthlyRetainer;
