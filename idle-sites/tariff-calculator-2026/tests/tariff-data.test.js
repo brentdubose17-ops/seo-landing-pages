@@ -539,3 +539,144 @@ test('drone tariff — index.html renders the category, tier selector, effective
   assert.ok(/Transshipment note/.test(html), 'index.html should carry the transshipment caveat');
   assert.ok(/The Great Transshipment Scam/.test(html), 'index.html should attribute the 40+ countries claim to the separate report');
 });
+
+// --- Ground beef 90-day out-of-quota tariff waiver tests (announced Aug 21, 2026) ---
+
+test('GROUND_BEEF_WAIVER is exported with correct waiver mechanics', () => {
+  const gw = T.GROUND_BEEF_WAIVER;
+  assert.ok(gw, 'GROUND_BEEF_WAIVER should be present');
+  assert.equal(gw.category, 'ground-beef');
+  assert.equal(gw.volume_mt, 300000, 'cap should be 300,000 metric tons');
+  assert.equal(gw.duration_days, 90, 'waiver should last 90 days');
+  assert.equal(gw.announced, '2026-08-21');
+  assert.equal(gw.window_start, '2026-08-21');
+  assert.equal(gw.window_end, '2026-11-19', '90-day window from announcement');
+  assert.ok(Math.abs(gw.out_quota_rate - 0.264) < 0.0001, 'out-of-quota rate should be 26.4%');
+  assert.ok(Math.abs(gw.in_quota_rate - 0.044) < 0.0001, 'in-quota rate should be 4.4 cents/kg');
+  assert.ok(Math.abs(gw.target_discount - 0.25) < 0.0001, 'exporter commitment should be 25% below market');
+  // Price context: $5.55 Jan 2025 → $6.89 July 2026
+  assert.equal(gw.retail_price.jan_2025, 5.55);
+  assert.equal(gw.retail_price.jul_2026, 6.89);
+  // HTS precedent from Proclamation 11010
+  assert.deepEqual(gw.hts_precedent, ['0201.30.5091', '0201.30.5097', '0202.30.5091', '0202.30.5097']);
+  assert.equal(gw.baseline_duty_unanswered, true, 'baseline 4.4c/kg status should be flagged unanswered');
+  assert.ok(gw.eo_status.includes('within two weeks'), 'EO status should note the pending two-week signature');
+  assert.ok(Array.isArray(gw.source_citations) && gw.source_citations.length >= 5, 'waiver should carry source citations');
+});
+
+test('ground-beef category available in CATEGORY_MODIFIERS', () => {
+  const cat = T.CATEGORY_MODIFIERS['ground-beef'];
+  assert.ok(cat, 'ground-beef category should exist');
+  assert.equal(cat.add, 0, 'ground-beef base add is 0 — rate comes from the waiver/out-of-quota logic');
+  assert.ok(cat.name.includes('Ground Beef'), 'category name should mention Ground Beef');
+  assert.ok(cat.name.includes('90-Day'), 'category name should mention the 90-day window');
+});
+
+test('SMOKE TEST: calculator returns the duty-free result (0%) for ground beef under the waiver cap', () => {
+  // Inside the 90-day window (announced Aug 21, 2026) → out-of-quota duty waived → 0%
+  const res = T.effectiveRate('australia', 'ground-beef', { asOfDate: '2026-08-21' });
+  assert.ok(res, 'ground-beef should compute');
+  assert.equal(res.breakdown.beef.applies, true, 'waiver should apply on announcement date');
+  assert.equal(res.breakdown.beef.waived, true, 'out-of-quota duty should be waived');
+  assert.equal(res.rate, 0, `expected duty-free rate 0, got ${res.rate}`);
+  // Mid-window date also duty-free
+  const mid = T.effectiveRate('brazil', 'ground-beef', { asOfDate: '2026-10-01' });
+  assert.equal(mid.rate, 0, `expected duty-free mid-window, got ${mid.rate}`);
+  // Last day of window inclusive
+  const last = T.effectiveRate('argentina', 'ground-beef', { asOfDate: '2026-11-19' });
+  assert.equal(last.breakdown.beef.applies, true);
+  assert.equal(last.rate, 0);
+  // Default (today, Aug 21 2026) is inside the window → duty-free
+  const def = T.effectiveRate('australia', 'ground-beef');
+  assert.equal(def.breakdown.beef.applies, true, 'default date should be inside the window');
+  assert.equal(def.rate, 0, 'default date should be duty-free');
+});
+
+test('ground beef waiver does NOT apply before announcement or after 90 days (26.4% out-of-quota rate)', () => {
+  // Before announcement: Aug 20 → not waived
+  const before = T.effectiveRate('australia', 'ground-beef', { asOfDate: '2026-08-20' });
+  assert.ok(before);
+  assert.equal(before.breakdown.beef.applies, false, 'waiver should not apply before announcement');
+  assert.ok(Math.abs(before.rate - 0.264) < 0.0001, `expected 26.4% before waiver, got ${before.rate}`);
+  // After window: Nov 20 → not waived
+  const after = T.effectiveRate('australia', 'ground-beef', { asOfDate: '2026-11-20' });
+  assert.equal(after.breakdown.beef.applies, false, 'waiver should not apply after the 90-day window');
+  assert.ok(Math.abs(after.rate - 0.264) < 0.0001, `expected 26.4% after window, got ${after.rate}`);
+});
+
+test('ground beef waiver details are exposed in the breakdown (cap, duration, HTS, prices)', () => {
+  const res = T.effectiveRate('australia', 'ground-beef', { asOfDate: '2026-09-01' });
+  const bw = res.breakdown.beef;
+  assert.ok(bw, 'breakdown.beef should be present');
+  assert.equal(bw.volumeMt, 300000);
+  assert.equal(bw.durationDays, 90);
+  assert.equal(bw.windowStart, '2026-08-21');
+  assert.equal(bw.windowEnd, '2026-11-19');
+  assert.equal(bw.outQuotaRate, 0.264);
+  assert.equal(bw.inQuotaRate, 0.044);
+  assert.equal(bw.targetDiscount, 0.25);
+  assert.equal(bw.retailPrice.jan_2025, 5.55);
+  assert.equal(bw.retailPrice.jul_2026, 6.89);
+  assert.deepEqual(bw.htsPrecedent, ['0201.30.5091', '0201.30.5097', '0202.30.5091', '0202.30.5097']);
+  assert.ok(bw.status.length > 50, 'status text should be substantive');
+});
+
+test('ground beef waiver does not disturb other categories or the 60-economy loop', () => {
+  // The exhaustive loop test above covers all categories incl. ground-beef;
+  // verify a couple of non-beef categories are unaffected.
+  const china = T.effectiveRate('china', 'electronics', { usmcaQualified: false });
+  assert.ok(Math.abs(china.rate - 0.403) < 0.0001, 'china/electronics should be unchanged');
+  const ca = T.effectiveRate('canada', 'auto');
+  assert.equal(ca.breakdown.section301, 0, 'Canada USMCA exemption should be unchanged');
+  assert.equal(T.GROUND_BEEF_WAIVER.category, 'ground-beef');
+  assert.ok(Object.keys(T.CATEGORY_MODIFIERS).includes('ground-beef'));
+});
+
+test('ground beef waiver — index.html explains the 90-day limitation and links to sources', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  // Category present in the JS-driven dropdown data
+  assert.ok(/Ground Beef/.test(html), 'index.html should mention Ground Beef');
+  assert.ok(/90-Day Out-of-Quota Waiver/.test(html), 'index.html should name the 90-day out-of-quota waiver');
+  assert.ok(/300,000 metric tons/.test(html), 'index.html should state the 300,000 MT cap');
+  // 90-day limitation clearly explained
+  assert.ok(/90 days/.test(html), 'index.html should explain the 90-day duration');
+  assert.ok(/Nov 19, 2026/.test(html), 'index.html should show the modeled window end');
+  assert.ok(/26.4%/.test(html), 'index.html should show the normal out-of-quota rate');
+  // Price context
+  assert.ok(/\$6\.89\/lb/.test(html), 'index.html should show the July 2026 price benchmark');
+  assert.ok(/\$5\.55\/lb/.test(html), 'index.html should show the Jan 2025 price benchmark');
+  // 25% below market commitment
+  assert.ok(/25% below current market prices/.test(html), 'index.html should state the 25% commitment');
+  // Sources link
+  assert.ok(html.includes('politico.com/news/2026/08/21/trump-ground-beef-import-tariffs'), 'index.html should link Politico');
+  assert.ok(html.includes('cnbc.com/2026/08/21/trump-ground-beef-import-tariff'), 'index.html should link CNBC');
+  // Explainer page linked
+  assert.ok(html.includes('ground-beef-tariff-waiver-2026.html'), 'index.html should link the explainer page');
+});
+
+test('ground beef waiver — explainer page exists, mentions the waiver, links sources, and is in the sitemap', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const page = fs.readFileSync(path.join(__dirname, '..', 'ground-beef-tariff-waiver-2026.html'), 'utf8');
+  assert.ok(page.length > 5000, 'explainer should be substantive');
+  assert.ok(/Ground Beef Tariff Waiver 2026/.test(page), 'explainer should carry the title');
+  assert.ok(/90 days/.test(page), 'explainer should explain the 90-day limitation');
+  assert.ok(/300,000 metric tons/.test(page), 'explainer should state the cap');
+  assert.ok(/26.4%/.test(page), 'explainer should state the normal out-of-quota rate');
+  assert.ok(/\$6\.89/.test(page), 'explainer should show the July 2026 price');
+  assert.ok(/\$5\.55/.test(page), 'explainer should show the Jan 2025 price');
+  assert.ok(/25% below current market prices/.test(page), 'explainer should state the exporter commitment');
+  assert.ok(htmlLinksSources(page), 'explainer should link to source outlets');
+  assert.ok(page.includes('https://www.politico.com/news/2026/08/21/trump-ground-beef-import-tariffs-01045353'), 'explainer should cite Politico URL');
+  assert.ok(page.includes('https://www.cnbc.com/2026/08/21/trump-ground-beef-import-tariff.html'), 'explainer should cite CNBC URL');
+  assert.ok(page.includes('https://www.aljazeera.com/news/2026/8/21/trump-waives-out-of-quota-beef-tariffs-for-90-days-to-lower-prices'), 'explainer should cite Al Jazeera URL');
+  // Sitemap includes the new page
+  const sitemap = fs.readFileSync(path.join(__dirname, '..', 'sitemap.xml'), 'utf8');
+  assert.ok(sitemap.includes('ground-beef-tariff-waiver-2026'), 'sitemap should include the explainer page');
+});
+
+function htmlLinksSources(html) {
+  return /href="https:\/\/www\.(politico|cnbc|aljazeera|nypost|axios|agri-pulse)\.com/.test(html);
+}

@@ -144,7 +144,8 @@
     paper:        { add: 0.010, name: 'Paper & Wood' },
     ceramics:     { add: 0.040, name: 'Ceramics & Glass' },
     polysilicon:  { add: 0,     name: 'Polysilicon & Solar (Section 232)' },
-    drones:       { add: 0,     name: 'Drones / UAS (Unmanned Aircraft) — Section 232' }
+    drones:       { add: 0,     name: 'Drones / UAS (Unmanned Aircraft) — Section 232' },
+    'ground-beef':{ add: 0,     name: 'Ground Beef — 90-Day Out-of-Quota Waiver (Aug 21, 2026)' }
   };
 
   /*
@@ -292,6 +293,69 @@
       'KPMG TaxNewsFlash: Section 232 tariffs on drones and components (Aug 14, 2026)',
       'EY Tax News 2026-1756: New Section 232 proclamation on drones and drone components',
       'Bloomberg via swissinfo.ch: Trump\'s 100% Tariff on Drones Deepens US-China Tech Decoupling'
+    ]
+  };
+
+  /*
+   * Ground beef — 90-day out-of-quota tariff waiver
+   * -------------------------------------------------
+   * Announced Friday morning, Aug 21, 2026 (Truth Social post, confirmed
+   * by White House official): for the next 90 days the United States will
+   * allow up to 300,000 metric tons of product for ground beef (lean beef
+   * trimmings) to be imported with NO out-of-quota tariff, in exchange
+   * for an exporter commitment to sell at 25% below current market prices.
+   * Baseline TRQ mechanics (Additional US Note 3, Ch. 2 HTSUS): in-quota
+   * imports face 4.4 cents/kg; imports above quota face a 26.4% tariff.
+   * The out-of-quota duty is WAIVED under the deal (duty-free result);
+   * whether the baseline 4.4-cent in-quota duty still applies was NOT
+   * answered by officials (NY Post, Aug 21, 2026) — flagged as ambiguity.
+   * Executive order to be signed within two weeks of announcement; no EO
+   * text, HTS scope, country list, or claiming mechanics published as of
+   * Aug 21, 2026. 90-day clock start (announcement vs. EO signature) not
+   * yet specified — this model uses announcement date (Aug 21) as the
+   * operative start and computes the window through Nov 19, 2026.
+   * HTS precedent (Proclamation 11010, Feb 6, 2026): 0201.30.5091,
+   * 0201.30.5097, 0202.30.5091, 0202.30.5097.
+   * Price benchmarks (BLS via Al Jazeera; FRED via NY Post): ground beef
+   * $5.55/lb Jan 2025 -> $6.89/lb July 2026 (+24% since Jan 2025, +10% YoY);
+   * White House Feb 2026 fact sheet: $6.69/lb Dec 2025 (record since 1980s).
+   * Verified 2026-08-21 against beef-tariff-waiver-brief.md (t_0d630218):
+   * Politico, Al Jazeera, NY Post, CNBC, Bloomberg Tax wire, NYT,
+   * Agri-Pulse, Axios, WH fact sheet, USTR TRQ notice, USDA AMS wk33, USMEF.
+   */
+  var GROUND_BEEF_WAIVER = {
+    category: 'ground-beef',
+    announced: '2026-08-21',
+    duration_days: 90,
+    window_start: '2026-08-21',
+    window_end: '2026-11-19', // 90 days from announcement (Aug 21 + 90)
+    volume_mt: 300000,
+    volume_lb_approx: 661400000, // 300,000 MT x 2,204.62 lb/MT
+    in_quota_rate: 0.044,        // USD/kg — 4.4 cents/kg (specific duty)
+    out_quota_rate: 0.264,       // 26.4% ad valorem above quota
+    target_discount: 0.25,       // exporter commitment: 25% below market
+    retail_price: {
+      jan_2025: 5.55,            // USD/lb — when Trump took office
+      dec_2025: 6.69,            // USD/lb — record since 1980s (WH fact sheet)
+      jul_2026: 6.89             // USD/lb — July 2026 avg (BLS via Al Jazeera / FRED via NY Post)
+    },
+    hts_precedent: ['0201.30.5091', '0201.30.5097', '0202.30.5091', '0202.30.5097'],
+    eo_status: 'Executive order to be signed within two weeks of the Aug 21, 2026 announcement. No EO text, HTS scope, country list, or claiming mechanics published as of Aug 21, 2026.',
+    baseline_duty_unanswered: true,
+    status: 'Announced August 21, 2026. For the next 90 days, up to 300,000 metric tons of product for ground beef (lean beef trimmings) may be imported with NO out-of-quota tariff (normally 26.4%), in exchange for an exporter commitment that the beef is sold at 25% below current market prices. EO pending within two weeks; claiming mechanics unpublished. Whether the baseline 4.4-cent/kg in-quota duty still applies has not been answered.',
+    source_citations: [
+      'Politico: Trump pauses quota tariff on 300,000 tons of beef ahead of midterms (Aug 21, 2026)',
+      'CNBC: Trump to allow import of 300,000 MT ground beef without tariff (Aug 21, 2026)',
+      'Al Jazeera: Trump waives out-of-quota beef tariffs for 90 days to lower prices (Aug 21, 2026)',
+      'NY Post: Trump lifts tariffs on 300K tons of ground beef, commits to 25% price drop (Aug 21, 2026)',
+      'Bloomberg News wire via Bloomberg Tax: Tariff Relief for Some Ground Beef Imports (Aug 21, 2026)',
+      'NYT: Trump Announces Move to Lift Ground Beef Tariffs in Bid to Lower Prices (Aug 21, 2026)',
+      'Agri-Pulse: Trump to lift beef tariffs within two weeks (Aug 21, 2026)',
+      'Axios: Trump authorizes more beef imports in effort to lower prices (Aug 21, 2026)',
+      'White House fact sheet: Ensuring Affordable Beef for the American Consumer (Feb 6, 2026)',
+      'USTR: Modification of the Allocation of the WTO TRQ Volumes for Beef (Dec 31, 2025, 90 FR 61497)',
+      'Proclamation 11010: Ensuring Affordable Beef for the American Consumer (Feb 6, 2026, FR 2026-03050)',
+      'USDA AMS: Imported Meat Passed for Entry in the U.S. by Country, Week 33 2026'
     ]
   };
 
@@ -458,7 +522,61 @@
       };
     }
 
-    var rate = base + s301Add + chinaExisting + proposedAdd + s232Add + droneAdd;
+    // Ground beef — 90-day out-of-quota tariff waiver (announced Aug 21, 2026).
+    // Date-gated on the 90-day window. Under the cap and inside the window
+    // the out-of-quota duty (normally 26.4%) is WAIVED -> duty-free rate 0.
+    // Outside the window the out-of-quota rate applies.
+    var beefAdd = 0;
+    var beefDetails = null;
+    if (category === 'ground-beef') {
+      var gw = GROUND_BEEF_WAIVER;
+
+      var beefQDateStr;
+      if (opts.asOfDate) {
+        beefQDateStr = String(opts.asOfDate).slice(0, 10);
+      } else {
+        beefQDateStr = new Date().toISOString().slice(0, 10); // today
+      }
+      var beefApplies = beefQDateStr >= gw.window_start && beefQDateStr <= gw.window_end;
+
+      if (beefApplies) {
+        beefAdd = 0; // out-of-quota tariff waived — duty-free under the cap
+      } else {
+        beefAdd = gw.out_quota_rate; // 26.4% out-of-quota rate applies
+      }
+
+      beefDetails = {
+        applies: beefApplies,
+        rate: beefAdd,
+        waived: beefApplies,
+        askedDate: beefQDateStr,
+        windowStart: gw.window_start,
+        windowEnd: gw.window_end,
+        durationDays: gw.duration_days,
+        announced: gw.announced,
+        volumeMt: gw.volume_mt,
+        volumeLbApprox: gw.volume_lb_approx,
+        inQuotaRate: gw.in_quota_rate,
+        outQuotaRate: gw.out_quota_rate,
+        targetDiscount: gw.target_discount,
+        retailPrice: gw.retail_price,
+        htsPrecedent: gw.hts_precedent,
+        eoStatus: gw.eo_status,
+        baselineDutyUnanswered: gw.baseline_duty_unanswered,
+        status: gw.status,
+        source_citations: gw.source_citations
+      };
+    }
+
+    var rate;
+    if (category === 'ground-beef') {
+      // TRQ-governed product: generic MFN/category base does not apply.
+      // The effective rate IS the beef component: 0 under the 90-day waiver
+      // (out-of-quota tariff waived), else the 26.4% out-of-quota rate.
+      rate = beefAdd;
+    } else {
+      rate = base + s301Add + chinaExisting + proposedAdd + s232Add + droneAdd + beefAdd;
+    }
     // Section 232 drone tariffs legitimately exceed 60% (100% Annex I tier),
     // so the safety clamp is raised for the drones category only.
     rate = Math.min(rate, category === 'drones' ? 1.50 : 0.60);
@@ -475,7 +593,8 @@
         type: c.type,
         cap: c.type === 'mfn_cap' ? c.cap : null,
         s232: s232Details,
-        drone: droneDetails
+        drone: droneDetails,
+        beef: beefDetails
       }
     };
   }
@@ -490,6 +609,7 @@
     PROPOSED_FLAGS: PROPOSED_FLAGS,
     SECTION_232_POLYSILICON: SECTION_232_POLYSILICON,
     SECTION_232_UAS: SECTION_232_UAS,
+    GROUND_BEEF_WAIVER: GROUND_BEEF_WAIVER,
     USMCA: USMCA,
     EXEMPTION_NOTES: EXEMPTION_NOTES,
     effectiveRate: effectiveRate
