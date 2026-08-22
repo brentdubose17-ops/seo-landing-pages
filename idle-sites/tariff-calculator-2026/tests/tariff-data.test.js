@@ -88,32 +88,121 @@ test('MFN-cap logic: EU tops up to 10% cap, Japan to 12.5%', () => {
   assert.ok(Math.abs((jp.breakdown.mfn + jp.breakdown.section301) - 0.125) < 0.0001);
 });
 
-test('Proposed tariff flags present: Canada S338 + EU DST', () => {
+test('Proposed tariff flags present: EU DST only (canada_s338 moved to SECTION_338_CANADA)', () => {
   const keys = T.PROPOSED_FLAGS.map(f => f.key);
-  assert.ok(keys.includes('canada_s338'), 'canada_s338 flag missing');
+  assert.ok(!keys.includes('canada_s338'), 'canada_s338 should no longer be a proposed flag — S338 is now in effect');
   assert.ok(keys.includes('eu_dst'), 'eu_dst flag missing');
-  const s338 = T.PROPOSED_FLAGS.find(f => f.key === 'canada_s338');
-  assert.equal(s338.rate, 0.50);
-  assert.equal(s338.country, 'canada');
-  assert.deepEqual(s338.categories, ['auto', 'food']);
-  assert.equal(s338.effective, '2026-08-22 12:01 AM ET');
-  // Canada S338 is SUSPENDED until Aug 22 (Aug 18, 2026) — not in effect, not cancelled
-  assert.equal(s338.status, 'suspended');
-  assert.equal(s338.paused_until, '2026-08-21 11:59 PM ET');
-  assert.ok(s338.note.includes('SUSPENDED'), 'note should state suspended status');
-  assert.ok(s338.note.includes('August 22, 2026'), 'note should state the Aug 22 effective date');
-  // EU DST is threatened, not in effect
   const eu = T.PROPOSED_FLAGS.find(f => f.key === 'eu_dst');
   assert.equal(eu.effective, null);
   assert.equal(eu.rate, 0.25);
 });
 
-test('Proposed flags are NOT included in default rate calculation', () => {
-  const ca = T.effectiveRate('canada', 'auto', { usmcaQualified: false });
-  assert.equal(ca.breakdown.proposed, 0, 'proposed S338 should not be in default rate');
-  // But included when opted in
-  const ca2 = T.effectiveRate('canada', 'auto', { usmcaQualified: false, includeProposed: true });
-  assert.equal(ca2.breakdown.proposed, 0.50);
+test('SECTION_338_CANADA entry correct (rate, effective date, authority, scope, sources)', () => {
+  const s = T.SECTION_338_CANADA;
+  assert.ok(s, 'SECTION_338_CANADA should be present');
+  assert.equal(s.rate, 0.50);
+  assert.equal(s.effective, '2026-08-22 12:01 AM ET');
+  assert.equal(s.effective_gmt, '04:01 GMT');
+  assert.ok(s.authority.includes('Section 338'), 'authority should cite Section 338');
+  assert.ok(s.value_affected.includes('$20 billion'), 'value_affected should mention ~$20B');
+  assert.equal(s.applies_to_cusma_goods, true);
+  assert.ok(Array.isArray(s.exceptions) && s.exceptions.includes('energy products'), 'exceptions should list energy/potash/fish/critical minerals/232');
+  assert.ok(s.source_citations.length >= 5, `should have >= 5 source citations, got ${s.source_citations.length}`);
+});
+
+test('Covered product scope includes hockey sticks and tongue depressors', () => {
+  const ps = T.SECTION_338_CANADA.product_scope;
+  assert.ok(ps, 'product_scope should be present');
+  const groups = Object.keys(ps).filter(k => k !== 'ap_framing');
+  const all = groups.reduce((acc, k) => acc.concat(ps[k]), []);
+  assert.ok(all.some(x => /hockey/i.test(x)), 'hockey sticks should be in scope');
+  assert.ok(all.some(x => /tongue depressor/i.test(x)), 'tongue depressors should be in scope');
+  assert.ok(ps.alcohol.includes('wine'), 'wine should be in alcohol scope');
+  assert.ok(ps.dairy.some(x => /whey|cream|milk/i.test(x)), 'dairy lines should be in scope');
+  // flat PRODUCT_SCOPE keyword list for product-name lookup
+  assert.ok(T.PRODUCT_SCOPE.includes('hockey stick'), 'PRODUCT_SCOPE missing hockey stick');
+  assert.ok(T.PRODUCT_SCOPE.includes('tongue depressor'), 'PRODUCT_SCOPE missing tongue depressor');
+});
+
+test('canada-s338 category available in CATEGORY_MODIFIERS', () => {
+  const cat = T.CATEGORY_MODIFIERS['canada-s338'];
+  assert.ok(cat, 'canada-s338 category should exist');
+  assert.equal(cat.add, 0, 'canada-s338 base add is 0 — rate comes from Section 338');
+  assert.ok(cat.name.includes('Section 338'));
+});
+
+test('COVERED product returns 50% on/after Aug 22 2026 (effective date)', () => {
+  // Canada / canada-s338 on Aug 22: MFN 0.005 + S338 0.50 = 0.505
+  const res = T.effectiveRate('canada', 'canada-s338', { asOfDate: '2026-08-22' });
+  assert.ok(res.breakdown.s338, 's338 details should be present');
+  assert.equal(res.breakdown.s338.applies, true);
+  assert.equal(res.breakdown.s338.rate, 0.50);
+  assert.equal(res.breakdown.s338.effective, '2026-08-22 12:01 AM ET');
+  assert.ok(Math.abs(res.rate - 0.505) < 0.0001, `expected 0.505, got ${res.rate}`);
+  // Auto & food categories also covered (original flag scope)
+  const auto = T.effectiveRate('canada', 'auto', { asOfDate: '2026-08-22' });
+  assert.equal(auto.breakdown.s338.applies, true);
+  assert.ok(Math.abs(auto.breakdown.s338.rate - 0.50) < 0.0001);
+  const food = T.effectiveRate('canada', 'food', { asOfDate: '2026-08-22' });
+  assert.ok(Math.abs(food.breakdown.s338.rate - 0.50) < 0.0001);
+});
+
+test('COVERED product does NOT get 50% before Aug 22 2026 (date gating)', () => {
+  const res = T.effectiveRate('canada', 'canada-s338', { asOfDate: '2026-08-21' });
+  assert.ok(res.breakdown.s338);
+  assert.equal(res.breakdown.s338.applies, false);
+  assert.equal(res.breakdown.s338.rate, 0);
+  assert.ok(Math.abs(res.rate - 0.005) < 0.0001, `expected 0.005 (base only), got ${res.rate}`);
+  // auto before Aug 22: base only 0.005 + 0.027 = 0.032
+  const auto = T.effectiveRate('canada', 'auto', { asOfDate: '2026-08-21' });
+  assert.ok(Math.abs(auto.rate - 0.032) < 0.0001, `expected 0.032, got ${auto.rate}`);
+});
+
+test('S338 applies by default (today >= Aug 22) and regardless of USMCA', () => {
+  // default (no opts) = today = Aug 22, 2026 → applies
+  const res = T.effectiveRate('canada', 'canada-s338');
+  assert.equal(res.breakdown.s338.applies, true);
+  assert.ok(Math.abs(res.breakdown.s338.rate - 0.50) < 0.0001);
+  // USMCA-qualified Canada auto still gets the S338 50% (no USMCA exemption)
+  const ca = T.effectiveRate('canada', 'auto', { usmcaQualified: true, asOfDate: '2026-08-22' });
+  assert.equal(ca.breakdown.section301, 0, 'S301 still waived for USMCA-qualified');
+  assert.equal(ca.breakdown.s338.applies, true, 'S338 applies regardless of USMCA');
+  assert.ok(Math.abs(ca.breakdown.s338.rate - 0.50) < 0.0001);
+});
+
+test('NON-covered goods unchanged: Canada electronics/steel/pharma keep prior rates', () => {
+  // Canada electronics USMCA default: 0.005 + 0.008 = 0.013 (S301 exempt, no S338)
+  const el = T.effectiveRate('canada', 'electronics', { asOfDate: '2026-08-22' });
+  assert.equal(el.breakdown.s338, null, 'electronics not covered — no s338 details');
+  assert.ok(Math.abs(el.rate - 0.013) < 0.0001, `expected 0.013, got ${el.rate}`);
+  // steel (Section 232 exemption): unchanged 0.005 + 0.014 = 0.019
+  const st = T.effectiveRate('canada', 'steel', { asOfDate: '2026-08-22' });
+  assert.ok(Math.abs(st.rate - 0.019) < 0.0001, `expected 0.019, got ${st.rate}`);
+  // pharma: 0.005
+  const ph = T.effectiveRate('canada', 'pharma', { asOfDate: '2026-08-22' });
+  assert.ok(Math.abs(ph.rate - 0.005) < 0.0001);
+});
+
+test('NON-covered: other countries unchanged (backward compat)', () => {
+  // China electronics stack still 0.403
+  const cn = T.effectiveRate('china', 'electronics', { usmcaQualified: false, asOfDate: '2026-08-22' });
+  assert.ok(Math.abs(cn.rate - 0.403) < 0.0001, `china/electronics expected 0.403, got ${cn.rate}`);
+  // Vietnam electronics still 0.178
+  const vn = T.effectiveRate('vietnam', 'electronics', { usmcaQualified: false, asOfDate: '2026-08-22' });
+  assert.ok(Math.abs(vn.rate - 0.178) < 0.0001, `vietnam/electronics expected 0.178, got ${vn.rate}`);
+  // Mexico USMCA auto unchanged (no S338 for Mexico)
+  const mx = T.effectiveRate('mexico', 'auto', { asOfDate: '2026-08-22' });
+  assert.equal(mx.breakdown.s338, null);
+  assert.ok(Math.abs(mx.rate - (0.008 + 0.027)) < 0.0001, `mexico/auto expected 0.035, got ${mx.rate}`);
+});
+
+test('S338 product-name QA sample: hockey stick + tongue depressor lookup', () => {
+  const q = (name) => T.PRODUCT_SCOPE.some(k => name.toLowerCase().includes(k));
+  assert.equal(q('wooden ice hockey stick'), true);
+  assert.equal(q('tongue depressors'), true);
+  assert.equal(q('bottle of wine'), true);
+  assert.equal(q('cheddar cheese'), false, 'cheddar not in the verified scope');
+  assert.equal(q('smartphone'), false);
 });
 
 test('Section 232 exemption note present (no stacking)', () => {
@@ -141,7 +230,9 @@ test('All 60 economies have MFN estimates and valid categories', () => {
     Object.keys(T.CATEGORY_MODIFIERS).forEach(cat => {
       const res = T.effectiveRate(k, cat, { usmcaQualified: false });
       assert.ok(res, `${k}/${cat} returned null`);
-      assert.ok(res.rate >= 0 && res.rate <= 0.60, `${k}/${cat} rate out of range: ${res.rate}`);
+      // Upper bound is 1.50 because drones (100% Annex I) and Canada S338
+      // covered goods (base + 10% S301 + 50% S338) legitimately exceed 60%.
+      assert.ok(res.rate >= 0 && res.rate <= 1.50, `${k}/${cat} rate out of range: ${res.rate}`);
     });
   });
 });
@@ -680,3 +771,51 @@ test('ground beef waiver — explainer page exists, mentions the waiver, links s
 function htmlLinksSources(html) {
   return /href="https:\/\/www\.(politico|cnbc|aljazeera|nypost|axios|agri-pulse)\.com/.test(html);
 }
+
+// --- Canada Section 338 — UI display tests (effective date + sources) ---
+
+test('S338 UI: index.html banner says IN EFFECT with Aug 22 date + source links', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  // Banner must no longer claim SUSPENDED as current status
+  assert.ok(!/SUSPENDED until Aug 22, 2026/.test(html), 'index.html must not claim the tariff is still suspended');
+  assert.ok(!/SUSPENDED until Aug 22/.test(html), 'index.html must not claim the tariff is still suspended');
+  // Must state IN EFFECT + effective date + time
+  assert.ok(/IN EFFECT/.test(html), 'index.html banner should state IN EFFECT');
+  assert.ok(/12:01 a\.m\. EDT/.test(html), 'index.html should show the 12:01 a.m. EDT effective time');
+  assert.ok(/Aug 22, 2026/.test(html), 'index.html should show the Aug 22, 2026 effective date');
+  // ~$20B and ~5% approximations
+  assert.ok(/\$20 billion/.test(html), 'index.html should show the ~$20B scope');
+  assert.ok(/hockey sticks to tongue depressors/.test(html), 'index.html should use the hockey sticks → tongue depressors framing');
+  // Source citations for the in-effect event
+  assert.ok(html.includes('reuters.com/world/americas/us-canadian-trade-teams-meet-again-tariffs-deadline-looms-2026-08-21'), 'index.html should link Reuters (Aug 21)');
+  assert.ok(html.includes('aljazeera.com/news/2026/8/22/us-imposes-50-tariffs-on-20bn-worth-of-canadian-goods'), 'index.html should link Al Jazeera');
+  assert.ok(html.includes('dw.com/en/us-imposes-50-tariffs-on-some-canadian-products-as-trade-talks-fail'), 'index.html should link DW');
+  assert.ok(html.includes('theguardian.com/world/2026/aug/22/canada-tariffs-trump-trade-deal-talks-fail'), 'index.html should link The Guardian');
+  assert.ok(html.includes('boston.com/news/national-news/2026/08/22/us-imposes-50-tariffs-on-20b-worth-of-canadian-products'), 'index.html should link AP via Boston.com');
+  // Calculator category present
+  assert.ok(/Canada Section 338 Covered Goods/.test(html), 'index.html should offer the Canada Section 338 Covered Goods category');
+});
+
+test('S338 UI: index.html calculator footnote says the 50% is included for covered categories', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.ok(!/not included in the default rate/.test(html), 'footnote must not claim S338 is excluded from the default rate');
+  assert.ok(/IS included in the default rate/.test(html), 'footnote should say S338 IS included for covered categories');
+});
+
+test('S338 UI: news advisory page reflects in-effect status with sources', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const news = fs.readFileSync(path.join(__dirname, '..', 'news', 'index.html'), 'utf8');
+  assert.ok(/IN EFFECT/.test(news), 'news page should state IN EFFECT');
+  assert.ok(!/STATUS: SUSPENDED/.test(news), 'news page must not show SUSPENDED status');
+  assert.ok(/hockey sticks to tongue depressors/.test(news), 'news page should use the AP framing');
+  assert.ok(news.includes('reuters.com/world/americas/us-canadian-trade-teams-meet-again-tariffs-deadline-looms-2026-08-21'), 'news page should link Reuters');
+  assert.ok(news.includes('aljazeera.com/news/2026/8/22/us-imposes-50-tariffs-on-20bn-worth-of-canadian-goods'), 'news page should link Al Jazeera');
+  assert.ok(news.includes('dw.com/en/us-imposes-50-tariffs-on-some-canadian-products-as-trade-talks-fail'), 'news page should link DW');
+  assert.ok(news.includes('theguardian.com/world/2026/aug/22/canada-tariffs-trump-trade-deal-talks-fail'), 'news page should link The Guardian');
+  assert.ok(news.includes('boston.com/news/national-news/2026/08/22/us-imposes-50-tariffs-on-20b-worth-of-canadian-products'), 'news page should link AP');
+});

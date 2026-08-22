@@ -1,6 +1,12 @@
 /*
  * Tariff Calculator 2026 — canonical tariff data
  * -------------------------------------------------
+ * Updated 2026-08-22: Canada Section 338 50% duty now IN EFFECT
+ * (effective 12:01 a.m. EDT Sat Aug 22, 2026 on ~$20B of Canadian goods;
+ * verified vs tariff-trigger-spec.md t_d87d9da9 — Reuters, Al Jazeera,
+ * DW, The Guardian, AP). Replaces the suspended canada_s338 proposed flag
+ * with SECTION_338_CANADA + product scope (hockey sticks, tongue
+ * depressors, etc.) applied to covered categories in the default rate.
  * Updated 2026-08-15: Section 232 UAS / drone tariff added
  * (100% Annex I / 25% Annex II + Annex III, effective 2026-09-03,
  * Annex III components 2027-02-09, allied 15%/10% carve-outs,
@@ -145,7 +151,8 @@
     ceramics:     { add: 0.040, name: 'Ceramics & Glass' },
     polysilicon:  { add: 0,     name: 'Polysilicon & Solar (Section 232)' },
     drones:       { add: 0,     name: 'Drones / UAS (Unmanned Aircraft) — Section 232' },
-    'ground-beef':{ add: 0,     name: 'Ground Beef — 90-Day Out-of-Quota Waiver (Aug 21, 2026)' }
+    'ground-beef':{ add: 0,     name: 'Ground Beef — 90-Day Out-of-Quota Waiver (Aug 21, 2026)' },
+    'canada-s338':{ add: 0,     name: 'Canada Section 338 Covered Goods — 50% Duty (effective Aug 22, 2026)' }
   };
 
   /*
@@ -158,31 +165,14 @@
   };
 
   /*
-   * Proposed / threatened retaliatory tariff flags (NOT currently
-   * in effect — shown as warnings, not added to the rate).
-   * canada_s338: Section 338, signed 2026-07-20, originally effective
-   *   2026-08-19, 50% on Canadian motor vehicles / alcoholic beverages /
-   *   dairy, applies EVEN to USMCA-qualifying goods.
-   *   STATUS: SUSPENDED Aug 18, 2026 (3-day suspension; new effective
-   *   date 12:01 a.m. ET Sat Aug 22, 2026) while U.S.–Canada deal talks
-   *   continue — NOT in effect and NOT cancelled; the three proclamations
-   *   remain legally in force and the duty could take effect Aug 22 if
-   *   talks collapse.
+   * Proposed / threatened tariff flags (NOT in effect — shown as
+   * warnings, not added to the rate).
+   * NOTE: canada_s338 was REMOVED from this list on 2026-08-22 — the
+   * Section 338 50% duty is now IN EFFECT and lives in SECTION_338_CANADA.
    * eu_dst: 25% Section 301 threatened over digital-services taxes,
    *   activation uncertain.
    */
   var PROPOSED_FLAGS = [
-    {
-      key: 'canada_s338',
-      country: 'canada',
-      label: 'Canada Section 338 50% duty (SUSPENDED until Aug 22, 2026)',
-      rate: 0.50,
-      categories: ['auto', 'food'],
-      effective: '2026-08-22 12:01 AM ET',
-      status: 'suspended',
-      paused_until: '2026-08-21 11:59 PM ET',
-      note: '50% additional duty on Canadian motor vehicles, alcoholic beverages, and dairy under Section 338 of the Tariff Act of 1930 — SUSPENDED Aug 18, 2026 for 3 days while U.S.–Canada deal talks continue. New effective date: 12:01 a.m. ET Saturday, August 22, 2026 if no deal is finalized — paused until Aug 22. Not in effect and not cancelled: the proclamations remain legally in force. Applies even to USMCA-qualifying goods. Exempt: energy, potash, Section 232 goods, fish, critical minerals. Sources: CNBC (Aug 18, 2026), C.H. Robinson client advisory (Aug 19, 2026), NPR (Aug 19, 2026).'
-    },
     {
       key: 'eu_dst',
       country: 'european-union',
@@ -360,13 +350,95 @@
   };
 
   /*
+   * Canada — Section 338 50% additional duty (IN EFFECT Aug 22, 2026)
+   * -------------------------------------------------
+   * First-ever use of Section 338 of the Tariff Act of 1930 (Smoot-Hawley).
+   * Three presidential proclamations signed July 20, 2026; the original
+   * Aug 19 start was suspended Aug 18 for 3 days while U.S.–Canada deal
+   * talks ran; talks failed Aug 19–21 and the 50% additional duty took
+   * effect Saturday, Aug 22, 2026 at 12:01 a.m. EDT (04:01 GMT) on roughly
+   * $20B of Canadian goods (~5% of Canada's annual exports to the US).
+   * Applies regardless of USMCA/CUSMA origin. Exceptions: energy products,
+   * potash, fish, critical minerals, items already under Section 232.
+   * Pre-existing steel/lumber/auto tariffs remain in force and stack.
+   * Canada's response: dollar-for-dollar retaliation starting Sept 8, 2026
+   * (US steel, dairy, appliances, ag machinery, paper, electronics).
+   * Verified 2026-08-22 against tariff-trigger-spec.md (t_d87d9da9):
+   * Reuters, Al Jazeera (x2), DW, The Guardian, AP.
+   */
+  var SECTION_338_CANADA = {
+    category: 'canada-s338',
+    rate: 0.50,
+    effective: '2026-08-22 12:01 AM ET',
+    effective_gmt: '04:01 GMT',
+    authority: 'Section 338, Tariff Act of 1930 (Smoot-Hawley) — first-ever use',
+    instrument: '3 presidential proclamations signed July 20, 2026; original Aug 19 start extended 3 days',
+    value_affected: '~$20 billion of Canadian goods (~5% of Canada\'s annual exports to the US)',
+    applies_to_cusma_goods: true,
+    // Calculator categories treated as covered for Canada. 'auto' and
+    // 'food' preserve the original proposed-flag scope (motor vehicles,
+    // alcoholic beverages, dairy); 'canada-s338' is the dedicated
+    // product-level covered-goods category (hockey sticks, tongue
+    // depressors, and the full Guardian/USTR inventory below).
+    covered_categories: ['auto', 'food', 'canada-s338'],
+    exceptions: ['energy products', 'potash', 'fish', 'critical minerals', 'items already under Section 232'],
+    pre_existing_stack: ['steel', 'lumber', 'autos'],
+    // Granular product scope — compiled from The Guardian's full category
+    // inventory (Aug 22, 2026) + AP's "hockey sticks to tongue depressors"
+    // framing + USTR statement shorthand (wine, hockey sticks, cement,
+    // dairy, swimming pools, furniture, fishing rods, seeds, clothing, wigs).
+    product_scope: {
+      ap_framing: 'products ranging from hockey sticks to tongue depressors',
+      dairy: ['milk and cream', 'whey and milk protein concentrates', 'bones and horn-cones', 'lactose', 'glucose', 'fructose and blended syrups', 'sugars', 'cane molasses', 'non-alcoholic beer', 'essential oils of peppermint'],
+      alcohol: ['beer', 'wine', 'liquor', 'cider', 'other fermented beverages'],
+      wood_hockey: ['essential oils of grapefruit', 'densified wood blocks', 'plates', 'strips', 'skewers', 'ice cream sticks', 'bamboo products', 'basketwork', 'grease-proof paper', 'ice hockey equipment', 'field hockey equipment', 'wooden ice hockey sticks'],
+      natural_plant: ['natural honey', 'down feathers', 'tortoise shell', 'whalebone', 'horns', 'antlers', 'tulips and dormant flower buds', 'live orchids', 'mushroom spawn', 'tubers', 'mosses', 'lichen', 'vegetable/tree/shrub seeds'],
+      misc_consumer: ['cements', 'candles', 'plastic furniture fittings', 'dog leashes', 'saddles', 'T-shirts', 'sweaters', 'trousers', 'dresses', 'wigs', 'false beards', 'eyebrows of synthetic material', 'floating docks', 'vessels', 'rafts', 'chandeliers', 'Christmas and festival decorations', 'ice skates', 'swimming pools', 'wading pools', 'fishing rods'],
+      medical_wood: ['tongue depressors']
+    },
+    hs_note: 'No HS/HTS codes enumerated in Reuters, Al Jazeera, DW, or The Guardian coverage. Official line-level HTS list lives in the three July 20, 2026 Section 338 proclamations / USTR statement PDF.',
+    status: 'IN EFFECT — the 50% additional duty took effect Saturday, Aug 22, 2026 at 12:01 a.m. EDT (04:01 GMT) after U.S.–Canada talks failed to finalize a deal. USTR Jamieson Greer: "Tonight, Canada declined to finalize the trade deal under the terms agreed earlier this week." Canada said it will match tariffs dollar for dollar starting Sept 8, 2026 (US steel, dairy, appliances, agricultural machinery, paper, electronics).',
+    source_citations: [
+      'Reuters: US, Canada trade teams meet again as tariff deadline looms (Aug 21, 2026) — https://www.reuters.com/world/americas/us-canadian-trade-teams-meet-again-tariffs-deadline-looms-2026-08-21/',
+      'Reuters: US imposes new 50% tariffs on Canadian products (Jul 20, 2026) — https://www.reuters.com/business/us-imposes-new-50-tariffs-canadian-products-2026-07-20/',
+      'Al Jazeera: US imposes 50% tariffs on $20bn worth of Canadian goods after talks fail (Aug 22, 2026) — https://www.aljazeera.com/news/2026/8/22/us-imposes-50-tariffs-on-20bn-worth-of-canadian-goods-after-talks-fail',
+      'Al Jazeera: Carney says Canada will enact retaliatory US tariffs starting September 8 (Aug 22, 2026) — https://www.aljazeera.com/news/2026/8/22/carney-canada-will-enact-retaliatory-us-tariffs-starting-september-8',
+      'DW: US imposes 50% tariffs on some Canadian products as trade talks fail (Aug 22, 2026) — https://www.dw.com/en/us-imposes-50-tariffs-on-some-canadian-products-as-trade-talks-fail/a-78466352',
+      'The Guardian: Canada tariffs — Trump trade deal talks fail (Aug 22, 2026) — https://www.theguardian.com/world/2026/aug/22/canada-tariffs-trump-trade-deal-talks-fail',
+      'AP via Boston.com: US imposes 50% tariffs on $20B worth of Canadian products, Canada says it will retaliate (Aug 22, 2026) — https://www.boston.com/news/national-news/2026/08/22/us-imposes-50-tariffs-on-20b-worth-of-canadian-products-canada-says-it-will-retaliate/'
+    ]
+  };
+
+  /*
+   * Covered product keywords (lowercase) for the Canada Section 338 duty —
+   * used for product-name lookup and QA sample checks. Compiled from the
+   * Guardian category inventory + AP "hockey sticks to tongue depressors"
+   * framing + USTR statement shorthand.
+   */
+  var PRODUCT_SCOPE = [
+    'hockey stick', 'hockey sticks', 'wooden ice hockey stick', 'ice hockey', 'field hockey',
+    'tongue depressor', 'tongue depressors',
+    'milk', 'cream', 'whey', 'milk protein concentrate', 'lactose', 'glucose', 'fructose',
+    'blended syrup', 'sugar', 'cane molasses', 'non-alcoholic beer', 'essential oil of peppermint',
+    'beer', 'wine', 'liquor', 'whisky', 'whiskey', 'cider', 'fermented beverage',
+    'essential oil of grapefruit', 'densified wood', 'wood block', 'wood strip', 'skewer',
+    'ice cream stick', 'bamboo', 'basketwork', 'grease-proof paper',
+    'honey', 'down feather', 'tortoise shell', 'whalebone', 'horn', 'antler',
+    'tulip', 'flower bud', 'orchid', 'mushroom spawn', 'tuber', 'moss', 'lichen', 'seed',
+    'cement', 'candle', 'plastic furniture fitting', 'dog leash', 'saddle',
+    't-shirt', 'sweater', 'trouser', 'dress', 'wig', 'false beard', 'eyebrow of synthetic material',
+    'floating dock', 'vessel', 'raft', 'chandelier', 'christmas decoration', 'festival decoration',
+    'ice skate', 'swimming pool', 'wading pool', 'fishing rod'
+  ];
+
+  /*
    * USMCA status and Section 301 exemptions.
    */
   var USMCA = {
     exempt_from_301: ['canada', 'mexico'],
     status: 'Annual review (July 1 2026 renewal deadline passed). Interim arrangements targeted by end of 2026; US–Mexico round 4 in Washington in September. Automotive rules of origin unresolved.',
     notes: {
-      canada: 'USMCA-qualified Canadian goods are EXEMPT from Section 301 (0% 301). Canada has a separate 10% Section 301 rate when NOT USMCA-qualified, plus the 50% Section 338 (autos/alcohol/dairy) — PAUSED Aug 18, 2026 through Aug 21 while a US–Canada deal is finalized — that applies regardless of USMCA status if it takes effect.',
+      canada: 'USMCA-qualified Canadian goods are EXEMPT from Section 301 (0% 301). Canada has a separate 10% Section 301 rate when NOT USMCA-qualified, plus the 50% Section 338 (autos/alcohol/dairy) — IN EFFECT since Aug 22, 2026 — that applies regardless of USMCA status.',
       mexico: 'USMCA-qualified Mexican goods are EXEMPT from Section 301 (0% 301). Mexico has a separate 10% Section 301 rate when NOT USMCA-qualified.'
     }
   };
@@ -568,6 +640,42 @@
       };
     }
 
+    // Canada Section 338 — 50% additional duty on covered goods.
+    // Effective 2026-08-22 12:01 AM ET (04:01 GMT). Applies regardless of
+    // USMCA/CUSMA origin (no USMCA exemption). Date-gated: before Aug 22
+    // the duty is not in effect. Covered categories: auto, food, and the
+    // dedicated 'canada-s338' product-level category.
+    var s338Add = 0;
+    var s338Details = null;
+    if (countrySlug === 'canada' && SECTION_338_CANADA.covered_categories.indexOf(category) !== -1) {
+      var s338QDateStr;
+      if (opts.asOfDate) {
+        s338QDateStr = String(opts.asOfDate).slice(0, 10);
+      } else {
+        s338QDateStr = new Date().toISOString().slice(0, 10); // today
+      }
+      var s338Applies = s338QDateStr >= '2026-08-22';
+      if (s338Applies) {
+        s338Add = SECTION_338_CANADA.rate;
+      }
+      s338Details = {
+        applies: s338Applies,
+        rate: s338Add,
+        baseRate: SECTION_338_CANADA.rate,
+        effective: SECTION_338_CANADA.effective,
+        effectiveGmt: SECTION_338_CANADA.effective_gmt,
+        askedDate: s338QDateStr,
+        authority: SECTION_338_CANADA.authority,
+        valueAffected: SECTION_338_CANADA.value_affected,
+        appliesToCusmaGoods: SECTION_338_CANADA.applies_to_cusma_goods,
+        exceptions: SECTION_338_CANADA.exceptions,
+        preExistingStack: SECTION_338_CANADA.pre_existing_stack,
+        productScope: SECTION_338_CANADA.product_scope,
+        status: SECTION_338_CANADA.status,
+        source_citations: SECTION_338_CANADA.source_citations
+      };
+    }
+
     var rate;
     if (category === 'ground-beef') {
       // TRQ-governed product: generic MFN/category base does not apply.
@@ -575,11 +683,15 @@
       // (out-of-quota tariff waived), else the 26.4% out-of-quota rate.
       rate = beefAdd;
     } else {
-      rate = base + s301Add + chinaExisting + proposedAdd + s232Add + droneAdd + beefAdd;
+      rate = base + s301Add + chinaExisting + proposedAdd + s232Add + droneAdd + beefAdd + s338Add;
     }
     // Section 232 drone tariffs legitimately exceed 60% (100% Annex I tier),
-    // so the safety clamp is raised for the drones category only.
-    rate = Math.min(rate, category === 'drones' ? 1.50 : 0.60);
+    // and Canada Section 338 covered goods stack +50% on top of base duties
+    // (e.g. non-USMCA Canada: base + 10% S301 + 50% S338 can exceed 60%),
+    // so the safety clamp is raised for those categories only.
+    var highCap = category === 'drones' ||
+      (countrySlug === 'canada' && SECTION_338_CANADA.covered_categories.indexOf(category) !== -1);
+    rate = Math.min(rate, highCap ? 1.50 : 0.60);
 
     return {
       rate: rate,
@@ -594,7 +706,8 @@
         cap: c.type === 'mfn_cap' ? c.cap : null,
         s232: s232Details,
         drone: droneDetails,
-        beef: beefDetails
+        beef: beefDetails,
+        s338: s338Details
       }
     };
   }
@@ -610,6 +723,8 @@
     SECTION_232_POLYSILICON: SECTION_232_POLYSILICON,
     SECTION_232_UAS: SECTION_232_UAS,
     GROUND_BEEF_WAIVER: GROUND_BEEF_WAIVER,
+    SECTION_338_CANADA: SECTION_338_CANADA,
+    PRODUCT_SCOPE: PRODUCT_SCOPE,
     USMCA: USMCA,
     EXEMPTION_NOTES: EXEMPTION_NOTES,
     effectiveRate: effectiveRate
