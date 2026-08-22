@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT iMessage Privacy Risk: Business AI Audit Checklist</title>
+    <meta name="description" content="OpenAI's Apple Messages plugin reads, summarizes, and sends iMessage/SMS/RCS after Full Disk Access. Audit the privacy and consent risk on business Macs.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mybusinessaiaudit.com/articles/chatgpt-imessage-privacy-audit">
+    <meta property="og:title" content="ChatGPT iMessage Privacy Risk: Business AI Audit Checklist">
+    <meta property="og:description" content="OpenAI's Apple Messages plugin reads, summarizes, and sends iMessage/SMS/RCS after Full Disk Access. Audit the privacy and consent risk on business Macs.">
+    <meta property="og:url" content="https://mybusinessaiaudit.com/articles/chatgpt-imessage-privacy-audit">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="My Business AI Audit">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "ChatGPT Can Now Read iMessages on Mac. What Your Business AI Audit Should Check",
+      "description": "OpenAI's Apple Messages plugin lets ChatGPT read, summarize, and send iMessage/SMS/RCS texts after granting Full Disk Access. Use this checklist to audit the privacy and consent risk on your business Macs.",
+      "datePublished": "2026-08-21",
+      "dateModified": "2026-08-21",
+      "author": {"@type": "Organization", "name": "My Business AI Audit"},
+      "publisher": {"@type": "Organization", "name": "My Business AI Audit"},
+      "mainEntityOfPage": "https://mybusinessaiaudit.com/articles/chatgpt-imessage-privacy-audit"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can ChatGPT read my iMessage, SMS, and RCS messages?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes — the Apple Messages plugin in the ChatGPT desktop app on macOS can read and search iMessage, SMS, and RCS conversations, and can prepare or send messages through Messages, but only after you grant macOS permissions during setup. It runs only on Apple silicon Macs and works in ChatGPT Work and Codex, not regular ChatGPT chats."}
+        },
+        {
+          "@type": "Question",
+          "name": "What permissions does the ChatGPT Messages plugin need?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Setup requires Full Disk Access in System Settings, plus access to the names of your contacts and to automation tools. The feature is opt-in, and OpenAI says the plugin does not create an index of your texts and only reads messages when you explicitly ask."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can ChatGPT send messages without asking me?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Not by default. ChatGPT sends a message only after you approve the message and its recipients. You can choose Allow once per send, or Always allow sending to this chat for persistent approval — which OpenAI discourages because it removes your final chance to review a message before it is sent as you."}
+        },
+        {
+          "@type": "Question",
+          "name": "Does OpenAI see my messages? What happens to them?",
+          "acceptedAnswer": {"@type": "Answer", "text": "OpenAI has not documented exactly which parts of a conversation are transmitted for processing. The plugin runs locally on the device and OpenAI says it does not create an index of texts, but what is sent to OpenAI when you ask it to summarize or analyze an archive is not spelled out in the release notes or plugin docs. Businesses should treat this as an open question to confirm with the vendor."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can my business disable the ChatGPT Messages plugin?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. In managed workspaces, administrators can disable Apple Messages through the existing Computer Use control, the same mechanism that governs other desktop-agent capabilities."}
+        },
+        {
+          "@type": "Question",
+          "name": "Should employees be allowed to use ChatGPT with their personal messages on a work Mac?",
+          "acceptedAnswer": {"@type": "Answer", "text": "That is a policy decision, not a technical one. The audit position: the feature is opt-in and sending is gated by default, but granting Full Disk Access gives ChatGPT read access to the entire Messages archive, group-chat participants are not asked for consent, and OpenAI has not published enterprise guidance for mixed personal/professional archives. If the business permits it, require approval gating, ban persistent approval, and document the consent and retention questions."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; }
+        .cta { display: inline-block; background: #2563eb; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; margin: 8px 0; }
+        .faq-item { margin-bottom: 18px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; color: #1a1a2e; }
+        footer { margin-top: 24px; color: #888; font-size: 0.85rem; text-align: center; }
+        nav.site { margin-bottom: 20px; font-size: 0.9rem; }
+        nav.site a { margin-right: 16px; text-decoration: none; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+    </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
+    <article>
+        <h1>ChatGPT Can Now Read iMessages on Mac. What Your Business AI Audit Should Check</h1>
+        <div class="meta"><span>Published August 21, 2026</span><span>My Business AI Audit</span></div>
+
+        <p>On August 20, 2026, OpenAI shipped an <strong>Apple Messages plugin</strong> for the ChatGPT desktop app on macOS. Once the user grants permission, ChatGPT can <strong>read, search, summarize, draft, and send</strong> iMessage, SMS, and RCS messages through the Messages app (<a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">OpenAI release notes</a>, <a href="https://developers.openai.com/codex/plugins">OpenAI plugin docs</a>, <a href="https://9to5mac.com/2026/08/20/chatgpt-update-adds-apple-messages-integration-on-mac">9to5Mac</a>). The interesting part for a business is not the feature — it is that an AI assistant now holds <strong>OS-level access to personal communications on work devices</strong>. That is a permission, consent, and data-retention event a business AI audit should check.</p>
+
+        <h2>What the plugin can actually do</h2>
+        <ul>
+            <li>Reads and searches iMessage, SMS, and RCS conversations on the Mac (<a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">OpenAI</a>, <a href="https://www.macrumors.com/2026/08/20/chatgpt-imessages-mac">MacRumors</a>, <a href="https://tech.yahoo.com/ai/chatgpt/articles/openai-rolls-deeper-integration-apple-025812887.html">Yahoo Tech</a>).</li>
+            <li>Can find, summarize, draft, or send a message (<a href="https://developers.openai.com/codex/plugins">OpenAI</a>, <a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>); can analyze the archive — "summarising who you talk to and what you talk about" (<a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>, <a href="https://www.macrumors.com/2026/08/20/chatgpt-imessages-mac">MacRumors</a>).</li>
+            <li>Runs in ChatGPT Work and Codex on the macOS desktop app — not regular ChatGPT chats, not web/mobile, not Codex CLI or the IDE extension (<a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">OpenAI</a>, <a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://www.unite.ai/chatgpt-plugin-reads-and-sends-apple-messages-on-apple-silicon-macs">Unite.AI</a>).</li>
+            <li>Apple silicon only; does not run on Intel Macs (<a href="https://developers.openai.com/codex/plugins">OpenAI</a>, <a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>).</li>
+            <li>Does NOT let you interact with ChatGPT remotely through Messages (<a href="https://developers.openai.com/codex/plugins">OpenAI</a>, <a href="https://tech.yahoo.com/ai/chatgpt/articles/openai-rolls-deeper-integration-apple-025812887.html">Yahoo Tech</a>).</li>
+        </ul>
+
+        <h2>What data is exposed and what permissions are granted</h2>
+        <ul>
+            <li><strong>Opt-in setup:</strong> a permission screen appears during setup (<a href="https://developers.openai.com/codex/plugins">OpenAI</a>, <a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>).</li>
+            <li><strong>Full Disk Access</strong> in System Settings (Mac privacy preferences) (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://www.macrumors.com/2026/08/20/chatgpt-imessages-mac">MacRumors</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>).</li>
+            <li><strong>Access to contact names</strong> and to <strong>automation tools</strong>; the plugin uses AppleScript and Accessibility settings (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://www.macrumors.com/2026/08/20/chatgpt-imessages-mac">MacRumors</a>).</li>
+            <li><strong>What it does NOT do (per OpenAI):</strong> no index of texts created (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>); reads messages only when the user explicitly asks (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>); will not send until the user explicitly approves the drafted message (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>).</li>
+            <li><strong>OpenAI statement:</strong> "We care deeply about user privacy, and the plugin is designed to be transparent and keep users in control of their Messages data." (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>)</li>
+        </ul>
+        <p><strong>Exposure caveats — say these carefully:</strong> OpenAI's docs do not spell out exactly which message bodies or metadata leave the machine for processing (TNW flags the gap) (<a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>); group-chat participants are not asked for consent when ChatGPT analyzes a conversation (<a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>). Phrase these as open questions, not confirmed facts.</p>
+
+        <h2>Send approval flow — where the control actually lives</h2>
+        <ul>
+            <li>Sending is <strong>gated by default</strong>: ChatGPT sends only after the user approves the message and its recipients (<a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">OpenAI</a>, <a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>).</li>
+            <li>Two choices: <strong>"Allow once"</strong> (single send) or <strong>"Always allow sending to this chat"</strong> (persistent approval for that conversation) (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://9to5mac.com/2026/08/20/chatgpt-update-adds-apple-messages-integration-on-mac">9to5Mac</a>).</li>
+            <li>OpenAI <strong>discourages persistent approval</strong>: "Persistent approval removes your final chance to review a message before ChatGPT sends it as you. Use it only when you accept that risk." (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>)</li>
+            <li>Revocable under Settings &gt; Computer use &gt; Messages &gt; Always allowed to send (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>).</li>
+            <li><strong>Known issue:</strong> tasks set to Full access or otherwise disabling approval prompts may break the send confirmation; OpenAI's remedy is "Ask for approval" or "Approve for me" (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>).</li>
+        </ul>
+
+        <h2>How to review AI tools that access personal communications (business audit)</h2>
+        <p>Lead with the principle: the audit question is not "is the vendor good?" — it is <strong>"what can this tool read, what can it send, who decided that, and who can undo it?"</strong> The 17-question checklist below maps to exactly that frame.</p>
+        <p><strong>A. Inventory and exposure</strong></p>
+        <p><strong>1. How many company Macs run the ChatGPT desktop app, and how many have the Apple Messages plugin enabled?</strong><br>
+        Start with the inventory — you cannot audit what you haven't counted. (<a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">OpenAI</a>, <a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>)</p>
+        <p><strong>2. Which employees granted Full Disk Access to ChatGPT during setup?</strong><br>
+        Full Disk Access is the grant that unlocks the Messages archive — record who has it. (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://www.macrumors.com/2026/08/20/chatgpt-imessages-mac">MacRumors</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>)</p>
+        <p><strong>3. Does anyone on the team use "Always allow sending to this chat" (persistent approval)?</strong><br>
+        OpenAI discourages persistent approval because it removes the final review before a send. (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://9to5mac.com/2026/08/20/chatgpt-update-adds-apple-messages-integration-on-mac">9to5Mac</a>)</p>
+        <p><strong>4. Are the Macs Apple silicon (arm64)?</strong><br>
+        Intel Macs are unaffected — the plugin does not run there. (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</p>
+        <p><strong>B. Permissions and controls</strong></p>
+        <p><strong>5. Who in your org can disable the plugin?</strong><br>
+        Admins can via the Computer Use control in managed workspaces. (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://www.unite.ai/chatgpt-plugin-reads-and-sends-apple-messages-on-apple-silicon-macs">Unite.AI</a>)</p>
+        <p><strong>6. Are tasks that involve Messages set to "Ask for approval"/"Approve for me" rather than Full access?</strong><br>
+        Known issue: Full-access tasks can break the send confirmation. (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</p>
+        <p><strong>7. Is there a documented owner for reviewing AI tool permissions — someone who can revoke access on request?</strong><br>
+        Aligns with the <a href="/articles/ai-agent-permissions-audit">AI agent permissions audit</a> lockdown framework: name the owner.</p>
+        <p><strong>8. How would you detect that a message was sent by ChatGPT rather than a human?</strong><br>
+        No such indicator is documented — treat as a monitoring gap.</p>
+        <p><strong>C. Consent and employee policy</strong></p>
+        <p><strong>9. Does your employee AI-use policy cover AI tools that read personal communications on work devices?</strong><br>
+        Policy question; no source claims OpenAI requires it.</p>
+        <p><strong>10. Is persistent send approval explicitly prohibited in policy?</strong><br>
+        Given OpenAI's own guidance against persistent approval, a policy ban is the defensible default. (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>)</p>
+        <p><strong>11. Have employees been told that group-chat participants are not asked for consent when ChatGPT analyzes a conversation?</strong><br>
+        Group-chat consent is an unaddressed gap — document the disclosure rule. (<a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</p>
+        <p><strong>12. For client-facing conversations: is there a disclosure rule when messages may be processed by an AI tool?</strong><br>
+        Grounded in the group-chat gap — the business must decide its own rule. (<a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</p>
+        <p><strong>D. Data retention and processing</strong></p>
+        <p><strong>13. Can you state, from documentation, exactly which message content is transmitted to OpenAI for processing?</strong><br>
+        OpenAI's docs do not spell this out — the correct audit answer is "no, and that gap should be flagged." (<a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</p>
+        <p><strong>14. What is OpenAI's retention/deletion policy for messages the plugin processes?</strong><br>
+        Not documented in the verified sources — do not invent an answer; mark as open. (<a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</p>
+        <p><strong>15. Does the plugin create an index of texts?</strong><br>
+        OpenAI spokesperson says no — but confirm from vendor documentation at audit time, not just press quotes. (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>)</p>
+        <p><strong>E. Vendor and administrator posture</strong></p>
+        <p><strong>16. Have you asked your AI vendor for: what data leaves the device, where it is processed, retention, and admin controls?</strong><br>
+        Enterprise admin data guidance is NOT published — ask and document the answer. (<a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</p>
+        <p><strong>17. If an employee leaves, is there a documented offboarding step to revoke plugin permissions?</strong><br>
+        Offboarding must include revoking Full Disk Access and any persistent approvals.</p>
+
+        <h2>Consent and data-retention questions for employees</h2>
+        <p>These are the questions a business should put in an employee AI-use policy:</p>
+        <ul>
+            <li>Do employees know that ChatGPT on their Mac can read their Messages archive once they grant Full Disk Access? (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://www.macrumors.com/2026/08/20/chatgpt-imessages-mac">MacRumors</a>)</li>
+            <li>Is "Allow once" the only permitted send mode, and is persistent approval banned? (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>)</li>
+            <li>What happens to messages that go to OpenAI for processing (retention, training, deletion)? — <strong>the answer is not documented</strong>; flag as an open item. (<a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</li>
+            <li>Are customers/clients aware their messages may be processed by an AI tool? (Group-chat participants are not asked for consent — the business must decide its own disclosure rule.) (<a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</li>
+            <li>Is there a revocation procedure (revoke persistent approval, disable plugin via Computer Use control)? (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://www.unite.ai/chatgpt-plugin-reads-and-sends-apple-messages-on-apple-silicon-macs">Unite.AI</a>)</li>
+        </ul>
+
+        <h2>How to frame this in a business AI audit</h2>
+        <p>Position this as a <strong>permissions and consent audit item</strong>, not a scare story. The feature is opt-in, sending is gated by default, and OpenAI's documented posture is user control (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>).</p>
+        <ul>
+            <li><strong>Audit output:</strong> an "AI tool access register" row per tool — data it can read / actions it can take / who approved / how to revoke.</li>
+            <li><strong>Suggested verdict framing:</strong> acceptable with controls (approval gating on, persistent approval off, plugin disabled where not needed) (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://www.unite.ai/chatgpt-plugin-reads-and-sends-apple-messages-on-apple-silicon-macs">Unite.AI</a>).</li>
+            <li><strong>Deep-dive:</strong> pair this with the <a href="/articles/ai-agent-permissions-audit">AI agent permissions audit</a> lockdown framework and the general <a href="/articles/ai-agent-security-audit">AI agent security audit</a> method. The sibling case — <a href="/articles/claude-code-cross-session-messaging-audit">Claude Code sessions messaging each other</a> — covers the agent-to-agent side of the same consent question.</li>
+        </ul>
+        <p><a class="cta" href="/audit-tool.html">Run the free AI audit tool →</a></p>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>Can ChatGPT read my iMessage, SMS, and RCS messages?</h3>
+            <p>Yes — the Apple Messages plugin in the ChatGPT desktop app on macOS can read and search iMessage, SMS, and RCS conversations, and can prepare or send messages through Messages, but only after you grant macOS permissions during setup. It runs only on Apple silicon Macs and works in ChatGPT Work and Codex, not regular ChatGPT chats. (<a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">OpenAI</a>, <a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://9to5mac.com/2026/08/20/chatgpt-update-adds-apple-messages-integration-on-mac">9to5Mac</a>)</p>
+        </div>
+        <div class="faq-item">
+            <h3>What permissions does the ChatGPT Messages plugin need?</h3>
+            <p>Setup requires Full Disk Access in System Settings, plus access to the names of your contacts and to automation tools. The feature is opt-in, and OpenAI says the plugin does not create an index of your texts and only reads messages when you explicitly ask. (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://www.macrumors.com/2026/08/20/chatgpt-imessages-mac">MacRumors</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>)</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can ChatGPT send messages without asking me?</h3>
+            <p>Not by default. ChatGPT sends a message only after you approve the message and its recipients. You can choose "Allow once" per send, or "Always allow sending to this chat" for persistent approval — which OpenAI discourages because it removes your final chance to review a message before it is sent as you. (<a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">OpenAI</a>, <a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>)</p>
+        </div>
+        <div class="faq-item">
+            <h3>Does OpenAI see my messages? What happens to them?</h3>
+            <p>OpenAI has not documented exactly which parts of a conversation are transmitted for processing. The plugin runs locally on the device and OpenAI says it does not create an index of texts, but what is sent to OpenAI when you ask it to summarize or analyze an archive is not spelled out in the release notes or plugin docs. Businesses should treat this as an open question to confirm with the vendor. (<a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://techcrunch.com/2026/08/20/chatgpt-can-now-send-texts-for-you-with-new-apple-messages-plugin">TechCrunch</a>, <a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can my business disable the ChatGPT Messages plugin?</h3>
+            <p>Yes. In managed workspaces, administrators can disable Apple Messages through the existing Computer Use control, the same mechanism that governs other desktop-agent capabilities. (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://www.unite.ai/chatgpt-plugin-reads-and-sends-apple-messages-on-apple-silicon-macs">Unite.AI</a>)</p>
+        </div>
+        <div class="faq-item">
+            <h3>Should employees be allowed to use ChatGPT with their personal messages on a work Mac?</h3>
+            <p>That is a policy decision, not a technical one. The audit position: the feature is opt-in and sending is gated by default, but granting Full Disk Access gives ChatGPT read access to the entire Messages archive, group-chat participants are not asked for consent, and OpenAI has not published enterprise guidance for mixed personal/professional archives. If the business permits it, require approval gating, ban persistent approval, and document the consent and retention questions above. (<a href="https://developers.openai.com/codex/plugins">OpenAI docs</a>, <a href="https://www.engadget.com/2241390/openai-chatgpt-imessage-integration">Engadget</a>, <a href="https://www.macrumors.com/2026/08/20/chatgpt-imessages-mac">MacRumors</a>, <a href="https://thenextweb.com/news/chatgpt-imessage-plugin-apple-privacy">TNW</a>)</p>
+        </div>
+
+        <h2>Accuracy note</h2>
+        <p style="font-size:0.85rem;color:#666;">Announced Aug 20, 2026 in OpenAI's release notes; plugin included only in the Apple Silicon (arm64) build; available on all plans with the functional surface in ChatGPT Work and Codex; sending gated by default with "Allow once" vs persistent approval (OpenAI discourages persistent); known issue where Full-access tasks can break the send confirmation; admins can disable via the Computer Use control. OpenAI has NOT documented exactly which message content is transmitted for processing, has NOT published enterprise admin data guidance for managed Macs, and Apple was not part of the announcement — those are open questions, not confirmed facts. No claim here that OpenAI "secretly reads texts" or "trains on iMessages" — the plugin reads only after opt-in permission grants and only when prompted. Apple sued OpenAI in July 2026 (trade secrets) and previously cut off third-party iMessage access (Beeper Mini, 2024) — background context only.</p>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/articles/meta-ai-mac-app-privacy-audit">Meta's New Mac App Sees Your Screen: Privacy Checks Before Installing</a></li>
+                <li><a href="/articles/ai-agent-permissions-audit">AI Agent Permissions Audit: Three Labs, Three Weeks — Lock Down Yours</a></li>
+                <li><a href="/articles/ai-agent-security-audit">AI Agent Security Audit</a></li>
+                <li><a href="/articles/claude-code-cross-session-messaging-audit">Claude Code Sessions Can Now Message Each Other: What Audited Businesses Should Check</a></li>
+                <li><a href="/articles/ai-agent-security-risks">AI Agent Security Risks</a></li>
+                <li><a href="/articles/ai-safety-audit-chatgpt-for-teens">AI Safety Audit: OpenAI Made Child Safety the Default. Can You Say the Same?</a></li>
+                <li><a href="/free-ai-audit-tools-for-small-business.html">Free AI Audit Tools for Small Business</a></li>
+            </ul>
+        </div>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; All rights reserved.</p>
+    </footer>
+</body>
+</html>
