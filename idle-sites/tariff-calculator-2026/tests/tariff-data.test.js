@@ -661,7 +661,7 @@ test('ground beef waiver — explainer page exists, mentions the waiver, links s
   const path = require('node:path');
   const page = fs.readFileSync(path.join(__dirname, '..', 'ground-beef-tariff-waiver-2026.html'), 'utf8');
   assert.ok(page.length > 5000, 'explainer should be substantive');
-  assert.ok(/Ground Beef Tariff Waiver 2026/.test(page), 'explainer should carry the title');
+  assert.ok(/Ground Beef Tariff Waiver 2026|Beef Tariff Rates 2026: The Ground Beef Tariff Waiver/.test(page), 'explainer should carry the title');
   assert.ok(/90 days/.test(page), 'explainer should explain the 90-day limitation');
   assert.ok(/300,000 metric tons/.test(page), 'explainer should state the cap');
   assert.ok(/26.4%/.test(page), 'explainer should state the normal out-of-quota rate');
