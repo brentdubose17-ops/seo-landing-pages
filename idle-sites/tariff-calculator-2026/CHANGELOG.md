@@ -2,6 +2,14 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-23 — US-Canada Tariffs FAQ retaliation section updated to Sept 8, 2026 dollar-for-dollar tariffs (kanban t_7a79c021)
+
+- **`/us-canada-tariffs-2026` FAQ updated (same slug, same URL):** retaliation language revised from "pledged" to confirmed — Canada will impose dollar-for-dollar retaliatory tariffs on US imports starting Tuesday, September 8, 2026, following the US 50% tariffs on ~$20B of Canadian goods that took effect Aug 22, 2026. Full targeted-sector list per verified fact sheet t_160b34b4: steel, electronics, dairy, household appliances, farming equipment, pulp/paper. Added Carney's "at war" quote ("You're at war when you get attacked. We got attacked.") with reporter-question context; "Why the talks failed" section updated to note talks collapsed Friday Aug 21 before the deadline, Carney recalled negotiators to Ottawa. Meta description updated (<160c), dateModified bumped to 2026-08-23, new FAQPage JSON-LD entry for the retaliation question, source note updated (verified Aug 23 vs datapack t_89767bbd + fact sheet t_160b34b4: Al Jazeera Carney piece, India Today, CNBC).
+- **Sitemap:** lastmod for /us-canada-tariffs-2026 bumped to 2026-08-23.
+- **No new page created, slug unchanged.** (Note: task body URL /us-canada-tariffs/ is a CF Pages catch-all that serves index.html — the real page is and remains /us-canada-tariffs-2026.)
+- **Tests:** 69/69 pass (no tariff-data.js logic change).
+- **Deployed:** Cloudflare Pages (tariff-calculator-2026), verified live.
+
 ## 2026-08-22 — US-Canada Tariffs 2026 FAQ page published for calculator users (kanban t_94938224)
 
 - **New page `/us-canada-tariffs-2026`:** concise SEO FAQ explaining the 50% Section 338 duty on ~$20B of Canadian goods for calculator users. Title starts "US-Canada Tariffs 2026", 7 H2 sections, meta description 144 chars (<160). Content includes: short "What happened" section, affected-category & rate table (motor vehicles 50%, alcohol 50%, dairy 50%, other Annex II 50%, pre-existing steel/lumber rows), links to the updated calculator, and a NOT-enacted callout for the rejected deal (steel/aluminum 25%, autos 15%, lumber 10% eliminated). All facts drawn from parent datapack t_89767bbd (12 sources / 6 official instruments); no contradictions with the datapack.
