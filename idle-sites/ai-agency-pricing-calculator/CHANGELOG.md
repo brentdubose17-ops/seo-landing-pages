@@ -2,6 +2,19 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-22 — GPT-5.6 Sol API pricing updated to verified $4/$20 promo (kanban t_db699f13, verified via parent research brief t_1d150dd3)
+
+- **GPT-5.6 Sol per-token pricing updated on `index.html` (homepage) and `index_calculator.html`** — OpenAI published official per-token pricing for GPT-5.6 Sol on **Aug 21, 2026: $4 per 1M input / $20 per 1M output / $0.40 per 1M cached input**, a **promotional rate valid Aug 21 – Nov 21, 2026**, down from the $5/$30 estimate the calculator previously used. Scope: API + eligible ChatGPT Work/Codex credits; ChatGPT Pro/Plus/Business subscription pricing unchanged.
+- **Touch points (both pages):** Model Strategy selector label (estimate → "$4/$20 promo through Nov 21, 2026"), Sol helper text (now the verified promo rate with window + cached input $0.40), model label + assumption note in `calculatePricing()`, FAQ item + FAQPage JSON-LD entries (Sol/Luna answer + Grok 4.6 + Sonnet 5 comparisons updated), meta description/keywords, Pricing Reference Table footnote, assumptions footer (Sol promo note added), on-page changelog entries. **No other model prices changed** (DeepSeek, Gemini, Grok, Qwen, Kimi, Sonnet 5, Fable 5, Muse, local all untouched). Calculator modeling unchanged (`MODEL_COMPUTE_FACTOR.sol = 1.15` / `MODEL_MARGIN_BONUS.sol = -3`).
+- **Grok 4.6 comparison recomputed** against the new Sol promo: 60%+/80% cheaper vs $5/$30 → **50%/70% cheaper vs $4/$20** (selector helper, FAQ JSON-LD, Pricing Reference footnote, ROI text).
+- **`ai-model-cost-per-task-2026.html` updated:** per-1M table row $5.00/$30.00 → **$4.00/$20.00** (official promo note), 10K-in/2K-out per-task cost **~$0.110 → ~$0.080**, monthly 10K-task spread **$1,100 → $800**, Grok vs Sol ratio **~3.4x → ~2.5x**, FAQ answers + FAQPage JSON-LD, accuracy note, heading date → Aug 22, 2026.
+- **`model-selection-muse-spark.html`:** GPT-5.6 Sol row now shows the official $4/$20 promo (AA $1.23 cost/task flagged as pre-cut reference).
+- **`openai-2027-ipo-pricing-risk.html`:** accuracy note updated (Sol rate now official promo, not marked estimate).
+- **`CALCULATOR-API-SPEC.md`:** Sol factor annotation updated to verified promo pricing; Sonnet 5 / Grok 4.6 comparison notes updated.
+- **Cost-per-task verification (3 representative examples):** 10K-in/2K-out task **~$0.110 → ~$0.080 (-27%)**; 100K-in/5K-out task **~$0.650 → ~$0.500 (-23%)**; 20K-in/4K-out task **~$0.220 → ~$0.160 (-27%)** — input-heavy agent workloads drop ~20%+, consistent with the 20% input / 33% output cuts. All other model per-task costs unchanged.
+- **Sources:** OpenAI API pricing (published Aug 21, 2026) — verified via research brief t_1d150dd3 (7 sources, 16 verbatim evidence quotes, verify --evidence PASS 84% coverage).
+- **Deployed:** Cloudflare Pages (ai-agency-pricing-calculator), verified live.
+
 ## 2026-08-22 — Umami instrumentation: pricing page tag + ChatGPT Ads preset event (kanban t_c59c3ef2)
 
 - **Umami tag added to `chatgpt-ads-agency-pricing-2026.html`** (live at https://aiagencycalculator.com/chatgpt-ads-agency-pricing-2026) — the page had canonical + Article/FAQPage JSON-LD but no analytics script (0 `data-website-id` occurrences, flagged by analytics t_b6da69f3). Now uses the same `cloud.umami.is/script.js` tag with `data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"` as the homepage. This page is the key CTA destination from https://findaiagency.com/chatgpt-ads-europe; it moves from "known gap" to fully instrumented for the day-7 KPI readout (2026-08-29).

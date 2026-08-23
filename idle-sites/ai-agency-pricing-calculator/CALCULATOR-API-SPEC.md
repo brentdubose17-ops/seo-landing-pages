@@ -2,7 +2,7 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-08-20 (OpenAI safety-monitoring overhead stress-test toggle — verified via research brief t_b34197c5, task t_72a68f53)
+**Last updated:** 2026-08-22 (ChatGPT Ads EU pricing preset — verified via research brief t_ff98639f, task t_f07e1052)
 
 ---
 
@@ -98,6 +98,46 @@ opened Aug 4–5, 2026. Sources linked in section `#wallet-rails`.
 
 ## 3. Main Pricing Calculator (unchanged fallback defaults)
 
+### 3.0 ChatGPT Ads (EU) preset (NEW 2026-08-22)
+
+Added as an 8th `serviceType` option: **`chatgpt_ads`** — "📢 ChatGPT Ads
+Management (EU)". Selecting it reveals a labeled inputs box (`#chatgptAdsBox`)
+with two extra inputs:
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `adsMonthlySpend` | Monthly Ad Spend (pass-through, $) | number | `5000` | 500–250,000, step 500 |
+| `adsMgmtFeePct` | Management Fee (% of ad spend) | number | `20` | 10–30, step 0.5 |
+
+Pricing model (replaces the generic retainer formula for this service only):
+
+```
+rawFee     = adsMonthlySpend × adsMgmtFeePct / 100
+feeFloor   = BASE_RETAINER.chatgpt_ads.min = 2000   (covers manual review + policy monitoring)
+feeCap     = BASE_RETAINER.chatgpt_ads.max = 7500   (typical rollout retainer ceiling)
+retainer   = round(clamp(rawFee, 2000, 7500) / 50) × 50
+setupFee   = round(setupMid × combined / 500) × 500 (no portability/plugin factors — managed line)
+margin     = BASE_MARGIN.chatgpt_ads = 62 (base; EXP_MULT applies, portability bonus zeroed)
+```
+
+Constants: `BASE_SETUP.chatgpt_ads = {1500, 5000}` · `BASE_RETAINER.chatgpt_ads =
+{2000, 7500}` · `BASE_MARGIN.chatgpt_ads = 62` · `SERVICE_LABELS.chatgpt_ads =
+'ChatGPT Ads management'`. ROI text and pitch script branch for this service
+(EU-reach framing, not hours-saved). Umami `calculator_run` carries the service
+value as before.
+
+Fact basis (research brief t_ff98639f, verified): OpenAI announced Aug 18, 2026
+that ChatGPT Ads expands to **31 European markets Aug 24, 2026** (40 markets
+total). Ads appear on **Free and Go tiers only** (Go ≈ €8/mo; Plus/Pro/Enterprise
+ad-free); buying is **agency-led first** (OpenAI Ads Solutions team + agency/tech
+partners; self-serve Ads Manager later this summer); EU targeting is
+**GDPR consent-shaped**; health/mental-health/political content ineligible;
+under-18 excluded. Agency pricing guidance (chatgpt-ads-agency-pricing-2026.html):
+setup $1,500–$5,000 (account structure, conversion tracking/oCPC, creative prep);
+management fee 15–25% of ad spend with $2,000–$7,500/mo retainer floor. Ad spend
+is pass-through — the client pays OpenAI directly; the management fee is the
+agency's revenue.
+
 ### 3.1 Inputs
 
 | Field ID | Type | Default |
@@ -128,7 +168,7 @@ SIZE_MULT     0.65 / 0.85 / 1.0 / 1.35 / 1.8
 WORKFLOW_MULT 0.7 / 0.9 / 1.0 / 1.3 / 1.6
 EXP_MULT      0.7 / 1.0 / 1.3 / 1.6
 TIMELINE_MULT 1.35 / 1.0 / 0.9
-MODEL_COMPUTE_FACTOR  open 0.95 · deepseek 0.92 (PROVISIONAL — hike announced) · local 0.85 (Meta Muse Glimmer self-host, cheapest — hardware-amortized, per-workload) · grok46 1.0 (Grok 4.6 SpaceXAI, $2/$6 verified — neutral, matches open-weight tier price but hosted frontier) · gemini37 0.93 (Gemini 3.7 Flash Google, intro $0.75/$3.75 verified through 2026-12-31 then $1.50/$7.50 — slightly below open because intro undercuts it, conservative due to expiry + hosted) · sonnet5 0.97 (Claude Sonnet 5 Anthropic, $2/$10 verified PERMANENT Aug 10 2026 — Sept 1 $3/$15 increase CANCELLED; input at open-weight parity, output above open but below premium frontier; hosted frontier no self-host upside) · hybrid 1.0 · frontier 1.1 · sol 1.15 (estimate)
+MODEL_COMPUTE_FACTOR  open 0.95 · deepseek 0.92 (PROVISIONAL — hike announced) · local 0.85 (Meta Muse Glimmer self-host, cheapest — hardware-amortized, per-workload) · grok46 1.0 (Grok 4.6 SpaceXAI, $2/$6 verified — neutral, matches open-weight tier price but hosted frontier) · gemini37 0.93 (Gemini 3.7 Flash Google, intro $0.75/$3.75 verified through 2026-12-31 then $1.50/$7.50 — slightly below open because intro undercuts it, conservative due to expiry + hosted) · sonnet5 0.97 (Claude Sonnet 5 Anthropic, $2/$10 verified PERMANENT Aug 10 2026 — Sept 1 $3/$15 increase CANCELLED; input at open-weight parity, output above open but below premium frontier; hosted frontier no self-host upside) · hybrid 1.0 · frontier 1.1 · sol 1.15 (verified official $4/$20 promo Aug 21 – Nov 21, 2026, down from $5/$30 estimate; cached input $0.40 — factor unchanged, still premium tier above generic frontier for reasoning-effort dial)
 MODEL_MARGIN_BONUS    open +5 · deepseek +6 · local +8 · grok46 +2 · gemini37 +4 · sonnet5 +3 · hybrid 0 · frontier −2 · sol −3
 DELIVERY_RISK_FACTOR  low 1.0 · moderate 1.15 · high 1.35 · levelsio 2.0
 PORTABILITY_SETUP_FACTOR   single 1.0 · plugin_2 0.85 · plugin_many 0.70
@@ -198,6 +238,21 @@ $1.50/$7.50) · Flash-Lite $0.30/$2.50 · Flash $1.50/$9.00 · 2.5 Pro $1.25/$10
 
 ## Changelog
 
+- **2026-08-22** — ChatGPT Ads (EU) pricing preset added (task t_f07e1052; fact
+  basis research brief t_ff98639f). New `serviceType` option `chatgpt_ads`
+  ("📢 ChatGPT Ads Management (EU)") with a labeled inputs box (`#chatgptAdsBox`,
+  shown only when selected) for monthly ad spend + management fee %. Retainer =
+  clamp(ad spend × fee %, $2,000, $7,500) rounded to $50; setup $1,500–$5,000
+  range; margin base 62%. Portability/plugin factors intentionally skipped for
+  this managed-service line. ROI/pitch text branches to EU-reach framing
+  (31 markets Aug 24, 2026; Free+Go only; agency-led buying first). FAQ +
+  FAQPage JSON-LD, Pricing Reference Table row, meta description/keywords,
+  assumptions footer (date → Aug 22), changelog entries on both pages.
+  Verified: node harness (15 scenarios on index_calculator.html, 13 on
+  index.html incl. portability regression) + browser render/click test +
+  JSON-LD valid. Sources: openai.com/index/chatgpt-ads-expands-across-europe ·
+  searchengineland.com · dataconomy.com · euronews.com (research brief
+  t_ff98639f, 7 sources, 16 verbatim quotes).
 - **2026-08-20** — OpenAI safety-monitoring overhead stress-test toggle added
   (task t_72a68f53; fact basis research brief t_b34197c5). New visible checkbox
   `openaiOverhead` in the Model Strategy section (OFF by default). When ON, a
@@ -221,7 +276,7 @@ $1.50/$7.50) · Flash-Lite $0.30/$2.50 · Flash $1.50/$9.00 · 2.5 Pro $1.25/$10
   change, subscription prices unchanged). Conservative modeling:
   `MODEL_COMPUTE_FACTOR.sonnet5 = 0.97`, `MODEL_MARGIN_BONUS.sonnet5 = +3` — input at
   open-weight parity ($2 vs Qwen 3.8 Max), output above open-weight ($10 vs $6) but
-  well below premium frontier (GPT-5.6 Sol $5/$30 estimate), hosted frontier API with
+  well below premium frontier (GPT-5.6 Sol $4/$20 promo through Nov 21, 2026), hosted frontier API with
   no open-weight/self-host upside. Selector option + helper, model label/assumption
   note/ROI text branches, FAQ + FAQPage JSON-LD, Pricing Reference Table footnote, meta
   tags, assumptions note. No other strategy factors changed; default (hybrid) outputs
@@ -259,7 +314,9 @@ $1.50/$7.50) · Flash-Lite $0.30/$2.50 · Flash $1.50/$9.00 · 2.5 Pro $1.25/$10
   model label/assumption note/ROI text branches, FAQ + FAQPage JSON-LD, Pricing Reference
   Table footnote, meta tags, assumptions note. No other strategy factors changed; default
   (hybrid) outputs unchanged. Sanity check: 50k input / 2k output run = $0.112 (vs
-  GPT-5.6 Sol $0.31 → 64% cheaper, consistent with AA "60%+ below"). Sources: x.ai, 9to5Mac,
+  GPT-5.6 Sol $0.31 → 64% cheaper at Sol's then-estimate $5/$30; at Sol's verified Aug 21,
+  2026 promo $4/$20 the same run is ~$0.24, so Grok 4.6 is ~53% cheaper — still the 
+  lower-cost stack for this workload). Sources: x.ai, 9to5Mac,
   Artificial Analysis (research brief t_a87cfcc9). Task t_c7e3e912.
 - **2026-08-12** — Grok Bot added as a fourth coding-agent billing model
   (subscription-bundled agent access) in the cost-transparency comparison on the
