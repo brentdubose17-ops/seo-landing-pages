@@ -3,10 +3,15 @@
  * -------------------------------------------------
  * Updated 2026-08-22: Canada Section 338 50% duty now IN EFFECT
  * (effective 12:01 a.m. EDT Sat Aug 22, 2026 on ~$20B of Canadian goods;
- * verified vs tariff-trigger-spec.md t_d87d9da9 — Reuters, Al Jazeera,
- * DW, The Guardian, AP). Replaces the suspended canada_s338 proposed flag
- * with SECTION_338_CANADA + product scope (hockey sticks, tongue
- * depressors, etc.) applied to covered categories in the default rate.
+ * re-verified against parent datapack t_89767bbd — 12 sources incl.
+ * official instruments: USTR statement, WH Fact Sheet, Proclamations
+ * 11046/47/48, Aug 18 suspension proclamation, plus Al Jazeera, JPost/
+ * Reuters, ZeroHedge, NPR, CBC, Guardian. Replaces the suspended
+ * canada_s338 proposed flag with SECTION_338_CANADA + product scope
+ * (hockey sticks, tongue depressors, cheeses, etc.) applied to covered
+ * categories in the default rate. The rejected deal offer
+ * (steel/aluminum 25%, autos 15%, lumber 10% eliminated) is NOT enacted
+ * and lives in REJECTED_DEAL_PRESET as an alternate preset only.
  * Updated 2026-08-15: Section 232 UAS / drone tariff added
  * (100% Annex I / 25% Annex II + Annex III, effective 2026-09-03,
  * Annex III components 2027-02-09, allied 15%/10% carve-outs,
@@ -363,16 +368,18 @@
    * Pre-existing steel/lumber/auto tariffs remain in force and stack.
    * Canada's response: dollar-for-dollar retaliation starting Sept 8, 2026
    * (US steel, dairy, appliances, ag machinery, paper, electronics).
-   * Verified 2026-08-22 against tariff-trigger-spec.md (t_d87d9da9):
-   * Reuters, Al Jazeera (x2), DW, The Guardian, AP.
+   * Re-verified 2026-08-22 against parent datapack t_89767bbd (12 sources,
+   * 26 verbatim quotes, 6 official instruments; verify --strict GREEN 56%).
+   * The rejected deal offer (steel/aluminum 25%, autos 15%, lumber 10%
+   * eliminated) is NOT enacted — see REJECTED_DEAL_PRESET below.
    */
   var SECTION_338_CANADA = {
     category: 'canada-s338',
     rate: 0.50,
     effective: '2026-08-22 12:01 AM ET',
     effective_gmt: '04:01 GMT',
-    authority: 'Section 338, Tariff Act of 1930 (Smoot-Hawley) — first-ever use',
-    instrument: '3 presidential proclamations signed July 20, 2026; original Aug 19 start extended 3 days',
+    authority: 'Section 338, Tariff Act of 1930 (19 U.S.C. 1338) — first-ever use',
+    instrument: '3 presidential proclamations signed July 20, 2026 (11046 alcohol, 11047 dairy, 11048 motor vehicles); original Aug 19 start suspended 3 days by Aug 18 proclamation → effective Aug 22',
     value_affected: '~$20 billion of Canadian goods (~5% of Canada\'s annual exports to the US)',
     applies_to_cusma_goods: true,
     // Calculator categories treated as covered for Canada. 'auto' and
@@ -389,7 +396,7 @@
     // dairy, swimming pools, furniture, fishing rods, seeds, clothing, wigs).
     product_scope: {
       ap_framing: 'products ranging from hockey sticks to tongue depressors',
-      dairy: ['milk and cream', 'whey and milk protein concentrates', 'bones and horn-cones', 'lactose', 'glucose', 'fructose and blended syrups', 'sugars', 'cane molasses', 'non-alcoholic beer', 'essential oils of peppermint'],
+      dairy: ['cheeses of all types', 'milk and cream', 'whey and milk protein concentrates', 'bones and horn-cones', 'lactose', 'glucose', 'fructose and blended syrups', 'sugars', 'cane molasses', 'non-alcoholic beer', 'essential oils of peppermint'],
       alcohol: ['beer', 'wine', 'liquor', 'cider', 'other fermented beverages'],
       wood_hockey: ['essential oils of grapefruit', 'densified wood blocks', 'plates', 'strips', 'skewers', 'ice cream sticks', 'bamboo products', 'basketwork', 'grease-proof paper', 'ice hockey equipment', 'field hockey equipment', 'wooden ice hockey sticks'],
       natural_plant: ['natural honey', 'down feathers', 'tortoise shell', 'whalebone', 'horns', 'antlers', 'tulips and dormant flower buds', 'live orchids', 'mushroom spawn', 'tubers', 'mosses', 'lichen', 'vegetable/tree/shrub seeds'],
@@ -399,13 +406,71 @@
     hs_note: 'No HS/HTS codes enumerated in Reuters, Al Jazeera, DW, or The Guardian coverage. Official line-level HTS list lives in the three July 20, 2026 Section 338 proclamations / USTR statement PDF.',
     status: 'IN EFFECT — the 50% additional duty took effect Saturday, Aug 22, 2026 at 12:01 a.m. EDT (04:01 GMT) after U.S.–Canada talks failed to finalize a deal. USTR Jamieson Greer: "Tonight, Canada declined to finalize the trade deal under the terms agreed earlier this week." Canada said it will match tariffs dollar for dollar starting Sept 8, 2026 (US steel, dairy, appliances, agricultural machinery, paper, electronics).',
     source_citations: [
-      'Reuters: US, Canada trade teams meet again as tariff deadline looms (Aug 21, 2026) — https://www.reuters.com/world/americas/us-canadian-trade-teams-meet-again-tariffs-deadline-looms-2026-08-21/',
-      'Reuters: US imposes new 50% tariffs on Canadian products (Jul 20, 2026) — https://www.reuters.com/business/us-imposes-new-50-tariffs-canadian-products-2026-07-20/',
+      'USTR: Ambassador Greer Issues Statement on President Trump Imposing Section 338 Tariffs on Canada (Jul 20, 2026) — https://ustr.gov/about/policy-offices/press-office/press-releases/2026/july/ambassador-greer-issues-statement-president-trump-imposing-section-338-tariffs-canada',
+      'White House Fact Sheet: Trump Imposes Additional Tariffs on Canada (Jul 20, 2026) — https://www.whitehouse.gov/fact-sheets/2026/07/fact-sheet-president-donald-j-trump-imposes-additional-tariffs-on-canada/',
+      'WH Proclamation 11048 (motor vehicles, Annex II) — https://www.whitehouse.gov/presidential-actions/2026/07/imposing-additional-duties-to-offset-canadian-discrimination-against-the-commerce-of-the-united-states-with-respect-to-motor-vehicles/',
+      'WH Proclamation 11046 (alcoholic beverages) — https://www.whitehouse.gov/presidential-actions/2026/07/imposing-additional-duties-to-offset-canadian-discrimination-against-the-commerce-of-the-united-states-with-respect-to-alcoholic-beverages/',
+      'WH Proclamation 11047 (dairy) — https://www.whitehouse.gov/presidential-actions/2026/07/imposing-additional-duties-to-offset-canadian-discrimination-against-the-commerce-of-the-united-states-with-respect-to-dairy/',
+      'WH Proclamation: Temporary Suspension of Additional Duties (Aug 18, 2026) — effective date moved to Aug 22 — https://www.whitehouse.gov/presidential-actions/2026/08/temporary-suspension-of-additional-duties-to-offset-canadian-discrimination-against-the-commerce-of-the-united-states-with-respect-to-alcoholic-beverages-dairy-and-motor-vehicles/',
       'Al Jazeera: US imposes 50% tariffs on $20bn worth of Canadian goods after talks fail (Aug 22, 2026) — https://www.aljazeera.com/news/2026/8/22/us-imposes-50-tariffs-on-20bn-worth-of-canadian-goods-after-talks-fail',
-      'Al Jazeera: Carney says Canada will enact retaliatory US tariffs starting September 8 (Aug 22, 2026) — https://www.aljazeera.com/news/2026/8/22/carney-canada-will-enact-retaliatory-us-tariffs-starting-september-8',
-      'DW: US imposes 50% tariffs on some Canadian products as trade talks fail (Aug 22, 2026) — https://www.dw.com/en/us-imposes-50-tariffs-on-some-canadian-products-as-trade-talks-fail/a-78466352',
-      'The Guardian: Canada tariffs — Trump trade deal talks fail (Aug 22, 2026) — https://www.theguardian.com/world/2026/aug/22/canada-tariffs-trump-trade-deal-talks-fail',
-      'AP via Boston.com: US imposes 50% tariffs on $20B worth of Canadian products, Canada says it will retaliate (Aug 22, 2026) — https://www.boston.com/news/national-news/2026/08/22/us-imposes-50-tariffs-on-20b-worth-of-canadian-products-canada-says-it-will-retaliate/'
+      'Jerusalem Post / Reuters: US imposes 50% tariffs on Canadian goods after deal fails (Aug 22, 2026) — https://www.jpost.com/international/article-906250',
+      'ZeroHedge: Canada-US Trade War Erupts, Setting New 50% Tariffs On Canadian Goods (Aug 22, 2026) — rejected-offer rates 25/15/10 — https://www.zerohedge.com/political/canada-us-trade-war-erupts-setting-new-50-tariffs-canadian-goods',
+      'NPR: U.S.-Canada trade talks collapse (Aug 22, 2026) — https://www.npr.org/2026/08/22/nx-s1-5941584/us-canada-tariffs',
+      'CBC: American tariffs on Canadian goods take effect after trade talks fall apart (Aug 22, 2026) — https://www.cbc.ca/news/canada/canada-us-tariffs-trump-imposes-new-50-per-cent-levy-on-canadian-goods-august-22-9.7311417',
+      'The Guardian: Canada vows dollar for dollar response as US puts 50% tariffs on some goods (Aug 22, 2026) — https://www.theguardian.com/world/2026/aug/22/canada-tariffs-trump-trade-deal-talks-fail'
+    ]
+  };
+
+  /*
+   * REJECTED_DEAL_PRESET — alternate preset, NOT enacted.
+   * -------------------------------------------------
+   * The deal Canada declined on Aug 21, 2026 would have REDUCED US tariffs:
+   *   - Steel & aluminum: cut to 25% (from pre-existing Section 232 duties)
+   *   - Automotive duties: lowered to 15%
+   *   - Lumber 10% levy: ELIMINATED
+   * These figures appear in the parent datapack (t_89767bbd) table 2 as the
+   * REJECTED offer — Guardian: Greer offered "significant tariff reductions
+   * on steel, aluminum, autos, and lumber"; ZeroHedge gives the exact
+   * 25%/15%/eliminated figures. The enacted outcome is the 50% Section 338
+   * levy (SECTION_338_CANADA) — the deal rates are NOT in force, were NEVER
+   * in force, and must not be presented as enacted. They are exposed here
+   * as an alternate "what-if" preset for modeling only.
+   */
+  var REJECTED_DEAL_PRESET = {
+    key: 'us_canada_deal_offer_2026',
+    label: 'Rejected US–Canada deal offer (Aug 2026) — what-if, NOT enacted',
+    not_enacted: true,
+    rejected_date: '2026-08-21',
+    rejected_by: 'Canada (Carney: terms "unfair, uneconomic"; talks suspended; negotiators recalled to Ottawa)',
+    outcome: 'Deal rejected → Section 338 50% additional duty took effect Aug 22, 2026 instead (see SECTION_338_CANADA)',
+    changes: [
+      { measure: 'Steel & aluminum', proposed_rate: 0.25, baseline: 'Pre-existing Section 232 duties (CBC: 50% steel/aluminum)', note: 'Would have been REDUCED to 25%' },
+      { measure: 'Automotive duties', proposed_rate: 0.15, baseline: 'Pre-existing Section 232 auto duties', note: 'Would have been lowered to 15%' },
+      { measure: 'Lumber levy', proposed_rate: 0.00, baseline: '10% pre-existing levy (Section 232)', note: 'Would have been ELIMINATED' }
+    ],
+    effectiveRateIfEnacted: function (countrySlug, category, opts) {
+      // What-if helper: returns the rate the calculator would compute with
+      // the deal offer applied (steel/aluminum 25%, autos 15%, lumber 0%)
+      // INSTEAD of the pre-existing Section 232 baselines. Pure modeling —
+      // never used by the live calculator.
+      if (countrySlug !== 'canada') return null;
+      var base = effectiveRate(countrySlug, category, opts);
+      if (!base) return null;
+      var presetRate = null;
+      if (category === 'steel' || category === 'ceramics') presetRate = 0.25;
+      else if (category === 'auto') presetRate = 0.15;
+      else if (category === 'paper') presetRate = 0.00;
+      return {
+        preset: presetRate,
+        liveRate: base.rate,
+        not_enacted: true,
+        note: 'Modeled rate if the rejected deal had been accepted — NOT in force'
+      };
+    },
+    source_citations: [
+      'ZeroHedge: "The proposed US-Canada trade deal would have reduced US tariffs on Canadian steel and aluminum to 25%, lowered automotive duties to 15%, and eliminated a 10% levy on lumber." — https://www.zerohedge.com/political/canada-us-trade-war-erupts-setting-new-50-tariffs-canadian-goods',
+      'The Guardian: Greer offering "significant tariff reductions on steel, aluminum, autos, and lumber" — https://www.theguardian.com/world/2026/aug/22/canada-tariffs-trump-trade-deal-talks-fail',
+      'USTR statement (Greer): "Canada declined to finalize the trade deal under the terms agreed earlier this week" — https://ustr.gov/about/policy-offices/press-office/press-releases/2026/july/ambassador-greer-issues-statement-president-trump-imposing-section-338-tariffs-canada'
     ]
   };
 
@@ -418,7 +483,7 @@
   var PRODUCT_SCOPE = [
     'hockey stick', 'hockey sticks', 'wooden ice hockey stick', 'ice hockey', 'field hockey',
     'tongue depressor', 'tongue depressors',
-    'milk', 'cream', 'whey', 'milk protein concentrate', 'lactose', 'glucose', 'fructose',
+    'milk', 'cream', 'cheese', 'cheeses', 'whey', 'milk protein concentrate', 'lactose', 'glucose', 'fructose',
     'blended syrup', 'sugar', 'cane molasses', 'non-alcoholic beer', 'essential oil of peppermint',
     'beer', 'wine', 'liquor', 'whisky', 'whiskey', 'cider', 'fermented beverage',
     'essential oil of grapefruit', 'densified wood', 'wood block', 'wood strip', 'skewer',
@@ -724,6 +789,7 @@
     SECTION_232_UAS: SECTION_232_UAS,
     GROUND_BEEF_WAIVER: GROUND_BEEF_WAIVER,
     SECTION_338_CANADA: SECTION_338_CANADA,
+    REJECTED_DEAL_PRESET: REJECTED_DEAL_PRESET,
     PRODUCT_SCOPE: PRODUCT_SCOPE,
     USMCA: USMCA,
     EXEMPTION_NOTES: EXEMPTION_NOTES,

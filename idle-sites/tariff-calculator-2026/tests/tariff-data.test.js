@@ -201,7 +201,7 @@ test('S338 product-name QA sample: hockey stick + tongue depressor lookup', () =
   assert.equal(q('wooden ice hockey stick'), true);
   assert.equal(q('tongue depressors'), true);
   assert.equal(q('bottle of wine'), true);
-  assert.equal(q('cheddar cheese'), false, 'cheddar not in the verified scope');
+  assert.equal(q('cheddar cheese'), true, 'cheeses of all types are covered per Proclamation 11047 (datapack row 3, HIGH)');
   assert.equal(q('smartphone'), false);
 });
 
@@ -788,12 +788,15 @@ test('S338 UI: index.html banner says IN EFFECT with Aug 22 date + source links'
   // ~$20B and ~5% approximations
   assert.ok(/\$20 billion/.test(html), 'index.html should show the ~$20B scope');
   assert.ok(/hockey sticks to tongue depressors/.test(html), 'index.html should use the hockey sticks → tongue depressors framing');
-  // Source citations for the in-effect event
-  assert.ok(html.includes('reuters.com/world/americas/us-canadian-trade-teams-meet-again-tariffs-deadline-looms-2026-08-21'), 'index.html should link Reuters (Aug 21)');
+  // Source citations for the in-effect event (parent datapack t_89767bbd — official instruments + press)
+  assert.ok(html.includes('ustr.gov/about/policy-offices/press-office/press-releases/2026/july'), 'index.html should link the official USTR statement');
+  assert.ok(html.includes('whitehouse.gov/fact-sheets/2026/07/fact-sheet-president-donald-j-trump-imposes-additional-tariffs-on-canada'), 'index.html should link the WH Fact Sheet');
+  assert.ok(html.includes('Proclamations 11046/47/48'), 'index.html should cite Proclamations 11046/47/48');
   assert.ok(html.includes('aljazeera.com/news/2026/8/22/us-imposes-50-tariffs-on-20bn-worth-of-canadian-goods'), 'index.html should link Al Jazeera');
-  assert.ok(html.includes('dw.com/en/us-imposes-50-tariffs-on-some-canadian-products-as-trade-talks-fail'), 'index.html should link DW');
+  assert.ok(html.includes('jpost.com/international/article-906250'), 'index.html should link Reuters/JPost');
+  assert.ok(html.includes('npr.org/2026/08/22/nx-s1-5941584'), 'index.html should link NPR');
+  assert.ok(html.includes('cbc.ca/news/canada/canada-us-tariffs'), 'index.html should link CBC');
   assert.ok(html.includes('theguardian.com/world/2026/aug/22/canada-tariffs-trump-trade-deal-talks-fail'), 'index.html should link The Guardian');
-  assert.ok(html.includes('boston.com/news/national-news/2026/08/22/us-imposes-50-tariffs-on-20b-worth-of-canadian-products'), 'index.html should link AP via Boston.com');
   // Calculator category present
   assert.ok(/Canada Section 338 Covered Goods/.test(html), 'index.html should offer the Canada Section 338 Covered Goods category');
 });
@@ -813,9 +816,123 @@ test('S338 UI: news advisory page reflects in-effect status with sources', () =>
   assert.ok(/IN EFFECT/.test(news), 'news page should state IN EFFECT');
   assert.ok(!/STATUS: SUSPENDED/.test(news), 'news page must not show SUSPENDED status');
   assert.ok(/hockey sticks to tongue depressors/.test(news), 'news page should use the AP framing');
-  assert.ok(news.includes('reuters.com/world/americas/us-canadian-trade-teams-meet-again-tariffs-deadline-looms-2026-08-21'), 'news page should link Reuters');
+  assert.ok(news.includes('ustr.gov/about/policy-offices/press-office/press-releases/2026/july'), 'news page should link the official USTR statement');
   assert.ok(news.includes('aljazeera.com/news/2026/8/22/us-imposes-50-tariffs-on-20bn-worth-of-canadian-goods'), 'news page should link Al Jazeera');
-  assert.ok(news.includes('dw.com/en/us-imposes-50-tariffs-on-some-canadian-products-as-trade-talks-fail'), 'news page should link DW');
+  assert.ok(news.includes('jpost.com/international/article-906250'), 'news page should link JPost/Reuters');
+  assert.ok(news.includes('zerohedge.com/political/canada-us-trade-war-erupts'), 'news page should link ZeroHedge');
+  assert.ok(news.includes('npr.org/2026/08/22/nx-s1-5941584'), 'news page should link NPR');
+  assert.ok(news.includes('cbc.ca/news/canada/canada-us-tariffs'), 'news page should link CBC');
   assert.ok(news.includes('theguardian.com/world/2026/aug/22/canada-tariffs-trump-trade-deal-talks-fail'), 'news page should link The Guardian');
-  assert.ok(news.includes('boston.com/news/national-news/2026/08/22/us-imposes-50-tariffs-on-20b-worth-of-canadian-products'), 'news page should link AP');
+  assert.ok(news.includes('Proclamations 11046'), 'news page should cite Proclamations 11046/47/48');
+});
+
+// --- Canada Section 338 — parent-datapack re-verification (t_89767bbd) ---
+
+test('S338 citations include official instruments from parent datapack (Proclamations 11046/47/48 + suspension)', () => {
+  const cites = T.SECTION_338_CANADA.source_citations.join(' ');
+  assert.ok(cites.includes('11046'), 'should cite Proclamation 11046 (alcohol)');
+  assert.ok(cites.includes('11047'), 'should cite Proclamation 11047 (dairy)');
+  assert.ok(cites.includes('11048'), 'should cite Proclamation 11048 (motor vehicles)');
+  assert.ok(cites.includes('Temporary Suspension'), 'should cite the Aug 18 suspension proclamation');
+  assert.ok(cites.includes('ustr.gov'), 'should cite the official USTR statement');
+  assert.ok(cites.includes('whitehouse.gov'), 'should cite the WH Fact Sheet');
+  assert.ok(cites.length >= 10, `expected >= 10 citations (12-source datapack), got ${cites.length}`);
+});
+
+test('REJECTED_DEAL_PRESET exists with the verified offer rates, flagged NOT enacted', () => {
+  const p = T.REJECTED_DEAL_PRESET;
+  assert.ok(p, 'REJECTED_DEAL_PRESET should be present');
+  assert.equal(p.not_enacted, true, 'preset must be flagged NOT enacted');
+  assert.equal(p.rejected_date, '2026-08-21');
+  assert.ok(p.label.includes('NOT enacted'), 'label should say NOT enacted');
+  const byMeasure = Object.fromEntries(p.changes.map(c => [c.measure, c]));
+  assert.equal(byMeasure['Steel & aluminum'].proposed_rate, 0.25, 'steel/aluminum offer = 25%');
+  assert.equal(byMeasure['Automotive duties'].proposed_rate, 0.15, 'autos offer = 15%');
+  assert.equal(byMeasure['Lumber levy'].proposed_rate, 0.00, 'lumber 10% levy would have been eliminated');
+  assert.ok(p.source_citations.length >= 3, 'should cite ZeroHedge + Guardian + USTR');
+});
+
+test('REJECTED_DEAL_PRESET is an alternate preset only — live calculator must NOT apply 25/15/10', () => {
+  // Steel: live rate stays at pre-existing (0.005 MFN + 0.014 cat = 0.019), NOT 25%
+  const st = T.effectiveRate('canada', 'steel', { asOfDate: '2026-08-22' });
+  assert.ok(Math.abs(st.rate - 0.019) < 0.0001, `steel live rate must NOT be 25%, got ${st.rate}`);
+  // Auto: live rate is 0.005 + 0.027 + 0.50 S338 = 0.532, NOT 15%
+  const au = T.effectiveRate('canada', 'auto', { asOfDate: '2026-08-22' });
+  assert.ok(Math.abs(au.rate - 0.532) < 0.0001, `auto live rate must be 0.532 (incl. S338), got ${au.rate}`);
+  assert.ok(Math.abs(au.breakdown.s338.rate - 0.50) < 0.0001, 'S338 50% stacks on autos — the enacted outcome');
+});
+
+test('REJECTED_DEAL_PRESET what-if helper models the offer without touching live rates', () => {
+  const p = T.REJECTED_DEAL_PRESET;
+  const steel = p.effectiveRateIfEnacted('canada', 'steel', { asOfDate: '2026-08-22' });
+  assert.equal(steel.preset, 0.25, 'what-if steel = 25%');
+  assert.equal(steel.not_enacted, true);
+  assert.ok(Math.abs(steel.liveRate - 0.019) < 0.0001, 'liveRate still the real pre-existing rate');
+  const auto = p.effectiveRateIfEnacted('canada', 'auto', { asOfDate: '2026-08-22' });
+  assert.equal(auto.preset, 0.15, 'what-if auto = 15%');
+  const lumber = p.effectiveRateIfEnacted('canada', 'paper', { asOfDate: '2026-08-22' });
+  assert.equal(lumber.preset, 0.00, 'what-if lumber = eliminated (0%)');
+  assert.equal(p.effectiveRateIfEnacted('china', 'steel', { asOfDate: '2026-08-22' }), null, 'what-if only applies to Canada');
+});
+
+// --- Example products across affected categories: duty totals ---
+
+const DUTY_TOTAL_CASES = [
+  // product, category, country, value, expected duty, expected rate (0.005 MFN + stack)
+  { product: 'bottle of wine',      category: 'food',         country: 'canada', value: 10000, duty: 5510, rate: 0.551 }, // 0.005 + 0.046 + 0.50
+  { product: 'cheddar cheese',      category: 'food',         country: 'canada', value: 25000, duty: 13775, rate: 0.551 },
+  { product: 'wooden hockey stick', category: 'canada-s338',  country: 'canada', value: 5000,  duty: 2525, rate: 0.505 },  // 0.005 + 0 + 0.50
+  { product: 'auto parts',          category: 'auto',         country: 'canada', value: 100000, duty: 53200, rate: 0.532 }, // 0.005 + 0.027 + 0.50
+  { product: 'tongue depressors',   category: 'canada-s338',  country: 'canada', value: 2000,  duty: 1010, rate: 0.505 },
+];
+
+test('S338 example products (5) return correct duty totals across affected categories', () => {
+  DUTY_TOTAL_CASES.forEach(c => {
+    const res = T.effectiveRate(c.country, c.category, { asOfDate: '2026-08-22' });
+    assert.ok(res, `${c.product}: effectiveRate failed`);
+    assert.ok(Math.abs(res.rate - c.rate) < 0.0001, `${c.product}: expected rate ${c.rate}, got ${res.rate}`);
+    const duty = Math.round(c.value * res.rate * 100) / 100;
+    assert.ok(Math.abs(duty - c.duty) < 0.01, `${c.product}: expected duty $${c.duty}, got $${duty}`);
+    const total = c.value + duty;
+    assert.ok(total > c.value, `${c.product}: landed cost must exceed value`);
+  });
+});
+
+test('S338 example products: duty totals BEFORE Aug 22 exclude the 50% (date gating)', () => {
+  const pre = T.effectiveRate('canada', 'food', { asOfDate: '2026-08-21' });
+  // 0.005 + 0.046 = 0.051 — no S338
+  assert.ok(Math.abs(pre.rate - 0.051) < 0.0001, `expected 0.051 before Aug 22, got ${pre.rate}`);
+  assert.equal(pre.breakdown.s338.applies, false);
+});
+
+test('S338 example products: excluded goods (steel, energy, potash) do NOT stack the 50%', () => {
+  // Section 232 goods (steel) are exempt from S338
+  const steel = T.effectiveRate('canada', 'steel', { asOfDate: '2026-08-22' });
+  assert.equal(steel.breakdown.s338, null, 'steel is Section 232 — exempt from S338');
+  // 'chemicals' is not in the covered set for Canada — no S338
+  const chem = T.effectiveRate('canada', 'chemicals', { asOfDate: '2026-08-22' });
+  assert.equal(chem.breakdown.s338, null);
+});
+
+test('REJECTED_DEAL_PRESET surfaced in index.html as NOT-enacted alternate preset (no outdated rate live)', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  // The deal offer must be labeled NOT enacted / rejected wherever it appears.
+  assert.ok(/rejected US–Canada deal/i.test(html), 'index.html should carry the rejected-deal callout heading');
+  assert.ok(/NOT enacted/.test(html), 'index.html should label the deal offer as not enacted');
+  // The callout must show the three offer rates framed as the rejected deal.
+  const calloutStart = html.indexOf('rejected US–Canada deal');
+  assert.ok(calloutStart > -1, 'rejected-deal callout should exist');
+  const callout = html.slice(calloutStart, calloutStart + 3000);
+  assert.ok(/<strong>25%<\/strong>/.test(callout), 'callout should show steel/aluminum 25% offer');
+  assert.ok(/<strong>15%<\/strong>/.test(callout), 'callout should show autos 15% offer');
+  assert.ok(/Eliminated/.test(callout), 'callout should show lumber levy eliminated');
+  assert.ok(/NOT enacted|rejected|would have/i.test(callout), 'offer rates must be framed as rejected, never as live rates');
+  // The IN-EFFECT banner (before the callout) must not present 25/15/10 as current Canada rates.
+  const bannerStart = html.indexOf('Canada 50% Section 338 Tariff');
+  const banner = html.slice(bannerStart, calloutStart);
+  assert.ok(/IN EFFECT/.test(banner), 'banner should state IN EFFECT');
+  assert.ok(!/25%|15%|10%/.test(banner.replace(/<[^>]+>/g, ' ')),
+    'IN-EFFECT banner must not show the rejected 25/15/10 figures as live rates');
 });
