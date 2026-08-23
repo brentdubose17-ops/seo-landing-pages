@@ -2,6 +2,20 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-23 — SEO/AEO refresh on US-Canada Tariffs FAQ for Sept 8 retaliation (kanban t_012d1339)
+
+- **`/us-canada-tariffs-2026` on-page SEO refreshed for the new retaliation queries:**
+  - Title → `Canada Retaliatory Tariffs Sept 8, 2026: US-Canada Tariffs 2026` (63 chars, targets "Canada tariffs September 8 2026" / "US Canada tariff retaliation").
+  - Meta description → 149 chars: `US-Canada retaliation: Canada's dollar-for-dollar tariffs start Sept 8, 2026 on steel, electronics, dairy, appliances, farming equipment, pulp/paper.`
+  - H1 → `US-Canada Tariffs 2026: 50% Section 338 Duty on ~$20B + Canada's Sept 8 Retaliation`.
+  - New H2 answer block `Canada's retaliation: dollar-for-dollar tariffs start September 8, 2026` with bulleted sector list (steel, electronics, dairy, household appliances, farming equipment, pulp/paper) and Canada-side landed-cost note — featured-snippet/AEO-ready direct answer.
+  - Article JSON-LD headline + description synced to new title/meta; FAQPage (6 Qs) already carries Sept 8 + dollar-for-dollar + sectors; dateModified stays 2026-08-23.
+  - No conflicting stale dates: only historical "original August 19 effective date" context remains (accurate, not stale).
+- **Internal links:** `canada-50-percent-tariff-august-19-explainer.html` + `section-301-tariff-expansion-60-countries.html` now link to /us-canada-tariffs-2026 (were missing); news feed item + homepage BLOG_ARTICLES card title/desc refreshed with Sept 8 retaliation; llms.txt entry retitled.
+- **Rank tracking:** added 3 queries to ~/.hermes/seo-data/keywords.json for tariffcalculator2026.com: "canada tariffs september 8 2026", "canada retaliatory tariffs september 8 2026", "us canada tariff retaliation".
+- **Tests:** 69/69 pass (no tariff-data.js change by this task).
+- **Deployed:** Cloudflare Pages (tariff-calculator-2026), preview 9e75b8fd, verified live — title/meta/H2/schema all present; sha256 matches local modulo CF beacon injection.
+
 ## 2026-08-23 — US-Canada Tariffs FAQ retaliation section updated to Sept 8, 2026 dollar-for-dollar tariffs (kanban t_7a79c021)
 
 - **`/us-canada-tariffs-2026` FAQ updated (same slug, same URL):** retaliation language revised from "pledged" to confirmed — Canada will impose dollar-for-dollar retaliatory tariffs on US imports starting Tuesday, September 8, 2026, following the US 50% tariffs on ~$20B of Canadian goods that took effect Aug 22, 2026. Full targeted-sector list per verified fact sheet t_160b34b4: steel, electronics, dairy, household appliances, farming equipment, pulp/paper. Added Carney's "at war" quote ("You're at war when you get attacked. We got attacked.") with reporter-question context; "Why the talks failed" section updated to note talks collapsed Friday Aug 21 before the deadline, Carney recalled negotiators to Ottawa. Meta description updated (<160c), dateModified bumped to 2026-08-23, new FAQPage JSON-LD entry for the retaliation question, source note updated (verified Aug 23 vs datapack t_89767bbd + fact sheet t_160b34b4: Al Jazeera Carney piece, India Today, CNBC).

@@ -192,6 +192,15 @@
     </div>
 </div>
 
+<div class="notice-banner" role="note" style="border-left-color:#2563eb;background:#eff6ff;">
+    <div class="inner">
+        <h2>🆕 Canada Retaliation: Dollar-for-Dollar Tariffs on US Imports — Effective September 8, 2026 <span class="deadline">Tuesday, Sept 8, 2026</span></h2>
+        <p><strong>Status: PENDING — Canada will impose dollar-for-dollar retaliatory tariffs on US imports starting Tuesday, September 8, 2026.</strong> Prime Minister Carney announced the response after the US 50% Section 338 duty on ~$20B of Canadian goods took effect Aug 22, 2026 and trade talks collapsed. The retaliation targets US <strong>steel, electronics, dairy, household appliances, farming equipment, and pulp &amp; paper</strong>, matching the US action dollar for dollar.</p>
+        <p><strong>In the calculator:</strong> switch "Shipping To" to <strong>🇨🇦 Canada</strong>, keep country of origin as <strong>United States</strong>, and select a targeted sector. On or after September 8, 2026 the 50% dollar-for-dollar retaliation duty is applied to your estimate; before that date it shows as PENDING. Read the full <a href="us-canada-tariffs-2026.html">US-Canada tariffs explainer</a>.</p>
+        <p style="font-size:0.85rem;color:#666;">Updated Aug 23, 2026. Sources: <a href="https://www.aljazeera.com/news/2026/8/22/carney-canada-will-enact-retaliatory-us-tariffs-starting-september-8" target="_blank" rel="noopener">Al Jazeera</a> · <a href="https://www.indiatoday.in/world/canada-news/story/canada-us-tariffs-mark-carney-retaliatory-duties-september-8-2977785-2026-08-23" target="_blank" rel="noopener">India Today</a> · <a href="https://www.cnbc.com/2026/08/22/us-canada-trade-talks-collapse-ushering-in-wave-of-new-tariffs.html" target="_blank" rel="noopener">CNBC</a> (verified against fact sheet t_160b34b4, Aug 23, 2026).</p>
+    </div>
+</div>
+
 <div class="notice-banner" role="note" style="border-left-color:#b45309;background:#fffaf0;">
     <div class="inner">
         <h2>⚠️ What the rejected US–Canada deal would have meant — NOT enacted</h2>
@@ -217,6 +226,14 @@
 
 <section class="calc-section">
     <div class="calculator">
+        <div class="form-row">
+            <label for="direction">Shipping To</label>
+            <select id="direction" onchange="onDirectionChange()">
+                <option value="to-us">🇺🇸 United States (importing into the US)</option>
+                <option value="to-canada">🇨🇦 Canada (US goods imported into Canada)</option>
+            </select>
+        </div>
+        <div class="flag info" id="canadaBanner" style="display:none;margin-top:4px;"></div>
         <div class="form-row">
             <label for="country">Country of Origin</label>
             <select id="country">
@@ -272,7 +289,7 @@
                 </div>
             </div>
             <div id="flags"></div>
-            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates including Section 301 (forced labor), Section 232 (polysilicon, drones/UAS), and the Canada Section 338 50% duty. The 50% Canada Section 338 duty (effective Aug 22, 2026 on ~$20B of Canadian goods) IS included in the default rate when you select <strong>Canada</strong> and a covered product category (Automotive, Food &amp; Beverages, or Canada Section 338 Covered Goods). The 100%/25% drone/UAS Section 232 duty (effective Sept 3, 2026) is applied when the Drones / UAS category is selected. The 90-day ground beef out-of-quota waiver (up to 300,000 metric tons; announced Aug 21, 2026) is applied when the Ground Beef category is selected with an import date inside the waiver window (Aug 21 – Nov 19, 2026), returning a duty-free result subject to the cap. Actual rates vary by HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database and USTR Chapter 99 headings 9903.05.20–9903.06.21.</p>
+            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates including Section 301 (forced labor), Section 232 (polysilicon, drones/UAS), and the Canada Section 338 50% duty. The 50% Canada Section 338 duty (effective Aug 22, 2026 on ~$20B of Canadian goods) IS included in the default rate when you select <strong>Canada</strong> and a covered product category (Automotive, Food &amp; Beverages, or Canada Section 338 Covered Goods). The 100%/25% drone/UAS Section 232 duty (effective Sept 3, 2026) is applied when the Drones / UAS category is selected. The 90-day ground beef out-of-quota waiver (up to 300,000 metric tons; announced Aug 21, 2026) is applied when the Ground Beef category is selected with an import date inside the waiver window (Aug 21 – Nov 19, 2026), returning a duty-free result subject to the cap. <strong>For US goods shipped TO Canada</strong>, switch "Shipping To" to <strong>Canada</strong> — Canada's dollar-for-dollar retaliation (50%, effective <strong>September 8, 2026</strong>) applies to US steel, electronics, dairy, household appliances, farming equipment, and pulp/paper on or after that date; before then it shows as PENDING. Actual rates vary by HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database and USTR Chapter 99 headings 9903.05.20–9903.06.21.</p>
         </div>
     </div>
 </section>
@@ -483,24 +500,84 @@ function estimateCssp() {
     var T = window.TARIFF_DATA;
     var countrySel = document.getElementById('country');
     var catSel = document.getElementById('category');
+    var dirSel = document.getElementById('direction');
 
-    // Populate country select from Section 301 matrix (sorted by name)
-    var keys = Object.keys(T.SECTION_301);
-    keys.sort(function (a, b) { return T.SECTION_301[a].name.localeCompare(T.SECTION_301[b].name); });
-    keys.forEach(function (k) {
-        var opt = document.createElement('option');
-        opt.value = k;
-        opt.textContent = T.SECTION_301[k].name + (T.SECTION_301[k].type === 'mfn_cap' ? ' (' + (T.SECTION_301[k].cap * 100) + '% cap)' : '');
-        countrySel.appendChild(opt);
-    });
+    var CANADA_SECTORS = (T.CANADA_RETALIATION && T.CANADA_RETALIATION.sector_categories) ||
+        ['steel', 'electronics', 'dairy', 'household-appliances', 'farming-equipment', 'pulp-paper'];
 
-    // Populate categories
-    Object.keys(T.CATEGORY_MODIFIERS).forEach(function (k) {
-        var opt = document.createElement('option');
-        opt.value = k;
-        opt.textContent = T.CATEGORY_MODIFIERS[k].name + ' (avg ' + (T.CATEGORY_MODIFIERS[k].add * 100).toFixed(1) + '%)';
-        catSel.appendChild(opt);
-    });
+    function populateCountries(direction) {
+        countrySel.innerHTML = '';
+        var first = document.createElement('option');
+        first.value = '';
+        first.textContent = '— Select country —';
+        countrySel.appendChild(first);
+        if (direction === 'to-canada') {
+            var us = document.createElement('option');
+            us.value = 'us';
+            us.textContent = '🇺🇸 United States';
+            countrySel.appendChild(us);
+            countrySel.value = 'us';
+        } else {
+            var keys = Object.keys(T.SECTION_301);
+            keys.sort(function (a, b) { return T.SECTION_301[a].name.localeCompare(T.SECTION_301[b].name); });
+            keys.forEach(function (k) {
+                var opt = document.createElement('option');
+                opt.value = k;
+                opt.textContent = T.SECTION_301[k].name + (T.SECTION_301[k].type === 'mfn_cap' ? ' (' + (T.SECTION_301[k].cap * 100) + '% cap)' : '');
+                countrySel.appendChild(opt);
+            });
+        }
+    }
+
+    function populateCategories(direction) {
+        catSel.innerHTML = '';
+        var first = document.createElement('option');
+        first.value = '';
+        first.textContent = '— Select product category —';
+        catSel.appendChild(first);
+        var keys = direction === 'to-canada'
+            ? CANADA_SECTORS.slice()
+            : Object.keys(T.CATEGORY_MODIFIERS);
+        keys.forEach(function (k) {
+            var opt = document.createElement('option');
+            opt.value = k;
+            opt.textContent = T.CATEGORY_MODIFIERS[k].name +
+                (direction === 'to-canada' ? '' : ' (avg ' + (T.CATEGORY_MODIFIERS[k].add * 100).toFixed(1) + '%)');
+            catSel.appendChild(opt);
+        });
+    }
+
+    function updateCanadaBanner() {
+        var banner = document.getElementById('canadaBanner');
+        if (!banner) return;
+        if (dirSel.value !== 'to-canada') {
+            banner.style.display = 'none';
+            return;
+        }
+        var ret = T.CANADA_RETALIATION;
+        var entryDate = document.getElementById('entryDate').value || new Date().toISOString().split('T')[0];
+        var applies = entryDate >= ret.effective;
+        var sectors = ret.sectors.map(function (s) { return s.label; }).join(', ');
+        banner.style.display = 'block';
+        banner.className = applies ? 'flag info' : 'flag warn';
+        banner.innerHTML = applies
+            ? '<strong>🔴 Canada Retaliation — IN EFFECT (effective ' + ret.effective_label + ')</strong>Canada\'s dollar-for-dollar retaliatory tariffs on US imports apply on or after <strong>September 8, 2026</strong>. Targeted sectors: <strong>' + sectors + '</strong>. Select a targeted sector above and an entry date on/after Sept 8, 2026 to see the retaliation duty in your estimate.'
+            : '<strong>🟡 Canada Retaliation — PENDING (effective ' + ret.effective_label + ')</strong>Canada\'s dollar-for-dollar retaliatory tariffs on US imports take effect <strong>September 8, 2026</strong>. Targeted sectors: <strong>' + sectors + '</strong>. Select an entry date on/after September 8, 2026 to see the retaliation duty in your estimate.';
+    }
+
+    window.onDirectionChange = function () {
+        var direction = dirSel.value;
+        populateCountries(direction);
+        populateCategories(direction);
+        document.getElementById('usmcaRow').style.display = 'none';
+        document.getElementById('droneTierRow').style.display = 'none';
+        document.getElementById('results').classList.remove('show');
+        updateCanadaBanner();
+    };
+
+    // Initial population (default: importing into the US)
+    populateCountries('to-us');
+    populateCategories('to-us');
 
     // USMCA checkbox visibility
     countrySel.addEventListener('change', function () {
@@ -513,6 +590,10 @@ function estimateCssp() {
         document.getElementById('droneTierRow').style.display = catSel.value === 'drones' ? 'block' : 'none';
     });
 
+    // Canada retaliation banner reacts to entry-date changes
+    var entryDateInput = document.getElementById('entryDate');
+    if (entryDateInput) entryDateInput.addEventListener('change', updateCanadaBanner);
+
     // Build rate matrix table
     var groups = {
         '10% additional': [],
@@ -520,7 +601,7 @@ function estimateCssp() {
         '10% combined cap': [],
         '12.5% combined cap': []
     };
-    keys.forEach(function (k) {
+    Object.keys(T.SECTION_301).forEach(function (k) {
         var c = T.SECTION_301[k];
         if (c.type === 'flat' && c.rate === 0.10) groups['10% additional'].push(c.name);
         else if (c.type === 'flat') groups['12.5% additional'].push(c.name);
@@ -565,10 +646,15 @@ function calculate() {
     errorMsg.style.display = 'none';
 
     var usmcaQualified = document.getElementById('usmca').checked;
+    var direction = document.getElementById('direction') ? document.getElementById('direction').value : 'to-us';
     var opts = { usmcaQualified: usmcaQualified };
     if (entryDate) opts.asOfDate = entryDate;
     if (category === 'drones') {
         opts.droneTier = document.getElementById('droneTier').value;
+    }
+    if (direction === 'to-canada') {
+        opts.direction = 'to-canada';
+        opts.usmcaQualified = false;
     }
     var res = T.effectiveRate(country, category, opts);
     if (!res) return;
@@ -577,8 +663,9 @@ function calculate() {
     var duty = value * effectiveRate;
     var total = value + duty;
 
+    var countryName = country === 'us' ? 'United States' : T.SECTION_301[country].name;
     document.getElementById('resultValue').textContent = '$' + value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    document.getElementById('resultRate').textContent = (effectiveRate * 100).toFixed(1) + '% (' + T.SECTION_301[country].name + ' → ' + T.CATEGORY_MODIFIERS[category].name + ')';
+    document.getElementById('resultRate').textContent = (effectiveRate * 100).toFixed(1) + '% (' + countryName + ' → ' + T.CATEGORY_MODIFIERS[category].name + ')';
     document.getElementById('resultDuty').textContent = '$' + duty.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('resultTotal').textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
@@ -587,7 +674,17 @@ function calculate() {
     flags.innerHTML = '';
     var b = res.breakdown;
     var breakdownParts = [];
-    if (category === 'ground-beef') {
+    if (b.canadaRetaliation) {
+        var cr = b.canadaRetaliation;
+        if (cr.applies) {
+            breakdownParts.push('Canada retaliation (dollar-for-dollar): +' + (cr.rate * 100).toFixed(0) + '%');
+            breakdownParts.push('Effective: ' + cr.effectiveLabel);
+        } else if (cr.targeted) {
+            breakdownParts.push('Canada retaliation: PENDING — effective ' + cr.effectiveLabel);
+        } else {
+            breakdownParts.push('Canada retaliation: sector not targeted');
+        }
+    } else if (category === 'ground-beef') {
         // TRQ-governed product — no generic MFN/category base applies
         if (b.beef && b.beef.applies) {
             breakdownParts.push('Out-of-quota 26.4%: WAIVED (90-day waiver)');
@@ -742,6 +839,27 @@ function calculate() {
         }
     }
 
+    // Canada retaliation — dollar-for-dollar duty on US goods entering Canada
+    if (res.breakdown.canadaRetaliation) {
+        var cr2 = res.breakdown.canadaRetaliation;
+        var crSectors = cr2.sectors.map(function (s) { return s.label; }).join(', ');
+        if (!cr2.applies) {
+            var ncr = document.createElement('div');
+            ncr.className = 'flag warn';
+            ncr.innerHTML = '<strong>⚠️ Canada Retaliation — Not Yet In Effect For This Entry Date</strong>Canada\'s dollar-for-dollar retaliatory tariffs on US imports take effect <strong>September 8, 2026</strong>. For this entry date (' + cr2.askedDate + ') the retaliation duty does NOT apply — the rate above excludes it. Select an entry date on or after September 8, 2026 to see the 50% dollar-for-dollar duty. Targeted sectors: <strong>' + crSectors + '</strong>.';
+            flags.appendChild(ncr);
+        } else {
+            var crf = document.createElement('div');
+            crf.className = 'flag info';
+            crf.innerHTML = '<strong>Canada Retaliation — 50% Dollar-for-Dollar Duty (IN EFFECT)</strong>'
+                + 'Canada\'s dollar-for-dollar retaliatory tariff applies to this US product, effective <strong>' + cr2.effectiveLabel + '</strong>.'
+                + '<br><small>' + cr2.framework + ' retaliation — ' + cr2.valueAffected + '. Applies to ' + T.CATEGORY_MODIFIERS[category].name + ' in the targeted sectors: ' + crSectors + '.</small>'
+                + '<br><small>' + cr2.status + '</small>'
+                + '<br><small>Sources: <a href="https://www.aljazeera.com/news/2026/8/22/carney-canada-will-enact-retaliatory-us-tariffs-starting-september-8" target="_blank" rel="noopener">Al Jazeera</a> · <a href="https://www.indiatoday.in/world/canada-news/story/canada-us-tariffs-mark-carney-retaliatory-duties-september-8-2977785-2026-08-23" target="_blank" rel="noopener">India Today</a> · <a href="https://www.cnbc.com/2026/08/22/us-canada-trade-talks-collapse-ushering-in-wave-of-new-tariffs.html" target="_blank" rel="noopener">CNBC</a> (verified Aug 23, 2026).</small>';
+            flags.appendChild(crf);
+        }
+    }
+
     results.classList.add('show');
     results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -756,7 +874,7 @@ var BLOG_ARTICLES = [
     { title: "Polysilicon Section 232 Tariff: 15% Duty + Price Floors Effective Dec 4, 2026", file: "polysilicon-section-232-tariff-advisory.html", desc: "The U.S. imposed a 15% Section 232 tariff on polysilicon and derivatives with MIP floors of $21/kg, $100/kg, $0.22/W, and $0.38/W — effective December 4, 2026. What importers need to know.", featured: true },
     { title: "Section 301 Tariff Expansion: 60 Countries Now Covered", file: "section-301-tariff-expansion-60-countries.html", desc: "The 10% global tariff is gone. Here's what the new 60-country forced-labor tariff framework means for importers, plus proposed Canada and EU actions." },
     { title: "Canada 50% Tariff IN EFFECT Aug 22: What Importers Need to Know", file: "canada-50-percent-tariff-august-19-explainer.html", desc: "The 50% Section 338 duties on Canadian goods took effect Saturday, Aug 22, 2026 at 12:01 a.m. EDT after U.S.–Canada talks failed — covering roughly $20B of exports from hockey sticks to tongue depressors, with no USMCA exemption. Canada will retaliate dollar for dollar starting Sept 8, 2026." },
-    { title: "US-Canada Tariffs 2026: 50% Duty on ~$20B of Canadian Goods", file: "us-canada-tariffs-2026.html", desc: "Concise FAQ for calculator users: the 50% Section 338 duty took effect Aug 22, 2026 after talks failed. Affected-category rate table, the rejected deal (25%/15%/10% NOT enacted), exclusions, and how to run your estimate with the 50% duty included.", featured: true },
+    { title: "Canada Retaliatory Tariffs Sept 8, 2026: US-Canada Tariffs 2026", file: "us-canada-tariffs-2026.html", desc: "Concise FAQ: the 50% Section 338 duty on ~$20B of Canadian goods took effect Aug 22, 2026; Canada's dollar-for-dollar retaliation starts Sept 8 on steel, electronics, dairy, appliances, farming equipment, pulp/paper. Rate table, exclusions, calculator.", featured: true },
     { title: "US Tariff Rates 2026 by Country", file: "us-tariff-rates-2026-by-country.html", desc: "Complete guide to current US import tariff rates for every major trading partner." },
     { title: "How Tariffs Affect Small Business Imports", file: "how-tariffs-affect-small-business-imports.html", desc: "Practical guide for small businesses navigating 2026 tariff changes." },
     { title: "Tariff Classification Guide 2026", file: "tariff-classification-guide-2026.html", desc: "How to classify your products under the HTS (Harmonized Tariff Schedule)." },
