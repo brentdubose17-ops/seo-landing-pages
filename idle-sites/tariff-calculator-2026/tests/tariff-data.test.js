@@ -936,3 +936,100 @@ test('REJECTED_DEAL_PRESET surfaced in index.html as NOT-enacted alternate prese
   assert.ok(!/25%|15%|10%/.test(banner.replace(/<[^>]+>/g, ' ')),
     'IN-EFFECT banner must not show the rejected 25/15/10 figures as live rates');
 });
+
+// ── Canada retaliation (Sept 8, 2026 dollar-for-dollar) ─────────────
+
+test('CANADA_RETALIATION structure matches verified fact sheet (t_160b34b4)', () => {
+  const R = T.CANADA_RETALIATION;
+  assert.ok(R, 'CANADA_RETALIATION missing from exports');
+  assert.equal(R.effective, '2026-09-08');
+  assert.match(R.effective_label, /September 8, 2026/);
+  assert.equal(R.framework, 'dollar-for-dollar');
+  assert.equal(R.rate, 0.50);
+  assert.equal(R.sector_categories.length, 6);
+  assert.deepEqual(R.sector_categories,
+    ['steel', 'electronics', 'dairy', 'household-appliances', 'farming-equipment', 'pulp-paper']);
+  const labels = R.sectors.map(s => s.label);
+  ['Steel', 'Electronics', 'Dairy', 'Household Appliances', 'Farming Equipment', 'Pulp & Paper']
+    .forEach(l => assert.ok(labels.includes(l), `missing sector label ${l}`));
+});
+
+test('Canada retaliation: PENDING before Sept 8 — 0% duty, applies false, for all six sectors', () => {
+  for (const cat of T.CANADA_RETALIATION.sector_categories) {
+    const res = T.effectiveRate('us', cat, { direction: 'to-canada', asOfDate: '2026-08-23' });
+    assert.ok(res, `to-canada ${cat} should resolve`);
+    assert.equal(res.rate, 0, `${cat} before Sept 8 must be 0%`);
+    const cr = res.breakdown.canadaRetaliation;
+    assert.equal(cr.applies, false, `${cat} should be pending`);
+    assert.equal(cr.targeted, true);
+    assert.equal(cr.askedDate, '2026-08-23');
+    assert.equal(cr.effective, '2026-09-08');
+  }
+});
+
+test('Canada retaliation: 50% dollar-for-dollar duty applies ON Sept 8 and after', () => {
+  const on = T.effectiveRate('us', 'steel', { direction: 'to-canada', asOfDate: '2026-09-08' });
+  assert.equal(on.rate, 0.50);
+  assert.equal(on.breakdown.canadaRetaliation.applies, true);
+  const after = T.effectiveRate('us', 'pulp-paper', { direction: 'to-canada', asOfDate: '2026-09-09' });
+  assert.equal(after.rate, 0.50);
+  assert.equal(after.breakdown.canadaRetaliation.applies, true);
+  // every targeted sector resolves to 50% after the effective date
+  for (const cat of T.CANADA_RETALIATION.sector_categories) {
+    const res = T.effectiveRate('us', cat, { direction: 'to-canada', asOfDate: '2026-09-08' });
+    assert.equal(res.rate, 0.50, `${cat} on Sept 8 must be 50%`);
+  }
+});
+
+test('Canada retaliation: non-targeted sectors get 0% even after Sept 8', () => {
+  for (const cat of ['textiles', 'footwear', 'pharma', 'toys', 'polysilicon', 'drones', 'ground-beef', 'canada-s338']) {
+    const res = T.effectiveRate('us', cat, { direction: 'to-canada', asOfDate: '2026-09-09' });
+    assert.ok(res, `to-canada ${cat} should resolve`);
+    assert.equal(res.rate, 0, `${cat} is not a retaliation sector and must stay 0%`);
+    assert.equal(res.breakdown.canadaRetaliation.targeted, false);
+  }
+});
+
+test('Canada retaliation: to-canada only valid for US-origin goods (other origins null)', () => {
+  assert.equal(T.effectiveRate('china', 'steel', { direction: 'to-canada', asOfDate: '2026-09-09' }), null);
+  assert.equal(T.effectiveRate('canada', 'dairy', { direction: 'to-canada', asOfDate: '2026-09-09' }), null);
+  // 'us' is not a US-import origin; without the direction flag it stays null
+  assert.equal(T.effectiveRate('us', 'steel', { asOfDate: '2026-09-09' }), null);
+});
+
+test('REGRESSION: default US-import flows unchanged by retaliation layer', () => {
+  // china electronics: mfn 0.195 + cat 0.008 + s301 0.125 + china existing 0.075 = 0.403
+  const cn = T.effectiveRate('china', 'electronics', { usmcaQualified: false });
+  assert.ok(Math.abs(cn.rate - 0.403) < 0.0001);
+  // canada covered goods still stack the 50% Section 338 (Aug 22 onward)
+  const ca = T.effectiveRate('canada', 'food', { asOfDate: '2026-08-22' });
+  assert.ok(ca.breakdown.s338 && ca.breakdown.s338.applies);
+  assert.ok(ca.rate > 0.50);
+  // USMCA default for canada still exempts Section 301
+  const mx = T.effectiveRate('mexico', 'auto', { asOfDate: '2026-08-22' });
+  assert.equal(mx.breakdown.section301, 0);
+  // no canadaRetaliation key in the default direction
+  assert.equal(cn.breakdown.canadaRetaliation, undefined);
+  assert.equal(ca.breakdown.canadaRetaliation, undefined);
+});
+
+test('index.html carries the Sept 8 retaliation flag, sectors, and direction control', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.ok(/September 8, 2026/.test(html), 'index.html must name September 8, 2026');
+  assert.ok(/dollar-for-dollar/.test(html), 'index.html must use dollar-for-dollar framing');
+  assert.ok(/id="direction"/.test(html), 'index.html must have the Shipping To direction control');
+  assert.ok(/to-canada/.test(html), 'index.html must have the to-canada option');
+  assert.ok(/household appliances/.test(html), 'index.html must list household appliances sector');
+  assert.ok(/farming equipment/.test(html), 'index.html must list farming equipment sector');
+  assert.ok(/pulp (&amp;|&) paper|pulp and paper/i.test(html), 'index.html must list pulp/paper sector');
+  // The banner should clearly mark the pending status before the effective date
+  assert.ok(/PENDING/.test(html), 'index.html must show pending/upcoming status');
+  // New sector categories exist in data for the calculator dropdown
+  const fs2 = require('node:fs');
+  const data = fs2.readFileSync(path.join(__dirname, '..', 'tariff-data.js'), 'utf8');
+  ['dairy', 'household-appliances', 'farming-equipment', 'pulp-paper'].forEach(k => {
+    assert.ok(data.includes("'" + k + "'"), `tariff-data.js must define category ${k}`);
+  });
+});

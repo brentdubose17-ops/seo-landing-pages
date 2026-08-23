@@ -2,6 +2,16 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-23 — Canada Sept 8 retaliation date flag added to calculator (kanban t_2dad0fe7)
+
+- **New `CANADA_RETALIATION` data layer (`tariff-data.js`):** dollar-for-dollar retaliation effective **Tuesday, September 8, 2026** (50% rate mirroring the US Section 338 duty), targeting six US sectors: **steel, electronics, dairy, household appliances, farming equipment, pulp & paper**. Verified against fact sheet t_160b34b4 (Al Jazeera, India Today, CNBC — Aug 23, 2026). Exported for tests + UI.
+- **New calculator direction ("Shipping To"):** default **🇺🇸 United States** (existing US-import flows unchanged); new **🇨🇦 Canada (US goods imported into Canada)** mode forces country of origin = United States and filters the product category list to the six targeted sectors.
+- **Date-gated flag (`effectiveRate` opts.direction='to-canada'):** before 2026-09-08 the retaliation shows **PENDING** (0% duty + warn flag naming September 8, 2026); on/after 2026-09-08 the **50% dollar-for-dollar duty is applied** (info flag with effective date, targeted sectors, ~$20B dollar-for-dollar scope, and Al Jazeera/India Today/CNBC sources). Date gating follows the calculator's existing entry-date convention (defaults to today).
+- **New product categories** for sector coverage: Dairy Products, Household Appliances, Farming & Agricultural Equipment, Pulp & Paper (added to `CATEGORY_MODIFIERS` with standard modifiers; available in both directions).
+- **Homepage:** new notice-banner "Canada Retaliation: Dollar-for-Dollar Tariffs on US Imports — Effective September 8, 2026" (PENDING status, sector list, links to the US-Canada explainer); calculator footnote updated; in-calculator banner + result flags added.
+- **Tests:** 76/76 pass (was 69). Added 7: retaliation structure vs fact sheet, PENDING before Sept 8 (all six sectors 0%), 50% on/after Sept 8 (all sectors), non-targeted sectors stay 0%, to-canada only for US origin, regression (China 301, Canada S338, USMCA), index.html markers (Sept 8, dollar-for-dollar, direction control, sectors).
+- **Deployed:** Cloudflare Pages (tariff-calculator-2026), verified live.
+
 ## 2026-08-23 — SEO/AEO refresh on US-Canada Tariffs FAQ for Sept 8 retaliation (kanban t_012d1339)
 
 - **`/us-canada-tariffs-2026` on-page SEO refreshed for the new retaliation queries:**

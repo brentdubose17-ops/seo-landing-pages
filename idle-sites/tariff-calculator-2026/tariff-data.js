@@ -157,7 +157,11 @@
     polysilicon:  { add: 0,     name: 'Polysilicon & Solar (Section 232)' },
     drones:       { add: 0,     name: 'Drones / UAS (Unmanned Aircraft) — Section 232' },
     'ground-beef':{ add: 0,     name: 'Ground Beef — 90-Day Out-of-Quota Waiver (Aug 21, 2026)' },
-    'canada-s338':{ add: 0,     name: 'Canada Section 338 Covered Goods — 50% Duty (effective Aug 22, 2026)' }
+    'canada-s338':{ add: 0,     name: 'Canada Section 338 Covered Goods — 50% Duty (effective Aug 22, 2026)' },
+    dairy:        { add: 0.046, name: 'Dairy Products' },
+    'household-appliances': { add: 0.027, name: 'Household Appliances' },
+    'farming-equipment': { add: 0.014, name: 'Farming & Agricultural Equipment' },
+    'pulp-paper':  { add: 0.010, name: 'Pulp & Paper' }
   };
 
   /*
@@ -422,6 +426,43 @@
   };
 
   /*
+   * Canada's dollar-for-dollar retaliation (effective Sept 8, 2026)
+   * -------------------------------------------------------------
+   * After the US Section 338 50% duty took effect Aug 22, 2026 on ~$20B
+   * of Canadian goods, Canada announced a dollar-for-dollar response
+   * beginning Tuesday, September 8, 2026, targeting US steel, electronics,
+   * dairy, household appliances, farming equipment, and pulp/paper.
+   * Verified 2026-08-23 against Al Jazeera, India Today, and CNBC
+   * (fact sheet t_160b34b4). Rate is modeled as the dollar-for-dollar
+   * mirror of the US 50% Section 338 levy; per-product rates await
+   * Canada's formal notice and may vary by HTS line.
+   * Applied via effectiveRate() with opts.direction='to-canada' for
+   * US-origin goods (countrySlug='us') in the targeted sector categories.
+   */
+  var CANADA_RETALIATION = {
+    effective: '2026-09-08',
+    effective_label: 'Tuesday, September 8, 2026',
+    framework: 'dollar-for-dollar',
+    rate: 0.50,
+    value_affected: '~$20 billion of US goods (dollar-for-dollar match of the US Section 338 50% levy on Canadian goods)',
+    sectors: [
+      { category: 'steel', label: 'Steel' },
+      { category: 'electronics', label: 'Electronics' },
+      { category: 'dairy', label: 'Dairy' },
+      { category: 'household-appliances', label: 'Household Appliances' },
+      { category: 'farming-equipment', label: 'Farming Equipment' },
+      { category: 'pulp-paper', label: 'Pulp & Paper' }
+    ],
+    sector_categories: ['steel', 'electronics', 'dairy', 'household-appliances', 'farming-equipment', 'pulp-paper'],
+    status: 'PENDING — Canada will impose dollar-for-dollar retaliatory tariffs on US imports starting Tuesday, September 8, 2026, targeting US steel, electronics, dairy, household appliances, farming equipment, and pulp/paper. Announced after the US 50% Section 338 duty on ~$20B of Canadian goods took effect Aug 22, 2026 following collapsed talks.',
+    source_citations: [
+      'Al Jazeera: Carney: Canada will enact retaliatory US tariffs starting September 8 (Aug 22, 2026) — https://www.aljazeera.com/news/2026/8/22/carney-canada-will-enact-retaliatory-us-tariffs-starting-september-8',
+      'India Today: We got attacked: Carney says Canada at war with US over Trump\'s 50% tariffs (Aug 23, 2026) — https://www.indiatoday.in/world/canada-news/story/canada-us-tariffs-mark-carney-retaliatory-duties-september-8-2977785-2026-08-23',
+      'CNBC: US-Canada trade talks collapse, ushering in wave of new tariffs (Aug 22, 2026) — https://www.cnbc.com/2026/08/22/us-canada-trade-talks-collapse-ushering-in-wave-of-new-tariffs.html'
+    ]
+  };
+
+  /*
    * REJECTED_DEAL_PRESET — alternate preset, NOT enacted.
    * -------------------------------------------------
    * The deal Canada declined on Aug 21, 2026 would have REDUCED US tariffs:
@@ -516,18 +557,82 @@
   };
 
   /*
+   * Canada retaliation helper — US-origin goods shipped TO Canada.
+   * Canada's dollar-for-dollar retaliation applies on/after 2026-09-08
+   * to the six targeted sectors; before that date it is PENDING (0 duty).
+   */
+  function canadaRetaliationRate(category, opts) {
+    var ret = CANADA_RETALIATION;
+    var qDateStr;
+    if (opts.asOfDate) {
+      qDateStr = String(opts.asOfDate).slice(0, 10);
+    } else {
+      qDateStr = new Date().toISOString().slice(0, 10); // today
+    }
+    var targeted = ret.sector_categories.indexOf(category) !== -1;
+    var applies = targeted && qDateStr >= ret.effective;
+    var rate = applies ? ret.rate : 0;
+    return {
+      rate: rate,
+      breakdown: {
+        mfn: 0,
+        categoryAdd: 0,
+        section301: 0,
+        chinaExisting301: 0,
+        proposed: 0,
+        usmcaQualified: false,
+        type: 'retaliation',
+        cap: null,
+        s232: null,
+        drone: null,
+        beef: null,
+        s338: null,
+        canadaRetaliation: {
+          applies: applies,
+          targeted: targeted,
+          rate: rate,
+          baseRate: ret.rate,
+          effective: ret.effective,
+          effectiveLabel: ret.effective_label,
+          framework: ret.framework,
+          valueAffected: ret.value_affected,
+          sectors: ret.sectors,
+          sectorCategories: ret.sector_categories,
+          askedDate: qDateStr,
+          status: ret.status,
+          source_citations: ret.source_citations
+        }
+      }
+    };
+  }
+
+  /*
    * Effective-rate computation used by the calculator AND tests.
    * @param countrySlug  e.g. 'vietnam'
    * @param category     e.g. 'electronics'
    * @param opts { usmcaQualified: bool (default true for CA/MX),
    *              includeProposed: bool (default false),
    *              asOfDate: Date|string (default today) — controls
-   *                        Section 232 effective-date gating }
+   *                        Section 232 effective-date gating,
+   *              direction: 'to-canada' — US-origin goods imported into
+   *                        Canada; applies CANADA_RETALIATION to the six
+   *                        targeted sectors on/after 2026-09-08 }
    * Returns { rate, breakdown: {...} } where rate is the estimated
    * effective duty rate (decimal).
    */
   function effectiveRate(countrySlug, category, opts) {
     opts = opts || {};
+
+    // Canada retaliation direction: US goods entering Canada. The US is
+    // not in the Section 301 matrix; the relevant duty is Canada's
+    // dollar-for-dollar retaliation (or PENDING, before Sept 8, 2026).
+    if (opts.direction === 'to-canada') {
+      if (countrySlug === 'us') {
+        return canadaRetaliationRate(category, opts);
+      }
+      return null; // to-canada is only defined for US-origin goods
+    }
+
     var c = SECTION_301[countrySlug];
     var cat = CATEGORY_MODIFIERS[category];
     if (!c || !cat) return null;
@@ -789,6 +894,7 @@
     SECTION_232_UAS: SECTION_232_UAS,
     GROUND_BEEF_WAIVER: GROUND_BEEF_WAIVER,
     SECTION_338_CANADA: SECTION_338_CANADA,
+    CANADA_RETALIATION: CANADA_RETALIATION,
     REJECTED_DEAL_PRESET: REJECTED_DEAL_PRESET,
     PRODUCT_SCOPE: PRODUCT_SCOPE,
     USMCA: USMCA,

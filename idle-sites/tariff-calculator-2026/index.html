@@ -574,6 +574,7 @@ function estimateCssp() {
         document.getElementById('results').classList.remove('show');
         updateCanadaBanner();
     };
+    window.updateCanadaBanner = updateCanadaBanner;
 
     // Initial population (default: importing into the US)
     populateCountries('to-us');
@@ -644,6 +645,9 @@ function calculate() {
         return;
     }
     errorMsg.style.display = 'none';
+
+    // Keep the Canada retaliation banner in sync with the entry date used
+    if (window.updateCanadaBanner) window.updateCanadaBanner();
 
     var usmcaQualified = document.getElementById('usmca').checked;
     var direction = document.getElementById('direction') ? document.getElementById('direction').value : 'to-us';
