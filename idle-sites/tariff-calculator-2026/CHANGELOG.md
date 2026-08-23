@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-22 — US-Canada Tariffs 2026 FAQ page published for calculator users (kanban t_94938224)
+
+- **New page `/us-canada-tariffs-2026`:** concise SEO FAQ explaining the 50% Section 338 duty on ~$20B of Canadian goods for calculator users. Title starts "US-Canada Tariffs 2026", 7 H2 sections, meta description 144 chars (<160). Content includes: short "What happened" section, affected-category & rate table (motor vehicles 50%, alcohol 50%, dairy 50%, other Annex II 50%, pre-existing steel/lumber rows), links to the updated calculator, and a NOT-enacted callout for the rejected deal (steel/aluminum 25%, autos 15%, lumber 10% eliminated). All facts drawn from parent datapack t_89767bbd (12 sources / 6 official instruments); no contradictions with the datapack.
+- **News feed (`news/index.html`):** new feed item at top of "Earlier advisories" + CTA cross-link from the Canada Section 338 advisory.
+- **Homepage (`index.html`):** new BLOG_ARTICLES entry (featured: true) so the FAQ card appears in the blog grid.
+- **Sitemap + llms.txt:** new URL registered (`/us-canada-tariffs-2026`, lastmod 2026-08-22).
+- **Tests:** unchanged (69/69 pass — no tariff-data.js logic change).
+- **Deployed:** Cloudflare Pages (tariff-calculator-2026), verified live.
+
 ## 2026-08-22 — Canada Section 338 50% levy re-verified vs official datapack; rejected-deal offer added as alternate preset (kanban t_3798c106, verified via parent datapack t_89767bbd — 12 sources, 6 official instruments)
 
 - **Canada Section 338 50% duty — source citations upgraded to the verified datapack.** `tariff-data.js` `SECTION_338_CANADA` now cites the official instruments (USTR Greer statement Jul 20; White House Fact Sheet Jul 20; Proclamations **11046** alcohol, **11047** dairy, **11048** motor vehicles; Aug 18 Temporary Suspension proclamation) plus Al Jazeera, JPost/Reuters, ZeroHedge, NPR, CBC, and The Guardian (12 sources). Authority string updated to the statutory cite (19 U.S.C. 1338). Header + instrument notes re-verified. **No rate change** — the 50% additional ad valorem (effective 12:01 a.m. ET Aug 22, 2026, ~$20B scope, no USMCA exemption) was already live from the prior release and remains in the default rate for Canada on covered categories (`auto`, `food`, `canada-s338`).
