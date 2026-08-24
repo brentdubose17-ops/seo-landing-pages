@@ -1033,3 +1033,55 @@ test('index.html carries the Sept 8 retaliation flag, sectors, and direction con
     assert.ok(data.includes("'" + k + "'"), `tariff-data.js must define category ${k}`);
   });
 });
+
+test('Threatened auto tariff flag: canada_auto_50 present (50%, effective 2027-01-01, NOT in effect)', () => {
+  const f = T.PROPOSED_FLAGS.find(x => x.key === 'canada_auto_50');
+  assert.ok(f, 'canada_auto_50 flag missing from PROPOSED_FLAGS');
+  assert.equal(f.country, 'canada');
+  assert.equal(f.rate, 0.50, 'threatened auto rate should be 50%');
+  assert.deepEqual(f.categories, ['auto'], 'flag should apply to the auto category only');
+  assert.equal(f.effective, '2027-01-01', 'proposed effective date should be 2027-01-01');
+  assert.equal(f.status, 'threatened', 'flag must be marked threatened');
+  assert.ok(/NOT in effect/i.test(f.note), 'note must state the rate is not in effect');
+  // eu_dst still present (no regression)
+  assert.ok(T.PROPOSED_FLAGS.some(x => x.key === 'eu_dst'), 'eu_dst flag should still be present');
+});
+
+test('Threatened auto tariff: default canada auto calculation UNCHANGED (proposed NOT added)', () => {
+  // Pre-change default: MFN 0.005 + auto modifier 0.027 + S338 0.50 = 0.532 (USMCA-qualified, on/after Aug 22)
+  const def = T.effectiveRate('canada', 'auto', { asOfDate: '2026-08-24', usmcaQualified: true });
+  assert.ok(Math.abs(def.rate - 0.532) < 0.0001, `default canada auto should stay 0.532, got ${def.rate}`);
+  assert.equal(def.breakdown.proposed, 0, 'proposed flag must NOT be added by default');
+  // Before the S338 effective date the proposed flag still does not leak in
+  const early = T.effectiveRate('canada', 'auto', { asOfDate: '2026-08-21', usmcaQualified: true });
+  assert.ok(Math.abs(early.rate - 0.032) < 0.0001, `pre-S338 canada auto should stay 0.032, got ${early.rate}`);
+  assert.equal(early.breakdown.proposed, 0);
+});
+
+test('Threatened auto tariff: includeProposed adds the 50% only for Canada + auto', () => {
+  const thr = T.effectiveRate('canada', 'auto', { asOfDate: '2026-08-24', usmcaQualified: true, includeProposed: true });
+  assert.equal(thr.breakdown.proposed, 0.50, 'includeProposed should add the 50% threatened rate');
+  assert.ok(Math.abs(thr.rate - (0.532 + 0.50)) < 0.0001, `threatened scenario rate wrong: ${thr.rate}`);
+  // Not applied to other countries/categories
+  const mx = T.effectiveRate('mexico', 'auto', { asOfDate: '2026-08-24', includeProposed: true });
+  assert.equal(mx.breakdown.proposed, 0, 'threatened auto flag must not apply to Mexico');
+  const food = T.effectiveRate('canada', 'food', { asOfDate: '2026-08-24', includeProposed: true });
+  assert.equal(food.breakdown.proposed, 0, 'threatened auto flag must not apply to non-auto Canada categories');
+});
+
+test('index.html: Auto Tariff Scenario toggle (current ~25% vs threatened 50% effective Jan 1, 2027)', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.ok(/id="autoScenarioRow"/.test(html), 'index.html must have the autoScenarioRow');
+  assert.ok(/id="autoScenario"/.test(html), 'index.html must have the autoScenario select');
+  assert.ok(/~25% auto tariff \(in effect\)/.test(html), 'index.html scenario toggle must show the current ~25% rate');
+  assert.ok(/Threatened/.test(html), 'index.html must label the 50% scenario as Threatened');
+  assert.ok(/50% auto tariff/.test(html), 'index.html must show the threatened 50% auto rate');
+  assert.ok(/Jan 1, 2027/.test(html), 'index.html must show the Jan 1, 2027 proposed effective date');
+  assert.ok(/NOT included by default/.test(html), 'index.html must state the threatened rate is not included by default');
+  // updateAutoScenarioRow wiring exists
+  assert.ok(/updateAutoScenarioRow/.test(html), 'index.html must wire updateAutoScenarioRow visibility');
+  // includeProposed wiring exists in calculate()
+  assert.ok(/includeProposed/.test(html), 'index.html must pass includeProposed for the threatened scenario');
+});

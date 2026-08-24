@@ -1,6 +1,13 @@
 /*
  * Tariff Calculator 2026 — canonical tariff data
  * -------------------------------------------------
+ * Updated 2026-08-24: canada_auto_50 THREATENED flag added — President
+ * Trump threatened (Mon Aug 24, 2026) to raise US tariffs on Canadian
+ * cars, trucks & auto parts from the current ~25% to 50%, proposed
+ * effective 2027-01-01. NOT in effect — modeled as a PROPOSED_FLAGS
+ * entry (category 'auto', country 'canada') so default calculations
+ * stay unchanged unless the user selects the threatened scenario.
+ * Sources: CNN, CNBC, CP24 (Aug 24, 2026 — all verified HTTP 200).
  * Updated 2026-08-22: Canada Section 338 50% duty now IN EFFECT
  * (effective 12:01 a.m. EDT Sat Aug 22, 2026 on ~$20B of Canadian goods;
  * re-verified against parent datapack t_89767bbd — 12 sources incl.
@@ -178,10 +185,24 @@
    * warnings, not added to the rate).
    * NOTE: canada_s338 was REMOVED from this list on 2026-08-22 — the
    * Section 338 50% duty is now IN EFFECT and lives in SECTION_338_CANADA.
+   * canada_auto_50 ADDED 2026-08-24 — President Trump threatened to
+   * raise the US auto tariff on Canadian cars, trucks & auto parts from
+   * the current ~25% to 50%, proposed effective 2027-01-01 (NOT in
+   * effect). Sources: CNN, CNBC, CP24 (Aug 24, 2026).
    * eu_dst: 25% Section 301 threatened over digital-services taxes,
    *   activation uncertain.
    */
   var PROPOSED_FLAGS = [
+    {
+      key: 'canada_auto_50',
+      country: 'canada',
+      label: '50% tariff on Canadian cars, trucks & auto parts (threatened)',
+      rate: 0.50,
+      categories: ['auto'],
+      effective: '2027-01-01',
+      status: 'threatened',
+      note: 'Threatened by President Trump on Aug 24, 2026 — NOT in effect. Would roughly double the current ~25% auto tariff on Canadian-built vehicles and auto parts, proposed effective January 1, 2027. Sources: CNN (us-canada-cost-more), CNBC (trump-canada-auto-tariffs-trade-war.html), CP24 (we-dont-need-canada-they-need-us) — Aug 24, 2026.'
+    },
     {
       key: 'eu_dst',
       country: 'european-union',

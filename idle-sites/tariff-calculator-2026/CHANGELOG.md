@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-24 — Calculator: threatened 50% auto tariff flag + scenario toggle (kanban t_3bf0ad31)
+
+- **`tariff-data.js` — new `PROPOSED_FLAGS` entry `canada_auto_50`:** the threatened 50% tariff on Canadian cars, trucks & auto parts (threatened by President Trump Aug 24, 2026, proposed effective **2027-01-01**) is now in the canonical data layer with `status: 'threatened'`, `rate: 0.50`, `categories: ['auto']`, `effective: '2027-01-01'`. Modeled as a proposed flag — **NOT added to any default calculation** unless the user opts in. Sources: CNN, CNBC, CP24 (Aug 24, 2026).
+- **`index.html` — new Auto Tariff Scenario toggle** (`#autoScenarioRow` / `#autoScenario`), shown only for **🇨🇦 Canada + Automotive**: **Current — ~25% auto tariff (in effect)** vs **Threatened — 50% auto tariff (proposed, effective Jan 1, 2027)**.
+- **Calculation default unchanged:** the threatened 50% is excluded unless the user selects the Threatened scenario (`opts.includeProposed`), so all existing estimates are bit-for-bit identical. Result label, rate breakdown ("Threatened auto tariff (proposed): +50.0%"), and the warning flag ("⚠️ … THREATENED, proposed effective 2027-01-01 (NOT in effect)") update when the scenario is active.
+- **Homepage metadata:** dateModified (meta + JSON-LD) → 2026-08-24; sitemap lastmod for `/` → 2026-08-24.
+- **Tests:** 80/80 pass (was 76). Added 4: flag structure (50%, 2027-01-01, threatened), default calc unchanged (0.532 USMCA / 0.032 pre-S338), includeProposed adds 50% only for Canada+auto, index.html marker checks (toggle, labels, date, wiring).
+- **Not deployed** — publish/QA leg is sibling task t_cf6e19a4 (waits on t_3bf0ad31 + t_ee50cffc).
+
 ## 2026-08-24 — US-Canada auto section: threatened 50% tariff layer added (kanban t_cef2f560)
 
 - **`/us-canada-tariffs-2026` auto section:** new clearly-marked THREATENED layer (`.threatened` callout, purple border, "⚠️ THREATENED — NOT IN EFFECT"): on **Aug 24, 2026** Trump threatened to raise US tariffs on Canadian cars, trucks & auto parts from the current **~25% to 50%** effective **January 1, 2027**. Explicitly marked as a proposal, NOT an enacted tariff — current effective auto rate remains ~25%.

@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tariff Calculator 2026 — Free Import Duty Calculator">
     <meta name="twitter:description" content="Calculate import duties instantly with 2026 Section 301 tariff rates for 60 countries.">
-    <meta name="dateModified" content="2026-08-15">
+    <meta name="dateModified" content="2026-08-24">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -26,7 +26,7 @@
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript",
-        "dateModified": "2026-08-15"
+        "dateModified": "2026-08-24"
     }
     </script>
     <script type="application/ld+json">
@@ -246,6 +246,14 @@
                 <option value="">— Select product category —</option>
             </select>
         </div>
+        <div class="form-row" id="autoScenarioRow" style="display:none;">
+            <label for="autoScenario">Auto Tariff Scenario (Canada)</label>
+            <select id="autoScenario">
+                <option value="current">Current — ~25% auto tariff (in effect)</option>
+                <option value="threatened">Threatened — 50% auto tariff (proposed, effective Jan 1, 2027)</option>
+            </select>
+            <div style="font-size:0.8rem;color:#888;margin-top:4px;">Applies to 🇨🇦 Canada + Automotive. The threatened 50% rate is <strong>NOT in effect</strong> — the default estimate keeps the current rate unless you select the threatened scenario.</div>
+        </div>
         <div class="form-row" id="droneTierRow" style="display:none;">
             <label for="droneTier">UAS / Drone Tier (Section 232)</label>
             <select id="droneTier">
@@ -289,7 +297,7 @@
                 </div>
             </div>
             <div id="flags"></div>
-            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates including Section 301 (forced labor), Section 232 (polysilicon, drones/UAS), and the Canada Section 338 50% duty. The 50% Canada Section 338 duty (effective Aug 22, 2026 on ~$20B of Canadian goods) IS included in the default rate when you select <strong>Canada</strong> and a covered product category (Automotive, Food &amp; Beverages, or Canada Section 338 Covered Goods). The 100%/25% drone/UAS Section 232 duty (effective Sept 3, 2026) is applied when the Drones / UAS category is selected. The 90-day ground beef out-of-quota waiver (up to 300,000 metric tons; announced Aug 21, 2026) is applied when the Ground Beef category is selected with an import date inside the waiver window (Aug 21 – Nov 19, 2026), returning a duty-free result subject to the cap. <strong>For US goods shipped TO Canada</strong>, switch "Shipping To" to <strong>Canada</strong> — Canada's dollar-for-dollar retaliation (50%, effective <strong>September 8, 2026</strong>) applies to US steel, electronics, dairy, household appliances, farming equipment, and pulp/paper on or after that date; before then it shows as PENDING. Actual rates vary by HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database and USTR Chapter 99 headings 9903.05.20–9903.06.21.</p>
+            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates including Section 301 (forced labor), Section 232 (polysilicon, drones/UAS), and the Canada Section 338 50% duty. The 50% Canada Section 338 duty (effective Aug 22, 2026 on ~$20B of Canadian goods) IS included in the default rate when you select <strong>Canada</strong> and a covered product category (Automotive, Food &amp; Beverages, or Canada Section 338 Covered Goods). The 100%/25% drone/UAS Section 232 duty (effective Sept 3, 2026) is applied when the Drones / UAS category is selected. The 90-day ground beef out-of-quota waiver (up to 300,000 metric tons; announced Aug 21, 2026) is applied when the Ground Beef category is selected with an import date inside the waiver window (Aug 21 – Nov 19, 2026), returning a duty-free result subject to the cap. <strong>For US goods shipped TO Canada</strong>, switch "Shipping To" to <strong>Canada</strong> — Canada's dollar-for-dollar retaliation (50%, effective <strong>September 8, 2026</strong>) applies to US steel, electronics, dairy, household appliances, farming equipment, and pulp/paper on or after that date; before then it shows as PENDING. A <strong>threatened 50% tariff on Canadian cars, trucks &amp; auto parts</strong> (proposed effective <strong>January 1, 2027</strong>) can be modeled with the <strong>Auto Tariff Scenario</strong> toggle — select <strong>Canada</strong> + <strong>Automotive</strong> and choose the <strong>Threatened</strong> scenario. It is <strong>NOT included by default</strong>, so existing estimates are unchanged. Actual rates vary by HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database and USTR Chapter 99 headings 9903.05.20–9903.06.21.</p>
         </div>
     </div>
 </section>
@@ -571,6 +579,7 @@ function estimateCssp() {
         populateCategories(direction);
         document.getElementById('usmcaRow').style.display = 'none';
         document.getElementById('droneTierRow').style.display = 'none';
+        document.getElementById('autoScenarioRow').style.display = 'none';
         document.getElementById('results').classList.remove('show');
         updateCanadaBanner();
     };
@@ -584,12 +593,24 @@ function estimateCssp() {
     countrySel.addEventListener('change', function () {
         var isUSMCA = T.USMCA.exempt_from_301.indexOf(countrySel.value) !== -1;
         document.getElementById('usmcaRow').style.display = isUSMCA ? 'flex' : 'none';
+        updateAutoScenarioRow();
     });
 
     // UAS / drone tier selector visibility
     catSel.addEventListener('change', function () {
         document.getElementById('droneTierRow').style.display = catSel.value === 'drones' ? 'block' : 'none';
+        updateAutoScenarioRow();
     });
+
+    // Auto Tariff Scenario (Canada + Automotive) visibility — shows the
+    // threatened 50% (proposed effective Jan 1, 2027) vs current ~25%.
+    function updateAutoScenarioRow() {
+        var row = document.getElementById('autoScenarioRow');
+        if (!row) return;
+        var show = countrySel.value === 'canada' && catSel.value === 'auto';
+        row.style.display = show ? 'block' : 'none';
+    }
+    window.updateAutoScenarioRow = updateAutoScenarioRow;
 
     // Canada retaliation banner reacts to entry-date changes
     var entryDateInput = document.getElementById('entryDate');
@@ -660,6 +681,16 @@ function calculate() {
         opts.direction = 'to-canada';
         opts.usmcaQualified = false;
     }
+    // Auto Tariff Scenario: Canada + Automotive — include the threatened
+    // 50% (proposed effective Jan 1, 2027) ONLY when the user selects it.
+    var includeProposed = false;
+    if (country === 'canada' && category === 'auto') {
+        var autoScenarioSel = document.getElementById('autoScenario');
+        if (autoScenarioSel && autoScenarioSel.value === 'threatened') {
+            includeProposed = true;
+            opts.includeProposed = true;
+        }
+    }
     var res = T.effectiveRate(country, category, opts);
     if (!res) return;
 
@@ -668,8 +699,10 @@ function calculate() {
     var total = value + duty;
 
     var countryName = country === 'us' ? 'United States' : T.SECTION_301[country].name;
+    var rateLabel = (effectiveRate * 100).toFixed(1) + '% (' + countryName + ' → ' + T.CATEGORY_MODIFIERS[category].name + ')';
+    if (includeProposed) rateLabel += ' — threatened auto scenario (incl. proposed 50%)';
     document.getElementById('resultValue').textContent = '$' + value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    document.getElementById('resultRate').textContent = (effectiveRate * 100).toFixed(1) + '% (' + countryName + ' → ' + T.CATEGORY_MODIFIERS[category].name + ')';
+    document.getElementById('resultRate').textContent = rateLabel;
     document.getElementById('resultDuty').textContent = '$' + duty.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('resultTotal').textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
@@ -713,6 +746,9 @@ function calculate() {
         if (b.s338 && b.s338.applies) {
             breakdownParts.push('Section 338 (Canada 50% duty): +' + (b.s338.rate * 100).toFixed(1) + '%');
         }
+        if (b.proposed > 0) {
+            breakdownParts.push('Threatened auto tariff (proposed): +' + (b.proposed * 100).toFixed(1) + '%');
+        }
     }
 
     var info = document.createElement('div');
@@ -726,10 +762,13 @@ function calculate() {
             var w = document.createElement('div');
             w.className = 'flag warn';
             var statusTxt = '';
+            var includedTxt = includeProposed ? ' — INCLUDED in the estimate above' : '';
             if (f.status === 'paused') {
                 statusTxt = ' — PAUSED through ' + f.paused_until + ' (deal pending; NOT cancelled)';
             } else if (f.status === 'suspended') {
                 statusTxt = ' — SUSPENDED until ' + f.effective + ' (deal talks ongoing; NOT cancelled)';
+            } else if (f.status === 'threatened') {
+                statusTxt = ' — THREATENED, proposed effective ' + f.effective + ' (NOT in effect)' + includedTxt;
             } else if (f.effective) {
                 statusTxt = ' — effective ' + f.effective;
             }
