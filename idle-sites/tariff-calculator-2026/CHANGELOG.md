@@ -2,6 +2,26 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-24 — PUBLISHED: US-Canada auto tariff threat layer live (kanban t_cf6e19a4)
+
+- **Deployed to Cloudflare Pages (tariff-calculator-2026)** — the combined content (t_cef2f560), calculator (t_3bf0ad31), and SEO/AEO (t_ee50cffc) changes are now live.
+- **QA passed (browser + curl):** live title/meta `Canadian Car Tariff: 50% Auto Tariff Threat — Will Car Prices Go Up?`; 11-item FAQPage JSON-LD; `#canadian-car-tariff` direct-answer block; THREATENED — NOT IN EFFECT callout with Jan 1, 2027; all 20 source links HTTP 200; calculator verified in both modes — Canada+Automotive default 53.2% ($5,320 duty on $10k, threatened 50% NOT included) vs Threatened scenario 103.2% ($10,320, +50% breakdown, "INCLUDED in the estimate above" flag); toggle shows only for Canada+Automotive; no console errors; no horizontal overflow on desktop, mobile breakpoints present (640px/600px).
+- **Content calendar updated** with the publish note.
+
+## 2026-08-24 — SEO/AEO refresh: Canadian car tariff queries on /us-canada-tariffs-2026 (kanban t_ee50cffc)
+
+- **Title/meta retargeted to the auto-tariff spike queries** (Canadian car tariff, will car prices go up, 50% tariff cars, what is the tariff on Canadian cars, when do Canadian auto tariffs take effect):
+  - Title → `Canadian Car Tariff: 50% Auto Tariff Threat — Will Car Prices Go Up?` (68 chars, "Canadian Car Tariff" + "Will Car Prices Go Up" exact).
+  - Meta description → 148 chars: `Canadian car tariff: 25% today, with a 50% auto tariff threatened for Jan 1, 2027. The 50% duty on ~$20B of Canadian goods took effect Aug 22, 2026.`
+  - og:title/og:description and Article JSON-LD headline/description synced; dateModified stays 2026-08-24.
+- **New AEO direct-answer block** (`#canadian-car-tariff`, placed right after the in-effect banner, top of the auto section): H2 `Canadian car tariff — direct answers` with three exact-query H3s and one-sentence answers — "What is the tariff on Canadian cars?" (25% today; 50% threatened Jan 1, 2027, not in effect), "When do Canadian auto tariffs take effect?" (Jan 1, 2027 if enacted; the separate 50% Section 338 duty took effect Aug 22, 2026), and "Will car prices go up?" (likely for some models — CNN Aug 24).
+- **FAQPage JSON-LD expanded 6 → 11 questions** with exact-query phrasing: What is the tariff on Canadian cars?, When do Canadian auto tariffs take effect?, Will car prices go up?, Is the 50% tariff on cars in effect?, What is the Canadian car tariff in 2026? — mirrored as visible `.faq-item` Q&As in the FAQ section.
+- **Facts verified vs live sources (all HTTP 200 Aug 24, 2026):** CNBC (current top-line tariff on Canadian auto imports = 25%; threat to 50% Jan 1, 2027; "On January First, 2027, Tariffs on all Cars, Trucks, both large and small, Automotive Parts, and Steel, will be increased to 50%"), CNN (double duties on Canadian cars/car parts to 50% come January 1; S338 $20B took effect early Saturday; "chances that at least some of the tariff costs ultimately land on consumers"), CP24 (threat "will not take effect until Jan. 1", cars/trucks/parts/steel; $28B vs $20B figure discrepancy noted — page keeps verified $20B).
+- **Title syncs:** llms.txt entry, homepage BLOG_ARTICLES card, news feed item updated to the new title/desc (news item date bumped to Aug 24).
+- **Rank tracking:** added 5 queries to ~/.hermes/seo-data/keywords.json for tariffcalculator2026.com (backup keywords.json.bak-canada-car-tariff-t_ee50cffc).
+- **Tests:** 80/80 pass (no tariff-data.js change by this task).
+- **Not deployed** — publish/QA leg is child task t_cf6e19a4 (waits on t_ee50cffc + t_3bf0ad31 + t_cef2f560). Verify live after deploy: title/meta, 11-item FAQPage JSON-LD, #canadian-car-tariff block.
+
 ## 2026-08-24 — Calculator: threatened 50% auto tariff flag + scenario toggle (kanban t_3bf0ad31)
 
 - **`tariff-data.js` — new `PROPOSED_FLAGS` entry `canada_auto_50`:** the threatened 50% tariff on Canadian cars, trucks & auto parts (threatened by President Trump Aug 24, 2026, proposed effective **2027-01-01**) is now in the canonical data layer with `status: 'threatened'`, `rate: 0.50`, `categories: ['auto']`, `effective: '2027-01-01'`. Modeled as a proposed flag — **NOT added to any default calculation** unless the user opts in. Sources: CNN, CNBC, CP24 (Aug 24, 2026).
