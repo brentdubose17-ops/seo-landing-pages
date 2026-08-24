@@ -2,6 +2,14 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-24 — US-Canada auto section: threatened 50% tariff layer added (kanban t_cef2f560)
+
+- **`/us-canada-tariffs-2026` auto section:** new clearly-marked THREATENED layer (`.threatened` callout, purple border, "⚠️ THREATENED — NOT IN EFFECT"): on **Aug 24, 2026** Trump threatened to raise US tariffs on Canadian cars, trucks & auto parts from the current **~25% to 50%** effective **January 1, 2027**. Explicitly marked as a proposal, NOT an enacted tariff — current effective auto rate remains ~25%.
+- **Context included:** 50% tariffs on ~$20B of Canadian goods took effect **Aug 22, 2026**; Canada announced **dollar-for-dollar retaliation starting Sept 8, 2026**; Trump leverage quote **"We don't need Canada, they need us."**
+- **Sources linked (verified HTTP 200 Aug 24, 2026):** CNN (2026/08/24/business/us-canada-cost-more), CNBC (trump-canada-auto-tariffs-trade-war.html), CP24 (we-dont-need-canada-they-need-us...). Added to source-note, which now leads with the Aug 24 auto-threat set (CNN, CNBC, CP24) ahead of the existing Aug 23/Jul 20 instruments.
+- **JSON-LD dateModified → 2026-08-24; sitemap lastmod → 2026-08-24.** Existing effective 50% Section 338 info and NOT-enacted rejected-deal callout left intact. Calculator flag/scenario handled by sibling task t_3bf0ad31; SEO/AEO schema + meta handled by t_ee50cffc; deploy/QA by t_cf6e19a4.
+- **No tariff-data.js change** (calculator unaffected by this task).
+
 ## 2026-08-23 — Canada Sept 8 retaliation date flag added to calculator (kanban t_2dad0fe7)
 
 - **New `CANADA_RETALIATION` data layer (`tariff-data.js`):** dollar-for-dollar retaliation effective **Tuesday, September 8, 2026** (50% rate mirroring the US Section 338 duty), targeting six US sectors: **steel, electronics, dairy, household appliances, farming equipment, pulp & paper**. Verified against fact sheet t_160b34b4 (Al Jazeera, India Today, CNBC — Aug 23, 2026). Exported for tests + UI.
