@@ -38,42 +38,50 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Who actually owns the AI model and codebase once the project is finished?",
+      "name": "Who owns the AI model, the data, and the fine-tuned outputs \u2014 and what happens if we leave the agency?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "By default, many AI agencies retain ownership of the model and license it to you \u2014 which is bad for your negotiating position. The industry-best outcome is that you own the custom source code, fine-tuned model weights, and any proprietary training data, while the agency's pre-existing base platform remains theirs under a perpetual license. Make sure your contract includes an explicit \"work made for hire\" clause to secure ownership."
+        "text": "In a well-negotiated contract, you own your training data, prompts, fine-tuned weights, and derivative outputs. The agency typically retains ownership of the pre-trained base model. The critical detail is operational portability: you must also secure handover of fine-tuned weights, evaluation sets, and prompt chains in a format a new vendor can actually use on Day 1. Without that, your ownership language is worthless in practice."
       }
     },
     {
       "@type": "Question",
-      "name": "Can the agency use my confidential business data to train their foundational models or other clients' AI agents?",
+      "name": "Should we pay per project, per hour, on retainer, or per output \u2014 and what's the industry standard?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Only if you let them. Many generic contracts omit this detail, creating an implied risk that your data could be used to improve models serving your competitors. You must add an explicit clause stating that the agency shall not use your data to train, fine-tune, or improve any model for any purpose other than providing services to you, and confirm that your data is stored in a segregated environment."
+        "text": "Hourly billing is rapidly shrinking. The industry has shifted to monthly retainers ($5k\u2013$50k+/month), project-based fees ($15k\u2013$500k+ for enterprise implementations), and output/usage-based models where you pay per API call or per unit of work. The fastest-growing model is output-based pricing, but it's the riskiest for buyers: without monitoring and audit rights, overpayment of 30\u201350% is common. We recommend a hybrid model \u2014 a base retainer plus transparent usage fees \u2014 for most enterprise deployments."
       }
     },
     {
       "@type": "Question",
-      "name": "What happens to the AI agent's performance if I stop paying the monthly retainer \u2014 do I lose access to the entire system?",
+      "name": "What happens if the AI system produces inaccurate or harmful outputs? Where does liability sit?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "This depends on your exit clause. Some agencies structure the contract so that the fine-tuned model and code transfer to you upon final payment, while others keep them behind a license that dies when the retainer stops. Negotiate for a full transfer of model weights, source code, and data exports on termination, plus a defined transition assistance period, so you aren't locked out of a system you paid to build."
+        "text": "Liability for AI outputs is the most under-negotiated area in AI contracts. Industry standard is a liability cap of 6\u201312 months of fees with mutual indemnification \u2014 the agency is responsible for model defects, you're responsible for how you deploy and use the system. But 1-in-3 AI contracts attempt a zero-liability or total-costs-paid cap. Push back hard. You should also require a failure-remediation clause that pre-negotiates prices for correcting drift or hallucination issues, since remediation after failure costs 3\u20134x preventive monitoring."
       }
     },
     {
       "@type": "Question",
-      "name": "How do I protect myself if the AI hallucinates and gives a customer incorrect or harmful advice? Who is legally liable?",
+      "name": "What SLA terms do we need for AI, and how do we measure quality when outputs aren't deterministic?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Liability allocation must be written into the contract, not assumed. A strong agreement distributes liability based on whose failure caused the harm: if the agency designed the training pipeline, guardrails, or prompt structure, they should bear a share of the risk. Also review the contract's indemnification clauses and the liability cap \u2014 a cap below the contract value often leaves you holding the bag for downstream harms like defamation, regulatory fines, or unauthorized advice."
+        "text": "AI SLAs differ fundamentally from traditional IT SLAs. Beyond standard uptime (99.5%+) and latency (p95 under defined load), you need accuracy thresholds tested against a mutually agreed evaluation set, hallucination tolerance (typically under 3\u20135%), quarterly drift detection, and periodic bias audits. Each requires a defined threshold and a remediation commitment \u2014 otherwise the SLA is unenforceable in practice."
       }
     },
     {
       "@type": "Question",
-      "name": "Why do the contracts include \"usage fees\" for tokens/APIs on top of the flat development fee?",
+      "name": "Can the agency license our proprietary data or conversations to other clients?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Because 57% of AI agents are priced on token/usage volume rather than flat fees. Every inference your agent runs consumes compute resources, and in a multi-tenant model, those costs can vary by demand. The fix is to require that token and API costs are passed through at cost with markup disclosed, and to include a realistic monthly budget line item so your \"flat fee\" doesn't balloon. Without this clause, a 3x budget overrun is entirely possible."
+        "text": "Not unless you sign a contract that allows it. You need an explicit exclusivity clause stating the agency will not use your data, prompts, conversation logs, or fine-tuning insights for any other client, benchmark, or internal model improvement. This is especially critical if you operate in a competitive industry where your AI workflows are a strategic advantage."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens to our prompts, conversation logs, and fine-tuning data if we terminate mid-contract?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The contract should require full handover of all prompts, few-shot examples, evaluation sets, fine-tuned embeddings, conversation logs, and API documentation in a vendor-neutral format within 30 days of termination. Switch costs for AI agencies run $30k\u2013$150k for mid-size deployments, so the exit clause matters more than the base fee. Look for \"operational portability\" language that defines exactly what you receive and in what format."
       }
     }
   ]
@@ -109,255 +117,242 @@
             <h1>AI Agency Contract Tips What to Look For</h1>
             <div class="meta"><span>Published August 24, 2026</span><span>By ABD Legacy LLC</span></div>
         </header>
-        <h2>AI Agency Contract Tips: What to Look For Before You Sign</h2>
+        <h2>AI Agency Contracts: The 2026 Buyer's Guide to What to Look For</h2>
 
-<p>AI agency contracts are fundamentally different from traditional web design or software development agreements, and signing a generic template could cost you hundreds of thousands of dollars in hidden fees, lost data rights, and a model that quietly degrades in accuracy within a year. Before you engage an AI agency, you must negotiate five critical areas: IP and data ownership, pricing structure, performance SLAs, data security, and exit strategy. Industry data shows that 30% of generative AI projects are abandoned after proof-of-concept, and models can lose 5–10% of predictive accuracy within 12–18 months without retraining — so your contract must address both kill criteria and long-term model maintenance. The bottom line: treat your AI agency agreement as a "maintained AI service" contract, not a one-time build deliverable.</p>
+<p>AI agency contracts are failing buyers at an alarming rate. McKinsey reports that 65% of organizations now use generative AI in at least one business function, yet only 11% have a contractual risk framework for AI vendor management. That gap is expensive: companies that actively negotiate AI vendor contracts report 18–25% lower total cost of ownership across a three-year term, according to ISG benchmark research. The bottom line: a poorly structured AI contract doesn't just cost you money — it can lock you out of your own data, models, and operational capability for years.</p>
 
-<h2>Why Standard IT Contracts Fail for AI Projects</h2>
+<p>The AI services market has matured faster than the legal frameworks governing it. Most AI agency contracts are still adapted from traditional software development agreements, which means they systematically fail to address the issues that actually matter: model ownership, hallucination liability, output-based pricing verification, and operational portability. Buyers who sign first drafts without scrutiny are exposing themselves to financial and operational risks that dwarf the base fees on the signature page.</p>
 
-<p>Most businesses make a costly mistake: they reuse their standard software development agreement and send it to an AI agency. That template was written for a world of static code, predictable timelines, and deliverables that don't change once deployed. AI projects break every one of those assumptions.</p>
+<p>This guide walks through the five clauses that matter most — IP ownership, pricing models, SLAs, exit rights, and liability caps — plus four rarely-covered traps that inflate costs by 30–50%. Whether you're procuring a $15,000 MVP deployment or a $500,000 enterprise implementation, the principles here apply across the board.</p>
 
-<p>An AI agent is not a finished product — it is a probabilistic system that evolves, drifts, and requires ongoing retraining. The code may work perfectly on launch day and become measurably worse six months later as real-world data shifts. Your contract needs to reflect this reality, and most boilerplate agreements simply do not.</p>
+<h2>Why AI Contracts Break Traditional Legal Frameworks</h2>
 
-<p>The stakes are concrete. Gartner predicted that 30% of generative AI projects would be abandoned after proof-of-concept by the end of 2025, and one of the top reasons cited was poorly structured vendor agreements that made scaling or pivoting prohibitively expensive. A well-written contract is your insurance policy against becoming another statistic.</p>
+<p>Traditional software contracts assume deterministic outputs. You buy a system, it behaves in a predictable way, and the vendor's obligations are measurable against fixed functionality. An AI system, by contrast, generates non-deterministic results: it can hallucinate, drift over time, and produce biased outputs that shift as new data arrives. That fundamental difference breaks the assumptions baked into most standard contract language.</p>
 
-<h2>The 5 Non-Negotiable Clauses Every AI Agency Contract Needs</h2>
+<p>Consider the Gartner statistic: 85% of AI projects deliver erroneous outcomes due to bias in data, algorithms, or the teams managing them. If your agency's contract doesn't explicitly address what happens when outputs are wrong — who detects it, who pays to fix it, and who bears the liability — you're exposed on every deliverable. A standard software defect clause simply doesn't cover an AI that works as designed but produces a confidently wrong answer.</p>
 
-<p>After reviewing hundreds of AI agency agreements through our work at Find AI Agency, five clauses consistently separate good contracts from dangerous ones. If any of these are missing or vaguely worded, get legal counsel before signing.</p>
+<p>Gartner also projects that 30% of generative AI projects will be abandoned after proof-of-concept by the end of 2025, citing poor data quality, rising costs, and inadequate risk controls. A well-structured contract is your only protection against being part of that statistic — and the only mechanism to recover spend if the project goes sideways.</p>
 
-<h3>1. Intellectual Property & Data Ownership: The "Who Owns What" Problem</h3>
+<p>The core issue: AI contracts need to address probabilistic outcomes, ongoing model behavior, and data relationships that don't exist in traditional software. Treat your AI agency contract as a partnership agreement for an evolving system, not a fixed-scope work order.</p>
 
-<p>IP disputes are the #1 source of litigation between AI agencies and their clients. The root cause is ambiguity: AI projects generate multiple types of intellectual property, and each one has different ownership implications.</p>
+<h2>IP and Data Ownership: The #1 Source of Disputes</h2>
 
-<p>Your contract must clearly delineate four separate asset classes: the agency's pre-existing base platform, the custom source code written for your project, the fine-tuned model weights, and the training data used to customize the model. The most common negotiating failure is treating all four as one bundle — which typically results in the agency keeping ownership of the most valuable assets.</p>
+<p>IP ownership is where AI contracts diverge most sharply from traditional software agreements. In a conventional development project, you pay for code, and you own it. With AI, most agencies claim ownership of the "underlying model" while granting you a license to outputs. That split is the single biggest source of contract disputes in the industry — and the issue most frequently litigated when relationships sour.</p>
 
-<p>Use this "who owns what" matrix as your negotiation checklist:</p>
+<h3>The Model vs. Outputs Split</h3>
 
-<table>
-<tr>
-<th>Asset Class</th>
-<th>Client Owns</th>
-<th>Licensed from Agency</th>
-<th>Key Negotiation Point</th>
-</tr>
-<tr>
-<td>Base platform / proprietary framework</td>
-<td>No</td>
-<td>Yes (perpetual, non-exclusive)</td>
-<td>Ensure the license survives contract termination and isn't tied to a monthly retainer.</td>
-</tr>
-<tr>
-<td>Custom source code written for you</td>
-<td>Yes (negotiate for it)</td>
-<td>Only if you fail to negotiate</td>
-<td>Agencies often default to "works made for hire" language. Verify it covers code.</td>
-</tr>
-<tr>
-<td>Fine-tuned model weights</td>
-<td>Yes</td>
-<td>No</td>
-<td>This is your competitive advantage. Do not accept a shared-ownership clause.</td>
-</tr>
-<tr>
-<td>Your proprietary training data</td>
-<td>Yes</td>
-<td>No</td>
-<td>Add explicit language: "Client data shall not be used to train third-party models."</td>
-</tr>
-</table>
+<p>A typical AI agency contract states that the agency retains ownership of the base model, fine-tuned weights, and model architecture — while you receive a license to use the outputs. On its face, this seems reasonable. The problem is that fine-tuned weights, prompt chains, and evaluation datasets are often where the real business value lives.</p>
 
-<p>The critical phrase to look for is "work made for hire." Under US copyright law, a work made for hire automatically gives the hiring party ownership — but only if the contract says so explicitly. Many AI agencies use a "license back" structure where they own everything and grant you a conditional license. That is a red flag.</p>
+<p>If your agency fine-tunes a model on your proprietary data, who owns those fine-tuned weights? If the contract doesn't explicitly assign ownership to you, the agency does by default. And when you leave, you lose the tuned model even though your data created it. We've seen mid-market buyers lose months of optimization work because they never challenged this clause.</p>
 
-<p>You also need to address pre-existing IP. The agency will bring its own base models, libraries, and frameworks. Those remain theirs, and that's fair. But the fine-tuned weights — the trained version that knows your business — should be yours outright, with a full transfer of ownership upon final payment.</p>
+<p>The negotiation stance you should take: the agency retains the pre-trained base model, but you own the fine-tuned weights, the training recipes, and all client-specific configurations. This is a fair split that recognizes both parties' contributions — and reputable agencies will accept it.</p>
 
-<p>One client we worked with lost negotiating leverage because their contract stated the agency retained "all improvements to the underlying model." By the time the client realized it, they couldn't switch vendors without rebuilding their AI assistant from scratch at a cost of $75,000. Do not let that happen to you.</p>
+<h3>Training Data and Derivative Outputs</h3>
 
-<h3>2. Pricing Structure & Scope Creep: The Hidden Cost Traps</h3>
+<p>Your training data — the proprietary documents, customer conversations, and internal knowledge that shaped the model — must remain yours. That's non-negotiable. But you also need to address derivative outputs: if your AI system generates content that becomes part of your product, you need unambiguous ownership of that content.</p>
 
-<p>AI agencies price projects in three main ways: fixed fee, time & materials (T&amp;M), and outcome-based or success fee models. Your risk profile changes dramatically depending on which structure you choose.</p>
+<p>Push for contract language that states: "Client retains full ownership of all training data, prompts, fine-tuned weights, and derivative outputs. Agency retains ownership of the pre-trained base model and any general-purpose improvements that are not Client-specific." That split is fair, defensible, and increasingly standard practice among established AI agencies.</p>
 
-<p>Market data shows that 57% of AI agents are priced based on token or usage volume rather than flat SaaS fees, according to AI Market Reports. That means your "fixed" contract may still carry variable costs tied to API consumption — and those costs can explode if the contract doesn't define them precisely.</p>
+<p>Be specific about what counts as "Client-specific" versus "general-purpose." Define it in writing: anything developed using your data, your evaluation sets, or your usage patterns belongs to you. Ambiguity here is exactly what leads to disputes down the line.</p>
+
+<h3>Exclusivity and Data Reuse</h3>
+
+<p>One clause that buyers routinely miss: can the agency license your proprietary data, prompts, or conversation logs to other clients? Some agencies, particularly those building vertical solutions, will attempt to reuse your engagement patterns to serve competitors.</p>
+
+<p>You want an explicit exclusivity clause stating the agency will not use your data, prompts, conversation logs, or fine-tuning insights for any other client, benchmark, or internal model improvement. This is particularly critical if you operate in a competitive industry where your AI workflows themselves are a strategic advantage.</p>
+
+<h2>AI Agency Pricing Models: What You're Actually Paying For</h2>
+
+<p>Pricing structures for AI services have evolved rapidly. Hourly billing is shrinking as the industry shifts toward project-based, retainer, and output/outcome-based models. Deloitte reports that 68% of AI buyers cite "lack of transparency in vendor pricing" as their top negotiation friction point — meaning most buyers don't understand what they're paying for or how the price relates to the value delivered.</p>
+
+<p>Here's the pricing landscape as of mid-2026, with typical ranges and risk allocation:</p>
 
 <table>
-<tr>
-<th>Pricing Model</th>
-<th>Who Bears Risk</th>
-<th>Best Use Case</th>
-<th>Hidden Cost Trap</th>
-</tr>
-<tr>
-<td>Fixed Fee</td>
-<td>Agency bears overrun risk</td>
-<td>Well-defined scope with clear acceptance criteria</td>
-<td>Change orders inflate price by 10–20% per major revision; vague "acceptance" allows endless revisions.</td>
-</tr>
-<tr>
-<td>Time &amp; Materials</td>
-<td>Client bears risk</td>
-<td>Exploratory pilots or unclear requirements</td>
-<td>Senior AI engineers bill at $150–$250/hour vs. $75–$110 for general devs. No cap = runaway budget.</td>
-</tr>
-<tr>
-<td>Outcome-Based / Success Fee</td>
-<td>Shared risk</td>
-<td>ROI-driven deployments where value is measurable</td>
-<td>Premium pricing (often 20–30% above fixed) and disputes over how "success" is measured.</td>
-</tr>
+<tr><th>Pricing Model</th><th>Typical Range</th><th>Pros</th><th>Cons</th><th>Best For</th><th>Risk Bearer</th></tr>
+<tr><td>Monthly Retainer</td><td>$5k–$50k+/mo</td><td>Predictable costs; ongoing optimization; priority support</td><td>You can overpay during low-usage periods</td><td>Continuous AI operations; ongoing tuning</td><td>Buyer</td></tr>
+<tr><td>Project-Based</td><td>$15k–$500k+</td><td>Clear scope; fixed deliverables; easy to compare bids</td><td>Scope creep; no ongoing support; re-tuning costs extra</td><td>Defined MVPs; launch deployments</td><td>Agency</td></tr>
+<tr><td>Output/Usage-Based</td><td>Per API call, per lead, per document; typically 20–40% above raw API costs</td><td>Cost aligns with business value; no idle spend</td><td>Verification is hard; buyers overpay 30–50% without monitoring rights</td><td>High-volume automation; scaling AI operations</td><td>Shared</td></tr>
+<tr><td>Hybrid (Base + Usage)</td><td>$3k–$15k/mo base + usage fees</td><td>Balances predictability with flexibility</td><td>Complex; requires careful metering</td><td>Most enterprise deployments</td><td>Shared</td></tr>
 </table>
 
-<p>Fixed-fee contracts sound safest, but AI projects rarely stay fixed. Standard IT benchmarks show that scope changes add 10–20% to final contract value for every major change request, and AI projects see even higher variance because "acceptance" criteria are ambiguous. What does "the chatbot answers accurately" mean? You need quantifiable thresholds: e.g., "90% of test queries answered correctly on a validated benchmark set."</p>
+<p>Average contract length across the industry is 12 months with a 30-day termination clause for convenience. But beware: 43% of AI agency contracts include auto-renewal provisions that buyers miss until they're locked in for another year. We cover this in detail below.</p>
 
-<p>The most dangerous clause in T&amp;M contracts is the absence of a cap or "not to exceed" limit. If your AI project is exploratory, insist on a capped T&amp;M arrangement with a clear statement of work for each phase. Additionally, define what happens to unused budget — can you roll it over, or does the agency keep it?</p>
+<h3>The Output-Based Pricing Paradox</h3>
 
-<p>Token pricing deserves special attention. When an AI agent operates, it consumes tokens for every API call. At commercial LLM rates, a customer-facing agent can rack up $500 to $3,000 per month in token costs for a mid-size business, and some agencies mark up these pass-through costs by 20–40%. Your contract should state explicitly that token and API costs are passed through at cost, with the agency's markup disclosed in writing.</p>
+<p>The fastest-growing AI agency model — output-based pricing — is also the one buyers least understand. You're billed per AI call, per document processed, per lead generated. On paper, this aligns cost with business value. In practice, it creates an information asymmetry that can cost you 30–50% in overpayment.</p>
 
-<p>You should also demand a "maintenance basket" line item. Model retraining and evaluation is not optional — it's a fixed cost of operating AI. Budget for $500 to $5,000 per training cycle in cloud compute, depending on your model size and data volume, and make sure the contract names who pays for GPU/CPU hours when retraining is triggered.</p>
+<p>We've audited contracts where the agency defined an "output" as any API call — including failed calls, retries, and internal test requests. Other contracts round tokens up to the nearest 1,000, inflating bills by 15–20% on small-volume operations. The agency has full visibility into usage; you have a monthly invoice with a single line item.</p>
 
-<h3>3. Performance Metrics, SLAs &amp; Model Decay: The Clause Everyone Forgets</h3>
-
-<p>Here is the unique angle that most AI agency contract guides miss: <strong>models get dumber over time.</strong> This isn't speculation — it's a documented phenomenon called model drift or data drift. Published machine learning research confirms that models lose 5–10% of predictive accuracy within 12–18 months without retraining, as real-world data shifts away from the original training distribution.</p>
-
-<p>A contract that treats the AI agent as a static deliverable is therefore fundamentally broken. You are not buying a product; you are buying a dynamic system that requires scheduled maintenance. Your agreement must include a "Continuous Evaluation &amp; Re-tuning" clause that answers three questions: who monitors for data drift, how often the model gets retrained, and who foots the bill for compute.</p>
-
-<p>If the agency doesn't proactively address model decay, you should raise it yourself. An established agency will have a model monitoring protocol already; a red flag response is "the model won't degrade" — that's technically false.</p>
-
-<p>Service Level Agreements (SLAs) are equally critical. The industry standard for AI agent APIs is 99.9% uptime. Anything less than 99.5% equates to roughly 1.8 days of downtime per year, which can mean thousands of lost transactions for a customer-facing agent. Your SLA should include:</p>
-
+<p>Before signing an output-based agreement, negotiate for:</p>
 <ul>
-<li><strong>Uptime guarantee:</strong> Minimum 99.5%-99.9% monthly uptime for production instances.</li>
-<li><strong>Latency threshold:</strong> Defined response times, e.g., p95 under 2 seconds for inference.</li>
-<li><strong>Service credits:</strong> Standard compensation is 1.5x the value of downtime, credited against your next invoice.</li>
-<li><strong>Accuracy benchmarks:</strong> Quarterly evaluation against a jointly-approved test set, with a documented target (e.g., "maintain 90%+ task success rate").</li>
+<li><strong>Buyer monitoring rights:</strong> access to a dashboard showing raw call volume, token usage, and processing logs</li>
+<li><strong>Error-filtered billing:</strong> no charge for failed, retried, or aborted calls</li>
+<li><strong>Explicit rounding rules:</strong> defined in writing, with no minimums on partial tokens</li>
+<li><strong>Monthly minimums with annual true-up:</strong> avoid punitive overage penalties; reconcile annually</li>
+<li><strong>Cost transparency:</strong> you should know the raw model API cost and the agency's markup percentage</li>
 </ul>
 
-<p>Service credits are the teeth of any SLA. A clause that says "agency will use commercially reasonable efforts" without a credit mechanism is worthless. If the agency misses the uptime or latency target, you should automatically receive a credit — no negotiation required.</p>
+<p>An unconditional right to audit usage logs is the single best protection against billing inflation. "Commercially reasonable access" sounds fine but gives the agency discretion to deny you meaningful data. Push for unconditional, real-time audit access.</p>
 
-<p>Also define severity levels for support. A critical production outage should have a response time measured in minutes (e.g., 15 minutes), not business days. Tier 2 or non-urgent issues can tolerate longer response windows. Make those numbers explicit.</p>
+<h2>Performance and Quality Standards: AI-Specific SLAs</h2>
 
-<h3>4. Data Security &amp; Compliance: Protecting Proprietary Information</h3>
+<p>Traditional SLAs focus on uptime and response time. AI SLAs must address things that are fundamentally harder to measure: accuracy, hallucination rates, model drift, and bias. A system that is up 99.9% of the time but hallucinating 20% of its outputs is worse than useless — it's dangerous.</p>
 
-<p>Data security clauses are the most likely to be copied verbatim from a generic IT contract — and the most likely to be inadequate for AI. The core question is not just "will the agency protect my data" but "can the agency use my data to train other clients' models?"</p>
-
-<p>The answer must be an explicit "no" for any confidential or proprietary business data. Add a clause that states: "Agency shall not use Client's data to train, fine-tune, or improve any model, foundation model, or AI system for any purpose other than providing services to Client, including but not limited to use for other clients." This is not standard language, so you must ask for it.</p>
-
-<p>Data segregation is another concern. Ask the agency whether your data is stored in a single-tenant environment or shared infrastructure. In a multi-tenant architecture, a breach or misconfiguration could expose your data to other tenants. For regulated industries — healthcare, finance, legal — single-tenant or a private cloud instance should be the default, not an upgrade.</p>
-
-<p>Compliance obligations depend on your sector and geography. If you handle health data, HIPAA business associate agreements are non-negotiable. If you operate in California, CCPA/CPRA applies, and if you serve European customers, GDPR and the EU AI Act introduce specific transparency and risk-management duties. The contract must allocate liability for regulatory non-compliance: who bears the cost of a fine resulting from the agency's failure to implement required controls?</p>
-
-<p>One area agencies love to bury in the fine print is indemnification for AI-generated content. If your AI agent hallucinates and gives a customer incorrect financial, legal, or medical advice, who is legally liable? A strong contract allocates liability to the party whose failure caused the harm. If the agency was responsible for the model's training and guardrails, it should carry a share of that risk — not push the entire liability onto you.</p>
-
-<p>As of May 2026, with the EU AI Act fully in force and the US regulatory landscape evolving state by state, you should also require the agency to maintain a documented AI risk assessment and model card. If they push back on documentation, that's a signal they aren't operating at a mature compliance level.</p>
-
-<h3>5. Exit Strategy &amp; Vendor Lock-In: Plan for the Breakup Before the Honeymoon</h3>
-
-<p>The hardest question to negotiate — and the one most clients never ask — is "what happens when we terminate?" By the time you need an exit clause, it's too late to negotiate one. Your contract must define the exit process on day one.</p>
-
-<p>Vendor lock-in is rampant in AI. Your agent may depend on the agency's proprietary API, its hosting infrastructure, and its prompt engineering patterns. If you cancel the license, does the model stop working entirely? Many agencies structure contracts so that you lose access to the fine-tuned model if you stop paying the monthly retainer — even though you paid for the development.</p>
-
-<p>Protect yourself with these exit provisions:</p>
+<p>Your AI agency contract should include, at minimum, the following AI-specific SLA components:</p>
 
 <ul>
-<li><strong>Full transfer of code and weights:</strong> Upon final payment, the agency must deliver all source code, fine-tuned model weights, configuration files, and prompt templates in a standard, portable format.</li>
-<li><strong>Neutral escrow:</strong> For critical systems, require source code escrow held by a third party, released if the agency goes bankrupt or breaches the agreement.</li>
-<li><strong>Data export:</strong> Your proprietary data must be exportable in a commonly-used format (JSON, CSV, SQL dump) at no cost within 30 days of termination.</li>
-<li><strong>Transition assistance:</strong> Define a transition services period (typically 30–60 days) where the agency provides documentation and handover support, either included or at a pre-agreed rate.</li>
-<li><strong>Reasonable notice:</strong> Typical AI agency contracts run 12–24 months with 30–60 day termination notice — significantly longer than the 30-day terms common in web design contracts.</li>
+<li><strong>Accuracy benchmarks:</strong> a defined accuracy threshold (e.g., 95%) tested against a mutually agreed evaluation set — not the agency's proprietary test data</li>
+<li><strong>Hallucination tolerance:</strong> an acceptable rate of fabricated or incorrect outputs, typically under 3–5% for production systems</li>
+<li><strong>Latency:</strong> p95 response time under defined load conditions, stated in milliseconds</li>
+<li><strong>Uptime:</strong> 99.5% or better for production endpoints</li>
+<li><strong>Drift detection:</strong> quarterly model drift assessments with defined remediation commitments</li>
+<li><strong>Bias auditing:</strong> periodic audits for demographic or other bias, with remediation requirements if thresholds are breached</li>
 </ul>
 
-<p>Map out two exit scenarios in your head before signing. Scenario one: you leave in month six because the pilot failed. You should owe only the work completed to date and get your data back. Scenario two: you leave in year two because you found a better vendor. You should own the full model, have the training data, and be able to migrate to another host. If the contract doesn't support both scenarios, keep negotiating.</p>
+<p>The evaluation set matters enormously. If the agency defines the benchmark against its own data, you have no way to validate performance on your actual use cases. Insist on a jointly agreed evaluation set — a curated batch of your real-world inputs with labeled expected outputs — before the contract is signed.</p>
 
-<h2>How to Vet an AI Agency Before You Sign</h2>
+<h3>The Failure-Remediation Clause: The #1 Hidden Cost</h3>
 
-<p>Contract language matters, but so does the vendor's behavior during the sales process. Use these diligence questions to gauge whether you're dealing with a mature AI agency or an overhyped web shop cashing in on the AI wave.</p>
+<p>Nearly no standard AI contract includes a failure-remediation clause — but it's the single most financially important clause you can add. When a production AI system fails — drifts, hallucinates at scale, or produces biased outputs — remediation costs 3–4x the cost of preventive monitoring, according to ISG data.</p>
 
-<h3>Ask for the Model Card and Evaluation Data</h3>
+<p>Your contract should require the agency to run periodic drift and hallucination audits with defined thresholds. When those thresholds are breached, the agency must remediate at a pre-negotiated price — not at whatever rate they quote after the fact. This converts an unpredictable catastrophic cost into a manageable, budgeted line item.</p>
 
-<p>A reputable agency will have a model card for its base models — a document describing training data, evaluation metrics, known limitations, and recommended use cases. If the agency can't explain how it measures model performance, it cannot write a meaningful accuracy SLA.</p>
+<p>Without this clause, you're at the agency's mercy during a failure. They can quote you $80k to re-tune a model that's producing bad outputs, and you have no leverage to negotiate because your business is already suffering the consequences of the failure.</p>
 
-<h3>Demand a Paid Proof-of-Concept with Kill Criteria</h3>
+<h2>Termination, Offboarding, and Exit Rights</h2>
 
-<p>Given the Gartner statistic that 30% of generative AI projects are abandoned after proof-of-concept, you should make the POC phase explicit in the contract. Structure it as a fixed-fee pilot with defined success metrics and a written kill criterion: if the pilot doesn't hit X performance threshold within Y weeks, either party can walk away without penalty. This protects both sides and forces honesty about what the technology can deliver.</p>
+<p>The typical AI agency contract runs 12 months with a 30-day termination clause for convenience. That sounds reasonable — until you realize that 43% of contracts include auto-renewal traps that buyers miss. Check: does the contract auto-renew for another year unless you give 60–90 days' notice? We've seen contracts with notice periods as long as 120 days, effectively forcing renewal unless you plan nearly a third of a year ahead.</p>
 
-<h3>Check for Partnership Leverage</h3>
+<p>Beyond auto-renewal, AI "offboarding" is fundamentally more complex than traditional software offboarding. Switching AI agencies costs $30k–$150k in re-training, re-deployment, and data migration for mid-size deployments. That makes exit clauses financially more important than the base fee itself.</p>
 
-<p>If your project depends on models from OpenAI, Anthropic, Google, or open-source families, the agency's relationship with those providers matters. Agencies with direct API partnerships often get better rate tiers, which can lower your token costs by 15–25%. Ask for written confirmation of pricing passed through at cost.</p>
+<h3>Operational Portability: The Clause Everybody Forgets</h3>
 
-<h3>Talk to Reference Clients About Their Contracts</h3>
+<p>Most articles on AI contracts mention IP ownership but gloss over operational portability. The question that matters: when you walk out the door, can a new vendor actually use what you take with you? If the answer is no, your ownership language is worthless.</p>
 
-<p>Don't just ask for references — ask those references what they would change about their own contracts. Did they face surprise token fees? Did they successfully exercise an exit clause? Were they able to get their model weights transferred? These questions expose the gap between the agency's promises and its actual contract behavior.</p>
-
-<h2>Red Flags That Should Make You Walk Away</h2>
-
-<p>Some contract signals are so dangerous that you should terminate negotiations entirely. We recommend walking away if you encounter any of the following:</p>
-
+<p>Your contract should require the agency to hand over, on Day 1 of offboarding:</p>
 <ul>
-<li><strong>"All improvements" clauses:</strong> The agency claims ownership of any model improvements created during your engagement. This gives them your competitive advantage and makes switching vendors impossible.</li>
-<li><strong>No uptime SLA:</strong> A production AI agent without a binding uptime guarantee is an operational risk you should not accept.</li>
-<li><strong>Unlimited liability waivers:</strong> As of 2026, firms can no longer hide behind "limitation of liability" caps that shield them from gross negligence or intentional breaches. A cap below the total contract value is a red flag.</li>
-<li><strong>Token cost ambiguity:</strong> The contract references "usage fees" but never defines per-token pricing or markup. You are signing a blank check.</li>
-<li><strong>No retraining clause:</strong> The agency doesn't mention model drift, retraining schedules, or ongoing evaluation. They are treating your AI system as a static website — and it will decay.</li>
-<li><strong>Vague data usage:</strong> Any contract that doesn't explicitly prohibit using your data to train other clients' models should be rejected.</li>
+<li><strong>All prompts and prompt chains</strong> in a documented, vendor-neutral format</li>
+<li><strong>Few-shot examples and evaluation sets</strong> used for testing</li>
+<li><strong>Fine-tuned embeddings and weights</strong> (or the complete training recipes required to recreate them)</li>
+<li><strong>Conversation logs and usage analytics</strong> in a portable format (CSV or JSON)</li>
+<li><strong>API documentation, architecture diagrams, and integration configurations</strong></li>
 </ul>
 
-<h2>Checklist: 12 Contract Items to Verify Before Signing</h2>
+<p>Without these deliverables, an exit clause that says "you own your data" is a hollow promise. A new agency can't run what you can't load. A standard contract almost never addresses this specificity — you need to add it explicitly with a timeline (typically 30 days) and a named point of contact for the handover.</p>
 
-<p>Use this checklist during your final contract review. Every item should be explicitly addressed; if it's absent or ambiguous, request a revision.</p>
+<h2>Liability, Indemnification, and Compliance</h2>
+
+<p>Who is liable when an AI system gives harmful financial advice, rejects a job applicant because of biased outputs, or violates data privacy regulations? This is the question that keeps general counsels up at night — and the one most AI contracts fail to answer adequately.</p>
+
+<h3>Liability Caps: What's Acceptable</h3>
+
+<p>Industry-standard liability caps in AI contracts run 6–12 months of fees. But an alarming 1-in-3 AI contracts attempt a zero-liability or total-costs-paid-to-date cap, according to contract analysis data. That's effectively no protection at all — the worst you can recover is what you've already paid, which covers none of the downstream damage.</p>
+
+<table>
+<tr><th>Cap Level</th><th>What It Means</th><th>Verdict</th></tr>
+<tr><td>Zero liability / fees-paid-to-date</td><td>Agency takes no real risk for failures</td><td>Red flag — reject</td></tr>
+<tr><td>3 months of fees</td><td>Minimal protection; common in smaller agencies</td><td>Below standard — push for more</td></tr>
+<tr><td>6 months of fees</td><td>Industry minimum</td><td>Acceptable for small-to-mid deployments</td></tr>
+<tr><td>12 months of fees</td><td>Industry standard for enterprise</td><td>Good — reasonable starting point</td></tr>
+<tr><td>1–2x annual contract value</td><td>Strong protection</td><td>Best-case — rare but obtainable</td></tr>
+</table>
+
+<p>Push back on any cap below 6 months of fees. And ensure the cap is symmetrical — applying equally to both parties. An asymmetrical cap (where you're capped at 3 months but the agency's cap is 12 months) is a red flag that the contract was drafted entirely in the agency's favor.</p>
+
+<h3>Compliance and Data Residency</h3>
+
+<p>Your contract must explicitly assign responsibility for regulatory compliance. Key areas:</p>
+<ul>
+<li><strong>GDPR/CCPA:</strong> who ensures data residency, deletion rights, and privacy notices are maintained</li>
+<li><strong>HIPAA:</strong> a Business Associate Agreement (BAA) is required if you operate in healthcare or handle protected health information</li>
+<li><strong>Biased output liability:</strong> who is responsible when the model produces discriminatory results that expose you to legal action</li>
+<li><strong>Hallucinated advice liability:</strong> who bears the cost when the AI gives factually wrong — and financially damaging — guidance to a customer</li>
+</ul>
+
+<p>Your best protection is a mutual indemnification clause: the agency holds you harmless for defects in their model and training data; you hold them harmless for how you deploy and use the system. Keep liability caps symmetrical, and ensure you have the right to inspect training data lineage and audit data sources.</p>
+
+<p>Data residency is another area where AI contracts need specificity. Your model's API might route through servers in jurisdictions that violate your compliance framework. Your contract should state exactly where data is stored and processed, with a commitment not to change that without your prior written consent.</p>
+
+<h2>Four Contract Clauses Most Buyers Miss</h2>
+
+<h3>1. The AI Model Deprecation Clause</h3>
+
+<p>New models ship every 3–6 months. Who decides when to upgrade? Who pays for re-tuning? What happens when your performance targets shift because the underlying model's behavior changes after an upgrade? Almost no standard AI contract addresses this.</p>
+
+<p>Your contract should specify a governance process: a named committee or role that reviews model upgrades, with cost responsibility assigned up front. Without this, you're either stuck paying for re-tuning every time the agency decides to swap the base model, or left on a deprecated model that's quietly degrading in performance — and neither path is acceptable.</p>
+
+<h3>2. The Auto-Renewal Trap</h3>
+
+<p>As noted, 43% of AI contracts carry auto-renewal provisions with notice requirements that are easy to miss. We've seen 90-day notice periods and $10k+ non-renewal penalties. Flag any auto-renewal language in the first draft and negotiate for a 30-day notice with no penalty. If the agency refuses, that alone is a reason to walk away.</p>
+
+<h3>3. The Right to Audit Clause</h3>
+
+<p>For output-based pricing, verification is everything. The right to audit usage logs, call records, and token counts should be unconditional, real-time, and at no additional cost. "Commercially reasonable access" gives the agency discretion to deny you meaningful data. Make it a hard requirement: dashboard access, raw logs, and the right to bring in a third-party auditor at your own expense if you suspect discrepancies.</p>
+
+<h3>4. The Use-Case Restriction Clause</h3>
+
+<p>Your AI system will be fine-tuned and optimized for a defined set of use cases. The contract should restrict the agency from expanding scope, adding capabilities, or changing the system's behavior without your written approval — and any change in use case should trigger a re-scope of the commercial terms. This prevents "scope creep by default," where the agency adds features (and costs) without explicit authorization.</p>
+
+<h2>Putting It All Together: A Pre-Signing Checklist</h2>
+
+<p>Before you sign any AI agency contract, run through this checklist:</p>
 
 <ol>
-<li>Client owns fine-tuned model weights and custom source code (work made for hire).</li>
-<li>Agency's pre-existing IP is licensed perpetually, not tied to active subscription.</li>
-<li>Client data is never used to train third-party models.</li>
-<li>Token/API costs are passed through at cost with markup disclosed.</li>
-<li>Maintenance basket covers retraining and is priced at $500–$5,000 per cycle.</li>
-<li>Uptime SLA is at least 99.5%, with service credits at 1.5x.</li>
-<li>Output accuracy is measured against a defined benchmark on a defined schedule.</li>
-<li>Data drift and retraining triggers are documented.</li>
-<li>Security and compliance responsibilities (HIPAA, GDPR, CCPA, EU AI Act) are allocated.</li>
-<li>Exit provides full data export and model weight transfer at no extra cost.</li>
-<li>Termination notice period is reasonable (30–60 days), not punitive.</li>
-<li>Liability cap is negotiated to cover gross negligence and data breaches.</li>
+<li><strong>IP ownership:</strong> You own all training data, prompts, fine-tuned weights, and derivative outputs. Agency owns only the pre-trained base model.</li>
+<li><strong>Exclusivity:</strong> Your data and prompts are never reused for other clients, benchmarks, or internal improvement.</li>
+<li><strong>Pricing transparency:</strong> You understand the markup on raw API costs and have unconditional audit rights for usage.</li>
+<li><strong>SLAs:</strong> Accuracy, hallucination tolerance, drift detection, and bias audits are defined with measurable thresholds and a jointly agreed evaluation set.</li>
+<li><strong>Failure-remediation:</strong> Pre-negotiated remediation pricing with defined drift and hallucination thresholds.</li>
+<li><strong>Exit:</strong> Full operational portability deliverables defined, with a 30-day handover timeline.</li>
+<li><strong>Liability cap:</strong> At least 6 months of fees, symmetrical, with mutual indemnification.</li>
+<li><strong>Auto-renewal:</strong> Removed or limited to 30-day notice with no penalty.</li>
+<li><strong>Model deprecation:</strong> Defined upgrade governance and cost assignment.</li>
+<li><strong>Data residency:</strong> Explicit processing-location guarantees with prior-written-consent requirements for changes.</li>
 </ol>
 
-<h2>Final Negotiating Strategy: Buy a Dynamic System, Not a Static Product</h2>
+<p>One final data point to keep in mind: companies that negotiate their AI vendor contracts rather than accepting first drafts report 18–25% lower total cost of ownership across a three-year term. Negotiation isn't just smart — it's worth six figures on enterprise-scale engagements.</p>
 
-<p>The single biggest mindset shift is this: you are not buying an AI model. You are buying a continuously maintained cognitive service. Your contract must fund ongoing evaluation, retraining, monitoring, and improvement — or your investment will silently degrade.</p>
-
-<p>When you approach the negotiation table, lead with model decay. Ask the agency: "What happens to our system's accuracy in 18 months, and who pays for the retraining?" A strong agency will have a detailed answer with cost estimates. A weak one will be caught flat-footed — and that tells you everything you need to know about their operational maturity.</p>
-
-<p>Remember the numbers: 30% of genAI projects are abandoned after POC. Scope changes add 10–20% per major revision. Models lose 5–10% accuracy in 12–18 months without retraining. Token overruns can triple your budget. None of these are surprises — they are predictable, documented realities. A good contract anticipates them; a naive contract ignores them.</p>
-
-<p>You've invested weeks building a business case for AI. Don't jeopardize that investment with a contract that doesn't protect your data, your IP, and your model's long-term performance. Use this guide, push for the clauses above, and treat the agreement with the same rigor you'd apply to any major procurement. The right contract won't just protect you — it will transform your AI agency from a vendor into a long-term partner whose incentives are aligned with yours.</p>
-
-<p>For a curated list of vetted AI agencies that follow mature contracting practices, visit <a href="https://findaiagency.com">Find AI Agency</a> — where every listed partner has been evaluated on transparency, technical depth, and contract fairness.</p>
+<h2>Frequently Asked Questions</h2>
 
 <div class="faq-item">
-<h3>Q: Who actually owns the AI model and codebase once the project is finished?</h3>
-<p>A: By default, many AI agencies retain ownership of the model and license it to you — which is bad for your negotiating position. The industry-best outcome is that you own the custom source code, fine-tuned model weights, and any proprietary training data, while the agency's pre-existing base platform remains theirs under a perpetual license. Make sure your contract includes an explicit "work made for hire" clause to secure ownership.</p>
+<h3>Q: Who owns the AI model, the data, and the fine-tuned outputs — and what happens if we leave the agency?</h3>
+<p>A: In a well-negotiated contract, you own your training data, prompts, fine-tuned weights, and derivative outputs. The agency typically retains ownership of the pre-trained base model. The critical detail is operational portability: you must also secure handover of fine-tuned weights, evaluation sets, and prompt chains in a format a new vendor can actually use on Day 1. Without that, your ownership language is worthless in practice.</p>
 </div>
 
 <div class="faq-item">
-<h3>Q: Can the agency use my confidential business data to train their foundational models or other clients' AI agents?</h3>
-<p>A: Only if you let them. Many generic contracts omit this detail, creating an implied risk that your data could be used to improve models serving your competitors. You must add an explicit clause stating that the agency shall not use your data to train, fine-tune, or improve any model for any purpose other than providing services to you, and confirm that your data is stored in a segregated environment.</p>
+<h3>Q: Should we pay per project, per hour, on retainer, or per output — and what's the industry standard?</h3>
+<p>A: Hourly billing is rapidly shrinking. The industry has shifted to monthly retainers ($5k–$50k+/month), project-based fees ($15k–$500k+ for enterprise implementations), and output/usage-based models where you pay per API call or per unit of work. The fastest-growing model is output-based pricing, but it's the riskiest for buyers: without monitoring and audit rights, overpayment of 30–50% is common. We recommend a hybrid model — a base retainer plus transparent usage fees — for most enterprise deployments.</p>
 </div>
 
 <div class="faq-item">
-<h3>Q: What happens to the AI agent's performance if I stop paying the monthly retainer — do I lose access to the entire system?</h3>
-<p>A: This depends on your exit clause. Some agencies structure the contract so that the fine-tuned model and code transfer to you upon final payment, while others keep them behind a license that dies when the retainer stops. Negotiate for a full transfer of model weights, source code, and data exports on termination, plus a defined transition assistance period, so you aren't locked out of a system you paid to build.</p>
+<h3>Q: What happens if the AI system produces inaccurate or harmful outputs? Where does liability sit?</h3>
+<p>A: Liability for AI outputs is the most under-negotiated area in AI contracts. Industry standard is a liability cap of 6–12 months of fees with mutual indemnification — the agency is responsible for model defects, you're responsible for how you deploy and use the system. But 1-in-3 AI contracts attempt a zero-liability or total-costs-paid cap. Push back hard. You should also require a failure-remediation clause that pre-negotiates prices for correcting drift or hallucination issues, since remediation after failure costs 3–4x preventive monitoring.</p>
 </div>
 
 <div class="faq-item">
-<h3>Q: How do I protect myself if the AI hallucinates and gives a customer incorrect or harmful advice? Who is legally liable?</h3>
-<p>A: Liability allocation must be written into the contract, not assumed. A strong agreement distributes liability based on whose failure caused the harm: if the agency designed the training pipeline, guardrails, or prompt structure, they should bear a share of the risk. Also review the contract's indemnification clauses and the liability cap — a cap below the contract value often leaves you holding the bag for downstream harms like defamation, regulatory fines, or unauthorized advice.</p>
+<h3>Q: What SLA terms do we need for AI, and how do we measure quality when outputs aren't deterministic?</h3>
+<p>A: AI SLAs differ fundamentally from traditional IT SLAs. Beyond standard uptime (99.5%+) and latency (p95 under defined load), you need accuracy thresholds tested against a mutually agreed evaluation set, hallucination tolerance (typically under 3–5%), quarterly drift detection, and periodic bias audits. Each requires a defined threshold and a remediation commitment — otherwise the SLA is unenforceable in practice.</p>
 </div>
 
 <div class="faq-item">
-<h3>Q: Why do the contracts include "usage fees" for tokens/APIs on top of the flat development fee?</h3>
-<p>A: Because 57% of AI agents are priced on token/usage volume rather than flat fees. Every inference your agent runs consumes compute resources, and in a multi-tenant model, those costs can vary by demand. The fix is to require that token and API costs are passed through at cost with markup disclosed, and to include a realistic monthly budget line item so your "flat fee" doesn't balloon. Without this clause, a 3x budget overrun is entirely possible.</p>
+<h3>Q: Can the agency license our proprietary data or conversations to other clients?</h3>
+<p>A: Not unless you sign a contract that allows it. You need an explicit exclusivity clause stating the agency will not use your data, prompts, conversation logs, or fine-tuning insights for any other client, benchmark, or internal model improvement. This is especially critical if you operate in a competitive industry where your AI workflows are a strategic advantage.</p>
 </div>
 
 <div class="faq-item">
-<h3>Q: How often do we need to re-train the model, and who pays for data labeling and compute costs?</h3>
-<p>A: Published research shows models lose 5–10% of predictive accuracy within 12–18 months without retraining due to data drift. Best practice is quarterly or half-yearly evaluation with retraining as
+<h3>Q: What happens to our prompts, conversation logs, and fine-tuning data if we terminate mid-contract?</h3>
+<p>A: The contract should require full handover of all prompts, few-shot examples, evaluation sets, fine-tuned embeddings, conversation logs, and API documentation in a vendor-neutral format within 30 days of termination. Switch costs for AI agencies run $30k–$150k for mid-size deployments, so the exit clause matters more than the base fee. Look for "operational portability" language that defines exactly what you receive and in what format.</p>
+</div>
+
+<h2>The Bottom Line</h2>
+
+<p>AI agency contracts are not traditional software contracts, and treating them as such is a financial trap. With only 11% of organizations maintaining a contractual risk framework for AI vendors, buyers are negotiating from a position of weakness — but you don't have to be one of them.</p>
+
+<p>Prioritize these five areas in every negotiation: IP ownership (including fine-tuned weights and derivative outputs), pricing model transparency (especially for output-based billing), AI-specific SLAs with measurable thresholds, operational portability for exit, and liability caps of at least 6 months of fees.</p>
+
+<p>And remember: agencies that try to slide in auto-renewal traps, zero-liability caps, and usage-counting opacity are signaling how they'll behave after you sign. Walk away from those contracts. The best AI agencies will welcome specificity — because they know a well-structured partnership outperforms a poorly-structured one over the long term.</p>
+
+<p>For help evaluating AI agency proposals, comparing pricing models, and negotiating contracts, visit <a href="https://findaiagency.com">Find AI Agency</a>.</p>
     </article>
     <footer>
         <p>&copy; 2026 <a href="https://findaiagency.com">Findaiagency</a> &mdash; All rights reserved.</p>

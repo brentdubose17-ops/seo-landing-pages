@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</title>
+    <meta name="description" content="Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead, with agent-first pricing guidance built in.">
+    <meta name="keywords" content="AI agent API cost, agent API cost calculator, AI agent cost estimator, agent workload cost, agent-first pricing, AI agency API costs, token cost calculator, AI agent pricing, API cost per agent">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aiagencycalculator.com/ai-agent-api-cost-calculator">
+    <meta property="og:title" content="AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs" />
+    <meta property="og:description" content="Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead, with agent-first pricing guidance built in.">
+    <meta property="og:url" content="https://aiagencycalculator.com/ai-agent-api-cost-calculator">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aiagencycalculator">
+    <meta property="og:image" content="https://aiagencycalculator.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs",
+      "description": "Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead, with agent-first pricing guidance built in.",
+      "datePublished": "2026-08-24",
+      "dateModified": "2026-08-24",
+      "author": {"@type": "Organization", "name": "ABD Legacy LLC"},
+      "publisher": {"@type": "Organization", "name": "ABD Legacy LLC"},
+      "mainEntityOfPage": "https://aiagencycalculator.com/ai-agent-api-cost-calculator",
+      "image": "https://aiagencycalculator.com/og-image.png",
+      "keywords": "AI agent API cost, agent API cost calculator, agent-first pricing, AI agency API costs"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I estimate the API cost of an AI agent workload?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Multiply the number of agents by average API calls per agent per day and working days per month to get monthly calls. Then multiply by tokens per call (or price per call) and the provider's per-token rate, and add agency overhead for retries, oversight, and integration. The formula on this page does all of that live."}
+        },
+        {
+          "@type": "Question",
+          "name": "What is a realistic API cost per AI agent per month in 2026?",
+          "acceptedAnswer": {"@type": "Answer", "text": "It depends on model and volume. On current 2026 rates a moderately active agent making ~200 calls/day with ~8K input / 1.2K output tokens per call runs about $30–$90/month in raw API cost on mid-tier models (Claude Sonnet 5 $2/$10 per 1M, Grok 4.6 $2/$6), before agency overhead — and a fraction of that on cheap models like DeepSeek V4-Flash off-peak ($0.22/$0.66 per 1M)." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is agent-first pricing?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Agent-first pricing bills on agent activities, completed tasks, outcomes, or resources used — not human seats. Examples: Salesforce Agentforce at $2 per conversation and $0.10 per action, Intercom Fin at $0.99 per resolution. For agencies it means passing through API costs with a documented margin, pricing per outcome, or charging a retainer floor plus usage-based overage."}
+        },
+        {
+          "@type": "Question",
+          "name": "Why do AI agent API bills exceed simple token estimates?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Agents don't make one clean call per task. They fan out subagents, retry failed steps, reload context, and bill every intermediate call. A single agent task can query thousands of endpoints (Cloudflare's Matthew Prince cited ~5,000 sites vs ~5 for a human). Add a workload-complexity multiplier for retries and fan-out or your estimate will be low by 1.5–3x."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } }
+
+        /* Calculator widget */
+        .calc { background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; padding: 24px; margin: 24px 0; }
+        .calc h2 { border-bottom: none; margin: 0 0 16px; padding: 0; font-size: 1.35rem; }
+        .calc .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
+        .calc .field { display: flex; flex-direction: column; }
+        .calc .field.full { grid-column: 1 / -1; }
+        .calc label { font-size: 0.85rem; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+        .calc label .hint { font-weight: 400; color: #888; }
+        .calc input[type="number"], .calc select { padding: 8px 10px; border: 1px solid #d0d5e0; border-radius: 6px; font-size: 0.95rem; background: #fff; color: #1a1a2e; width: 100%; }
+        .calc input[type="range"] { width: 100%; margin: 6px 0 2px; accent-color: #2563eb; }
+        .calc .range-val { font-size: 0.85rem; color: #2563eb; font-weight: 600; }
+        .calc .radio-row { display: flex; gap: 14px; margin: 4px 0 10px; }
+        .calc .radio-row label { font-weight: 400; font-size: 0.95rem; display: flex; align-items: center; gap: 5px; }
+        .calc .radio-row input { accent-color: #2563eb; }
+        .results { margin-top: 20px; background: #fff; border: 1px solid #e8e8f0; border-radius: 10px; padding: 20px; }
+        .results .big { font-size: 1.7rem; font-weight: 800; color: #111; line-height: 1.2; }
+        .results .big .sub { font-size: 0.9rem; font-weight: 400; color: #666; }
+        .results .row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #f0f0f5; font-size: 0.98rem; }
+        .results .row:last-child { border-bottom: none; }
+        .results .row .k { color: #555; }
+        .results .row .v { font-weight: 600; color: #111; text-align: right; }
+        .results .row.total .v { color: #2563eb; font-size: 1.15rem; }
+        .price-card { margin-top: 16px; background: #f0f7ff; border: 1px solid #cfe3ff; border-radius: 10px; padding: 16px 18px; }
+        .price-card h4 { font-size: 0.95rem; color: #1d4ed8; margin-bottom: 8px; }
+        .price-card .line { display: flex; justify-content: space-between; font-size: 0.95rem; padding: 4px 0; }
+        .price-card .line .v { font-weight: 700; color: #111; }
+        .note { font-size: 0.82rem; color: #888; margin-top: 10px; }
+        .formula { background: #fff; border: 1px dashed #c0c8d8; border-radius: 8px; padding: 14px 18px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88rem; color: #333; margin: 12px 0 4px; overflow-x: auto; white-space: pre-wrap; }
+        .badge { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.78rem; padding: 3px 10px; border-radius: 20px; font-weight: 600; margin-right: 8px; }
+        @media (max-width: 600px) { .calc .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</h1>
+            <div class="meta"><span>Published August 24, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>AI agent API costs</span> <span>Agent-first pricing</span> <span>Agency billing</span></div>
+        </header>
+
+        <p><strong>The short answer:</strong> a moderately active AI agent costs <strong>roughly $50–$150/month in raw API spend</strong> on mid-tier 2026 models, and a full agent deployment is easy to model once you separate the four cost drivers: number of agents, calls per agent per day, tokens (or price) per call, and agency overhead. This calculator walks an agency owner through each driver and turns it into a defensible monthly number — plus a suggested client price using agent-first pricing.</p>
+
+        <p>This page is the pricing companion to <a href="https://findaiagency.com/ai-agents-api-economy" rel="noopener">"AI Agents Are the API Economy's Biggest Customers: What Agencies Should Charge"</a> — the full analysis of the PYMNTS report is there; the math is here. AI agents are the fastest-growing class of API consumers (PYMNTS, Aug 24, 2026), OpenRouter passed 1 trillion tokens/day in late 2025, and Cloudflare's Matthew Prince cites a single agent task querying ~5,000 sites versus ~5 for a human. That machine-scale consumption is exactly what an agency is paying for — and what it should bill for, deliberately.</p>
+
+        <div class="calc" id="calc">
+            <h2>Agent API Cost Estimator</h2>
+            <div class="grid">
+                <div class="field">
+                    <label for="agents">Number of agents <span class="hint">(active in production)</span></label>
+                    <input type="number" id="agents" value="10" min="1" max="1000" step="1">
+                </div>
+                <div class="field">
+                    <label for="callsPerDay">Avg API calls per agent per day</label>
+                    <input type="number" id="callsPerDay" value="200" min="1" max="100000" step="10">
+                </div>
+                <div class="field">
+                    <label for="daysPerMonth">Working days per month</label>
+                    <input type="number" id="daysPerMonth" value="22" min="1" max="31" step="1">
+                </div>
+                <div class="field">
+                    <label for="complexity">Workload complexity <span class="hint">(retries / fan-out)</span></label>
+                    <select id="complexity">
+                        <option value="1.0">1.0× — Clean runs (no retries)</option>
+                        <option value="1.5" selected>1.5× — Typical agentic (retries + context reloads)</option>
+                        <option value="3.0">3.0× — Fan-out / subagents (heavy)</option>
+                    </select>
+                </div>
+                <div class="field full">
+                    <label>Pricing basis</label>
+                    <div class="radio-row">
+                        <label><input type="radio" name="basis" value="tokens" checked> Per-token (input + output)</label>
+                        <label><input type="radio" name="basis" value="percall"> Per call (flat rate)</label>
+                    </div>
+                </div>
+                <div class="field" id="tokInField">
+                    <label for="tokIn">Input tokens per call</label>
+                    <input type="number" id="tokIn" value="8000" min="0" max="2000000" step="500">
+                </div>
+                <div class="field" id="tokOutField">
+                    <label for="tokOut">Output tokens per call</label>
+                    <input type="number" id="tokOut" value="1200" min="0" max="2000000" step="100">
+                </div>
+                <div class="field" id="inPriceField">
+                    <label for="inPrice">Input price per 1M tokens ($)</label>
+                    <input type="number" id="inPrice" value="2.00" min="0" max="200" step="0.05">
+                </div>
+                <div class="field" id="outPriceField">
+                    <label for="outPrice">Output price per 1M tokens ($)</label>
+                    <input type="number" id="outPrice" value="10.00" min="0" max="200" step="0.05">
+                </div>
+                <div class="field full" id="perCallField" style="display:none;">
+                    <label for="perCall">Price per API call ($)</label>
+                    <input type="number" id="perCall" value="0.02" min="0" max="50" step="0.005">
+                </div>
+                <div class="field">
+                    <label for="cacheHit">Input cache hit rate <span class="hint">(context reuse)</span></label>
+                    <input type="range" id="cacheHit" min="0" max="90" value="40" step="5">
+                    <span class="range-val" id="cacheHitVal">40%</span>
+                </div>
+                <div class="field">
+                    <label for="overhead">Agency operational overhead <span class="hint">(oversight, integration, monitoring)</span></label>
+                    <input type="range" id="overhead" min="0" max="100" value="25" step="5">
+                    <span class="range-val" id="overheadVal">25%</span>
+                </div>
+                <div class="field">
+                    <label for="markup">Client markup <span class="hint">(agent-first margin)</span></label>
+                    <input type="range" id="markup" min="0" max="100" value="30" step="5">
+                    <span class="range-val" id="markupVal">30%</span>
+                </div>
+                <div class="field">
+                    <label for="cachePrice">Cached input price per 1M tokens ($)</label>
+                    <input type="number" id="cachePrice" value="0.20" min="0" max="50" step="0.05">
+                </div>
+            </div>
+
+            <div class="results" id="results">
+                <div class="row total"><span class="k">Monthly raw API cost</span><span class="v" id="rRaw">—</span></div>
+                <div class="row"><span class="k">Total API calls / month</span><span class="v" id="rCalls">—</span></div>
+                <div class="row"><span class="k">Input tokens / month</span><span class="v" id="rInTok">—</span></div>
+                <div class="row"><span class="k">Output tokens / month</span><span class="v" id="rOutTok">—</span></div>
+                <div class="row"><span class="k">Fully-loaded cost (raw + overhead)</span><span class="v" id="rLoaded">—</span></div>
+                <div class="row"><span class="k">Cost per agent / month (loaded)</span><span class="v" id="rPerAgent">—</span></div>
+                <div class="row"><span class="k">Cost per 1,000 calls (loaded)</span><span class="v" id="rPerK">—</span></div>
+                <div class="price-card">
+                    <h4>Agent-first client pricing (suggested)</h4>
+                    <div class="line"><span>Suggested client price (loaded × (1+markup))</span><span class="v" id="rBill">—</span></div>
+                    <div class="line"><span>Equivalent price per resolution*</span><span class="v" id="rPerRes">—</span></div>
+                    <div class="line"><span>Implied gross margin at that price</span><span class="v" id="rMargin">—</span></div>
+                    <div class="note">*Assuming 50 API calls per client-facing outcome — tune to your actual workflow. Benchmarks for agent-first pricing: Intercom Fin $0.99 per resolution; Salesforce Agentforce $2 per conversation + $0.10 per action. A markup on cost converts to margin as markup ÷ (1 + markup): 30% markup ≈ 23% margin.</div>
+                </div>
+            </div>
+            <div class="note">All figures are estimates on current published 2026 list rates (see reference table below). Your real bills will vary with model choice, caching, off-peak scheduling, and retry patterns — re-run quarterly.</div>
+        </div>
+
+        <h2>How the math works</h2>
+        <p>Four steps, each with one formula. The calculator runs these live; the same formulas are what you'd put in a spreadsheet or a quote.</p>
+        <ol>
+            <li><strong>Monthly calls.</strong> <code>agents × calls/agent/day × working days × complexity</code>. The complexity multiplier is where agents differ from humans: retries re-pay full context, subagent fan-out re-reads context per turn, and loops still bill. 1.5× is a defensible default for real agentic work; heavy fan-out runs closer to 3×.</li>
+            <li><strong>Monthly tokens.</strong> <code>monthly calls × tokens per call</code>, split into input and output. A typical agent turn sends a large system prompt + conversation context (input-heavy) and returns a smaller completion (output).</li>
+            <li><strong>Raw API cost.</strong> <code>(input tokens ÷ 1M × input price × (1 − cache hit rate)) + (input tokens ÷ 1M × cache price × cache hit rate) + (output tokens ÷ 1M × output price)</code>. Caching matters: a 40% input cache hit rate at $0.20/1M vs a $2.00/1M miss price cuts the input leg nearly in half. For per-call pricing, raw cost is simply <code>monthly calls × price per call</code>.</li>
+            <li><strong>Fully-loaded cost.</strong> <code>raw × (1 + overhead)</code>. Overhead covers the human and tooling layer — monitoring, oversight, integration, prompt maintenance, re-baselining — which doesn't scale with tokens but is real cost. Then cost per agent = <code>loaded ÷ agents</code>.</li>
+        </ol>
+        <div class="formula">Monthly raw API cost =
+  (monthlyCalls × inTok ÷ 1M × inPrice × (1 − cacheHit))
++ (monthlyCalls × inTok ÷ 1M × cachePrice × cacheHit)
++ (monthlyCalls × outTok ÷ 1M × outPrice)
+
+Fully-loaded = raw × (1 + overhead%)
+Suggested client price = loaded × (1 + markup%)
+   (30% markup on cost ≈ 23% gross margin)
+Cost per agent = loaded ÷ agents
+Cost per resolution = loaded ÷ (monthlyCalls ÷ 50)</div>
+
+        <h2>Reference: current per-1M rates (Aug 2026) — the inputs for your own math</h2>
+        <p>Same reference table as our <a href="/ai-model-cost-per-task-2026">per-task cost benchmarks</a>, current as of Aug 22, 2026. Rates move fast — re-verify before quoting a client.</p>
+        <table>
+            <tr><th>Model</th><th>Input ($/1M)</th><th>Output ($/1M)</th><th>Notes</th></tr>
+            <tr><td>DeepSeek V4-Flash (off-peak)</td><td>$0.22</td><td>$0.66</td><td>Peak $0.44/$1.32; cache-hit input $0.007 off-peak / $0.014 peak</td></tr>
+            <tr><td>DeepSeek V4-Pro (off-peak)</td><td>$0.66</td><td>$1.98</td><td>Peak $1.32/$3.96; cache-hit input $0.022 off-peak / $0.044 peak</td></tr>
+            <tr><td>Gemini 3.7 Flash (intro)</td><td>$0.75</td><td>$3.75</td><td>Intro through 2026-12-31, then $1.50/$7.50; 1M context</td></tr>
+            <tr><td>Meta Muse Glimmer (hosted, Together AI)</td><td>$0.35</td><td>$1.50</td><td>Local self-host = electricity after hardware amortized</td></tr>
+            <tr><td>Grok 4.6 (SpaceXAI)</td><td>$2.00</td><td>$6.00</td><td>500K context; cache hit $0.50</td></tr>
+            <tr><td>Qwen 3.8 Max (open weights)</td><td>$2.00</td><td>$6.00</td><td>Hosted API list price</td></tr>
+            <tr><td>Claude Sonnet 5</td><td>$2.00</td><td>$10.00</td><td>Permanent as of Aug 10, 2026</td></tr>
+            <tr><td>GPT-5.6 Sol</td><td>$4.00</td><td>$20.00</td><td>Official OpenAI promo (Aug 21 – Nov 21, 2026); cached input $0.40</td></tr>
+        </table>
+
+        <h2>What a realistic deployment costs (worked example)</h2>
+        <p>Default calculator inputs — 10 agents, 200 calls/day, 22 days, 1.5× complexity, 8K in / 1.2K out tokens, Claude Sonnet 5 rates ($2/$10), 40% input cache hit, 25% overhead:</p>
+        <ul>
+            <li><strong>Monthly calls:</strong> 10 × 200 × 22 × 1.5 = <strong>66,000</strong></li>
+            <li><strong>Tokens:</strong> 528M input, 79.2M output</li>
+            <li><strong>Raw API cost:</strong> ≈ <strong>$1,468/month</strong> (input ≈ $676 after cache, output ≈ $792)</li>
+            <li><strong>Fully-loaded:</strong> ≈ <strong>$1,835/month</strong> → <strong>$183/agent/month</strong></li>
+            <li><strong>Suggested client price at 30% markup:</strong> ≈ <strong>$2,385/month</strong> (23% gross margin), or roughly <strong>$1.39 per resolution</strong> at 50 calls/resolution — which is <em>above</em> Intercom's $0.99 benchmark. That is the honest finding: on mid-tier frontier rates with a 50-call outcome, per-resolution math is not automatically cheaper than the SaaS per-outcome price.</li>
+        </ul>
+        <p>Now move the model lever and the picture changes by an order of magnitude:</p>
+        <ul>
+            <li><strong>DeepSeek V4-Flash off-peak ($0.22/$0.66, cache $0.007):</strong> same workload ≈ <strong>$123/month raw</strong>, ≈ $154 loaded, ≈ <strong>$0.12 per resolution</strong> — dramatically under every per-outcome benchmark. This is the cheapest-model margin story.</li>
+            <li><strong>GPT-5.6 Sol ($4/$20, cache $0.40):</strong> same workload ≈ <strong>$2,936/month raw</strong>, ≈ $3,670 loaded, ≈ <strong>$2.78 per resolution</strong> — above Salesforce's $2/conversation anchor.</li>
+        </ul>
+        <p>Model choice is the single biggest lever in the model — which is why routing small tasks to cheap models is a margin decision, not a footnote.</p>
+
+        <h2>Why the PYMNTS picture makes this math urgent</h2>
+        <p>PYMNTS reported (Aug 24, 2026) that AI agents are the fastest-growing class of API consumers — and that the API economy's pricing, identity, and trust infrastructure "were not designed for this" and "are being rebuilt now." Three consequences for an agency's cost model:</p>
+        <ul>
+            <li><strong>Volume is machine-scale.</strong> One agent task can touch thousands of endpoints. Per-seat assumptions break; per-usage math is the only honest frame.</li>
+            <li><strong>Token prices collapsed ~200x in 16 months</strong> (GPT-4 $30/1M input, Mar 2023 → GPT-4o mini $0.15/1M, Jul 2024), so the same client deliverable costs a fraction of what it did 18 months ago — and keeps falling 30–50%/year. If you bill hourly or pass through API costs as a flat line item, clients with a calculator will ask why their bill didn't fall.</li>
+            <li><strong>The market has already repriced for agents.</strong> Salesforce Agentforce lists $2/conversation and $0.10/action; Intercom Fin charges $0.99/resolution. Those are your pricing anchors — per-outcome, not per-seat.</li>
+        </ul>
+        <p>The full argument, with sources, is in the companion post: <a href="https://findaiagency.com/ai-agents-api-economy" rel="noopener">AI Agents Are the API Economy's Biggest Customers: What Agencies Should Charge</a>.</p>
+
+        <h2>How to price agent work for clients (agent-first)</h2>
+        <ol>
+            <li><strong>Pass through API costs with a documented margin (10–20%).</strong> Put token/model costs in the contract as a pass-through line at a known markup, re-baselined quarterly. Transparency is your defense when prices move — and they move weekly in 2026.</li>
+            <li><strong>Or price per outcome.</strong> If an agent resolves a ticket or closes a lead, bill per resolution — Intercom's $0.99 and Salesforce's $2 are client-accepted anchors. Your loaded cost per resolution (calculator output above) tells you the floor.</li>
+            <li><strong>Keep a retainer floor + usage overage.</strong> Flat retainers still work for oversight, governance, and maintenance — the human-in-the-loop work that doesn't scale with tokens. Add a metered bucket for agent consumption on top. Hybrid is the safest structure in 2026.</li>
+            <li><strong>Model the loops, not just the tokens.</strong> Quote retries, subagent fan-out, and context reloads explicitly, and offer budget rails (hard cap + kill switch) as a sellable feature. The agencies that forecast honestly win the renegotiation.</li>
+        </ol>
+
+        <div class="cta">
+            <p><strong>Model the full picture: setup, retainers, and margin</strong></p>
+            <a class="btn" href="/index_calculator" data-umami-event="click_to_calculator">Open the AI Agency Pricing Calculator →</a>
+            <p style="margin-top:12px;font-size:0.9rem;">The full calculator covers setup fees, retainers, model strategy (DeepSeek, Gemini, Grok 4.6, Qwen, Sonnet 5, local), failure/retry risk, and margin — current 2026 rates.</p>
+        </div>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>How do I estimate the API cost of an AI agent workload?</h3>
+            <p>Multiply the number of agents by average API calls per agent per day and working days per month to get monthly calls. Then multiply by tokens per call (or price per call) and the provider's per-token rate, and add agency overhead for retries, oversight, and integration. The formula on this page does all of that live.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is a realistic API cost per AI agent per month in 2026?</h3>
+            <p>It depends on model and volume. On current 2026 rates a moderately active agent making ~200 calls/day with ~8K input / 1.2K output tokens per call runs about $50–$150/month in raw API cost on mid-tier models (Claude Sonnet 5 $2/$10 per 1M, Grok 4.6 $2/$6) before agency overhead — and a fraction of that on cheap models like DeepSeek V4-Flash off-peak ($0.22/$0.66 per 1M).</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is agent-first pricing?</h3>
+            <p>Agent-first pricing bills on agent activities, completed tasks, outcomes, or resources used — not human seats. Examples: Salesforce Agentforce at $2 per conversation and $0.10 per action, Intercom Fin at $0.99 per resolution. For agencies it means passing through API costs with a documented margin, pricing per outcome, or charging a retainer floor plus usage-based overage.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Why do AI agent API bills exceed simple token estimates?</h3>
+            <p>Agents don't make one clean call per task. They fan out subagents, retry failed steps, reload context, and bill every intermediate call. A single agent task can query thousands of endpoints (Cloudflare's Matthew Prince cited ~5,000 sites vs ~5 for a human). Add a workload-complexity multiplier for retries and fan-out or your estimate will be low by 1.5–3x.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How much should I mark up API costs when billing clients?</h3>
+            <p>A transparent 10–20% pass-through margin is the defensible norm — the margin compensates for forecasting risk, monitoring, and re-baselining, not just the tokens. If you price per outcome instead, set the per-resolution price at or below established benchmarks (Intercom Fin $0.99, Salesforce Agentforce $2) while keeping your loaded cost per resolution well under it.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="https://findaiagency.com/ai-agents-api-economy" rel="noopener">AI Agents Are the API Economy's Biggest Customers: What Agencies Should Charge</a> (Find AI Agency)</li>
+                <li><a href="/ai-agent-cost-blowups">AI Agent Cost Blowups: Real Estimates &amp; Loop Risk for Your Pricing</a></li>
+                <li><a href="/ai-model-cost-per-task-2026">AI Model Cost per Task 2026: Frontier vs Open-Weight Benchmarks</a></li>
+                <li><a href="/ai-agency-profit-margin-2026">AI Agency Profit Margin 2026: Real Benchmarks by Service Type</a></li>
+                <li><a href="/ai-automation-pricing-guide-2026">AI Automation Pricing Guide 2026</a></li>
+                <li><a href="https://findaiagency.com/ai-coding-agent-pricing" rel="noopener">AI Coding Agent Pricing: Billing Models Compared</a> (Find AI Agency)</li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>PYMNTS, "AI Agents Become the API Economy's Biggest New Customers" (Aug 24, 2026): <a href="https://www.pymnts.com/news/artificial-intelligence/2026/ai-agents-become-the-api-economys-biggest-new-customers" rel="noopener">pymnts.com</a></li>
+            <li>a16z / OpenRouter, State of AI — 100T-token study, 1T tokens/day (Dec 4, 2025): <a href="https://a16z.com/state-of-ai" rel="noopener">a16z.com/state-of-ai</a></li>
+            <li>Cloudflare Radar — bots &gt;50% of HTML requests; Prince ~5,000 sites per agent task (Jun 6, 2026): <a href="https://stackfutures.com/blog/bots-overtake-human-web-traffic-cloudflare-2026" rel="noopener">stackfutures.com</a></li>
+            <li>Salesforce Agentforce pricing — $2/conversation, $0.10/action (list, mid-2026): <a href="https://www.eesel.ai/blog/agentforce-pricing" rel="noopener">eesel.ai</a></li>
+            <li>Intercom Fin — $0.99/resolution (Mar 3, 2026): <a href="https://myaskai.com/blog/intercom-fin-ai-agent-complete-guide-2026" rel="noopener">myaskai.com</a></li>
+            <li>TokenCost AI Price Index — 200x token price collapse (Mar 20, 2026): <a href="https://tokencost.app/blog/ai-price-index" rel="noopener">tokencost.app</a></li>
+            <li>Per-1M model rates as of Aug 22, 2026 (DeepSeek, Google, Together AI, SpaceXAI, Anthropic, OpenAI) — see <a href="/ai-model-cost-per-task-2026">AI Model Cost per Task 2026</a> for the full table and dated sources</li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: The calculator uses published 2026 list rates (Aug 22, 2026 snapshot) and user-supplied inputs; all figures are estimates, not guarantees. The "fastest-growing class of API consumers" framing follows PYMNTS (Aug 24, 2026) — no public dataset measures agents' absolute share of API traffic. Salesforce and Intercom prices are list prices as of mid-2026; real bills can stack additional platform fees. Re-verify provider rates before quoting clients — 2026 pricing moves weekly (GPT-5.6 Sol Aug 21, DeepSeek Aug 16, Gemini 3.7 Flash Aug 13, Grok 4.6 Aug 12, Claude Sonnet 5 Aug 10).</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+
+    <script>
+    (function () {
+        function $(id) { return document.getElementById(id); }
+        function num(id) { var v = parseFloat($(id).value); return isNaN(v) ? 0 : v; }
+
+        function fmtUSD(n) {
+            if (n >= 1000) return '$' + n.toLocaleString('en-US', {maximumFractionDigits: 0});
+            if (n >= 100) return '$' + n.toFixed(0);
+            if (n >= 10) return '$' + n.toFixed(1);
+            return '$' + n.toFixed(2);
+        }
+        function fmtInt(n) {
+            if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B';
+            if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+            if (n >= 1e3) return (n / 1e3).toFixed(0) + 'K';
+            return String(n);
+        }
+
+        var basis = 'tokens';
+        document.querySelectorAll('input[name="basis"]').forEach(function (r) {
+            r.addEventListener('change', function () {
+                basis = r.value;
+                $('tokInField').style.display = basis === 'tokens' ? 'flex' : 'none';
+                $('tokOutField').style.display = basis === 'tokens' ? 'flex' : 'none';
+                $('inPriceField').style.display = basis === 'tokens' ? 'flex' : 'none';
+                $('outPriceField').style.display = basis === 'tokens' ? 'flex' : 'none';
+                $('perCallField').style.display = basis === 'percall' ? 'flex' : 'none';
+                calc();
+            });
+        });
+
+        function calc() {
+            var agents = Math.max(1, num('agents'));
+            var callsPerDay = Math.max(0, num('callsPerDay'));
+            var days = Math.max(1, num('daysPerMonth'));
+            var complexity = parseFloat($('complexity').value) || 1.5;
+            var cacheHit = (num('cacheHit')) / 100;
+            var overhead = (num('overhead')) / 100;
+            var markup = (num('markup')) / 100;
+
+            var monthlyCalls = agents * callsPerDay * days * complexity;
+            var raw, inTok, outTok;
+
+            if (basis === 'percall') {
+                var perCall = Math.max(0, num('perCall'));
+                raw = monthlyCalls * perCall;
+                inTok = 0; outTok = 0;
+            } else {
+                var inTokPer = Math.max(0, num('tokIn'));
+                var outTokPer = Math.max(0, num('tokOut'));
+                var inPrice = Math.max(0, num('inPrice'));
+                var outPrice = Math.max(0, num('outPrice'));
+                var cachePrice = Math.max(0, num('cachePrice'));
+                inTok = monthlyCalls * inTokPer;
+                outTok = monthlyCalls * outTokPer;
+                var inCost = (inTok / 1e6) * inPrice * (1 - cacheHit) + (inTok / 1e6) * cachePrice * cacheHit;
+                var outCost = (outTok / 1e6) * outPrice;
+                raw = inCost + outCost;
+            }
+
+            var loaded = raw * (1 + overhead);
+            var perAgent = agents > 0 ? loaded / agents : 0;
+            var perK = monthlyCalls > 0 ? (loaded / monthlyCalls) * 1000 : 0;
+            var bill = loaded * (1 + markup);
+            var margin = bill > 0 ? (bill - loaded) / bill * 100 : 0;
+            var perRes = monthlyCalls > 0 ? loaded / (monthlyCalls / 50) : 0; // 50 calls per resolution
+
+            $('rRaw').textContent = fmtUSD(raw);
+            $('rCalls').textContent = fmtInt(monthlyCalls) + ' calls';
+            $('rInTok').textContent = fmtInt(inTok) + ' tokens';
+            $('rOutTok').textContent = fmtInt(outTok) + ' tokens';
+            $('rLoaded').textContent = fmtUSD(loaded) + ' /mo';
+            $('rPerAgent').textContent = fmtUSD(perAgent) + ' /agent/mo';
+            $('rPerK').textContent = fmtUSD(perK) + ' per 1K calls';
+            $('rBill').textContent = fmtUSD(bill) + ' /mo';
+            $('rPerRes').textContent = fmtUSD(perRes) + ' /resolution';
+            $('rMargin').textContent = margin.toFixed(0) + '%';
+        }
+
+        ['agents','callsPerDay','daysPerMonth','complexity','tokIn','tokOut','inPrice','outPrice','perCall','cachePrice','cacheHit','overhead','markup'].forEach(function (id) {
+            $(id).addEventListener('input', calc);
+            $(id).addEventListener('change', calc);
+        });
+
+        function bindVal(id, outId, suffix) {
+            $(id).addEventListener('input', function () {
+                $(outId).textContent = $(id).value + suffix;
+                calc();
+            });
+        }
+        bindVal('cacheHit', 'cacheHitVal', '%');
+        bindVal('overhead', 'overheadVal', '%');
+        bindVal('markup', 'markupVal', '%');
+
+        calc();
+    })();
+    </script>
+</body>
+</html>
