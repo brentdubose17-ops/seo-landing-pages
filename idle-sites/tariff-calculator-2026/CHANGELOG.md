@@ -2,6 +2,17 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-24 — Calculator inputs updated to verified S338 basket schedule + trucking-impact layer (kanban t_bf150bb5)
+
+- **`tariff-data.js` — S338 covered categories now match the three official proclamation baskets** (verified vs research brief t_cb75bfd7 / Chicago Fed / WH Proclamations 11046/47/48): `covered_categories` = `['auto', 'food', 'dairy', 'alcohol', 'canada-s338']`. New **`alcohol`** category ("Alcoholic Beverages") added to `CATEGORY_MODIFIERS`; **`dairy`** ("Dairy Products") added to the covered list. Both now apply the 50% Section 338 duty for Canada on/after Aug 22, 2026 (dairy 55.1%, alcohol 55.1% on default USMCA-qualified base). `hs_note` updated with the verified enumeration: **569 HTSUS subheadings — alcohol HTS 9903.03.12 (61 codes), dairy 9903.03.13 (52 codes), motor vehicles 9903.03.14 (456 codes)**, ~$24B / 5.5% of annual Canadian import value (Chicago Fed).
+- **`canada_auto_50` threatened flag extended to steel** — categories `['auto', 'steel']` (Jan 1, 2027 announcement covers all cars, trucks, auto parts AND steel; verified CNBC/CBS/POLITICO Aug 24). Label → "50% tariff on Canadian cars, trucks, auto parts & steel (threatened)". Steel does NOT get S338 (Section 232 exempt) and stays at base 1.9% by default; the threatened scenario adds the 50% for Canada + Steel & Metals (51.9%).
+- **New `TRUCKING_IMPACT` data layer** — verified freight-side facts (CTA fewer-loads / equipment-imbalance quotes, CTOA carrier-cost quote, PMTC 72% trade / 60% truck share) + `blog_slug: canada-tariff-trucking-freight-impact` + 50% rate notes (S338 Aug 22, autos/steel Jan 1 2027, retaliation Sept 8).
+- **`index.html` — "🚚 Tariff Cost per Truckload" result row** (`#truckloadRow`) shown whenever a Canada tariff layer drives the estimate (S338 covered goods, retaliation, or the threatened autos/steel scenario). The value is the calculator's existing shipment-value input (never invented): $5,510 on $10k at 55.1%, etc. S338 flag block gained a trucking-impact line linking the new blog post.
+- **Auto Tariff Scenario toggle → Auto & Steel Tariff Scenario** — now shown for Canada + **Automotive OR Steel & Metals**; option labels updated ("Current — ~25% auto tariff / steel S232 rates" vs "Threatened — 50% autos & steel (proposed, effective Jan 1, 2027)").
+- **Homepage links to the trucking-impact blog post** — Canada S338 section (`canada-tariff-trucking-freight-impact.html`, "How the 50% Canada Tariffs Hit Freight Volumes and Carriers"), calculator footnote, and `BLOG_ARTICLES` featured card. Slug is the writer-shipped URL; the post itself is published by its own leg (attachment t_ae08aad3) — link may 404 via SPA fallback until then.
+- **Tests:** 82/82 pass (was 80). Added: S338 basket coverage (dairy/alcohol 50%, hs_note 569/HTS), TRUCKING_IMPACT layer, threatened flag steel category + steel includeProposed + steel default unchanged, index.html markers (truckloadRow, autos/steel toggle, blog link).
+- **Deployed:** Cloudflare Pages (tariff-calculator-2026), verified live.
+
 ## 2026-08-24 — PUBLISHED: US-Canada auto tariff threat layer live (kanban t_cf6e19a4)
 
 - **Deployed to Cloudflare Pages (tariff-calculator-2026)** — the combined content (t_cef2f560), calculator (t_3bf0ad31), and SEO/AEO (t_ee50cffc) changes are now live.

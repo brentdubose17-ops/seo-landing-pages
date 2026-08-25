@@ -1,6 +1,13 @@
 /*
  * Tariff Calculator 2026 — canonical tariff data
  * -------------------------------------------------
+ * Updated 2026-08-24 (t_bf150bb5): S338 covered-categories now match the
+ * three official proclamation baskets — alcohol (HTS 9903.03.12, 61 codes),
+ * dairy (9903.03.13, 52 codes), motor vehicles (9903.03.14, 456 codes) =
+ * 569 HTSUS subheadings (Chicago Fed verified). New 'alcohol' category;
+ * 'dairy' added to covered list. canada_auto_50 threatened flag extended
+ * to steel (Jan 1, 2027: cars, trucks, auto parts AND steel to 50%).
+ * New TRUCKING_IMPACT layer for the 'tariff cost per truckload' angle.
  * Updated 2026-08-24: canada_auto_50 THREATENED flag added — President
  * Trump threatened (Mon Aug 24, 2026) to raise US tariffs on Canadian
  * cars, trucks & auto parts from the current ~25% to 50%, proposed
@@ -166,6 +173,7 @@
     'ground-beef':{ add: 0,     name: 'Ground Beef — 90-Day Out-of-Quota Waiver (Aug 21, 2026)' },
     'canada-s338':{ add: 0,     name: 'Canada Section 338 Covered Goods — 50% Duty (effective Aug 22, 2026)' },
     dairy:        { add: 0.046, name: 'Dairy Products' },
+    alcohol:      { add: 0.046, name: 'Alcoholic Beverages' },
     'household-appliances': { add: 0.027, name: 'Household Appliances' },
     'farming-equipment': { add: 0.014, name: 'Farming & Agricultural Equipment' },
     'pulp-paper':  { add: 0.010, name: 'Pulp & Paper' }
@@ -196,12 +204,12 @@
     {
       key: 'canada_auto_50',
       country: 'canada',
-      label: '50% tariff on Canadian cars, trucks & auto parts (threatened)',
+      label: '50% tariff on Canadian cars, trucks, auto parts & steel (threatened)',
       rate: 0.50,
-      categories: ['auto'],
+      categories: ['auto', 'steel'],
       effective: '2027-01-01',
       status: 'threatened',
-      note: 'Threatened by President Trump on Aug 24, 2026 — NOT in effect. Would roughly double the current ~25% auto tariff on Canadian-built vehicles and auto parts, proposed effective January 1, 2027. Sources: CNN (us-canada-cost-more), CNBC (trump-canada-auto-tariffs-trade-war.html), CP24 (we-dont-need-canada-they-need-us) — Aug 24, 2026.'
+      note: 'Threatened by President Trump on Aug 24, 2026 — NOT in effect. Would raise the current ~25% auto tariff on Canadian-built vehicles and auto parts to 50% and lock steel at 50%, proposed effective January 1, 2027. Sources: CNBC (trump-canada-auto-tariffs-trade-war.html), CBS News (trump-canadian-automotive-steel-tariffs), POLITICO — Aug 24, 2026.'
     },
     {
       key: 'eu_dst',
@@ -407,12 +415,17 @@
     instrument: '3 presidential proclamations signed July 20, 2026 (11046 alcohol, 11047 dairy, 11048 motor vehicles); original Aug 19 start suspended 3 days by Aug 18 proclamation → effective Aug 22',
     value_affected: '~$20 billion of Canadian goods (~5% of Canada\'s annual exports to the US)',
     applies_to_cusma_goods: true,
-    // Calculator categories treated as covered for Canada. 'auto' and
-    // 'food' preserve the original proposed-flag scope (motor vehicles,
-    // alcoholic beverages, dairy); 'canada-s338' is the dedicated
-    // product-level covered-goods category (hockey sticks, tongue
-    // depressors, and the full Guardian/USTR inventory below).
-    covered_categories: ['auto', 'food', 'canada-s338'],
+    // Calculator categories treated as covered for Canada. The three
+    // official proclamation baskets (per research brief t_cb75bfd7,
+    // verified vs Chicago Fed / WH proclamations): alcohol (HTS
+    // 9903.03.12, 61 codes), dairy (9903.03.13, 52 codes), motor
+    // vehicles (9903.03.14, 456 codes) = 569 HTSUS subheadings total.
+    // 'auto' = motor-vehicles basket; 'alcohol' + 'dairy' = the two
+    // ag/food baskets (explicit categories added 2026-08-24); 'food'
+    // (Food & Beverages) covers alcohol/dairy broadly; 'canada-s338'
+    // is the dedicated product-level covered-goods category (hockey
+    // sticks, tongue depressors, and the full Guardian/USTR inventory).
+    covered_categories: ['auto', 'food', 'dairy', 'alcohol', 'canada-s338'],
     exceptions: ['energy products', 'potash', 'fish', 'critical minerals', 'items already under Section 232'],
     pre_existing_stack: ['steel', 'lumber', 'autos'],
     // Granular product scope — compiled from The Guardian's full category
@@ -428,7 +441,7 @@
       misc_consumer: ['cements', 'candles', 'plastic furniture fittings', 'dog leashes', 'saddles', 'T-shirts', 'sweaters', 'trousers', 'dresses', 'wigs', 'false beards', 'eyebrows of synthetic material', 'floating docks', 'vessels', 'rafts', 'chandeliers', 'Christmas and festival decorations', 'ice skates', 'swimming pools', 'wading pools', 'fishing rods'],
       medical_wood: ['tongue depressors']
     },
-    hs_note: 'No HS/HTS codes enumerated in Reuters, Al Jazeera, DW, or The Guardian coverage. Official line-level HTS list lives in the three July 20, 2026 Section 338 proclamations / USTR statement PDF.',
+    hs_note: 'Verified official enumeration (research brief t_cb75bfd7, Chicago Fed Jul 2026, WH Proclamations 11046/47/48): 569 eight-digit HTSUS subheadings across three proclamations — alcoholic beverages (HTS heading 9903.03.12, 61 codes), dairy (9903.03.13, 52 codes), motor vehicles (9903.03.14, 456 codes), capturing ~$24B / 5.5% of annual Canadian import value. USMCA does NOT shield covered goods. Excluded: energy, potash, Section 232 goods, fish, critical minerals. Official line-level HTS list lives in the three July 20, 2026 Section 338 proclamations / USTR statement PDF (Federal Register d/2026-14997, 91 FR 46663).',
     status: 'IN EFFECT — the 50% additional duty took effect Saturday, Aug 22, 2026 at 12:01 a.m. EDT (04:01 GMT) after U.S.–Canada talks failed to finalize a deal. USTR Jamieson Greer: "Tonight, Canada declined to finalize the trade deal under the terms agreed earlier this week." Canada said it will match tariffs dollar for dollar starting Sept 8, 2026 (US steel, dairy, appliances, agricultural machinery, paper, electronics).',
     source_citations: [
       'USTR: Ambassador Greer Issues Statement on President Trump Imposing Section 338 Tariffs on Canada (Jul 20, 2026) — https://ustr.gov/about/policy-offices/press-office/press-releases/2026/july/ambassador-greer-issues-statement-president-trump-imposing-section-338-tariffs-canada',
@@ -480,6 +493,40 @@
       'Al Jazeera: Carney: Canada will enact retaliatory US tariffs starting September 8 (Aug 22, 2026) — https://www.aljazeera.com/news/2026/8/22/carney-canada-will-enact-retaliatory-us-tariffs-starting-september-8',
       'India Today: We got attacked: Carney says Canada at war with US over Trump\'s 50% tariffs (Aug 23, 2026) — https://www.indiatoday.in/world/canada-news/story/canada-us-tariffs-mark-carney-retaliatory-duties-september-8-2977785-2026-08-23',
       'CNBC: US-Canada trade talks collapse, ushering in wave of new tariffs (Aug 22, 2026) — https://www.cnbc.com/2026/08/22/us-canada-trade-talks-collapse-ushering-in-wave-of-new-tariffs.html'
+    ]
+  };
+
+  /*
+   * Trucking / freight-impact layer (added 2026-08-24, research brief
+   * t_cb75bfd7 — verified vs Truck News Aug 24, CTA statement, CTOA,
+   * PMTC). Surfaced in the calculator as the "tariff cost per truckload"
+   * angle: 50% duty (S338 in effect Aug 22, 2026; autos/steel to 50%
+   * Jan 1, 2027; Canada retaliation Sept 8, 2026) applied to the load
+   * value the user enters. We never invent per-load values — the load
+   * value IS the calculator's existing shipment-value input.
+   */
+  var TRUCKING_IMPACT = {
+    blog_slug: 'canada-tariff-trucking-freight-impact',
+    blog_title: 'How the 50% Canada Tariffs Hit Freight Volumes and Carriers',
+    rate_notes: {
+      s338: '50% Section 338 duty (effective Aug 22, 2026)',
+      threatened: 'autos/steel to 50% announced for Jan 1, 2027 (NOT in effect)',
+      retaliation: 'Canada dollar-for-dollar retaliation 50% (effective Sept 8, 2026)'
+    },
+    stats: {
+      canada_trade_with_us_pct: 72,
+      truck_share_pct: 60
+    },
+    impact: [
+      'Weaker Canadian exports translate directly into fewer loads for trucking companies (CTA).',
+      'Fewer Canadian trucks operating in the US means less Canadian equipment available to haul American goods northbound — a severe, structural equipment imbalance (CTA).',
+      'On cancelled/rejected/delayed shipments the truck still has operating costs: driver pay, fuel already purchased, plus detention, storage, redelivery and empty-mile expenses (CTOA).',
+      '72% of Canada\'s trade is with the US, and roughly 60% of the total trade is moved by truck (PMTC).'
+    ],
+    source_citations: [
+      'Truck News: Trucking groups warn tariff fallout will hit freight volumes, carriers (Aug 24, 2026) — https://www.trucknews.com/transportation/trucking-groups-warn-tariff-fallout-will-hit-freight-volumes-carriers/1003220384',
+      'CTA statement on conclusion of Canada-U.S. trade negotiations — https://cantruck.ca/cta-statement-on-conclusion-of-canada-u-s-trade-negotiations-and-impact-on-supply-chain',
+      'CBS News: Trump announces 50% tariffs on Canadian auto and steel (Aug 24, 2026) — https://www.cbsnews.com/news/trump-canadian-automotive-steel-tariffs'
     ]
   };
 
@@ -916,6 +963,7 @@
     GROUND_BEEF_WAIVER: GROUND_BEEF_WAIVER,
     SECTION_338_CANADA: SECTION_338_CANADA,
     CANADA_RETALIATION: CANADA_RETALIATION,
+    TRUCKING_IMPACT: TRUCKING_IMPACT,
     REJECTED_DEAL_PRESET: REJECTED_DEAL_PRESET,
     PRODUCT_SCOPE: PRODUCT_SCOPE,
     USMCA: USMCA,

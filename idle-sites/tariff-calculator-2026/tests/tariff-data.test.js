@@ -1034,12 +1034,12 @@ test('index.html carries the Sept 8 retaliation flag, sectors, and direction con
   });
 });
 
-test('Threatened auto tariff flag: canada_auto_50 present (50%, effective 2027-01-01, NOT in effect)', () => {
+test('Threatened autos/steel tariff flag: canada_auto_50 present (50%, effective 2027-01-01, NOT in effect)', () => {
   const f = T.PROPOSED_FLAGS.find(x => x.key === 'canada_auto_50');
   assert.ok(f, 'canada_auto_50 flag missing from PROPOSED_FLAGS');
   assert.equal(f.country, 'canada');
-  assert.equal(f.rate, 0.50, 'threatened auto rate should be 50%');
-  assert.deepEqual(f.categories, ['auto'], 'flag should apply to the auto category only');
+  assert.equal(f.rate, 0.50, 'threatened autos/steel rate should be 50%');
+  assert.deepEqual(f.categories, ['auto', 'steel'], 'flag should apply to auto and steel categories (Jan 1, 2027: cars, trucks, auto parts AND steel)');
   assert.equal(f.effective, '2027-01-01', 'proposed effective date should be 2027-01-01');
   assert.equal(f.status, 'threatened', 'flag must be marked threatened');
   assert.ok(/NOT in effect/i.test(f.note), 'note must state the rate is not in effect');
@@ -1047,7 +1047,7 @@ test('Threatened auto tariff flag: canada_auto_50 present (50%, effective 2027-0
   assert.ok(T.PROPOSED_FLAGS.some(x => x.key === 'eu_dst'), 'eu_dst flag should still be present');
 });
 
-test('Threatened auto tariff: default canada auto calculation UNCHANGED (proposed NOT added)', () => {
+test('Threatened autos/steel tariff: default canada auto calculation UNCHANGED (proposed NOT added)', () => {
   // Pre-change default: MFN 0.005 + auto modifier 0.027 + S338 0.50 = 0.532 (USMCA-qualified, on/after Aug 22)
   const def = T.effectiveRate('canada', 'auto', { asOfDate: '2026-08-24', usmcaQualified: true });
   assert.ok(Math.abs(def.rate - 0.532) < 0.0001, `default canada auto should stay 0.532, got ${def.rate}`);
@@ -1058,30 +1058,70 @@ test('Threatened auto tariff: default canada auto calculation UNCHANGED (propose
   assert.equal(early.breakdown.proposed, 0);
 });
 
-test('Threatened auto tariff: includeProposed adds the 50% only for Canada + auto', () => {
+test('Threatened autos/steel tariff: includeProposed adds the 50% only for Canada + auto or steel', () => {
   const thr = T.effectiveRate('canada', 'auto', { asOfDate: '2026-08-24', usmcaQualified: true, includeProposed: true });
   assert.equal(thr.breakdown.proposed, 0.50, 'includeProposed should add the 50% threatened rate');
-  assert.ok(Math.abs(thr.rate - (0.532 + 0.50)) < 0.0001, `threatened scenario rate wrong: ${thr.rate}`);
+  assert.ok(Math.abs(thr.rate - (0.532 + 0.50)) < 0.0001, `threatened auto scenario rate wrong: ${thr.rate}`);
+  // Steel is also covered by the Jan 1, 2027 announcement (cars, trucks, parts AND steel)
+  const steel = T.effectiveRate('canada', 'steel', { asOfDate: '2026-08-24', includeProposed: true });
+  assert.equal(steel.breakdown.proposed, 0.50, 'includeProposed should add the 50% threatened rate to steel');
+  // Steel without includeProposed stays at base (S338 does NOT cover steel — Section 232 exempt)
+  const steelBase = T.effectiveRate('canada', 'steel', { asOfDate: '2026-08-24' });
+  assert.equal(steelBase.breakdown.proposed, 0, 'steel must NOT get the threatened rate by default');
+  assert.ok(Math.abs(steelBase.rate - 0.019) < 0.0001, `base canada steel should stay 0.019, got ${steelBase.rate}`);
   // Not applied to other countries/categories
   const mx = T.effectiveRate('mexico', 'auto', { asOfDate: '2026-08-24', includeProposed: true });
-  assert.equal(mx.breakdown.proposed, 0, 'threatened auto flag must not apply to Mexico');
+  assert.equal(mx.breakdown.proposed, 0, 'threatened flag must not apply to Mexico');
   const food = T.effectiveRate('canada', 'food', { asOfDate: '2026-08-24', includeProposed: true });
-  assert.equal(food.breakdown.proposed, 0, 'threatened auto flag must not apply to non-auto Canada categories');
+  assert.equal(food.breakdown.proposed, 0, 'threatened flag must not apply to non-auto/steel Canada categories');
 });
 
-test('index.html: Auto Tariff Scenario toggle (current ~25% vs threatened 50% effective Jan 1, 2027)', () => {
+test('S338 covered categories match the three official proclamation baskets (alcohol, dairy, motor vehicles)', () => {
+  const covered = T.SECTION_338_CANADA.covered_categories;
+  ['auto', 'food', 'dairy', 'alcohol', 'canada-s338'].forEach(k => {
+    assert.ok(covered.includes(k), `covered_categories must include ${k}`);
+  });
+  // alcohol + dairy categories exist in the calculator dropdown
+  assert.equal(T.CATEGORY_MODIFIERS.alcohol.name, 'Alcoholic Beverages');
+  assert.equal(T.CATEGORY_MODIFIERS.dairy.name, 'Dairy Products');
+  // 50% applied for dairy and alcohol (on/after Aug 22, 2026)
+  const dairy = T.effectiveRate('canada', 'dairy', { asOfDate: '2026-08-24' });
+  assert.ok(Math.abs(dairy.rate - (0.005 + 0.046 + 0.50)) < 0.0001, `dairy should get 50% S338, got ${dairy.rate}`);
+  const alcohol = T.effectiveRate('canada', 'alcohol', { asOfDate: '2026-08-24' });
+  assert.ok(Math.abs(alcohol.rate - (0.005 + 0.046 + 0.50)) < 0.0001, `alcohol should get 50% S338, got ${alcohol.rate}`);
+  // hs_note carries the verified enumeration (569 subheadings, 3 HTS headings)
+  assert.ok(/569/.test(T.SECTION_338_CANADA.hs_note), 'hs_note must state the 569-subheading verified scope');
+  assert.ok(/9903\.03\.1[234]/.test(T.SECTION_338_CANADA.hs_note), 'hs_note must cite HTS headings 9903.03.12/13/14');
+});
+
+test('TRUCKING_IMPACT layer: blog slug, stats, and 50% rate notes present', () => {
+  assert.ok(T.TRUCKING_IMPACT, 'TRUCKING_IMPACT must be exported');
+  assert.equal(T.TRUCKING_IMPACT.blog_slug, 'canada-tariff-trucking-freight-impact');
+  assert.equal(T.TRUCKING_IMPACT.stats.canada_trade_with_us_pct, 72);
+  assert.equal(T.TRUCKING_IMPACT.stats.truck_share_pct, 60);
+  assert.ok(/50%/.test(T.TRUCKING_IMPACT.rate_notes.s338), 's338 rate note must name the 50% duty');
+  assert.ok(T.TRUCKING_IMPACT.impact.length >= 3, 'trucking impact must include the verified impact statements');
+});
+
+test('index.html: Auto & Steel Tariff Scenario toggle (current rates vs threatened 50% effective Jan 1, 2027)', () => {
   const fs = require('node:fs');
   const path = require('node:path');
   const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.ok(/id="autoScenarioRow"/.test(html), 'index.html must have the autoScenarioRow');
   assert.ok(/id="autoScenario"/.test(html), 'index.html must have the autoScenario select');
-  assert.ok(/~25% auto tariff \(in effect\)/.test(html), 'index.html scenario toggle must show the current ~25% rate');
+  assert.ok(/~25% auto tariff/.test(html), 'index.html scenario toggle must show the current ~25% rate');
   assert.ok(/Threatened/.test(html), 'index.html must label the 50% scenario as Threatened');
-  assert.ok(/50% auto tariff/.test(html), 'index.html must show the threatened 50% auto rate');
+  assert.ok(/50% autos &amp; steel/.test(html), 'index.html must show the threatened 50% autos/steel rate');
   assert.ok(/Jan 1, 2027/.test(html), 'index.html must show the Jan 1, 2027 proposed effective date');
   assert.ok(/NOT included by default/.test(html), 'index.html must state the threatened rate is not included by default');
-  // updateAutoScenarioRow wiring exists
+  // updateAutoScenarioRow wiring exists (Canada + Automotive OR Steel & Metals)
   assert.ok(/updateAutoScenarioRow/.test(html), 'index.html must wire updateAutoScenarioRow visibility');
+  assert.ok(/catSel\.value === 'auto' \|\| catSel\.value === 'steel'/.test(html), 'index.html must show the scenario row for auto OR steel');
   // includeProposed wiring exists in calculate()
   assert.ok(/includeProposed/.test(html), 'index.html must pass includeProposed for the threatened scenario');
+  // Trucking cost-per-truckload row + blog post link
+  assert.ok(/id="truckloadRow"/.test(html), 'index.html must have the truckloadRow result item');
+  assert.ok(/Tariff Cost per Truckload/.test(html), 'index.html must label the truckload cost row');
+  assert.ok(/canada-tariff-trucking-freight-impact\.html/.test(html), 'index.html must link the trucking-impact blog post');
+  assert.ok(/How the 50% Canada Tariffs Hit Freight Volumes and Carriers/.test(html), 'index.html must show the trucking post title');
 });
