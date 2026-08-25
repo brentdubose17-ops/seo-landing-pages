@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-24 — Site-wide stale /blog/ canonical sweep (kanban t_180fc246)
+
+- **Fixed stale `/blog/` canonicals on all 9 remaining pages** — canonical, og:url, and JSON-LD `@id` on `china-tariff-rates-2026-explained`, `customs-valuation-methods-for-import-duty-calculation`, `de-minimis-rule-changes-2026-impact-on-ecommerce`, `how-to-apply-for-tariff-exclusion-or-drawback`, `how-to-calculate-import-duties-from-china`, `import-duty-calculation-explained-2026`, `section-301-tariffs-on-china-latest-updates-2026`, `tariff-exemption-list-2026-what-products-are-exempt`, `tariffs-on-electronics-imports-from-asia-2026` pointed at `/blog/<slug>/`, which serves the SPA fallback (homepage, ~93.8KB soft-404) instead of the article. All now point to the extensionless root path (`/tariffcalculator2026.com/<slug>`) that serves the real article and matches the sitemap. Closes the ⚠️ flagged in the t_850be755 entry.
+- **Legacy `deploy_main/` copies normalized too** — `china-tariff-rates-2026-explained`, `how-tariffs-affect-small-business-imports`, `tariff-exemption-list-2026-what-products-are-exempt`, `us-tariff-rates-2026-by-country` carried the same stale `/blog/` canonical and are still served live at `/deploy_main/...` (200); canonical now points to the canonical root extensionless URL. (`deploy_main/how-to-calculate-import-duties-from-china.html` had no /blog/ refs.)
+- **`tariff-exemption-list-2026-what-products-are-exempt.html`** also picked up the pre-existing uncommitted FAQPage JSON-LD upgrade already live on the page (5 Q&A) — now committed with this sweep.
+- **Sitemap/llms.txt:** verified — no `/blog/` entries; all sitemap URLs already extensionless and resolving 200.
+- **Tests:** 82/82 pass (unchanged).
+- **Deployed:** Cloudflare Pages (tariff-calculator-2026), live verified — all 9 extensionless URLs return 200 with real article content (sizes 4.5–35KB, correct titles), canonical on each live page matches local; `/blog/<slug>/` variants still serve the SPA fallback (unchanged behavior, no longer cited as canonical anywhere).
+
 ## 2026-08-24 — Trucking cluster cross-linking + blog post published (kanban t_850be755)
 
 - **Published `canada-tariff-trucking-freight-impact.html`** — "How the 50% Canada Tariffs Hit Freight Volumes and Carriers" (writer artifact from t_ae08aad3) copied into the repo and deployed; live verified (real article content served, not SPA fallback). Stale calculator-slug placeholder comment resolved: the calculator lives at the homepage (tariffcalculator2026.com/); no dedicated /canada-tariff-calculator page shipped, so homepage hrefs are the canonical calculator target.
