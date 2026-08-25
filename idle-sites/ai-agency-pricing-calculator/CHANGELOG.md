@@ -2,6 +2,14 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-25 — ChatGPT Business Premium seat estimator added (kanban t_d7ed9100, parent research brief t_642ada39)
+
+- **New estimator section** `#chatgpt-seats-estimator` — "ChatGPT Business Seat Cost Estimator": seat-type selector (Standard / Premium), seat count (2–200, default 10), billing cadence (Monthly / Annual, default Annual). Outputs per-user price, monthly cost, annual cost, annual-billing savings (20%), and a usage-vs-Standard card (Premium = 5x more usage, no 5-hour limit, weekly resets; Standard = baseline, 5-hour limit applies). Validation alerts for <2 seats (2-seat minimum) and >200 seats (200-seat cap since Aug 24, 2026).
+- **Verified math** (node harness, 16/16 scenarios): 10 Premium annual = $1,000/mo / $12,000/yr; 10 Premium monthly = $1,250/mo / $15,000/yr; 10 Standard annual = $200/mo / $2,400/yr; 10 Standard monthly = $250/mo / $3,000/yr; 5 Premium annual = $500/mo / $6,000/yr; 2 Premium monthly = $250/mo / $3,000/yr.
+- **Pricing basis (verified via parent research brief t_642ada39, 7 sources / 34 evidence quotes):** Premium $125/user/mo monthly / $100 annual (20% annual discount); Standard $25/$20; Premium = official "5x more usage than Standard seats" (no fixed credit/dollar equivalent — flagged as usage-multiplier assumption), no five-hour usage limit, predictable weekly usage resets; 2-seat minimum (any mix), 200-seat cap since Aug 24, 2026; larger deployments → ChatGPT Enterprise (sales-led); billing cadence per-subscription; API billed separately.
+- **Updated everywhere on index.html + index_calculator.html:** FAQ item + FAQPage JSON-LD entry rewritten ("not a calculator input — budget separately" superseded, now points to the estimator), meta description/keywords (+8 seat keywords), assumptions footer (date → Aug 25, 2026; Aug 10 premium note marked superseded), on-page changelog, Umami events (`chatgpt_seats_estimated` on calculate, `chatgpt_seat_type_selected` on seat-type change), internal link to new explainer `/chatgpt-business-premium-seats-pricing` (sibling content task t_248c3858). Also fixed a pre-existing malformed keywords meta tag (unterminated attribute value that was swallowing the robots meta).
+- **Deployed to Cloudflare Pages (ai-agency-pricing-calculator).** See site CHANGELOG for full details.
+
 ## 2026-08-24 — New article: AI Agent API Cost Calculator (kanban t_13f3550d, parent research brief t_b065f420)
 
 - **New article:** `ai-agent-api-cost-calculator.html` (live at https://aiagencycalculator.com/ai-agent-api-cost-calculator) — "AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs" (Article + FAQPage JSON-LD, 5 Q&A, target keywords 'AI agent API costs' / 'agent-first pricing' / 'AI agency API costs'). Pricing companion to the PYMNTS-driven post https://findaiagency.com/ai-agents-api-economy (sibling task t_095bafd3 draft; findaiagency publish pending).

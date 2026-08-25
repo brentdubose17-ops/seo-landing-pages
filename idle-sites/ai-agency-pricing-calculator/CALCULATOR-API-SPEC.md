@@ -2,13 +2,13 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-08-22 (ChatGPT Ads EU pricing preset — verified via research brief t_ff98639f, task t_f07e1052)
+**Last updated:** 2026-08-25 (ChatGPT Business Premium seat estimator — verified via research brief t_642ada39, task t_d7ed9100)
 
 ---
 
 ## 1. Overview
 
-Single-file static calculator (HTML + inline JS, no backend). Exposes four
+Single-file static calculator (HTML + inline JS, no backend). Exposes five
 independent estimators in one page:
 
 | # | Estimator | Function | Section |
@@ -17,6 +17,7 @@ independent estimators in one page:
 | 2 | Agent Failure & Retry Cost Estimator | `calculateFailure()` | `#failure-estimator` |
 | 3 | Gemini API Cost & Model Routing Savings | `calculateRouting()` | main form |
 | 4 | **Agent Wallet & Spend Cap Estimator** (NEW 2026-08-07) | `calculateWallet()` | `#wallet-estimator` |
+| 5 | **ChatGPT Business Seat Cost Estimator** (NEW 2026-08-25) | `calculateChatgptSeats()` | `#chatgpt-seats-estimator` |
 
 All calculators are client-side. No API keys, no server round-trips (except the
 optional email-capture worker on result unlock).
@@ -236,8 +237,92 @@ $1.50/$7.50) · Flash-Lite $0.30/$2.50 · Flash $1.50/$9.00 · 2.5 Pro $1.25/$10
 
 ---
 
+## 6. ChatGPT Business Seat Cost Estimator (NEW 2026-08-25)
+
+Purpose: model ChatGPT Business subscription seat costs (Standard vs Premium)
+for a client's workspace, with billing cadence (monthly vs annual) and the
+verified usage-multiplier assumptions. This reverses the earlier Aug 10/12
+"seat costs are not a calculator input — budget separately" stance.
+
+### 6.1 Inputs
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `chatgptSeatType` | Seat Type | select | `premium` | `standard` \| `premium` |
+| `chatgptSeats` | Number of Seats (Users) | number | `10` | 2–200, step 1 |
+| `chatgptBilling` | Billing Cadence | select | `annual` | `monthly` \| `annual` |
+
+### 6.2 Price table (USD list prices, verified Aug 25, 2026)
+
+| Seat type | Monthly billing | Annual billing (effective /mo) | Annual discount |
+|-----------|-----------------|-------------------------------|-----------------|
+| Standard  | $25/user/mo     | $20/user/mo                   | 20%             |
+| Premium   | $125/user/mo    | $100/user/mo                  | 20%             |
+
+### 6.3 Model
+
+```
+perUser      = billing === 'annual' ? price.annual : price.monthly
+monthlyCost  = seats × perUser
+annualCost   = monthlyCost × 12
+savings      = billing === 'annual' ? (seats × price.monthly × 12) − annualCost : 0
+```
+
+Validation: `seats < 2` → alert (2-seat minimum, any mix of Standard + Premium);
+`seats > 200` → alert (200-seat cap per subscription since Aug 24, 2026; larger
+deployments move to ChatGPT Enterprise).
+
+### 6.4 Outputs
+
+| Element ID | Label |
+|------------|-------|
+| `cs-peruser` / `cs-peruser-sub` | Per-user price at chosen cadence (both cadences listed) |
+| `cs-monthly` / `cs-monthly-sub` | Monthly cost (seats × per-user effective rate) |
+| `cs-annual` / `cs-annual-sub` | Annual cost (seats × per-user × 12) |
+| `cs-savings` / `cs-savings-sub` | Annual-billing savings vs monthly (20%) or switch CTA |
+| `cs-usage` / `cs-usage-sub` | Premium = "5x more usage", no 5-hour limit, weekly resets; Standard = baseline, 5-hour limit applies |
+| `cs-note` | How-to-read text incl. usage-multiplier framing and billing mechanics |
+
+### 6.5 Usage-multiplier assumptions (from verified facts)
+
+- Premium's official benefit is **"5x more usage than Standard seats"** — there is
+  **no fixed credit/dollar equivalent** (consumption depends on model and task);
+  included usage is separate from the workspace credit pool; the five-hour usage
+  limit does not apply to Premium; usage resets weekly (predictable cadence).
+- 2-seat minimum (any mix); 200-seat cap since Aug 24, 2026; >200 → Enterprise
+  (sales-led, contracted).
+- Billing cadence is per-subscription (all seats share monthly or annual);
+  changing cadence takes effect at renewal. Mid-cycle seat additions trigger an
+  immediate prorated charge; reductions take effect next cycle.
+- ChatGPT API usage is billed separately from Business seats. OpenAI does not
+  train on workspace data. Prices in USD; may vary by country/currency.
+- Fact basis: research brief t_642ada39 (7 sources, 34 evidence quotes;
+  openai.com/index/premium-seats-chatgpt-business + OpenAI Help Center).
+
+### 6.6 Analytics
+
+`chatgpt_seats_estimated` on every estimate click (payload: seat_type, seats,
+billing); `chatgpt_seat_type_selected` on seat-type change (index.html only —
+index_calculator.html tracks via the estimate click).
+
 ## Changelog
 
+- **2026-08-25** — ChatGPT Business Premium seat estimator added (task
+  t_d7ed9100; fact basis research brief t_642ada39, 7 sources / 34 evidence
+  quotes). New section `#chatgpt-seats-estimator` (`calculateChatgptSeats()`)
+  with seat-type selector (Standard $25/$20 / Premium $125/$100), seat count
+  (2–200), billing cadence (monthly / annual). Premium = official "5x more
+  usage than Standard", no 5-hour limit, weekly resets (usage-multiplier
+  assumption, no credit/dollar equivalent — flagged). 2-seat minimum, 200-seat
+  cap, cadence per-subscription, API billed separately. Verified: node harness
+  16/16 scenarios on both index.html and index_calculator.html (10 Premium
+  annual = $1,000/mo / $12,000/yr; 10 Premium monthly = $1,250/mo). FAQ +
+  FAQPage JSON-LD rewritten (supersedes "budget separately" note), meta
+  description/keywords, assumptions footer (date → Aug 25), on-page changelog,
+  Umami events `chatgpt_seats_estimated` + `chatgpt_seat_type_selected`, link
+  to new explainer /chatgpt-business-premium-seats-pricing. Also fixed a
+  pre-existing malformed keywords meta (unterminated attribute swallowing the
+  robots meta).
 - **2026-08-22** — ChatGPT Ads (EU) pricing preset added (task t_f07e1052; fact
   basis research brief t_ff98639f). New `serviceType` option `chatgpt_ads`
   ("📢 ChatGPT Ads Management (EU)") with a labeled inputs box (`#chatgptAdsBox`,
