@@ -2,6 +2,14 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-26 — Capacity-context notes + cross-link to findaiagency.com Nscale post on 4 Claude pricing pages (kanban t_6b99175f)
+
+- **Added a short "Capacity context" note** to the 4 Claude pricing pages (`anthropic-65b-run-rate-agency-pricing`, `anthropic-ipo-pricing-impact`, `ai-model-cost-per-task-2026`, `ai-agent-api-cost-calculator`): explains that Anthropic's reported **$45B Nscale commitment** and **SpaceX Colossus 1 compute deal** signal real Claude capacity growth but also pricing pressure ahead of the record IPO.
+- **Cross-link added** on all 4 pages to the new findaiagency.com post via descriptive SEO-friendly anchor "Anthropic's $45B Nscale compute deal: what it means for Claude capacity and pricing" → `https://findaiagency.com/anthropic-45b-compute-deal` (`rel="noopener"`).
+- **No calculator-logic change** — pricing tables, calculator widget, and all inline JS untouched; note placed in body copy only (after intro paragraphs on 65b/IPO/model-cost pages; before the calculator widget on ai-agent-api-cost-calculator).
+- **Verified:** inline JS syntax clean (`node --check` on calculator page), HTML tag balance OK on all 4 pages, each page has exactly 1 note + 1 link, live target URL HTTP 200.
+- **Deployed:** Cloudflare Pages project `ai-agency-pricing-calculator`.
+
 ## 2026-08-25 — Meta Hatch consumer AI agent comparison row added to the calculator (kanban t_b177c468, parent research t_b6570320)
 
 - **New section** `#consumer-agent-pricing` on `index.html` (homepage) and `index_calculator.html` — "Consumer AI Agent Pricing: Meta Hatch vs ChatGPT & Claude" — an 8-field comparison table (Provider | Product | Price | Billing | Availability | Model | Category | Source) with the **Meta Hatch row**: Meta · Hatch · **$199.99/mo — REPORTED, pending confirmation** · monthly · launching in coming weeks (late Aug–early Sep 2026 target) · Watermelon (targeted October 2026) · consumer AI agent · sourced to The Information via RuntimeWire. Comparison rows: ChatGPT Plus $20/mo, ChatGPT Pro $100–$200/mo, Claude Max up to $200/mo (current list prices as of Aug 25, 2026).
