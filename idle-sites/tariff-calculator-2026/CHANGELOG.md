@@ -2,6 +2,16 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-25 — China 7.5% overcapacity tariff post published (kanban t_eb32fdbf)
+
+- **New post `china-overcapacity-tariff-7-5-percent.html`** — "China Tariff 2026: 7.5% Overcapacity Tariff Coming?" (title 51c, meta 148c, canonical extensionless, pubDate 2026-08-25). Breaking-news explainer per SEO/AEO brief t_87fa2218, fact base research brief t_7f248947 (12 sources / 31 evidence quotes). Lead: Bloomberg Aug 24 report that the US is set to impose a 7.5% Section 301 overcapacity tariff on Chinese goods before the Sept. 24 Xi-Trump summit. **Critical framing: REPORTED plan from anonymous sources, NOT official** — Reuters could not verify; White House called it "baseless speculation"; no USTR/FRN action as of Aug 25. Covers: what happened, why before the summit (Sept. 24 meeting + 20% ceiling + Nov. 10 truce), Section 301 rate stack (legacy 7.5%–100% on ~$360B, July 12.5% forced-labor on China, 7.5%-on-top = ~20%), affected importers (overcapacity sectors; no HTS list yet), what happens next (pre-summit findings → Sept 24 summit → Nov 10 truce; 25-state CIT suit; drone tariff Sept 3), AEO direct-answer box ("Will the US add more China tariffs?" verbatim, first 100 words), 4-question FAQ mirrored in FAQPage JSON-LD (0 text mismatches), Article JSON-LD, calculator CTA, 6 internal links (all HTTP 200), 10-source note. ~1,500 visible words.
+- **`index.html`** — BLOG_ARTICLES card added (featured, top of grid).
+- **`news/index.html`** — new feed item (Aug 25, tag Tariffs) linking the post; meta description updated to lead with the China advisory.
+- **`sitemap.xml`** — URL entry added (lastmod 2026-08-25, priority 0.9).
+- **`llms.txt`** — article link added.
+- **`china-tariff-rates-2026-explained.html`** — reciprocal link added (breaking update note → new post), per SEO brief mandatory reciprocal requirement.
+- **Deployed:** Cloudflare Pages (tariff-calculator-2026), verified live.
+
 ## 2026-08-25 — Canada retaliation blog post published (kanban t_80cc4bfd)
 
 - **New post `canada-retaliatory-tariffs-september-2026.html`** — "Canada Retaliatory Tariffs 2026: 15/25/50% Rates on Sept 8" (title 58c, meta 152c, canonical extensionless, pubDate 2026-08-25). Structure per SEO/AEO brief: H1, direct-answer box ("What is the current US-Canada tariff rate?" → Sept 8, 2026 12:01 a.m. ET), key takeaways, timeline table, what-changed, three-tier affected-categories table (874 items: 404@50%, 449@25%, 21@15%), trucking/freight impact (55% of freight value by truck, ~15,000 trucks/day, CTA quotes, in-transit exemption), 9-item FAQ mirrored in FAQPage JSON-LD, Article JSON-LD, calculator CTA, internal links to the updated calculator (homepage), /us-canada-tariffs-2026 explainer, /canada-50-percent-tariff-august-19-explainer, trucking post, supply-chain + small-business guides, /news. Sources: the 8 verified Aug 25 sources (Finance Canada release + 874-item list, FreightWaves, Truck News, Guardian, Euronews, CTA, CNBC — research brief t_8153278d). ~1,300 visible words.
