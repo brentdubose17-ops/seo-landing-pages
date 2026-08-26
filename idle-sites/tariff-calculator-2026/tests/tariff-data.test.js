@@ -931,7 +931,10 @@ test('REJECTED_DEAL_PRESET surfaced in index.html as NOT-enacted alternate prese
   assert.ok(/NOT enacted|rejected|would have/i.test(callout), 'offer rates must be framed as rejected, never as live rates');
   // The IN-EFFECT banner (before the callout) must not present 25/15/10 as current Canada rates.
   const bannerStart = html.indexOf('Canada 50% Section 338 Tariff');
-  const banner = html.slice(bannerStart, calloutStart);
+  // Bound the slice at the Canada retaliation banner (which legitimately carries the 15/25/50% tiers)
+  const retStart = html.indexOf('Canada Retaliation CONFIRMED');
+  const sliceEnd = retStart > bannerStart ? retStart : calloutStart;
+  const banner = html.slice(bannerStart, sliceEnd);
   assert.ok(/IN EFFECT/.test(banner), 'banner should state IN EFFECT');
   assert.ok(!/25%|15%|10%/.test(banner.replace(/<[^>]+>/g, ' ')),
     'IN-EFFECT banner must not show the rejected 25/15/10 figures as live rates');
@@ -939,22 +942,57 @@ test('REJECTED_DEAL_PRESET surfaced in index.html as NOT-enacted alternate prese
 
 // ── Canada retaliation (Sept 8, 2026 dollar-for-dollar) ─────────────
 
-test('CANADA_RETALIATION structure matches verified fact sheet (t_160b34b4)', () => {
+test('CANADA_RETALIATION structure matches verified fact sheet (t_8153278d — Aug 25, 2026 announcement)', () => {
   const R = T.CANADA_RETALIATION;
   assert.ok(R, 'CANADA_RETALIATION missing from exports');
   assert.equal(R.effective, '2026-09-08');
   assert.match(R.effective_label, /September 8, 2026/);
+  assert.match(R.effective_label, /12:01 a\.m\. ET/, 'effective_label must carry the 12:01 a.m. ET time');
   assert.equal(R.framework, 'dollar-for-dollar');
-  assert.equal(R.rate, 0.50);
-  assert.equal(R.sector_categories.length, 6);
-  assert.deepEqual(R.sector_categories,
-    ['steel', 'electronics', 'dairy', 'household-appliances', 'farming-equipment', 'pulp-paper']);
+  assert.equal(R.announced, '2026-08-25');
+  assert.equal(R.rate, 0.50, 'headline rate stays 0.50 (max tier)');
+  // Three verified tiers with item counts from the official 874-item list
+  assert.equal(R.list_size.total, 874);
+  assert.equal(R.list_size.rate_50, 404);
+  assert.equal(R.list_size.rate_25, 449);
+  assert.equal(R.list_size.rate_15, 21);
+  assert.equal(R.tiers['0.50'].item_count, 404);
+  assert.equal(R.tiers['0.25'].item_count, 449);
+  assert.equal(R.tiers['0.15'].item_count, 21);
+  assert.ok(R.tiers['0.15'].release_note.includes('8415'), '15% tier should cite AC/heat-pump headings');
+  // Origin + in-transit rules from the Finance Canada backgrounder
+  assert.ok(/originating from the US/.test(R.origin_rule), 'origin rule must be US-origin only');
+  assert.ok(/in transit/.test(R.in_transit), 'in-transit carve-out must be present');
+  // Category -> tier map covers the six focus sectors + expanded 874-item scope
+  assert.equal(R.category_tiers.steel, 0.50);
+  assert.equal(R.category_tiers.electronics, 0.25);
+  assert.equal(R.category_tiers.dairy, 0.25);
+  assert.equal(R.category_tiers['household-appliances'], 0.25);
+  assert.equal(R.category_tiers['farming-equipment'], 0.15);
+  assert.equal(R.category_tiers['pulp-paper'], 0.50);
+  assert.equal(R.category_tiers.auto, 0.25);
+  assert.equal(R.category_tiers.furniture, 0.50);
+  assert.equal(R.category_tiers.textiles, 0.50);
+  assert.equal(R.category_tiers.food, 0.25);
+  assert.equal(R.category_tiers.chemicals, 0.50);
+  assert.equal(R.category_tiers.toys, 0.50);
+  // Six official focus sectors still listed
   const labels = R.sectors.map(s => s.label);
   ['Steel', 'Electronics', 'Dairy', 'Household Appliances', 'Farming Equipment', 'Pulp & Paper']
     .forEach(l => assert.ok(labels.includes(l), `missing sector label ${l}`));
+  // Representative products present for the acceptance set
+  const reps = R.representative_products;
+  assert.ok(reps.some(p => /steel coil/i.test(p.product) && p.tier === 0.50), 'steel representative product missing');
+  assert.ok(reps.some(p => /aluminum/i.test(p.product) && p.tier === 0.50), 'aluminum representative product missing');
+  assert.ok(reps.some(p => p.category === 'auto'), 'auto representative product missing');
+  assert.ok(reps.some(p => p.category === 'dairy' && p.tier === 0.25), 'dairy/cheese representative product missing');
+  assert.ok(reps.some(p => p.category === 'farming-equipment' && p.tier === 0.15), 'farming-equipment representative product missing');
+  assert.ok(reps.every(p => /^\d{4}\.\d{2}\.\d{2}$/.test(p.hs)), 'representative products must carry 8-digit HS codes');
+  assert.ok(R.source_citations.length >= 8, `expected >= 8 source citations, got ${R.source_citations.length}`);
+  assert.ok(R.source_citations.some(c => c.includes('canada.ca')), 'should cite the official Finance Canada release');
 });
 
-test('Canada retaliation: PENDING before Sept 8 — 0% duty, applies false, for all six sectors', () => {
+test('Canada retaliation: PENDING before Sept 8 — 0% duty, applies false, for all targeted categories', () => {
   for (const cat of T.CANADA_RETALIATION.sector_categories) {
     const res = T.effectiveRate('us', cat, { direction: 'to-canada', asOfDate: '2026-08-23' });
     assert.ok(res, `to-canada ${cat} should resolve`);
@@ -967,22 +1005,72 @@ test('Canada retaliation: PENDING before Sept 8 — 0% duty, applies false, for 
   }
 });
 
-test('Canada retaliation: 50% dollar-for-dollar duty applies ON Sept 8 and after', () => {
-  const on = T.effectiveRate('us', 'steel', { direction: 'to-canada', asOfDate: '2026-09-08' });
-  assert.equal(on.rate, 0.50);
-  assert.equal(on.breakdown.canadaRetaliation.applies, true);
-  const after = T.effectiveRate('us', 'pulp-paper', { direction: 'to-canada', asOfDate: '2026-09-09' });
-  assert.equal(after.rate, 0.50);
-  assert.equal(after.breakdown.canadaRetaliation.applies, true);
-  // every targeted sector resolves to 50% after the effective date
-  for (const cat of T.CANADA_RETALIATION.sector_categories) {
-    const res = T.effectiveRate('us', cat, { direction: 'to-canada', asOfDate: '2026-09-08' });
-    assert.equal(res.rate, 0.50, `${cat} on Sept 8 must be 50%`);
-  }
+test('Canada retaliation: tier rates apply ON Sept 8 and after (verified 15/25/50% tiers)', () => {
+  // steel (ch. 72/73/76) -> 50% tier
+  const steel = T.effectiveRate('us', 'steel', { direction: 'to-canada', asOfDate: '2026-09-08' });
+  assert.equal(steel.rate, 0.50);
+  assert.equal(steel.breakdown.canadaRetaliation.applies, true);
+  assert.equal(steel.breakdown.canadaRetaliation.tierRate, 0.50);
+  assert.equal(steel.breakdown.canadaRetaliation.tierLabel, '50%');
+  assert.equal(steel.breakdown.canadaRetaliation.tierItemCount, 404);
+  // electronics (ch. 84/85) -> 25% tier
+  const el = T.effectiveRate('us', 'electronics', { direction: 'to-canada', asOfDate: '2026-09-09' });
+  assert.equal(el.rate, 0.25);
+  assert.equal(el.breakdown.canadaRetaliation.tierLabel, '25%');
+  // dairy (cheese headline) -> 25% tier
+  const dairy = T.effectiveRate('us', 'dairy', { direction: 'to-canada', asOfDate: '2026-09-09' });
+  assert.equal(dairy.rate, 0.25);
+  // household appliances -> 25% tier
+  const app = T.effectiveRate('us', 'household-appliances', { direction: 'to-canada', asOfDate: '2026-09-09' });
+  assert.equal(app.rate, 0.25);
+  // farming equipment (mowers) -> 15% tier
+  const farm = T.effectiveRate('us', 'farming-equipment', { direction: 'to-canada', asOfDate: '2026-09-09' });
+  assert.equal(farm.rate, 0.15);
+  assert.equal(farm.breakdown.canadaRetaliation.tierLabel, '15%');
+  assert.equal(farm.breakdown.canadaRetaliation.tierItemCount, 21);
+  // pulp & paper -> 50% tier
+  const pulp = T.effectiveRate('us', 'pulp-paper', { direction: 'to-canada', asOfDate: '2026-09-09' });
+  assert.equal(pulp.rate, 0.50);
+  // expanded 874-item scope: auto 25%, furniture 50%, textiles 50%, food 25%, chemicals 50%, toys 50%
+  assert.equal(T.effectiveRate('us', 'auto', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.25);
+  assert.equal(T.effectiveRate('us', 'furniture', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.50);
+  assert.equal(T.effectiveRate('us', 'textiles', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.50);
+  assert.equal(T.effectiveRate('us', 'food', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.25);
+  assert.equal(T.effectiveRate('us', 'chemicals', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.50);
+  assert.equal(T.effectiveRate('us', 'toys', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.50);
+});
+
+test('Canada retaliation: representative products return the verified tier rates with effective dates', () => {
+  const reps = T.CANADA_RETALIATION.representative_products;
+  assert.ok(reps.length >= 10, `expected >= 10 representative products, got ${reps.length}`);
+  reps.forEach(p => {
+    // Each representative product carries its verified line-level tier and the
+    // Sept 8 effective date (the category default may differ for mixed-tier
+    // categories — e.g. motorcycle 50% vs auto default 25%).
+    assert.equal(p.tier, reps.find(r => r.hs === p.hs).tier);
+    assert.ok([0.15, 0.25, 0.50].includes(p.tier), `${p.product} tier must be a verified tier`);
+    const res = T.effectiveRate('us', p.category, { direction: 'to-canada', asOfDate: '2026-09-08' });
+    const cr = res.breakdown.canadaRetaliation;
+    assert.equal(cr.effective, '2026-09-08', `${p.product} must carry the Sept 8 effective date`);
+    assert.equal(cr.rate, T.CANADA_RETALIATION.category_tiers[p.category],
+      `${p.product} category default should match category_tiers`);
+    assert.ok(cr.representativeProducts.some(rp => rp.hs === p.hs && rp.tier === p.tier),
+      `${p.hs} should be listed as a representative product for ${p.category} with tier ${p.tier}`);
+  });
+  // Steel (uniform 50% tier): category default == product tier
+  const steel = T.effectiveRate('us', 'steel', { direction: 'to-canada', asOfDate: '2026-09-08' });
+  assert.equal(steel.breakdown.canadaRetaliation.rate, 0.50);
+  // Before Sept 8 the same products are PENDING (0%)
+  const before = T.effectiveRate('us', 'steel', { direction: 'to-canada', asOfDate: '2026-09-07' });
+  assert.equal(before.rate, 0);
+  assert.equal(before.breakdown.canadaRetaliation.applies, false);
+  assert.ok(/PENDING|CONFIRMED|September 8/.test(before.breakdown.canadaRetaliation.status) ||
+    before.breakdown.canadaRetaliation.effectiveLabel.includes('September 8'));
 });
 
 test('Canada retaliation: non-targeted sectors get 0% even after Sept 8', () => {
-  for (const cat of ['textiles', 'footwear', 'pharma', 'toys', 'polysilicon', 'drones', 'ground-beef', 'canada-s338']) {
+  // textiles/toys/food/etc are now targeted (874-item list); these remain outside it
+  for (const cat of ['footwear', 'pharma', 'polysilicon', 'drones', 'ground-beef', 'canada-s338']) {
     const res = T.effectiveRate('us', cat, { direction: 'to-canada', asOfDate: '2026-09-09' });
     assert.ok(res, `to-canada ${cat} should resolve`);
     assert.equal(res.rate, 0, `${cat} is not a retaliation sector and must stay 0%`);
@@ -1013,25 +1101,69 @@ test('REGRESSION: default US-import flows unchanged by retaliation layer', () =>
   assert.equal(ca.breakdown.canadaRetaliation, undefined);
 });
 
-test('index.html carries the Sept 8 retaliation flag, sectors, and direction control', () => {
+test('index.html carries the confirmed Sept 8 retaliation (tiers, 874 items, C$27.6B, origin + in-transit rules)', () => {
   const fs = require('node:fs');
   const path = require('node:path');
   const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.ok(/September 8, 2026/.test(html), 'index.html must name September 8, 2026');
+  assert.ok(/12:01 a\.m\. ET/.test(html), 'index.html must show the 12:01 a.m. ET effective time');
   assert.ok(/dollar-for-dollar/.test(html), 'index.html must use dollar-for-dollar framing');
   assert.ok(/id="direction"/.test(html), 'index.html must have the Shipping To direction control');
   assert.ok(/to-canada/.test(html), 'index.html must have the to-canada option');
   assert.ok(/household appliances/.test(html), 'index.html must list household appliances sector');
-  assert.ok(/farming equipment/.test(html), 'index.html must list farming equipment sector');
+  assert.ok(/farming equipment|agricultural equipment/.test(html), 'index.html must list farming equipment sector');
   assert.ok(/pulp (&amp;|&) paper|pulp and paper/i.test(html), 'index.html must list pulp/paper sector');
+  // Verified announcement details (research brief t_8153278d)
+  assert.ok(/874/.test(html), 'index.html must state the 874-item official list');
+  assert.ok(/C\$27\.6 billion/.test(html), 'index.html must state C$27.6 billion coverage');
+  assert.ok(/15%|25%|50%/.test(html), 'index.html must show the 15/25/50 tier rates');
+  assert.ok(/in transit/.test(html), 'index.html must mention the in-transit carve-out');
+  assert.ok(/originating from the US|US-origin/i.test(html), 'index.html must state the US-origin rule');
   // The banner should clearly mark the pending status before the effective date
   assert.ok(/PENDING/.test(html), 'index.html must show pending/upcoming status');
+  // Representative products table (acceptance set) present
+  assert.ok(/Flat-rolled steel coil/.test(html), 'index.html must show the steel representative product');
+  assert.ok(/Aluminum/.test(html), 'index.html must show the aluminum representative product');
+  assert.ok(/Motorcycle/.test(html), 'index.html must show the auto representative product');
+  assert.ok(/Cheese/.test(html), 'index.html must show the dairy/cheese representative product');
+  assert.ok(/Mower/.test(html), 'index.html must show the farming representative product');
   // New sector categories exist in data for the calculator dropdown
   const fs2 = require('node:fs');
   const data = fs2.readFileSync(path.join(__dirname, '..', 'tariff-data.js'), 'utf8');
-  ['dairy', 'household-appliances', 'farming-equipment', 'pulp-paper'].forEach(k => {
+  ['dairy', 'household-appliances', 'farming-equipment', 'pulp-paper', 'furniture', 'textiles'].forEach(k => {
     assert.ok(data.includes("'" + k + "'"), `tariff-data.js must define category ${k}`);
   });
+});
+
+test('US-Canada explainer page is current: Aug 24 announcement, collapsed talks, Sept 8 tiers, 874 items', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const page = fs.readFileSync(path.join(__dirname, '..', 'us-canada-tariffs-2026.html'), 'utf8');
+  assert.ok(page.length > 20000, 'explainer should be substantive');
+  // Aug 24 announcement (Trump Truth Social: autos/trucks/parts/steel to 50% Jan 1, 2027)
+  assert.ok(/August 24, 2026/.test(page), 'explainer must mention the Aug 24 announcement');
+  assert.ok(/January 1, 2027/.test(page), 'explainer must keep the Jan 1, 2027 threatened date');
+  // Collapsed trade talks context
+  assert.ok(/collapsed|collapse/i.test(page), 'explainer must mention the collapsed trade talks');
+  // Confirmed Sept 8 retaliation: three tiers, 874 items, C$27.6B, origin + in-transit
+  assert.ok(/September 8, 2026/.test(page), 'explainer must name the September 8 effective date');
+  assert.ok(/12:01 a\.m\. ET/.test(page), 'explainer must show the 12:01 a.m. ET effective time');
+  assert.ok(/874/.test(page), 'explainer must state the 874-item official list');
+  assert.ok(/C\$27\.6 billion/.test(page), 'explainer must state C$27.6 billion coverage');
+  assert.ok(/15%/.test(page) && /25%/.test(page) && /50%/.test(page), 'explainer must show 15/25/50% tiers');
+  assert.ok(/in transit/.test(page), 'explainer must mention the in-transit carve-out');
+  assert.ok(/C\$7\.5 billion/.test(page), 'explainer must mention the C$7.5B support package');
+  // Representative products from the official list
+  assert.ok(/steel coil|Flat-rolled|7208/i.test(page), 'explainer must show steel line examples');
+  assert.ok(/7606|aluminum/i.test(page), 'explainer must show aluminum line examples');
+  assert.ok(/8415|air condition/i.test(page), 'explainer must show the 15% tier examples (AC units)');
+  assert.ok(/8433|mower/i.test(page), 'explainer must show farming/mower examples');
+  assert.ok(/6109|t-shirt/i.test(page), 'explainer must show apparel examples');
+  // Sources: official Finance Canada + press verified Aug 25
+  assert.ok(page.includes('canada.ca/en/department-finance/news/2026/08'), 'explainer should cite the Finance Canada release');
+  assert.ok(page.includes('freightwaves.com') || page.includes('trucknews.com') || page.includes('theguardian.com/world/2026/aug/25'), 'explainer should cite Aug 25 press coverage');
+  // dateModified bumped
+  assert.ok(/dateModified/.test(page));
 });
 
 test('Threatened autos/steel tariff flag: canada_auto_50 present (50%, effective 2027-01-01, NOT in effect)', () => {
