@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-08-25 — Canada retaliation blog post published (kanban t_80cc4bfd)
+
+- **New post `canada-retaliatory-tariffs-september-2026.html`** — "Canada Retaliatory Tariffs 2026: 15/25/50% Rates on Sept 8" (title 58c, meta 152c, canonical extensionless, pubDate 2026-08-25). Structure per SEO/AEO brief: H1, direct-answer box ("What is the current US-Canada tariff rate?" → Sept 8, 2026 12:01 a.m. ET), key takeaways, timeline table, what-changed, three-tier affected-categories table (874 items: 404@50%, 449@25%, 21@15%), trucking/freight impact (55% of freight value by truck, ~15,000 trucks/day, CTA quotes, in-transit exemption), 9-item FAQ mirrored in FAQPage JSON-LD, Article JSON-LD, calculator CTA, internal links to the updated calculator (homepage), /us-canada-tariffs-2026 explainer, /canada-50-percent-tariff-august-19-explainer, trucking post, supply-chain + small-business guides, /news. Sources: the 8 verified Aug 25 sources (Finance Canada release + 874-item list, FreightWaves, Truck News, Guardian, Euronews, CTA, CNBC — research brief t_8153278d). ~1,300 visible words.
+- **`index.html`** — BLOG_ARTICLES card added (featured, top of grid).
+- **`news/index.html`** — new feed item (Aug 25, tag Tariffs) linking the post.
+- **`sitemap.xml`** — URL entry added (lastmod 2026-08-25, priority 0.9).
+- **`llms.txt`** — article link added.
+- **Deployed:** Cloudflare Pages (tariff-calculator-2026), verified live.
+
 ## 2026-08-25 — Canada retaliation upgraded to CONFIRMED 15/25/50% tiers + explainer refresh (kanban t_ceb6a59f)
 
 - **`tariff-data.js` — `CANADA_RETALIATION` now carries the verified Finance Canada measures** (research brief t_8153278d, 9 sources / 44 evidence quotes): counter-tariffs of **15/25/50% on C$27.6 billion of US imports** effective **Sept 8, 2026 12:01 a.m. ET**; official **874-item list** (404 at 50%, 449 at 25%, 21 at 15%); each product rate **matches the corresponding US rate** (S338/S232 products); **origin rule** (US-origin only, CUSMA marking) + **in-transit carve-out** (US goods in transit on Sept 8 exempt); C$7.5B support package context; `announced: 2026-08-25`. Supersedes the Aug 23 flat-50% six-sector pre-announcement estimate.
