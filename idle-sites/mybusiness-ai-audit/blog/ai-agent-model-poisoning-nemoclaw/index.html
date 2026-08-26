@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NemoClaw Vulnerability: AI Agent Security &amp; Model Poisoning</title>
+    <meta name="description" content="One webpage visit can give attackers permanent control of your local AI agent. The NemoClaw model-poisoning attack, plus a 10-point AI security audit.">
+    <meta name="keywords" content="AI agent security, model poisoning attack, NemoClaw vulnerability, CVE-2026-65105, DNS rebinding, Ollama security, local AI agent risk, AI security audit, can a webpage hack my AI agent">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mybusinessaiaudit.com/blog/ai-agent-model-poisoning-nemoclaw/">
+    <meta property="og:title" content="NemoClaw Vulnerability: AI Agent Security &amp; Model Poisoning">
+    <meta property="og:description" content="One webpage visit can give attackers permanent control of your local AI agent. The NemoClaw model-poisoning attack, plus a 10-point AI security audit.">
+    <meta property="og:url" content="https://mybusinessaiaudit.com/blog/ai-agent-model-poisoning-nemoclaw/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="My Business AI Audit">
+    <meta property="og:image" content="https://mybusinessaiaudit.com/og-image.png">
+    <meta property="og:image:alt" content="NemoClaw model poisoning attack chain — AI agent security diagram">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://mybusinessaiaudit.com/blog/ai-agent-model-poisoning-nemoclaw/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://mybusinessaiaudit.com/blog/ai-agent-model-poisoning-nemoclaw/"
+      },
+      "headline": "NemoClaw Vulnerability: AI Agent Security & Model Poisoning",
+      "description": "One webpage visit can give attackers permanent control of your local AI agent. The NemoClaw model-poisoning attack, plus a 10-point AI security audit.",
+      "image": "https://mybusinessaiaudit.com/og-image.png",
+      "datePublished": "2026-08-25",
+      "dateModified": "2026-08-25",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://mybusinessaiaudit.com/og-image.png"
+        }
+      },
+      "wordCount": 2204
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://mybusinessaiaudit.com/blog/ai-agent-model-poisoning-nemoclaw/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can a webpage hack my AI agent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, under specific conditions. If a local model server like Ollama is bound to 0.0.0.0 with no authentication, an attacker-controlled webpage can use DNS rebinding to reach it through your browser. In the NemoClaw case (CVE-2026-65105), one visit gave attackers full control and planted persistent hidden instructions in the model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is model poisoning?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Model poisoning is tampering with a model's definition — here, its chat template — so hidden instructions are appended to every message at inference time. Unlike prompt injection, which lives in the input, a poisoned template lives in the model: it persists across conversations and is invisible to clients."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is DNS rebinding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DNS rebinding is when an attacker-controlled domain first resolves to the attacker's server, then re-resolves to 127.0.0.1 (or a LAN IP). Because browsers enforce same-origin policy by hostname rather than IP, the browser keeps treating those requests as same-origin, letting a webpage reach local services like Ollama."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I check if my Ollama is exposed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Run lsof -i :11434 (macOS/Linux) or netstat -an | findstr 11434 (Windows) and look for a bind other than 127.0.0.1 — a 0.0.0.0 bind means LAN exposure AND a disabled Host-header check, the control that normally stops DNS rebinding. Also test from a second device on your LAN; if port 11434 responds, your API is network-reachable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I run an AI security audit on my agent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Run the 10-point AI security audit in this post: check how Ollama is bound, update NemoClaw, verify no bypass env vars are set, keep Ollama on loopback behind an authenticated proxy, block port 11434 at the firewall, and review what your agent is authorized to reach."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        code { background: #f4f4f7; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+        .table-wrap { overflow-x: auto; margin: 0 0 18px; -webkit-overflow-scrolling: touch; }
+        table { border-collapse: collapse; width: 100%; margin: 0; font-size: 0.95rem; }
+        th, td { border: 1px solid #e8e8f0; padding: 8px 12px; text-align: left; vertical-align: top; }
+        th { background: #f8f9ff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.85rem; } th, td { padding: 6px 8px; } code { word-break: break-all; } }
+    </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
+    <article>
+        <header>
+            <h1>Can a Webpage Hack Your AI Agent? The NemoClaw Model-Poisoning Attack</h1>
+            <div class="meta"><span>Published August 25, 2026</span><span>My Business AI Audit · Tag: AI agent security</span></div>
+        </header>
+
+        <blockquote><strong>Can a webpage hack my AI agent?</strong> Yes — under specific conditions. A single visit to an attacker-controlled webpage can give the attacker full, unauthenticated control of the local AI model server behind a developer's agent, and plant hidden instructions that persist across every future conversation.</blockquote>
+
+        <h2>The Short Answer: Yes, One Webpage Visit Can Take Over Your Agent</h2>
+        <p>On August 25, 2026, researchers at Oasis Security disclosed a vulnerability in NVIDIA NemoClaw, tracked as <strong>CVE-2026-65105</strong>. Their finding: <em>"A single visit to an attacker-controlled webpage is all it takes to give the attacker these capabilities."</em> [3]</p>
+        <p>Released at NVIDIA's GTC in March 2026, NemoClaw is NVIDIA's open-source reference stack for running AI agents — specifically OpenClaw — inside OpenShell sandboxes, with local inference handled by Ollama. The pitch was a "safer way" to run agents: the agent is fenced inside a Docker container that limits filesystem, network, and process access. [1] But the sandbox is the wrong layer to defend. NemoClaw's Windows-host configuration launches Ollama bound to every network interface, with authentication disabled, so a malicious webpage can reach the server through the browser via DNS rebinding and — worst case — rewrite the model's chat template to plant hidden instructions that survive every conversation. The attacker "never touches the victim's machine" yet "ends up steering their AI agent from that point forward." [3]</p>
+        <p>This isn't only a NemoClaw story — it's a clear sign that <strong>the model server is an unauthenticated attack surface on your developer's machine</strong>, the same class of risk as the <a href="/blog/ai-agent-prompt-injection-backdoor-risks/">prompt-injection backdoor</a> that keeps AI agents off production bug boards. For the wider landscape of agent threats, see our <a href="/ai-agent-security-risks">AI agent security risks</a> guide.</p>
+
+        <h2>What Happened: A NemoClaw Vulnerability in NVIDIA's AI Agent Stack</h2>
+        <p>Oasis researchers Elad Luz and Ofek Itach reported the flaw to NVIDIA's PSIRT before publication, then disclosed the full attack chain with a proof-of-concept video on August 25, 2026. [1][2][3] No active exploitation had been reported as of publication; the proof of concept was demonstrated in Firefox on macOS. [2]</p>
+        <h3>Why this matters beyond the specific product</h3>
+        <ul>
+            <li><strong>Agents carry organizational keys.</strong> They typically reach source control, CI/CD, internal APIs, and MCP servers — and, as Oasis puts it, <em>"the blast radius is defined not by the sandbox boundary, but by the scope of organizational resources the agent is authorized to interact with."</em> [3] That footprint is exactly where <a href="/articles/ai-agent-safeguards-fail">AI agent safeguards fail</a> in practice.</li>
+            <li><strong>The compromise is persistent and invisible.</strong> The payload lives in the model definition — <em>"well below the conversation state an operator can reset"</em> — and survives fresh chats; model name, size, and metadata read as normal. [1][3]</li>
+            <li><strong>The attack needs no credentials and no foothold on the victim's machine or network</strong> — the victim's own browser does the work. [3]</li>
+        </ul>
+
+        <h2>Who Is at Risk: Local AI Agent Risk by Configuration</h2>
+        <ul>
+            <li><strong>NemoClaw users on the Windows/WSL-host path.</strong> v0.0.35 fixed macOS/Linux, but there is <strong>no fix on Windows/WSL</strong> — v0.0.34 added a Windows installation warning instead. [2]</li>
+            <li><strong>Anyone running Ollama with <code>OLLAMA_HOST=0.0.0.0:11434</code>.</strong> NemoClaw sets it on the affected path, and it is common in hand-rolled WSL2/container setups. When the bind is not loopback, Ollama skips Host-header validation entirely. [1][2][3]</li>
+            <li><strong>Businesses whose agents can reach sensitive systems.</strong> If an agent can touch source control, CI/CD, internal APIs, or MCP servers, compromising the model behind it is a business compromise.</li>
+            <li><strong>Anyone on a shared network.</strong> The 0.0.0.0 binding means any device on the same network segment can hit the Ollama API directly — no DNS rebinding needed. [3]</li>
+        </ul>
+
+        <h2>The Model Poisoning Attack Chain: How DNS Rebinding Poisons Ollama</h2>
+        <svg viewBox="0 0 760 150" role="img" aria-label="NemoClaw model poisoning attack chain — AI agent security diagram" style="width:100%;height:auto;margin:8px 0 24px;border:1px solid #e8e8f0;border-radius:10px;background:#fff;">
+            <title>NemoClaw model poisoning attack chain — AI agent security diagram</title>
+            <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+                </marker>
+            </defs>
+            <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#333">
+                <rect x="10" y="40" width="150" height="66" rx="10" fill="#f8f9ff" stroke="#2563eb" stroke-width="1.5"/>
+                <text x="85" y="66" text-anchor="middle" font-weight="700" fill="#111">Attacker's</text>
+                <text x="85" y="84" text-anchor="middle" font-weight="700" fill="#111">webpage</text>
+                <text x="85" y="100" text-anchor="middle" font-size="10" fill="#666">victim's browser</text>
+                <line x1="162" y1="73" x2="196" y2="73" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow)"/>
+                <rect x="200" y="40" width="150" height="66" rx="10" fill="#f8f9ff" stroke="#2563eb" stroke-width="1.5"/>
+                <text x="275" y="66" text-anchor="middle" font-weight="700" fill="#111">DNS rebinding</text>
+                <text x="275" y="84" text-anchor="middle" font-size="10" fill="#666">same-origin bypass</text>
+                <text x="275" y="100" text-anchor="middle" font-size="10" fill="#666">Origin = Host</text>
+                <line x1="352" y1="73" x2="386" y2="73" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow)"/>
+                <rect x="390" y="40" width="150" height="66" rx="10" fill="#f8f9ff" stroke="#2563eb" stroke-width="1.5"/>
+                <text x="465" y="66" text-anchor="middle" font-weight="700" fill="#111">Ollama API</text>
+                <text x="465" y="84" text-anchor="middle" font-size="10" fill="#666">port 11434</text>
+                <text x="465" y="100" text-anchor="middle" font-size="10" fill="#666">no authentication</text>
+                <line x1="542" y1="73" x2="576" y2="73" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow)"/>
+                <rect x="580" y="40" width="170" height="66" rx="10" fill="#eef2ff" stroke="#2563eb" stroke-width="1.5"/>
+                <text x="665" y="66" text-anchor="middle" font-weight="700" fill="#111">Poisoned chat</text>
+                <text x="665" y="84" text-anchor="middle" font-weight="700" fill="#111">template</text>
+                <text x="665" y="100" text-anchor="middle" font-size="10" fill="#666">persists in the model</text>
+            </g>
+        </svg>
+        <h3>Step 1 — NemoClaw binds Ollama to every interface, on the Windows-host path</h3>
+        <p>Docker containers cannot reach the host's loopback, so NemoClaw launches Ollama with <code>OLLAMA_HOST=0.0.0.0:11434</code> — port 11434 goes live on every interface, while the install message still reads "Using Ollama on localhost:11434." [1][2][3]</p>
+        <h3>Step 2 — Ollama's defenses are partially disabled</h3>
+        <p>The API on port 11434 has no authentication; a CORS allowlist and Host-header validation stand in for it. When the bind is not loopback, the Host check is skipped entirely, leaving only CORS. [1][2][3]</p>
+        <h3>Step 3 — DNS rebinding walks around CORS</h3>
+        <p>The attacker's domain first resolves to the attacker's server; the victim's browser loads a page the attacker serves on <strong>port 11434</strong> — same port as the API, so requests are same-origin. The domain then re-resolves to 127.0.0.1 (or the LAN IP). Same-origin policy keys on the hostname, not the IP behind it, so the browser keeps treating those requests as same-origin — and CORS passes because Origin and Host both carry the attacker's domain. [1][2][3]</p>
+        <h3>Step 4 — Full unauthenticated API access</h3>
+        <p>JavaScript on the page can now call any Ollama endpoint: run inference on the victim's GPU, enumerate models and the machine's hostname and public key, delete models, fill the disk, push models to ollama.com under the victim's account, or force sign-out. [3]</p>
+        <h3>Step 5 — Model poisoning via chat-template injection</h3>
+        <p>System-prompt injection does not survive contact with the agent, because OpenClaw sends its own system prompt that overrides the baked-in one. So the researchers went a layer lower: Ollama's <code>/api/create</code> accepts a <code>template</code> field — a Go template that renders the messages array into the raw text the model reads. The attacker fetches the existing template via <code>/api/show</code>, splices in a hidden instruction, and writes it back via <code>/api/create</code>. Nothing looks wrong. [1][2][3]</p>
+        <h3>Step 6 — Persistent, silent compromise</h3>
+        <p>Every message now passes through the attacker's template, including the agent's own system prompt. It persists across conversations, survives fresh chats, and is invisible: model name, size, and metadata read as normal — "one layer beneath anything a guardrail or an operator can see." [1][2][3]</p>
+        <h3>Step 7 — The agent is steered</h3>
+        <p>A poisoned agent follows the attacker's instructions — backdoored code, suppressed warnings, exfiltrated data, steered recommendations — in every conversation that follows. [1][3]</p>
+
+        <h2>What an Attacker Can Do With a Poisoned Agent</h2>
+        <p><strong>Direct exploitation (no poisoning needed):</strong> GPU theft — arbitrary prompts on the victim's hardware; information disclosure — models, Ollama version, system prompts, hostname, public key; destructive actions — delete models, force sign-out, fill the disk. [3]</p>
+        <p><strong>Agent compromise via model poisoning:</strong></p>
+        <ul>
+            <li>Backdoored code that passes casual review. [1][3]</li>
+            <li>Suppressed security warnings. [1][3]</li>
+            <li>Steered recommendations toward attacker-controlled packages, URLs, and configurations. [3]</li>
+            <li>Data exfiltration, if the agent has outbound access. [1][3]</li>
+        </ul>
+
+        <h2>The AI Security Audit: A 10-Point Checklist for Local AI Agents</h2>
+        <p>Audit your local AI agent setup against these 10 checks:</p>
+        <ol>
+            <li><strong>Check how Ollama is bound.</strong> Run <code>lsof -i :11434</code> (macOS/Linux) or <code>netstat -an | findstr 11434</code> (Windows); flag any bind other than 127.0.0.1, especially <code>0.0.0.0:11434</code>.</li>
+            <li><strong>Audit your NemoClaw version.</strong> v0.0.35+ is fixed on macOS/Linux; treat pre-v0.0.35 Windows-host setups as vulnerable.</li>
+            <li><strong>Verify no bypass env var is set.</strong> <code>NEMOCLAW_OLLAMA_PROXY_SKIP_BIND_PROBE</code> must not be set — it disables the proxy's loopback check.</li>
+            <li><strong>Keep Ollama on loopback behind an authenticated reverse proxy</strong> with a Host-header allowlist — the standard fix for this attack class.</li>
+            <li><strong>Block port 11434 inbound at the firewall</strong> (LAN and internet) — though this does NOT stop DNS rebinding, since the victim's browser makes the requests.</li>
+            <li><strong>Check chat-template integrity.</strong> Run <code>ollama show &lt;model&gt; --template</code>, or read the <code>template</code> field from <code>POST /api/show</code>; compare against a freshly pulled copy or the published Modelfile, and scan for appended instructions.</li>
+            <li><strong>Review what the agent is authorized to reach</strong> — source control, CI/CD, internal APIs, MCP servers. Least-privilege it: the blast radius is its authorizations, not its sandbox.</li>
+            <li><strong>Monitor Ollama access.</strong> Watch access logs (or a reverse proxy's log) for <code>/api/create</code>, <code>/api/show</code>, <code>/api/tags</code>, <code>/api/me</code>; alert on non-local calls.</li>
+            <li><strong>Test from a second device on your LAN.</strong> Confirm the Ollama API is unreachable from another machine.</li>
+            <li><strong>Keep browser and DNS hygiene.</strong> Use DNS-rebinding protection where available; treat "visit this link while your agent is running" as risky.</li>
+        </ol>
+
+        <h2>Mitigation: What's Fixed, What Isn't, What to Do Now</h2>
+        <p><strong>Fix status (as of August 25, 2026):</strong></p>
+        <div class="table-wrap"><table>
+            <tr><th>Layer</th><th>Status</th></tr>
+            <tr><td>NemoClaw macOS/Linux</td><td><strong>Fixed</strong> in v0.0.35 [2]</td></tr>
+            <tr><td>NemoClaw Windows/WSL</td><td><strong>No fix</strong> — v0.0.34 added only an installation warning [2]</td></tr>
+            <tr><td>Local Ollama proxy default</td><td><strong>Partial</strong> — v0.0.106 refuses a non-loopback backend, but is bypassable via <code>NEMOCLAW_OLLAMA_PROXY_SKIP_BIND_PROBE=1</code>, does not fail closed where the bind check cannot run, and does not run on WSL paths [2]</td></tr>
+            <tr><td>Chat-template integrity check</td><td><strong>None</strong> — no template-integrity check exists in the NemoClaw repository [2]</td></tr>
+        </table></div>
+        <p>This is the same browser-to-local-service class Ollama hardened in 2024 (CVE-2024-28224) — a reminder that the fix is configuration discipline, not just version bumps. [1][2]</p>
+        <h3>What to do now</h3>
+        <ul>
+            <li><strong>macOS/Linux NemoClaw:</strong> upgrade to v0.0.35+ immediately.</li>
+            <li><strong>Windows/WSL NemoClaw:</strong> assume you are vulnerable until a fix ships — move Ollama to loopback, put an authenticated proxy in front, restrict agent permissions.</li>
+            <li><strong>Everyone:</strong> NVIDIA's warning not to expose port 11434 only addresses inbound access — DNS rebinding does not need it, since the browser already runs on the host. [2]</li>
+        </ul>
+        <p>The principle, per Black Duck's Collin Hogue-Spears: <em>"Local describes where the model runs. Private describes who can reach it."</em> [1]</p>
+        <p>And because the payload sits one layer beneath anything a guardrail or an operator can see, add template integrity to your <a href="/articles/claude-safety-audit">model safety audit</a> checklist as well as your network config.</p>
+        <p>If you're not sure whether your setup has this exposure — or what your agents are authorized to reach — that is exactly what an <a href="/articles/ai-agent-security-audit">AI agent security audit</a> is for. You can also run a quick self-check with our <a href="/audit-tool">AI audit tool</a>, review the <a href="/articles/ai-agent-permissions-audit">permissions your agents actually hold</a>, and read the related prompt-injection backdoor risk that keeps AI off production bug boards.</p>
+
+        <div class="cta">
+            <p><strong>Not sure if your local AI agents are exposed? Run the audit.</strong></p>
+            <a class="btn" href="/audit-tool.html">Run the free AI audit tool →</a>
+            <p class="secondary"><a href="/articles/ai-agent-security-audit">AI agent security audit</a> · <a href="/articles/ai-agent-permissions-audit">permissions audit</a></p>
+        </div>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <h3>Can a webpage hack my AI agent?</h3>
+            <p>Yes, under specific conditions. If a local model server like Ollama is bound to 0.0.0.0 with no authentication, an attacker-controlled webpage can use DNS rebinding to reach it through your browser. In the NemoClaw case (CVE-2026-65105), one visit gave attackers full control and planted persistent hidden instructions in the model.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is model poisoning?</h3>
+            <p>Model poisoning is tampering with a model's definition — here, its chat template — so hidden instructions are appended to every message at inference time. Unlike prompt injection, which lives in the input, a poisoned template lives in the model: it persists across conversations and is invisible to clients.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is DNS rebinding?</h3>
+            <p>DNS rebinding is when an attacker-controlled domain first resolves to the attacker's server, then re-resolves to 127.0.0.1 (or a LAN IP). Because browsers enforce same-origin policy by hostname rather than IP, the browser keeps treating those requests as same-origin, letting a webpage reach local services like Ollama.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I check if my Ollama is exposed?</h3>
+            <p>Run <code>lsof -i :11434</code> (macOS/Linux) or <code>netstat -an | findstr 11434</code> (Windows) and look for a bind other than 127.0.0.1 — a <code>0.0.0.0</code> bind means LAN exposure AND a disabled Host-header check, the control that normally stops DNS rebinding. Also test from a second device on your LAN; if port 11434 responds, your API is network-reachable.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I run an AI security audit on my agent?</h3>
+            <p>Run the 10-point AI security audit in this post: check how Ollama is bound, update NemoClaw, verify no bypass env vars are set, keep Ollama on loopback behind an authenticated proxy, block port 11434 at the firewall, and review what your agent is authorized to reach.</p>
+        </div>
+
+        <h2>Bottom Line</h2>
+        <p>This is a clear demonstration that agentic AI risk lives in the plumbing, not the model. A model server bound to every interface, with no authentication, turns one webpage visit into persistent control of an agent that may hold the keys to your source code, CI/CD, and internal systems. The fix is boring and effective: bind to loopback, authenticate the proxy, validate Host and Origin headers, least-privilege the agent, and audit the configuration.</p>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>SiliconANGLE — "Nvidia NemoClaw flaw let attackers poison the model behind a developer's AI agent" (2026-08-25): <a href="https://siliconangle.com/2026/08/25/nvidia-nemoclaw-flaw-let-attackers-poison-the-model-behind-a-developers-ai-agent/" rel="noopener">siliconangle.com</a></li>
+            <li>The Hacker News — "A Malicious Webpage Could Poison Your Local AI Model Behind NVIDIA NemoClaw" (2026-08-25): <a href="https://thehackernews.com/2026/08/a-malicious-webpage-could-poison-your.html" rel="noopener">thehackernews.com</a></li>
+            <li>Cyera / Oasis Security research — "Drive-By Agent Hijacking: One Website Visit, Persistent Model Poisoning" (2026-08-25): <a href="https://www.cyera.com/research/nemoclaw-one-website-visit-to-hijack-your-ai-agent" rel="noopener">cyera.com</a></li>
+            <li><strong>CVE note:</strong> The primary research page and SiliconANGLE use <strong>CVE-2026-65105</strong>; The Hacker News reported at publication time that the research carried no CVE identifier. This article follows the primary source and SiliconANGLE. [1][3] vs [2]</li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: All facts, dates, and quotes verified against SiliconANGLE, The Hacker News, and the Cyera/Oasis Security research on 2026-08-25 (source briefing t_68dbe249, accuracy review t_3fec2cc7 including live command tests against Ollama v0.20.6, SEO/AEO spec t_0c33f460). CVE-2026-65105 follows the primary research page and SiliconANGLE; The Hacker News reported no CVE identifier at publication time. No active exploitation reported as of publication; the proof of concept was demonstrated in Firefox on macOS.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
