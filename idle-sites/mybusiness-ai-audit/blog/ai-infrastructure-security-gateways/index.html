@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Infrastructure Security: Why Attackers Target Gateways, Not Models</title>
+    <meta name="description" content="Microsoft Security Research details three real AI infrastructure compromises — LiteLLM, RAGFlow, Kestra — where attackers went after gateways and control points instead of models. Plus the AI infrastructure security audit checklist.">
+    <meta name="keywords" content="AI infrastructure security, securing AI gateways, AI attack surface 2026, how to audit AI infrastructure, LiteLLM vulnerability, Kestra CVE, RAGFlow security, AI gateway compromise, AI infrastructure audit, AI gateway attack">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mybusinessaiaudit.com/blog/ai-infrastructure-security-gateways/">
+    <meta property="og:title" content="AI Infrastructure Security: Why Attackers Target Gateways, Not Models">
+    <meta property="og:description" content="Microsoft Security Research details three real AI infrastructure compromises — LiteLLM, RAGFlow, Kestra — where attackers went after gateways and control points instead of models. Plus the AI infrastructure security audit checklist.">
+    <meta property="og:url" content="https://mybusinessaiaudit.com/blog/ai-infrastructure-security-gateways/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="My Business AI Audit">
+    <meta property="og:image" content="https://mybusinessaiaudit.com/og-image.png">
+    <meta property="og:image:alt" content="AI infrastructure gateways and control points are the new attack surface">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://mybusinessaiaudit.com/blog/ai-infrastructure-security-gateways/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://mybusinessaiaudit.com/blog/ai-infrastructure-security-gateways/"
+      },
+      "headline": "AI Infrastructure Security: Why Attackers Target Gateways, Not Models",
+      "description": "Microsoft Security Research details three real AI infrastructure compromises — LiteLLM, RAGFlow, Kestra — where attackers went after gateways and control points instead of models. Plus the AI infrastructure security audit checklist.",
+      "image": "https://mybusinessaiaudit.com/og-image.png",
+      "datePublished": "2026-08-26",
+      "dateModified": "2026-08-26",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://mybusinessaiaudit.com/og-image.png"
+        }
+      },
+      "wordCount": 2869
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://mybusinessaiaudit.com/blog/ai-infrastructure-security-gateways/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the AI infrastructure attack surface?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The gateways, retrieval platforms, orchestration services, and containerized runtimes that sit between users, applications, data, and AI models. They concentrate credentials, data access, model connectivity, and execution privileges — which is why attackers now target them instead of the models themselves."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is an AI gateway and why is it a security target?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An AI gateway (LiteLLM is the most common example) is a proxy between applications and model providers. It holds or retrieves model-provider API keys, master keys, virtual-key records, database connection strings, and routing configuration — making it a Tier-0 secrets store that gives one compromise broad impact."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are small businesses actually at risk from AI infrastructure attacks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The attack pattern — credential theft, persistence, and compute hijacking through control points — applies to any AI stack. Small businesses run the same shapes: ChatGPT Enterprise, Copilot, Zapier-style automations, AI support agents, and RAG tools all concentrate credentials in one place. Microsoft observed real compromises across LiteLLM, RAGFlow, and Kestra deployments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do attackers get into AI gateways?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Through unpatched vulnerabilities in exposed management surfaces. Microsoft's LiteLLM case used CVE-2026-42271 (command execution via MCP test endpoints) chained with CVE-2026-48710 (Starlette host-header bypass) for unauthenticated remote code execution. The Kestra case used CVE-2026-49869, a critical authentication bypass. Internet-exposed, unpatched admin surfaces are the entry point."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is CVE-2026-49869 (Kestra)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A critical authentication-bypass vulnerability in Kestra, the workflow orchestration platform. Because the check was a suffix match, any API path ending in /configs bypassed authentication entirely, letting an unauthenticated attacker define a malicious workflow and trigger worker-side shell-script execution. Fixed in Kestra 1.0.45 and 1.3.21."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should an AI infrastructure security audit check?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Twelve things: inventory your AI control points, check management-surface exposure, patch cadence, where secrets are stored, whether keys are scoped, database access limits, outbound egress rules, who can create workflows, Docker socket exposure, persistence signals, logging and monitoring, and vendor diligence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can a small business secure AI infrastructure without a security team?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Focus on the controls that cost nothing: don't expose admin interfaces to the internet, patch AI tools promptly, stop storing API keys in environment variables, issue scoped keys with spend limits, deny outbound traffic by default, and monitor for shells spawned from your AI services. Most of Microsoft's mitigations are configuration changes, not security-team projects."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0 24px; font-size: 0.92rem; }
+        th { background: #f0f2ff; color: #1a1a2e; text-align: left; padding: 10px 12px; border: 1px solid #e0e0ea; font-weight: 700; }
+        td { padding: 10px 12px; border: 1px solid #e0e0ea; vertical-align: top; color: #333; }
+        tr:nth-child(even) td { background: #fafaff; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } }
+    </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
+    <article>
+        <header>
+            <h1>AI Infrastructure Security: Why Attackers Now Target Gateways, Not Models</h1>
+            <div class="meta"><span>Published August 26, 2026</span><span>My Business AI Audit · Tag: AI security</span></div>
+        </header>
+
+        <p>On August 26, 2026, Microsoft Security Research published a detailed account of what happens when <a href="https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/" rel="noopener">AI infrastructure becomes the target</a>. In three real intrusions, attackers went after the gateways and control points of AI systems — not the models themselves. The victims were a LiteLLM gateway, a RAGFlow deployment, and a Kestra workflow environment. The objectives across all three were strikingly similar: steal credentials, establish persistence, and hijack compute for cryptocurrency mining.[1]</p>
+
+        <h2>Why AI Infrastructure Is the New Attack Surface</h2>
+        <p>AI is creating a new layer of enterprise infrastructure. Gateways, retrieval platforms, orchestration services, and containerized runtimes now sit between users, applications, data, and models. Microsoft's researchers describe these systems as concentrating "credentials, data access, model connectivity, and execution privileges" — making them some of the most powerful components in the AI stack.[1]</p>
+        <p>That concentration of trust is exactly what attackers are learning to target. Instead of attacking the model itself, they attack the control plane around it: the proxy that holds the API keys, the retrieval platform that stores tenant configuration, the orchestrator that can run arbitrary workflows. One compromised gateway can expose every provider key, every downstream database connection, and the compute it runs on.</p>
+
+        <h2>What Microsoft Actually Saw: Three Compromised AI Workloads</h2>
+        <p>The campaign-level signal extends beyond any single product. The three workloads served different functions, but each exposed assets that could support follow-on abuse — model-provider keys, proxy-issued virtual keys, database connection strings, tenant configuration, workflow execution, and host compute.[1]</p>
+        <table>
+            <tr><th>Workload</th><th>What it does</th><th>How attackers got in</th><th>What they wanted</th></tr>
+            <tr><td><strong>LiteLLM gateway</strong></td><td>Proxy between applications and model providers</td><td>CVE-2026-42271 (command execution via MCP test endpoints) chained with CVE-2026-48710 (Starlette host-header bypass) for unauthenticated RCE[1][2]</td><td>Provider API keys, virtual keys, database records, compute for mining</td></tr>
+            <tr><td><strong>RAGFlow deployment</strong></td><td>Document processing and retrieval-augmented generation</td><td>SSRF-style probing, then remote code execution in the service context (specific vulnerability unconfirmed)[1]</td><td>LLM provider credentials entered by tenants</td></tr>
+            <tr><td><strong>Kestra environment</strong></td><td>Workflow orchestration platform</td><td>CVE-2026-49869, a critical authentication bypass[1][3][4]</td><td>Shell execution, Docker socket secrets, mining</td></tr>
+        </table>
+
+        <h2>Case Study 1: The LiteLLM Gateway — Credentials First, Then the Database</h2>
+        <p>LiteLLM is commonly deployed as a proxy or gateway between applications and model providers. In that position it may hold model-provider keys, LiteLLM master keys, virtual-key records, database connection strings, routing configuration, and tenant policy data. Command execution in the gateway runtime therefore exposed a process context sitting next to AI routing and credential material.[1]</p>
+
+        <h3>Initial access: a two-CVE chain</h3>
+        <p>Microsoft assesses with high confidence that initial access came through exploitation of the exposed LiteLLM gateway surface. Public vulnerability paths include <strong>CVE-2026-42271</strong>, an authenticated command-execution issue in LiteLLM's MCP stdio test endpoints, and research that chains it with <strong>CVE-2026-48710</strong>, a Starlette host-header validation bypass, to achieve unauthenticated remote code execution in vulnerable exposed deployments.[1][2] In the observed case, the gateway service itself became the execution origin.</p>
+
+        <h3>The six-stage attack chain</h3>
+        <ol>
+            <li><strong>Credential harvesting.</strong> The payload read the gateway process environment — in containerized deployments the gateway runs as PID 1, so <code>/proc/1/environ</code> exposed the full environment block. It filtered for keywords like <em>master</em>, <em>API key</em>, <em>token</em>, <em>password</em>, and UI-related fields, then exfiltrated via multiple transports (Python urllib, curl, wget) as fallbacks if one outbound method was blocked.[1]</li>
+            <li><strong>Payload delivery.</strong> A masqueraded ELF binary was retrieved from attacker infrastructure, staged under a temporary path, and launched with command-line arguments resembling a Linux service process. A second path used a shell-stage downloader with short timeouts and fallback behavior — redundant retrieval and execution from the gateway process context.[1]</li>
+            <li><strong>Host discovery.</strong> The payload fingerprinted the host, checked privilege boundaries, inspected listening ports, and swept for other miner or remote-access activity on the system.[1]</li>
+            <li><strong>Mining preparation.</strong> Telemetry showed XMRig or XMRig-like components, RandomX-related tuning — including loading the Linux Model-Specific Register (MSR) module with write access — and a crontab rewrite that removed entries belonging to competing miners.[1]</li>
+            <li><strong>Database access.</strong> Using the harvested connection string, a self-contained python3 one-liner parsed <code>DATABASE_URL</code>, connected to the LiteLLM-backed PostgreSQL data tier (Azure Database for PostgreSQL in this case), and dumped records from <code>LiteLLM_ProxyModelTable</code> and <code>LiteLLM_VerificationToken</code> — model configuration, upstream provider key material, provider endpoints, and proxy-issued virtual keys. Output was base64-encoded and exfiltrated in small chunks to an out-of-band callback endpoint.[1]</li>
+            <li><strong>Persistence.</strong> Service-account SSH authorized-key modification, hidden-file relay execution, masqueraded systemd service names, self-relaunch loops, and immutable-file attributes.[1]</li>
+        </ol>
+        <p><strong>Impact:</strong> provider credential exposure, proxy-issued key exposure, database-backed configuration access, host resource abuse, and durable service-account access. The gateway role made these impacts broader than a standard single-process application compromise.[1]</p>
+
+        <h2>Case Study 2: RAGFlow — The Credential-Interception Hook</h2>
+        <p>RAGFlow supports document-processing and retrieval-augmented generation workflows and stores tenant LLM configuration. The affected code paths process provider credentials when users add or modify LLM settings — exactly where an attacker wants to sit.[1]</p>
+        <p>Microsoft assesses with high confidence that initial access came through the exposed RAGFlow application surface: telemetry showed the server process retrieving an attacker-supplied URL through its own HTTP client (a Burp Collaborator callback), with remote code execution in the same service context following days later. The specific vulnerability is unconfirmed; Microsoft lists plausible public paths including CVE-2026-45312 and CVE-2026-28797 (authenticated Jinja2 server-side template injection in the prompt generator and Agent workflow components), CVE-2026-24770 (a MinerU parser path-traversal allowing arbitrary file overwrite), and CVE-2025-68700 (a Canvas CodeExec sandbox bypass).[1]</p>
+        <p>Once inside, the attackers created a hidden runtime hook under the application tree, modified the startup or import path so the hook loaded with the RAGFlow service, and wrapped the tenant LLM configuration flow. The hook captured newly supplied provider metadata — provider type, model name, API key material, endpoint metadata — and sent it out via HTTP from inside the container while suppressing errors so the application kept working.[1]</p>
+        <p><strong>Impact:</strong> primarily LLM credential collection rather than host monetization. The startup-path modification could persist across service restarts, meaning credentials configured <em>after</em> the hook was installed were also at risk.[1]</p>
+
+        <h2>Case Study 3: Kestra — Workflow Execution as a Shell</h2>
+        <p>Kestra is a workflow orchestration environment. Because workflows are designed to execute tasks and interact with external systems, abuse of workflow-creation and execution capabilities provides direct code execution in the worker runtime.[1]</p>
+        <p>Initial access came through <strong>CVE-2026-49869</strong>, a critical authentication-bypass vulnerability: the auth check was a suffix match, so any API path ending in <code>/configs</code> bypassed it entirely, letting an unauthenticated attacker define a malicious workflow using the Process runner and trigger worker-side shell-script execution. Public records confirm the fix shipped in Kestra 1.0.45 and 1.3.21.[1][3][4]</p>
+        <p>The observed chain then used that workflow-origin shell to access the mounted Docker socket from inside the orchestration environment, querying container metadata and environment arrays — exposing cloud keys, database passwords, API tokens, and internal service endpoints from other containers. A monetization phase followed: miner retrieval from a public release source, archive extraction, binary renaming, background execution, mining-pool communication, and RandomX/XMRig CPU tuning. A later event used a curl-pipe-shell pattern and stored collected output through Kestra's own key-value interface.[1]</p>
+        <p><strong>Impact:</strong> shell execution through the workflow engine, container-environment exposure via the Docker socket, host resource hijacking through miner deployment, and follow-on collection through workflow task execution.[1]</p>
+
+        <h2>The Pattern That Matters for Your Business</h2>
+        <p>Initial access differed by workload, but the observed objectives were consistent: credential collection, durable access mechanisms, and resource monetization. Microsoft's guidance to defenders is to monitor AI workloads according to their <em>control-plane role</em>, not as isolated applications — gateway, retrieval, and orchestration services concentrate credentials, database access, workflow execution, and container privileges in one runtime.[1]</p>
+        <p>You may not run LiteLLM, RAGFlow, or Kestra. But your AI stack has the same shape. ChatGPT Enterprise and Copilot admin consoles, Zapier and Make automations, AI support agents, internal RAG tools, and any custom AI integration all concentrate credentials and data access in a handful of control points. The question for an <a href="/articles/ai-agent-security-audit.html">AI agent security audit</a> is no longer just "what can the model do?" — it's "what can the infrastructure around the model do, and who can reach it?"</p>
+
+        <h2>The AI Infrastructure Security Audit Checklist: 12 Control Points</h2>
+        <p>Microsoft's research gives audits a concrete new checklist area. Here is the infrastructure-level checklist it implies, written for a small business without a dedicated security team:</p>
+        <table>
+            <tr><th>#</th><th>Control point</th><th>What to check</th></tr>
+            <tr><td>1</td><td><strong>Inventory</strong></td><td>List every AI control point: gateways, retrieval platforms, orchestrators, agent runtimes, automation tools. You can't audit what you can't name.</td></tr>
+            <tr><td>2</td><td><strong>Management surface exposure</strong></td><td>Is any admin UI, API, or management port exposed to the internet? Microsoft's cases all began with exposed surfaces. Admin interfaces should sit behind VPN or IP allowlist — never directly on the public internet.[1]</td></tr>
+            <tr><td>3</td><td><strong>Patch cadence</strong></td><td>Are LiteLLM, RAGFlow, Kestra, and every AI-adjacent tool patched? CVE-2026-42271, CVE-2026-48710, and CVE-2026-49869 were all known, fixable vulnerabilities before the observed intrusions.[1][2][3]</td></tr>
+            <tr><td>4</td><td><strong>Secret storage</strong></td><td>Are API keys in process environment variables or a managed secret store? The LiteLLM case harvested <code>/proc/1/environ</code> in seconds — secrets in environment variables are one read away.[1]</td></tr>
+            <tr><td>5</td><td><strong>Key scoping</strong></td><td>Per-team virtual keys with spend limits instead of shared master keys? A stolen scoped key is an incident; a stolen master key is an emergency.[1]</td></tr>
+            <tr><td>6</td><td><strong>Database access</strong></td><td>Does the gateway's database sit behind a private endpoint with restrictive firewall rules and least-privilege accounts? Attackers went from gateway to PostgreSQL in stage five.[1]</td></tr>
+            <tr><td>7</td><td><strong>Outbound egress</strong></td><td>Deny-by-default egress with an allowlist of required model-provider endpoints? Raw-IP connections and non-standard ports should be blocked entirely.[1]</td></tr>
+            <tr><td>8</td><td><strong>Workflow access</strong></td><td>Who can create or trigger workflows in your orchestration tools? The Kestra case was an unauthenticated workflow creation leading to shell execution.[1][4]</td></tr>
+            <tr><td>9</td><td><strong>Runtime socket exposure</strong></td><td>Is the Docker socket mounted into AI containers? The Kestra attackers reached other containers' environment secrets through it.[1]</td></tr>
+            <tr><td>10</td><td><strong>Persistence signals</strong></td><td>Are cron entries, SSH authorized_keys files, and immutable-file attributes monitored? Those were the persistence mechanisms in both the LiteLLM and Kestra cases.[1]</td></tr>
+            <tr><td>11</td><td><strong>Logging and monitoring</strong></td><td>Do you alert when an AI service spawns a shell, reads <code>/proc/1/environ</code>, or phones home to an out-of-band callback domain? Microsoft's highest-value pivot was a gateway process launching execution utilities.[1]</td></tr>
+            <tr><td>12</td><td><strong>Vendor diligence</strong></td><td>Do the vendors running your AI stack apply the same controls? If you outsource AI work, the gateways and orchestration layers are someone else's — which makes vendor vetting part of your audit. See our <a href="https://findaiagency.com/ai-agency-security-vetting" rel="noopener">AI agency security vetting checklist</a> for the 12 questions to ask.</td></tr>
+        </table>
+
+        <h2>Microsoft's Mitigation Guidance, Translated for Small Business</h2>
+        <p>Microsoft's recommendations map cleanly to small-business scale. The ones that matter most:</p>
+        <ul>
+            <li><strong>Treat AI gateways as Tier-0 secrets stores.</strong> Keep them patched, require authentication across API and UI surfaces, restrict administrative and management ports, and don't expose management interfaces to the internet.[1]</li>
+            <li><strong>Scope and protect provider credentials.</strong> Issue per-team virtual keys with spend limits instead of sharing master keys, store upstream API keys in a managed secret store rather than process environment variables, and rotate credentials associated with any exposed gateway.[1]</li>
+            <li><strong>Apply least privilege to gateway and database access.</strong> Dedicated service accounts, database permissions limited to required objects, private endpoints with restrictive firewall rules.[1]</li>
+            <li><strong>Constrain outbound traffic.</strong> Deny-by-default egress, allowlist only required model-provider endpoints, block direct connections to raw-IP hosts and non-standard ports.[1]</li>
+            <li><strong>Monitor outbound callbacks.</strong> Log DNS for out-of-band callbacks and subdomain-encoded beacons; watch for connections to command-and-control and OAST domains.[1]</li>
+            <li><strong>Harden the host runtime.</strong> Mount temporary directories as non-executable where feasible, alert on execution from world-writable paths, monitor changes to cron entries, SSH authorized_keys files, and immutable-file attributes.[1]</li>
+        </ul>
+        <p>None of these require a security team. They are configuration decisions, and they are the difference between the LiteLLM compromise ending at a stolen key and ending at a hijacked database and a cryptominer on your server.</p>
+
+        <h2>How to Audit Your AI Infrastructure in 5 Steps</h2>
+        <p>If you're asking "how do I audit AI infrastructure," start here — this is the operational version of the checklist above:</p>
+        <ol>
+            <li><strong>Map the control plane.</strong> Find every gateway, retrieval platform, orchestration service, and agent runtime in your stack — including the ones embedded in SaaS tools you rent.</li>
+            <li><strong>Test the management surface.</strong> Check which admin interfaces are reachable from the internet, whether they require authentication, and whether the underlying tools are patched against known CVEs (start with CVE-2026-42271, CVE-2026-48710, CVE-2026-49869).</li>
+            <li><strong>Audit secret concentration.</strong> List every API key, token, and connection string your AI stack holds, where it's stored, who can read it, and whether keys are scoped with spend limits.</li>
+            <li><strong>Constrain and monitor.</strong> Set deny-by-default egress, block raw-IP and non-standard-port connections, and add alerts for AI services spawning shells or accessing secret files.</li>
+            <li><strong>Re-audit on change.</strong> Every new AI tool, vendor, or workflow is a new control point. The <a href="/articles/ai-agent-safeguards-fail.html">safeguards that failed</a> in these cases were all configurable before the intrusion.</li>
+        </ol>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <h3>What is the AI infrastructure attack surface?</h3>
+            <p>The gateways, retrieval platforms, orchestration services, and containerized runtimes that sit between users, applications, data, and AI models. They concentrate credentials, data access, model connectivity, and execution privileges — which is why attackers now target them instead of the models themselves.[1]</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is an AI gateway and why is it a security target?</h3>
+            <p>An AI gateway (LiteLLM is the most common example) is a proxy between applications and model providers. It holds or retrieves model-provider API keys, master keys, virtual-key records, database connection strings, and routing configuration — making it a Tier-0 secrets store where one compromise has broad impact.[1]</p>
+        </div>
+        <div class="faq-item">
+            <h3>Are small businesses actually at risk from AI infrastructure attacks?</h3>
+            <p>Yes. The attack pattern — credential theft, persistence, and compute hijacking through control points — applies to any AI stack. Small businesses run the same shapes: ChatGPT Enterprise, Copilot, Zapier-style automations, AI support agents, and RAG tools all concentrate credentials in one place. Microsoft observed real compromises across LiteLLM, RAGFlow, and Kestra deployments.[1]</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do attackers get into AI gateways?</h3>
+            <p>Through unpatched vulnerabilities in exposed management surfaces. Microsoft's LiteLLM case used CVE-2026-42271 (command execution via MCP test endpoints) chained with CVE-2026-48710 (Starlette host-header bypass) for unauthenticated remote code execution. The Kestra case used CVE-2026-49869, a critical authentication bypass. Internet-exposed, unpatched admin surfaces are the entry point.[1][2][3]</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is CVE-2026-49869 (Kestra)?</h3>
+            <p>A critical authentication-bypass vulnerability in Kestra, the workflow orchestration platform. Because the check was a suffix match, any API path ending in /configs bypassed authentication entirely, letting an unauthenticated attacker define a malicious workflow and trigger worker-side shell-script execution. Fixed in Kestra 1.0.45 and 1.3.21.[1][3][4]</p>
+        </div>
+        <div class="faq-item">
+            <h3>What should an AI infrastructure security audit check?</h3>
+            <p>Twelve things: inventory your AI control points, management-surface exposure, patch cadence, secret storage, key scoping, database access limits, outbound egress rules, workflow access, Docker socket exposure, persistence signals, logging and monitoring, and vendor diligence.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How can a small business secure AI infrastructure without a security team?</h3>
+            <p>Focus on the controls that cost nothing: don't expose admin interfaces to the internet, patch AI tools promptly, stop storing API keys in environment variables, issue scoped keys with spend limits, deny outbound traffic by default, and monitor for shells spawned from your AI services. Most of Microsoft's mitigations are configuration changes, not security-team projects.[1]</p>
+        </div>
+
+        <div class="cta">
+            <p><strong>Not sure where the credentials in your AI stack actually live? Run the audit.</strong></p>
+            <a class="btn" href="/audit-tool.html">Run the free AI audit tool →</a>
+            <p class="secondary"><a href="/articles/ai-agent-security-audit.html">AI agent security audit</a> · <a href="/articles/5-signs-need-ai-audit.html">5 signs your business needs an AI audit</a></p>
+        </div>
+
+        <h2>Bottom Line: Audit the Control Plane, Not Just the Model</h2>
+        <p>Microsoft's three case studies are the clearest evidence yet that AI security has moved from the model layer to the infrastructure layer. Attackers don't need to break the AI — they need to break the gateway that holds the keys, the retrieval platform that stores the configuration, or the orchestrator that can run the shell.[1]</p>
+        <p>The good news is that the mitigations are mostly configuration: patch, don't expose, scope the keys, constrain egress, and watch for the control-plane signals Microsoft documented. If an AI service in your stack can spawn a shell, read its own environment, or reach a database it doesn't need, that is your attack surface — and now you know exactly how attackers will use it. For the agent-level layer of the same problem, see <a href="/blog/ai-agent-prompt-injection-backdoor-risks/">prompt injection and AI agent backdoors</a>; for the broader picture, start with <a href="/ai-agent-security-risks">AI agent security risks</a>.</p>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>Microsoft Security Research — "When AI infrastructure becomes the target: Securing gateways and control points" (Aug 26, 2026): <a href="https://www.microsoft.com/en-us/security/blog/2026/08/26/when-ai-infrastructure-becomes-target-securing-gateways-control-points/" rel="noopener">microsoft.com/en-us/security/blog</a></li>
+            <li>Horizon3.ai — CVE-2026-42271 chained with CVE-2026-48710 (LiteLLM unauthenticated RCE): <a href="https://horizon3.ai/attack-research/vulnerabilities/cve-2026-42271-chained-with-cve-2026-48710/" rel="noopener">horizon3.ai</a></li>
+            <li>CIRCL Vulnerability-Lookup — CVE-2026-49869 (Kestra auth bypass, fixed in 1.0.45 / 1.3.21): <a href="https://vulnerability.circl.lu/vuln/cve-2026-49869" rel="noopener">vulnerability.circl.lu</a></li>
+            <li>TheHackerWire — Kestra critical RCE: unauthenticated workflow execution (CVE-2026-49869): <a href="https://www.thehackerwire.com/kestra-critical-rce-unauthenticated-workflow-execution-cve-2026-49869/" rel="noopener">thehackerwire.com</a></li>
+            <li>NVD — CVE-2026-42271: <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-42271" rel="noopener">nvd.nist.gov</a>; CVE-2026-49869: <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-49869" rel="noopener">nvd.nist.gov</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: All facts, dates, CVEs, and attack-chain details verified against the Microsoft Security Research post (Aug 26, 2026) and public CVE/advisory records on 2026-08-26. The two headline vulnerabilities (LiteLLM CVE-2026-42271 + CVE-2026-48710 chain; Kestra CVE-2026-49869) were corroborated via Horizon3.ai, CIRCL Vulnerability-Lookup, and TheHackerWire. Microsoft's assessments of initial access for the RAGFlow case remain low-confidence on the specific vulnerability, and this article reflects that.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
