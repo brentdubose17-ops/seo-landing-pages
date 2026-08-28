@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tencent Hy4 Preview Pricing: 770B Open Weights at $0.834/M</title>
+    <meta name="description" content="Tencent Hy4 preview: 770B-parameter MoE with 49B active, 1M context, Apache 2.0 weights, and $0.834/$2.501 per 1M tokens on OpenRouter. Agency cost math inside.">
+    <meta name="keywords" content="Tencent Hy4 pricing, Hy4 preview cost, Tencent Hy4 price per token, Hy4 vs GLM-5.3 vs DeepSeek, best open model for agents, Tencent Hunyuan Hy4, open weight model API price, 1M context model pricing">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aiagencycalculator.com/blog/tencent-hy4-preview-pricing/">
+    <meta property="og:title" content="Tencent Hy4 Preview Pricing: 770B Open Weights at $0.834/M">
+    <meta property="og:description" content="Tencent Hy4 preview: 770B-parameter MoE with 49B active, 1M context, Apache 2.0 weights, and $0.834/$2.501 per 1M tokens on OpenRouter. Agency cost math inside.">
+    <meta property="og:url" content="https://aiagencycalculator.com/blog/tencent-hy4-preview-pricing/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aiagencycalculator">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://aiagencycalculator.com/blog/tencent-hy4-preview-pricing/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://aiagencycalculator.com/blog/tencent-hy4-preview-pricing/"
+      },
+      "headline": "Tencent Hy4 Preview Pricing: 770B Open Weights at $0.834/M",
+      "description": "Tencent Hy4 preview: 770B-parameter MoE with 49B active, 1M context, Apache 2.0 weights, and $0.834/$2.501 per 1M tokens on OpenRouter. Agency cost math inside.",
+      "datePublished": "2026-08-28",
+      "dateModified": "2026-08-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://aiagencycalculator.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://aiagencycalculator.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://aiagencycalculator.com/og-image.png"
+        }
+      },
+      "wordCount": 2780
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://aiagencycalculator.com/blog/tencent-hy4-preview-pricing/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Tencent Hy4 preview and how much does it cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tencent Hy4 preview is a Mixture-of-Experts flagship model released and open-sourced on August 28, 2026: 770B total parameters with 49B active per token, a context window exceeding 1 million tokens, and Apache 2.0 weights. On OpenRouter it lists at $0.834 per 1M input tokens and $2.501 per 1M output tokens (cached input $0.042 per 1M), with Tencent Cloud as the sole provider. Tencent's domestic pricing is about ¥6 per 1M input and ¥18 per 1M output — roughly 25-36% below GLM-5.3 and 70-82% below Kimi K3."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Tencent Hy4 preview open source?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — Tencent released Hy4 preview weights on August 28, 2026 under the Apache 2.0 license, with no field-of-use clause and no geo carve-out. The weights are available on Hugging Face (tencent/Hy4-preview plus an FP8 variant), ModelScope, GitCode, and CNB. 'Open weights' is the precise description: you get the model weights, deployment recipes, and fine-tuning pipeline, not the full training data. Note that 770B parameters is a cluster-scale deployment — the FP8 checkpoint alone is about 770GB, which does not fit on an 8xH100 node (640GB); you need H200-class or multi-node tensor parallelism."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Tencent Hy4 preview compare to GLM-5.3 and DeepSeek?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tencent's internal blind evaluation scored Hy4 preview 2.99/4.00 against GLM-5.3 at 2.92 and Kimi K3 at 2.94 — a 0.05-point margin on vendor-selected tasks, which reads as tier parity, not a decisive win. On price, Hy4 preview undercuts GLM-5.3 ($1.40/$4.40) by roughly 40% on input and 43% on output, and undercuts Kimi K3 ($3/$15) by about 6x on output. It is still more expensive than DeepSeek V4 Pro's off-peak rates ($0.66/$1.98 with $0.022 cache reads), so DeepSeek keeps the price floor; Hy4 preview's pitch is 1M context and strong agentic benchmarks at an open-weight price. Public benchmarks are mixed — Hy4 preview lags GLM-5.3 on code and cybersecurity tests like DeepSWE and CyberGym."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Hy4 preview's context window and architecture?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hy4 preview has a native 1M-token context window (1,048,576 tokens) with 64,000 tokens of max output. Architecturally it is a sparse MoE with 78 layers (a dense first layer plus 77 MoE layers with 256 routed experts and 1 shared expert, activating the top-8), built on Gated DeepSeek Sparse Attention with an IndexCache for cross-layer sparse index reuse, identity Hyper-Connections for the residual pathway, and a built-in MTP layer (10B total / 0.7B active) for speculative decoding. The 1M context is native, supported by the sparse-attention design — not rope-scaling a shorter model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can agencies self-host Tencent Hy4 preview?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only with serious hardware. The FP8 checkpoint is about 770GB, so it does not fit on an 8xH100 node (640GB VRAM); you need 8xH200 (1.1TB) or multi-node tensor parallelism. Tencent ships official prebuilt vLLM (vllm/vllm-openai:hy4-preview) and SGLang (lmsysorg/sglang:hy4-preview) images with tensor-parallel 8 and speculative decoding enabled, both exposing an OpenAI-compatible endpoint. For most agencies the API is the practical route — Apache 2.0 matters because no vendor can revoke the right to run it, but 'open weights' and 'weights you can afford to serve' are different things at 770B scale."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the caveats of Tencent Hy4 preview?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tencent itself flags it as an early version: real headroom in pre-training and post-training, plus known issues including spending longer than necessary reasoning through complex tasks and a tendency to over-verify its own work. Independent observations add two more: roughly 36 tokens/sec at P50 with 3.19s latency on OpenRouter's sole provider (Tencent Cloud), and about 86% availability over the first three days. A model that over-reasons, at 36 tok/s, billed per output token, is a bad fit for a tight agent loop — the over-verification tax lands on latency and bill simultaneously. Do not make it a single point of failure this week."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        .answer-box { margin: 0 0 24px; padding: 20px 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; }
+        .answer-box h2 { margin: 0 0 10px; font-size: 1.15rem; border: none; padding: 0; }
+        .answer-box p { margin-bottom: 0; color: #333; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>Tencent Hy4 Preview Pricing: 770B Open Weights at $0.834/M</h1>
+            <div class="meta"><span>Published August 28, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>Tencent Hy4 pricing</span> <span>open weight model pricing</span> <span>1M context model</span> <span>best open model for agents</span></div>
+        </header>
+
+        <div class="answer-box">
+            <h2>What is Tencent Hy4 preview and how much does it cost?</h2>
+            <p><strong>Tencent Hy4 preview is a 770-billion-parameter Mixture-of-Experts model (49B active per token) with a 1M-token context window, released and open-sourced on August 28, 2026 under Apache 2.0. On OpenRouter it lists at $0.834 per 1M input tokens and $2.501 per 1M output tokens (cached input $0.042), with Tencent Cloud as the sole provider.</strong> Tencent's domestic pricing is about ¥6 per 1M input and ¥18 per 1M output — roughly 25–36% below GLM-5.3 and 70–82% below Kimi K3. Bloomberg covered the release the same day, and Tencent positions the model as beating Z.ai's GLM-5.3 and Moonshot's Kimi K3 in its internal blind evaluation (2.99 vs 2.92 vs 2.94 out of 4.00).</p>
+        </div>
+
+        <p><strong>On August 28, 2026, Tencent released and open-sourced Hy4 preview — its largest model yet, 53 days after Hy3.</strong> The launch post ended with an unusual sign-off: "Use it. Tell us what breaks." The headline numbers are 770B total parameters, 49B active per token, a native context window exceeding 1 million tokens, and Apache 2.0 weights with no field-of-use clause and no geo carve-out.</p>
+
+        <p>For AI agencies, this is a pricing-benchmark event, not just a model release. Hy4 preview lands mid-ladder in the open-weight class: <strong>cheaper than GLM-5.3 and Kimi K3, still pricier than DeepSeek V4 Pro's off-peak rates, and far cheaper than the paid frontier</strong> — with a 1M context window that only a handful of models offer at any price. That is exactly the shape of data point that changes what you quote for long-context agent work.</p>
+
+        <h2>The pace: Hy3 to Hy4 in 53 days</h2>
+        <p>Context for how fast this market moves: Tencent's Hy3 shipped on July 6, 2026 at 295B total parameters, 21B active, and a 256K context window. Fifty-three days later, Hy4 preview is <strong>2.6x larger with 4x the context</strong>. Tencent frames the jump as "We scaled Hy4 preview on three fronts: model size, context length, and training data" — a scaling release, not a claimed algorithmic breakthrough. The iteration speed in Chinese open weights has not slowed, and pricing pressure on the whole open-weight ladder keeps compounding.</p>
+
+        <h2>Hy4 preview specs at a glance</h2>
+        <table>
+            <thead>
+                <tr><th>Spec</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Developer</strong></td><td>Tencent Hy Team (Tencent Hunyuan)</td></tr>
+                <tr><td><strong>Release</strong></td><td>August 28, 2026 — open-sourced same day</td></tr>
+                <tr><td><strong>Model size</strong></td><td>770B total parameters, 49B active per token (MoE)</td></tr>
+                <tr><td><strong>Architecture</strong></td><td>78 layers (1 dense FFN + 77 MoE layers); 256 routed + 1 shared expert per MoE layer, top-8 routed; Gated DeepSeek Sparse Attention with IndexCache; identity Hyper-Connections; built-in MTP layer (10B total / 0.7B active) for speculative decoding</td></tr>
+                <tr><td><strong>Context window</strong></td><td>1,048,576 tokens (1M+); 64,000 max output</td></tr>
+                <tr><td><strong>Inputs</strong></td><td>Text only — this release is not a unified multimodal checkpoint</td></tr>
+                <tr><td><strong>Weights</strong></td><td>Hugging Face <code>tencent/Hy4-preview</code> (+ FP8 variant), ModelScope, GitCode, CNB — Apache 2.0</td></tr>
+                <tr><td><strong>API routes</strong></td><td><code>tencent/hy4-preview</code> on OpenRouter; Tencent Cloud sole provider</td></tr>
+                <tr><td><strong>Deployment paths</strong></td><td>vLLM (<code>vllm/vllm-openai:hy4-preview</code>) and SGLang (<code>lmsysorg/sglang:hy4-preview</code>) prebuilt images, tensor-parallel 8, speculative decoding enabled</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Hy4 preview pricing vs the open-weight class and frontier</h2>
+        <p>The price is the adoption driver. Hy4 preview undercuts GLM-5.3 by roughly <strong>40% on input and 43% on output</strong>, and undercuts Kimi K3 by about <strong>6x on output</strong>. Cached input at $0.042/M is a ~20x discount off the input rate — the number that matters for agentic workloads that resend a large system prompt and a growing tool-call history on every turn.</p>
+        <table>
+            <thead>
+                <tr><th>Model</th><th>Input per 1M</th><th>Output per 1M</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Tencent Hy4 preview</strong></td><td>$0.834</td><td>$2.501</td><td>Apache 2.0; cached input $0.042; 1M context; OpenRouter + Tencent Cloud</td></tr>
+                <tr><td>DeepSeek V4 Pro (off-peak)</td><td>$0.66</td><td>$1.98</td><td>Cache read $0.022 — still the price floor; peak rates ~2x</td></tr>
+                <tr><td>GLM-5.3-Flash (Z.ai)</td><td>$0.15</td><td>$0.50</td><td>MIT weights; promo $0.075/$0.25 through Sep 9, 2026</td></tr>
+                <tr><td>GLM-5.3 (Z.ai flagship)</td><td>$1.40</td><td>$4.40</td><td>Hy4 preview is ~40% cheaper on input, ~43% on output</td></tr>
+                <tr><td>Qwen 3.8 Max (Alibaba)</td><td>$2</td><td>$6</td><td>Open weights since Aug 12; license threshold $50M/12mo</td></tr>
+                <tr><td>Kimi K3 (Moonshot)</td><td>$3</td><td>$15</td><td>Open weights; Hy4 preview is ~6x cheaper on output</td></tr>
+                <tr><td>GPT-5.6 Sol (OpenAI)</td><td>$4</td><td>$20</td><td>Promo through Nov 21, 2026; cached input $0.40</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.85rem;color:#666;">Rates as published Aug 28, 2026. Hy4 preview rates are OpenRouter's published list (Tencent Cloud sole provider). DeepSeek V4 Pro rates are DeepSeek's official off-peak rates effective Aug 16, 2026. Tencent's domestic pricing (~¥6/$18 per 1M) reported via KuCoin flash and Tencent materials; international rates on OpenRouter differ.</p>
+
+        <p>Run the per-task math on a typical agent workload — 10K input tokens, 2K output tokens per task:</p>
+        <ul>
+            <li><strong>Tencent Hy4 preview:</strong> $0.00834 + $0.00500 = <strong>$0.0133 per task</strong></li>
+            <li><strong>DeepSeek V4 Pro off-peak:</strong> $0.0066 + $0.0040 = <strong>$0.0106 per task</strong></li>
+            <li><strong>GLM-5.3-Flash at list:</strong> $0.0015 + $0.0010 = <strong>$0.0025 per task</strong></li>
+            <li><strong>GPT-5.6 Sol:</strong> $0.04 + $0.04 = <strong>$0.08 per task</strong></li>
+        </ul>
+        <p>On this shape, Hy4 preview is about <strong>25% above DeepSeek V4 Pro off-peak</strong>, <strong>6x below GPT-5.6 Sol</strong>, and the GLM-5.3-Flash promo keeps its price edge for now. The real Hy4 argument is the long tail: on a 100K-token input / 5K-token output task (the shape that stresses context, not price), Hy4 preview's 1M window removes the chunking and re-planning cost that short-context models add — which is often the larger line item than raw tokens. For a 100,000-task monthly delivery at the 10K/2K shape, the difference between Sol and Hy4 preview is about <strong>$6,670/month in raw token cost</strong> ($8,000 vs $1,330) before retries and overhead.</p>
+
+        <h2>Benchmarks: tier parity on a vendor-selected test, mixed in public</h2>
+        <p>Tencent ran a blind evaluation with <strong>163 internal experts scoring 203 engineering tasks</strong>. Hy4 preview averaged <strong>2.99 out of 4</strong>, against Kimi K3 at 2.94 and GLM-5.3 at 2.92. A 0.05-point margin, on tasks the vendor selected, graded by the vendor's own employees, is not a result — it is a statement that the three models are interchangeable on this workload. Read it as: <strong>Hy4 preview reached the GLM-5.3 / Kimi K3 tier</strong>, which is a real achievement, and stop there.</p>
+        <p>Tencent's published model card reports frontier-adjacent numbers: <strong>GPQA Diamond 92.3, HLE (High + Tools) 55.4, SWE-Bench Multilingual 82.9, SWE-Bench Pro 65.7, DeepSWE 64.3, Terminal-Bench 2.1 85.4, MCP-Atlas 83.7, CyberGym 78.4, Office QA Pro 66.2</strong>. The agentic column — Terminal-Bench 2.1 at 85.4 and MCP-Atlas at 83.7 — is the one worth caring about if you run tool-calling loops rather than chat.</p>
+        <p>Public benchmarks are mixed, and Tencent does not lead everywhere: coverage notes Hy4 preview <strong>still lags GLM-5.3 on code and cybersecurity tests like DeepSWE and CyberGym</strong>. The honest read: strong all-rounder with standout agentic scores, not a clean sweep. All numbers are vendor-reported until independent replication.</p>
+
+        <h2>Architecture: borrowed strengths, 1M context that is native</h2>
+        <p>Two things stand out for anyone evaluating long-context work. First, the attention module uses <strong>Gated DeepSeek Sparse Attention with an IndexCache</strong> — a direct borrowing from the lab whose pricing has set the floor for this market — so sparse indices are reused across layers rather than recomputed. That is what makes a 1M context economically serveable at all. Second, the <strong>MTP layer ships speculative decoding in the weights</strong> (vLLM and SGLang both enable it in Tencent's prebuilt images), so the speed story is partly pre-built rather than stack-dependent.</p>
+        <p>The 1M context is native per the model card, supported by the sparse-attention design rather than by rope-scaling a shorter model — a better sign than most 1M claims. It is still worth running a needle-in-haystack test at your actual working depth before trusting it.</p>
+
+        <h2>Can you actually serve it? The 770GB answer</h2>
+        <p>Short answer: <strong>not on hardware you own, unless you own a lot of it.</strong></p>
+        <table>
+            <thead>
+                <tr><th>Precision</th><th>Weights alone</th><th>Fits on 8xH100 (640GB)?</th><th>Fits on 8xH200 (1.1TB)?</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>BF16</td><td>~1.54 TB</td><td>No</td><td>No (no room for KV cache)</td></tr>
+                <tr><td>FP8</td><td>~770 GB</td><td>No</td><td>Yes, with room for KV cache</td></tr>
+            </tbody>
+        </table>
+        <p>770B parameters at one byte each is 770GB before you allocate a single token of KV cache. An 8xH100 node tops out at 640GB of VRAM, so the FP8 checkpoint does not fit — you need H200-class cards or multi-node tensor parallelism. This is the practical difference between Hy4 and Hy3's single-GPU GGUFs: Hy3 at 295B was squeezable; Hy4 at 770B is not, and no amount of llama.cpp cleverness makes a 770B model a laptop model. Tencent recommends vLLM and SGLang for production, both with prebuilt images exposing an OpenAI-compatible endpoint. For most teams that means the API, not the weights. The Apache 2.0 license still matters — no vendor can revoke your right to run it, and you can fine-tune and redistribute — but "open weights" and "weights you can afford to serve" are different things at this scale.</p>
+
+        <h2>The caveats Tencent published themselves</h2>
+        <p>This is the most credible part of the release, and it deserves quoting in full:</p>
+        <blockquote>"This is an early version of Hy4. There is real headroom left in both pre-training and post-training, and we are shipping with known issues — among them, spending longer than necessary reasoning through complex tasks, and a tendency to over-verify its own work."</blockquote>
+        <p>Vendors rarely name their model's failure mode on the model card. Take it seriously, because it compounds with a second number: <strong>~36 tokens/sec at P50 and 3.19s P50 latency</strong> as observed on OpenRouter, where Tencent Cloud is currently the sole provider. A model that over-reasons, at 36 tok/s, billed per output token, is a bad fit for a tight agent loop — the over-verification tax lands on your latency and your bill simultaneously.</p>
+        <p>Also worth knowing before you route production traffic: OpenRouter recorded <strong>roughly 86% availability over the model's first three days</strong>. That is a day-one capacity story, not necessarily a lasting one, but do not make Hy4 a single point of failure this week. Other release notes: this is a <strong>text model</strong> (Hunyuan's image/video/3D models are separate), and the "preview" label signals the checkpoint will be replaced — Tencent says it will iterate as quickly as it did on Hy3.</p>
+
+        <h2>What this changes in the calculator</h2>
+        <p>We have added <strong>Tencent Hy4 preview</strong> as a selectable model strategy in the <a href="/">AI Agency Pricing Calculator</a> — modeled at OpenRouter list $0.834/$2.501 with the Apache 2.0 weights, the sole-provider and preview-status caveats flagged, positioned between the cache-aware DeepSeek V4 Pro and the plain open-weight stack. The practical takeaway for your quoting:</p>
+        <ul>
+            <li><strong>The price ladder now has a 1M-context rung at open-weight prices.</strong> If a client's workload genuinely needs 100K+ tokens of context per turn, Hy4 preview is one of the cheapest ways to get it without paying GLM-5.3 or Kimi K3 rates — and its cached-input rate ($0.042/M) rewards the agent pattern of resending a large system prompt.</li>
+            <li><strong>DeepSeek still holds the price floor.</strong> V4 Pro off-peak ($0.66/$1.98, $0.022 cache reads) remains cheaper per token; Hy4 preview's pitch is context and agentic benchmarks, not raw cost. Quote both and let the workload decide.</li>
+            <li><strong>Preview risk is real and priced.</strong> The "preview" label, the over-verification habit, the 36 tok/s throughput, and the single provider all argue for a fallback model in production. Budget two numbers: Hy4 preview for evaluation and the OpenRouter-fallback rate for anything client-critical this month.</li>
+            <li><strong>Do not self-host at this scale without a plan.</strong> ~770GB FP8 means H200-class or multi-node infra. For the vast majority of agencies the API is the only sane route — which is exactly why Tencent open-sourced under Apache 2.0 and charges API rates at the same time.</li>
+        </ul>
+
+        <div class="cta">
+            <p><strong>Price your AI work against current market benchmarks</strong></p>
+            <a class="btn" href="/" data-umami-event="click_to_calculator">Try the AI Agency Pricing Calculator →</a>
+            <p style="margin-top:12px;font-size:0.9rem;">Estimate setup fees, retainers, and margin in under a minute — then model per-agent workload costs with the <a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator</a>.</p>
+        </div>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>What is Tencent Hy4 preview and how much does it cost?</h3>
+            <p>Tencent Hy4 preview is a Mixture-of-Experts flagship model released and open-sourced on August 28, 2026: 770B total parameters with 49B active per token, a context window exceeding 1 million tokens, and Apache 2.0 weights. On OpenRouter it lists at $0.834 per 1M input tokens and $2.501 per 1M output tokens (cached input $0.042 per 1M), with Tencent Cloud as the sole provider. Tencent's domestic pricing is about ¥6 per 1M input and ¥18 per 1M output — roughly 25–36% below GLM-5.3 and 70–82% below Kimi K3.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is Tencent Hy4 preview open source?</h3>
+            <p>Yes — Tencent released Hy4 preview weights on August 28, 2026 under the Apache 2.0 license, with no field-of-use clause and no geo carve-out. The weights are available on Hugging Face (tencent/Hy4-preview plus an FP8 variant), ModelScope, GitCode, and CNB. "Open weights" is the precise description: you get the model weights, deployment recipes, and fine-tuning pipeline, not the full training data. Note that 770B parameters is a cluster-scale deployment — the FP8 checkpoint alone is about 770GB, which does not fit on an 8xH100 node (640GB); you need H200-class or multi-node tensor parallelism.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How does Tencent Hy4 preview compare to GLM-5.3 and DeepSeek?</h3>
+            <p>Tencent's internal blind evaluation scored Hy4 preview 2.99/4.00 against GLM-5.3 at 2.92 and Kimi K3 at 2.94 — a 0.05-point margin on vendor-selected tasks, which reads as tier parity, not a decisive win. On price, Hy4 preview undercuts GLM-5.3 ($1.40/$4.40) by roughly 40% on input and 43% on output, and undercuts Kimi K3 ($3/$15) by about 6x on output. It is still more expensive than DeepSeek V4 Pro's off-peak rates ($0.66/$1.98 with $0.022 cache reads), so DeepSeek keeps the price floor; Hy4 preview's pitch is 1M context and strong agentic benchmarks at an open-weight price. Public benchmarks are mixed — Hy4 preview lags GLM-5.3 on code and cybersecurity tests like DeepSWE and CyberGym.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is Hy4 preview's context window and architecture?</h3>
+            <p>Hy4 preview has a native 1M-token context window (1,048,576 tokens) with 64,000 tokens of max output. Architecturally it is a sparse MoE with 78 layers (a dense first layer plus 77 MoE layers with 256 routed experts and 1 shared expert, activating the top-8), built on Gated DeepSeek Sparse Attention with an IndexCache for cross-layer sparse index reuse, identity Hyper-Connections for the residual pathway, and a built-in MTP layer (10B total / 0.7B active) for speculative decoding. The 1M context is native, supported by the sparse-attention design — not rope-scaling a shorter model.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can agencies self-host Tencent Hy4 preview?</h3>
+            <p>Only with serious hardware. The FP8 checkpoint is about 770GB, so it does not fit on an 8xH100 node (640GB VRAM); you need 8xH200 (1.1TB) or multi-node tensor parallelism. Tencent ships official prebuilt vLLM (vllm/vllm-openai:hy4-preview) and SGLang (lmsysorg/sglang:hy4-preview) images with tensor-parallel 8 and speculative decoding enabled, both exposing an OpenAI-compatible endpoint. For most agencies the API is the practical route — Apache 2.0 matters because no vendor can revoke the right to run it, but "open weights" and "weights you can afford to serve" are different things at 770B scale.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What are the caveats of Tencent Hy4 preview?</h3>
+            <p>Tencent itself flags it as an early version: real headroom in pre-training and post-training, plus known issues including spending longer than necessary reasoning through complex tasks and a tendency to over-verify its own work. Independent observations add two more: roughly 36 tokens/sec at P50 with 3.19s latency on OpenRouter's sole provider (Tencent Cloud), and about 86% availability over the first three days. A model that over-reasons, at 36 tok/s, billed per output token, is a bad fit for a tight agent loop — the over-verification tax lands on latency and bill simultaneously. Do not make it a single point of failure this week.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/">AI Agency Pricing Calculator: Setup Fees, Retainers &amp; Margin</a></li>
+                <li><a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</a></li>
+                <li><a href="/deepseek-v4-api-price-increase-2026">DeepSeek V4 API Price Increase 2026: What It Means for Agency Costs</a></li>
+                <li><a href="/blog/glm-5-3-flash-pricing/">GLM-5.3-Flash Pricing: Ox Alpha Revealed at $0.15/M</a></li>
+                <li><a href="/ai-model-cost-per-task-2026">AI Model Cost Per Task 2026: Per-Token Math for Agency Pricing</a></li>
+                <li><a href="/gpt-5.6-sol-api-pricing">GPT-5.6 Sol API Pricing: $4/$20 Promo Through November 2026</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>Tencent, "Tencent Releases and Open-Sources Tencent Hy4 preview" (Aug 28, 2026): <a href="https://www.tencent.com/tencent-releases-and-open-sources-tencent-hy4-preview/" rel="noopener">tencent.com</a></li>
+            <li>Tencent Hy Team, "Introducing Hy4 preview" (Aug 28, 2026): <a href="https://hy.tencent.ai/research/hy4-preview?langVersion=en" rel="noopener">hy.tencent.ai</a></li>
+            <li>GitHub, Tencent-Hunyuan/Hy4-preview (README — architecture, benchmarks, known limitations, Apache 2.0): <a href="https://github.com/Tencent-Hunyuan/Hy4-preview" rel="noopener">github.com</a></li>
+            <li>Hugging Face, tencent/Hy4-preview + tencent/Hy4-preview-FP8 (model cards, weights live): <a href="https://huggingface.co/tencent/Hy4-preview" rel="noopener">huggingface.co</a></li>
+            <li>OpenRouter, "Tencent: Hy4 preview" (pricing + provider page, Aug 28, 2026): <a href="https://openrouter.ai/tencent/hy4-preview" rel="noopener">openrouter.ai</a></li>
+            <li>Bloomberg, "Tencent Touts New AI Model It Claims Outperforms Z.AI, Moonshot" (Aug 28, 2026): <a href="https://www.bloomberg.com/news/articles/2026-08-28/tencent-touts-new-ai-model-it-claims-outperforms-z-ai-moonshot" rel="noopener">bloomberg.com</a></li>
+            <li>KuCoin flash, "Tencent's Hy4 Outperforms GLM-5.3 and Kimi K3 in Internal Tests, Cuts Output Costs by 82%" (Aug 28, 2026): <a href="https://www.kucoin.com/news/flash/tencent-s-hy4-outperforms-glm-5-3-and-kimi-k3-in-internal-tests-cuts-output-costs-by-82" rel="noopener">kucoin.com</a></li>
+            <li>explainx.ai, "Tencent Hy4 preview: 770B open weights, 1M context, Apache 2.0" (Aug 28, 2026): <a href="https://explainx.ai/blog/tencent-hy4-preview-770b-moe-1m-context-august-2026" rel="noopener">explainx.ai</a></li>
+            <li>TechNode (via Shattered.io), "Tencent Hy4 Preview: 770B Params, 1M-Token AI Model" (Aug 28, 2026): <a href="https://shattered.io/tencent-hy4-preview-770b-2026/" rel="noopener">shattered.io</a></li>
+            <li>vLLM Recipes, "tencent/Hy4-preview" deployment recipe: <a href="https://recipes.vllm.ai/tencent/Hy4-preview" rel="noopener">recipes.vllm.ai</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: Model specs (770B/49B, 1M context, 64K output, Apache 2.0) are from Tencent's official release, the GitHub README, and the Hugging Face model card, verified Aug 28, 2026. OpenRouter list pricing ($0.834/$2.501, cached input $0.042) is from OpenRouter's published provider page; Tencent's domestic pricing (~¥6/$18 per 1M) is per KuCoin flash reporting — international rates differ. The internal blind evaluation (2.99 vs 2.92 vs 2.94 on 203 tasks, 163 experts) is Tencent's own, vendor-selected and vendor-graded; public benchmarks are mixed and Hy4 preview lags GLM-5.3 on DeepSWE/CyberGym. Throughput (~36 tok/s P50, 3.19s latency) and first-three-days availability (~86%) are OpenRouter observations at release, subject to change as capacity scales. All benchmark scores are vendor-reported; no independent replication exists as of Aug 28, 2026. Per-task math uses 10K input / 2K output tokens; real agent workloads vary with retries, fan-out, and cache behavior — model your own volume in the calculator.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
