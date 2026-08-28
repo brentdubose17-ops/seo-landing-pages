@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenRouter OpenAI Batch Endpoints Down: 3 Ways to Keep the 50% Discount</title>
+    <meta name="description" content="OpenRouter removed all 35 openai/*:batch model slugs on Aug 26, 2026 — completions now 404. Three routes keep the 50% batch discount: the beta Batch API, openai/flex, or OpenAI direct.">
+    <meta name="keywords" content="openrouter batch api not working, openai batch api pricing 2026, openrouter no endpoints found, openai batch discount, openai flex pricing, cheapest way to run gpt batch, ai agency api costs, batch api pricing">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aiagencycalculator.com/blog/openrouter-openai-batch-endpoints-down/">
+    <meta property="og:title" content="OpenRouter OpenAI Batch Endpoints Down: 3 Ways to Keep the 50% Discount">
+    <meta property="og:description" content="OpenRouter removed all 35 openai/*:batch model slugs on Aug 26, 2026 — completions now 404. Three routes keep the 50% batch discount: the beta Batch API, openai/flex, or OpenAI direct.">
+    <meta property="og:url" content="https://aiagencycalculator.com/blog/openrouter-openai-batch-endpoints-down/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aiagencycalculator">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://aiagencycalculator.com/blog/openrouter-openai-batch-endpoints-down/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://aiagencycalculator.com/blog/openrouter-openai-batch-endpoints-down/"
+      },
+      "headline": "OpenRouter OpenAI Batch Endpoints Down: 3 Ways to Keep the 50% Discount",
+      "description": "OpenRouter removed all 35 openai/*:batch model slugs on Aug 26, 2026 — completions now 404. Three routes keep the 50% batch discount: the beta Batch API, openai/flex, or OpenAI direct.",
+      "datePublished": "2026-08-28",
+      "dateModified": "2026-08-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://aiagencycalculator.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://aiagencycalculator.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://aiagencycalculator.com/og-image.png"
+        }
+      },
+      "wordCount": 2140
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://aiagencycalculator.com/blog/openrouter-openai-batch-endpoints-down/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does OpenRouter say no endpoints found for my OpenAI batch model?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because the model entry still exists in the catalogue but has zero providers attached to it. OpenRouter removed all 35 openai/*:batch slugs from its routing table on Aug 26, 2026 while leaving the catalogue records in place — so metadata calls succeed and completion calls return 404 with 'No endpoints found for openai/<model>:batch'."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is OpenAI batch API still available on OpenRouter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not through the :batch model suffixes — those are gone. The 50% batch discount is still reachable three ways: OpenRouter's beta Batch API (POST /api/beta/batches, takes the plain model slug, 24-hour window, text-only), the openai/flex service tier (synchronous, explicit opt-in, GPT-5.6 family only), or OpenAI's own direct Batch API."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the OpenAI batch models coming back?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nothing in OpenRouter's docs or catalogue suggests they will. The :batch suffix is absent from the current Batch API documentation entirely, which reads like the suffix was the legacy mechanism and the beta endpoint is the replacement. OpenAI went first; the surviving 24 batch variants from other vendors are the ones to watch for the next sweep."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the cheapest way to run OpenAI batch jobs now?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you are on a GPT-5.6 model, provider: {\"only\": [\"openai/flex\"]} gets you the same 50% discount synchronously (e.g. gpt-5.6-sol at $1.00/$5.00 per 1M instead of $2.00/$10.00). If you are on an older ID like gpt-5, gpt-4o, o3 or gpt-4.1, flex does not exist for them — use OpenRouter's beta Batch API or OpenAI's direct Batch API, both holding the 50% with a 24-hour window attached."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Did other vendors lose their batch variants too?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Two did: z-ai/glm-5.2:batch and moonshotai/kimi-k2.7-code:batch. Anthropic kept 11 batch variants, Google kept 10, and Thinking Machines, NVIDIA and MiniMax kept one each — 24 variants in total still route, including anthropic/claude-opus-5:batch at the same clean 50% discount."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I check whether a model slug still routes on OpenRouter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "One call, no key: curl https://openrouter.ai/api/v1/models/openai/gpt-5:batch/endpoints and count the array length. Zero means the ID is dead. Run it against every model string in your config — the sweep took 42 entries, so you may be holding more than one dead slug. For the recurring version, diff the full /api/v1/models response daily and alert on any slug that disappears."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        .answer-box { margin: 0 0 24px; padding: 20px 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; }
+        .answer-box h2 { margin: 0 0 10px; font-size: 1.15rem; border: none; padding: 0; }
+        .answer-box p { margin-bottom: 0; color: #333; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>OpenRouter OpenAI Batch Endpoints Down: 3 Ways to Keep the 50% Discount</h1>
+            <div class="meta"><span>Published August 28, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>OpenRouter batch API</span> <span>OpenAI batch pricing</span> <span>AI agency API costs</span> <span>batch discount routes</span></div>
+        </header>
+
+        <div class="answer-box">
+            <h2>Is OpenAI batch API still available on OpenRouter?</h2>
+            <p><strong>Not through the :batch model suffixes — OpenRouter removed all 35 openai/*:batch slugs on Aug 26, 2026, and completions against them now return 404 "No endpoints found." The 50% batch discount is still reachable three ways: OpenRouter's beta Batch API (plain slug, 24-hour window, text-only), the openai/flex service tier (synchronous, explicit opt-in, GPT-5.6 family only), or OpenAI's own direct Batch API.</strong> The base models (openai/gpt-5, gpt-4o, o3) still route at standard pricing — you lost a pricing tier, not a model.</p>
+        </div>
+
+        <p><strong>On August 26, 2026, every openai/*:batch model slug on OpenRouter stopped resolving to a provider — 35 of them, in one silent sweep.</strong> The slugs still answer metadata requests, so nothing looks broken until you send an actual completion and get a four-word answer: <em>No endpoints found for openai/gpt-5:batch.</em> If your agency runs nightly batch jobs for client work through OpenRouter, that is your production run failing at 3am with a message that points at your key, your billing, or your code — none of which is the problem.</p>
+
+        <p>For AI agencies, this is a pricing-path alert, not a model outage. Batch API pricing is how agencies price bulk client work (evals, data extraction, large content jobs) against realtime work, and the discount route is the difference between quoting a job at a sane margin and eating double the token cost. Here is what actually changed, the three routes that still hold the 50% discount, and how to check every model ID in your config before the next sweep bites you.</p>
+
+        <h2>What "no endpoints found" actually means</h2>
+        <p>OpenRouter separates two things most clients collapse into one. There is a <strong>model entry</strong> — a catalogue record with a description, a context length and a price sheet — and there are <strong>endpoints</strong> — the actual provider routes that can serve a request. Delete the routes and keep the record, and you get a slug that looks alive from the outside.</p>
+        <p>That is exactly the state <code>openai/gpt-5:batch</code> is in. Ask for its metadata and you get a full record back. Ask for its endpoints and you get an empty array:</p>
+<pre style="background:#f8f9ff;border:1px solid #e8e8f0;border-radius:8px;padding:14px 18px;overflow-x:auto;font-size:0.85rem;margin:0 0 18px;">GET https://openrouter.ai/api/v1/models/openai/gpt-5:batch/endpoints
+{"data":{"id":"openai/gpt-5:batch","name":"OpenAI: GPT-5", ... ,"endpoints":[]}}</pre>
+        <p>Send a completion and OpenRouter has nowhere to route you — the request comes back <strong>404 with "No endpoints found for openai/gpt-5:batch."</strong> Swap in whichever slug you were calling and the string changes to match: <em>gpt-4o:batch</em>, <em>o3:batch</em>, all the way back to <em>gpt-3.5-turbo:batch</em>. The shape is identical either way, which is why regenerating a key or topping up credit changes nothing. Every variant of "OpenRouter batch API not working" traffic traces back to the same cause: an empty routing table behind a record that still exists.</p>
+
+        <h2>The sweep: 35 OpenAI batch models, 42 departures total</h2>
+        <p>The removal was not a quiet trim of two or three stale entries. OpenRouter's catalogue went from <strong>422 models to 380</strong> between the August 25 and August 26 snapshots, and <strong>37 of the 42 departures carried the :batch suffix</strong>. Thirty-five of those 37 were OpenAI. The full list runs the length of the vendor's history on the platform:</p>
+        <table>
+            <thead>
+                <tr><th>Model family</th><th>Batch variants removed</th><th>Examples</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>GPT-5.6 series</strong></td><td>6</td><td>gpt-5.6-luna, -luna-pro, -terra, -terra-pro, -sol, -sol-pro</td></tr>
+                <tr><td><strong>GPT-5.5 series</strong></td><td>2</td><td>gpt-5.5, gpt-5.5-pro</td></tr>
+                <tr><td><strong>GPT-5.4 series</strong></td><td>4+</td><td>gpt-5.4, plus nano, mini and pro variants</td></tr>
+                <tr><td><strong>GPT-5.2 series</strong></td><td>2</td><td>gpt-5.2, gpt-5.2-pro</td></tr>
+                <tr><td><strong>GPT-5.1 / GPT-5</strong></td><td>6</td><td>gpt-5.1, gpt-5, gpt-5-pro, gpt-5-mini, gpt-5-nano, gpt-5-codex</td></tr>
+                <tr><td><strong>o-series</strong></td><td>5+</td><td>the whole o-series back through o1</td></tr>
+                <tr><td><strong>4-series and earlier</strong></td><td>5+</td><td>gpt-4o and the 4-series down to gpt-3.5-turbo</td></tr>
+                <tr><td><strong>Non-OpenAI batch casualties</strong></td><td>2</td><td>z-ai/glm-5.2:batch, moonshotai/kimi-k2.7-code:batch</td></tr>
+            </tbody>
+        </table>
+        <p>The other two were <strong>z-ai/glm-5.2:batch</strong> and <strong>moonshotai/kimi-k2.7-code:batch</strong> — so this was not an OpenAI-only event, it was mostly one. Anthropic kept 11 batch variants, Google kept 10, and Thinking Machines, NVIDIA and MiniMax kept one each. Call <code>anthropic/claude-opus-5:batch</code> today and it still bills at <strong>$2.50 per million input against $5.00 on the standard route</strong> — the same clean 50% the OpenAI variants used to give you.</p>
+        <p>Nobody announced any of this. There was no changelog entry, no deprecation banner on the model pages, no <code>expiration_date</code> field ticking down. The catalogue simply had 42 fewer rows the next morning. The pattern is familiar if you follow this space: it is the same silent-removal failure mode that hit DeepSeek model IDs on OpenRouter earlier, and the same one behind Kimi K2.5's deprecation.</p>
+
+        <h2>The base models are fine — only the suffix died</h2>
+        <p>Worth separating clearly, because the first instinct on seeing a 404 from <code>openai/gpt-5:batch</code> is to assume GPT-5 is down. It is not. OpenRouter's OpenAI vendor page still advertises <strong>96 models</strong> with roughly <strong>2.8 trillion tokens per week</strong> of volume through the platform, and <code>openai/gpt-5</code> resolves to three live routes:</p>
+        <table>
+            <thead>
+                <tr><th>Route</th><th>Input / 1M</th><th>Output / 1M</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>OpenAI (standard)</strong></td><td>$1.25</td><td>$10.00</td></tr>
+                <tr><td>Azure (standard)</td><td>$1.25</td><td>$10.00</td></tr>
+                <tr><td>Azure Sweden Central</td><td>$1.375</td><td>$11.00</td></tr>
+            </tbody>
+        </table>
+        <p>So the outage is narrow and specific: <strong>you lost a pricing tier, not a model.</strong> Everything you were sending to <code>openai/gpt-5:batch</code> will run today against <code>openai/gpt-5</code> at exactly double the token cost — which is the fastest possible unblock and the worst possible answer to leave in place. If you do not change anything, your next batch job quietly bills at 2x and your client margin takes the hit.</p>
+
+        <h2>Route One: OpenRouter's beta Batch API takes the plain slug</h2>
+        <p>The thing the <code>:batch</code> suffix used to do now lives at its own endpoint. OpenRouter ships a Batch API, marked Beta in the docs sidebar, at <code>POST https://openrouter.ai/api/beta/batches</code>. It bills batch requests <strong>"at 50% of the model's standard per-token pricing"</strong>, supports a single completion window of <strong>24 hours</strong>, and takes the ordinary model slug rather than a suffixed one:</p>
+<pre style="background:#f8f9ff;border:1px solid #e8e8f0;border-radius:8px;padding:14px 18px;overflow-x:auto;font-size:0.85rem;margin:0 0 18px;">{
+  "endpoint": "/v1/chat/completions",
+  "model": "openai/gpt-4o",
+  "requests": [
+    { "custom_id": "req-0001", "body": { "messages": [{"role": "user", "content": "Hello"}] } }
+  ]
+}</pre>
+        <p>Two constraints will bite before the pricing does. The Batch API is <strong>text-only</strong>, so validation rejects any request carrying image, audio, video or file content parts — which rules it out if your batch was doing document extraction or multimodal work. And a successful submission returns <strong>202 Accepted with <code>status: "validating"</code></strong>, meaning OpenRouter has queued your batch and nothing more; treating a 202 as completion is the single easiest way to ship a pipeline that silently drops work.</p>
+        <p>The 24-hour window is the part that quietly changes your infrastructure requirements. Submitting is a single call, but somebody has to poll for results and collect them, potentially most of a day later — a laptop that sleeps at 6pm is not that somebody. Budget the poll as part of the job, or the discount pays for itself in ops time.</p>
+
+        <h2>Route Two: openai/flex keeps the discount without the wait</h2>
+        <p>The early write-ups missed this part entirely. OpenAI's service tiers are still on OpenRouter; they moved from model slugs to <strong>provider endpoint tags</strong>. Ask <code>openai/gpt-5.6-sol</code> for its endpoints and three OpenAI routes come back, each with its own price sheet:</p>
+        <table>
+            <thead>
+                <tr><th>Service tier tag</th><th>Input / 1M</th><th>Output / 1M</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>openai (standard)</strong></td><td>$2.00</td><td>$10.00</td></tr>
+                <tr><td><strong>openai/flex</strong></td><td>$1.00</td><td>$5.00</td></tr>
+                <tr><td>openai/priority</td><td>$4.00</td><td>$20.00</td></tr>
+            </tbody>
+        </table>
+        <p>Flex is exactly half of standard — the same discount <code>:batch</code> gave you — and it is <strong>synchronous</strong>. No 24-hour window, no polling, no collection step. For most workloads that were on batch purely for the price rather than the asynchrony, this is a straight upgrade.</p>
+        <p>The catch is that these tiers require <strong>explicit opt-in</strong>. OpenRouter's provider routing docs are direct about it: service tier endpoints are not matched by base slugs — they require explicit opt-in. You name the tag in the provider block:</p>
+<pre style="background:#f8f9ff;border:1px solid #e8e8f0;border-radius:8px;padding:14px 18px;overflow-x:auto;font-size:0.85rem;margin:0 0 18px;">{
+  "model": "openai/gpt-5.6-sol",
+  "messages": [{"role": "user", "content": "Hello"}],
+  "provider": { "only": ["openai/flex"] }
+}</pre>
+        <p>The second catch is coverage, and it is the one that will decide this for you. <strong>Flex exists on the GPT-5.6 family. It does not exist on openai/gpt-5, openai/gpt-4o, openai/o3 or openai/gpt-4.1</strong> — all of which came back with nothing but standard <code>openai</code> and <code>azure</code> tags when checked on August 28. If your batch pipeline was pinned to an older ID, there is no discounted tier left for it on OpenRouter at all, and your real choice is to move the workload forward a model generation or move it off the platform.</p>
+
+        <h2>Route Three: OpenAI's own Batch API never went anywhere</h2>
+        <p>OpenAI still runs batching directly, and the terms are unchanged: a <strong>50% cost discount compared to synchronous APIs</strong>, a separate pool of higher rate limits that does not draw down your per-model limits, and batches that complete "within 24 hours (and often more quickly)". Per batch you get up to <strong>50,000 requests and a 200MB input file</strong>, and you can create up to <strong>2,000 batches an hour</strong>.</p>
+        <p>The cost of going direct is the thing you were on OpenRouter for. You give up the unified key, the fallback routing, and the ability to move a workload to Anthropic or Google by editing a string. If OpenAI is the only vendor in your batch pipeline, take the direct route and stop thinking about it. If you were batching across vendors, splitting one job across two APIs to save 50% on part of it is how you end up with reconciliation code nobody wants to own.</p>
+
+        <h2>What the three routes cost per task</h2>
+        <p>Run the math on a typical agency batch job — 10K input tokens, 2K output tokens per task, the shape of an eval or extraction workload:</p>
+        <table>
+            <thead>
+                <tr><th>Route</th><th>Input / 1M</th><th>Output / 1M</th><th>Per-task cost (10K in / 2K out)</th><th>Latency profile</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>openai/gpt-5.6-sol (standard)</strong></td><td>$2.00</td><td>$10.00</td><td>$0.04</td><td>Realtime</td></tr>
+                <tr><td><strong>openai/gpt-5.6-sol via flex</strong></td><td>$1.00</td><td>$5.00</td><td><strong>$0.02</strong></td><td>Realtime (same 50%)</td></tr>
+                <tr><td><strong>openai/gpt-4o via beta Batch API</strong></td><td>50% of standard</td><td>50% of standard</td><td>~half of realtime</td><td>Up to 24h window</td></tr>
+                <tr><td><strong>OpenAI direct Batch API</strong></td><td>50% of sync</td><td>50% of sync</td><td>~half of realtime</td><td>Up to 24h window</td></tr>
+                <tr><td><strong>openai/gpt-5:batch (dead slug)</strong></td><td>—</td><td>—</td><td>404 — will not run</td><td>Fails immediately</td></tr>
+            </tbody>
+        </table>
+        <p>On a 100,000-task monthly delivery, the difference between standard and flex on GPT-5.6 Sol is about <strong>$2,000/month in raw token cost</strong> ($4,000 vs $2,000) before retries and overhead. That is exactly the line item the <a href="/">AI Agency Pricing Calculator</a> exists to model — and exactly the line that silently doubles if a dead <code>:batch</code> slug falls back to standard pricing without anyone noticing.</p>
+
+        <h2>How to check any model ID before it bites you</h2>
+        <p>The check takes one call and no key. Ask for a model's endpoints and count the array:</p>
+<pre style="background:#f8f9ff;border:1px solid #e8e8f0;border-radius:8px;padding:14px 18px;overflow-x:auto;font-size:0.85rem;margin:0 0 18px;">curl -s https://openrouter.ai/api/v1/models/openai/gpt-5:batch/endpoints \
+| python3 -c "import json,sys; print(len(json.load(sys.stdin)['data']['endpoints']))"</pre>
+        <p><strong>Zero means the ID is a headstone.</strong> Anything else means it routes. Run it against every model string in your config, not only the one that threw — the sweep took 42 entries and you may be holding more than one dead slug. Check at minimum: every <code>:batch</code> variant, every pinned model you quote to clients, and every fallback route in your provider block.</p>
+        <p>For the recurring version, diff the full <code>/api/v1/models</code> response daily and alert on any slug that disappears or gains a non-null <code>expiration_date</code>. There is no mailing list for this and no changelog to subscribe to; <strong>the catalogue is the announcement</strong>. Which means the alert only works if it runs every day whether or not you opened your laptop.</p>
+
+        <h2>What to pin before the next OpenRouter sweep</h2>
+        <p>The lesson from August 26 is not that OpenRouter is unreliable; catalogues change and 42 rows moving in a night is a normal Wednesday for an aggregator carrying 380 models. The lesson is that most of us <strong>pin the model and treat the price tier as scenery, when the tier is the part that gets deleted</strong>.</p>
+        <p><code>openai/gpt-5</code> survived. <code>openai/gpt-5:batch</code> did not — and the difference between them was six characters and 50% of your bill. A practical checklist for your agency's quoting and tooling:</p>
+        <ul>
+            <li><strong>Audit every model string in your configs today.</strong> Endpoint-count check on each one; anything returning zero gets replaced or flagged before it runs.</li>
+            <li><strong>Decide the discount route per model family.</strong> GPT-5.6 models → <code>provider: {"only": ["openai/flex"]}</code>. Older models and multi-vendor batch → OpenRouter beta Batch API or OpenAI direct, with the 24-hour poll built into the job.</li>
+            <li><strong>Put the tier check on a clock.</strong> A tier that vanishes with no notice is only a real problem if you find out from a failed production run at 3am rather than from a diff that ran at 6am.</li>
+            <li><strong>Quote with the discount, budget with the fallback.</strong> Price client bulk work at the batch rate but keep the standard-rate number in the model so a route change never flips a margin negative silently.</li>
+        </ul>
+
+        <div class="cta">
+            <p><strong>Model your AI delivery costs against current market rates</strong></p>
+            <a class="btn" href="/" data-umami-event="click_to_calculator">Try the AI Agency Pricing Calculator →</a>
+            <p style="margin-top:12px;font-size:0.9rem;">Estimate setup fees, retainers, and margin in under a minute — then model per-agent workload costs with the <a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator</a>.</p>
+        </div>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>Why does OpenRouter say no endpoints found for my OpenAI batch model?</h3>
+            <p>Because the model entry still exists in the catalogue but has zero providers attached to it. OpenRouter removed all 35 openai/*:batch slugs from its routing table on Aug 26, 2026 while leaving the catalogue records in place — so metadata calls succeed and completion calls return 404 with "No endpoints found for openai/&lt;model&gt;:batch."</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is OpenAI batch API still available on OpenRouter?</h3>
+            <p>Not through the :batch model suffixes — those are gone. The 50% batch discount is still reachable three ways: OpenRouter's beta Batch API (POST /api/beta/batches, takes the plain model slug, 24-hour window, text-only), the openai/flex service tier (synchronous, explicit opt-in, GPT-5.6 family only), or OpenAI's own direct Batch API.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Are the OpenAI batch models coming back?</h3>
+            <p>Nothing in OpenRouter's docs or catalogue suggests they will. The :batch suffix is absent from the current Batch API documentation entirely, which reads like the suffix was the legacy mechanism and the beta endpoint is the replacement. OpenAI went first; the surviving 24 batch variants from other vendors are the ones to watch for the next sweep.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is the cheapest way to run OpenAI batch jobs now?</h3>
+            <p>If you are on a GPT-5.6 model, provider: {"only": ["openai/flex"]} gets you the same 50% discount synchronously (e.g. gpt-5.6-sol at $1.00/$5.00 per 1M instead of $2.00/$10.00). If you are on an older ID like gpt-5, gpt-4o, o3 or gpt-4.1, flex does not exist for them — use OpenRouter's beta Batch API or OpenAI's direct Batch API, both holding the 50% with a 24-hour window attached.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Did other vendors lose their batch variants too?</h3>
+            <p>Two did: z-ai/glm-5.2:batch and moonshotai/kimi-k2.7-code:batch. Anthropic kept 11 batch variants, Google kept 10, and Thinking Machines, NVIDIA and MiniMax kept one each — 24 variants in total still route, including anthropic/claude-opus-5:batch at the same clean 50% discount.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I check whether a model slug still routes on OpenRouter?</h3>
+            <p>One call, no key: curl https://openrouter.ai/api/v1/models/openai/gpt-5:batch/endpoints and count the array length. Zero means the ID is dead. Run it against every model string in your config — the sweep took 42 entries, so you may be holding more than one dead slug. For the recurring version, diff the full /api/v1/models response daily and alert on any slug that disappears.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/">AI Agency Pricing Calculator: Setup Fees, Retainers &amp; Margin</a></li>
+                <li><a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</a></li>
+                <li><a href="/ai-model-cost-per-task-2026">AI Model Cost Per Task 2026: Per-Token Math for Agency Pricing</a></li>
+                <li><a href="/gpt-5.6-sol-api-pricing">GPT-5.6 Sol API Pricing: $4/$20 Promo Through November 2026</a></li>
+                <li><a href="/deepseek-v4-api-price-increase-2026">DeepSeek V4 API Price Increase 2026: What It Means for Agency Costs</a></li>
+                <li><a href="/blog/tencent-hy4-preview-pricing/">Tencent Hy4 Preview Pricing: 770B Open Weights at $0.834/M</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>MoClaw, "No Endpoints Found for OpenAI Batch Models" (Aug 28, 2026): <a href="https://moclaw.ai/blog/no-endpoints-found-for-openai-batch" rel="noopener">moclaw.ai</a></li>
+            <li>OpenRouter API, "List models" (<code>/api/v1/models</code>, live read Aug 28, 2026): <a href="https://openrouter.ai/api/v1/models" rel="noopener">openrouter.ai</a></li>
+            <li>OpenRouter, OpenAI vendor page (96 models, ~2.8T tokens/wk): <a href="https://openrouter.ai/openai" rel="noopener">openrouter.ai</a></li>
+            <li>OpenRouter, Batch API Quickstart (beta, 50% per-token pricing, 24h window, text-only): <a href="https://openrouter.ai/docs/api-reference/batch" rel="noopener">openrouter.ai/docs</a></li>
+            <li>OpenRouter, Provider routing docs (service tiers require explicit opt-in): <a href="https://openrouter.ai/docs/features/provider-routing" rel="noopener">openrouter.ai/docs</a></li>
+            <li>OpenAI, Batch API documentation (50% discount vs synchronous, 50K requests/batch, 24h completion): <a href="https://platform.openai.com/docs/guides/batch" rel="noopener">platform.openai.com</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: All catalogue numbers (422→380 models, 35 OpenAI :batch removals, 42 total departures, 24 surviving batch variants, flex tier pricing, GPT-5 route pricing) were read from OpenRouter's live /api/v1/models API on Aug 28, 2026 and documented by MoClaw's investigation the same day; verified again against OpenRouter's OpenAI vendor page. The 50% discount terms for OpenRouter's beta Batch API and OpenAI's direct Batch API are from the respective official docs. Batch pricing and model availability on an aggregator change without notice — re-run the endpoint check before quoting client work.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -116,30 +116,35 @@
         </table>
         <p>These are vendor-independent benchmark figures, not our own measurements. Note the DeepSeek row is the <strong>pre-hike</strong> reference — after the <a href="/deepseek-v4-api-price-increase-2026">Aug 16, 2026 increase</a>, the per-task cost for DeepSeek V4 depends heavily on peak vs off-peak and cache hits.</p>
 
-        <h2>Current per-1M rates (Aug 22, 2026) — the inputs for your own math</h2>
+        <h2>Current per-1M rates (Aug 28, 2026) — the inputs for your own math</h2>
         <table>
             <tr><th>Model</th><th>Input ($/1M)</th><th>Output ($/1M)</th><th>Notes</th></tr>
+            <tr><td>GPT-5.6 Luna</td><td>$0.20</td><td>$1.20</td><td>−80% Jul 30, 2026 (from $1/$6); 13.8x usage in the Jul 27 – Aug 14 discount window</td></tr>
             <tr><td>DeepSeek V4-Flash (off-peak)</td><td>$0.22</td><td>$0.66</td><td>Peak $0.44/$1.32; cache-hit input $0.007 off-peak / $0.014 peak</td></tr>
             <tr><td>DeepSeek V4-Pro (off-peak)</td><td>$0.66</td><td>$1.98</td><td>Peak $1.32/$3.96; cache-hit input $0.022 off-peak / $0.044 peak</td></tr>
             <tr><td>Gemini 3.7 Flash (intro)</td><td>$0.75</td><td>$3.75</td><td>Intro through 2026-12-31, then $1.50/$7.50; 1M context</td></tr>
             <tr><td>Meta Muse Glimmer (hosted, Together AI)</td><td>$0.35</td><td>$1.50</td><td>Local self-host = electricity after hardware amortized</td></tr>
+            <tr><td>GPT-5.6 Terra</td><td>$2.00</td><td>$12.00</td><td>−20% Jul 30, 2026 (from $2.50/$15); 5.6x usage in the discount window</td></tr>
             <tr><td>Grok 4.6 (SpaceXAI)</td><td>$2.00</td><td>$6.00</td><td>500K context; AA Intelligence Index 61; cache hit $0.50</td></tr>
             <tr><td>Qwen 3.8 Max (open weights)</td><td>$2.00</td><td>$6.00</td><td>Hosted API list price; open weights live Aug 12, 2026</td></tr>
             <tr><td>Claude Sonnet 5</td><td>$2.00</td><td>$10.00</td><td>Permanent as of Aug 10, 2026; Sept 1 increase cancelled</td></tr>
             <tr><td>Kimi K3 (Moonshot)</td><td>$3.00</td><td>$15.00</td><td>Open weights; $20M/12mo commercial-use threshold</td></tr>
             <tr><td>GPT-5.6 Sol</td><td>$4.00</td><td>$20.00</td><td>Official OpenAI promo rate (Aug 21 – Nov 21, 2026); cached input $0.40; previously $5/$30</td></tr>
         </table>
+        <p><strong>OpenAI's discount experiment (Jul 27 – Aug 14, 2026):</strong> when Terra and Luna were discounted 50% via OpenRouter, daily Terra token usage rose <strong>5.6x</strong> and Luna <strong>13.8x</strong>, while Sol at list price rose only <strong>1.1x</strong> (control); ~1/3 of users who tried a discounted model kept using it after expiry. Terra/Luna went from 0.7% to 7.8% of OpenRouter tokens. For the agency-pricing breakdown, see <a href="/openai-discounts-token-usage">OpenAI's discount experiment: what 13.8x usage growth means for agency pricing</a>.</p>
 
         <h2>Cost per task on a typical 10K-in / 2K-out workload</h2>
         <p>Illustrative math (input tokens ÷ 1M × input price + output tokens ÷ 1M × output price), not a benchmark claim — your real token counts will differ:</p>
         <table>
             <tr><th>Model</th><th>Input cost</th><th>Output cost</th><th>Total per task</th></tr>
             <tr><td>DeepSeek V4-Flash (off-peak)</td><td>$0.0022</td><td>$0.0013</td><td><strong>~$0.004</strong></td></tr>
+            <tr><td>GPT-5.6 Luna</td><td>$0.002</td><td>$0.0024</td><td><strong>~$0.004</strong></td></tr>
             <tr><td>Gemini 3.7 Flash (intro)</td><td>$0.0075</td><td>$0.0075</td><td><strong>~$0.015</strong></td></tr>
             <tr><td>Muse Glimmer (hosted)</td><td>$0.0035</td><td>$0.0030</td><td><strong>~$0.007</strong></td></tr>
             <tr><td>Grok 4.6</td><td>$0.020</td><td>$0.012</td><td><strong>~$0.032</strong></td></tr>
             <tr><td>Qwen 3.8 Max</td><td>$0.020</td><td>$0.012</td><td><strong>~$0.032</strong></td></tr>
             <tr><td>Claude Sonnet 5</td><td>$0.020</td><td>$0.020</td><td><strong>~$0.040</strong></td></tr>
+            <tr><td>GPT-5.6 Terra</td><td>$0.020</td><td>$0.024</td><td><strong>~$0.044</strong></td></tr>
             <tr><td>GPT-5.6 Sol</td><td>$0.040</td><td>$0.040</td><td><strong>~$0.080</strong></td></tr>
         </table>
         <p>At 10K tasks/month, that spread is <strong>$40/mo (DeepSeek off-peak) to $800/mo (GPT-5.6 Sol)</strong> on identical volume — Sol's Aug 21 promo cut ($5/$30 → $4/$20) drops its 10K-task monthly bill from $1,100 to $800. This is why model routing is a margin lever, not a footnote. The demand side of those prices is firming up too: Anthropic's reported <a href="/anthropic-65b-run-rate-agency-pricing">$65B run rate</a> signals a vendor with real pricing power behind Claude's per-token rates.</p>
@@ -187,6 +192,7 @@
         <div class="related">
             <h3>Related reading</h3>
             <ul>
+                <li><a href="/openai-discounts-token-usage">OpenAI's Discount Experiment: What 13.8x Usage Growth Means for Agency Pricing</a></li>
                 <li><a href="/blog/openai-jalapeno-chip-inference-costs/">OpenAI's Jalapeño Chip: Falling Inference Costs &amp; the AI Model Pricing Trend</a></li>
                 <li><a href="/openai-2027-ipo-pricing-risk">OpenAI's 2027 IPO Window: Re-Baseline Your Cost Assumptions</a></li>
                 <li><a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</a></li>
@@ -208,9 +214,12 @@
             <li>SpaceXAI, "Grok 4.6" (Aug 12, 2026): <a href="https://x.ai/news/grok-4-6" rel="noopener">x.ai/news/grok-4-6</a></li>
             <li>Anthropic, "Claude Sonnet 5" + pricing docs (Aug 10, 2026): <a href="https://www.anthropic.com/news/claude-sonnet-5" rel="noopener">anthropic.com</a></li>
             <li>Together AI, Muse Glimmer hosted pricing (verified Aug 12, 2026): <a href="https://together.ai/pricing" rel="noopener">together.ai/pricing</a></li>
+            <li>OpenRouter Blog, "GPT 5.6 Discounts &amp; Jevons Paradox" (Aug 25, 2026): <a href="https://openrouter.ai/blog/insights/gpt-5-6-discounts-jevons-paradox/" rel="noopener">openrouter.ai</a></li>
+            <li>OpenAI API pricing (platform docs, verified Aug 28, 2026 — Terra $2/$12, Luna $0.20/$1.20, Sol $4/$20 promo): <a href="https://platform.openai.com/docs/pricing" rel="noopener">platform.openai.com/docs/pricing</a></li>
+            <li>TLDR AI newsletter (Aug 28, 2026): <a href="https://tldr.tech/ai/2026-08-28" rel="noopener">tldr.tech</a></li>
             <li>Hacker News / levelsio cost-per-task baseline (Aug 5, 2026): <a href="https://news.ycombinator.com/item?id=45931825" rel="noopener">news.ycombinator.com/item?id=45931825</a></li>
         </ul>
-        <p style="font-size:0.85rem;color:#666;">Accuracy note: The three per-task reference points (Muse Spark $0.40, Claude Opus 5 $2.34, DeepSeek V4 Flash $0.03) are Artificial Analysis figures from Aug 2026 and are attributed as such; the DeepSeek row predates the Aug 16, 2026 increase. The 10K/2K per-task column is our illustrative arithmetic on published per-1M rates — labeled as such, not a benchmark claim. GPT-5.6 Sol per-token pricing is OpenAI's official promotional rate ($4/$20 per 1M, cached input $0.40, valid Aug 21 – Nov 21, 2026; previously $5/$30). Per-1M rates are as of Aug 22, 2026 and move frequently — re-verify before quoting. No hands-on model testing was performed for this page; all figures trace to named sources.</p>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: The three per-task reference points (Muse Spark $0.40, Claude Opus 5 $2.34, DeepSeek V4 Flash $0.03) are Artificial Analysis figures from Aug 2026 and are attributed as such; the DeepSeek row predates the Aug 16, 2026 increase. The 10K/2K per-task column is our illustrative arithmetic on published per-1M rates — labeled as such, not a benchmark claim. GPT-5.6 Sol per-token pricing is OpenAI's official promotional rate ($4/$20 per 1M, cached input $0.40, valid Aug 21 – Nov 21, 2026; previously $5/$30). GPT-5.6 Terra ($2/$12) and Luna ($0.20/$1.20) are OpenAI's official Jul 30, 2026 list prices; the usage multiples (Luna 13.8x, Terra 5.6x, Sol 1.1x control) and ~1/3 retention are OpenRouter's measured discount-window data (Jul 27 – Aug 14, 2026), attributed as such (research brief t_5c8841ca). Per-1M rates are as of Aug 28, 2026 and move frequently — re-verify before quoting. No hands-on model testing was performed for this page; all figures trace to named sources.</p>
     </article>
     <footer>
         <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
