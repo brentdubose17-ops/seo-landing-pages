@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Standards Guide: MCP, Agent Plugins, AGENTS.md, and MHS</title>
+    <meta name="description" content="The 2026 AI agent standards guide — MCP, Agent Plugins, AGENTS.md, and Anthropic's Model Hardware Standard (MHS). What agencies need to know.">
+    <meta name="keywords" content="AI agent standards, MCP 2026, Agent Plugins, AGENTS.md, Model Hardware Standard, MHS, AI agent protocols, agent interoperability, AI agency standards, MCP vs MHS">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://findaiagency.com/ai-agent-standards-guide">
+    <meta property="og:title" content="AI Agent Standards Guide: MCP, Agent Plugins, AGENTS.md, and MHS">
+    <meta property="og:description" content="The 2026 AI agent standards guide — MCP, Agent Plugins, AGENTS.md, and Anthropic's Model Hardware Standard (MHS). What agencies need to know.">
+    <meta property="og:url" content="https://findaiagency.com/ai-agent-standards-guide">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Find AI Agency">
+    <meta property="og:image" content="https://findaiagency.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "AI Agent Standards Guide: MCP, Agent Plugins, AGENTS.md, and MHS",
+      "description": "The 2026 AI agent standards guide — MCP, Agent Plugins, AGENTS.md, and Anthropic's Model Hardware Standard (MHS). What agencies need to know.",
+      "datePublished": "2026-08-27",
+      "dateModified": "2026-08-27",
+      "author": {"@type": "Organization", "name": "Find AI Agency"},
+      "publisher": {"@type": "Organization", "name": "Find AI Agency"},
+      "mainEntityOfPage": "https://findaiagency.com/ai-agent-standards-guide",
+      "image": "https://findaiagency.com/og-image.png",
+      "keywords": "AI agent standards, MCP, Agent Plugins, AGENTS.md, Model Hardware Standard, MHS"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the main AI agent standards in 2026?",
+          "acceptedAnswer": {"@type": "Answer", "text": "The four that matter most for agencies: MCP (Model Context Protocol) for connecting agents to software and data, Agent Plugins 1.0.0 for packaging agent skills and MCP servers portably, AGENTS.md for project-level agent instructions, and Anthropic's Model Hardware Standard (MHS) for agents operating physical devices."}
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between MCP and MHS?",
+          "acceptedAnswer": {"@type": "Answer", "text": "MCP connects AI agents to software and data sources; MHS extends the same idea to physical hardware. MHS is model-agnostic and accessible through MCP, so the two standards stack rather than compete."}
+        },
+        {
+          "@type": "Question",
+          "name": "Which agent standards should an AI agency track?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Track MCP (the base connector every agent integration touches), Agent Plugins (the packaging layer that makes skills portable across Codex, ChatGPT, Cursor, Copilot, Kiro, and VS Code), AGENTS.md (the instructions file shipped with code), and MHS for clients in research, manufacturing, and robotics."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Model Hardware Standard (MHS) open source?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Not yet. Anthropic announced MHS as a research preview on August 27, 2026, sharing an early version with partners ahead of making the standard open source — the same path MCP took in 2024."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; vertical-align: top; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>AI Agent Standards Guide: MCP, Agent Plugins, AGENTS.md, and MHS</h1>
+            <div class="meta"><span>Published August 27, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>AI agent standards</span> <span>MCP</span> <span>Agent Plugins</span> <span>AGENTS.md</span> <span>MHS</span></div>
+        </header>
+
+        <p><strong>Agent standards are the plumbing that makes AI agents portable, composable, and sellable — and 2026 is the year they went from niche to table stakes.</strong> Every agency building agent integrations, quoting agent builds, or advising clients on tooling needs a working map of the standards lane: what each standard does, who backs it, and when it changes how you quote work.</p>
+
+        <p>This guide tracks the four standards that matter most for agencies right now — MCP for software connections, Agent Plugins for portable skills, AGENTS.md for agent instructions, and the new Model Hardware Standard (MHS) for physical devices. We update it as the lane moves.</p>
+
+        <h2>The agent standards at a glance</h2>
+        <table>
+            <tr><th>Standard</th><th>What it does</th><th>Why agencies care</th><th>Read more</th></tr>
+            <tr>
+                <td><strong>MCP</strong> (Model Context Protocol)</td>
+                <td>Connects AI agents to software tools, data sources, and APIs through a standard protocol — including the 2026-07-28 revision that removed the session layer.</td>
+                <td>Every agent integration an agency builds or audits touches MCP; the 2026 spec change re-prices hosting, testing, and maintenance.</td>
+                <td><a href="/mcp-2026-spec-session-layer-removed">MCP 2026: Sessions Removed — What AI Agencies Need to Change</a></td>
+            </tr>
+            <tr>
+                <td><strong>Agent Plugins</strong> (1.0.0)</td>
+                <td>Open, vendor-neutral spec for packaging agent skills and MCP servers into portable plugins across Codex, ChatGPT, Cursor, Copilot, Kiro, and VS Code.</td>
+                <td>"Build once, run anywhere" packaging that agencies can reuse across client platforms instead of maintaining six directory layouts.</td>
+                <td><a href="/agent-plugins-for-ai-agencies">Agent Plugins Made AI Agent Skills Portable — What Agencies Should Do Now</a></td>
+            </tr>
+            <tr>
+                <td><strong>AGENTS.md</strong></td>
+                <td>Project-level instructions file that tells coding agents how to work in a repo; stewarded by the Agentic AI Foundation (AAIF), a Linux Foundation directed fund.</td>
+                <td>Shipping AGENTS.md is now a deliverable agencies can include in code handoffs — and a compatibility question when tools don't read it natively.</td>
+                <td><a href="/blog/claude-code-agents-md-shopify-ban">Claude Code Finally Reads AGENTS.md — and Shopify Banned It</a></td>
+            </tr>
+            <tr>
+                <td><strong>MHS</strong> (Model Hardware Standard)</td>
+                <td>Anthropic's shared specification (research preview, August 27, 2026) for AI agents to safely operate physical devices — labs, manufacturing, robotics — via standard primitives.</td>
+                <td>Opens a new client vertical: physical AI integration for research and manufacturing, scoped against Anthropic's "hours or minutes" setup claim.</td>
+                <td><a href="/model-hardware-standard-mhs">Model Hardware Standard (MHS) explained</a></td>
+            </tr>
+        </table>
+
+        <h2>MCP: the software connector</h2>
+        <p>The Model Context Protocol is the base layer of the standards stack — the protocol agents use to reach software and data. On July 28, 2026, MCP shipped its largest revision since launch: the 2026-07-28 spec <strong>removed protocol-level sessions</strong> entirely. No more <code>initialize</code> handshake, no <code>Mcp-Session-Id</code> — every request is self-describing, and any request can land on any server instance behind a plain load balancer.</p>
+        <p>For agencies the practical effect is a re-priced stack: stateless hosting gets simpler and cheaper, agent-driven testing becomes a billable line item, retrieval tiers need to be explicit, and servers on the 2025-11-25 spec need migration inside the twelve-month deprecation window. If you only track one standard, track this one — <a href="/mcp-2026-spec-session-layer-removed">the full MCP 2026 breakdown is here</a>.</p>
+
+        <h2>Agent Plugins: portable skills</h2>
+        <p>Published August 6, 2026 by OpenAI alongside AWS, Cursor, GitHub, and Vercel, <strong>Agent Plugins 1.0.0</strong> standardizes how agent skills and MCP servers are packaged: a <code>plugin.json</code> manifest, a <code>skills/</code> folder, an optional <code>mcp.json</code>, and reverse-domain client-extension namespaces. The payoff is portability — the same plugin runs across Codex, ChatGPT, Cursor, Copilot, Kiro, and VS Code.</p>
+        <p>That turns a recurring agency pain (repackaging the same tool six times) into a build-once asset. Our <a href="/agent-plugins-for-ai-agencies">Agent Plugins explainer</a> covers what shipped, who backs it, and the next steps to take this week.</p>
+
+        <h2>AGENTS.md: the instructions file</h2>
+        <p>AGENTS.md is the project-level counterpart to per-tool config — a plain-text file at the repo root that tells coding agents how to work: commands, conventions, and guardrails. OpenAI shipped the format with Codex in August 2025, then handed it to the <strong>Agentic AI Foundation (AAIF)</strong>, a Linux Foundation directed fund co-founded by OpenAI, Anthropic, and Block that also stewards MCP. The ironic twist agencies should remember: Anthropic co-founded the AAIF, yet Claude Code did not read AGENTS.md natively until the August 2026 rollout — and Shopify <a href="/blog/claude-code-agents-md-shopify-ban">banned AGENTS.md in its repos</a> the same week.</p>
+
+        <h2>MHS: the standard goes physical</h2>
+        <p>On August 27, 2026, Anthropic opened a research preview of the <strong>Model Hardware Standard (MHS)</strong> — the same standards idea pointed at machines. MHS is a standardized driver layer that translates between an agent and a hardware device using simple primitives like read ("get temperature") and write ("set temperature"), with devices carrying natural-language tags for weight and safety limits. It is model-agnostic and accessible through MCP, so the two standards stack: agents reach physical devices through the same protocol they use for software.</p>
+        <p>Early partner results include Genentech running an autonomous BCA assay with self-recovering error handling, HHMI Janelia compressing a half-day microscope setup into a single step, and QuEra lifting quantum laser lock recovery from 58% to 99.3% in a blind test. For agencies, MHS opens a new client vertical — physical AI integration for research, manufacturing, and robotics — with procurement decisions starting to lock in agent compatibility. Our full explainer: <a href="/model-hardware-standard-mhs">Model Hardware Standard (MHS) explained</a>.</p>
+
+        <h2>How the standards stack</h2>
+        <p>The four standards are layers, not rivals: <strong>MCP</strong> connects agents to software and data, <strong>MHS</strong> extends the connection to physical hardware through MCP, <strong>Agent Plugins</strong> packages skills and MCP servers into portable units, and <strong>AGENTS.md</strong> tells the agent how to behave inside a specific repo. Agencies that can speak all four fluently can quote the full stack — from the connector to the packaging to the governance — instead of selling single integrations.</p>
+
+        <div class="cta">
+            <p><strong>Need an agency that speaks agent standards?</strong> Find a vetted AI automation agency for your next build.</p>
+            <a class="btn" href="/best-ai-agencies-for-small-business" data-umami-event="click_to_directory">Browse Vetted AI Agencies →</a>
+            <p style="margin-top:12px;font-size:0.9rem;">Or <a href="/ai-agent-adoption-statistics-2026">see how agencies are selling agent adoption in 2026</a>.</p>
+        </div>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>What are the main AI agent standards in 2026?</h3>
+            <p>The four that matter most for agencies: MCP (Model Context Protocol) for connecting agents to software and data, Agent Plugins 1.0.0 for packaging agent skills and MCP servers portably, AGENTS.md for project-level agent instructions, and Anthropic's Model Hardware Standard (MHS) for agents operating physical devices.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is the difference between MCP and MHS?</h3>
+            <p>MCP connects AI agents to software and data sources; MHS extends the same idea to physical hardware. MHS is model-agnostic and accessible through MCP, so the two standards stack rather than compete.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Which agent standards should an AI agency track?</h3>
+            <p>Track MCP (the base connector every agent integration touches), Agent Plugins (the packaging layer that makes skills portable across Codex, ChatGPT, Cursor, Copilot, Kiro, and VS Code), AGENTS.md (the instructions file shipped with code), and MHS for clients in research, manufacturing, and robotics.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is the Model Hardware Standard (MHS) open source?</h3>
+            <p>Not yet. Anthropic announced MHS as a research preview on August 27, 2026, sharing an early version with partners ahead of making the standard open source — the same path MCP took in 2024.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/mcp-2026-spec-session-layer-removed">MCP 2026: The Spec Just Dropped Protocol Sessions — What AI Agencies Need to Change</a></li>
+                <li><a href="/agent-plugins-for-ai-agencies">Agent Plugins Made AI Agent Skills Portable — What Agencies Should Do Now</a></li>
+                <li><a href="/model-hardware-standard-mhs">Model Hardware Standard (MHS) explained</a></li>
+                <li><a href="/blog/claude-code-agents-md-shopify-ban">Claude Code Finally Reads AGENTS.md — and Shopify Banned It</a></li>
+                <li><a href="/openai-agents-for-everyone">OpenAI Agents for Everyone: The Agent-Platform Era Has Arrived</a></li>
+                <li><a href="/ai-agent-adoption-statistics-2026">AI Agent Adoption Statistics 2026: What Agencies Should Know</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>MCP official blog — The 2026-07-28 Specification: <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28" rel="noopener">blog.modelcontextprotocol.io/posts/2026-07-28</a></li>
+            <li>Model Context Protocol documentation: <a href="https://modelcontextprotocol.io" rel="noopener">modelcontextprotocol.io</a></li>
+            <li>Agent Plugins 1.0.0 (announced by OpenAI developer account, Aug 6, 2026): covered in <a href="/agent-plugins-for-ai-agencies">Agent Plugins Made AI Agent Skills Portable</a></li>
+            <li>AGENTS.md (Agentic AI Foundation / Linux Foundation): <a href="https://agents.md" rel="noopener">agents.md</a></li>
+            <li>Anthropic (Aug 27, 2026) — "Previewing the Model Hardware Standard": <a href="https://www.anthropic.com/news/model-hardware-standard-research-preview" rel="noopener">anthropic.com</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: All external sources re-verified HTTP 200 on 2026-08-27. MHS is a research preview, not a shipped product; partner results are from Anthropic's announcement and are covered in detail with sourcing in the linked explainer. This guide is a living roundup and is updated as the standards lane moves.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
