@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Document Processing Cost: What Agencies Should Charge</title>
+    <meta name="description" content="AI document processing cost: Cohere Parse at $1.50 per 1,000 pages vs Textract, Document AI, Azure, LlamaParse, Mistral — and what agencies should charge.">
+    <meta name="keywords" content="AI document processing cost, OCR to structured data API, document AI pricing, Cohere Parse pricing, document processing API pricing, AI document processing for agencies, Cohere Parse, Textract pricing, Document AI pricing, LlamaParse pricing, Mistral OCR 4">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://findaiagency.com/ai-document-processing-tools">
+    <meta property="og:title" content="AI Document Processing Cost: What Agencies Should Charge">
+    <meta property="og:description" content="AI document processing cost: Cohere Parse at $1.50 per 1,000 pages vs Textract, Document AI, Azure, LlamaParse, Mistral — and what agencies should charge.">
+    <meta property="og:url" content="https://findaiagency.com/ai-document-processing-tools">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Find AI Agency">
+    <meta property="og:image" content="https://findaiagency.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Cohere Parse and the AI Document-Processing Stack: What Agencies Should Charge",
+      "description": "AI document processing cost: Cohere Parse at $1.50 per 1,000 pages vs Textract, Document AI, Azure, LlamaParse, Mistral — and what agencies should charge.",
+      "datePublished": "2026-08-28",
+      "dateModified": "2026-08-28",
+      "author": {"@type": "Organization", "name": "Find AI Agency"},
+      "publisher": {"@type": "Organization", "name": "Find AI Agency"},
+      "mainEntityOfPage": "https://findaiagency.com/ai-document-processing-tools",
+      "image": "https://findaiagency.com/og-image.png"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does AI document processing cost?",
+          "acceptedAnswer": {"@type": "Answer", "text": "OCR-class APIs run $1.50–$4 per 1,000 pages (Cohere Parse, Textract text, GCP OCR, Azure Read); structured extraction (forms and tables) runs $10–$50 per 1,000. A 100,000-page/month OCR workload works out to roughly $150–$400/month at list price. On the low end, Cohere Parse pricing starts at $1.50 per 1,000 pages."}
+        },
+        {
+          "@type": "Question",
+          "name": "What should an agency charge for document processing?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Raw model cost is the floor — $0.15 for a 100-page package at $1.50 per 1,000 pages. Quote for service value: a flat project fee, a per-document fee, or a retainer. For overall benchmarks, see how much an AI agency costs in 2026 (findaiagency.com/how-much-does-an-ai-agency-cost-in-2026)."}
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best OCR-to-structured-data API?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No single winner. Decide on output format (JSON vs Markdown), language coverage, and deployment posture — the comparison table in this post is the working reference."}
+        },
+        {
+          "@type": "Question",
+          "name": "Does Cohere Parse output JSON?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No — structured Markdown only. Textract, Document AI, and Azure return JSON; Mistral OCR 4 offers optional JSON annotations."}
+        },
+        {
+          "@type": "Question",
+          "name": "Which document AI tool supports the most languages?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Mistral OCR 4: 170 languages. Cohere Parse: nine."}
+        },
+        {
+          "@type": "Question",
+          "name": "Do these document processing APIs have free tiers?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. Cohere Space's free tier; GCP OCR's first 1,000 pages free; Azure F0 (Layout 500 pages/mo free); LlamaParse 10,000 free credits/mo."}
+        },
+        {
+          "@type": "Question",
+          "name": "What's the cheapest way to process 1,000,000 pages a month?",
+          "acceptedAnswer": {"@type": "Answer", "text": "OCR-class list price is about $1,500/month across Cohere, Textract, GCP, and Azure; Mistral Batch lands at $2,000/month; volume discounts exist, e.g., GCP at $0.60 above 5M pages."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can document AI run on-premises or air-gapped?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Cohere Parse explicitly supports cloud, on-premises, private, and air-gapped deployment. Hyperscaler options are cloud/region-hosted — flag that for security-sensitive clients."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        sup a { color: #2563eb; text-decoration: none; font-size: 0.75em; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        .table-wrap { overflow-x: auto; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .notes { margin-top: 40px; padding: 20px 24px; background: #fffbf0; border: 1px solid #f0e6c8; border-radius: 12px; font-size: 0.92rem; color: #555; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>Cohere Parse and the AI Document-Processing Stack: What Agencies Should Charge</h1>
+            <div class="meta"><span>Published August 28, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>AI document processing / document AI pricing</span></div>
+        </header>
+
+        <h2>1. Why document processing is a core agency service</h2>
+        <p>AI document processing has become one of the most dependable services an agency can sell. Client onboarding and KYC extraction, invoice and accounts-payable automation, contract analysis, and insurance claims intake all reduce to the same job: turning messy documents into structured data clients can actually use — work that sits inside the <a href="/ai-workflows-every-agency-should-steal">workflows every agency should steal</a>.</p>
+
+        <p>Until this week, AI document processing cost was a guess: project quotes, hourly rates, or gut feel, with no public per-page benchmark to anchor against. Then Cohere launched Parse at $1.50 per 1,000 pages <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://tldr.tech/ai/2026-08-28" rel="noopener" target="_blank">[2]</a></sup>, and the category finally had a defensible number to quote against. This post benchmarks the stack — Cohere Parse against the OCR-to-structured-data APIs your clients are already being quoted — and translates the API rates into what agencies should actually charge.</p>
+
+        <h2>2. What's new: Cohere Parse just gave the category a price anchor</h2>
+        <p>Cohere is best known for enterprise language models and retrieval — Embed, Rerank, and the Compass search stack. Parse is its document-ingestion layer: a vision-language parser that converts complex, multimodal files (forms, scans, PDFs, tables, images) into structured, machine-readable data for indexing, RAG, and agentic retrieval <sup><a href="https://cohere.com/parse" rel="noopener" target="_blank">[1]</a></sup><sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>.</p>
+
+        <p>The launch facts an agency needs:</p>
+        <ul>
+            <li><strong>Availability:</strong> generally available August 27, 2026 via the Cohere API, Model Vault, Microsoft Foundry, and AWS SageMaker <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>; the product page also lists Microsoft Azure <sup><a href="https://cohere.com/parse" rel="noopener" target="_blank">[1]</a></sup>.</li>
+            <li><strong>API price:</strong> $1.50 per 1,000 pages, with a free tier in Cohere Space <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://tldr.tech/ai/2026-08-28" rel="noopener" target="_blank">[2]</a></sup>.</li>
+            <li><strong>Inputs and outputs:</strong> PDF, PPT, and JPEG (Base64) <sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>; structured <strong>Markdown</strong> out — tables as HTML, bounding boxes, and image descriptions — <strong>not JSON</strong> <sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>.</li>
+            <li><strong>Languages:</strong> nine — Arabic, English, French, German, Japanese, Korean, Italian, Portuguese, Spanish <sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>.</li>
+            <li><strong>Positioning:</strong> trained for business documents in finance, insurance, and scientific work <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>.</li>
+            <li><strong>Deployment:</strong> cloud, on-premises, private, or air-gapped <sup><a href="https://cohere.com/parse" rel="noopener" target="_blank">[1]</a></sup><sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>.</li>
+        </ul>
+
+        <p>Two facts worth pricing into your pipeline. First, Cohere reports a ParseBench score of 79.2 across three evaluation dimensions (against 74.5 for Mistral OCR 4 and 78.3 for LlamaParse's Cost-Effective tier) — vendor-reported, re-scored under August 2026 rules <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>. Second, for sustained high volume, Model Vault single-tenant inference runs from $4.00/hr (Medium) or $7.00/hr (XL) — per-instance, <strong>not per-page</strong> — with Cohere reporting roughly 23% lower inference cost at 50% GPU utilization and up to 61% at full utilization <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://cohere.com/pricing" rel="noopener" target="_blank">[4]</a></sup>.</p>
+
+        <h2>3. The OCR-to-structured-data API stack: how six document tools compare</h2>
+        <p>An OCR to structured data API — a service that turns scanned and digital documents into queryable data — is defined by two differentiators: output shape (JSON vs Markdown) and extraction depth (plain text vs forms and tables). For a broader view of budget-friendly tools in this space, see our <a href="/small-business-ai-tools-that-actually-save-money">small-business AI tools that actually save money</a> roundup.</p>
+
+        <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Tool</th><th>Input types</th><th>Structured output</th><th>Per-page price (USD)</th><th>Free tier</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Cohere Parse</strong></td><td>PDF, PPT, JPEG (Base64)</td><td>Markdown (tables as HTML, bounding boxes); <strong>no JSON</strong></td><td><strong>$1.50 / 1,000</strong> (API); Model Vault from $4.00/hr</td><td>Free in Cohere Space</td><td><sup><a href="https://cohere.com/parse" rel="noopener" target="_blank">[1]</a></sup><sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://cohere.com/pricing" rel="noopener" target="_blank">[4]</a></sup><sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup></td></tr>
+                <tr><td><strong>AWS Textract</strong></td><td>Docs &amp; images; Analyze ID for identity docs</td><td>JSON: text, forms (key-value), tables, queries, signatures</td><td>Detect Text $1.50/1k (first 1M; $0.60 after); Tables $15; Forms $50; Queries $15; Signatures $3.50 per 1k</td><td>3-month free tier, 1,000 pages/mo Detect Text</td><td><sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup></td></tr>
+                <tr><td><strong>Google Cloud Document AI</strong></td><td>Images (JPEG/JPG, PNG, BMP, HEIF), PDF, TIFF</td><td>JSON (entities, key-value via parsers)</td><td>Enterprise OCR $1.50/1k (first 1k free; $0.60 above 5M); Form Parser/Custom Extractor $30→$20; Layout $10</td><td>OCR first 1,000 pages free</td><td><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup></td></tr>
+                <tr><td><strong>Azure AI Document Intelligence</strong></td><td>Documents, images, PDFs</td><td>JSON: text, layout, key-value, prebuilt fields (invoice, receipt, ID, W-2, 1098, contract…)</td><td>Read $1.50/1k (first 1M; $0.60 after); All Prebuilt $10/1k; Custom extraction $30/1k; classification $3/1k</td><td>F0 free tier; Layout 500 pages/mo free</td><td><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup></td></tr>
+                <tr><td><strong>LlamaParse (LlamaIndex)</strong></td><td>PDFs, images, docx/pptx, .md, spreadsheets</td><td>Markdown + structured extraction (LlamaExtract); layout option +3 credits/page</td><td>$1.25/1,000 credits; Fast $1.25; Cost-effective $3.75; Agentic $12.50; Agentic Plus $56.25 per 1k pages</td><td>10,000 free credits/mo</td><td><sup><a href="https://developers.llamaindex.ai/llamaparse/general/pricing" rel="noopener" target="_blank">[8]</a></sup><sup><a href="https://www.llamaindex.ai/pricing" rel="noopener" target="_blank">[9]</a></sup></td></tr>
+                <tr><td><strong>Mistral OCR 4</strong></td><td>PDF, DOC, PPT, OpenDocument</td><td>Markdown + optional structured JSON annotations</td><td>$4/1k API; $2/1k Batch; $5/1k Document AI</td><td>$10/mo free API credits</td><td><sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup><sup><a href="https://mistral.ai/pricing" rel="noopener" target="_blank">[11]</a></sup></td></tr>
+            </tbody>
+        </table>
+        </div>
+        <p><em>Azure prices are us-east list prices; regional variation exists (e.g., US Gov regions at 1.25x) <sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>.</em></p>
+
+        <p>One integration note: Cohere Parse also slots into Cohere's Compass search stack, whose ingestion pipeline extends coverage to broader formats such as .xlsx, .docx, and .html <sup><a href="https://cohere.com/parse" rel="noopener" target="_blank">[1]</a></sup><sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup> — relevant if a client's source documents are mostly Office files rather than PDFs.</p>
+
+        <h3>3.1 Reading the table: the $1.50–$4 OCR class vs the $15–$50 structured tier</h3>
+        <p>All four OCR-class anchors — Cohere Parse, Google's Enterprise OCR, Azure Read, and Textract's Detect Text — cluster at $1.50–$4 per 1,000 pages <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup><sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup>. The price jumps when you need forms, tables, or queries: $15–$50 per 1,000 <sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>. Choosing among vendors is part of any tool-selection process — see our <a href="/ai-vendor-risk-assessment">AI vendor risk assessment</a> before locking in a stack.</p>
+
+        <h3>3.2 The JSON/Markdown output split — what it means for your pipeline</h3>
+        <p>If the client's downstream stack expects JSON, Textract, Document AI, and Azure deliver it <sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>. Cohere Parse is Markdown-only <sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>; Mistral OCR 4 returns Markdown with optional structured JSON annotations <sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup>. That is a real integration cost, not a footnote — a JSON pipeline fed Markdown needs an adapter, and vice versa. For agencies reselling this stack, the integration work is often the largest line item in the proposal; size it explicitly rather than folding it into the API price.</p>
+
+        <h3>3.3 Language coverage: 9 vs 170</h3>
+        <p>Cohere Parse supports nine languages <sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>; Mistral OCR 4 covers 170 across 10 groups <sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup>. For multilingual client work, that difference decides the tool.</p>
+
+        <h2>4. AI document processing cost: what the API really costs — and what to charge</h2>
+        <p>Document AI pricing is transparent now; the model cost is the easy half — the quoting decision is yours. For agencies comparing vendors, document processing API pricing is public and comparable across the six tools above. The tables below are arithmetic on the cited per-page rates (analysis, not new sourced claims), so you can reproduce every line.</p>
+
+        <h3>4.1 Real-world cost math at agency volumes</h3>
+        <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Tool (rate source)</th><th>10,000 pages/mo</th><th>100,000 pages/mo</th><th>1,000,000 pages/mo</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Cohere Parse API ($1.50/1k) <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup></td><td>$15</td><td>$150</td><td>$1,500</td></tr>
+                <tr><td>AWS Textract — Detect Text ($1.50/1k first 1M) <sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup></td><td>$15</td><td>$150</td><td>$1,500</td></tr>
+                <tr><td>AWS Textract — Forms ($50/1k) <sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup></td><td>$500</td><td>$5,000</td><td>$50,000</td></tr>
+                <tr><td>Google Document AI — OCR ($1.50/1k after 1k free) <sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup></td><td>$15</td><td>$150</td><td>$1,500</td></tr>
+                <tr><td>Google Document AI — Form Parser ($30/1k) <sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup></td><td>$300</td><td>$3,000</td><td>$30,000</td></tr>
+                <tr><td>Azure — Read ($1.50/1k) <sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup></td><td>$15</td><td>$150</td><td>$1,500</td></tr>
+                <tr><td>Azure — Prebuilt ($10/1k) <sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup></td><td>$100</td><td>$1,000</td><td>$10,000</td></tr>
+                <tr><td>LlamaParse — Cost-effective ($3.75/1k) <sup><a href="https://developers.llamaindex.ai/llamaparse/general/pricing" rel="noopener" target="_blank">[8]</a></sup><sup><a href="https://www.llamaindex.ai/pricing" rel="noopener" target="_blank">[9]</a></sup></td><td>$37.50</td><td>$375</td><td>$3,750</td></tr>
+                <tr><td>Mistral OCR 4 — API ($4/1k) / Batch ($2/1k) <sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup></td><td>$40 / $20</td><td>$400 / $200</td><td>$4,000 / $2,000</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p>The raw-model takeaway: at $1.50 per 1,000 pages, the model cost of a 100-page client onboarding package is <strong>$0.15</strong> (arithmetic on <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>) — the agency fee is where the margin lives.</p>
+
+        <h3>4.2 Where margin lives: model cost is the floor, service value is the price</h3>
+        <p>Never quote raw API cost as the price. The deliverable is configured extraction, error handling, integration, and monitoring — that is what clients pay for. Four fee frameworks work in practice:</p>
+        <ol>
+            <li><strong>Flat project fee</strong> per onboarding package (most predictable for the client).</li>
+            <li><strong>Per-document or per-page service fee</strong> (scales with volume).</li>
+            <li><strong>Monthly retainer</strong> for ongoing ingestion (best for steady-state pipelines).</li>
+            <li><strong>Cost-plus markup</strong> for high-volume batch work (transparent, defensible).</li>
+        </ol>
+        <p>For legacy-rate conversations, Cohere's own example is a useful mid-market anchor: it compares Parse against "a hyperscaler offering priced at $10 per 1,000 pages" and estimates roughly $1.47M in annual savings on a 13M-page/month workflow <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup> — attribute that as Cohere's example, and use it when a client is being quoted document-AI work at old rates. Whatever framework you choose, put the API line in the SOW as a pass-through line item: it protects your margin and gives the client a transparent cost breakdown. For context on what agencies charge for AI work overall, see <a href="/how-much-does-an-ai-agency-cost-in-2026">how much an AI agency costs in 2026</a>.</p>
+
+        <h3>4.3 Volume economics: Model Vault vs the API</h3>
+        <p>For sustained high-volume workloads, single-tenant Model Vault ($4.00/hr Medium, $7.00/hr XL) can cut inference cost versus the API — Cohere reports roughly 23% at 50% GPU utilization and up to 61% at full utilization <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://cohere.com/pricing" rel="noopener" target="_blank">[4]</a></sup>. Per-instance pricing, not per-page; vendor-reported.</p>
+
+        <h2>5. Document AI pricing in practice: eight agency use cases</h2>
+        <p>Each use case below maps to a cost line in §4, so you can quote from the table instead of guessing.</p>
+        <ol>
+            <li><strong>Client onboarding document ingestion</strong> — KYC paperwork, contracts, and IDs into structured profiles; forms and key-value extraction are core Parse capabilities <sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>. Maps to the $1.50/1k OCR line: $0.15 per 100-page package (arithmetic).</li>
+            <li><strong>Invoice and accounts-payable automation</strong> — invoices are an explicit Parse target; Cohere's own example is a 13M-page/month AP workflow <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>. Structured tiers apply: $10–$50 per 1k <sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>.</li>
+            <li><strong>Contract analysis and renewal tracking</strong> — extract parties, dates, and terms from contract PDFs; RAG-ready Markdown feeds downstream agents <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>. OCR line plus your integration work.</li>
+            <li><strong>RAG and knowledge-base builds</strong> — Parse's stated purpose is document indexing, RAG, and agentic retrieval; it pairs with Cohere Embed, Rerank, and Compass <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://cohere.com/parse" rel="noopener" target="_blank">[1]</a></sup>. Volume economics from §4.3 apply.</li>
+            <li><strong>Insurance claims intake</strong> — claims are an explicit use case, and the model is positioned for finance and insurance <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>. Prebuilt-extraction tier.</li>
+            <li><strong>Multilingual document processing</strong> — nine stable languages for agencies serving non-English markets <sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>; compare against Mistral OCR 4's 170 if breadth is the requirement <sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup>.</li>
+            <li><strong>Paper-archive digitization</strong> — OCR plus bounding-box spatial grounding for scanned archives <sup><a href="https://cohere.com/parse" rel="noopener" target="_blank">[1]</a></sup><sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>. Cheapest OCR line: $1.50/1k <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://tldr.tech/ai/2026-08-28" rel="noopener" target="_blank">[2]</a></sup>.</li>
+            <li><strong>Multimodal agent workflows</strong> — give agents tables, diagrams, and image context <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>; Markdown output with embedded HTML tables and image descriptions is what makes this work <sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>.</li>
+        </ol>
+
+        <h2>6. How to pick a document-processing API for your agency</h2>
+        <p>A short checklist, deliberately vendor-neutral:</p>
+        <ul>
+            <li><strong>Output format your pipeline needs</strong> — JSON vs Markdown (§3.2). Decide before you build.</li>
+            <li><strong>Language coverage</strong> — 9 vs 170 (§3.3) if you serve multilingual clients.</li>
+            <li><strong>Deployment and security posture</strong> — Cohere Parse runs cloud, on-premises, private, and air-gapped <sup><a href="https://cohere.com/parse" rel="noopener" target="_blank">[1]</a></sup><sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>; the hyperscaler tools are region/cloud-hosted <sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>. Flag this for security-sensitive clients.</li>
+            <li><strong>Free-tier pilots before committing</strong> — Cohere Space <sup><a href="https://tldr.tech/ai/2026-08-28" rel="noopener" target="_blank">[2]</a></sup><sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>; GCP OCR's first 1,000 pages free <sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup>; Azure F0 with Layout 500 pages/mo free <sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>; LlamaParse 10,000 free credits/mo <sup><a href="https://www.llamaindex.ai/pricing" rel="noopener" target="_blank">[9]</a></sup>.</li>
+            <li><strong>Volume tiering and batch discounts</strong> — e.g., GCP $0.60 above 5M <sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup>; Mistral Batch at 50% off <sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup>.</li>
+            <li><strong>Compliance posture</strong> — for regulated clients, confirm data retention, deletion, and logging terms before signing; vendor-neutral guidance, and a natural fit for the vendor-risk review above.</li>
+        </ul>
+        <p>When in doubt, buy the outcome rather than the stack: <a href="/how-to-choose-an-ai-automation-agency">our guide to choosing an AI automation agency</a> covers what to look for if you'd rather outsource this than run it in-house.</p>
+
+        <h2>7. FAQ: document AI pricing and processing questions for agencies</h2>
+        <div class="faq-item">
+            <h3>How much does AI document processing cost?</h3>
+            <p>OCR-class APIs run $1.50–$4 per 1,000 pages (Cohere Parse, Textract text, GCP OCR, Azure Read) <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>; structured extraction (forms and tables) runs $10–$50 per 1,000 <sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>. A 100,000-page/month OCR workload works out to roughly $150–$400/month at list price (arithmetic on <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup><sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup>). On the low end, Cohere Parse pricing starts at $1.50 per 1,000 pages <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What should an agency charge for document processing?</h3>
+            <p>Raw model cost is the floor — $0.15 for a 100-page package at $1.50/1k (arithmetic). Quote for service value: a flat project fee, a per-document fee, or a retainer (see §4.2). For overall benchmarks, see <a href="/how-much-does-an-ai-agency-cost-in-2026">how much an AI agency costs in 2026</a>.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is the best OCR-to-structured-data API?</h3>
+            <p>No single winner. Decide on output format (JSON vs Markdown), language coverage, and deployment posture — the comparison table in §3 is the working reference.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Does Cohere Parse output JSON?</h3>
+            <p>No — structured Markdown only <sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>. Textract, Document AI, and Azure return JSON <sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>; Mistral OCR 4 offers optional JSON annotations <sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup>.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Which document AI tool supports the most languages?</h3>
+            <p>Mistral OCR 4: 170 languages <sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup>. Cohere Parse: nine <sup><a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">[12]</a></sup>.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Do these document processing APIs have free tiers?</h3>
+            <p>Yes. Cohere Space's free tier <sup><a href="https://tldr.tech/ai/2026-08-28" rel="noopener" target="_blank">[2]</a></sup><sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>; GCP OCR's first 1,000 pages free <sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup>; Azure F0 (Layout 500 pages/mo free) <sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>; LlamaParse 10,000 free credits/mo <sup><a href="https://www.llamaindex.ai/pricing" rel="noopener" target="_blank">[9]</a></sup>.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What's the cheapest way to process 1,000,000 pages a month?</h3>
+            <p>OCR-class list price is about $1,500/month across Cohere, Textract, GCP, and Azure <sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup><sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup>; Mistral Batch lands at $2,000/month <sup><a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">[10]</a></sup>; volume discounts exist, e.g., GCP at $0.60 above 5M <sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup>. Arithmetic on cited rates.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can document AI run on-premises or air-gapped?</h3>
+            <p>Cohere Parse explicitly supports cloud, on-premises, private, and air-gapped deployment <sup><a href="https://cohere.com/parse" rel="noopener" target="_blank">[1]</a></sup><sup><a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">[3]</a></sup>. Hyperscaler options are cloud/region-hosted <sup><a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">[5]</a></sup><sup><a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">[6]</a></sup><sup><a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">[7]</a></sup> — flag that for security-sensitive clients.</p>
+        </div>
+
+        <h2>8. Get document AI working for your clients</h2>
+        <p>This page is the working reference for the stack — bookmark <a href="https://findaiagency.com/ai-document-processing-tools">findaiagency.com/ai-document-processing-tools</a> and come back to it whenever you quote document work. AI document processing for agencies is a repeatable, profitable service, and with a public per-page benchmark, AI document processing cost is now answerable: model cost as the floor, your service value as the price.</p>
+
+        <div class="cta">
+            <p><strong>Rather buy the outcome than build the pipeline?</strong></p>
+            <a class="btn" href="/how-to-choose-an-ai-automation-agency" data-umami-event="click_to_choose_agency">Find an AI Automation Agency →</a>
+            <p style="margin-top:12px;font-size:0.9rem;">Our <a href="/how-to-choose-an-ai-automation-agency">guide to choosing an AI automation agency</a> covers what to look for in a partner that handles document processing for you.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/ai-workflows-every-agency-should-steal">AI Workflows Every Agency Should Steal</a></li>
+                <li><a href="/small-business-ai-tools-that-actually-save-money">Small-Business AI Tools That Actually Save Money</a></li>
+                <li><a href="/how-much-does-an-ai-agency-cost-in-2026">How Much Does an AI Agency Cost in 2026?</a></li>
+                <li><a href="/what-does-an-ai-automation-agency-do">What Does an AI Automation Agency Do?</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>Cohere — Parse product page: <a href="https://cohere.com/parse" rel="noopener" target="_blank">cohere.com/parse</a></li>
+            <li>TLDR AI, Aug 28, 2026 issue (Cohere Parse launch): <a href="https://tldr.tech/ai/2026-08-28" rel="noopener" target="_blank">tldr.tech/ai/2026-08-28</a></li>
+            <li>Cohere blog — "Introducing Parse" (Aug 27, 2026): <a href="https://cohere.com/blog/parse" rel="noopener" target="_blank">cohere.com/blog/parse</a></li>
+            <li>Cohere — pricing page (Model Vault Parse tiers): <a href="https://cohere.com/pricing" rel="noopener" target="_blank">cohere.com/pricing</a></li>
+            <li>AWS — Textract pricing: <a href="https://aws.amazon.com/textract/pricing" rel="noopener" target="_blank">aws.amazon.com/textract/pricing</a></li>
+            <li>Google Cloud — Document AI pricing: <a href="https://cloud.google.com/document-ai/pricing" rel="noopener" target="_blank">cloud.google.com/document-ai/pricing</a></li>
+            <li>Microsoft Azure — AI Document Intelligence pricing: <a href="https://azure.microsoft.com/en-us/pricing/details/ai-document-intelligence" rel="noopener" target="_blank">azure.microsoft.com/…/ai-document-intelligence</a></li>
+            <li>LlamaIndex developer docs — LlamaParse pricing: <a href="https://developers.llamaindex.ai/llamaparse/general/pricing" rel="noopener" target="_blank">developers.llamaindex.ai/llamaparse/general/pricing</a></li>
+            <li>LlamaIndex — plan pricing: <a href="https://www.llamaindex.ai/pricing" rel="noopener" target="_blank">llamaindex.ai/pricing</a></li>
+            <li>Mistral — OCR 4 announcement: <a href="https://mistral.ai/news/ocr-4" rel="noopener" target="_blank">mistral.ai/news/ocr-4</a></li>
+            <li>Mistral — pricing: <a href="https://mistral.ai/pricing" rel="noopener" target="_blank">mistral.ai/pricing</a></li>
+            <li>Cohere docs — Parse (details and application): <a href="https://docs.cohere.com/docs/parse" rel="noopener" target="_blank">docs.cohere.com/docs/parse</a></li>
+        </ul>
+
+        <div class="notes">
+            <p><strong>Notes on sources and interpretation</strong></p>
+            <ul>
+                <li>Cohere Parse outputs <strong>Markdown, not JSON</strong> — "structured data" here means structured Markdown.</li>
+                <li>ParseBench and throughput figures are <strong>vendor-reported</strong> by Cohere, re-scored under August 2026 rules.</li>
+                <li>Model Vault rates are <strong>per-instance, not per-page</strong>.</li>
+                <li>Language coverage differs sharply: Cohere Parse 9 vs Mistral OCR 4's 170.</li>
+                <li>Azure prices are us-east list prices; regional variation exists (e.g., US Gov regions at 1.25x).</li>
+                <li>Cost-math tables and FAQ figures are arithmetic on the cited list rates (analysis, not new sourced claims).</li>
+            </ul>
+        </div>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>

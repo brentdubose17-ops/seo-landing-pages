@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free AI Audit Tool — My Business AI Audit</title>
-    <meta name="description" content="Free AI readiness audit tool for small business: a 10-minute checklist covering tool inventory, permissions, approval gates, vendors, and data access.">
+    <meta name="description" content="Free AI readiness audit tool for small business: a 10-minute checklist covering tool inventory, permissions, approval gates, vendors, data access, and insurance coverage for AI agents.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://mybusinessaiaudit.com/audit-tool">
     <meta property="og:title" content="Free AI Audit Tool — My Business AI Audit">
@@ -32,6 +32,8 @@
         label.q { display: block; padding: 16px 0; border-bottom: 1px solid #f0f0f5; font-size: 1.05rem; cursor: pointer; }
         label.q input { margin-right: 10px; transform: scale(1.15); }
         label.q .risk { display: block; color: #666; font-size: 0.85rem; margin-top: 4px; }
+        .sec { font-size: 1.25rem; font-weight: 700; margin: 32px 0 4px; color: #1a1a2e; }
+        .sec-note { color: #555; font-size: 0.95rem; margin-bottom: 8px; }
         .btn { display: inline-block; background: #2563eb; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; margin: 24px 0 8px; border: none; font-size: 1rem; cursor: pointer; }
         #result { display: none; background: #eef2ff; border-radius: 12px; padding: 24px; margin-top: 24px; }
         #result h2 { margin-bottom: 8px; }
@@ -73,15 +75,28 @@
             <label class="q"><input type="checkbox" name="q" data-risk="6"> We re-run this checklist at least quarterly.
                 <span class="risk">The AI tool list changes faster than any other part of your stack.</span></label>
 
+            <div class="sec">Insurance and liability</div>
+            <p class="sec-note">AI agents can cause losses without a conventional hack — insurers including MSIG, QBE, and Beazley are rewriting cyber policy language for exactly this gap. If you can't tick these, take them to your broker before the loss, not after. See <a href="/ai-agent-cyber-insurance-coverage">Does Your Cyber Insurance Cover AI Agents?</a> for the full breakdown.</p>
+            <label class="q"><input type="checkbox" name="q" data-risk="8"> Our cyber policy defines AI agents or automated systems — or our broker has confirmed in writing how they're treated.
+                <span class="risk">Most policies were written for human attackers; an agent that acts on its own fits no definition cleanly.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="8"> We have confirmed there is no exclusion for losses caused by autonomous AI actions.
+                <span class="risk">Targeted exclusions are under discussion for systemic events and agents "acting as designed."</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="8"> We have disclosed our AI agent deployments and what they can access to our insurer.
+                <span class="risk">An agent using access it was deliberately given may not trigger a policy's "security event" definition.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="6"> We know who bears liability if an agent acts without human instruction — us, the vendor, or the model provider.
+                <span class="risk">"Who is liable when an AI agent causes damage?" is unresolved; get the position in writing.</span></label>
+            <label class="q"><input type="checkbox" name="q" data-risk="6"> Our policy covers vendor and principal risks — agents our vendors run for us and agents we run for clients.
+                <span class="risk">An agent you never met can reach you through a vendor you never audited — and the policy may not respond.</span></label>
+
             <button type="button" class="btn" onclick="scoreAudit()" data-umami-event="audit_tool_score">Score my audit</button>
         </form>
 
         <div id="result">
             <h2>Your AI audit score</h2>
-            <p><span class="score" id="scoreVal">0</span>/78 — <span id="grade"></span></p>
+            <p><span class="score" id="scoreVal">0</span>/114 — <span id="grade"></span></p>
             <p id="verdict"></p>
             <ul id="fixes"></ul>
-            <p>Next steps: read <a href="/articles/ai-readiness-audit-guide.html">how to run a full readiness audit</a>, check the <a href="/articles/ai-agent-security-risks.html">AI agent security risks</a> you should know about, and see <a href="/articles/5-signs-need-ai-audit.html">whether you need an audit at all</a>.</p>
+            <p>Next steps: read <a href="/articles/ai-readiness-audit-guide.html">how to run a full readiness audit</a>, check the <a href="/articles/ai-agent-security-risks.html">AI agent security risks</a> you should know about, see <a href="/articles/5-signs-need-ai-audit.html">whether you need an audit at all</a>, and ask your broker the <a href="/ai-agent-cyber-insurance-coverage">cyber insurance coverage questions</a> before an agent-caused loss.</p>
         </div>
     </div>
     <footer>
@@ -96,7 +111,7 @@
                 var risk = parseInt(b.getAttribute('data-risk'), 10);
                 if (b.checked) { score += risk; } else { unchecked.push(b.parentElement.textContent.trim().split('\n')[0]); }
             });
-            var max = 78;
+            var max = 114;
             document.getElementById('scoreVal').textContent = score;
             var grade, verdict;
             if (score >= 65) { grade = 'Strong'; verdict = 'Your AI controls are in good shape. Keep the quarterly cadence.'; }
