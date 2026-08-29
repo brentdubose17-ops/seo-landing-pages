@@ -1257,3 +1257,164 @@ test('index.html: Auto & Steel Tariff Scenario toggle (current rates vs threaten
   assert.ok(/canada-tariff-trucking-freight-impact\.html/.test(html), 'index.html must link the trucking-impact blog post');
   assert.ok(/How the 50% Canada Tariffs Hit Freight Volumes and Carriers/.test(html), 'index.html must show the trucking post title');
 });
+
+// ============================================================
+// Brazil Section 301 25% duty (t_60875ef4) — verified vs research
+// brief t_c288793e (16 sources / 52 quotes)
+// ============================================================
+
+test('BRAZIL_301 entry correct (25%, effective July 22 2026, HTS 9903.05.01, exemptions, sources)', () => {
+  const b = T.BRAZIL_301;
+  assert.ok(b, 'BRAZIL_301 should be exported');
+  assert.equal(b.rate, 0.25, 'Brazil 301 rate should be 25%');
+  assert.equal(b.effective, '2026-07-22 12:01 AM ET', 'effective date must be July 22 2026 12:01 AM ET (NOT July 20 = FRN publication)');
+  assert.equal(b.notice_date, '2026-07-15');
+  assert.equal(b.frn_published, '2026-07-20');
+  assert.equal(b.heading, '9903.05.01', 'general heading must be 9903.05.01');
+  assert.equal(b.headings.aircraft, '9903.05.05', 'aircraft carve-out heading must be 9903.05.05');
+  assert.equal(b.headings.pharma, '9903.05.06', 'pharma carve-out heading must be 9903.05.06');
+  assert.equal(b.headings.s232_covered, '9903.05.07', '232-covered heading must be 9903.05.07');
+  // Exemption count reconciliation (research brief §4): ~1,200 standard + ~430 aircraft = 1,600+
+  assert.equal(b.standard_exempt_lines, 1200);
+  assert.equal(b.aircraft_carveout_lines, 430);
+  assert.ok(/1,600\+/.test(b.exempt_subheadings), 'exempt_subheadings must state the 1,600+ figure');
+  // Exempt category coverage (research brief §3)
+  ['pharma', 'steel', 'auto', 'polysilicon', 'drones', 'ground-beef'].forEach(k => {
+    assert.ok(b.exempt_categories.includes(k), `exempt_categories must include ${k}`);
+  });
+  ['coffee', 'beef', 'orange juice', 'cocoa', 'iron ore', 'pharmaceuticals', 'civil aircraft'].forEach(k => {
+    assert.ok(b.exempt_categories_list.some(x => x.toLowerCase().includes(k)), `exempt list must mention ${k}`);
+  });
+  // Section 232 non-stacking
+  assert.ok(b.s232_excluded.includes('steel') && b.s232_excluded.includes('semiconductors'), 's232_excluded must list steel/semiconductors');
+  assert.ok(/37\.5%/.test(b.stacking.forced_labor_301), 'stacking note must mention the 37.5% combined (PIIE)');
+  // Post-consultation what-if scenarios (modeling only)
+  assert.deepEqual(Object.keys(b.scenarios), ['current', 'reduced_20', 'reduced_15', 'reduced_10', 'removed']);
+  assert.equal(b.scenarios.current.rate, 0.25);
+  assert.equal(b.scenarios.current.in_effect, true);
+  assert.equal(b.scenarios.removed.rate, 0);
+  assert.equal(b.scenarios.removed.in_effect, false);
+  assert.ok(/NOT in effect/.test(b.scenarios.reduced_15.label), 'what-if labels must state NOT in effect');
+  // Sources from the verified research pack
+  assert.ok(b.source_citations.length >= 8, `should have >= 8 source citations, got ${b.source_citations.length}`);
+  assert.ok(b.source_citations.some(s => s.includes('ustr.gov')), 'sources must cite USTR');
+  assert.ok(b.source_citations.some(s => s.includes('piie.com')), 'sources must cite PIIE');
+  // Trade context
+  assert.equal(b.trade_context.goods_surplus, 'US goods surplus $14.4B (+115.7% YoY)');
+});
+
+test('Brazil 301: non-exempt goods pay MFN + 25% + 12.5% forced-labor (37.5% stack)', () => {
+  // electronics: MFN 0.048 + cat 0.008 + forced-labor 0.125 + Brazil 0.25 = 0.431
+  const res = T.effectiveRate('brazil', 'electronics', { asOfDate: '2026-07-22', usmcaQualified: false });
+  assert.ok(Math.abs(res.rate - 0.431) < 0.0001, `expected 0.431, got ${res.rate}`);
+  assert.equal(res.breakdown.brazil301.rate, 0.25);
+  assert.equal(res.breakdown.brazil301.applies, true);
+  assert.equal(res.breakdown.brazil301.exempt, false);
+  assert.equal(res.breakdown.section301, 0.125, 'forced-labor 12.5% must still apply (PIIE stack)');
+  // textiles: MFN 0.048 + cat 0.101 + 0.125 + 0.25 = 0.524
+  const tex = T.effectiveRate('brazil', 'textiles', { asOfDate: '2026-07-22', usmcaQualified: false });
+  assert.ok(Math.abs(tex.rate - 0.524) < 0.0001, `textiles expected 0.524, got ${tex.rate}`);
+});
+
+test('Brazil 301: exempt categories pay 0% on the 25% action (pharma 9903.05.06, S232 9903.05.07, beef)', () => {
+  const pharma = T.effectiveRate('brazil', 'pharma', { asOfDate: '2026-07-22', usmcaQualified: false });
+  assert.equal(pharma.breakdown.brazil301.rate, 0, 'pharma must be exempt from the 25%');
+  assert.equal(pharma.breakdown.brazil301.exempt, true);
+  // steel: Section 232 exclusion — no 25%, no stacking
+  const steel = T.effectiveRate('brazil', 'steel', { asOfDate: '2026-07-22', usmcaQualified: false });
+  assert.equal(steel.breakdown.brazil301.rate, 0, 'steel (S232) must be exempt from the 25%');
+  assert.equal(steel.breakdown.brazil301.exempt, true);
+  const auto = T.effectiveRate('brazil', 'auto', { asOfDate: '2026-07-22', usmcaQualified: false });
+  assert.equal(auto.breakdown.brazil301.rate, 0, 'autos (S232) must be exempt from the 25%');
+  const poly = T.effectiveRate('brazil', 'polysilicon', { asOfDate: '2026-07-22', usmcaQualified: false });
+  assert.equal(poly.breakdown.brazil301.rate, 0, 'polysilicon/semiconductors (S232) must be exempt');
+  const drones = T.effectiveRate('brazil', 'drones', { asOfDate: '2026-09-03', usmcaQualified: false });
+  assert.equal(drones.breakdown.brazil301.rate, 0, 'drones/UAS (S232) must be exempt from the 25%');
+});
+
+test('Brazil 301: post-talks what-if scenarios model reduction or removal (NOT in effect)', () => {
+  const base = T.effectiveRate('brazil', 'electronics', { asOfDate: '2026-08-28', usmcaQualified: false });
+  assert.equal(base.breakdown.brazil301.scenario, 'current', 'default scenario must be current (25%)');
+  assert.equal(base.breakdown.brazil301.scenarioInEffect, true);
+  // removed -> 0% Brazil layer; base MFN 0.048 + cat 0.008 + FL 0.125 = 0.181
+  const removed = T.effectiveRate('brazil', 'electronics', { asOfDate: '2026-08-28', usmcaQualified: false, brazilScenario: 'removed' });
+  assert.equal(removed.breakdown.brazil301.rate, 0, 'removed scenario must zero the 25%');
+  assert.equal(removed.breakdown.brazil301.scenarioInEffect, false);
+  assert.ok(Math.abs(removed.rate - 0.181) < 0.0001, `removed scenario expected 0.181, got ${removed.rate}`);
+  // reduced_15 -> 15% Brazil layer
+  const r15 = T.effectiveRate('brazil', 'electronics', { asOfDate: '2026-08-28', usmcaQualified: false, brazilScenario: 'reduced_15' });
+  assert.equal(r15.breakdown.brazil301.rate, 0.15);
+  assert.ok(Math.abs(r15.rate - 0.331) < 0.0001, `reduced_15 expected 0.331, got ${r15.rate}`);
+  assert.ok(/NOT in effect/.test(r15.breakdown.brazil301.scenarioLabel), 'scenario label must flag NOT in effect');
+  // reduced_10 / reduced_20 sanity
+  assert.equal(T.effectiveRate('brazil', 'electronics', { asOfDate: '2026-08-28', brazilScenario: 'reduced_10' }).breakdown.brazil301.rate, 0.10);
+  assert.equal(T.effectiveRate('brazil', 'electronics', { asOfDate: '2026-08-28', brazilScenario: 'reduced_20' }).breakdown.brazil301.rate, 0.20);
+  // unknown scenario falls back to current
+  const unknown = T.effectiveRate('brazil', 'electronics', { asOfDate: '2026-08-28', brazilScenario: 'nonsense' });
+  assert.equal(unknown.breakdown.brazil301.scenario, 'current');
+});
+
+test('Brazil 301: date-gated — no 25% before July 22 2026, applies on/after', () => {
+  const before = T.effectiveRate('brazil', 'electronics', { asOfDate: '2026-07-21', usmcaQualified: false });
+  assert.equal(before.breakdown.brazil301.applies, false);
+  assert.equal(before.breakdown.brazil301.rate, 0, 'no Brazil 25% before the effective date');
+  assert.ok(Math.abs(before.rate - 0.181) < 0.0001, `pre-effective expected 0.181, got ${before.rate}`);
+  const onDay = T.effectiveRate('brazil', 'electronics', { asOfDate: '2026-07-22', usmcaQualified: false });
+  assert.equal(onDay.breakdown.brazil301.applies, true);
+  assert.equal(onDay.breakdown.brazil301.rate, 0.25);
+});
+
+test('Brazil 301: only applies to Brazil (no brazil301 breakdown elsewhere)', () => {
+  const cn = T.effectiveRate('china', 'electronics', { asOfDate: '2026-08-28' });
+  assert.equal(cn.breakdown.brazil301, null, 'china must not get a brazil301 layer');
+  const ca = T.effectiveRate('canada', 'auto', { asOfDate: '2026-08-28' });
+  assert.equal(ca.breakdown.brazil301, null, 'canada must not get a brazil301 layer');
+  // Brazil forced-labor rate (9903.05.27) unchanged at 12.5% in the 60-economy matrix
+  assert.equal(T.SECTION_301.brazil.rate, 0.125);
+  assert.equal(T.SECTION_301.brazil.heading, '9903.05.27');
+});
+
+test('index.html: Brazil 25% Section 301 scenario toggle + HTS/coverage note + sources + blog card', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  const data = fs.readFileSync(path.join(__dirname, '..', 'tariff-data.js'), 'utf8');
+  // Scenario toggle present and wired
+  assert.ok(/id="brazilScenarioRow"/.test(html), 'index.html must have the brazilScenarioRow');
+  assert.ok(/id="brazilScenario"/.test(html), 'index.html must have the brazilScenario select');
+  assert.ok(/updateBrazilScenarioRow/.test(html), 'index.html must wire updateBrazilScenarioRow');
+  assert.ok(/opts\.brazilScenario/.test(html), 'index.html must pass brazilScenario into effectiveRate');
+  // Current + what-if options, defaults to current
+  assert.ok(/Current — 25% Section 301/.test(html), 'index.html must default to the current 25%');
+  assert.ok(/NOT in effect/.test(html), 'index.html must flag what-if rates as NOT in effect');
+  assert.ok(/removed \/ 0%/.test(html), 'index.html must offer the removed/0% scenario');
+  // HTS/coverage note in the UI
+  assert.ok(/9903\.05\.01/.test(html), 'index.html must cite HTS 9903.05.01');
+  assert.ok(/1,600\+ exempt HTSUS subheadings|1,600\+ HTSUS subheadings/.test(html), 'index.html must state the 1,600+ exemption count');
+  assert.ok(/9903\.05\.07/.test(html), 'index.html must cite the Section 232 heading 9903.05.07');
+  assert.ok(/July 22, 2026/.test(html), 'index.html must state the July 22, 2026 effective date');
+  assert.ok(/37\.5%/.test(html), 'index.html must state the 37.5% combined stack');
+  assert.ok(/Rosa/.test(html), 'index.html must mention the Rosa-Greer talks');
+  // Source attribution in the UI
+  assert.ok(html.includes('ustr.gov/sites/default/files/files/Issue_Areas/Enforcement/Section%20301'), 'index.html must link the USTR FRN');
+  assert.ok(html.includes('piie.com/blogs/realtime-economics/2026/trumps-new-tariffs-brazil'), 'index.html must link PIIE');
+  // Data layer exports BRAZIL_301
+  assert.ok(data.includes('BRAZIL_301: BRAZIL_301'), 'tariff-data.js must export BRAZIL_301');
+  // Blog card discoverable from homepage
+  assert.ok(/brazil-section-301-tariff-2026\.html/.test(html), 'index.html must feature the Brazil blog card');
+  // FAQ parity: the two Brazil FAQPage items have matching visible Q&A blocks
+  const faqCount = (html.match(/"name": "What is the Brazil tariff in 2026\?"/g) || []).length;
+  const visCount = (html.match(/Q: What is the Brazil tariff in 2026\?/g) || []).length;
+  assert.equal(faqCount, 1, 'FAQPage must contain the Brazil tariff question');
+  assert.equal(visCount, 1, 'visible Q&A must mirror the FAQPage Brazil question');
+});
+
+test('Brazil blog post: CTA points to Country of Origin: Brazil (discoverable from the post)', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const post = fs.readFileSync(path.join(__dirname, '..', 'brazil-section-301-tariff-2026.html'), 'utf8');
+  assert.ok(/Country of Origin: Brazil/.test(post), 'blog CTA must instruct Country of Origin: Brazil');
+  assert.ok(!/Shipping To: Brazil/.test(post), 'blog CTA must NOT say Shipping To: Brazil (that control is US/Canada only)');
+  assert.ok(/Tariff Calculator 2026/.test(post), 'blog CTA must link the calculator');
+  assert.ok(/scenario toggle/.test(post), 'blog CTA must reference the post-talks scenario toggle');
+});

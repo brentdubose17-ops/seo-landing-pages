@@ -1,6 +1,16 @@
 /*
  * Tariff Calculator 2026 — canonical tariff data
  * -------------------------------------------------
+ * Updated 2026-08-28 (t_60875ef4): BRAZIL_301 layer added — the 25%
+ * Section 301 additional duty on most Brazilian goods (HTS 9903.05.01,
+ * effective July 22, 2026; verified research brief t_c288793e), with the
+ * 1,600+ exempt HTS subheadings (~1,200 standard + ~430 civil-aircraft
+ * lines), Section 232 non-stacking (9903.05.07), pharma (9903.05.06) and
+ * aircraft (9903.05.05) carve-outs, the 12.5% forced-labor stack (up to
+ * 37.5% combined per PIIE), and post-consultation what-if scenarios
+ * (opts.brazilScenario: current / reduced_20 / reduced_15 / reduced_10 /
+ * removed — modeling only, NOT in effect). Brazil's existing 12.5%
+ * forced-labor rate (9903.05.27) is unchanged.
  * Updated 2026-08-25 (t_ceb6a59f): CANADA_RETALIATION upgraded to the
  * CONFIRMED Finance Canada measures (announced Aug 25, 2026) — three
  * counter-tariff tiers (15/25/50%, rate for rate matching the US rate)
@@ -587,6 +597,117 @@
   };
 
   /*
+   * Brazil — Section 301 25% additional duty (IN EFFECT July 22, 2026)
+   * ----------------------------------------------------------------
+   * Separate USTR action: investigation initiated July 15, 2025 under
+   * Section 301(b); determination June 1, 2026 (proposed 25% on all goods
+   * of Brazil with exemptions); Notice of Action July 15, 2026; FRN
+   * published July 20, 2026 (91 FR 137); duty effective 12:01 a.m. ET
+   * July 22, 2026 for entries on/after that time. Imposes +25% ad valorem
+   * on top of MFN for non-exempt Brazilian goods (HTS 9903.05.01).
+   * DISTINCT from Brazil's 12.5% forced-labor Section 301 rate
+   * (9903.05.27, in SECTION_301) — per PIIE the two stack, up to 37.5%
+   * combined for non-exempt, non-232 goods.
+   * Exemptions: 1,600+ HTSUS subheadings in the FRN annex (~1,200
+   * standard + ~430 civil-aircraft lines; final action kept the proposal
+   * exemptions and added ~12 categories). Confirmed exempt: coffee, beef,
+   * orange juice, cocoa, Brazil nuts & tropical fruit, iron ore,
+   * petroleum & coal products, pharmaceuticals (9903.05.06), civil
+   * aircraft & parts (~430 lines, 9903.05.05), pig iron, organic honey,
+   * seafood, certain wood products, hides/furskins/leather, iron & steel
+   * waste/scrap, used clothing, antiques/collectibles/art, aluminum
+   * hydroxide. Donations (9903.05.08) and informational materials
+   * (9903.05.09) excluded; personal-use baggage excluded.
+   * Section 232: NO stacking — steel, aluminum, copper, autos, wood
+   * products, semiconductors (9903.05.07) are excluded from the 25% and
+   * pay the Section 232 rate only.
+   * Post-consultation what-if scenarios (modeling only, NOT in effect):
+   * Brazil's stated agenda (Minister Rosa, Jul 30) is to expand the
+   * exemption list, reduce tariff rates, and reassess the merits; USTR
+   * may modify/terminate under Trade Act Sec. 307(c). The Aug 31 event is
+   * bilateral virtual Rosa-Greer tariff talks; WTO consultations are the
+   * separate DS646 track (Brazil requested Jul 28, circulated Jul 30, US
+   * accepted Aug 10; China joined). No agreement announced as of
+   * 2026-08-28 — scenarios are selectable in the calculator UI for
+   * modeling only.
+   * Verified 2026-08-28 against research brief t_c288793e (16 sources,
+   * 52 verbatim quotes: USTR FRN/press release/Brazil page, WTO DS646,
+   * PIIE, CNBC, Valor x3, EY, Green Worldwide, TariffStool, BDO,
+   * Economic Times (Reuters), Agência Brasil, Eurasia Review).
+   */
+  var BRAZIL_301 = {
+    category: 'brazil-301',
+    rate: 0.25,
+    effective: '2026-07-22 12:01 AM ET',
+    notice_date: '2026-07-15',
+    frn_published: '2026-07-20',
+    frn_cite: '91 FR 137',
+    authority: 'Section 301(b)/304(a), Trade Act of 1974',
+    heading: '9903.05.01',
+    headings: {
+      general: '9903.05.01',
+      in_transit: '9903.05.02',
+      special_carveouts: '9903.05.03-04',
+      aircraft: '9903.05.05',
+      pharma: '9903.05.06',
+      s232_covered: '9903.05.07',
+      donations: '9903.05.08',
+      informational: '9903.05.09'
+    },
+    // The action covers ALL imports of Brazil "with certain exemptions"
+    // (USTR FRN) — the calculator treats every category as subject unless
+    // it is in exempt_categories. subject_highlights documents the
+    // confirmed subject concentration (PIIE, Jul 17): machinery,
+    // electrical equipment, granite, gold, tires, sugar, apparel.
+    subject_highlights: ['machinery', 'electrical equipment', 'granite', 'gold', 'tires', 'sugar', 'apparel'],
+    // Calculator categories EXEMPT from the +25%: pharma (9903.05.06),
+    // Section 232-covered articles (9903.05.07 — steel/aluminum/copper/
+    // autos/wood/semiconductors incl. polysilicon + drones/UAS), civil
+    // aircraft (9903.05.05 — no dedicated calculator category), and beef
+    // (exempt product + 'ground-beef' has its own TRQ/waiver logic).
+    exempt_categories: ['pharma', 'steel', 'auto', 'polysilicon', 'drones', 'ground-beef'],
+    exempt_subheadings: '1,600+ HTSUS subheadings (~1,200 standard + ~430 civil-aircraft lines; final action kept + expanded)',
+    standard_exempt_lines: 1200,
+    aircraft_carveout_lines: 430,
+    exempt_categories_list: ['coffee', 'beef', 'orange juice', 'cocoa', 'Brazil nuts & tropical fruit', 'iron ore', 'petroleum & coal products', 'pharmaceuticals', 'civil aircraft & parts', 'pig iron', 'organic honey', 'seafood', 'certain wood products', 'hides/furskins/leather', 'iron & steel waste/scrap', 'used clothing', 'antiques/collectibles/art', 'aluminum hydroxide'],
+    s232_excluded: ['steel', 'aluminum', 'copper', 'autos', 'wood products', 'semiconductors'],
+    stacking: {
+      forced_labor_301: 'Brazil is also in the 60-economy forced-labor Section 301 matrix at 12.5% (HTS 9903.05.27) — per PIIE the 25% and 12.5% duties stack, up to 37.5% combined for non-exempt, non-232 goods.',
+      s232: 'Articles already under Section 232 (steel, aluminum, copper, autos, wood, semiconductors — HTS 9903.05.07) are NOT subject to the 25%; the two duties do not stack.'
+    },
+    // Post-consultation what-if scenarios (modeling only — NOT in effect).
+    scenarios: {
+      current:    { label: 'Current law — 25% in effect', rate: 0.25, in_effect: true },
+      reduced_20: { label: 'What-if: 20% after talks (NOT in effect)', rate: 0.20, in_effect: false },
+      reduced_15: { label: 'What-if: 15% after talks (NOT in effect)', rate: 0.15, in_effect: false },
+      reduced_10: { label: 'What-if: 10% after talks (NOT in effect)', rate: 0.10, in_effect: false },
+      removed:    { label: 'What-if: removed / 0% after talks (NOT in effect)', rate: 0, in_effect: false }
+    },
+    trade_context: {
+      exports_2025: 'US goods exports to Brazil $54.3B (2025)',
+      imports_2025: 'US goods imports from Brazil $39.9B (2025)',
+      goods_surplus: 'US goods surplus $14.4B (+115.7% YoY)',
+      services_surplus: 'US services surplus $27.4B',
+      lula_cumulative: 'Lula: cumulative $424.5B US goods+services surplus over 15 years'
+    },
+    affected_share: '18% (Brazilian minister) vs ~34% (PIIE) of Brazil\'s exports to the US — conflicting; use range with attribution',
+    status: 'IN EFFECT — +25% additional duty on non-exempt Brazilian goods since July 22, 2026 (12:01 a.m. ET). Talks: bilateral virtual Rosa-Greer tariff talks Aug 31, 2026 (WTO consultations are the separate DS646 track — Brazil requested Jul 28, circulated Jul 30, US accepted Aug 10; China joined). Brazil\'s agenda: expand exemptions, reduce rates, reassess merits.',
+    source_citations: [
+      'USTR Notice of Action / Federal Register notice (Brazil Section 301 final action, July 15 2026, published July 20, 91 FR 137) — https://ustr.gov/sites/default/files/files/Issue_Areas/Enforcement/Section%20301/Brazil%20301%20Final%20Action%20FRN%207-15-2026%20final.pdf',
+      'USTR press release: Section 301 Action on Brazil\'s Unreasonable Acts, Policies, and Practices (Jul 15, 2026)',
+      'USTR Brazil trade summary (2025: US exports $54.3B, imports $39.9B, goods surplus $14.4B) — https://ustr.gov/countries-regions/americas/brazil',
+      'WTO DS646 news item — https://www.wto.org/english/news_e/news26_e/ds646rfc_30jul26_468_e.htm',
+      'PIIE Realtime Economics: Trump\'s new tariffs on Brazil (Jul 17, 2026) — 37.5% stack, ~34% affected share, subject categories — https://www.piie.com/blogs/realtime-economics/2026/trumps-new-tariffs-brazil-reflect-weakness-us-trade-strategy',
+      'CNBC: U.S. slaps 25% tariff on most Brazilian goods (Jul 16, 2026)',
+      'Valor International: Brazil will remain in talks (Jul 31, 2026); U.S. agrees to WTO talks (Aug 11, 2026); Lula calls Trump (Aug 21, 2026)',
+      'Green Worldwide: USTR proposes 25% Section 301 tariff on Brazilian goods — 1,200+ HTS exemptions and 430 aircraft carve-outs',
+      'TariffStool: New 25% Tariff on Brazil Takes Effect July 22, 2026',
+      'EY Tax News 2026-1530; BDO insights; Economic Times (Reuters); Agência Brasil',
+      'Eurasia Review / Agência Brasil: Brazil, US To Discuss Tariff Hikes Next Monday (Aug 27, 2026) — Aug 31 Rosa-Greer virtual talks'
+    ]
+  };
+
+  /*
    * Trucking / freight-impact layer (added 2026-08-24, research brief
    * t_cb75bfd7 — verified vs Truck News Aug 24, CTA statement, CTOA,
    * PMTC). Surfaced in the calculator as the "tariff cost per truckload"
@@ -1026,6 +1147,67 @@
       };
     }
 
+    // Brazil Section 301 — 25% additional duty (IN EFFECT July 22, 2026).
+    // Applies to non-exempt Brazilian goods (HTS 9903.05.01); stacks with
+    // the 12.5% forced-labor Section 301 rate (SECTION_301.brazil,
+    // 9903.05.27) per PIIE (up to 37.5% combined). Exempt: pharma
+    // (9903.05.06), Section 232-covered articles (9903.05.07), civil
+    // aircraft (9903.05.05), beef, and the ~1,200 standard annex lines;
+    // donations/informational materials excluded. Post-consultation
+    // what-if scenarios selectable via opts.brazilScenario
+    // ('current' | 'reduced_20' | 'reduced_15' | 'reduced_10' | 'removed')
+    // — default 'current' (25%). What-if rates are NOT in effect.
+    var brazil301Add = 0;
+    var brazil301Details = null;
+    if (countrySlug === 'brazil') {
+      var br = BRAZIL_301;
+      var brQDateStr;
+      if (opts.asOfDate) {
+        brQDateStr = String(opts.asOfDate).slice(0, 10);
+      } else {
+        brQDateStr = new Date().toISOString().slice(0, 10); // today
+      }
+      var brApplies = brQDateStr >= '2026-07-22';
+      var brExempt = br.exempt_categories.indexOf(category) !== -1;
+      // The action covers ALL imports of Brazil "with certain exemptions"
+      // (USTR FRN) — subject unless in exempt_categories.
+      var brSubject = !brExempt;
+      var brScenarioKey = (opts.brazilScenario && br.scenarios[opts.brazilScenario]) ? opts.brazilScenario : 'current';
+      var brScenario = br.scenarios[brScenarioKey];
+      if (brApplies && brSubject) {
+        brazil301Add = brScenario.rate;
+      }
+      brazil301Details = {
+        applies: brApplies && brSubject,
+        rate: brazil301Add,
+        baseRate: br.rate,
+        scenario: brScenarioKey,
+        scenarioLabel: brScenario.label,
+        scenarioInEffect: brScenario.in_effect,
+        effective: br.effective,
+        noticeDate: br.notice_date,
+        frnPublished: br.frn_published,
+        frnCite: br.frn_cite,
+        authority: br.authority,
+        heading: br.heading,
+        headings: br.headings,
+        exempt: brExempt,
+        subject: brSubject,
+        subjectHighlights: br.subject_highlights,
+        exemptSubheadings: br.exempt_subheadings,
+        standardExemptLines: br.standard_exempt_lines,
+        aircraftCarveoutLines: br.aircraft_carveout_lines,
+        exemptCategoriesList: br.exempt_categories_list,
+        s232Excluded: br.s232_excluded,
+        stacking: br.stacking,
+        tradeContext: br.trade_context,
+        affectedShare: br.affected_share,
+        askedDate: brQDateStr,
+        status: br.status,
+        source_citations: br.source_citations
+      };
+    }
+
     var rate;
     if (category === 'ground-beef') {
       // TRQ-governed product: generic MFN/category base does not apply.
@@ -1033,7 +1215,7 @@
       // (out-of-quota tariff waived), else the 26.4% out-of-quota rate.
       rate = beefAdd;
     } else {
-      rate = base + s301Add + chinaExisting + proposedAdd + s232Add + droneAdd + beefAdd + s338Add;
+      rate = base + s301Add + chinaExisting + proposedAdd + s232Add + droneAdd + beefAdd + s338Add + brazil301Add;
     }
     // Section 232 drone tariffs legitimately exceed 60% (100% Annex I tier),
     // and Canada Section 338 covered goods stack +50% on top of base duties
@@ -1057,7 +1239,8 @@
         s232: s232Details,
         drone: droneDetails,
         beef: beefDetails,
-        s338: s338Details
+        s338: s338Details,
+        brazil301: brazil301Details
       }
     };
   }
@@ -1075,6 +1258,7 @@
     GROUND_BEEF_WAIVER: GROUND_BEEF_WAIVER,
     SECTION_338_CANADA: SECTION_338_CANADA,
     CANADA_RETALIATION: CANADA_RETALIATION,
+    BRAZIL_301: BRAZIL_301,
     TRUCKING_IMPACT: TRUCKING_IMPACT,
     REJECTED_DEAL_PRESET: REJECTED_DEAL_PRESET,
     PRODUCT_SCOPE: PRODUCT_SCOPE,
