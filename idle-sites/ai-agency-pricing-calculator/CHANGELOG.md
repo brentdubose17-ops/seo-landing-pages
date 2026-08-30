@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-30 — Duplicate title fix: /index_calculator title differentiated from root (kanban t_cedbf1dd, found by t_adfac8c9) — LIVE
+
+- **Issue:** index.html (`/`) and index_calculator.html (`/index_calculator`) both served `<title>AI Agency Pricing Calculator — Instantly Calculate Your Rate</title>` (plus identical og:title / twitter:title) — duplicate titles across indexable pages dilute SERP relevance. Pre-existing; verified NOT introduced by the Gemini Omni video cluster work.
+- **Fix (title differentiation only — no URL surgery):** `/index_calculator` now carries `<title>AI Agency Pricing Calculator — Interactive Rate &amp; Margin</title>` (56c, ≤60); og:title + twitter:title synced to match. Root title unchanged ("AI Agency Pricing Calculator — Instantly Calculate Your Rate").
+- **Meta descriptions were already distinct** (index.html: Agent Plugins / wallet caps / coding-agent angle; index_calculator.html: frontier vs open-weight + ChatGPT Ads + Business seats angle) — no change needed.
+- **Indexability confirmed:** both pages remain `<meta name="robots" content="index, follow">` — no noindex introduced; no redirects/removals (64 inbound links to `/index_calculator` preserved).
+- **Canonical unchanged:** index_calculator.html still canonicalizes to https://aiagencycalculator.com/ (pre-existing). Out of scope for this title-differentiation card, flagged for orchestrator: while canonical="/" stands, the distinct title is neutralized for Google consolidation — self-canonicalization of `/index_calculator` is a separate decision given its 64 inbound links.
+- **Deployed:** Cloudflare Pages project `ai-agency-pricing-calculator` — full-dir wrangler deploy, verified live 200 + byte-identical local==live on both `/` and `/index_calculator`.
+
 ## 2026-08-30 — NEW page /ai-video-cost-per-second-2026: per-second video cost calculator + Gemini Omni 1.1 Flash row (kanban t_e335eb62, fact sheet t_39e6123c) — LIVE
 
 - **New page:** `ai-video-cost-per-second-2026.html` LIVE at https://aiagencycalculator.com/ai-video-cost-per-second-2026 — "AI Video Cost per Second 2026: Pricing Calculator" (title 49c, meta description 148c, Article + FAQPage JSON-LD @graph 5 Q&A, visible==schema FAQ parity 5/5, single H1). Root-level article, extensionless canonical, no /blog/ variant. Umami `video_cost_model_selected` / `video_cost_tier_selected` / `video_cost_duration_*` events + `click_to_calculator` CTA.
