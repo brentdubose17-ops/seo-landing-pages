@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Switching Costs in 2026: What OpenAI's Import Changed</title>
+    <meta name="description" content="OpenAI's import feature collapsed AI agent switching costs from rebuild-everything to import plus review. What transfers, what still costs, why switching is one-way.">
+    <meta name="keywords" content="AI agent switching costs, AI coding agent switching costs, AI agent switching cost, import from another agent, ChatGPT Work import, Codex import, Claude Code import, Cursor import, MCP configuration import, AI agent migration cost, AI vendor lock-in">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://findaiagency.com/ai-agent-switching-costs">
+    <meta property="og:title" content="AI Agent Switching Costs in 2026: What OpenAI's Import Changed">
+    <meta property="og:description" content="OpenAI's import feature collapsed AI agent switching costs from rebuild-everything to import plus review. What transfers, what still costs, why switching is one-way.">
+    <meta property="og:url" content="https://findaiagency.com/ai-agent-switching-costs">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Find AI Agency">
+    <meta property="og:image" content="https://findaiagency.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "AI Agent Switching Costs in 2026: What OpenAI's Import Changed",
+      "description": "OpenAI's import feature collapsed AI agent switching costs from rebuild-everything to import plus review. What transfers, what still costs, why switching is one-way.",
+      "datePublished": "2026-08-30",
+      "dateModified": "2026-08-30",
+      "author": {
+        "@type": "Organization",
+        "name": "Find AI Agency"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Find AI Agency"
+      },
+      "mainEntityOfPage": "https://findaiagency.com/ai-agent-switching-costs",
+      "image": "https://findaiagency.com/og-image.png"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are AI agent switching costs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI agent switching costs are the time and money required to move a team's agent setup from one tool to another \u2014 rebuilding instructions, skills, configuration, memories, and work history in the new runtime. Before OpenAI's import feature, that meant manual reconstruction; today, configuration and recent work transfer in minutes, while validation work remains."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does ChatGPT Work's Import feature transfer from Claude Code and Cursor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The official import list covers AGENTS.md instruction files, settings.json (mapped to config.toml), skills, plugins, existing project folders, project memories, chats from the last 30 days, MCP server configuration, hooks, slash commands, and subagents. In the Codex CLI, up to 50 chats from the last 30 days transfer. The import is non-destructive \u2014 it doesn't change or delete the existing agent setup."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do API keys and credentials transfer when importing an agent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Provider credentials and API keys are not on the import list anywhere in OpenAI's documentation \u2014 no API keys, tokens, or provider credentials are documented as importable. Teams that import must re-enter credentials in the destination runtime, which is one of the reasons post-import validation is still real work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What still costs money after importing an agent setup?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Post-import validation. OpenAI's own docs list what to review after importing: permissions and tool restrictions in imported skills and agents, MCP servers using custom auth that may require signing in again, hooks that may behave differently, placeholder-based prompt templates that may break, and plugins or marketplaces that may need manual follow-up or re-authorization. A successful import means the configuration was mapped \u2014 not that every permission, credential, hook, or integration has been validated for the new runtime."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is AI agent switching now free and fully reversible?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No \u2014 switching costs are asymmetric, not zero. Import is one-way into ChatGPT and Codex: OpenAI documents importing from Claude Code, Claude Cowork, or Cursor, but no reverse export route is documented. Leaving Claude or Cursor for OpenAI is now comparatively cheap; leaving OpenAI for another agent still means manual reconstruction. The cost of switching depends on the direction of the flow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does OpenAI's import feature change agency tool evaluation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Agencies evaluating tools for their own stack or recommending tools to clients should stop treating migration effort as a days-of-rebuild line item \u2014 it's now an import plus a review pass. But the evaluation rubric must also weigh directionality: import lowers the cost of leaving Claude or Cursor for OpenAI while doing nothing for the reverse, so lock-in risk is asymmetric rather than eliminated."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which agents can you import from, and how does the import work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On the ChatGPT desktop app, import works from Claude Code, Claude Cowork, or Cursor via Settings > Import. In the Codex CLI, the /import command works from Claude Code or Cursor. The desktop flow supports optional automatic updates that keep imported work in sync with the source agent, and import history is reviewable in the same section. The feature rolled out in stages: first import flows in June 2026, a CLI expansion in July 2026, and the full desktop-plus-CLI wave on August 11, 2026."
+          }
+        }
+      ]
+    }
+  ]
+}</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>AI Agent Switching Costs in 2026: What OpenAI's Import Changed</h1>
+            <div class="meta"><span>Published August 30, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>AI tools / switching costs / ChatGPT</span></div>
+        </header>
+
+        <h2>The switching-cost curve just bent</h2>
+        <p>For most of 2026, the economics of switching AI coding agents were simple and grim: moving a team from Claude Code to Cursor — or from any agent to any other — meant rebuilding everything by hand. Instructions, skills, configuration, project memories, MCP server connections, hooks, slash commands, subagents, and weeks of chat history were each tied to one runtime. The mental model agencies used was <strong>"sunk setup"</strong>: the longer a team had been in one tool, the more expensive leaving became.</p>
+
+        <p>That model stopped being accurate on <strong>August 11, 2026</strong>, when OpenAI's desktop-plus-CLI import wave landed. ChatGPT Work and Codex can now pull an entire working agent setup out of Claude Code, Claude Cowork, or Cursor — configuration, skills, memories, and recent work history — in minutes instead of days [1][2]. The cost curve didn't disappear; it bent. This page is the agency-grade version of that change: what exactly transfers, what still costs money, and why the honest framing is <strong>asymmetric, not zero</strong>.</p>
+
+        <h2>What OpenAI's import feature actually transfers</h2>
+        <p>OpenAI's official import documentation (learn.chatgpt.com/docs/import) lists exactly what moves into ChatGPT Work and Codex when you import from another agent [1]:</p>
+
+        <table>
+            <thead>
+                <tr><th>Source item</th><th>Destination in ChatGPT / Codex</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Instruction files</strong></td><td>AGENTS.md</td></tr>
+                <tr><td><strong>settings.json</strong></td><td>config.toml</td></tr>
+                <tr><td><strong>Skills</strong></td><td>Skills</td></tr>
+                <tr><td><strong>Plugins</strong></td><td>Plugins</td></tr>
+                <tr><td><strong>Existing project folders</strong></td><td>Projects (same folders)</td></tr>
+                <tr><td><strong>Project memories (Claude Code)</strong></td><td>Memories</td></tr>
+                <tr><td><strong>Chats from the last 30 days</strong></td><td>ChatGPT chats</td></tr>
+                <tr><td><strong>MCP server configuration</strong></td><td>Codex MCP configuration</td></tr>
+                <tr><td><strong>Hooks</strong></td><td>Codex hooks</td></tr>
+                <tr><td><strong>Slash commands</strong></td><td>Skills</td></tr>
+                <tr><td><strong>Subagents</strong></td><td>Codex agents</td></tr>
+            </tbody>
+        </table>
+
+        <p>The practical reading for agencies: <strong>everything a team configured once — the entire "build &amp; configure" layer — is portable now</strong>. AGENTS.md gives the new runtime your project conventions. Skills and slash commands bring your workflow vocabulary. Memories carry project context. MCP configuration brings the external tools you depend on. Hooks preserve lifecycle automation. Subagents preserve the specialist roles your team already built.</p>
+
+        <p>Two mechanical details matter when you plan the move [1]:</p>
+        <ul>
+            <li><strong>Desktop flow:</strong> the ChatGPT desktop app imports from <strong>Claude Code, Claude Cowork, or Cursor</strong> via Settings &gt; Import, with an optional <strong>automatic-updates</strong> toggle that keeps imported work in sync with the source agent, and a reviewable import history in the same section.</li>
+            <li><strong>CLI flow:</strong> the Codex CLI imports from <strong>Claude Code or Cursor</strong> via the <code>/import</code> command, with a limit of <strong>up to 50 chats from the last 30 days</strong>. <code>/import</code> is unavailable during a running task, in a remote session, or while connected to a local app-server daemon.</li>
+        </ul>
+
+        <p>And the import is <strong>non-destructive</strong> — OpenAI's docs are explicit: "Importing doesn't change or delete your existing agent setup" [1]. You are not burning the source environment to move; you are copying it, with the option to keep it synced.</p>
+
+        <h2>How the timeline got here: three releases, one capability</h2>
+        <p>The August 11 wave was the headline moment, but the feature was built in stages across 2026 — which is exactly why it now looks so complete. The official changelog shows [2]:</p>
+
+        <table>
+            <thead>
+                <tr><th>Date</th><th>Release</th><th>What shipped</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>June 9, 2026</strong></td><td>Codex app 26.608</td><td>First "Import to Codex" flows for Claude Code and Claude Cowork, including during onboarding.</td></tr>
+                <tr><td><strong>July 21, 2026</strong></td><td>Codex CLI 0.145.0</td><td><code>/import</code> expanded to Cursor and Claude Code — settings, MCP servers, plugins, sessions, commands, and project-scoped memories.</td></tr>
+                <tr><td><strong>August 11, 2026</strong></td><td>Desktop + CLI wave</td><td>Desktop app supports Claude Code, Claude Cowork, and Cursor; CLI <code>/import</code> for Claude Code and Cursor; same release brought the Linux desktop preview.</td></tr>
+            </tbody>
+        </table>
+
+        <p>For an agency evaluating tools, the timeline matters because it tells you the capability is <strong>mature enough to plan around</strong>: the June and July releases worked out the flow, and the August wave standardized it across desktop and CLI. The official channel for the announcement is the docs changelog rather than a marketing post — treat the changelog as the source of truth when you verify what a specific version supports.</p>
+
+        <h2>What still costs money: post-import validation is real work</h2>
+        <p>Here is where "switching is now free" gets it wrong. Import transfers configuration; it does not validate it. OpenAI's own docs list exactly what to review after importing [1]:</p>
+        <ul>
+            <li><strong>Permissions and tool restrictions</strong> in imported skills and agents need review — a skill that was approved to run in your old runtime inherits no approval in the new one.</li>
+            <li><strong>MCP servers using custom auth</strong> — servers that rely on custom auth, headers, environment variables, or unusual transports may require signing in again.</li>
+            <li><strong>Hooks may behave differently</strong> after the mapping, even when they appear to have transferred cleanly.</li>
+            <li><strong>Prompt templates that depend on arguments, shell interpolation, or file-path placeholders</strong> may break in the new runtime.</li>
+            <li><strong>Plugins and marketplace connections</strong> may need manual follow-up or re-authorization.</li>
+        </ul>
+
+        <p>OpenAI's framing is worth quoting because it sets the right expectation: <em>"A successful import means the configuration was mapped; it does not mean every permission, credential, hook, or integration has been validated for the new runtime"</em> [1]. Translation for agency budgets: the <strong>build-and-configure</strong> slice of a migration got dramatically cheaper, but a <strong>validate-and-harden</strong> slice appeared in its place. That is billable effort — someone has to go through the imported permissions, re-authenticate the MCP servers, re-test the hooks, fix the placeholder templates, and re-authorize the plugins before the environment is safe to run client work on.</p>
+
+        <p>And one category never transfers at all: <strong>credentials and API keys are not on the import list</strong>. No API keys, tokens, or provider credentials are documented as importable, so every team that switches re-enters them in the destination [1][3]. That is by design — and it is exactly why "import made switching free" is a slogan, not a cost model.</p>
+
+        <h2>The asymmetry: import is one-way into OpenAI</h2>
+        <p>The most important structural fact about the feature is the direction it runs. <strong>OpenAI documents importing <em>into</em> ChatGPT and Codex from Claude Code, Claude Cowork, or Cursor — but no reverse export route is documented</strong> [1][4]. You can bring a Claude Code setup into ChatGPT Work in minutes. Taking a ChatGPT Work or Codex setup back to Claude Code or Cursor still means manual reconstruction.</p>
+
+        <p>The consequences for switching-cost math are straightforward:</p>
+        <ul>
+            <li><strong>Leaving Claude or Cursor for OpenAI is now cheap</strong> — configuration, skills, memories, and recent chats transfer, with optional automatic sync keeping imported work current with the source agent [1][2].</li>
+            <li><strong>Leaving OpenAI is still expensive</strong> — nothing in the documentation describes exporting a ChatGPT Work or Codex setup back out. Teams that standardize on OpenAI should plan for that direction to remain manual until proven otherwise.</li>
+        </ul>
+
+        <p>So the right framing is <strong>asymmetric switching costs, not zero switching costs</strong>. It is tempting to write "no lock-in" after an import feature ships — resist it. The verified shape is one-way import plus automatic sync plus a post-import review burden; full bidirectional portability is not documented [1][4]. When you evaluate a stack for a client, the direction of the flow is now part of the decision, not a footnote.</p>
+
+        <p>This asymmetry also connects to the adjacent story of August 2026: OpenAI's notice that it will stop supplying models to Cursor on November 12, 2026 — the Cursor cutoff is a separate supply decision, but it is one more reason an agency might be weighing the switch right now. We cover that timeline in full in <a href="/openai-cursor-partnership-end">OpenAI Is Cutting Off Cursor: What It Means for AI Coding Agents</a>.</p>
+
+        <h2>What agencies should do with this: evaluation, standardization, and pricing</h2>
+        <p>Three practical changes follow from the bent cost curve.</p>
+
+        <h3>1. Stop ranking tools on "sunk setup" as a switching barrier</h3>
+        <p>Evaluation frameworks that still treat "sticky ecosystem / already invested" as a major cost are stale. Migration effort is no longer a days-of-rebuild line item — it is an import plus a review pass [1]. If you compare harnesses for your own stack, the portability score should now reflect what actually transfers and what validation remains, not the sunk cost of the current setup. Our <a href="/grok-bot-vs-claude-code">Grok Bot vs Claude Code</a> comparison shows how the harness-level picture looks once setup friction is no longer the deciding factor.</p>
+
+        <h3>2. Weigh the direction of the flow when standardizing a client stack</h3>
+        <p>The one-way door changes recommendation duty. A client with an established Claude Code or Cursor workflow can move to ChatGPT Work cheaply — but the reverse is not documented, so standardizing a client on OpenAI is a decision with an asymmetric exit cost. Document the direction in the recommendation, and treat "flexibility" as a directional property, not an absolute one. For the vendor-risk side of that call, our <a href="/ai-vendor-risk-assessment">AI vendor risk assessment</a> and the running <a href="/vendor-risk-tracker">AI vendor risk tracker</a> are the working references.</p>
+
+        <h3>3. Price migration as import + validation, and budget the validation</h3>
+        <p>If you sell migration services, the effort split changed: configuration transfer is near-zero now, but validation is a real, visible workstream. Quote the post-import checklist — permissions, MCP auth, hooks, prompt templates, plugin re-authorization — as its own line rather than burying it in "setup." And if you are budgeting the agents themselves rather than the switch, remember that agent cost blowups are driven by loops and usage, not setup — see our <a href="/ai-agent-cost-blowups">AI agent cost blowups breakdown</a> for the spend side of the same decision.</p>
+
+        <div class="cta">
+            <p><strong>Migration effort is now a cost variable</strong></p>
+            <p style="margin-bottom:16px;">The AI coding agent pricing guide has been updated: import/validation effort now sits alongside usage volume, model selection, and billing model in the cost variables that predict spend.</p>
+            <a class="btn" href="/ai-coding-agent-pricing" data-umami-event="click_to_coding_agent_pricing">Read the updated AI coding agent pricing guide (migration effort now a cost variable) →</a>
+        </div>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>What are AI agent switching costs?</h3>
+            <p>AI agent switching costs are the time and money required to move a team's agent setup from one tool to another — rebuilding instructions, skills, configuration, memories, and work history in the new runtime. Before OpenAI's import feature, that meant manual reconstruction; today, configuration and recent work transfer in minutes, while validation work remains.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What does ChatGPT Work's Import feature transfer from Claude Code and Cursor?</h3>
+            <p>The official import list covers AGENTS.md instruction files, settings.json (mapped to config.toml), skills, plugins, existing project folders, project memories, chats from the last 30 days, MCP server configuration, hooks, slash commands, and subagents. In the Codex CLI, up to 50 chats from the last 30 days transfer. The import is non-destructive — it doesn't change or delete the existing agent setup.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Do API keys and credentials transfer when importing an agent?</h3>
+            <p>No. Provider credentials and API keys are not on the import list anywhere in OpenAI's documentation — no API keys, tokens, or provider credentials are documented as importable. Teams that import must re-enter credentials in the destination runtime, which is one of the reasons post-import validation is still real work.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What still costs money after importing an agent setup?</h3>
+            <p>Post-import validation. OpenAI's own docs list what to review after importing: permissions and tool restrictions in imported skills and agents, MCP servers using custom auth that may require signing in again, hooks that may behave differently, placeholder-based prompt templates that may break, and plugins or marketplaces that may need manual follow-up or re-authorization. A successful import means the configuration was mapped — not that every permission, credential, hook, or integration has been validated for the new runtime.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is AI agent switching now free and fully reversible?</h3>
+            <p>No — switching costs are asymmetric, not zero. Import is one-way into ChatGPT and Codex: OpenAI documents importing from Claude Code, Claude Cowork, or Cursor, but no reverse export route is documented. Leaving Claude or Cursor for OpenAI is now comparatively cheap; leaving OpenAI for another agent still means manual reconstruction. The cost of switching depends on the direction of the flow.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How does OpenAI's import feature change agency tool evaluation?</h3>
+            <p>Agencies evaluating tools for their own stack or recommending tools to clients should stop treating migration effort as a days-of-rebuild line item — it's now an import plus a review pass. But the evaluation rubric must also weigh directionality: import lowers the cost of leaving Claude or Cursor for OpenAI while doing nothing for the reverse, so lock-in risk is asymmetric rather than eliminated.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Which agents can you import from, and how does the import work?</h3>
+            <p>On the ChatGPT desktop app, import works from Claude Code, Claude Cowork, or Cursor via Settings > Import. In the Codex CLI, the /import command works from Claude Code or Cursor. The desktop flow supports optional automatic updates that keep imported work in sync with the source agent, and import history is reviewable in the same section. The feature rolled out in stages: first import flows in June 2026, a CLI expansion in July 2026, and the full desktop-plus-CLI wave on August 11, 2026.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/ai-coding-agent-pricing">AI Coding Agent Pricing: Billing Models, Cost Variables, and Budgeting</a></li>
+                <li><a href="/openai-cursor-partnership-end">OpenAI Is Cutting Off Cursor: What It Means for AI Coding Agents</a></li>
+                <li><a href="/ai-agent-cost-blowups">AI Agent Costs: Blowups, Loops, and Real Estimates</a></li>
+                <li><a href="/grok-bot-vs-claude-code">Grok Bot vs Claude Code: What Changes When an Agent Team Is a Subscription</a></li>
+                <li><a href="/ai-vendor-risk-assessment">AI Vendor Risk Assessment for Agencies</a></li>
+                <li><a href="/vendor-risk-tracker">AI Vendor Risk Tracker for Agencies</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>[1] OpenAI / ChatGPT Learn — "Import from another agent" (official documentation): <a href="https://learn.chatgpt.com/docs/import" rel="noopener">learn.chatgpt.com/docs/import</a></li>
+            <li>[2] OpenAI / ChatGPT Learn — ChatGPT &amp; Codex changelog (entries for 2026-06-09, 2026-07-21, 2026-08-11): <a href="https://learn.chatgpt.com/docs/changelog" rel="noopener">learn.chatgpt.com/docs/changelog</a></li>
+            <li>[3] Verified brief (2026-08-16) — "OpenAI ChatGPT Work + Codex: Import from Claude Code / Cursor" (10-source ledger; credentials/one-way flags): <a href="https://x.com/JulianGoldieSEO/status/2089087300273897771" rel="noopener">original signal — Julian Goldie on X</a></li>
+            <li>[4] Eyerys — "OpenAI Starts Letting Developers Import Their Work From Other AI Agents" (directionality observation based on the official doc): <a href="https://www.eyerys.com/articles/news/openai-starts-letting-developers-import-their-work-other-ai-agents-chatgpt-and-codex" rel="noopener">eyerys.com</a></li>
+        </ul>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
