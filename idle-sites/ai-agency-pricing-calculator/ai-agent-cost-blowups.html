@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agent Cost Blowups: Real Estimates &amp; Loop Risk for Your Pricing</title>
     <meta name="description" content="levelsio burned $900 on one agent loop. See the real AI agent cost blowups, and estimate your own with failure loops priced in.">
-    <meta name="keywords" content="AI agent cost, agent cost calculator, AI agent pricing, levelsio Gauntlet Loop, agent failure loops, AI agency costs, subagent cost, agent budget cap, AI agency estimate">
+    <meta name="keywords" content="AI agent cost, agent cost calculator, AI agent pricing, levelsio Gauntlet Loop, agent failure loops, AI agency costs, subagent cost, agent budget cap, AI agency estimate, Cloudflare wallet fees, x402 payment protocol, agent wallet spending cap, manual override agent wallet, agent wallet fee estimate">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aiagencycalculator.com/ai-agent-cost-blowups">
     <meta property="og:title" content="AI Agent Cost Blowups: Real Estimates &amp; Loop Risk for Your Pricing" />
@@ -24,7 +24,7 @@
       "headline": "What does an AI agent really cost?",
       "description": "levelsio burned $900 on one agent loop. See the real AI agent cost blowups, and estimate your own with failure loops priced in.",
       "datePublished": "2026-08-08",
-      "dateModified": "2026-08-05",
+      "dateModified": "2026-08-29",
       "author": {"@type": "Organization", "name": "Aiagencycalculator"},
       "publisher": {"@type": "Organization", "name": "Aiagencycalculator"},
       "mainEntityOfPage": "https://aiagencycalculator.com/ai-agent-cost-blowups",
@@ -62,6 +62,21 @@
           "@type": "Question",
           "name": "How do I estimate what an AI agent project will cost?",
           "acceptedAnswer": {"@type": "Answer", "text": "Model the run the way agents actually run: input tokens, output tokens, subagent fan-out, retry rate, context reloads, and a budget cap. A calculator that prices failure loops in will show you the range between a clean run and a loop-heavy one."}
+        },
+        {
+          "@type": "Question",
+          "name": "What are Cloudflare wallet fees and the x402 payment protocol?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Cloudflare Wallets (announced August 4, 2026) give AI agents a human-readable wallet handle for paying APIs, MCP tools, and AI inference. Payments run on x402 — HTTP 402 with a price manifest the agent pays before a request is served. Cloudflare has not published a wallet fee schedule, so any wallet-fee assumption you use in pricing today is an estimate; update it when Cloudflare ships fees."}
+        },
+        {
+          "@type": "Question",
+          "name": "Should I price wallet fees into client retainers now?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes — as an estimate line item, not a fixed cost. No fee schedule has been published, so model a placeholder (e.g. a small % of agent spend or per-transaction micropayments) and revisit it when Cloudflare ships fees, which is expected in the coming months. The bigger immediate cost is cap management: when an agent hits its wallet spending cap, over-limit requests are blocked and routed to a human for a manual override — that approval time is billable minutes worth quoting."}
+        },
+        {
+          "@type": "Question",
+          "name": "What happens when an AI agent hits its wallet spending cap?",
+          "acceptedAnswer": {"@type": "Answer", "text": "The over-limit request is blocked and routed to a human for a manual override — agents cannot self-approve escalations, and the cap is enforced at the wallet's API layer so prompt injection cannot lift it. That manual override is billable human time: model it as over-cap requests per month times billable minutes per override, priced at your rate. The calculator's Agent Failure & Retry Cost Estimator has a wallet allowance-cap breach preset for exactly this."}
         }
       ]
     }
@@ -107,7 +122,7 @@
     <article>
         <header>
             <h1>What does an AI agent really cost?</h1>
-            <div class="meta"><span>Published August 8, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="meta"><span>Published August 8, 2026 · Updated August 29, 2026</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>AI agents / cost</span></div>
         </header>
 
@@ -159,6 +174,7 @@
         </div>
 
         <h2>Frequently asked questions</h2>
+        <p style="font-size:0.9rem; color:#555; margin-bottom:16px;">Wallet mechanics in depth: <a href="/cloudflare-wallets">Cloudflare Wallets Give AI Agencies Real Budget Rails for Agent Spend</a>.</p>
         <div class="faq-item">
             <h3>How much did levelsio's Gauntlet Loop really cost?</h3>
             <p>Pieter Levels (@levelsio) reported $500 per loop on August 5, 2026, then corrected the same day: $900 total, with 95% of the generated code removed in cleanup. Both figures are his own words.</p>
@@ -182,6 +198,18 @@
         <div class="faq-item">
             <h3>How do I estimate what an AI agent project will cost?</h3>
             <p>Model the run the way agents actually run: input tokens, output tokens, subagent fan-out, retry rate, context reloads, and a budget cap. A calculator that prices failure loops in will show you the range between a clean run and a loop-heavy one.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What are Cloudflare wallet fees and the x402 payment protocol?</h3>
+            <p>Cloudflare Wallets (announced August 4, 2026) give AI agents a human-readable wallet handle for paying APIs, MCP tools, and AI inference. Payments run on x402 — HTTP 402 with a price manifest the agent pays before a request is served. Cloudflare has not published a wallet fee schedule, so any wallet-fee assumption you use in pricing today is an estimate; update it when Cloudflare ships fees.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Should I price wallet fees into client retainers now?</h3>
+            <p>Yes — as an estimate line item, not a fixed cost. No fee schedule has been published, so model a placeholder (e.g. a small % of agent spend or per-transaction micropayments) and revisit it when Cloudflare ships fees, which is expected in the coming months. The bigger immediate cost is cap management: when an agent hits its wallet spending cap, over-limit requests are blocked and routed to a human for a manual override — that approval time is billable minutes worth quoting.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What happens when an AI agent hits its wallet spending cap?</h3>
+            <p>The over-limit request is blocked and routed to a human for a manual override — agents cannot self-approve escalations, and the cap is enforced at the wallet's API layer so prompt injection cannot lift it. That manual override is billable human time: model it as over-cap requests per month times billable minutes per override, priced at your rate. The calculator's Agent Failure &amp; Retry Cost Estimator has a wallet allowance-cap breach preset for exactly this.</p>
         </div>
 
         <div class="related">

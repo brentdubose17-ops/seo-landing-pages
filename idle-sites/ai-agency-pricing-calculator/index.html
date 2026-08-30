@@ -1383,8 +1383,12 @@
             <option value="levelsio" selected>levelsio Gauntlet Loop (real-world, Aug 5 2026)</option>
             <option value="fanout">Typical agentic build — subagent fan-out + retries</option>
             <option value="simple">Simple automation — few retries</option>
+            <option value="capbreach">Wallet allowance-cap breach — manual override approvals (billable minutes)</option>
             <option value="custom">Custom</option>
           </select>
+          <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
+            The cap-breach preset models Cloudflare Wallets' manual-override rule: when an agent hits its creator-set allowance, over-limit requests are blocked and routed to a human for approval — that approval time is billable.
+          </div>
         </div>
         <div class="form-group">
           <label for="failBaseCost">Base Cost per Loop Attempt ($)</label>
@@ -1397,6 +1401,25 @@
         <div class="form-group">
           <label for="failCleanup">Cleanup / Rework Cost ($)</label>
           <input type="number" id="failCleanup" min="0" max="10000" value="400" step="25" />
+        </div>
+      </div>
+      <div id="capbreachBox" style="display:none; border:1px solid rgba(34,211,238,0.35); border-radius:10px; padding:14px 16px; background:rgba(34,211,238,0.06); margin:4px 0 20px;">
+        <div style="font-size:0.8rem; color:var(--text-secondary); line-height:1.6; margin-bottom:10px;">
+          <strong style="color:var(--text-primary);">💳 Wallet allowance-cap breach — manual override overhead</strong> — Cloudflare Wallets (announced Aug 4, 2026) enforce the spending cap at the wallet's API layer: when an agent's spend exceeds its creator-set allowance, the over-limit request is <strong>blocked and routed to a human for a manual override</strong> (agents cannot self-approve; prompt injection can't lift the cap). Each override is billable human time — model the approval minutes here. Cloudflare has not published wallet fees or override pricing; these are directional assumptions you should replace with your own observed numbers.
+        </div>
+        <div class="form-grid" style="margin:0;">
+          <div class="form-group">
+            <label for="capReqCount">Over-Cap Requests / Month</label>
+            <input type="number" id="capReqCount" min="1" max="1000" value="10" step="1" />
+          </div>
+          <div class="form-group">
+            <label for="capMinPer">Billable Minutes per Override</label>
+            <input type="number" id="capMinPer" min="1" max="240" value="10" step="1" />
+          </div>
+          <div class="form-group">
+            <label for="capRateHr">Billable Rate ($/hr)</label>
+            <input type="number" id="capRateHr" min="1" max="1000" value="150" step="5" />
+          </div>
         </div>
       </div>
       <button class="btn-calculate" onclick="calculateFailure()">🔁 Estimate Total Spend With Retries</button>
@@ -1417,6 +1440,11 @@
             <div class="result-value" id="f-cleanup">—</div>
             <div class="result-sub">Manual rework after failure</div>
           </div>
+          <div class="result-card" id="f-override-card" style="display:none;">
+            <div class="result-label">Manual Override Approval</div>
+            <div class="result-value" id="f-override">—</div>
+            <div class="result-sub" id="f-override-sub">—</div>
+          </div>
           <div class="result-card primary">
             <div class="result-label">Total Including Retries</div>
             <div class="result-value" id="f-total">—</div>
@@ -1428,7 +1456,7 @@
           <div class="box-text" id="f-note">—</div>
         </div>
         <p style="margin-top:12px; font-size:0.78rem; color:var(--text-secondary); line-height:1.7;">
-          Model: total = base cost per loop attempt × (1 + failed attempts) + cleanup/rework. Source: levelsio, Aug 5 2026 — "$500 per Gauntlet Loop run", corrected to "$900 total… remove 95% of what it made" (<a href="https://x.com/levelsio/status/2084997902632390981" target="_blank" rel="noopener" style="color:var(--cyan-light);">@levelsio on X</a>); baselines from Systima token-overhead analysis (<a href="https://systima.ai/blog/claude-code-vs-opencode-token-overhead" target="_blank" rel="noopener" style="color:var(--cyan-light);">systima.ai, Jul 12 2026</a>), HN Cursor usage analytics ($0.06/req avg, <a href="https://news.ycombinator.com/item?id=45931825" target="_blank" rel="noopener" style="color:var(--cyan-light);">HN #45931825</a>), and AgentGuard infinite-loop tooling (~$2,000 overnight, <a href="https://github.com/dipampaul17/AgentGuard" target="_blank" rel="noopener" style="color:var(--cyan-light);">github.com/dipampaul17/AgentGuard</a>). Directional estimate — substitute your own observed retry rates.
+          Model: total = base cost per loop attempt × (1 + failed attempts) + cleanup/rework. The <strong>Wallet allowance-cap breach</strong> preset adds manual-override approval overhead: over-cap requests/mo × (billable minutes per override ÷ 60) × billable rate/hr — the human approval an agent must request when it hits its creator-set wallet cap. Cloudflare has not published wallet fees or override pricing, so cap-breach defaults are estimates; update when Cloudflare ships fees. Source: levelsio, Aug 5 2026 — "$500 per Gauntlet Loop run", corrected to "$900 total… remove 95% of what it made" (<a href="https://x.com/levelsio/status/2084997902632390981" target="_blank" rel="noopener" style="color:var(--cyan-light);">@levelsio on X</a>); baselines from Systima token-overhead analysis (<a href="https://systima.ai/blog/claude-code-vs-opencode-token-overhead" target="_blank" rel="noopener" style="color:var(--cyan-light);">systima.ai, Jul 12 2026</a>), HN Cursor usage analytics ($0.06/req avg, <a href="https://news.ycombinator.com/item?id=45931825" target="_blank" rel="noopener" style="color:var(--cyan-light);">HN #45931825</a>), and AgentGuard infinite-loop tooling (~$2,000 overnight, <a href="https://github.com/dipampaul17/AgentGuard" target="_blank" rel="noopener" style="color:var(--cyan-light);">github.com/dipampaul17/AgentGuard</a>); wallet override rule per Cloudflare blog (Aug 4, 2026) + Help Net Security (Aug 5, 2026). Directional estimate — substitute your own observed retry rates.
         </p>
       </div>
     </div>
@@ -1452,10 +1480,10 @@
           <input type="number" id="walletPerAgent" min="0" max="1000000" value="200" step="10" />
         </div>
         <div class="form-group">
-          <label for="walletFeePct">Wallet Fee (% of spend)</label>
+          <label for="walletFeePct">Wallet Fee (% of spend) — <span style="color:var(--warning); font-weight:800;">ESTIMATE</span></label>
           <input type="number" id="walletFeePct" min="0" max="10" value="0" step="0.1" />
           <div style="font-size:0.72rem; color:var(--text-secondary); margin-top:4px; line-height:1.5;">
-            Default <strong>0%</strong> = no wallet fee (Cloudflare has not disclosed fees). Credit-card rails run ~1.5–3.5% + fixed fee; stablecoin/x402 micropayments can be sub-cent per transaction (~$0.0001) — set your own rail's fee here.
+            ⚠ <strong>Cloudflare has not published wallet fees; this default is an estimate.</strong> Default <strong>0%</strong> = no wallet fee until a fee schedule ships. Credit-card rails run ~1.5–3.5% + fixed fee; stablecoin/x402 micropayments can be sub-cent per transaction (~$0.0001) — set your own rail's fee here. Update this default when Cloudflare publishes fees.
           </div>
         </div>
         <div class="form-group">
@@ -1690,6 +1718,7 @@
       </ul>
       <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:10px;">Changelog</div>
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-08-29:</strong> Added the <strong>Wallet allowance-cap breach</strong> preset to the <strong>Agent Failure &amp; Retry Cost Estimator</strong> — models Cloudflare Wallets' manual-override rule: when an agent hits its creator-set spending cap, over-limit requests are blocked at the wallet API layer and routed to a human for a <strong>manual override</strong>; the approval is billable human time. Math: over-cap requests/mo × (billable minutes per override ÷ 60) × billable rate/hr, added to the retry total with its own "Manual Override Approval" result card. Also labeled the <strong>Wallet Fee</strong> input in the Agent Wallet &amp; Spend Cap Estimator as <strong>ESTIMATE</strong> with the flag "Cloudflare has not published wallet fees; this default is an estimate." — no fee schedule exists yet (update when Cloudflare ships fees; tracked in code comment + CHANGELOG). Sources: Cloudflare blog (Aug 4, 2026) + Help Net Security (Aug 5, 2026) — verified via research brief t_7746aecf (Cloudflare agent wallets chain, kanban t_da2044f8).
         <strong>2026-08-28:</strong> Added <strong>Qwen3.8-Flash</strong> as a selectable model strategy — Qwen's new open-weight multimodal MoE (open-sourced <strong>Aug 26, 2026</strong> on Hugging Face + ModelScope; production API on QwenCloud same day): <strong>125B total / ~6B active per token, ~95% sparsity</strong> (OrcaRouter phrasing; card says "125B with 6B activated"), <strong>262,144-token native context → 1M via YaRN</strong>, <strong>qwen-community-1.0 license (NOT Apache-2.0)</strong>. Official pricing: <strong>$0.15 per 1M input / $0.47 per 1M output</strong> (cache read <strong>$0.016</strong>); China ¥0.8/¥2.7/¥0.1. OpenRouter live at $0.15/$0.47; Artificial Analysis medians $0.30/$1.20; OrcaRouter pass-through. Modeling: <code>MODEL_COMPUTE_FACTOR.qwen38flash = 0.86</code> / <code>MODEL_MARGIN_BONUS.qwen38flash = +7</code> — the cheapest open-weight API at list (below GLM-5.3-Flash on output and cache, below DeepSeek V4 Pro off-peak on both axes, lowest cache-read on the page at $0.016), tied with dsv4pro's 0.86 rather than below because benchmarks are vendor-reported with no independent replication, the model is two days old, GLM-5.3-Flash's 50% promo still undercuts on raw price through Sep 9, and the qwen-community-1.0 license is a new licensing layer. Selector option + helper, model label + assumption note + ROI text, FAQ item + FAQPage schema entry (24→25 Q), meta description/keywords, Pricing Reference Table footnote, open-weight section narrative + sources, changelog entry. New post: <a href="/qwen3-8-flash-next-cost" style="color:var(--cyan-light);">Qwen3.8-Flash-Next Cost: Open-Weight MoE at $0.15/M</a>. Sources: QwenCloud qwen3.8-flash + HF Qwen/Qwen3.8-Flash-Next + OpenRouter qwen/qwen3.8-flash + OrcaRouter release blog + Artificial Analysis + Unite.AI + Intelligent Living + SGLang docs + HN thread (verified via kanban t_ca417b6f / t_d363cc52).
         <strong>2026-08-28:</strong> Added <strong>OpenAI's GPT-5.6 discount-experiment data</strong> to the model-cost comparison pages: during <strong>Jul 27 – Aug 14, 2026</strong>, Terra and Luna were discounted 50% via OpenRouter — daily <strong>Terra token usage rose 5.6x</strong> and <strong>Luna 13.8x</strong>, while Sol at list price rose only <strong>1.1x</strong> (control); ~1/3 of users who tried a discounted model kept using it after expiry, and Terra/Luna went from 0.7% to 7.8% of OpenRouter tokens (Jevons-paradox elasticity, per OpenRouter's Aug 25 analysis + TLDR Aug 28). <strong>List prices updated:</strong> GPT-5.6 Terra <strong>$2/$12</strong> (−20% Jul 30, from $2.50/$15), GPT-5.6 Luna <strong>$0.20/$1.20</strong> (−80% Jul 30, from $1/$6) per 1M tokens — added to the per-1M rate tables on <a href="/ai-model-cost-per-task-2026" style="color:var(--cyan-light);">AI Model Cost per Task 2026</a> and <a href="/ai-agent-api-cost-calculator" style="color:var(--cyan-light);">AI Agent API Cost Calculator</a>, plus the Sol pricing page. Sol's $4/$20 promo (Aug 21 – Nov 21, 2026) unchanged. New post: <a href="/openai-discounts-token-usage" style="color:var(--cyan-light);">OpenAI's Discount Experiment: What 13.8x Usage Growth Means for Agency Pricing</a>. Sources: OpenRouter Blog (Aug 25, 2026) · TLDR AI (Aug 28, 2026) · OpenAI API pricing (platform docs, verified Aug 28, 2026) — research brief t_5c8841ca (7 sources, 18 evidence quotes). No calculator-logic change.
         <strong>2026-08-28:</strong> Added a <strong>PRICING-PATH ALERT</strong> + FAQ entry: <strong>OpenRouter removed all 35 openai/*:batch model slugs on Aug 26, 2026</strong> (plus z-ai/glm-5.2:batch and moonshotai/kimi-k2.7-code:batch) — catalogue went 422→380 models, 37 of 42 departures carried the :batch suffix. The slugs still answer metadata requests, so nothing looks broken until a completion returns <strong>404 "No endpoints found"</strong>. Base models untouched (openai/gpt-5 still routes at $1.25/$10.00 per 1M; OpenAI vendor page: 96 models, ~2.8T tokens/wk); 24 batch variants from Anthropic (11), Google (10), Thinking Machines/NVIDIA/MiniMax survive — anthropic/claude-opus-5:batch still bills at the clean 50%. <strong>No calculator-logic change</strong> (batch is a routing tier, not a model price input), but quoting guidance updated: (1) <strong>OpenRouter beta Batch API</strong> — POST /api/beta/batches, plain slug, 50% of standard per-token pricing, 24h window, text-only (rejects image/audio/file parts), returns 202 + status "validating" (do not treat 202 as completion); (2) <strong>openai/flex</strong> — <code>provider: {"only": ["openai/flex"]}</code>, synchronous 50% (gpt-5.6-sol $1.00/$5.00 vs $2.00/$10.00), explicit opt-in required, <strong>GPT-5.6 family only</strong> (absent on gpt-5, gpt-4o, o3, gpt-4.1); (3) <strong>OpenAI direct Batch API</strong> — still 50% vs synchronous, separate rate-limit pool, 50K requests/batch, 200MB input, 2,000 batches/hr, completes within 24h. Check any slug: <code>curl .../api/v1/models/&lt;model&gt;/endpoints</code> — empty array = dead; run it against every model string in config (42 entries vanished). FAQ item + FAQPage schema entry (23→24 Q), visible FAQ item, model-pricing NEW banner, meta description/keywords, changelog entry. New post: <a href="/blog/openrouter-openai-batch-endpoints-down/" style="color:var(--cyan-light);">OpenRouter OpenAI Batch Endpoints Down: 3 Ways to Keep the 50% Discount</a>. Sources: MoClaw investigation (Aug 28, 2026) + OpenRouter /api/v1/models live read + OpenRouter Batch API Quickstart + provider routing docs + OpenAI Batch API docs (verified via kanban t_40c4dca7).
@@ -3337,6 +3366,14 @@ function calculateChatgptSeats() {
 
 // ── Agent Failure & Retry Cost Estimator ──
 // Model: total = base cost per loop attempt x (1 + failed attempts) + cleanup/rework.
+// capbreach (NEW 2026-08-29, Cloudflare agent wallets chain): allowance-cap breach →
+// manual override approval overhead. When an agent hits its creator-set wallet cap,
+// over-limit requests are blocked and routed to a human for a manual override; the
+// approval is billable human time. overrideCost = overCapReqs/mo × (billable min per
+// override ÷ 60) × billable rate/hr. Cloudflare has NOT published wallet fees or
+// override pricing — defaults are estimates; update when Cloudflare ships fees
+// (changelog entry tracks this). Fact basis: Cloudflare blog (Aug 4, 2026) +
+// Help Net Security (Aug 5, 2026) via research brief t_6e67321b / t_7746aecf.
 // Evidence (Aug 5 2026): levelsio reported burning $500 per Gauntlet Loop run, corrected
 // to $900 total with 95% of generated code removed (https://x.com/levelsio/status/2084997902632390981).
 // Systima measured Claude Code subagent fan-out at 4.2x token cost on the same task
@@ -3347,6 +3384,7 @@ const FAIL_PRESETS = {
   levelsio: { base: 500, retries: 0, cleanup: 400, label: 'levelsio Gauntlet Loop' },
   fanout:   { base: 120, retries: 2, cleanup: 150, label: 'subagent fan-out build' },
   simple:   { base: 20,  retries: 1, cleanup: 15,  label: 'simple automation build' },
+  capbreach:{ base: 0,   retries: 0, cleanup: 0,   label: 'allowance-cap breach (manual override approvals)' },
   custom:   { base: 500, retries: 0, cleanup: 400, label: 'custom scenario' }
 };
 
@@ -3356,6 +3394,10 @@ function applyFailScenario() {
   document.getElementById('failBaseCost').value = preset.base;
   document.getElementById('failRetries').value = preset.retries;
   document.getElementById('failCleanup').value = preset.cleanup;
+  const box = document.getElementById('capbreachBox');
+  if (box) {
+    box.style.display = (key === 'capbreach') ? 'block' : 'none';
+  }
   calculateFailure();
 }
 
@@ -3364,17 +3406,31 @@ function calculateFailure() {
   const retries = parseInt(document.getElementById('failRetries').value) || 0;
   const cleanup = parseFloat(document.getElementById('failCleanup').value) || 0;
 
-  if (base <= 0) {
+  const key = document.getElementById('failScenario').value;
+  const isCap = key === 'capbreach';
+
+  if (base <= 0 && !isCap) {
     alert('Enter a base cost per loop attempt greater than zero.');
     return;
   }
 
   const naive = base;                       // one clean loop, no cleanup
   const retryCost = base * retries;         // burned retry loops
-  const total = base * (1 + retries) + cleanup;
-  const multiple = total > 0 ? Math.round((total / naive) * 10) / 10 : 1;
 
-  const key = document.getElementById('failScenario').value;
+  // capbreach: manual override approval overhead (billable minutes)
+  let overrideCost = 0;
+  let overrideNote = '';
+  if (isCap) {
+    const reqs = parseInt(document.getElementById('capReqCount').value) || 0;
+    const mins = parseFloat(document.getElementById('capMinPer').value) || 0;
+    const rate = parseFloat(document.getElementById('capRateHr').value) || 0;
+    overrideCost = reqs * (mins / 60) * rate;
+    overrideNote = reqs + ' override(s)/mo × ' + mins + ' min × $' + rate + '/hr';
+  }
+
+  const total = base * (1 + retries) + cleanup + overrideCost;
+  const multiple = total > 0 ? Math.round((total / (naive || 1)) * 10) / 10 : 1;
+
   const label = (FAIL_PRESETS[key] || FAIL_PRESETS.custom).label;
 
   document.getElementById('f-naive').textContent = fmt(naive);
@@ -3383,6 +3439,14 @@ function calculateFailure() {
   document.getElementById('f-cleanup').textContent = fmt(cleanup);
   document.getElementById('f-total').textContent = fmt(total);
   document.getElementById('f-total-sub').textContent = multiple + '× vs naive estimate';
+  const overrideCard = document.getElementById('f-override-card');
+  if (overrideCard) {
+    overrideCard.style.display = isCap ? 'block' : 'none';
+    if (isCap) {
+      document.getElementById('f-override').textContent = fmt(overrideCost);
+      document.getElementById('f-override-sub').textContent = overrideNote;
+    }
+  }
 
   let note;
   if (key === 'levelsio') {
@@ -3397,6 +3461,12 @@ function calculateFailure() {
   } else if (key === 'simple') {
     note = 'A simple automation build with occasional retries: total = ' + fmt(total) + ' vs ' + fmt(naive) + ' naive (' + multiple +
       '×). Keep workflows small and sequential — the data shows controlled, step-by-step builds avoid the failure multiplier almost entirely.';
+  } else if (key === 'capbreach') {
+    note = 'Allowance-cap breach: ' + overrideNote + ' = ' + fmt(overrideCost) +
+      '/mo in manual-override approval time (the over-limit request is blocked at the wallet API layer until a human approves it — prompt injection cannot lift the cap). ' +
+      'Total including retries/cleanup = ' + fmt(total) + '. Cloudflare has not published wallet fees or override pricing, so this is a directional estimate — ' +
+      'replace the minutes and rate with your own observed approval overhead, and pair this with the Agent Wallet & Spend Cap Estimator above to see the capped-vs-uncapped spend gap. ' +
+      'The agency takeaway: cap breaches convert compute spend into billable human time, so factor override approvals into the retainer when client workloads run near their wallet cap.';
   } else {
     note = 'Custom scenario: total = ' + fmt(base) + ' × (1 + ' + retries + ') + ' + fmt(cleanup) + ' cleanup = ' + fmt(total) +
       ', which is ' + multiple + '× the naive ' + fmt(naive) + ' estimate. Use this to model your own observed retry rates.';

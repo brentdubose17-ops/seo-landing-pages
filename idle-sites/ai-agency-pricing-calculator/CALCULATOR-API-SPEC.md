@@ -36,8 +36,13 @@ show **capped vs uncapped** scenarios.
 |----------|-------|------|---------|------------|
 | `walletAgents` | Number of Agents | number | `5` | 1–1000, step 1 |
 | `walletPerAgent` | Monthly AI Spend per Agent (uncapped, $) | number | `200` | 0–1,000,000, step 10 |
-| `walletFeePct` | Wallet Fee (% of spend) | number | `0` (no wallet fee) | 0–10, step 0.1 |
+| `walletFeePct` | Wallet Fee (% of spend) — **ESTIMATE** | number | `0` (no wallet fee) | 0–10, step 0.1 |
 | `walletCap` | Creator-Set Cap per Agent / Month ($) | number, **optional** | blank = uncapped | 0–1,000,000, step 10 |
+
+The wallet-fee input is labeled **ESTIMATE** with the UI flag "Cloudflare has not
+published wallet fees; this default is an estimate." — Cloudflare has published no
+fee schedule as of 2026-08-29; update the default and drop the flag when Cloudflare
+ships fees (tracked in the code comment + CHANGELOG).
 
 Defaults are the fallback model: **no wallet fee, no cap** — identical to the
 pre-wallet calculator behavior. Entering nothing changes no prior assumption.
@@ -212,14 +217,40 @@ followed (Axios, Aug 19, 2026). Umami `calculator_run` event gains
 
 ---
 
-## 4. Failure & Retry Estimator (unchanged)
+## 4. Failure & Retry Estimator (unchanged core)
 
 ```
 total = base × (1 + retries) + cleanup
 multiple = total / base
 ```
 
-Presets: levelsio (500/0/400 → $900, 1.8×), fanout (120/2/150), simple (20/1/15), custom.
+Presets: levelsio (500/0/400 → $900, 1.8×), fanout (120/2/150), simple (20/1/15),
+custom.
+
+### 4.1 capbreach preset (NEW 2026-08-29 — Cloudflare agent wallets chain)
+
+Scenario Preset dropdown option **"Wallet allowance-cap breach — manual override
+approvals (billable minutes)"**. Models Cloudflare Wallets' manual-override rule:
+when an agent hits its creator-set allowance, over-limit requests are blocked at the
+wallet API layer and routed to a human for a manual override; the approval is
+billable human time. Shows a conditional inputs box (`#capbreachBox`) with:
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `capReqCount` | Over-Cap Requests / Month | number | `10` | 1–1000, step 1 |
+| `capMinPer` | Billable Minutes per Override | number | `10` | 1–240, step 1 |
+| `capRateHr` | Billable Rate ($/hr) | number | `150` | 1–1000, step 5 |
+
+```
+overrideCost = capReqCount × (capMinPer ÷ 60) × capRateHr
+total        = base × (1 + retries) + cleanup + overrideCost
+```
+
+Adds a "Manual Override Approval" result card (visible only in capbreach mode).
+Cloudflare has NOT published wallet fees or override pricing — defaults are
+estimates; update when Cloudflare ships fees (code comment + CHANGELOG track this).
+Fact basis: Cloudflare blog (Aug 4, 2026) + Help Net Security (Aug 5, 2026) via
+research brief t_6e67321b / t_7746aecf.
 
 ---
 
@@ -307,6 +338,20 @@ index_calculator.html tracks via the estimate click).
 
 ## Changelog
 
+- **2026-08-29** — Wallet-fee ESTIMATE flag + `capbreach` failScenario preset
+  (task t_da2044f8, Cloudflare agent wallets chain t_967d9cb2 / brief t_85e664a9).
+  Wallet Fee input now labeled **ESTIMATE** with the UI flag "Cloudflare has not
+  published wallet fees; this default is an estimate." (see §2.1). New Scenario
+  Preset `capbreach` — "Wallet allowance-cap breach — manual override approvals
+  (billable minutes)" — in the Agent Failure & Retry Cost Estimator (§4.1):
+  conditional inputs box `#capbreachBox` (Over-Cap Requests/Month, Billable
+  Minutes per Override, Billable Rate $/hr), `overrideCost = reqs × (min/60) ×
+  rate` added to the total, new "Manual Override Approval" result card shown
+  only in capbreach mode. No published fee schedule → estimates, tracked in code
+  comments + CHANGELOG for the update-when-fees-ship trigger. FAQ addendum on
+  /ai-agent-cost-blowups (3 Q&As, HTML-identical to FAQPage JSON-LD, internal
+  link → /cloudflare-wallets, dateModified → 2026-08-29). Verified: node
+  harness + JSON-LD parity + no NaN.
 - **2026-08-26** — Claude Opus 5 model strategy added + Ramp AI Index adoption
   stats (task t_18e43426; fact basis research brief t_06f1cfb2, Ramp AI Index
   Aug 12, 2026 + WinBuzzer/BreezyScroll/Superpower Daily (FT) + Anthropic
