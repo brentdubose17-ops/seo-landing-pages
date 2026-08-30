@@ -2,7 +2,7 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-08-26 (Claude Opus 5 model strategy + Ramp AI Index adoption stats — verified via research brief t_06f1cfb2, task t_18e43426)
+**Last updated:** 2026-08-29 (Compute Supply Scenario §7 + Theseus chain — task t_1cecd86a)
 
 ---
 
@@ -18,6 +18,7 @@ independent estimators in one page:
 | 3 | Gemini API Cost & Model Routing Savings | `calculateRouting()` | main form |
 | 4 | **Agent Wallet & Spend Cap Estimator** (NEW 2026-08-07) | `calculateWallet()` | `#wallet-estimator` |
 | 5 | **ChatGPT Business Seat Cost Estimator** (NEW 2026-08-25) | `calculateChatgptSeats()` | `#chatgpt-seats-estimator` |
+| 6 | **Compute Supply Scenario** (NEW 2026-08-29) | `calculateSupply()` | `#compute-supply-estimator` |
 
 All calculators are client-side. No API keys, no server round-trips (except the
 optional email-capture worker on result unlock).
@@ -336,8 +337,104 @@ deployments move to ChatGPT Enterprise).
 billing); `chatgpt_seat_type_selected` on seat-type change (index.html only —
 index_calculator.html tracks via the estimate click).
 
+## 7. Compute Supply Scenario (NEW 2026-08-29)
+
+Purpose: model **supply-side risk** on per-token costs for 2026–2027 —
+power-constrained vs baseline. The calculator previously priced today's inputs
+only; nothing modeled power caps, dedicated-capacity deals, or grid-upgrade
+pass-throughs. This module closes that gap for agency owners pricing client
+AI spend. All adjustment percentages are **ESTIMATES** (projections, not
+published prices) — defaults are derived from verified signals, and the UI
+labels them accordingly.
+
+### 7.1 Inputs
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `supplyTokens` | Monthly Token Volume (millions) | number | `100` | 1–100,000, step 1 |
+| `supplyBasePerM` | Baseline Cost per 1M Tokens ($) | number | `3.00` | 0.01–200, step 0.05 |
+| `supplyHorizon` | Horizon | select | `2026` | `2026` \| `2027` |
+| `supplyGridPass` | Grid / Power Pass-Through (% add-on) — **ESTIMATE** | number | `8` (2026) / `12` (2027) | 0–50, step 0.5 |
+| `supplyLockedRelief` | Locked-In Capacity Relief (% discount) — **ESTIMATE** | number | `0` (2026) / `5` (2027) | 0–50, step 0.5 |
+
+Horizon select calls `applySupplyHorizon()`, which loads `SUPPLY_PRESETS`
+(`'2026': {grid: 8, relief: 0}`, `'2027': {grid: 12, relief: 5}`) into the two
+ESTIMATE fields, then recalculates.
+
+### 7.2 Model
+
+```
+baselineCost      = tokens × basePerM
+constrainedPerM   = basePerM × (1 + gridPass/100) × (1 − relief/100)
+constrainedCost   = tokens × constrainedPerM
+delta             = constrainedCost − baselineCost
+deltaPct          = (constrainedPerM / basePerM − 1) × 100
+annualDelta       = delta × 12
+```
+
+Money is formatted with `fmt()` (compact `$1.5K` ≥ 10K, else toLocaleString).
+
+### 7.3 Outputs
+
+| Element ID | Meaning |
+|------------|---------|
+| `s-baseline` | Baseline monthly cost at user's blended rate |
+| `s-constrained` / `s-constrained-sub` | Power-constrained monthly cost (EST.) + horizon/preset label |
+| `s-delta` / `s-delta-sub` | Delta per month ($, sign-prefixed) + % vs baseline |
+| `s-perm` / `s-perm-sub` | Effective per-1M under scenario (EST.) vs baseline per-1M |
+| `s-annual` | 12-month outlook delta if the scenario holds |
+| `s-note` | Narrative: no-adjustment / constrained / net-relief branches with fact basis |
+
+### 7.4 Fact basis (verified via research brief t_395ea2fa / fact sheet t_6abde9f4)
+
+- Gartner **FORECASTS**: datacenter power +26% YoY to 565 TWh 2026, passing
+  1,200 TWh by 2030 where grid supply may be insufficient — the power-constrained
+  driver. Labeled as forecast everywhere.
+- Locked capacity: up to 5GW AWS Trainium (Anthropic >$100B/10yr commitment,
+  Amazon $5B now + up to $20B) + ~3.5GW Google TPU via Broadcom from 2027.
+- Theseus Infrastructure (Anthropic + Macquarie AM + GIC, announced Aug 10,
+  2026): Macquarie/GIC own the platform and fund the majority of each project's
+  equity; Anthropic anchor tenant under long-term leases. **No capital
+  commitment, capacity, site count, or lease terms disclosed — the module says
+  so.**
+- The 100% grid-upgrade pledge is an **Anthropic commitment** (its own newsroom
+  page), not the venture's — module says so.
+- Amodei's $10–15B/GW buildout math and "hundreds of billions, not trillions"
+  = his framing on the Dwarkesh podcast, not a published cost schedule.
+- The 8%/12% pass-through and 0%/5% relief presets are **directional estimates**
+  for stress-testing, not published prices.
+
+### 7.5 Edge cases
+
+1. `tokens <= 0` or `basePerM <= 0` → alert, no calculation.
+2. Zero adjustment (both 0): constrained == baseline, delta 0.0%, narrative
+   says "No supply adjustment".
+3. Relief exceeds pass-through: net-negative delta, narrative "Net relief"
+   branch.
+4. Large volumes: `fmt()` compact (≥ 10K → `$30K`).
+
+### 7.6 Analytics
+
+`compute_supply_estimated` on every estimate click (payload: horizon,
+grid_pass, relief, tokens_m).
+
 ## Changelog
 
+- **2026-08-29** — Compute Supply Scenario added (task t_1cecd86a, Theseus
+  Infrastructure chain t_a54f7304 → t_6abde9f4 → t_395ea2fa → t_c4c2693f
+  APPROVED). New §7 module `#compute-supply-estimator` + `calculateSupply()` /
+  `applySupplyHorizon()` on index.html: power-constrained vs baseline per-token
+  cost outlooks for 2026–2027 with grid pass-through (ESTIMATE) and locked-in
+  capacity relief (ESTIMATE) presets. FAQ + FAQPage JSON-LD entry (parity
+  verified), meta keywords extended, WebApplication featureList entry, Print /
+  Save PDF button in results. Companion post published at
+  /compute-supply-scenario-2026 (Article + FAQPage, 4 Q&A parity, wordCount
+  1715, accuracy flags honored). Newsletter copy (Angle 2) saved to
+  theseus-newsletter-angle2.md for Brent's manual post. Verified: node --check,
+  24/24 mock-DOM math harness, 10/10 estimator regression, JSON-LD parse, no
+  duplicate IDs, single H1, internal links resolve. Deployed full dir; live ==
+  local byte-identical. Keywords +registered in keywords.json
+  (aiagencycalculator.com).
 - **2026-08-29** — Wallet-fee ESTIMATE flag + `capbreach` failScenario preset
   (task t_da2044f8, Cloudflare agent wallets chain t_967d9cb2 / brief t_85e664a9).
   Wallet Fee input now labeled **ESTIMATE** with the UI flag "Cloudflare has not
