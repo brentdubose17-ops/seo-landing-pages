@@ -19,6 +19,7 @@ independent estimators in one page:
 | 4 | **Agent Wallet & Spend Cap Estimator** (NEW 2026-08-07) | `calculateWallet()` | `#wallet-estimator` |
 | 5 | **ChatGPT Business Seat Cost Estimator** (NEW 2026-08-25) | `calculateChatgptSeats()` | `#chatgpt-seats-estimator` |
 | 6 | **Compute Supply Scenario** (NEW 2026-08-29) | `calculateSupply()` | `#compute-supply-estimator` |
+| 7 | **Claude Code Usage Limit Cost Impact Estimator** (NEW 2026-08-30) | `calculateClaudeCodeLimits()` | `#claude-code-limits-estimator` |
 
 All calculators are client-side. No API keys, no server round-trips (except the
 optional email-capture worker on result unlock).
@@ -435,6 +436,26 @@ grid_pass, relief, tokens_m).
   duplicate IDs, single H1, internal links resolve. Deployed full dir; live ==
   local byte-identical. Keywords +registered in keywords.json
   (aiagencycalculator.com).
+- **2026-08-30** — Claude Code Usage Limit Cost Impact Estimator added
+  (task t_8f20add6; fact basis research brief t_6a2f4dd0, 13 sources / 31
+  verbatim quotes, Anthropic-confirmed). New section `#claude-code-limits-estimator`
+  (`calculateClaudeCodeLimits()`) modeling the Sept 14, 2026 weekly-limit change:
+  permanent +25% over baseline replaces the temporary +50% boost → net −16.7%
+  (≈ −17%) vs today for Pro/Max/Team/seat-based Enterprise. Inputs: plan
+  selector (`ccPlan`), current weekly usage % of today's boosted cap
+  (`ccUsageToday`, default 100), seat price $/mo (`ccSeatPrice`, default $100),
+  seat count (`ccSeats`, default 5). Math: `new_cap = today_cap × (125/150) =
+  0.8333`; `baseline = today_cap / 1.5`; `new_cap = baseline × 1.25`; workload
+  at 100% of today's cap = 120% of new cap (150/125 = 1.2); cost to hold
+  capacity = seat line × 1.2. Outputs: new cap % of today (`cc-newcap`), usage
+  after Sept 14 (`cc-usage-new`), capacity cut (`cc-capacity-cut`), dollar cost
+  to hold capacity (`cc-eq-cost`), narrative note (`cc-note`). Umami event
+  `claude_code_limits_estimated` fires on submit. Ratio-based only (Anthropic
+  does not publish absolute weekly counts). FAQ + FAQPage JSON-LD (28→29 Q on
+  homepage) updated; new standalone page
+  /claude-code-usage-limit-cost-impact. Verified: node --check + mock-DOM math
+  harness (83.3% / 120% / $600 cases) + regression 10/10 + FAQ parity + JSON-LD
+  parse.
 - **2026-08-29** — Wallet-fee ESTIMATE flag + `capbreach` failScenario preset
   (task t_da2044f8, Cloudflare agent wallets chain t_967d9cb2 / brief t_85e664a9).
   Wallet Fee input now labeled **ESTIMATE** with the UI flag "Cloudflare has not
