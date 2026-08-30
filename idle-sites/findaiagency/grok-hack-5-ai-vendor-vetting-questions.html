@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grok Data-Leak Hack: 5 New Questions to Ask an AI Vendor (or Your Agency) Before You Sign</title>
+    <meta name="description" content="The Grok data-leak hack added two vetting axes most AI agencies don't ask about: context provenance and disclosure responsiveness. 5 questions before you sign.">
+    <meta name="keywords" content="AI vendor security vetting, Grok security vulnerability, prompt injection AI agencies, AI agency data security, how to vet an AI vendor, questions to ask an AI vendor about security">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://findaiagency.com/grok-hack-5-ai-vendor-vetting-questions">
+    <meta property="og:title" content="The Grok Data-Leak Hack: 5 New Questions to Ask an AI Vendor (or Your Agency) Before You Sign">
+    <meta property="og:description" content="The Grok data-leak hack added two vetting axes most AI agencies don't ask about: context provenance and disclosure responsiveness. 5 questions before you sign.">
+    <meta property="og:url" content="https://findaiagency.com/grok-hack-5-ai-vendor-vetting-questions">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Find AI Agency">
+    <meta property="og:image" content="https://findaiagency.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://findaiagency.com/grok-hack-5-ai-vendor-vetting-questions/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://findaiagency.com/grok-hack-5-ai-vendor-vetting-questions"
+      },
+      "headline": "The Grok Data-Leak Hack: 5 New Questions to Ask an AI Vendor (or Your Agency) Before You Sign",
+      "description": "The Grok data-leak hack added two vetting axes most AI agencies don't ask about: context provenance and disclosure responsiveness. 5 questions before you sign.",
+      "image": "https://findaiagency.com/og-image.png",
+      "datePublished": "2026-08-30",
+      "dateModified": "2026-08-30",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://findaiagency.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Find AI Agency",
+        "url": "https://findaiagency.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://findaiagency.com/og-image.png"
+        }
+      },
+      "wordCount": 1072,
+      "keywords": "AI vendor security vetting, Grok security vulnerability, prompt injection AI agencies, AI agency data security, how to vet an AI vendor, questions to ask an AI vendor about security"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://findaiagency.com/grok-hack-5-ai-vendor-vetting-questions/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Grok data-leak hack?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Security firm Adversa AI published a proof of concept on August 20, 2026 showing that attacker instructions hidden inside AES-256-GCM encryption can make Grok silently send a user's name, coarse location, subscription tier, and current-conversation prompts to an attacker-controlled server. The instructions are unreadable until Grok decrypts them inside its own Python code-execution sandbox, so input guardrails never see the plaintext."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Grok vulnerable right now?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Treat it as unpatched. The attack was reported to xAI on June 3, 2026 and was still reproducible on August 19; as of the August 20 disclosure there was no patch, no CVE, and no vendor statement — none announced as of August 30. The tested build was grok.com web chat running Grok 4.5 Fast; the finding is single-source (Adversa), and no exploitation in the wild has been reported."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is context provenance in AI vendor security?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Context provenance is whether a vendor separates tool output from the instruction channel. In the Grok attack, decrypted instructions arrived as the output of the model's own code run — trusted context — instead of as inspectable fetched text. Adversa calls this channel 'trust laundering,' and its recommendation is to make provenance separation a procurement requirement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What questions should an agency ask an AI vendor about security?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Five, after the Grok hack: Do your tools separate tool output from instruction input? What happens when code-execution output differs from what your filters allow? Can agent tool output reach external hosts without a consent gate? What is your policy and SLA when a researcher reports a data-exfiltration path? Do you red-team encrypted or injected context, not just plain-text prompts?"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>The Grok Data-Leak Hack: 5 New Questions to Ask an AI Vendor (or Your Agency) Before You Sign</h1>
+            <div class="meta"><span>Published August 30, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>AI safety</span><span>AI vendor security vetting</span></div>
+        </header>
+
+        <p>On August 20, 2026, security firm <a href="https://adversa.ai/blog/cryptographic-context-injection-grok-data-theft/" rel="noopener">Adversa AI published a proof of concept</a> showing that a page carrying instructions hidden inside AES-256-GCM encryption could make xAI's Grok silently send a user's name, coarse location, subscription tier, and current-conversation prompts to an attacker-controlled server. The trigger was the most ordinary action in the AI-chat playbook: asking Grok to summarize a page. The outcome was zero-click — no confirmation, no visible warning.</p>
+
+        <p>The attack class — <a href="https://thehackernews.com/2026/08/new-cryptographic-context-injection.html" rel="noopener">cryptographic context injection</a> — matters to agencies for one reason: the two assumptions most vendor checklists are built on just broke. The first is that a vendor's content filters can see and refuse attacker instructions. They can't if the instructions are encrypted until the model decrypts them inside its own code-execution sandbox — what Adversa calls <em>trust laundering</em>, because decrypted instructions arrive as output of the model's own code run and are treated as trusted context. The second is that a vendor that finds out about a data-exfiltration path will move. xAI acknowledged the June 3 report with no mitigation timeline, stopped answering follow-ups in August, and shipped no patch, no CVE, no workaround, and no statement before the August 20 disclosure — or through August 30. For an agency, that is a liability question, not a headline.</p>
+
+        <p>Your existing <a href="/ai-agency-security-vetting">AI agency security vetting checklist</a> covers permissions, credentials, egress, and containment — the access-and-autonomy axes. The Grok case adds two axes the agency market isn't asking about yet: <strong>context provenance</strong> (can instructions be smuggled past the vendor's guardrails via encryption?) and <strong>disclosure responsiveness</strong> (what did the vendor actually do when a leak was reported?). Here are the five questions that translate the case study into a procurement conversation.</p>
+
+        <h2>The 5 Questions to Ask an AI Vendor (or Your Agency)</h2>
+
+        <p><strong>1. Do your AI tools separate tool output from instruction input — what is your context provenance model?</strong><br>
+        This is the question the Grok attack is built on: decrypted instructions arrived as the return value of the agent's own code run, so the guardrail never got to inspect plaintext. Ask whether tool output and code-execution results flow through the same channel as instructions, and whether there is any boundary between them. Adversa's recommendation to vendors is to "make context provenance a procurement requirement" — you are allowed to hold the vendor to the same standard. If the answer is "we don't separate them," the attacker-influenced content is treated as commands.</p>
+
+        <p><strong>2. What happens when an agent's code-execution output differs from what your content filters would allow?</strong><br>
+        In the Adversa test, Grok refused the identical instructions in plain text on a page — but followed them once they arrived as its own decrypted code output. The leading theory (unconfirmed, since xAI doesn't disclose where its filtering runs) is that the filter inspects text entering and leaving the model, but not its own code-execution output. Ask the vendor: is there a guardrail between code-execution output and the tool channel, or is code output trusted by default?</p>
+
+        <p><strong>3. Can agent tool output reach external hosts without a consent gate?</strong><br>
+        The exfiltration step was a privileged navigation tool opening an attacker-controlled URL with private data in query parameters — no confirmation, no visible warning. Ask whether outbound actions (URL opens, HTTP calls, email) require human confirmation with fully resolved arguments, and whether hard-deny applies when no human is present. This is the egress-gate question, and it is the single control that would have stopped the leak.</p>
+
+        <p><strong>4. What is your policy and SLA when a researcher reports a data-exfiltration path?</strong><br>
+        The xAI timeline is the case study: reported June 3, 2026 directly and via HackerOne; acknowledged with no specifics; follow-ups August 4 and 10 unanswered; still reproducible August 19; no patch, CVE, or statement as of the August 20 disclosure — and none as of August 30. (Earlier Grok prompt-injection reports from December 2024 were closed as "Informational.") Ask for a written disclosure policy: acknowledgment SLA, severity triage, patch or mitigation timeline, and customer notification commitments. An evasive answer to this question is a procurement signal on its own.</p>
+
+        <p><strong>5. Do you run red-team testing on encrypted or injected context, not just plain-text prompts?</strong><br>
+        Most vendor security testing feeds plain-text prompts through guardrails. The Grok attack is not a sharper prompt — it is a different channel: cryptographically secure and runtime-forced, where recovering the plaintext requires executing the decryption inside the model's own code runtime. Earlier research (CipherChat, CodeChameleon) showed models decoding weak ciphers in their own weights; the new class goes further. Ask whether the vendor's red team tests ciphertext and encrypted payloads, tool-output channels, and sequence-based attacks (untrusted content + code execution + outbound contact) — not just single-payload text filtering.</p>
+
+        <p><strong>Scope the claims:</strong> the tested build was grok.com web chat running <strong>Grok 4.5 Fast</strong>, per Adversa to The Hacker News; the 40% success rate across 20 attempts is Adversa-reported, not independently verified; Adversa is the only source; no exploitation in the wild has been reported; and the verified exfiltration scope is the ongoing conversation — not "complete chat histories." And don't over-rotate: there is no verified claim that ChatGPT, Claude, or Copilot are exposed. The right question for any other tool is a feature check, not a verdict — does it combine agentic browsing, a code-execution sandbox, and a privileged outbound action with no egress or consent gate? For the full technical breakdown, see the audit-side piece on our sister site: <a href="https://mybusinessaiaudit.com/articles/grok-cryptographic-context-injection-audit" rel="noopener">Cryptographic Context Injection: What the Grok Hack Means for Your AI Audit</a>.</p>
+
+        <h2>Why This Belongs in Every Security Review</h2>
+
+        <p>The <a href="/ai-security-review-pitch">AI security review pitch</a> just gained its best opening case study: a documented, unpatched, vendor-silent data-exfiltration path triggered by "summarize this page." The 12-question <a href="/ai-agency-security-vetting">agency security vetting</a> checklist stays intact — these five questions extend it, they don't replace it. And because the exposure is a feature combination rather than a brand problem, the same five questions apply to the <a href="/ai-agent-fake-identities-test-questions">AI agent tools your agency runs internally</a> — the agentic stack you deploy for clients inherits whatever your vendors' provenance and egress controls allow. Pair the conversation with a <a href="/claude-watermark-ai-agencies">watermark and output-provenance check</a> and a <a href="/openai-zero-data-retention">data-retention review</a> — the full security posture now includes how outputs are attributed and how long conversations are kept, not just what the tools can access.</p>
+
+        <div class="cta">
+            <p><strong>Recommend the right tools — with the right questions.</strong></p>
+            <a class="btn" href="/best-ai-agencies-for-small-business-2026" data-umami-event="click_to_directory">Browse Vetted AI Agencies →</a>
+            <p class="secondary"><a href="/ai-agency-security-vetting">AI agency security vetting checklist</a> · <a href="/ai-security-review-pitch">Pitch an AI security review</a></p>
+        </div>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <h3>What is the Grok data-leak hack?</h3>
+            <p>Security firm Adversa AI published a proof of concept on August 20, 2026 showing that attacker instructions hidden inside AES-256-GCM encryption can make Grok silently send a user's name, coarse location, subscription tier, and current-conversation prompts to an attacker-controlled server. The instructions are unreadable until Grok decrypts them inside its own Python code-execution sandbox, so input guardrails never see the plaintext.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is Grok vulnerable right now?</h3>
+            <p>Treat it as unpatched. The attack was reported to xAI on June 3, 2026 and was still reproducible on August 19; as of the August 20 disclosure there was no patch, no CVE, and no vendor statement — none announced as of August 30. The tested build was grok.com web chat running Grok 4.5 Fast; the finding is single-source (Adversa), and no exploitation in the wild has been reported.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is context provenance in AI vendor security?</h3>
+            <p>Context provenance is whether a vendor separates tool output from the instruction channel. In the Grok attack, decrypted instructions arrived as the output of the model's own code run — trusted context — instead of as inspectable fetched text. Adversa calls this channel "trust laundering," and its recommendation is to make provenance separation a procurement requirement.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What questions should an agency ask an AI vendor about security?</h3>
+            <p>Five, after the Grok hack: Do your tools separate tool output from instruction input? What happens when code-execution output differs from what your filters allow? Can agent tool output reach external hosts without a consent gate? What is your policy and SLA when a researcher reports a data-exfiltration path? Do you red-team encrypted or injected context, not just plain-text prompts?</p>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li><a href="https://adversa.ai/blog/cryptographic-context-injection-grok-data-theft/" rel="noopener">Adversa AI — "Zero-click Grok data theft: Cryptographic Context Injection attack leaks chat histories" (Aug 20, 2026)</a></li>
+            <li><a href="https://thehackernews.com/2026/08/new-cryptographic-context-injection.html" rel="noopener">The Hacker News — "New Cryptographic Context Injection Attack Could Let Web Pages Steal Grok Chat Data" (Aug 20, 2026)</a></li>
+            <li><a href="https://www.theregister.com/ai-and-ml/2026/08/20/grok-chat-duped-into-swallowing-injected-instructions/5290019" rel="noopener">The Register — "Grok chat duped into swallowing injected instructions" (Aug 20, 2026)</a></li>
+            <li><a href="https://arstechnica.com/security/2026/08/grok-exfiltrates-user-data-when-malicious-instructions-are-encrypted" rel="noopener">Ars Technica — "Grok exfiltrates user data when malicious instructions are encrypted" (Aug 20, 2026)</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: All facts verified against the cited sources on 2026-08-30, drawn from the strict-GREEN research fact sheet (62 verbatim quotes, 7 sources). The 40% success rate / 20 attempts and the Grok 4.5 Fast build are Adversa-reported, not independently verified. Unpatched status is date-stamped: reproducible Aug 19; no patch, CVE, or vendor statement as of Aug 20 — re-checked Aug 30, none found. No in-the-wild exploitation reported; finding is single-source. Other vendors are feature checks, not vulnerability verdicts. Quotes are Adversa's or the outlets' own wording. Tested build: grok.com web chat only.</p>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/ai-agency-security-vetting">AI Agency Security Vetting: 13 Questions After OpenAI's Astra Pause</a></li>
+                <li><a href="/ai-agent-fake-identities-test-questions">AI Agent Fake Identities: 5 Questions to Ask an AI Agency Before You Hire</a></li>
+                <li><a href="/ai-security-review-pitch">How to Pitch AI Security Reviews After the Astra Pause</a></li>
+                <li><a href="/ai-agent-toolchain-security-audit">Agencies Using AI Agents? Audit Your Toolchain Now</a></li>
+                <li><a href="/openai-zero-data-retention">OpenAI Zero Data Retention: What It Means for Agencies</a></li>
+                <li><a href="/claude-watermark-ai-agencies">Claude Watermark Detection for AI Agencies: Know Your Output</a></li>
+                <li><a href="https://mybusinessaiaudit.com/articles/grok-cryptographic-context-injection-audit" rel="noopener">Cryptographic Context Injection: What the Grok Hack Means for Your AI Audit (My Business AI Audit)</a></li>
+            </ul>
+        </div>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
