@@ -2,7 +2,7 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-08-29 (Compute Supply Scenario §7 + Theseus chain — task t_1cecd86a)
+**Last updated:** 2026-08-31 (Outcome-based pricing mode — task t_e54f18c1)
 
 ---
 
@@ -25,6 +25,67 @@ All calculators are client-side. No API keys, no server round-trips (except the
 optional email-capture worker on result unlock).
 
 ---
+
+## 8. Outcome-based pricing mode (NEW 2026-08-31)
+
+**Location:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/ai-agent-api-cost-calculator.html`
+(separate page — the Agent API Cost Estimator, per-token model). This is the
+calculator that got the outcome-mode selector; the homepage index.html main
+calculator is unchanged.
+
+Purpose: compare paying per-token (or per-call) for the same AI workload vs
+paying per completed task/outcome — the pricing model OpenAI began piloting
+with select enterprise customers Aug 30–31, 2026 (research brief t_9974fbbc).
+
+### 8.1 Mode selector
+
+Radio `name="mode"` at the top of the calculator: `usage` (default, existing
+behavior preserved) | `outcome`. Switching modes toggles visibility of the
+outcome inputs and the side-by-side results block; **input values are never
+cleared**, so switching modes does not lose inputs.
+
+### 8.2 Inputs (outcome mode)
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `tasksPerMonth` | Expected completed tasks per month | number | `1320` | 1–10,000,000, step 1 |
+| `pricePerOutcome` | Price per completed outcome ($) | number | `0.99` | 0.01–50, step 0.01 |
+
+The existing per-token inputs (agents, callsPerDay, daysPerMonth, complexity,
+tokIn/tokOut, inPrice/outPrice, cacheHit, cachePrice, overhead, markup) remain
+visible in outcome mode and drive the per-token side of the comparison.
+
+### 8.3 Model
+
+```
+monthlyCalls   = agents × callsPerDay × daysPerMonth × complexity   (existing)
+outcomeMonth   = tasksPerMonth × pricePerOutcome
+outcomeYear    = outcomeMonth × 12
+tokenMonth     = loaded (existing fully-loaded per-token cost)
+tokenYear      = tokenMonth × 12
+delta          = outcomeMonth − tokenMonth   (negative = outcome cheaper)
+deltaPct       = delta / tokenMonth × 100
+```
+
+### 8.4 Outputs (rounded to 2 decimals via `fmt2()`)
+
+| Result ID | Meaning |
+|-----------|---------|
+| `rOutcomeMonth` / `rOutcomeYear` | Outcome-based monthly/yearly cost |
+| `rTokenMonth` / `rTokenYear` | Same work per-token (loaded) monthly/yearly |
+| `rDelta` / `rDeltaLabel` | Delta $ + % (break-even when |delta| < $0.005) |
+| `rOutcomePerTask` | Price per completed outcome |
+| `outcomeNote` | Required availability note: OpenAI's outcome-based pricing is currently limited to select enterprise customers and is not generally available; risk-transfer copy (cheaper when success rate low, riskier at high volume when per-outcome price > effective per-token cost); market references (Intercom $0.99, Zendesk ~$1.20–1.50, HubSpot $0.50, Salesforce $2) |
+
+### 8.5 Verified
+
+- Mock-DOM node harness (test-aac-outcome.mjs) PASS: default math ($1,306.80/mo
+  outcome vs $1,834.80/mo token at defaults), input preservation across mode
+  switches, 2-decimal rounding on all $ figures.
+- index.html regression harness still 10/10 (main calculator untouched).
+- JSON-LD valid; FAQ parity 7/7 visible = schema; all 42 JS-referenced element
+  ids exist in HTML (no null getElementById / console-error risk).
+
 
 ## 2. Wallet & Spend Cap Estimator (NEW)
 

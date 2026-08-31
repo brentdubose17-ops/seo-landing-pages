@@ -2,6 +2,16 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-08-31 — Outcome-based pricing mode on /ai-agent-api-cost-calculator (kanban t_e54f18c1, research brief t_9974fbbc) — LIVE
+
+- **Mode selector added** to the Agent API Cost Estimator: `API/usage-based` (default, existing behavior unchanged) | `Outcome-based` (new). Radio `name="mode"` toggles the outcome inputs and the side-by-side comparison block; **input values are never cleared on switch**, so switching modes does not lose inputs.
+- **Outcome-based mode inputs:** expected completed tasks per month (default 1,320 — matches the existing 50-calls-per-resolution assumption on defaults) and price per completed outcome (default $0.99, market ref range $0.50–$2.00). Existing per-token inputs (agents, calls, tokens, prices, cache, overhead, markup) stay visible and drive the per-token side of the comparison.
+- **Side-by-side outputs (rounded to 2 decimals via `fmt2()`):** outcome-based monthly/yearly vs same work per-token (loaded) monthly/yearly, delta $ + %, per-task price, break-even label when |delta| < $0.005.
+- **Required availability note** (static, in the outcome results block): "OpenAI's outcome-based pricing is currently limited to select enterprise customers and is not generally available." Plus risk-transfer copy — cheaper when success rate low or workload burns many calls per completion; riskier at high volume when per-outcome price > effective per-token cost; market references (Intercom Fin $0.99, Zendesk Verified Resolutions ~$1.20–$1.50, HubSpot Customer Agent $0.50, Salesforce Agentforce $2).
+- **Copy/FAQ:** new "Outcome-based pricing: when it's cheaper, when it's riskier" section (Aug 30–31, 2026 OpenAI/TNW/The Information context, risk-transfer economics, definition-of-success/attribution caveat); 2 new visible FAQ items ("Can I pay for AI only when it works?" + "When is outcome-based pricing cheaper than per-token, and when is it riskier?") — visible==schema FAQ parity now 7/7 (also added the pre-existing missing "How much should I mark up" item to schema). Meta description/keywords extended with outcome-pricing terms; dateModified → 2026-08-31.
+- **Related links added:** /agency-pricing (Sell Outcomes, Not Services) + /ai-agency-pricing-models-explained.
+- **Verified:** mock-DOM node harness PASS (default math $1,306.80/mo outcome vs $1,834.80/mo token, input preservation, 2-dp rounding); index.html regression harness still 10/10; JSON-LD parses clean; all 42 JS-referenced element ids exist (no console-error risk); node --check syntax OK.
+
 ## 2026-08-30 — Duplicate title fix: /index_calculator title differentiated from root (kanban t_cedbf1dd, found by t_adfac8c9) — LIVE
 
 - **Issue:** index.html (`/`) and index_calculator.html (`/index_calculator`) both served `<title>AI Agency Pricing Calculator — Instantly Calculate Your Rate</title>` (plus identical og:title / twitter:title) — duplicate titles across indexable pages dilute SERP relevance. Pre-existing; verified NOT introduced by the Gemini Omni video cluster work.

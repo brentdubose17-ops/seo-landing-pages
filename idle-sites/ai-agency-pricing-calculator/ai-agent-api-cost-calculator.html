@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</title>
-    <meta name="description" content="Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead, with agent-first pricing guidance built in.">
-    <meta name="keywords" content="AI agent API cost, agent API cost calculator, AI agent cost estimator, agent workload cost, agent-first pricing, AI agency API costs, token cost calculator, AI agent pricing, API cost per agent">
+    <meta name="description" content="Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead — and compare per-token vs outcome-based pricing side-by-side, with agent-first pricing guidance built in.">
+    <meta name="keywords" content="AI agent API cost, agent API cost calculator, AI agent cost estimator, agent workload cost, agent-first pricing, AI agency API costs, token cost calculator, AI agent pricing, API cost per agent, outcome-based pricing, pay per completed task, OpenAI outcome-based pricing, per-resolution pricing, AI pricing models 2026, pay for AI only when it works">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aiagencycalculator.com/ai-agent-api-cost-calculator">
     <meta property="og:title" content="AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs" />
-    <meta property="og:description" content="Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead, with agent-first pricing guidance built in.">
+    <meta property="og:description" content="Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead — and compare per-token vs outcome-based pricing side-by-side.">
     <meta property="og:url" content="https://aiagencycalculator.com/ai-agent-api-cost-calculator">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Aiagencycalculator">
@@ -22,9 +22,9 @@
     {
       "@type": "Article",
       "headline": "AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs",
-      "description": "Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead, with agent-first pricing guidance built in.",
+      "description": "Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead — and compare per-token vs outcome-based pricing side-by-side.",
       "datePublished": "2026-08-24",
-      "dateModified": "2026-08-24",
+      "dateModified": "2026-08-31",
       "author": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "publisher": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "mainEntityOfPage": "https://aiagencycalculator.com/ai-agent-api-cost-calculator",
@@ -53,6 +53,21 @@
           "@type": "Question",
           "name": "Why do AI agent API bills exceed simple token estimates?",
           "acceptedAnswer": {"@type": "Answer", "text": "Agents don't make one clean call per task. They fan out subagents, retry failed steps, reload context, and bill every intermediate call. A single agent task can query thousands of endpoints (Cloudflare's Matthew Prince cited ~5,000 sites vs ~5 for a human). Add a workload-complexity multiplier for retries and fan-out or your estimate will be low by 1.5–3x."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can I pay for AI only when it works?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes, but only for select large enterprise customers so far. In late August 2026, OpenAI began letting some of its largest customers pay only when its AI actually completes the job — for example a customer-support interaction handled end-to-end — instead of per token or per call. The arrangement is limited to select major accounts, is not generally available, and OpenAI has not formally announced it; the terms, customers, and prices are not public. Use the outcome-based mode on this calculator to model what that would cost your workload."}
+        },
+        {
+          "@type": "Question",
+          "name": "When is outcome-based pricing cheaper than per-token, and when is it riskier?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Outcome-based pricing shifts retry and failure risk to the vendor: you pay only when the AI completes the job, so it is cheaper when your success rate is low or your workload burns many calls per completed task. It is riskier at high volume when the per-outcome price exceeds your effective per-token cost — for example a $0.99 per resolution price vs $0.12 per resolution of token cost on a cheap model. Market references for per-resolution pricing: Intercom Fin $0.99 per conversation resolved, Zendesk Verified Resolutions ~$1.20–$1.50, HubSpot Customer Agent $0.50, Salesforce Agentforce $2 per conversation."}
+        },
+        {
+          "@type": "Question",
+          "name": "How much should I mark up API costs when billing clients?",
+          "acceptedAnswer": {"@type": "Answer", "text": "A transparent 10–20% pass-through margin is the defensible norm — the margin compensates for forecasting risk, monitoring, and re-baselining, not just the tokens. If you price per outcome instead, set the per-resolution price at or below established benchmarks (Intercom Fin $0.99, Salesforce Agentforce $2) while keeping your loaded cost per resolution well under it."}
         }
       ]
     }
@@ -142,6 +157,14 @@
 
         <div class="calc" id="calc">
             <h2>Agent API Cost Estimator</h2>
+            <div class="field full" style="margin-bottom:14px;">
+                <label>Calculator mode</label>
+                <div class="radio-row">
+                    <label><input type="radio" name="mode" value="usage" checked> API/usage-based</label>
+                    <label><input type="radio" name="mode" value="outcome"> Outcome-based</label>
+                </div>
+                <div class="note" id="modeNote" style="margin-top:6px;"></div>
+            </div>
             <div class="grid">
                 <div class="field">
                     <label for="agents">Number of agents <span class="hint">(active in production)</span></label>
@@ -209,6 +232,17 @@
                     <label for="cachePrice">Cached input price per 1M tokens ($)</label>
                     <input type="number" id="cachePrice" value="0.20" min="0" max="50" step="0.05">
                 </div>
+                <div class="field full" id="outcomeHeader" style="display:none; grid-column: 1 / -1; margin-top: 6px; border-top: 1px dashed #cfe3ff; padding-top: 14px;">
+                    <label style="font-size:1rem; color:#1d4ed8;">Outcome-based pricing inputs <span class="hint">(pay per completed task — not per token)</span></label>
+                </div>
+                <div class="field" id="tasksField" style="display:none;">
+                    <label for="tasksPerMonth">Expected completed tasks per month</label>
+                    <input type="number" id="tasksPerMonth" value="1320" min="1" max="10000000" step="1">
+                </div>
+                <div class="field" id="priceField" style="display:none;">
+                    <label for="pricePerOutcome">Price per completed outcome ($) <span class="hint">(market ref $0.50–$2.00)</span></label>
+                    <input type="number" id="pricePerOutcome" value="0.99" min="0.01" max="50" step="0.01">
+                </div>
             </div>
 
             <div class="results" id="results">
@@ -228,6 +262,22 @@
                 </div>
             </div>
             <div class="note">All figures are estimates on current published 2026 list rates (see reference table below). Your real bills will vary with model choice, caching, off-peak scheduling, and retry patterns — re-run quarterly.</div>
+
+            <div class="results" id="outcomeResults" style="display:none; border-color:#cfe3ff; background:#f7fbff;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px; margin-bottom:4px;">
+                    <h4 style="color:#1d4ed8; margin:0;">Outcome-based vs per-token — side by side</h4>
+                    <span class="badge" style="background:#eef7ff;">NEW Aug 31, 2026</span>
+                </div>
+                <div class="row total"><span class="k">Outcome-based — monthly</span><span class="v" id="rOutcomeMonth">—</span></div>
+                <div class="row"><span class="k">Outcome-based — yearly</span><span class="v" id="rOutcomeYear">—</span></div>
+                <div class="row"><span class="k">Per-token (same work, loaded) — monthly</span><span class="v" id="rTokenMonth">—</span></div>
+                <div class="row"><span class="k">Per-token (same work, loaded) — yearly</span><span class="v" id="rTokenYear">—</span></div>
+                <div class="row"><span class="k" id="rDeltaLabel">Delta (outcome vs per-token)</span><span class="v" id="rDelta">—</span></div>
+                <div class="row"><span class="k">Outcome-based per completed task</span><span class="v" id="rOutcomePerTask">—</span></div>
+                <div class="note" id="outcomeNote" style="color:#444; font-size:0.85rem; background:#f0f7ff; border:1px solid #cfe3ff; border-radius:8px; padding:10px 12px; margin-top:12px;">
+                    <strong>Availability:</strong> OpenAI's outcome-based pricing is currently limited to select enterprise customers and is not generally available. When it is available, it shifts retry/failure risk to the vendor: cheaper when your success rate is low or your workload burns many calls per completion, riskier at high volume if the per-outcome price exceeds your effective per-token cost. Market references: Intercom Fin $0.99/resolved conversation, Zendesk Verified Resolutions ~$1.20–$1.50, HubSpot Customer Agent $0.50, Salesforce Agentforce $2/conversation.
+                </div>
+            </div>
         </div>
 
         <h2>How the math works</h2>
@@ -238,6 +288,7 @@
             <li><strong>Raw API cost.</strong> <code>(input tokens ÷ 1M × input price × (1 − cache hit rate)) + (input tokens ÷ 1M × cache price × cache hit rate) + (output tokens ÷ 1M × output price)</code>. Caching matters: a 40% input cache hit rate at $0.20/1M vs a $2.00/1M miss price cuts the input leg nearly in half. For per-call pricing, raw cost is simply <code>monthly calls × price per call</code>.</li>
             <li><strong>Fully-loaded cost.</strong> <code>raw × (1 + overhead)</code>. Overhead covers the human and tooling layer — monitoring, oversight, integration, prompt maintenance, re-baselining — which doesn't scale with tokens but is real cost. Then cost per agent = <code>loaded ÷ agents</code>.</li>
         </ol>
+        <p><strong>Outcome-based mode (new).</strong> Switch the mode selector to <em>Outcome-based</em> to compare the same workload against paying per completed task instead of per token. Enter your expected completed tasks per month and the price per completed outcome (market references cluster around <strong>$0.50–$2.00 per resolution</strong> — Intercom Fin $0.99, Zendesk Verified Resolutions ~$1.20–$1.50, HubSpot Customer Agent $0.50, Salesforce Agentforce $2). The calculator shows monthly and yearly cost for both models side by side, plus the delta. Outcome pricing transfers retry/failure risk to the vendor: it tends to win when your success rate is low or your workload burns many calls per completion, and loses at high volume when the per-outcome price exceeds your effective per-token cost.</p>
         <div class="formula">Monthly raw API cost =
   (monthlyCalls × inTok ÷ 1M × inPrice × (1 − cacheHit))
 + (monthlyCalls × inTok ÷ 1M × cachePrice × cacheHit)
@@ -247,7 +298,13 @@ Fully-loaded = raw × (1 + overhead%)
 Suggested client price = loaded × (1 + markup%)
    (30% markup on cost ≈ 23% gross margin)
 Cost per agent = loaded ÷ agents
-Cost per resolution = loaded ÷ (monthlyCalls ÷ 50)</div>
+Cost per resolution = loaded ÷ (monthlyCalls ÷ 50)
+
+Outcome-based mode:
+  Outcome monthly = completedTasks × pricePerOutcome
+  Outcome yearly  = outcomeMonthly × 12
+  Per-token monthly = loaded (same workload)
+  Delta = outcomeMonthly − loaded   (negative = outcome cheaper)</div>
 
         <h2>Reference: current per-1M rates (Aug 2026) — the inputs for your own math</h2>
         <p>Same reference table as our <a href="/ai-model-cost-per-task-2026">per-task cost benchmarks</a>, current as of Aug 28, 2026. Rates move fast — re-verify before quoting a client.</p>
@@ -291,6 +348,12 @@ Cost per resolution = loaded ÷ (monthlyCalls ÷ 50)</div>
         </ul>
         <p>The full argument, with sources, is in the companion post: <a href="https://findaiagency.com/ai-agents-api-economy" rel="noopener">AI Agents Are the API Economy's Biggest Customers: What Agencies Should Charge</a>.</p>
 
+        <h2>Outcome-based pricing: when it's cheaper, when it's riskier</h2>
+        <p><strong>What changed (Aug 30–31, 2026):</strong> OpenAI has begun letting some of its largest enterprise customers pay only when its AI actually completes the job — the example cited is a customer-support interaction handled end-to-end — instead of per token, per query, or per compute time. For those accounts it replaces conventional usage-based pricing. The arrangement is <strong>limited to select major accounts, is not generally available, and OpenAI has not formally announced it</strong> — the terms, the customers, and the prices are all unknown (TNW / The Information, Aug 31, 2026).</p>
+        <p><strong>When outcome pricing wins:</strong> it shifts retry and failure risk to the vendor. Under per-token billing you pay for every failed attempt, retry, and fan-out loop; under outcome billing the vendor absorbs failures. So outcome pricing is usually cheaper when your success rate is low or your workload burns many calls per completed task — exactly the workloads where a per-resolution price like <strong>Intercom's $0.99</strong> or <strong>Zendesk's ~$1.20–$1.50 Verified Resolution</strong> undercuts your effective token cost. That is why per-success prices "cluster around a dollar rather than a cent": the vendor is loading the failure rate into the price.</p>
+        <p><strong>When it's riskier:</strong> at high volume on a cheap model, the per-outcome price can exceed your effective per-token cost. The worked example above shows a DeepSeek V4-Flash workload at ~$0.12 per resolution — paying $0.99–$2.00 per outcome for the same work is 8–16x more expensive. And "completed" needs a definition: a resolution is countable, but agentic work involves multi-step tasks where completion is a matter of judgment. Stripe's outcome-pricing guidance warns that without explicit attribution rules, customers will dispute whose outcome it was. Price per-outcome only when success is measurable and the contract defines it.</p>
+        <p>Use the <strong>outcome-based mode</strong> above to test your own workload: set your tasks/month and per-outcome price, and the calculator shows the monthly and yearly delta against the same work done per-token. Related: <a href="/agency-pricing">AI Agency Pricing 2026: Sell Outcomes, Not Services</a> and <a href="/openai-discounts-token-usage">OpenAI's Discount Experiment: What 13.8x Usage Growth Means for Agency Pricing</a>.</p>
+
         <h2>How to price agent work for clients (agent-first)</h2>
         <ol>
             <li><strong>Pass through API costs with a documented margin (10–20%).</strong> Put token/model costs in the contract as a pass-through line at a known markup, re-baselined quarterly. Transparency is your defense when prices move — and they move weekly in 2026.</li>
@@ -323,6 +386,14 @@ Cost per resolution = loaded ÷ (monthlyCalls ÷ 50)</div>
             <p>Agents don't make one clean call per task. They fan out subagents, retry failed steps, reload context, and bill every intermediate call. A single agent task can query thousands of endpoints (Cloudflare's Matthew Prince cited ~5,000 sites vs ~5 for a human). Add a workload-complexity multiplier for retries and fan-out or your estimate will be low by 1.5–3x.</p>
         </div>
         <div class="faq-item">
+            <h3>Can I pay for AI only when it works?</h3>
+            <p>Yes, but only for select large enterprise customers so far. In late August 2026, OpenAI began letting some of its largest customers pay only when its AI actually completes the job — for example a customer-support interaction handled end-to-end — instead of per token or per call. The arrangement is limited to select major accounts, is not generally available, and OpenAI has not formally announced it; the terms, customers, and prices are not public. Use the outcome-based mode on this calculator to model what that would cost your workload.</p>
+        </div>
+        <div class="faq-item">
+            <h3>When is outcome-based pricing cheaper than per-token, and when is it riskier?</h3>
+            <p>Outcome-based pricing shifts retry and failure risk to the vendor: you pay only when the AI completes the job, so it is cheaper when your success rate is low or your workload burns many calls per completed task. It is riskier at high volume when the per-outcome price exceeds your effective per-token cost — for example a $0.99 per resolution price vs $0.12 per resolution of token cost on a cheap model. Market references for per-resolution pricing: Intercom Fin $0.99 per conversation resolved, Zendesk Verified Resolutions ~$1.20–$1.50, HubSpot Customer Agent $0.50, Salesforce Agentforce $2 per conversation.</p>
+        </div>
+        <div class="faq-item">
             <h3>How much should I mark up API costs when billing clients?</h3>
             <p>A transparent 10–20% pass-through margin is the defensible norm — the margin compensates for forecasting risk, monitoring, and re-baselining, not just the tokens. If you price per outcome instead, set the per-resolution price at or below established benchmarks (Intercom Fin $0.99, Salesforce Agentforce $2) while keeping your loaded cost per resolution well under it.</p>
         </div>
@@ -331,6 +402,8 @@ Cost per resolution = loaded ÷ (monthlyCalls ÷ 50)</div>
             <h3>Related reading</h3>
             <ul>
                 <li><a href="/openai-discounts-token-usage">OpenAI's Discount Experiment: What 13.8x Usage Growth Means for Agency Pricing</a></li>
+                <li><a href="/agency-pricing">AI Agency Pricing 2026: Sell Outcomes, Not Services</a></li>
+                <li><a href="/ai-agency-pricing-models-explained">AI Agency Pricing Models Explained</a></li>
                 <li><a href="/blog/openai-jalapeno-chip-inference-costs/">OpenAI's Jalapeño Chip: Why Your Calculator's Token-Cost Assumptions Need a Refresh</a></li>
                 <li><a href="https://findaiagency.com/ai-agents-api-economy" rel="noopener">AI Agents Are the API Economy's Biggest Customers: What Agencies Should Charge</a> (Find AI Agency)</li>
                 <li><a href="/ai-agent-cost-blowups">AI Agent Cost Blowups: Real Estimates &amp; Loop Risk for Your Pricing</a></li>
@@ -354,7 +427,7 @@ Cost per resolution = loaded ÷ (monthlyCalls ÷ 50)</div>
             <li>OpenAI API pricing (platform docs, verified Aug 28, 2026 — Terra $2/$12, Luna $0.20/$1.20, Sol $4/$20 promo): <a href="https://platform.openai.com/docs/pricing" rel="noopener">platform.openai.com/docs/pricing</a></li>
             <li>Per-1M model rates as of Aug 28, 2026 (DeepSeek, Google, Together AI, SpaceXAI, Anthropic, OpenAI) — see <a href="/ai-model-cost-per-task-2026">AI Model Cost per Task 2026</a> for the full table and dated sources</li>
         </ul>
-        <p style="font-size:0.85rem;color:#666;">Accuracy note: The calculator uses published 2026 list rates (Aug 28, 2026 snapshot) and user-supplied inputs; all figures are estimates, not guarantees. GPT-5.6 Terra ($2/$12) and Luna ($0.20/$1.20) are OpenAI's official Jul 30, 2026 list prices; the usage multiples (Luna 13.8x, Terra 5.6x, Sol 1.1x control) and ~1/3 retention are OpenRouter's measured discount-window data (Jul 27 – Aug 14, 2026), attributed as such (research brief t_5c8841ca). The "fastest-growing class of API consumers" framing follows PYMNTS (Aug 24, 2026) — no public dataset measures agents' absolute share of API traffic. Salesforce and Intercom prices are list prices as of mid-2026; real bills can stack additional platform fees. Re-verify provider rates before quoting clients — 2026 pricing moves weekly (GPT-5.6 Terra/Luna Jul 30, GPT-5.6 Sol Aug 21, DeepSeek Aug 16, Gemini 3.7 Flash Aug 13, Grok 4.6 Aug 12, Claude Sonnet 5 Aug 10).</p>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: The calculator uses published 2026 list rates (Aug 28, 2026 snapshot) and user-supplied inputs; all figures are estimates, not guarantees. GPT-5.6 Terra ($2/$12) and Luna ($0.20/$1.20) are OpenAI's official Jul 30, 2026 list prices; the usage multiples (Luna 13.8x, Terra 5.6x, Sol 1.1x control) and ~1/3 retention are OpenRouter's measured discount-window data (Jul 27 – Aug 14, 2026), attributed as such (research brief t_5c8841ca). The "fastest-growing class of API consumers" framing follows PYMNTS (Aug 24, 2026) — no public dataset measures agents' absolute share of API traffic. Salesforce and Intercom prices are list prices as of mid-2026; real bills can stack additional platform fees. Outcome-based mode: OpenAI's outcome-based pricing (Aug 30–31, 2026 reporting via TNW/The Information) is limited to select enterprise accounts, not generally available, and unannounced; the per-outcome market references (Intercom $0.99, Zendesk ~$1.20–$1.50, HubSpot $0.50, Salesforce $2) are list prices as of mid-2026 and real contract terms vary (research brief t_9974fbbc). Re-verify provider rates before quoting clients — 2026 pricing moves weekly (GPT-5.6 Terra/Luna Jul 30, GPT-5.6 Sol Aug 21, DeepSeek Aug 16, Gemini 3.7 Flash Aug 13, Grok 4.6 Aug 12, Claude Sonnet 5 Aug 10).</p>
     </article>
     <footer>
         <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
@@ -379,6 +452,7 @@ Cost per resolution = loaded ÷ (monthlyCalls ÷ 50)</div>
         }
 
         var basis = 'tokens';
+        var mode = 'usage';
         document.querySelectorAll('input[name="basis"]').forEach(function (r) {
             r.addEventListener('change', function () {
                 basis = r.value;
@@ -390,6 +464,25 @@ Cost per resolution = loaded ÷ (monthlyCalls ÷ 50)</div>
                 calc();
             });
         });
+
+        document.querySelectorAll('input[name="mode"]').forEach(function (r) {
+            r.addEventListener('change', function () {
+                mode = r.value;
+                var isOutcome = mode === 'outcome';
+                $('outcomeHeader').style.display = isOutcome ? 'flex' : 'none';
+                $('tasksField').style.display = isOutcome ? 'flex' : 'none';
+                $('priceField').style.display = isOutcome ? 'flex' : 'none';
+                $('outcomeResults').style.display = isOutcome ? 'block' : 'none';
+                $('modeNote').textContent = isOutcome
+                    ? "Outcome-based pricing lets you pay only when the AI completes the job. OpenAI is currently piloting it with select large enterprise customers — it is not generally available. The side-by-side below compares it against doing the same work per-token."
+                    : "API/usage-based pricing bills per token or per call — the default model for most provider APIs in 2026.";
+                calc();
+            });
+        });
+
+        function fmt2(n) {
+            return '$' + n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
 
         function calc() {
             var agents = Math.max(1, num('agents'));
@@ -437,9 +530,33 @@ Cost per resolution = loaded ÷ (monthlyCalls ÷ 50)</div>
             $('rBill').textContent = fmtUSD(bill) + ' /mo';
             $('rPerRes').textContent = fmtUSD(perRes) + ' /resolution';
             $('rMargin').textContent = margin.toFixed(0) + '%';
+
+            if (mode === 'outcome') {
+                var tasksPerMonth = Math.max(0, num('tasksPerMonth'));
+                var pricePerOutcome = Math.max(0, num('pricePerOutcome'));
+                var outcomeMonth = tasksPerMonth * pricePerOutcome;
+                var outcomeYear = outcomeMonth * 12;
+                var tokenMonth = loaded;
+                var tokenYear = loaded * 12;
+                var delta = outcomeMonth - tokenMonth;
+                var deltaPct = tokenMonth > 0 ? (delta / tokenMonth) * 100 : 0;
+
+                $('rOutcomeMonth').textContent = fmt2(outcomeMonth) + ' /mo';
+                $('rOutcomeYear').textContent = fmt2(outcomeYear) + ' /yr';
+                $('rTokenMonth').textContent = fmt2(tokenMonth) + ' /mo';
+                $('rTokenYear').textContent = fmt2(tokenYear) + ' /yr';
+                $('rOutcomePerTask').textContent = fmt2(pricePerOutcome) + ' /task';
+                if (Math.abs(delta) < 0.005) {
+                    $('rDelta').textContent = '≈ break-even (0.00%)';
+                } else {
+                    var sign = delta < 0 ? '−' : '+';
+                    $('rDelta').textContent = sign + fmt2(Math.abs(delta)) + ' /mo (' + sign + Math.abs(deltaPct).toFixed(2) + '%)';
+                }
+                $('rDeltaLabel').textContent = delta < -0.005 ? 'Outcome-based is cheaper by' : (delta > 0.005 ? 'Outcome-based is more expensive by' : 'Delta (outcome vs per-token)');
+            }
         }
 
-        ['agents','callsPerDay','daysPerMonth','complexity','tokIn','tokOut','inPrice','outPrice','perCall','cachePrice','cacheHit','overhead','markup'].forEach(function (id) {
+        ['agents','callsPerDay','daysPerMonth','complexity','tokIn','tokOut','inPrice','outPrice','perCall','cachePrice','cacheHit','overhead','markup','tasksPerMonth','pricePerOutcome'].forEach(function (id) {
             $(id).addEventListener('input', calc);
             $(id).addEventListener('change', calc);
         });
