@@ -932,7 +932,7 @@ test('REJECTED_DEAL_PRESET surfaced in index.html as NOT-enacted alternate prese
   // The IN-EFFECT banner (before the callout) must not present 25/15/10 as current Canada rates.
   const bannerStart = html.indexOf('Canada 50% Section 338 Tariff');
   // Bound the slice at the Canada retaliation banner (which legitimately carries the 15/25/50% tiers)
-  const retStart = html.indexOf('Canada Retaliation CONFIRMED');
+  const retStart = html.indexOf('Canada Sept 8 Counter-Tariffs');
   const sliceEnd = retStart > bannerStart ? retStart : calloutStart;
   const banner = html.slice(bannerStart, sliceEnd);
   assert.ok(/IN EFFECT/.test(banner), 'banner should state IN EFFECT');
@@ -942,54 +942,64 @@ test('REJECTED_DEAL_PRESET surfaced in index.html as NOT-enacted alternate prese
 
 // ── Canada retaliation (Sept 8, 2026 dollar-for-dollar) ─────────────
 
-test('CANADA_RETALIATION structure matches verified fact sheet (t_8153278d — Aug 25, 2026 announcement)', () => {
+test('CANADA_RETALIATION structure matches verified 629-item dataset (t_d98a84da — revised Aug 26, 2026)', () => {
   const R = T.CANADA_RETALIATION;
   assert.ok(R, 'CANADA_RETALIATION missing from exports');
+  assert.equal(R.preset_key, 'canada-sept8-counter-tariffs');
+  assert.equal(R.preset_label, 'Canada Sept 8 Counter-Tariffs');
   assert.equal(R.effective, '2026-09-08');
   assert.match(R.effective_label, /September 8, 2026/);
   assert.match(R.effective_label, /12:01 a\.m\. ET/, 'effective_label must carry the 12:01 a.m. ET time');
   assert.equal(R.framework, 'dollar-for-dollar');
   assert.equal(R.announced, '2026-08-25');
   assert.equal(R.rate, 0.50, 'headline rate stays 0.50 (max tier)');
-  // Three verified tiers with item counts from the official 874-item list
-  assert.equal(R.list_size.total, 874);
-  assert.equal(R.list_size.rate_50, 404);
-  assert.equal(R.list_size.rate_25, 449);
+  // Three verified tiers with item counts from the official 629-item list
+  // (revised Aug 26: 413 at 50%, 195 at 25%, 21 at 15%)
+  assert.equal(R.list_size.total, 629);
+  assert.equal(R.list_size.rate_50, 413);
+  assert.equal(R.list_size.rate_25, 195);
   assert.equal(R.list_size.rate_15, 21);
-  assert.equal(R.tiers['0.50'].item_count, 404);
-  assert.equal(R.tiers['0.25'].item_count, 449);
+  assert.equal(R.tiers['0.50'].item_count, 413);
+  assert.equal(R.tiers['0.25'].item_count, 195);
   assert.equal(R.tiers['0.15'].item_count, 21);
   assert.ok(R.tiers['0.15'].release_note.includes('8415'), '15% tier should cite AC/heat-pump headings');
   // Origin + in-transit rules from the Finance Canada backgrounder
   assert.ok(/originating from the US/.test(R.origin_rule), 'origin rule must be US-origin only');
   assert.ok(/in transit/.test(R.in_transit), 'in-transit carve-out must be present');
-  // Category -> tier map covers the six focus sectors + expanded 874-item scope
+  // Category -> tier map covers the six focus sectors + expanded 629-item scope.
+  // CRITICAL: auto is NOT in the map (autos not on the Sept 8 list).
   assert.equal(R.category_tiers.steel, 0.50);
   assert.equal(R.category_tiers.electronics, 0.25);
   assert.equal(R.category_tiers.dairy, 0.25);
   assert.equal(R.category_tiers['household-appliances'], 0.25);
   assert.equal(R.category_tiers['farming-equipment'], 0.15);
   assert.equal(R.category_tiers['pulp-paper'], 0.50);
-  assert.equal(R.category_tiers.auto, 0.25);
+  assert.equal(R.category_tiers.auto, undefined, 'auto must NOT be on the Sept 8 list (separate existing 25% order)');
   assert.equal(R.category_tiers.furniture, 0.50);
   assert.equal(R.category_tiers.textiles, 0.50);
-  assert.equal(R.category_tiers.food, 0.25);
+  assert.equal(R.category_tiers.food, 0.50, 'food resolves to 50% (bakery/malt + honey; fish/seafood removed Aug 26)');
   assert.equal(R.category_tiers.chemicals, 0.50);
   assert.equal(R.category_tiers.toys, 0.50);
   // Six official focus sectors still listed
   const labels = R.sectors.map(s => s.label);
   ['Steel', 'Electronics', 'Dairy', 'Household Appliances', 'Farming Equipment', 'Pulp & Paper']
     .forEach(l => assert.ok(labels.includes(l), `missing sector label ${l}`));
-  // Representative products present for the acceptance set
+  // Representative products present for the acceptance set — ALL on the
+  // official 629-item list (no fish/seafood, no autos)
   const reps = R.representative_products;
   assert.ok(reps.some(p => /steel coil/i.test(p.product) && p.tier === 0.50), 'steel representative product missing');
   assert.ok(reps.some(p => /aluminum/i.test(p.product) && p.tier === 0.50), 'aluminum representative product missing');
-  assert.ok(reps.some(p => p.category === 'auto'), 'auto representative product missing');
   assert.ok(reps.some(p => p.category === 'dairy' && p.tier === 0.25), 'dairy/cheese representative product missing');
+  assert.ok(reps.some(p => p.category === 'dairy' && p.tier === 0.50), 'dairy/milk-powder representative product missing');
   assert.ok(reps.some(p => p.category === 'farming-equipment' && p.tier === 0.15), 'farming-equipment representative product missing');
+  assert.ok(reps.some(p => p.category === 'electronics' && p.tier === 0.50), 'electronics/smartphone representative product missing');
+  assert.ok(reps.some(p => p.category === 'paper' && p.tier === 0.25), 'paper/toilet-paper representative product missing');
+  assert.ok(reps.every(p => !/fish/i.test(p.product) && !/seafood/i.test(p.product)), 'no fish/seafood representative products (removed Aug 26)');
+  assert.ok(reps.every(p => p.category !== 'auto'), 'no auto representative products (autos not on Sept 8 list)');
   assert.ok(reps.every(p => /^\d{4}\.\d{2}\.\d{2}$/.test(p.hs)), 'representative products must carry 8-digit HS codes');
   assert.ok(R.source_citations.length >= 8, `expected >= 8 source citations, got ${R.source_citations.length}`);
   assert.ok(R.source_citations.some(c => c.includes('canada.ca')), 'should cite the official Finance Canada release');
+  assert.ok(R.source_citations.some(c => c.includes('gowlingwlg.com')), 'should cite Gowling (874→629 revision)');
 });
 
 test('Canada retaliation: PENDING before Sept 8 — 0% duty, applies false, for all targeted categories', () => {
@@ -1012,7 +1022,7 @@ test('Canada retaliation: tier rates apply ON Sept 8 and after (verified 15/25/5
   assert.equal(steel.breakdown.canadaRetaliation.applies, true);
   assert.equal(steel.breakdown.canadaRetaliation.tierRate, 0.50);
   assert.equal(steel.breakdown.canadaRetaliation.tierLabel, '50%');
-  assert.equal(steel.breakdown.canadaRetaliation.tierItemCount, 404);
+  assert.equal(steel.breakdown.canadaRetaliation.tierItemCount, 413);
   // electronics (ch. 84/85) -> 25% tier
   const el = T.effectiveRate('us', 'electronics', { direction: 'to-canada', asOfDate: '2026-09-09' });
   assert.equal(el.rate, 0.25);
@@ -1031,11 +1041,14 @@ test('Canada retaliation: tier rates apply ON Sept 8 and after (verified 15/25/5
   // pulp & paper -> 50% tier
   const pulp = T.effectiveRate('us', 'pulp-paper', { direction: 'to-canada', asOfDate: '2026-09-09' });
   assert.equal(pulp.rate, 0.50);
-  // expanded 874-item scope: auto 25%, furniture 50%, textiles 50%, food 25%, chemicals 50%, toys 50%
-  assert.equal(T.effectiveRate('us', 'auto', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.25);
+  // expanded 629-item scope: furniture 50%, textiles 50%, food 50%, chemicals 50%, toys 50%
+  // CRITICAL: auto is NOT a retaliation sector — 0% and targeted=false
+  const auto = T.effectiveRate('us', 'auto', { direction: 'to-canada', asOfDate: '2026-09-09' });
+  assert.equal(auto.rate, 0, 'auto must stay 0% (autos not on the Sept 8 list; separate existing 25% order)');
+  assert.equal(auto.breakdown.canadaRetaliation.targeted, false);
   assert.equal(T.effectiveRate('us', 'furniture', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.50);
   assert.equal(T.effectiveRate('us', 'textiles', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.50);
-  assert.equal(T.effectiveRate('us', 'food', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.25);
+  assert.equal(T.effectiveRate('us', 'food', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.50);
   assert.equal(T.effectiveRate('us', 'chemicals', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.50);
   assert.equal(T.effectiveRate('us', 'toys', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.50);
 });
@@ -1068,9 +1081,98 @@ test('Canada retaliation: representative products return the verified tier rates
     before.breakdown.canadaRetaliation.effectiveLabel.includes('September 8'));
 });
 
+test('ACCEPTANCE: sample values for at least two categories produce the expected tier percentage (Sept 8 preset)', () => {
+  // Steel $10,000 → 50% tier → $5,000 duty
+  const steel = T.effectiveRate('us', 'steel', { direction: 'to-canada', asOfDate: '2026-09-08' });
+  assert.equal(steel.rate, 0.50, 'steel must resolve to the 50% tier');
+  assert.equal(10000 * steel.rate, 5000, 'steel $10,000 must produce $5,000 estimated tariff');
+  // Dairy $10,000 → 25% tier → $2,500 duty
+  const dairy = T.effectiveRate('us', 'dairy', { direction: 'to-canada', asOfDate: '2026-09-08' });
+  assert.equal(dairy.rate, 0.25, 'dairy must resolve to the 25% tier');
+  assert.equal(10000 * dairy.rate, 2500, 'dairy $10,000 must produce $2,500 estimated tariff');
+  // Farming equipment $10,000 → 15% tier → $1,500 duty
+  const farm = T.effectiveRate('us', 'farming-equipment', { direction: 'to-canada', asOfDate: '2026-09-08' });
+  assert.equal(farm.rate, 0.15, 'farming-equipment must resolve to the 15% tier');
+  assert.equal(10000 * farm.rate, 1500, 'farming-equipment $10,000 must produce $1,500 estimated tariff');
+  // Electronics $10,000 → 25% tier → $2,500 duty
+  const el = T.effectiveRate('us', 'electronics', { direction: 'to-canada', asOfDate: '2026-09-08' });
+  assert.equal(el.rate, 0.25);
+  assert.equal(10000 * el.rate, 2500);
+});
+
+test('ACCEPTANCE: Sept 8 preset is visible and labeled with effective date in the calculator UI', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  // Visible preset label
+  assert.ok(html.includes('Canada Sept 8 Counter-Tariffs'), 'preset label must be visible in the calculator page');
+  // Effective-date labels (static banner + JS strings)
+  assert.ok(/Effective 12:01 a\.m\. ET, Tuesday, Sept 8, 2026/.test(html) || /Effective September 8, 2026/.test(html),
+    'effective-date label must be visible in the static banner');
+  assert.ok(html.includes('retPresetLabel'), 'banner JS must render the preset label');
+  assert.ok(html.includes('cr2PresetLabel') || html.includes('crPresetLabel'), 'results JS must render the preset label');
+  // The data layer carries preset identity + effective date
+  const R = T.CANADA_RETALIATION;
+  assert.equal(R.preset_label, 'Canada Sept 8 Counter-Tariffs');
+  assert.equal(R.effective, '2026-09-08');
+  assert.match(R.effective_label, /September 8, 2026/);
+  // Breakdown exposes preset identity
+  const res = T.effectiveRate('us', 'steel', { direction: 'to-canada', asOfDate: '2026-09-08' });
+  assert.equal(res.breakdown.canadaRetaliation.presetLabel, 'Canada Sept 8 Counter-Tariffs');
+  assert.equal(res.breakdown.canadaRetaliation.presetKey, 'canada-sept8-counter-tariffs');
+});
+
+test('ACCEPTANCE: preset rates/categories are configurable via the data file (t_6d585b6a)', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  // The preset lives in its own data file, not hardcoded in tariff-data.js
+  const presetFile = path.join(__dirname, '..', 'presets', 'canada-sept8-counter-tariffs.js');
+  assert.ok(fs.existsSync(presetFile), 'preset data file must exist');
+  const presetSrc = fs.readFileSync(presetFile, 'utf8');
+  assert.ok(presetSrc.includes('preset_key: \'canada-sept8-counter-tariffs\''), 'data file must carry the preset key');
+  assert.ok(presetSrc.includes('category_tiers:'), 'data file must carry the category→tier map');
+  assert.ok(presetSrc.includes('list_size: { total: 629'), 'data file must carry the 629-item list size');
+  // index.html loads the data file before tariff-data.js
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  const ps = html.indexOf('presets/canada-sept8-counter-tariffs.js');
+  const td = html.indexOf('src="tariff-data.js"');
+  assert.ok(ps !== -1 && td !== -1 && ps < td, 'preset data file must load before tariff-data.js');
+  // tariff-data.js resolves CANADA_RETALIATION from the data file (window/require),
+  // so editing the data file changes rates without touching calculator logic.
+  const dataSrc = fs.readFileSync(path.join(__dirname, '..', 'tariff-data.js'), 'utf8');
+  assert.ok(dataSrc.includes('CANADA_SEPT8_PRESET'), 'tariff-data.js must resolve the external preset');
+  assert.ok(dataSrc.includes("require('./presets/canada-sept8-counter-tariffs.js')"), 'tariff-data.js must require the preset data file');
+  // Loaded preset deep-equals the data file export (single source of truth)
+  const presetExport = require(path.join(__dirname, '..', 'presets', 'canada-sept8-counter-tariffs.js'));
+  assert.equal(T.CANADA_RETALIATION.preset_key, presetExport.preset_key);
+  assert.equal(T.CANADA_RETALIATION.list_size.total, presetExport.list_size.total);
+  assert.deepEqual(T.CANADA_RETALIATION.category_tiers, presetExport.category_tiers);
+});
+
+test('ACCEPTANCE: existing calculator presets still pass their previous smoke tests (Aug 22 / canada-50-percent-tariff unchanged)', () => {
+  // Section 338 (Aug 22, 2026) preset is byte-for-byte the same measure — still 50%,
+  // still covered categories auto/food/dairy/alcohol/canada-s338, still stacks.
+  const S = T.SECTION_338_CANADA;
+  assert.equal(S.rate, 0.50);
+  assert.equal(S.effective, '2026-08-22 12:01 AM ET');
+  assert.deepEqual(S.covered_categories, ['auto', 'food', 'dairy', 'alcohol', 'canada-s338']);
+  // Canada auto (to-us) still stacks the 50% S338 on/after Aug 22
+  const ca = T.effectiveRate('canada', 'auto', { asOfDate: '2026-08-24', usmcaQualified: true });
+  assert.ok(Math.abs(ca.rate - 0.532) < 0.0001, `S338 canada auto must stay 0.532, got ${ca.rate}`);
+  assert.ok(ca.breakdown.s338.applies);
+  // Rejected-deal preset still present and NOT enacted
+  assert.ok(T.REJECTED_DEAL_PRESET, 'REJECTED_DEAL_PRESET must still be exported');
+  assert.ok(/NOT enacted|not enacted|rejected/i.test(T.REJECTED_DEAL_PRESET.outcome || ''),
+    'rejected-deal preset must be marked not enacted');
+  // Brazil preset untouched (25% Section 301, July 22, 2026)
+  assert.equal(T.BRAZIL_301.rate, 0.25);
+  assert.equal(T.BRAZIL_301.effective, '2026-07-22 12:01 AM ET');
+});
+
 test('Canada retaliation: non-targeted sectors get 0% even after Sept 8', () => {
-  // textiles/toys/food/etc are now targeted (874-item list); these remain outside it
-  for (const cat of ['footwear', 'pharma', 'polysilicon', 'drones', 'ground-beef', 'canada-s338']) {
+  // textiles/toys/food/etc are now targeted (629-item list); these remain outside it.
+  // auto is NOT targeted either — autos are not on the Sept 8 list.
+  for (const cat of ['footwear', 'pharma', 'polysilicon', 'drones', 'ground-beef', 'canada-s338', 'auto']) {
     const res = T.effectiveRate('us', cat, { direction: 'to-canada', asOfDate: '2026-09-09' });
     assert.ok(res, `to-canada ${cat} should resolve`);
     assert.equal(res.rate, 0, `${cat} is not a retaliation sector and must stay 0%`);
@@ -1101,7 +1203,7 @@ test('REGRESSION: default US-import flows unchanged by retaliation layer', () =>
   assert.equal(ca.breakdown.canadaRetaliation, undefined);
 });
 
-test('index.html carries the confirmed Sept 8 retaliation (tiers, 874 items, C$27.6B, origin + in-transit rules)', () => {
+test('index.html carries the confirmed Sept 8 retaliation preset (tiers, 629 items, C$27.6B, origin + in-transit rules)', () => {
   const fs = require('node:fs');
   const path = require('node:path');
   const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
@@ -1113,26 +1215,40 @@ test('index.html carries the confirmed Sept 8 retaliation (tiers, 874 items, C$2
   assert.ok(/household appliances/.test(html), 'index.html must list household appliances sector');
   assert.ok(/farming equipment|agricultural equipment/.test(html), 'index.html must list farming equipment sector');
   assert.ok(/pulp (&amp;|&) paper|pulp and paper/i.test(html), 'index.html must list pulp/paper sector');
-  // Verified announcement details (research brief t_8153278d)
-  assert.ok(/874/.test(html), 'index.html must state the 874-item official list');
+  // The Sept 8 preset label must be visible on the page
+  assert.ok(/Canada Sept 8 Counter-Tariffs/.test(html), 'index.html must show the "Canada Sept 8 Counter-Tariffs" preset label');
+  // Verified announcement details (dataset t_d98a84da — 629-item list, revised Aug 26)
+  assert.ok(/629/.test(html), 'index.html must state the 629-item official list');
   assert.ok(/C\$27\.6 billion/.test(html), 'index.html must state C$27.6 billion coverage');
   assert.ok(/15%|25%|50%/.test(html), 'index.html must show the 15/25/50 tier rates');
   assert.ok(/in transit/.test(html), 'index.html must mention the in-transit carve-out');
   assert.ok(/originating from the US|US-origin/i.test(html), 'index.html must state the US-origin rule');
+  assert.ok(/autos are <strong>not<\/strong>|not on the list|NOT on the Sept 8/.test(html), 'index.html must state autos are NOT on the Sept 8 list');
   // The banner should clearly mark the pending status before the effective date
   assert.ok(/PENDING/.test(html), 'index.html must show pending/upcoming status');
   // Representative products table (acceptance set) present
   assert.ok(/Flat-rolled steel coil/.test(html), 'index.html must show the steel representative product');
   assert.ok(/Aluminum/.test(html), 'index.html must show the aluminum representative product');
-  assert.ok(/Motorcycle/.test(html), 'index.html must show the auto representative product');
+  assert.ok(/Motorcycle/.test(html), 'index.html must show the motorcycle representative product');
   assert.ok(/Cheese/.test(html), 'index.html must show the dairy/cheese representative product');
   assert.ok(/Mower/.test(html), 'index.html must show the farming representative product');
-  // New sector categories exist in data for the calculator dropdown
+  // Preset data file loaded before tariff-data.js (configurable rates/categories)
+  assert.ok(/presets\/canada-sept8-counter-tariffs\.js/.test(html), 'index.html must load the preset data file');
+  const scriptIdx = html.indexOf('presets/canada-sept8-counter-tariffs.js');
+  const dataIdx = html.indexOf('src="tariff-data.js"');
+  assert.ok(scriptIdx !== -1 && dataIdx !== -1 && scriptIdx < dataIdx, 'preset data file must load BEFORE tariff-data.js');
+  // New sector categories exist in data for the calculator dropdown — now sourced
+  // from the preset data file (presets/canada-sept8-counter-tariffs.js), which
+  // tariff-data.js loads via window/require.
   const fs2 = require('node:fs');
-  const data = fs2.readFileSync(path.join(__dirname, '..', 'tariff-data.js'), 'utf8');
+  const presetData = fs2.readFileSync(path.join(__dirname, '..', 'presets', 'canada-sept8-counter-tariffs.js'), 'utf8');
   ['dairy', 'household-appliances', 'farming-equipment', 'pulp-paper', 'furniture', 'textiles'].forEach(k => {
-    assert.ok(data.includes("'" + k + "'"), `tariff-data.js must define category ${k}`);
+    assert.ok(presetData.includes("'" + k + "'"), `preset data file must define category ${k}`);
   });
+  // Preset data file exists and exports the verified 629-item list
+  const presetFile = fs2.readFileSync(path.join(__dirname, '..', 'presets', 'canada-sept8-counter-tariffs.js'), 'utf8');
+  assert.ok(presetFile.includes('629'), 'preset data file must carry the 629-item total');
+  assert.ok(presetFile.includes('Canada Sept 8 Counter-Tariffs'), 'preset data file must carry the preset label');
 });
 
 test('US-Canada explainer page is current: Aug 24 announcement, collapsed talks, Sept 8 tiers, 874 items', () => {

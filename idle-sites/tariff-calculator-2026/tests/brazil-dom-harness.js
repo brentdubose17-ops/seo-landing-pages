@@ -10,6 +10,7 @@ const vm = require('vm');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const dataJs = fs.readFileSync(path.join(__dirname, '..', 'tariff-data.js'), 'utf8');
+const presetJs = fs.readFileSync(path.join(__dirname, '..', 'presets', 'canada-sept8-counter-tariffs.js'), 'utf8');
 
 // --- minimal DOM stub ---
 function makeEl(id) {
@@ -45,8 +46,12 @@ const windowStub = {
 windowStub.window = windowStub;
 windowStub.self = windowStub;
 
-// Load tariff-data.js into window.TARIFF_DATA
+// Load the Canada Sept 8 preset data file (mirrors the browser script order:
+// presets/canada-sept8-counter-tariffs.js BEFORE tariff-data.js)
 vm.createContext(windowStub);
+vm.runInContext(presetJs, windowStub);
+
+// Load tariff-data.js into window.TARIFF_DATA
 vm.runInContext(dataJs, windowStub);
 const T = windowStub.TARIFF_DATA;
 
@@ -143,5 +148,41 @@ check('on 7/22 Brazil 25% applies (43.1%)', getEl('resultRate').textContent.star
 set('country', 'china'); set('entryDate', '2026-08-28');
 runCalc();
 check('china has no Brazil flag', !getEl('flags').innerHTML.includes('Brazil Section 301'));
+
+// --- Flow 8: Canada Sept 8 Counter-Tariffs preset (US-origin goods into Canada) ---
+// Steel $10,000 on Sept 8 → 50% tier → $5,000 duty
+set('direction', 'to-canada'); set('country', 'us'); set('category', 'steel');
+set('value', '10000'); set('entryDate', '2026-09-08');
+runCalc();
+check('canada sept8 steel rate = 50.0%', getEl('resultRate').textContent.startsWith('50.0%'), getEl('resultRate').textContent);
+check('canada sept8 steel duty = $5,000.00', getEl('resultDuty').textContent === '$5,000.00', getEl('resultDuty').textContent);
+const canadaFlags8 = flagsContent();
+check('canada sept8 preset label shown', canadaFlags8.includes('Canada Sept 8 Counter-Tariffs'));
+check('canada sept8 413-item 50% tier', canadaFlags8.includes('413 items'));
+check('canada sept8 effective date shown', canadaFlags8.includes('September 8, 2026'));
+
+// Dairy $10,000 on Sept 8 → 25% tier → $2,500 duty
+set('category', 'dairy'); set('value', '10000');
+runCalc();
+check('canada sept8 dairy rate = 25.0%', getEl('resultRate').textContent.startsWith('25.0%'), getEl('resultRate').textContent);
+check('canada sept8 dairy duty = $2,500.00', getEl('resultDuty').textContent === '$2,500.00', getEl('resultDuty').textContent);
+
+// Farming equipment $10,000 on Sept 8 → 15% tier → $1,500 duty
+set('category', 'farming-equipment'); set('value', '10000');
+runCalc();
+check('canada sept8 farming rate = 15.0%', getEl('resultRate').textContent.startsWith('15.0%'), getEl('resultRate').textContent);
+check('canada sept8 farming duty = $1,500.00', getEl('resultDuty').textContent === '$1,500.00', getEl('resultDuty').textContent);
+
+// Auto is NOT on the Sept 8 list — 0% even after Sept 8
+set('category', 'auto'); set('value', '10000');
+runCalc();
+check('canada sept8 auto rate = 0.0% (not on list)', getEl('resultRate').textContent.startsWith('0.0%'), getEl('resultRate').textContent);
+check('canada sept8 auto not-on-list note', flagsContent().includes('not on the 629-item list'));
+
+// Before Sept 8 the same preset shows PENDING (0%)
+set('category', 'steel'); set('entryDate', '2026-09-07');
+runCalc();
+check('canada sept8 steel PENDING before Sept 8 (0%)', getEl('resultRate').textContent.startsWith('0.0%'), getEl('resultRate').textContent);
+check('canada sept8 PENDING note shown', flagsContent().includes('PENDING') || flagsContent().includes('Not Yet In Effect'));
 
 console.log(process.exitCode ? '\nSOME CHECKS FAILED' : '\nALL CHECKS PASSED');

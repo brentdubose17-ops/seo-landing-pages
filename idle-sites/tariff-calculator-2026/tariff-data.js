@@ -1,6 +1,17 @@
 /*
  * Tariff Calculator 2026 — canonical tariff data
  * -------------------------------------------------
+ * Updated 2026-08-31 (t_6d585b6a): CANADA_RETALIATION now resolves from
+ * the configurable preset data file presets/canada-sept8-counter-tariffs.js
+ * (window.CANADA_SEPT8_PRESET / require()) — a future trade deal is a
+ * data-file edit, no logic changes. Data corrected to the VERIFIED
+ * 629-item list (dataset t_d98a84da, revised Aug 26 from 874; 413 at
+ * 50%, 195 at 25%, 21 at 15%). CRITICAL: autos are NOT on the Sept 8
+ * list (separate existing 25% order) — 'auto' removed from the
+ * retaliation category map; fish/seafood removed in the Aug 26 revision
+ * — 'food' now resolves to 50% (bakery/malt + honey). Representative
+ * products re-verified against the official 629-item CSV. Aug 22 S338
+ * preset unchanged.
  * Updated 2026-08-28 (t_60875ef4): BRAZIL_301 layer added — the 25%
  * Section 301 additional duty on most Brazilian goods (HTS 9903.05.01,
  * effective July 22, 2026; verified research brief t_c288793e), with the
@@ -484,117 +495,59 @@
    * 15%, 25% and 50% on C$27.6 billion of US imports, effective
    * 12:01 a.m. ET, Tuesday, September 8, 2026. The rates match the
    * corresponding US rate (products drawn from those targeted by US
-   * Section 338 and Section 232 tariffs). Official list: 874 tariff
-   * items (404 at 50%, 449 at 25%, 21 at 15%). Origin rule: applies only
-   * to goods originating from the US (CUSMA marking regulations);
-   * in-transit carve-out: US goods already in transit to Canada on
-   * Sept 8 are not covered. Focus sectors: steel, dairy, appliances,
-   * agricultural equipment, pulp and paper, electronics; the full list
-   * also covers furniture, apparel/clothing, fish & seafood, cosmetics,
-   * tools, sporting goods, vehicles, and more.
-   * Verified 2026-08-25 against the official Finance Canada release and
-   * product list (874-item backgrounder), FreightWaves, Truck News, The
-   * Guardian, Euronews, CTA, CNBC (research brief t_8153278d — 9 sources,
-   * 44 evidence quotes). Supersedes the Aug 23 pre-announcement estimate
-   * (flat 50% across six sectors).
-   * Applied via effectiveRate() with opts.direction='to-canada' for
-   * US-origin goods (countrySlug='us') in the targeted categories.
+   * Section 338 and Section 232 tariffs). Official list: 629 tariff
+   * items (revised Aug 26 from 874; 413 at 50%, 195 at 25%, 21 at 15%).
+   * Origin rule: applies only to goods originating from the US (CUSMA
+   * marking regulations); in-transit carve-out: US goods already in
+   * transit to Canada on Sept 8 are not covered. Focus sectors: steel,
+   * dairy, appliances, agricultural equipment, pulp and paper,
+   * electronics; the list also covers furniture, apparel/clothing,
+   * cosmetics, tools, sporting goods, and more.
+   * CRITICAL (dataset t_d98a84da): US autos are NOT on this list
+   * (separate existing 25% counter-tariff order); fish/seafood was
+   * REMOVED in the Aug 26 revision (629 items, not 874).
+   * DATA FILE: the preset rates/categories live in
+   * presets/canada-sept8-counter-tariffs.js (window.CANADA_SEPT8_PRESET
+   * in the browser, require() in Node) so a future trade deal can be
+   * reflected by editing the data file only — no calculator logic
+   * changes, no risky deployment.
+   * Verified 2026-08-31 against dataset t_d98a84da (13 sources; official
+   * list parsed from Wayback snapshot 20260827212727). Supersedes the
+   * Aug 23 pre-announcement estimate (flat 50% across six sectors).
    */
-  var CANADA_RETALIATION = {
-    effective: '2026-09-08',
-    effective_label: 'Tuesday, September 8, 2026, 12:01 a.m. ET',
-    framework: 'dollar-for-dollar',
-    announced: '2026-08-25',
-    rate: 0.50, // headline MAXIMUM tier; per-category rates via category_tiers
-    value_affected: 'C$27.6 billion in US imports (~US$20B) — about 8% of total US exports to Canada (2025 Census Bureau data)',
-    list_size: { total: 874, rate_50: 404, rate_25: 449, rate_15: 21 },
-    origin_rule: 'Tariffs apply only to goods originating from the US (as marked under the CUSMA marking regulations).',
-    in_transit: 'Countermeasures do NOT apply to US goods already in transit to Canada on Sept 8, 2026 (the day they come into force).',
-    // Verified three-tier structure (Finance Canada official list, parsed
-    // to canada-retaliation-list-sep8-2026.csv — research brief t_8153278d).
-    tiers: {
-      '0.50': {
-        rate: 0.50,
-        label: '50%',
-        item_count: 404,
-        release_note: 'steel and aluminum products previously subject to only a 25% counter-tariff, furniture, and clothing and apparel',
-        chapters: 'ch. 72 steel (134), 73 iron/steel articles (111), 76 aluminum (27), 94 furniture (18), 62 apparel (18), 04 dairy (17), 44 wood (13), 48 paper (13), 19 bakery/malt (11), 61 knit apparel (6), 39 plastics (6), 33 cosmetics (5), 95 sporting goods (5), 35 casein/albumin (5), 85 electrical (3), 82 tools (3), 47 pulp (1), 84 machinery (1), 87 vehicles (1)'
-      },
-      '0.25': {
-        rate: 0.25,
-        label: '25%',
-        item_count: 449,
-        release_note: 'appliances, dairy products such as cheese, fish and seafood, and certain steel and aluminum derivative products',
-        chapters: 'ch. 03 fish/seafood (254), 04 dairy incl. cheese (34), 57 carpets (30), 84 machinery/appliances (30), 73 steel derivatives (29), 82 tools (20), 86 railway (16), 85 electrical (13), 44 wood (5), 48 paper (4), 94 furniture (4), 87 vehicles (4), 83 base-metal hardware (4), 76 aluminum (2)'
-      },
-      '0.15': {
-        rate: 0.15,
-        label: '15%',
-        item_count: 21,
-        release_note: 'air conditioning units/heat pumps (8415), fork-lift and works trucks (8427), lifts/conveyors/industrial robots (8428, 8431), mowers (8433), moulds (8480), metal-working dies/tools (8207)',
-        chapters: 'ch. 84 machinery (19), ch. 82 tools (2)'
-      }
-    },
-    // Default tier applied per calculator category (dominant verified
-    // tier for that category's HS chapters — individual HTS lines vary;
-    // e.g. dairy cheese is 25% while milk powder lines are 50%).
-    category_tiers: {
-      steel: 0.50,                  // ch. 72/73/76 — steel, iron/steel articles, aluminum
-      electronics: 0.25,            // ch. 84/85 machinery + electrical
-      dairy: 0.25,                  // ch. 04 — cheese/dairy (25% dominant; milk powder 50%)
-      'household-appliances': 0.25, // ch. 84 — refrigerators, appliances (AC units 15%)
-      'farming-equipment': 0.15,    // ch. 8433 — mowers, cutter bars (15% tier)
-      'pulp-paper': 0.50,           // ch. 44/47/48 — wood, pulp, paper
-      auto: 0.25,                   // ch. 87 — trailers/semi-trailers 25% (motorcycles 50%)
-      furniture: 0.50,              // ch. 94 — furniture (wooden kitchen 25%)
-      textiles: 0.50,               // ch. 61/62 — apparel/clothing (carpets ch. 57 at 25%)
-      food: 0.25,                   // ch. 03 fish/seafood 25% dominant (bakery/sugar 50%)
-      chemicals: 0.50,              // ch. 39 plastics, ch. 33 cosmetics
-      toys: 0.50,                   // ch. 95 sporting goods / video game consoles
-      paper: 0.50                   // ch. 44/48 wood & paper (Paper & Wood category)
-    },
-    sectors: [
-      { category: 'steel', label: 'Steel' },
-      { category: 'electronics', label: 'Electronics' },
-      { category: 'dairy', label: 'Dairy' },
-      { category: 'household-appliances', label: 'Household Appliances' },
-      { category: 'farming-equipment', label: 'Farming Equipment' },
-      { category: 'pulp-paper', label: 'Pulp & Paper' }
-    ],
-    // Calculator categories covered by the 874-item list (six official
-    // focus sectors + furniture/apparel/fish/food/chemicals/sporting
-    // goods/vehicles lines verified in the official Finance Canada list).
-    sector_categories: ['steel', 'electronics', 'dairy', 'household-appliances', 'farming-equipment', 'pulp-paper', 'auto', 'furniture', 'textiles', 'food', 'chemicals', 'toys', 'paper'],
-    // Representative products drawn directly from the official list
-    // (research brief t_8153278d CSV) — the acceptance set: autos, steel,
-    // aluminum, agriculture, consumer goods. rate = Canada-side duty tier.
-    representative_products: [
-      { product: 'Flat-rolled steel coil (hot-rolled, pickled)', hs: '7208.25.00', category: 'steel', tier: 0.50 },
-      { product: 'Aluminum alloy sheet / plate', hs: '7606.12.00', category: 'steel', tier: 0.50 },
-      { product: 'Unwrought aluminum', hs: '7601.10.00', category: 'steel', tier: 0.50 },
-      { product: 'Motorcycle (engine > 800 cc)', hs: '8711.50.00', category: 'auto', tier: 0.50 },
-      { product: 'Semi-trailer for goods transport', hs: '8716.39.30', category: 'auto', tier: 0.25 },
-      { product: 'Cheese — cheddar / grated', hs: '0406.20.11', category: 'dairy', tier: 0.25 },
-      { product: 'Fish fillets (fresh or chilled)', hs: '0304.31.00', category: 'food', tier: 0.25 },
-      { product: 'Household refrigerator', hs: '8418.21.00', category: 'household-appliances', tier: 0.25 },
-      { product: 'Air conditioner (window/wall unit)', hs: '8415.10.00', category: 'household-appliances', tier: 0.15 },
-      { product: 'Mower / tractor-mounted cutter bar', hs: '8433.20.00', category: 'farming-equipment', tier: 0.15 },
-      { product: 'Metal furniture', hs: '9403.20.00', category: 'furniture', tier: 0.50 },
-      { product: 'Cotton t-shirt (knitted)', hs: '6109.10.00', category: 'textiles', tier: 0.50 },
-      { product: 'Video game console', hs: '9504.50.00', category: 'toys', tier: 0.50 }
-    ],
-    status: 'CONFIRMED — Canada announced Aug 25, 2026 that counter-tariffs of 15%, 25% and 50% on C$27.6 billion of US imports come into force at 12:01 a.m. ET on Tuesday, September 8, 2026, with each product rate matching the corresponding US rate (products drawn from those targeted by US Section 338 and Section 232 tariffs). Official list: 874 tariff items (404 at 50%, 449 at 25%, 21 at 15%). Applies only to US-origin goods; US goods already in transit to Canada on Sept 8 are exempt. A C$7.5 billion support package for workers and businesses accompanies the measures, building on nearly C$25 billion in cumulative supports. Existing Canadian counter-tariffs on US autos remain in place. Announced by Finance Minister François-Philippe Champagne after the US 50% Section 338 duty on C$27.6B (~US$20B) of Canadian goods took effect Aug 22, 2026 and US-Canada talks collapsed (Aug 21) and Trump threatened 50% auto/steel tariffs for Jan 1, 2027 (Aug 24).',
-    source_citations: [
-      'Finance Canada news release: Canada announces targeted countermeasures and substantive support (Aug 25, 2026) — https://www.canada.ca/en/department-finance/news/2026/08/canada-announces-targeted-countermeasures-and-substantive-support-for-workers-and-businesses-in-response-to-us-tariffs.html',
-      'Finance Canada backgrounder: List of products from the United States subject to counter-tariffs effective September 8, 2026 (874 items, 12:01 a.m. effective, origin + in-transit rules) — https://www.canada.ca/en/department-finance/news/2026/08/list-of-products-from-the-united-states-subject-to-counter-tariffs-effective-september-8-2026.html',
-      'FreightWaves: Canada retaliates against US with tariffs of up to 50% as trade war escalates (Aug 25, 2026) — https://www.freightwaves.com/news/canada-retaliates-against-us-with-tariffs-of-up-to-50-as-trade-war-escalates',
-      'Truck News: Canada retaliates against US tariffs as trucking braces for impact (Aug 25, 2026) — https://www.trucknews.com/transportation/canada-retaliates-against-us-tariffs-as-trucking-braces-for-impact',
-      'The Guardian: Canada announces retaliatory tariffs on wide range of US goods (Aug 25, 2026) — https://www.theguardian.com/world/2026/aug/25/canada-retaliatory-tariffs-on-range-of-us-goods',
-      'Euronews: Canada hits back with new counter-tariffs on US goods (Aug 25, 2026) — https://www.euronews.com/2026/08/25/canada-hits-back-with-new-counter-tariffs-on-us-goods',
-      'Canadian Trucking Alliance: Canada announces countermeasures and support (Aug 25, 2026) — https://cantruck.ca/canada-announces-countermeasures-and-support-for-workers-and-businesses-in-response-to-u-s-tariffs',
-      'CNBC: Trump says US will hike Canada auto tariffs to 50% (Aug 24, 2026) — https://www.cnbc.com/2026/08/24/trump-canada-auto-tariffs-trade-war.html'
-    ]
-  };
+  var CANADA_RETALIATION = (function () {
+    var preset = null;
+    if (typeof window !== 'undefined' && window.CANADA_SEPT8_PRESET) {
+      preset = window.CANADA_SEPT8_PRESET;
+    } else if (typeof require === 'function') {
+      try { preset = require('./presets/canada-sept8-counter-tariffs.js'); } catch (e) { preset = null; }
+    }
+    if (preset && preset.preset_key === 'canada-sept8-counter-tariffs') {
+      return preset;
+    }
+    // Safe fallback (data file missing in an unusual runtime): expose
+    // the preset identity and a PENDING state rather than wrong rates.
+    return {
+      preset_key: 'canada-sept8-counter-tariffs',
+      preset_label: 'Canada Sept 8 Counter-Tariffs',
+      effective: '2026-09-08',
+      effective_label: 'Tuesday, September 8, 2026, 12:01 a.m. ET',
+      framework: 'dollar-for-dollar',
+      announced: '2026-08-25',
+      revised: '2026-08-26',
+      rate: 0,
+      value_affected: 'C$27.6 billion in US imports (~US$20B)',
+      list_size: { total: 629, rate_50: 413, rate_25: 195, rate_15: 21 },
+      origin_rule: 'Tariffs apply only to goods originating from the US (as marked under the CUSMA marking regulations).',
+      in_transit: 'Countermeasures do NOT apply to US goods already in transit to Canada on Sept 8, 2026.',
+      tiers: {},
+      category_tiers: {},
+      sectors: [],
+      sector_categories: [],
+      representative_products: [],
+      status: 'PENDING — preset data file not loaded (presets/canada-sept8-counter-tariffs.js).'
+    };
+  })();
 
   /*
    * Brazil — Section 301 25% additional duty (IN EFFECT July 22, 2026)
@@ -881,6 +834,8 @@
           applies: applies,
           targeted: targeted,
           rate: rate,
+          presetKey: ret.preset_key || 'canada-sept8-counter-tariffs',
+          presetLabel: ret.preset_label || 'Canada Sept 8 Counter-Tariffs',
           tierRate: tierRate,
           tierLabel: tierInfo ? tierInfo.label : null,
           tierItemCount: tierInfo ? tierInfo.item_count : null,

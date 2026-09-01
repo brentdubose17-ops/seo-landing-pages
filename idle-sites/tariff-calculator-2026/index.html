@@ -210,7 +210,7 @@
 
 <div class="notice-banner" role="note" style="border-left-color:#2563eb;background:#eff6ff;">
     <div class="inner">
-        <h2>🆕 Canada Retaliation CONFIRMED: 15/25/50% Counter-Tariffs on C$27.6B of US Imports — Effective September 8, 2026 <span class="deadline">12:01 a.m. ET, Tuesday, Sept 8, 2026</span></h2>
+        <h2>🆕 Canada Sept 8 Counter-Tariffs — CONFIRMED: 15/25/50% on C$27.6B of US Imports <span class="deadline">Effective 12:01 a.m. ET, Tuesday, Sept 8, 2026</span></h2>
         <p><strong>Status: CONFIRMED — Canada announced Aug 25, 2026 that counter-tariffs of 15%, 25% and 50% on C$27.6 billion of US imports come into force at 12:01 a.m. ET on Tuesday, September 8, 2026.</strong> Finance Minister François-Philippe Champagne said the rates match US duties <strong>"dollar for dollar, rate for rate"</strong> — each product is drawn from those targeted by US Section 338 and Section 232 tariffs, with the rate matching the corresponding US rate. The official list was revised Aug 26 to <strong>629 tariff items</strong> (413 at 50%, 195 at 25%, 21 at 15%). Focus sectors: <strong>steel, dairy, household appliances, agricultural equipment, pulp &amp; paper, and electronics</strong>; the list also covers furniture, clothing/apparel, cosmetics, tools, sporting goods, and more. Fish and seafood were <strong>removed</strong> in the Aug 26 revision; US autos are <strong>not</strong> on the list (separate existing 25% order). The tariffs apply <strong>only to US-origin goods</strong>, and US goods <strong>already in transit</strong> to Canada on Sept 8 are exempt. A <strong>C$7.5 billion support package</strong> (on top of nearly C$25B cumulative) accompanies the measures. Existing Canadian counter-tariffs on US autos remain in place.</p>
         <p><strong>In the calculator:</strong> switch "Shipping To" to <strong>🇨🇦 Canada</strong>, keep country of origin as <strong>United States</strong>, and select a covered category. On or after September 8, 2026 the tiered retaliation duty (50% steel/aluminum, 25% electronics/appliances/dairy, 15% farm equipment) is applied to your estimate; before that date it shows as PENDING. Read the full <a href="us-canada-tariffs-2026.html">US-Canada tariffs explainer</a> or the <a href="canada-september-8-counter-tariffs.html">complete Sept 8 counter-tariff tier list →</a></p>
         <p style="font-size:0.9rem;"><strong>Representative rates on US-origin goods entering Canada (effective Sept 8, 2026):</strong></p>
@@ -578,6 +578,7 @@ function estimateCssp() {
     <p style="margin-top:8px;">This tool provides estimates only. Consult a licensed customs broker for official duty determinations.</p>
 </footer>
 
+<script src="presets/canada-sept8-counter-tariffs.js"></script>
 <script src="tariff-data.js"></script>
 <script>
 (function () {
@@ -639,6 +640,8 @@ function estimateCssp() {
             return;
         }
         var ret = T.CANADA_RETALIATION;
+        var retPresetLabel = (ret && ret.preset_label) ? ret.preset_label : 'Canada Sept 8 Counter-Tariffs';
+        var retEffLabel = (ret && ret.effective_label) ? ret.effective_label : 'Tuesday, September 8, 2026, 12:01 a.m. ET';
         var entryDate = document.getElementById('entryDate').value || new Date().toISOString().split('T')[0];
         var applies = entryDate >= ret.effective;
         var sectors = ret.sectors.map(function (s) { return s.label; }).join(', ');
@@ -648,8 +651,8 @@ function estimateCssp() {
         banner.style.display = 'block';
         banner.className = applies ? 'flag info' : 'flag warn';
         banner.innerHTML = applies
-            ? "<strong>🔴 Canada Retaliation — IN EFFECT (effective " + ret.effective_label + ")</strong>Canada's 15/25/50% counter-tariffs on C$27.6B of US imports apply on or after <strong>September 8, 2026 at 12:01 a.m. ET</strong>. Focus sectors: <strong>" + sectors + "</strong>. " + (catName ? catName + ": " : "") + tierTxt + " Select an entry date on/after Sept 8, 2026 to see the retaliation duty in your estimate."
-            : "<strong>🟡 Canada Retaliation — PENDING (effective " + ret.effective_label + ")</strong>Canada's 15/25/50% counter-tariffs on C$27.6B of US imports take effect <strong>September 8, 2026 at 12:01 a.m. ET</strong>. Focus sectors: <strong>" + sectors + "</strong>. " + (catName ? catName + ": " : "") + tierTxt + " Select an entry date on/after September 8, 2026 to see the retaliation duty in your estimate.";
+            ? "<strong>🔴 " + retPresetLabel + " — IN EFFECT (effective " + retEffLabel + ")</strong>Canada's 15/25/50% counter-tariffs on C$27.6B of US imports apply on or after <strong>September 8, 2026 at 12:01 a.m. ET</strong>. Focus sectors: <strong>" + sectors + "</strong>. " + (catName ? catName + ": " : "") + tierTxt + " Select an entry date on/after Sept 8, 2026 to see the retaliation duty in your estimate."
+            : "<strong>🟡 " + retPresetLabel + " — PENDING (effective " + retEffLabel + ")</strong>Canada's 15/25/50% counter-tariffs on C$27.6B of US imports take effect <strong>September 8, 2026 at 12:01 a.m. ET</strong>. Focus sectors: <strong>" + sectors + "</strong>. " + (catName ? catName + ": " : "") + tierTxt + " Select an entry date on/after September 8, 2026 to see the retaliation duty in your estimate.";
     }
 
     window.onDirectionChange = function () {
@@ -838,13 +841,15 @@ function calculate() {
     var breakdownParts = [];
     if (b.canadaRetaliation) {
         var cr = b.canadaRetaliation;
+        var crPresetLabel = cr.presetLabel || 'Canada Sept 8 Counter-Tariffs';
+        var crEffLabel = cr.effectiveLabel || 'Tuesday, September 8, 2026, 12:01 a.m. ET';
         if (cr.applies) {
-            breakdownParts.push('Canada retaliation (dollar-for-dollar): +' + (cr.rate * 100).toFixed(0) + '%' + (cr.tierLabel ? ' (' + cr.tierLabel + ' tier, ' + cr.tierItemCount + ' items)' : ''));
-            breakdownParts.push('Effective: ' + cr.effectiveLabel);
+            breakdownParts.push(crPresetLabel + ' (dollar-for-dollar): +' + (cr.rate * 100).toFixed(0) + '%' + (cr.tierLabel ? ' (' + cr.tierLabel + ' tier, ' + cr.tierItemCount + ' items)' : ''));
+            breakdownParts.push('Effective: ' + crEffLabel);
         } else if (cr.targeted) {
-            breakdownParts.push('Canada retaliation: PENDING — effective ' + cr.effectiveLabel);
+            breakdownParts.push(crPresetLabel + ': PENDING — effective ' + crEffLabel);
         } else {
-            breakdownParts.push('Canada retaliation: category not on the 629-item list (revised Aug 26)');
+            breakdownParts.push(crPresetLabel + ': category not on the 629-item list (revised Aug 26)');
         }
     } else if (category === 'ground-beef') {
         // TRQ-governed product — no generic MFN/category base applies
@@ -1062,8 +1067,9 @@ function calculate() {
                         return p.product + ' (HS ' + p.hs + ', ' + (p.tier * 100).toFixed(0) + '%)';
                     }).join(' · ') + ' — exact HTS line governs the rate.</small>';
             }
-            crf.innerHTML = '<strong>Canada Retaliation — ' + (cr2.tierLabel || '') + ' Dollar-for-Dollar Duty (IN EFFECT)</strong>'
-                + "Canada's counter-tariffs apply to this US product at the <strong>" + (cr2.rate * 100).toFixed(0) + '% tier</strong> (rate for rate matching the US duty), effective <strong>' + cr2.effectiveLabel + '</strong>.'
+            var cr2PresetLabel = cr2.presetLabel || 'Canada Sept 8 Counter-Tariffs';
+            crf.innerHTML = '<strong>' + cr2PresetLabel + ' — ' + (cr2.tierLabel || '') + ' Dollar-for-Dollar Duty (IN EFFECT)</strong>'
+                + "Canada's counter-tariffs apply to this US product at the <strong>" + (cr2.rate * 100).toFixed(0) + "% tier</strong> (rate for rate matching the US duty), effective <strong>" + cr2.effectiveLabel + "</strong>."
                 + '<br><small>' + cr2.framework + ' retaliation on ' + cr2.valueAffected + '. Official list: ' + cr2.listSize.total + ' tariff items (' + cr2.listSize.rate_50 + ' at 50%, ' + cr2.listSize.rate_25 + ' at 25%, ' + cr2.listSize.rate_15 + ' at 15%). ' + (cr2.tierReleaseNote ? 'This tier: ' + cr2.tierReleaseNote + '. ' : '') + cr2.originRule + ' ' + cr2.inTransit + '</small>'
                 + repLine
                 + '<br><small>Focus sectors: ' + crSectors + '; the 629-item list (revised Aug 26) also covers furniture, apparel, cosmetics, tools, sporting goods, and more — autos are NOT on the Sept 8 list (separate existing 25% order), and fish and seafood were removed in the Aug 26 revision. A C$7.5B support package accompanies the measures (on top of nearly C$25B cumulative).</small>'
