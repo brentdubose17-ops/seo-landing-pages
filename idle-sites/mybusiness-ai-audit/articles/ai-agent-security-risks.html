@@ -213,6 +213,39 @@
         <p><strong>6. Would an agent need a verified identity before it can spend your money?</strong><br>
         Before any AI agent can transact — buy API access, top up a subscription, move funds — require a verified identity and an approved-merchant list it cannot edit. Cloudflare's new Wallets give agents a way to pay, but its cloudflare.pay handle is an optional human-readable label, not a verification system. Make verified-identity a policy requirement for your business, not a feature you assume the vendor provides.</p>
 
+        <h2>Verify AI crawler identity before granting crawl access</h2>
+        <p><strong>Is it safe to allow AI crawlers?</strong> Yes — with verification. Legitimate AI crawlers (ClaudeBot, GPTBot, OAI-SearchBot, PerplexityBot) help your content surface in AI answers, but in August 2026 security firm GreyNoise documented scanners impersonating those exact crawler names to harvest exposed credentials and config files from sites that trust crawler user agents. The user-agent string is a client-supplied header — anyone can send it. Allow a crawler only after checking its source IP against the vendor's published crawler ranges and confirming the request behaves like a crawler. Never let a user-agent string alone grant access. Full explainer: <a href="/ai-crawler-credential-theft">AI crawler impersonation: the new credential-theft vector businesses must audit</a>.</p>
+
+        <p><strong>1. Never treat a user-agent string as identity.</strong><br>
+        Any program can claim to be GPTBot or ClaudeBot; the user agent is a client-supplied header, not a credential. GreyNoise found the impostor ClaudeBot string matching Anthropic's character-for-character.</p>
+
+        <p><strong>2. Check the source IP against the vendor's published range for the exact crawler name you saw.</strong><br>
+        Match the name to its own list: Anthropic — claude.com/crawling/bots.json; OpenAI — openai.com/gptbot.json, /searchbot.json, /chatgpt-user.json; Google — developers.google.com/static/crawling/ipranges/common-crawlers.json; Perplexity — perplexity.ai/perplexitybot.json; Amazon — developer.amazon.com/amazonbot/ip-addresses/.</p>
+
+        <p><strong>3. Require both signals to agree: IP in the published range AND plausible crawler behavior.</strong><br>
+        GreyNoise's rule: "Allow only when the fingerprint and a published address agree." A real Anthropic crawler will come from a published address (e.g., 216.73.216.0/22) and read robots.txt first. Where the vendor publishes reverse-DNS or ASN ownership for its crawlers, confirm the address matches that too.</p>
+
+        <p><strong>4. Flag any "crawler" that never requests /robots.txt.</strong><br>
+        Real crawlers fetch it first and cache it; the forged cluster GreyNoise measured never requested it at all. Judge across days, not single visits.</p>
+
+        <p><strong>5. Alert on credential paths regardless of user agent.</strong><br>
+        /.env, /.aws/credentials, /.git/config, service-account.json, terraform.tfstate, and AI-coding-tool config files such as /.claude/settings.json — no legitimate crawler has any reason to request these.</p>
+
+        <p><strong>6. Wherever a crawler name grants access or waives a control (allowlist, WAF rule, rate-limit bypass), put an IP-range check behind it.</strong><br>
+        If you cannot verify the address, treat the request as unknown.</p>
+
+        <p><strong>7. Keep .env, .git and cloud credential files out of the web root entirely; rotate any key that was ever reachable from a web path.</strong><br>
+        Assume anything readable was read.</p>
+
+        <p><strong>8. Assign an owner and a refetch schedule for each vendor IP list.</strong><br>
+        Lists change — Google refreshes daily. A stale list either admits impostors or turns real crawlers into false alerts.</p>
+
+        <p><strong>9. Don't block everything to be safe.</strong><br>
+        Legitimate AI crawlers are a growing referral source; blocking them costs visibility (~7% weekly traffic for news publishers per Rutgers/Wharton research). Verify, don't ban. For opt-outs, use robots.txt — Anthropic warns IP-blocking can impede its crawler reading robots.txt.</p>
+
+        <p><strong>10. Treat red-flag strings as definitive proof of forgery.</strong><br>
+        Google-Extended sent as a user agent is always forged — Google's documentation says it has no HTTP user-agent string; Amazon's forged names also used undocumented strings.</p>
+
         <h2>How to Vet an AI Agency or AI Vendor</h2>
         <p>If you are outsourcing AI work rather than building it in-house, the audit questions above apply to your vendors — with a sharper edge, because you are handing over access, not just code. When you compare providers, ask for their permission model, their monitoring, their human approval gates, and their incident-response record. The third-lab-in-a-row pattern makes those questions urgent: if testing environments at OpenAI, Anthropic, and Meta all leaked, a vendor's claim that "our agents are safe" needs evidence, not reassurance. Two useful references: our guide to <a href="https://findaiagency.com/best-ai-agencies-for-small-business">how to vet an AI agency</a>, the <a href="https://findaiagency.com/ai-agent-fake-identities-test-questions">five security questions to ask any AI agency before you sign</a>, and the <a href="https://aiagencycalculator.com/index_calculator">AI agency pricing calculator</a> for a reality check on <a href="https://aiagencycalculator.com/cost-of-hiring-an-ai-agency">what agency work actually costs</a>.</p>
 
