@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qwen3.8-Flash-Next Cost: Open-Weight MoE at $0.15/M</title>
+    <meta name="description" content="Qwen3.8-Flash-Next cost: 125B MoE, 6B active, $0.15/$0.47 per 1M — a new cheapest AI model to run agents, and the open-weight vs API cost math.">
+    <meta name="keywords" content="Qwen3.8-Flash-Next cost, cheapest AI model to run agents, open-weight vs API cost 2026, open-weight MoE inference cost, Qwen3.8-Flash pricing, AI model cost per task 2026, agency AI pricing">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aiagencycalculator.com/qwen3-8-flash-next-cost">
+    <meta property="og:title" content="Qwen3.8-Flash-Next Cost: Open-Weight MoE at $0.15/M">
+    <meta property="og:description" content="Qwen3.8-Flash-Next cost: 125B MoE, 6B active, $0.15/$0.47 per 1M — a new cheapest AI model to run agents, and the open-weight vs API cost math.">
+    <meta property="og:url" content="https://aiagencycalculator.com/qwen3-8-flash-next-cost">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aiagencycalculator">
+    <meta property="og:image" content="https://aiagencycalculator.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://aiagencycalculator.com/qwen3-8-flash-next-cost/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://aiagencycalculator.com/qwen3-8-flash-next-cost"
+      },
+      "headline": "Qwen3.8-Flash-Next Cost: Open-Weight MoE at $0.15/M",
+      "description": "Qwen3.8-Flash-Next cost: 125B MoE, 6B active, $0.15/$0.47 per 1M — a new cheapest AI model to run agents, and the open-weight vs API cost math.",
+      "datePublished": "2026-08-28",
+      "dateModified": "2026-08-28",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://aiagencycalculator.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://aiagencycalculator.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://aiagencycalculator.com/og-image.png"
+        }
+      },
+      "image": "https://aiagencycalculator.com/og-image.png",
+      "keywords": "Qwen3.8-Flash-Next cost, cheapest AI model to run agents, open-weight vs API cost 2026, open-weight MoE inference cost, Qwen3.8-Flash pricing",
+      "wordCount": 1795
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://aiagencycalculator.com/qwen3-8-flash-next-cost/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Qwen3.8-Flash-Next open source?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Open-weight, not open source: weights on Hugging Face and ModelScope under qwen-community-1.0, not Apache-2.0. Variants: BF16, FP8 (172.78 GiB), NVFP4 (Blackwell-only)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does Qwen3.8-Flash cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "$0.15/$0.47 per 1M tokens with $0.016 cache reads on QwenCloud (China: ¥0.8 / ¥2.7 / ¥0.1); OpenRouter carries the same rate. A conflicting $0.16 input figure is unverified — the official rate is $0.15."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can agencies self-host Qwen3.8-Flash-Next?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, with serious hardware: FP8 is 172.78 GiB and runs on two DGX Sparks (128 GB unified each, NVLink); BF16 is 335.28 GiB; SGLang shipped day-0 support. Thinking is on by default; enable_thinking disables it via API. Capex decision — model it against the API bill."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Qwen3.8-Flash-Next the cheapest AI model to run agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In the hosted tier it joins the $0.15 input crowd — GLM-5.3-Flash ($0.15/$0.50) and DeepSeek V4 Flash ($0.15-0.22/$0.35-0.66) — and is cheaper on output than both at list; roughly a quarter of DeepSeek V4 Pro off-peak. \"Cheapest\" depends on cache behavior, context length, and retries — model your own volume in the calculator."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        .answer-box { margin: 0 0 24px; padding: 20px 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; }
+        .answer-box h2 { margin: 0 0 10px; font-size: 1.15rem; border: none; padding: 0; }
+        .answer-box p { margin-bottom: 0; color: #333; }
+        .answer-box ul { margin: 0 0 0 20px; }
+        .answer-box li { margin-bottom: 10px; color: #333; font-size: 1.0rem; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>Qwen3.8-Flash-Next: the Qwen4 preview that changes open-weight cost math</h1>
+            <div class="meta"><span>Published August 28, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>model-cost</span> <span>open-weights</span> <span>qwen</span> <span>moe</span> <span>agent-stacks</span></div>
+        </header>
+
+        <div class="answer-box">
+            <h2>What is Qwen3.8-Flash-Next and how much does it cost?</h2>
+            <p><strong>Qwen3.8-Flash-Next cost, in one paragraph:</strong> Alibaba's experimental open-weight multimodal MoE preview of the architecture that will underpin Qwen4 — 125B total parameters with ~6B active per token (~95% sparsity), text/image/video input, and 262,144-token native context extensible to 1M with YaRN. The production Qwen3.8-Flash API is live on QwenCloud and OpenRouter at $0.15/$0.47 per 1M tokens with $0.016 cache reads. Weights are on Hugging Face and ModelScope under the qwen-community-1.0 license.</p>
+        </div>
+
+        <h2>What is Qwen3.8-Flash-Next?</h2>
+        <p><strong>Qwen3.8-Flash-Next</strong> is the open-weight checkpoint published August 26 on Hugging Face and ModelScope. <strong>Qwen3.8-Flash</strong> is the production API built on that architecture — 1M default context, built-in tools (web search, web extraction, image/video search, code interpreter) — live on QwenCloud the same day; OpenRouter listed it that evening. Alibaba confirmed the rate August 27, the specs August 28.</p>
+        <p>It is multimodal — text, image, and video input; text output — with 512 MoE experts (10 routed + 1 shared per token) on hybrid Gated DeltaNet + QSA attention, and 262,144-token native context extensible to 1,000,000 with YaRN.</p>
+        <p>Contract note: this is <strong>open-weight, not open source</strong> — qwen-community-1.0, not Apache-2.0. That distinction matters when you embed a model in client deliverables.</p>
+
+        <h2>Why Qwen3.8-Flash-Next cuts open-weight MoE inference cost</h2>
+        <p>A dense model passes every token through every parameter: a 125B dense model costs 125B parameters of compute per token. In a MoE, only a subset of experts computes. Qwen3.8-Flash-Next activates about <strong>6B of 125B total</strong> — roughly 95% sparsity (6/125 = 95.2%; Alibaba says "125B with 6B activated").</p>
+        <p>Because inference cost tracks <strong>active</strong> parameters, that sparsity is the story behind the price. Three design choices reinforce it:</p>
+        <ul>
+            <li>A <strong>51B-parameter n-gram embedding</strong> (bigram/trigram lookup) adds capacity at near-zero per-token compute — it lives in host memory, prefetched asynchronously, so it does not occupy GPU memory.</li>
+            <li><strong>QSA attention</strong> cuts long-context latency at micro-block level — Qwen reports up to 7.6x prefill / 4.9x decode speedup at 1M context (conservative pair; SGLang cites up to 10.2x/6.6x; both vendor-reported).</li>
+            <li>Alibaba puts <strong>training at roughly one-ninth the cost of Qwen3.7-Plus</strong> — why the price exists at all.</li>
+        </ul>
+        <p>Result: open-weight MoE inference cost at a level once reserved for small dense models — with 1M context, vision, and tools attached.</p>
+
+        <h2>Qwen3.8-Flash-Next cost: the cheapest AI model to run agents?</h2>
+        <p>Typical agent workload: 10K input / 2K output tokens per task, no cache hits:</p>
+        <ul>
+            <li><strong>Qwen3.8-Flash:</strong> $0.0015 + $0.00094 = <strong>$0.0024 per task</strong></li>
+            <li><strong>DeepSeek V4 Pro (off-peak):</strong> $0.0066 + $0.0040 = <strong>$0.0106 per task</strong></li>
+            <li><strong>Qwen3.8-Max:</strong> $0.02 + $0.012 = <strong>$0.032 per task</strong></li>
+            <li><strong>Claude Opus 5:</strong> $0.05 + $0.05 = <strong>$0.10 per task</strong></li>
+            <li><strong>GPT-5.6 Sol (list):</strong> $0.05 + $0.06 = <strong>$0.11 per task</strong></li>
+        </ul>
+        <p>At 100,000 tasks a month: <strong>~$244 on Qwen3.8-Flash vs ~$1,056 on DeepSeek V4 Pro off-peak, ~$10,000 on Claude Opus 5, ~$11,000 on GPT-5.6 Sol</strong> — before retries and overhead, on a 1M-context model.</p>
+        <p>Three agent-specific details push the number lower in practice:</p>
+        <ol>
+            <li><strong>Cache reads at $0.016/1M are ~9x cheaper than input</strong> — and agent loops re-read history and tool output every turn.</li>
+            <li><strong>1M context cuts orchestration round-trips</strong> — hold the codebase or task history in one window instead of paying for multi-hop summarization.</li>
+            <li><strong>Tools plus a thinking toggle</strong> keep bills predictable: <code>enable_thinking</code> disables thinking, <code>reasoning_effort</code> (xhigh/medium/low) sets the depth — and at 74 tokens/sec (vs 65 average) there is no slow-thinker tax. OpenCode Go's flat-rate plan added qwen3.8-flash on the same basis.</li>
+        </ol>
+
+        <h2>Where Qwen3.8-Flash-Next lands in the model pricing comparison table</h2>
+        <p>Before you rebuild client quotes, see how it stacks against the field — we track the full set on the <a href="/ai-model-cost-per-task-2026">AI Model Cost per Task 2026 page</a>. Qwen3.8-Flash-Next slots into the cheap-open-weight tier:</p>
+        <table>
+            <thead>
+                <tr><th>Model</th><th>Open-weight?</th><th>Active params</th><th>Input $/1M</th><th>Output $/1M</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Qwen3.8-Flash</strong> (Alibaba)</td><td>Yes (preview)</td><td>6B</td><td><strong>$0.15</strong></td><td><strong>$0.47</strong></td><td>Cache read $0.016; 1M context (YaRN)</td></tr>
+                <tr><td>Qwen3.8-27B (Alibaba)</td><td>Yes (dense)</td><td>27B</td><td>$0.425</td><td>$2.55</td><td>Dense, so higher active cost</td></tr>
+                <tr><td>Qwen3.7-Plus (Alibaba)</td><td>No (API)</td><td>17B (397B total)</td><td>$0.32</td><td>$1.28</td><td>Prior gen API tier</td></tr>
+                <tr><td>Qwen3.7-Flash (Alibaba)</td><td>No (API)</td><td>—</td><td>$0.03</td><td>$0.13</td><td>Smallest Alibaba API</td></tr>
+                <tr><td>Qwen3.8-Max (Alibaba)</td><td>No (API)</td><td>~A95B (2.4T total)</td><td>$2.00</td><td>$6.00</td><td>Flagship API tier</td></tr>
+                <tr><td>DeepSeek V4 Flash</td><td>Yes</td><td>13B</td><td>$0.15–$0.22</td><td>$0.35–$0.66</td><td>Date/peak-sensitive after Aug 16 raise</td></tr>
+                <tr><td>DeepSeek V4 Pro 0813</td><td>Yes</td><td>49B</td><td>$0.66 (off-peak)</td><td>$1.98 (off-peak)</td><td>Off-peak rates; peak ~2x</td></tr>
+                <tr><td>Claude Opus 5 (Anthropic)</td><td>No</td><td>—</td><td>$5.00</td><td>$25.00</td><td>Top-tier API</td></tr>
+                <tr><td>GPT-5.6 Sol (OpenAI)</td><td>No</td><td>—</td><td>$5.00</td><td>$30.00</td><td>List; promo pricing may apply</td></tr>
+            </tbody>
+        </table>
+        <p>Rates verified 2026-08-27/28 via QwenCloud, OpenRouter, and Artificial Analysis; DeepSeek V4 Flash is date/peak-sensitive after the Aug 16 raise (up to 371% at peak). All USD per 1M tokens. Qwen3.8-Flash undercuts DeepSeek V4 Flash on official pricing and lands at <strong>roughly a quarter of DeepSeek V4 Pro's off-peak price</strong> — Intelligent Living frames it as matching V4 Pro's coding score (SWE-bench Pro 62.5 vs 55.4, vendor-reported) at about a quarter of the cost.</p>
+
+        <h2>Open-weight vs API cost 2026: the agency decision</h2>
+        <p>This release sharpens the open-weight vs API cost decision because both routes are now genuinely competitive at this tier.</p>
+        <p><strong>When the API wins (most agencies, most months).</strong> $0.15/$0.47 via QwenCloud or OpenRouter, zero capex, 1M context, tools, thinking control. At agency volume the bill stays small enough that hardware never pays for itself.</p>
+        <p><strong>When self-hosting wins.</strong> Sustained high volume, data residency, or a per-token cost floor. The FP8 checkpoint is <strong>172.78 GiB</strong> (BF16 is 335.28 GiB); two DGX Sparks (128 GB unified each, NVLink) can serve it. That's a deployment project, not an Ollama pull — and qwen-community-1.0 is not Apache-2.0, so free-to-download and free-to-redistribute differ.</p>
+        <p><strong>The shortcut:</strong> below roughly tens of billions of tokens a month, take the API and bank the $0.15 floor. Above that, model the FP8 self-host path against the bill — SGLang shipped day-0 support.</p>
+
+        <h2>Where it fits in the 2026 model-cost landscape</h2>
+        <p>DeepSeek's <strong>August 16 hike</strong> (up to 371% on V4 Flash output at peak) reopened the cheap tier; Qwen steps in at $0.15/$0.47 with a stronger active-parameter efficiency story. <strong>GLM-5.3-Flash</strong> (Z.ai, $0.15/$0.50 list, MIT weights) and <strong>Tencent Hy4 preview</strong> ($0.834/$2.501, Apache 2.0) made 1M context and cheap open weights table stakes; Qwen3.8-Flash is cheaper on output than both at list. The <strong>top tier has not moved</strong> — Claude Opus 5 and GPT-5.6 Sol are still 30-60x+ the cheap tier on raw tokens.</p>
+        <p>Independent data is positive but modest: Artificial Analysis scores it <strong>56 on its Intelligence Index vs a 29 median</strong>, at about half the median input price ($0.15 vs $0.30). All benchmarks (SWE-bench Pro 62.5, DeepSWE 58.7, GPQA Diamond 91.7) are <strong>vendor-reported, one day old, unreproduced as of August 28</strong> — treat as directional; the weights are public, so third-party runs are coming.</p>
+
+        <h2>What this changes for your model line item</h2>
+        <p>Qwen3.8-Flash belongs on every agency rate card now: list <strong>$0.15/$0.47</strong> with cache reads at $0.016, beside DeepSeek V4 Pro and the open-weight stack.</p>
+        <ul>
+            <li><strong>Your cost basis dropped again.</strong> Priced off GPT-5.6 Sol or DeepSeek V4 Pro off-peak, Qwen3.8-Flash changes the model line item by 4-45x on typical shapes. Decide deliberately whether that becomes margin, lower client price, or faster delivery.</li>
+            <li><strong>Cache is the number.</strong> At $0.016/1M, re-read-heavy agent loops decide the real monthly bill.</li>
+            <li><strong>Budget two prices.</strong> Today's list and whatever Qwen charges next quarter — same date-sensitivity asterisk as DeepSeek.</li>
+        </ul>
+
+        <div class="cta">
+            <p><strong>Price your AI work against current market benchmarks</strong></p>
+            <a class="btn" href="/" data-umami-event="click_to_calculator">Try the AI Agency Pricing Calculator →</a>
+            <p style="margin-top:12px;font-size:0.9rem;">Estimate setup fees, retainers, and margin in under a minute — then model per-agent workload costs with the <a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator</a>.</p>
+        </div>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>Is Qwen3.8-Flash-Next open source?</h3>
+            <p>Open-weight, not open source: weights on Hugging Face and ModelScope under qwen-community-1.0, not Apache-2.0. Variants: BF16, FP8 (172.78 GiB), NVFP4 (Blackwell-only).</p>
+        </div>
+        <div class="faq-item">
+            <h3>How much does Qwen3.8-Flash cost?</h3>
+            <p>$0.15/$0.47 per 1M tokens with $0.016 cache reads on QwenCloud (China: ¥0.8 / ¥2.7 / ¥0.1); OpenRouter carries the same rate. A conflicting $0.16 input figure is unverified — the official rate is $0.15.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can agencies self-host Qwen3.8-Flash-Next?</h3>
+            <p>Yes, with serious hardware: FP8 is 172.78 GiB and runs on two DGX Sparks (128 GB unified each, NVLink); BF16 is 335.28 GiB; SGLang shipped day-0 support. Thinking is on by default; enable_thinking disables it via API. Capex decision — model it against the API bill.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is Qwen3.8-Flash-Next the cheapest AI model to run agents?</h3>
+            <p>In the hosted tier it joins the $0.15 input crowd — GLM-5.3-Flash ($0.15/$0.50) and DeepSeek V4 Flash ($0.15-0.22/$0.35-0.66) — and is cheaper on output than both at list; roughly a quarter of DeepSeek V4 Pro off-peak. "Cheapest" depends on cache behavior, context length, and retries — model your own volume in the calculator.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/">AI Agency Pricing Calculator: Setup Fees, Retainers &amp; Margin</a></li>
+                <li><a href="/ai-model-cost-per-task-2026">AI Model Cost Per Task 2026: Per-Token Math for Agency Pricing</a></li>
+                <li><a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</a></li>
+                <li><a href="/deepseek-v4-api-price-increase-2026">DeepSeek V4 API Price Increase 2026: What It Means for Agency Costs</a></li>
+                <li><a href="/gpt-5.6-sol-api-pricing">GPT-5.6 Sol API Pricing</a></li>
+                <li><a href="/openai-discounts-token-usage">OpenAI's Discount Experiment: What Token Discounts Mean for Agency Pricing</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>Hugging Face model card: <a href="https://huggingface.co/Qwen/Qwen3.8-Flash-Next" rel="noopener">huggingface.co/Qwen/Qwen3.8-Flash-Next</a></li>
+            <li>Unite.ai: <a href="https://www.unite.ai/qwen3-8-flash-next-previews-qwen4-architecture-with-6b-active-parameters" rel="noopener">unite.ai</a></li>
+            <li>OrcaRouter: <a href="https://www.orcarouter.ai/blog/qwen-3-8-flash-release" rel="noopener">orcarouter.ai</a></li>
+            <li>QwenCloud pricing: <a href="https://www.qwencloud.com/models/qwen3.8-flash" rel="noopener">qwencloud.com/models/qwen3.8-flash</a></li>
+            <li>OpenRouter qwen3.8-flash: <a href="https://openrouter.ai/qwen/qwen3.8-flash" rel="noopener">openrouter.ai/qwen/qwen3.8-flash</a></li>
+            <li>Artificial Analysis: <a href="https://artificialanalysis.ai/models/qwen3-8-flash-next" rel="noopener">artificialanalysis.ai</a></li>
+            <li>Intelligent Living: <a href="https://www.intelligentliving.co/qwen38-flash-matches-deepseek-v4-pro/" rel="noopener">intelligentliving.co</a></li>
+            <li>SGLang docs: <a href="https://docs.sglang.io/cookbook/autoregressive/Qwen/Qwen3.8-Flash-Next" rel="noopener">docs.sglang.io</a></li>
+            <li>OpenRouter API: <a href="https://openrouter.ai/api/v1/models?q=qwen3.8" rel="noopener">openrouter.ai/api/v1/models</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: Pricing per QwenCloud official rate confirmed 2026-08-27 and OpenRouter's live listing, USD per 1M tokens. 125B/6B/~95% sparsity per Alibaba's Aug 28 announcement and the model card (6/125 = 95.2%). QSA speedups and all benchmarks vendor-reported, unreproduced. DeepSeek V4 prices date/peak-sensitive after the Aug 16 raise. GLM-5.3-Flash and Tencent Hy4 rates per the site's own pricing posts. Per-task math uses 10K/2K tokens; model your own volume.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
