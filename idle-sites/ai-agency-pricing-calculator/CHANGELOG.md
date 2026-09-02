@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-09-01 — Claude Fable 5.1 / Mythos 5.1 pricing refresh (kanban t_ffe72d4c) — LIVE
+
+- **Claude Fable 5 → Fable 5.1** across the site: Anthropic GA'd **Fable 5.1** Sept 1, 2026 (API id `claude-fable-5-1`) — same $10/$50 per 1M list as Fable 5, but **cache reads cut 75% to $0.25/1M** (0.025x base input; 5m writes $12.50, 1h writes $20), **1M-token context, 128K max output**. Added **Claude Mythos 5.1** row: same underlying model with cyber/bio-tuned safeguards, priced identically, **trusted access only (CVP/LSVP) — NOT GA**.
+- **Pages updated:** `/claude-pricing` (title, meta, JSON-LD Article+FAQ, pricing table with Fable 5.1 + Mythos 5.1 rows, EFS/ZDR retention section rewrite, sources, accuracy note, dateModified + meta Updated → 2026-09-01); `/` (index.html — selector option, model note, cache-aware scenario math, visible + schema FAQ, changelog entry); `/index_calculator` (meta, FAQ schema + visible, changelog entry); related-link titles on `/claude-code-usage-limit-cost-impact`, `/openai-discounts-token-usage`, `/anthropic-65b-run-rate-agency-pricing`, `/astra-model-cost-outlook`, `/blog/openai-jalapeno-chip-inference-costs/`; `llms.txt` title; sitemap lastmod → 2026-09-01.
+- **Cache-gap math updated:** the 276x headline (@JulianGoldieSEO) compared Fable 5's $1.00 cache read to DeepSeek's launch $0.003625. With Fable 5.1's $0.25 and DeepSeek's current off-peak $0.022 / peak $0.044, the current gap is **~11x off-peak / ~6x peak** (~69x on DeepSeek launch pricing). Updated in the scenario table, FAQ answers, assumption notes, and calculator JS (`CACHE_PRICES.fable5.hit = 0.25`).
+- **Data-retention policy updated:** the June 9, 2026 30-day retention rule applied to Fable 5/Mythos 5. Fable 5.1 introduces **Enterprise Frontier Safeguards (EFS)** — customer-controlled cloud storage = ZDR-equivalent privacy, phased rollout fall 2026; until EFS is available, eligible customers can use Fable 5.1 with **zero data retention**.
+- **Sources:** Anthropic announcement (anthropic.com/claude-fable-and-mythos-5-1) + platform pricing docs, verified Sept 1, 2026. Ramp July 2026 adoption data retained as historical (measured the predecessor Fable 5).
+- **Verified:** JSON-LD parses clean on all three pages; `node --check` passes on all inline JS; grep confirms no stale Fable-5-as-current pricing remains.
+
 ## 2026-08-31 — Outcome-based pricing mode on /ai-agent-api-cost-calculator (kanban t_e54f18c1, research brief t_9974fbbc) — LIVE
 
 - **Mode selector added** to the Agent API Cost Estimator: `API/usage-based` (default, existing behavior unchanged) | `Outcome-based` (new). Radio `name="mode"` toggles the outcome inputs and the side-by-side comparison block; **input values are never cleared on switch**, so switching modes does not lose inputs.

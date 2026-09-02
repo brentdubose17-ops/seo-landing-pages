@@ -237,7 +237,7 @@ SIZE_MULT     0.65 / 0.85 / 1.0 / 1.35 / 1.8
 WORKFLOW_MULT 0.7 / 0.9 / 1.0 / 1.3 / 1.6
 EXP_MULT      0.7 / 1.0 / 1.3 / 1.6
 TIMELINE_MULT 1.35 / 1.0 / 0.9
-MODEL_COMPUTE_FACTOR  open 0.95 · deepseek 0.92 (PROVISIONAL — hike announced) · dsv4pro 0.86 (DeepSeek V4 Pro cache-aware, off-peak $0.66/$1.98 per 1M + $0.022 cache read — lowest cache-read stack for agent runs; 92% hit-rate assumption flagged) · local 0.85 (Meta Muse Glimmer self-host, cheapest — hardware-amortized, per-workload) · grok46 1.0 (Grok 4.6 SpaceXAI, $2/$6 verified — neutral, matches open-weight tier price but hosted frontier) · gemini37 0.93 (Gemini 3.7 Flash Google, intro $0.75/$3.75 verified through 2026-12-31 then $1.50/$7.50 — slightly below open because intro undercuts it, conservative due to expiry + hosted) · sonnet5 0.97 (Claude Sonnet 5 Anthropic, $2/$10 verified PERMANENT Aug 10 2026 — Sept 1 $3/$15 increase CANCELLED; input at open-weight parity, output above open but below premium frontier; hosted frontier no self-host upside) · hybrid 1.0 · frontier 1.1 · sol 1.15 (verified official $4/$20 promo Aug 21 – Nov 21, 2026, down from $5/$30 estimate; cached input $0.40 — factor unchanged, still premium tier above generic frontier for reasoning-effort dial) · fable5 1.25 (Claude Fable 5 Anthropic, $10/$50 verified + $1.00 cache read — most expensive per-token stack; Ramp AI Index Aug 2026: ~6% of Anthropic business tokens / 11.4% of Anthropic spend) · opus5 1.18 (Claude Opus 5 Anthropic, $5/$25 verified — exactly half of Fable 5, launched late July 2026; between Sol 1.15 and Fable 5 1.25; FT-cited Ramp data reports Opus 5 overtook Fable 5 in enterprise spend)
+MODEL_COMPUTE_FACTOR  open 0.95 · deepseek 0.92 (PROVISIONAL — hike announced) · dsv4pro 0.86 (DeepSeek V4 Pro cache-aware, off-peak $0.66/$1.98 per 1M + $0.022 cache read — lowest cache-read stack for agent runs; 92% hit-rate assumption flagged) · local 0.85 (Meta Muse Glimmer self-host, cheapest — hardware-amortized, per-workload) · grok46 1.0 (Grok 4.6 SpaceXAI, $2/$6 verified — neutral, matches open-weight tier price but hosted frontier) · gemini37 0.93 (Gemini 3.7 Flash Google, intro $0.75/$3.75 verified through 2026-12-31 then $1.50/$7.50 — slightly below open because intro undercuts it, conservative due to expiry + hosted) · sonnet5 0.97 (Claude Sonnet 5 Anthropic, $2/$10 verified PERMANENT Aug 10 2026 — Sept 1 $3/$15 increase CANCELLED; input at open-weight parity, output above open but below premium frontier; hosted frontier no self-host upside) · hybrid 1.0 · frontier 1.1 · sol 1.15 (verified official $4/$20 promo Aug 21 – Nov 21, 2026, down from $5/$30 estimate; cached input $0.40 — factor unchanged, still premium tier above generic frontier for reasoning-effort dial) · fable5 1.25 (Claude Fable 5.1 Anthropic, $10/$50 verified Sept 1, 2026 + $0.25 cache read — cache reads down 75% from Fable 5's $1.00; most expensive per-token stack; 1M ctx, 128K max out; Mythos 5.1 same model, trusted-access-only/not GA; Ramp AI Index Aug 2026 measured the predecessor Fable 5: ~6% of Anthropic business tokens / 11.4% of Anthropic spend) · opus5 1.18 (Claude Opus 5 Anthropic, $5/$25 verified — exactly half of Fable 5, launched late July 2026; between Sol 1.15 and Fable 5 1.25; FT-cited Ramp data reports Opus 5 overtook Fable 5 in enterprise spend)
 MODEL_MARGIN_BONUS    open +5 · deepseek +6 · dsv4pro +7 · local +8 · grok46 +2 · gemini37 +4 · sonnet5 +3 · hybrid 0 · frontier −2 · sol −3 · fable5 −6 · opus5 −5
 DELIVERY_RISK_FACTOR  low 1.0 · moderate 1.15 · high 1.35 · levelsio 2.0
 PORTABILITY_SETUP_FACTOR   single 1.0 · plugin_2 0.85 · plugin_many 0.70
@@ -535,12 +535,12 @@ grid_pass, relief, tokens_m).
   stats (task t_18e43426; fact basis research brief t_06f1cfb2, Ramp AI Index
   Aug 12, 2026 + WinBuzzer/BreezyScroll/Superpower Daily (FT) + Anthropic
   official pricing). Opus 5 (Anthropic, launched late July 2026): $5/$25 per
-  1M input/output — exactly half of Fable 5; `MODEL_COMPUTE_FACTOR.opus5 =
-  1.18`, `MODEL_MARGIN_BONUS.opus5 = -5` (between Sol 1.15/-3 and Fable 5
-  1.25/-6). Adoption stats added to Fable 5 / Opus 5 / GPT-5.6 Sol entries:
+  1M input/output — exactly half of Fable 5.1; `MODEL_COMPUTE_FACTOR.opus5 =
+  1.18`, `MODEL_MARGIN_BONUS.opus5 = -5` (between Sol 1.15/-3 and Fable 5.1
+  1.25/-6). Adoption stats added to Fable 5 (predecessor) / Opus 5 / GPT-5.6 Sol entries:
   Fable 5 ~6% of Anthropic business tokens / 11.4% of Anthropic spend;
   GPT-5.6 Sol ~25% of OpenAI tokens / 23% of OpenAI spend; Opus 5 overtook
-  Fable 5 in enterprise spend per FT-cited Ramp data (attribution caveat
+  Fable 5 (the predecessor) in enterprise spend per FT-cited Ramp data (attribution caveat
   documented — Ramp's own report does not state the overtake). Selector option
   (inserted after fable5, Anthropic cluster preserved) + helper, model
   label/assumption note/ROI text branches, FAQ + FAQPage JSON-LD (19→20 Q),
