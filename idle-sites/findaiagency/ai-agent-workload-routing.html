@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agent Workload Routing 2026: Fable 5.1 vs Cache-Priced Loops</title>
     <meta name="description" content="Long AI agent runs cost far more than headline per-token prices suggest because agents re-read context on every step. Claude Fable 5.1's $0.25 cache reads vs DeepSeek V4 Pro — the 2026 cache-gap math and a workload-to-model decision table for agencies.">
-    <meta name="keywords" content="AI agent cost, model cost routing, DeepSeek V4 Pro pricing, Claude Fable 5.1 price, Claude API pricing 2026, cache read pricing, prompt caching, AI agency model selection, agent workload routing, long agent runs, AI pricing calculator">
+    <meta name="keywords" content="AI agent cost, model cost routing, DeepSeek V4 Pro pricing, Claude Fable 5.1 price, Claude API pricing 2026, cache read pricing, prompt caching, AI agency model selection, agent workload routing, long agent runs, AI pricing calculator, Gemini 3.8 Flash">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://findaiagency.com/ai-agent-workload-routing">
     <meta property="og:title" content="AI Agent Workload Routing 2026: Fable 5.1 vs Cache-Priced Loops">
@@ -24,7 +24,7 @@
       "headline": "AI Agent Workload Routing 2026: Fable 5.1 vs Cache-Priced Loops",
       "description": "Long AI agent runs cost far more than headline per-token prices suggest because agents re-read context on every step. Claude Fable 5.1's $0.25 cache reads vs DeepSeek V4 Pro cache-gap math, a workload-to-model decision table, and pricing-calculator guidance for AI agencies.",
       "datePublished": "2026-08-16",
-      "dateModified": "2026-09-01",
+      "dateModified": "2026-09-02",
       "author": {"@type": "Organization", "name": "Find AI Agency"},
       "publisher": {"@type": "Organization", "name": "Find AI Agency"},
       "mainEntityOfPage": "https://findaiagency.com/ai-agent-workload-routing",
@@ -103,13 +103,15 @@
     <article>
         <header>
             <h1>AI Agent Workload Routing: When to Pay for Premium Models vs Cache-Priced Loops</h1>
-            <div class="meta"><span>Published August 16, 2026</span><span>Updated September 1, 2026 (Claude Fable 5.1)</span><span>By ABD Legacy LLC</span></div>
+            <div class="meta"><span>Published August 16, 2026</span><span>Updated September 2, 2026 (Gemini 3.8 Flash)</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>AI pricing / model selection</span></div>
         </header>
 
         <p><strong>The number nobody quotes is the cache read, and it is the number that sets your agent bill.</strong> A 100-step agent run does not pay the headline input price 100 times — it pays the <em>cache-read</em> price 100 times, because the agent re-reads its instructions and context on every step. On Anthropic's new flagship, <a href="/claude-fable-5-1-mythos-5-1-pricing">Claude Fable 5.1 (released Sept 1, 2026)</a>, the cache read is <strong>$0.25 per 1M tokens</strong> — a 75% cut from Fable 5's $1.00 — against DeepSeek V4 Pro's $0.022 off-peak, the same loop is roughly <strong>11x cheaper</strong> before the model has written a single new token. On Fable 5 pricing the gap was <strong>45x</strong>, and on DeepSeek's launch pricing it was <strong>276x</strong> — the figure that went around on August 16, 2026 — before a same-day price change cut it to ~45x. Either way: for long agent runs, model choice moves the bill by orders of magnitude, and the per-token headline price barely explains why.</p>
 
         <p>This guide gives agencies a practical routing rule: <strong>pay premium prices for the high-value steps where quality decides the outcome, and run the routine loops on cache-priced models where the context is re-read every step.</strong> It uses the verified DeepSeek vs Fable 5 comparison from <a href="https://x.com/JulianGoldieSEO/status/2089064335717159410" rel="noopener">Julian Goldie's August 16, 2026 post</a>, updated for Anthropic's Sept 1 Fable 5.1 pricing, and it is built to feed directly into an agency pricing calculator.</p>
+
+        <blockquote><strong>Model update — September 2, 2026:</strong> Google released <a href="/gemini-3-8-flash-pricing-coding-agents">Gemini 3.8 Flash</a> — its third Flash in six weeks — and now recommends Flash for software engineering and autonomous agent workloads. The headline routing effect is a new floor on the coding/agent workhorse tier: $0.75/$3.75 per 1M input/output through December 31, 2026 (stepping to $1.50/$7.50), with Google reporting 3.8 Flash at the top of the DeepSWE v1.1 leaderboard at a fraction of the cost of larger frontier models. For the workload table below, the Google column gets a strict upgrade: route Google coding and agent work to the Flash tier by default, and do not price against an assumed Gemini Pro flagship — the release cadence says Flash, not Pro, is Google's workhorse for the rest of 2026.</blockquote>
 
         <h2>Why long agent runs ignore the headline price</h2>
         <p>Headline pricing is one read: $X per 1M input tokens, $Y per 1M output tokens. Agent economics are different. An agent holds a system prompt plus accumulated context — often 50,000 tokens or more — and re-sends that context to the model on <strong>every step</strong>. The cost model is not "input + output." It is:</p>
@@ -214,6 +216,7 @@
         <div class="related">
             <h3>Related reading</h3>
             <ul>
+                <li><a href="/gemini-3-8-flash-pricing-coding-agents">Gemini 3.8 Flash vs Claude Fable 5.1 vs GPT-5.6 Sol: Google's Third Flash in Six Weeks</a></li>
                 <li><a href="/claude-fable-5-1-mythos-5-1-pricing">Claude Fable 5.1 Price &amp; Mythos 5.1: Claude API Pricing 2026</a></li>
                 <li><a href="/ai-agent-cost-blowups">AI Agent Costs: Blowups, Loops, and Real Estimates</a></li>
                 <li><a href="/ai-coding-agent-pricing">AI Coding Agent Pricing: Billing Models, Cost Variables, and How to Budget</a></li>
@@ -232,6 +235,8 @@
             <li>Anthropic — "Introducing Claude Fable 5.1 and Claude Mythos 5.1" (Sept 1, 2026): <a href="https://www.anthropic.com/claude-fable-and-mythos-5-1" rel="noopener">anthropic.com/claude-fable-and-mythos-5-1</a> — Fable 5.1 cache reads $0.25/1M</li>
             <li>Anthropic official pricing (Fable 5: $10/$50, cache reads &amp; refreshes $1.00; Fable 5.1: $10/$50, cache reads $0.25): <a href="https://platform.claude.com/docs/en/about-claude/pricing" rel="noopener">platform.claude.com/docs/en/about-claude/pricing</a></li>
             <li>DeepSWE leaderboard v1.1 (Fable 5 70% ± 4 / $21.63, DeepSeek V4 Pro 63% ± 6 / $0.24, Grok 4.6 67% ± 2 / $5.50; 113 tasks, updated 2026-08-13): <a href="https://deepswe.datacurve.ai/" rel="noopener">deepswe.datacurve.ai</a></li>
+            <li>Ars Technica — "Google releases Gemini 3.8 Flash, its third Flash model in six weeks" (Sept 2, 2026): <a href="https://arstechnica.com/ai/2026/09/google-releases-gemini-3-8-flash-its-third-flash-model-in-six-weeks/" rel="noopener">arstechnica.com</a></li>
+            <li>9to5Google — "Gemini 3.8 Flash rolling out three weeks after last release" (Sept 2, 2026): <a href="https://9to5google.com/2026/09/02/gemini-3-8-flash-launch/" rel="noopener">9to5google.com</a></li>
             <li>Artificial Analysis Intelligence Index (Fable 5 = 62 #3/188, Grok 4.6 = 61 #6/188, Grok 4.5 = 56 #18/188): <a href="https://artificialanalysis.ai/models/claude-fable-5" rel="noopener">claude-fable-5</a> · <a href="https://artificialanalysis.ai/models/grok-4-6" rel="noopener">grok-4-6</a> · <a href="https://artificialanalysis.ai/models/grok-4-5" rel="noopener">grok-4-5</a></li>
             <li>OpenRouter model catalog (DeepSeek V4 Pro mirrors official off-peak pricing): <a href="https://openrouter.ai/api/v1/models" rel="noopener">openrouter.ai/api/v1/models</a></li>
             <li>DeepSeek V4 Pro launch pricing coverage: <a href="https://kie.ai/blog/deepseek-v4-pro-release" rel="noopener">kie.ai/blog/deepseek-v4-pro-release</a></li>
