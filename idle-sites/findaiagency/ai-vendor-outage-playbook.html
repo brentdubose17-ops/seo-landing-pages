@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The AI Vendor Outage Playbook: What Agencies Do When ChatGPT, Claude, and Grok Go Down</title>
+    <meta name="description" content="ChatGPT, Claude, and Grok went down together Sept 3, 2026. The agency playbook: monitoring, fallback models, multi-vendor routing, SLA credits, client comms.">
+    <meta name="keywords" content="AI vendor outage playbook, AI outage September 3 2026, ChatGPT down, Claude API down, why is Grok down, are AI APIs reliable, which AI vendor has best uptime, AI API reliability, fallback model, multi-vendor routing, circuit breaker, AI agency uptime, AI vendor failover, Claude API outage, ChatGPT outage">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://findaiagency.com/ai-vendor-outage-playbook">
+    <meta property="og:title" content="The AI Vendor Outage Playbook: What Agencies Do When ChatGPT, Claude, and Grok Go Down">
+    <meta property="og:description" content="ChatGPT, Claude, and Grok went down together Sept 3, 2026. The agency playbook: monitoring, fallback models, multi-vendor routing, SLA credits, client comms.">
+    <meta property="og:url" content="https://findaiagency.com/ai-vendor-outage-playbook">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Find AI Agency">
+    <meta property="og:image" content="https://findaiagency.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The AI Vendor Outage Playbook: What Agencies Do When ChatGPT, Claude, and Grok Go Down">
+    <meta name="twitter:description" content="ChatGPT, Claude, and Grok went down together Sept 3, 2026. The agency playbook: monitoring, fallback models, multi-vendor routing, SLA credits, client comms.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "The AI Vendor Outage Playbook: What Agencies Do When ChatGPT, Claude, and Grok Go Down",
+      "description": "ChatGPT, Claude, and Grok went down together Sept 3, 2026. The agency playbook: monitoring, fallback models, multi-vendor routing, SLA credits, client comms.",
+      "datePublished": "2026-09-03",
+      "dateModified": "2026-09-03",
+      "author": {"@type": "Organization", "name": "Find AI Agency"},
+      "publisher": {"@type": "Organization", "name": "Find AI Agency"},
+      "mainEntityOfPage": "https://findaiagency.com/ai-vendor-outage-playbook",
+      "image": "https://findaiagency.com/og-image.png",
+      "keywords": "AI vendor outage playbook, AI outage September 3 2026, ChatGPT down, Claude API down, why is Grok down, are AI APIs reliable, which AI vendor has best uptime, AI API reliability, multi-vendor routing, circuit breaker"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is ChatGPT down?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As of this page's publication on September 3, 2026, ChatGPT is back online: OpenAI said a routing error that started around 7:43 a.m. PT (10:43 a.m. ET) made ChatGPT and Codex unavailable for some users across platforms, and that a solution was implemented by 8:17 a.m. PT (11:17 a.m. ET). For a live answer, check status.openai.com — vendor status pages are the authoritative source, and Downdetector-style user reports usually spike before official notices (CNET; Gizmodo; OpenAI update via BleepingComputer)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is Claude API down?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If the Claude API is returning elevated errors or timeouts right now, check status.claude.com first: Anthropic posts incident status there and logs model-level incidents such as 'Elevated errors for multiple models' before most downstream monitors see them. On September 3, 2026, an undisclosed 'infrastructure issue' caused a partial outage across Claude.ai, Claude Code, Claude Cowork, and the Claude API; the status page listed Mythos/Fable 5.1, Mythos/Fable 5, Opus 5, Opus 4.8, and Opus 4.6, and Anthropic logged impact as ended at 16:16 UTC (12:16 p.m. ET), with Opus 4.8 and Opus 5 the last to recover (Anthropic status; DataCenterDynamics; Gizmodo). While the vendor works a fix, your app should be in retry/backoff behind a circuit breaker with a preconfigured fallback provider — see the playbook above."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is Grok down?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On September 3, 2026, Grok showed 'this model is overloaded right now. Please try again shortly or pick a different model,' and xAI logged an incident (INC25664c15) without giving a root cause — it happened the same morning ChatGPT and Claude went down, which is why 'why is Grok down' searches spiked alongside them (DataCenterDynamics; 9to5Google). xAI reported services back to normal later that day. When Grok is down for you, try a different Grok model first, then move affected workloads to a non-xAI provider per your routing table."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are AI APIs reliable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No single AI API can promise uninterrupted availability — and on September 3, 2026, ChatGPT/Codex, Claude (app and API), and Grok were all down at the same time, which turned AI API reliability into a design question rather than a monitoring one. Even strong vendors degrade: Anthropic's own 90-day uptime window captured on September 3, 2026 showed the Claude API at 99.5% — roughly four hours of allowed degradation a year under that arithmetic (status.claude.com). The reliable architecture is redundancy: per-vendor circuit breakers, model-level fallbacks, multi-vendor routing, and a local or self-hosted escape hatch for critical workloads."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happened with the AI outage on September 3, 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On the morning of September 3, 2026, OpenAI's ChatGPT and Codex, Anthropic's Claude (Claude.ai, Claude Code, Claude Cowork, and the Claude API), and xAI's Grok went down at overlapping times. User reports started around 9:00–9:30 a.m. ET; OpenAI pinned its own start to a routing error at 10:43 a.m. ET (fixed by 11:17 a.m. ET); Anthropic said an 'infrastructure issue' caused a partial outage and logged impact as ended at 16:16 UTC (12:16 p.m. ET). Google's Gemini saw reported issues for some developers but never confirmed an outage, and Perplexity users reported no issues. No single common cause was confirmed, though reporters noted all three vendors rely on overlapping cloud infrastructure, including Microsoft Azure (Axios; DataCenterDynamics; CNET; 9to5Google; Gizmodo)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which AI vendor has the best uptime?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There is no authoritative industry-wide comparison, but vendors publish their own numbers: Anthropic's status page showed 99.5% uptime for the Claude API over its 90-day window captured September 3, 2026 (99.93% for the Claude Console, 99.4% for claude.ai), while OpenAI and xAI publish comparable windows on status.openai.com and status.x.ai. Because uptime is measured per vendor, routing across genuinely independent providers is the only way to push availability above any single vendor's number — and outage events like September 3, 2026 are exactly when a backup that shares the same failure mode stops helping."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; margin-bottom: 4px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; vertical-align: top; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>The AI Vendor Outage Playbook: What to Do When ChatGPT, Claude, and Grok Go Down Together</h1>
+            <div class="meta"><span>Published September 3, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>AI vendor outage playbook</span><span>ChatGPT down</span><span>Claude API down</span><span>why is Grok down</span><span>are AI APIs reliable</span></div>
+        </header>
+
+        <p><strong>What happened.</strong> On the morning of <strong>September 3, 2026</strong>, the three AI vendors most agencies build on went down <strong>at the same time</strong>: OpenAI's <strong>ChatGPT and Codex</strong>, Anthropic's <strong>Claude</strong> (Claude.ai, Claude Code, Claude Cowork, and the <strong>Claude API</strong>), and xAI's <strong>Grok</strong> (Axios; DataCenterDynamics; 9to5Google; CNET; Gizmodo). User reports started around 9:00–9:30 a.m. ET; by mid-morning all three vendors had active status-page incidents; and by early afternoon everything was nominally back to normal. No single common cause was ever confirmed. The 09-03-2026 simultaneous outage is now the reference case for why <strong>AI API reliability</strong> has to be designed, not assumed — and why a single backup vendor is not a backup plan.</p>
+
+        <p>This page is the <strong>AI vendor outage playbook</strong> for agencies and anyone running production workloads on AI APIs: a short incident recap, then concrete, copy-paste-able actions — monitoring, fallback models, multi-vendor routing, timeout/retry/circuit-breaker configuration, SLA remedies, escalation and client communication, and a local-model escape hatch.</p>
+
+        <h2>Incident recap: the AI outage of September 3, 2026</h2>
+        <p>Timing matters because it exposes the difference between user impact and official notices — the same gap your monitoring has to cover:</p>
+        <ul>
+            <li><strong>~9:00–9:30 a.m. ET</strong> — Downdetector-style user reports spike for ChatGPT, Claude, and Grok, before most official status notices (CNET; Gizmodo).</li>
+            <li><strong>9:26 a.m. ET (13:26 UTC)</strong> — Anthropic status: <strong>Investigating</strong> elevated errors on Claude models; cause identified at 9:41 a.m. ET; affected list at 9:50 a.m. ET spans Mythos/Fable 5.1, Mythos/Fable 5, Opus 5, <strong>Opus 4.8, and Opus 4.6</strong> (status.claude.com).</li>
+            <li><strong>10:43 a.m. ET (7:43 a.m. PT)</strong> — OpenAI's stated start: "A <strong>routing error</strong> starting around 7:43am PT … made ChatGPT and Codex unavailable for some users across platforms" — a solution was implemented by <strong>11:17 a.m. ET</strong> (OpenAI update via Gizmodo; BleepingComputer).</li>
+            <li><strong>Through the late morning</strong> — Grok showed "<strong>this model is overloaded right now. Please try again shortly or pick a different model</strong>"; xAI logged incident <strong>INC25664c15</strong> with no root cause given (DataCenterDynamics; 9to5Google).</li>
+            <li><strong>12:16 p.m. ET (16:16 UTC)</strong> — Anthropic logged impact as ended; <strong>Opus 4.8 and Opus 5 were the last models to recover</strong> (status.claude.com; Gizmodo).</li>
+            <li><strong>3:38 p.m. ET (12:38 p.m. PT)</strong> — 9to5Google update: "All services are back to normal across ChatGPT, Claude, and Grok."</li>
+            <li><strong>4:22 p.m. ET</strong> — hours after the outage, OpenAI released <strong>GPT-6 Astra</strong> — timing that fed launch-day speculation but was never tied to the outage as a cause (Gizmodo; see our <a href="/gpt-6-astra-computer-use-agencies">GPT-6 Astra vs the field comparison</a>).</li>
+        </ul>
+        <p><strong>Gemini caveat:</strong> Google's Gemini saw user reports and some developer/API issues — including problems with recently created API keys — but <strong>never declared a confirmed outage</strong>; sources disagree on how much it was affected (Axios; 9to5Google vs CNET; Gizmodo; Economic Times). Treat Gemini as "reported issues, no confirmed outage" on this date.</p>
+
+        <h2>The lesson levelsio proved live: one backup vendor is not enough</h2>
+        <p>Pieter Levels (@levelsio) runs real products on AI APIs, and he documented the failure mode in real time through the outage morning. First: "<strong>xAI's API is down!</strong>" Then, after switching: "<strong>I switched my API to Claude now but now Claude also went down!</strong>" (X status <a href="https://x.com/levelsio/status/2095517218217902313" rel="noopener">2095517218217902313</a>), then "<strong>If both @xAI and @claudeai are down — does that mean the Colossus GPU farm is down?</strong>" (X status <a href="https://x.com/levelsio/status/2095522299722019002" rel="noopener">2095522299722019002</a>), and finally "<strong>No way now ChatGPT is down too?!!!</strong>" (levelsio via twiscan mirror).</p>
+        <p>The sequence is the whole lesson: he had a fallback, used it correctly, and the fallback was down too. As one machine-translated recap of his morning put it, <em>"a backup key is not insurance… when outages coincide in time, switching gives nothing"</em> (vibecoding.ru). Two structural reasons this happens:</p>
+        <ul>
+            <li><strong>Shared failure modes.</strong> The major vendors run on overlapping infrastructure — reporters noted all three use Microsoft Azure for cloud services, and Azure was having its own problems that morning. "Same cloud, three vendors" is closer to one big single point of failure than to three independent ones (Axios; CNET). (No common cause was confirmed — OpenAI said routing error, Anthropic said infrastructure issue — but the <em>architecture</em> makes correlation plausible.)</li>
+            <li><strong>Dependency chains.</strong> Downstream products fail when their model vendors fail: Cursor confirmed an outage <em>because</em> of the Grok and Claude outages (9to5Google). If your agency's product depends on an AI vendor, you are the next Cursor in that chain unless you build redundancy in front of it.</li>
+        </ul>
+
+        <h2>The AI vendor outage playbook</h2>
+        <p>Each section below is a concrete action with the settings and thresholds to start from. Work the list in order — monitoring first, because you cannot run the other steps blind.</p>
+
+        <h3>1. Monitor vendor status pages <em>and</em> your own API error rates</h3>
+        <p>Status pages are necessary but not sufficient: on Sept 3, user reports spiked around 9:00–9:30 a.m. ET while official vendor notices landed later — and Anthropic's Claude API incident ran on a model-level status page most dashboards don't read (CNET; Gizmodo; status.claude.com). Monitor both layers:</p>
+        <ul>
+            <li><strong>Vendor status pages + their JSON/RSS endpoints</strong>: status.openai.com, status.claude.com, and status.x.ai all publish machine-readable feeds. Poll them every 1–2 minutes, or subscribe to their status-page notifications; alert on any non-operational component, and map each component to the workloads that use it (Claude API ≠ claude.ai ≠ Claude Code).</li>
+            <li><strong>Your own traffic is the earlier signal</strong>: track API error rate (5xx + 429 as a share of requests), p95/p99 latency, and timeout rate per vendor per model, over a 5-minute window. Alert when error rate exceeds <strong>5% for 5 consecutive minutes</strong> or latency p99 doubles its 7-day baseline for 10 minutes. On Sept 3 the first symptom your app would have seen was timeouts and 5xx, before any status-page update.</li>
+            <li><strong>Synthetic checks</strong>: one request per minute per vendor from your own infrastructure, asserted on a 200 + sane latency. Synthetic checks catch "up but degraded" states that error-rate-only monitors miss.</li>
+            <li><strong>Do not alert humans on every blip</strong>: page a human only when your automated mitigation (below) has already failed for N minutes — otherwise the runbook becomes noise and nobody pages out.</li>
+        </ul>
+
+        <h3>2. Configure fallback models and providers before you need them</h3>
+        <ul>
+            <li><strong>Per-workload fallback table</strong>: for every workload, name a primary and at least one fallback (e.g., Claude API → GPT-5.6/GPT-6 Astra family → Gemini; Grok → GPT family → Claude; any coding agent → Gemini 3.8 Flash or an open-weight model). Store this in your routing config, not in someone's head.</li>
+            <li><strong>Fallbacks must be tested, not just configured</strong>: run the same prompts through the fallback monthly and diff output quality on your own task set — model quality differences are why agencies route in the first place (see <a href="/ai-agent-workload-routing">AI agent workload routing</a>).</li>
+            <li><strong>Provider-agnostic plumbing</strong>: keep prompts, tool schemas, and output contracts in a neutral format; use an OpenAI-compatible adapter or a gateway (LiteLLM-class, OpenRouter, or a small in-house shim) so a fallback switch is a config change, not a rewrite. OpenRouter's per-model pages even surface a "higher uptime with 2 providers" note — that is the same multi-provider idea applied to a single key.</li>
+            <li><strong>Do not fall back to the same vendor's different endpoint</strong>: ChatGPT web down ≠ API down, but when the API incident is infrastructure-wide (as Anthropic's was), a different model on the same API is not a fallback. The fallback must be a different provider or a different failure domain.</li>
+        </ul>
+
+        <h3>3. Implement multi-vendor routing and failover across independent stacks</h3>
+        <ul>
+            <li><strong>Route by workload with health weights</strong>: send each request to the primary vendor while it is healthy; on 5xx/429/timeout past your retry budget, route to the fallback. Health-based weighting (e.g., 80/20 primary/fallback when both are up) keeps the fallback warm so the first failover is not a cold start.</li>
+            <li><strong>Make "independent" mean independent</strong>: different model families and different cloud footprints. Because OpenAI, Anthropic, and xAI overlap on Azure, an OpenAI→Anthropic failover can still die with a shared-cloud event; add a provider on a different cloud (Google's Gemini, or a self-hosted model) to your critical path (Axios; CNET).</li>
+            <li><strong>Scope failover per client deliverable</strong>: an agency running 30 clients on one API key is 30 Cursors. Decide which client workloads are critical enough for multi-vendor routing and quote the redundancy cost into those retainers; routine batch work can stay single-vendor with a slower manual fallback.</li>
+            <li><strong>Log the route</strong>: record which vendor served each request and why (primary vs failover). You will need that trail for client reporting and for the SLA-credit evidence in step 5.</li>
+        </ul>
+
+        <h3>4. Set timeout, retry, and circuit-breaker behavior</h3>
+        <ul>
+            <li><strong>Timeouts</strong>: set per-call timeouts at 30–60s for chat-style calls (streaming first-token < 10s is a good alert line) and 2–5 minutes for long batch jobs — not "no timeout." A hung call on a degraded vendor will otherwise pile up.</li>
+            <li><strong>Retries</strong>: exponential backoff with jitter, starting at 1s and doubling to a cap of ~30s, for a maximum of <strong>3–5 attempts</strong>, retrying only on 5xx, 429, and network errors — <em>never</em> on 4xx. Add jitter (±20%) so recovery doesn't create a thundering herd that re-breaks the vendor.</li>
+            <li><strong>Circuit breakers, per vendor and per model</strong>: open the circuit after <strong>5 consecutive failures (or 50% errors over a 60s window)</strong>, trip all traffic to the fallback for a cooldown of 30–60s, then half-open and probe with a small share of traffic before closing. Separate breakers per vendor mean a Grok outage doesn't take down your Claude lane.</li>
+            <li><strong>Timeouts and retries are not the whole answer</strong>: on Sept 3, levelsio's retries would have failed too — his fallback provider was down. Circuit breakers route to the fallback, but step 3 is what makes the fallback actually survive a correlated outage.</li>
+            <li><strong>Test the failure path</strong>: run a chaos drill that force-fails your primary vendor in staging and confirm traffic shifts within your target RTO (start with 5 minutes).</li>
+        </ul>
+
+        <h3>5. Know your SLA remedies and credit processes</h3>
+        <ul>
+            <li><strong>Read the actual SLA, not the marketing page</strong>: most AI vendor SLAs are monthly-uptime commitments (typically 99.5–99.9%) with service credits as the remedy — not incident-by-incident refunds, and usually not covering degraded-but-not-down periods. Anthropic's own 90-day window captured on Sept 3, 2026 showed the Claude API at 99.5% — about four hours of allowed degradation per year under that arithmetic (status.claude.com). A multi-hour API incident like Sept 3 may not breach a monthly SLA at all.</li>
+            <li><strong>Know the filing path before the incident</strong>: enterprise agreement credits go through your account team; self-serve credits usually start from the status page or a support ticket. Ask now: who files, what evidence do they need, and what is the deadline (often 30 days)?</li>
+            <li><strong>Document impact as it happens</strong>: timestamped error logs, request counts, incident IDs (e.g., Grok's INC25664c15, Anthropic's Sep 3 status incident), and status-page screenshots are the evidence package. Store it the same day — "we were affected" is much easier to prove while it is happening.</li>
+            <li><strong>Factor SLA gaps into your own client terms</strong>: if the vendor's SLA allows hours of downtime, your agency SOW should not promise 100% availability either — mirror the vendor credit structure and define what the client gets if a vendor incident hits their deliverable.</li>
+        </ul>
+
+        <h3>6. Prepare internal escalation and client communication templates</h3>
+        <ul>
+            <li><strong>Internal escalation tree</strong>: define who is on call, in what order, and what triggers each level (error-rate alert → automated failover engaged → failover also failing → incident commander + client notice). Name the incident commander per client account before the incident.</li>
+            <li><strong>Pre-drafted client templates in three tiers</strong> — write them now, fill the blanks during the incident:
+                <ul>
+                    <li><em>Monitoring notice (only for critical accounts):</em> "We're seeing elevated error rates from [vendor] affecting [service]. Our automated failover to [fallback] is active. No action needed from you; we'll update by [time]."</li>
+                    <li><em>Status update:</em> "[Vendor] has declared an incident (ref [ID]) affecting [surfaces]. Impact on your [deliverable]: [none/partial/degraded]. Estimated recovery: [vendor estimate]. We are running on [fallback]."</li>
+                    <li><em>Post-incident recap:</em> "What happened, what we did, how long impact lasted, what [vendor] credits we claimed, and what we changed so it doesn't recur." Send the recap within 48 hours — it is the difference between a client who is annoyed and a client who trusts your operations.</li>
+                </ul>
+            </li>
+            <li><strong>Tell clients the truth about vendor risk up front</strong>: the SOW or onboarding doc should say you run on best-in-class AI vendors, that no AI API is 100% available, and that you mitigate with monitoring, fallbacks, and failover. A client who learns about AI outages from the news is a client who will blame you; a client who was briefed in advance is a client who watches you handle it.</li>
+        </ul>
+
+        <h3>7. Keep a local or self-hosted model escape hatch for critical workloads</h3>
+        <ul>
+            <li><strong>The only escape hatch with no vendor status page</strong>: on Sept 3, the hosted options were down simultaneously, and the workloads that kept running were on infrastructure outside the affected vendors. During the outage, levelsio noted in replies that Claude was failing on his laptop but working on his server — his read: "It seems Claude prioritizes servers when it goes down? … Another reason to run it on your VPS" (anecdotal, and speculation about Anthropic's behavior — treat it as color, not policy).</li>
+            <li><strong>What to self-host</strong>: an open-weight model (Qwen, GLM, Llama-class) behind vLLM or Ollama, sized for your genuinely critical workloads — client-facing classification, PII-safe extraction, form filling, anything where "vendor down" is unacceptable. This is <em>insurance for critical workloads</em>, not a replacement for frontier models; see <a href="/open-weight-coding-models-agency-margins">what open-weight models do to margins</a> for the honest cost picture.</li>
+            <li><strong>Keep it warm</strong>: run a small percentage of low-risk traffic (or a nightly batch) through the local model so the escape hatch is proven and the weights are current. An untested local stack is a second outage waiting to happen.</li>
+        </ul>
+
+        <h3>8. Run the drill and do the post-incident review</h3>
+        <ul>
+            <li><strong>Quarterly tabletop</strong>: "All three major vendors are down for two hours. Client X's deliverable is due today." Walk it end to end — who pages whom, which workloads shift where, what the client email says, when you invoke the local model.</li>
+            <li><strong>After every real incident, write the 4-up</strong>: what happened (vendor timeline vs your timeline), what your monitoring caught early and late, how long until mitigation worked, and one configuration change to make now. The Sept 3 play is already written for you: it is the incident recap at the top of this page.</li>
+        </ul>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>Is ChatGPT down?</h3>
+            <p>As of this page's publication on September 3, 2026, ChatGPT is back online: OpenAI said a routing error that started around 7:43 a.m. PT (10:43 a.m. ET) made ChatGPT and Codex unavailable for some users across platforms, and that a solution was implemented by 8:17 a.m. PT (11:17 a.m. ET). For a live answer, check status.openai.com — vendor status pages are the authoritative source, and Downdetector-style user reports usually spike before official notices (CNET; Gizmodo; OpenAI update via BleepingComputer).</p>
+        </div>
+        <div class="faq-item">
+            <h3>Why is Claude API down?</h3>
+            <p>If the Claude API is returning elevated errors or timeouts right now, check status.claude.com first: Anthropic posts incident status there and logs model-level incidents such as "Elevated errors for multiple models" before most downstream monitors see them. On September 3, 2026, an undisclosed "infrastructure issue" caused a partial outage across Claude.ai, Claude Code, Claude Cowork, and the Claude API; the status page listed Mythos/Fable 5.1, Mythos/Fable 5, Opus 5, Opus 4.8, and Opus 4.6, and Anthropic logged impact as ended at 16:16 UTC (12:16 p.m. ET), with Opus 4.8 and Opus 5 the last to recover (Anthropic status; DataCenterDynamics; Gizmodo). While the vendor works a fix, your app should be in retry/backoff behind a circuit breaker with a preconfigured fallback provider — see the playbook above.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Why is Grok down?</h3>
+            <p>On September 3, 2026, Grok showed "this model is overloaded right now. Please try again shortly or pick a different model," and xAI logged an incident (INC25664c15) without giving a root cause — it happened the same morning ChatGPT and Claude went down, which is why "why is Grok down" searches spiked alongside them (DataCenterDynamics; 9to5Google). xAI reported services back to normal later that day. When Grok is down for you, try a different Grok model first, then move affected workloads to a non-xAI provider per your routing table.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Are AI APIs reliable?</h3>
+            <p>No single AI API can promise uninterrupted availability — and on September 3, 2026, ChatGPT/Codex, Claude (app and API), and Grok were all down at the same time, which turned AI API reliability into a design question rather than a monitoring one. Even strong vendors degrade: Anthropic's own 90-day uptime window captured on September 3, 2026 showed the Claude API at 99.5% — roughly four hours of allowed degradation a year under that arithmetic (status.claude.com). The reliable architecture is redundancy: per-vendor circuit breakers, model-level fallbacks, multi-vendor routing, and a local or self-hosted escape hatch for critical workloads.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What happened with the AI outage on September 3, 2026?</h3>
+            <p>On the morning of September 3, 2026, OpenAI's ChatGPT and Codex, Anthropic's Claude (Claude.ai, Claude Code, Claude Cowork, and the Claude API), and xAI's Grok went down at overlapping times. User reports started around 9:00–9:30 a.m. ET; OpenAI pinned its own start to a routing error at 10:43 a.m. ET (fixed by 11:17 a.m. ET); Anthropic said an "infrastructure issue" caused a partial outage and logged impact as ended at 16:16 UTC (12:16 p.m. ET). Google's Gemini saw reported issues for some developers but never confirmed an outage, and Perplexity users reported no issues. No single common cause was confirmed, though reporters noted all three vendors rely on overlapping cloud infrastructure, including Microsoft Azure (Axios; DataCenterDynamics; CNET; 9to5Google; Gizmodo).</p>
+        </div>
+        <div class="faq-item">
+            <h3>Which AI vendor has the best uptime?</h3>
+            <p>There is no authoritative industry-wide comparison, but vendors publish their own numbers: Anthropic's status page showed 99.5% uptime for the Claude API over its 90-day window captured September 3, 2026 (99.93% for the Claude Console, 99.4% for claude.ai), while OpenAI and xAI publish comparable windows on status.openai.com and status.x.ai. Because uptime is measured per vendor, routing across genuinely independent providers is the only way to push availability above any single vendor's number — and outage events like September 3, 2026 are exactly when a backup that shares the same failure mode stops helping.</p>
+        </div>
+
+        <div class="cta">
+            <p><strong>An agency that has already run this playbook</strong></p>
+            <a class="btn" href="/best-ai-agencies-for-small-business" data-umami-event="click_to_directory">Browse Vetted AI Agencies →</a>
+            <p style="margin-top:12px;font-size:0.9rem;">Or <a href="https://aiagencycalculator.com/" rel="noopener" data-umami-event="click_to_calculator">price what multi-vendor redundancy actually costs per client with the AI agency pricing calculator</a>.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/ai-vendor-risk-assessment">AI Vendor Risk Assessment After Opus 4.6's Guardrail Bypass</a></li>
+                <li><a href="/vendor-risk-tracker">AI Vendor Risk Tracker for Agencies</a></li>
+                <li><a href="/ai-agent-workload-routing">AI Agent Workload Routing: When to Pay for Premium Models</a></li>
+                <li><a href="/ai-agent-switching-costs">AI Agent Switching Costs in 2026: What OpenAI's Import Changed</a></li>
+                <li><a href="/agent-ai-retirement-hubspot-agent-hub">Agent.ai Retirement: Why Building on a Vendor Platform Is a Risk</a></li>
+                <li><a href="/ai-agent-cost-blowups">AI Agent Cost Blowups &amp; Loops: Where Agents Spend Money Unexpectedly</a></li>
+                <li><a href="/gpt-6-astra-computer-use-agencies">GPT-6 Astra vs Claude Opus 5/Fable 5.1 vs Gemini 3.8 Flash vs GPT-5.6 Sol</a></li>
+                <li><a href="/agent-tools-roundup">AI Agent Tools Roundup: The Automation Stack for Agencies</a></li>
+                <li><a href="/">Find AI Agency — Home</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>Axios — "Widespread AI outage underway" (Sept 3, 2026): <a href="https://www.axios.com/2026/09/03/chatgpt-claude-grok-outages" rel="noopener">axios.com</a></li>
+            <li>DataCenterDynamics — "ChatGPT, Claude, and Grok hit by simultaneous outages" (Sept 3, 2026): <a href="https://www.datacenterdynamics.com/en/news/chatgpt-claude-and-grok-hit-by-simultaneous-outages" rel="noopener">datacenterdynamics.com</a></li>
+            <li>CNET — "AI's Very Bad Morning" (Sept 3, 2026): <a href="https://www.cnet.com/tech/services-and-software/sept-3-claude-chatgpt-grok-widespread-ai-outages" rel="noopener">cnet.com</a></li>
+            <li>9to5Google — "ChatGPT, Claude, and Grok down" (confirmed outages, Sept 3, 2026): <a href="https://9to5google.com/2026/09/03/chatgpt-claude-grok-outages" rel="noopener">9to5google.com</a></li>
+            <li>Gizmodo — "All the Major AI Chatbots Are Experiencing Outages Right Now" (Sept 3, 2026): <a href="https://gizmodo.com/all-the-major-ai-chatbots-are-experiencing-outages-right-now-2000806887" rel="noopener">gizmodo.com</a></li>
+            <li>Anthropic status — status.claude.com, Sept 3, 2026 incident history ("Elevated errors for multiple models"; 90-day uptime windows captured Sept 3, 2026): <a href="https://status.claude.com" rel="noopener">status.claude.com</a></li>
+            <li>BleepingComputer — "OpenAI confirms ChatGPT is down" (Sept 3, 2026): <a href="https://www.bleepingcomputer.com/news/artificial-intelligence/openai-confirms-chatgpt-is-down-ahead-of-astra-model-launch" rel="noopener">bleepingcomputer.com</a></li>
+            <li>levelsio on X — outage-morning posts (Sept 3, 2026): <a href="https://x.com/levelsio/status/2095517218217902313" rel="noopener">x.com/levelsio/status/2095517218217902313</a> · <a href="https://x.com/levelsio/status/2095522299722019002" rel="noopener">x.com/levelsio/status/2095522299722019002</a> · text mirror: <a href="https://twiscan.com/en/x/levelsio" rel="noopener">twiscan.com</a></li>
+            <li>vibecoding.ru — "Switching to backup API didn't help" (Sept 3, 2026 recap of levelsio's sequence): <a href="https://vibecoding.ru/news/2026/09/03/xai-claude-down-same-time" rel="noopener">vibecoding.ru</a></li>
+            <li>Gizmodo — "OpenAI Claims We're in the 'AGI Era' With Release of GPT-6 Astra" (Sept 3, 2026, 4:22 p.m. ET): <a href="https://gizmodo.com/openai-claims-were-in-the-agi-era-with-release-of-gpt-6-astra-2000807013" rel="noopener">gizmodo.com</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: Timeline and vendor language verified September 3, 2026 against the sources above. Gemini was reported as affected by some outlets (CNET; Gizmodo) but never declared a confirmed outage by Google; 9to5Google and Axios said Gemini appeared unaffected or unreported at the time, and Economic Times narrowed reports to developer/API issues with recently created keys — this page says "reported issues, no confirmed outage." No common cause for the simultaneous outage was confirmed; the Azure overlap is reported as a hypothesis (Axios; CNET), not a finding. The "Colossus GPU farm" question is levelsio's speculation and is not presented as fact. levelsio's post text is quoted verbatim from mirrors and X status pages; exact posting timestamps were not independently verified, so this page says only "through the outage morning." The 99.5% Claude API uptime figure is Anthropic's own 90-day status-page number captured on Sept 3, 2026 and is not a warranty. Uptime thresholds and circuit-breaker numbers in the playbook are starting points for your own engineering review, not guarantees. GPT-6 Astra was released hours after the outage; no source tied the outage to the Astra rollout. Re-verify vendor status before acting on any of this.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
