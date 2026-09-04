@@ -2,6 +2,15 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-03 — Sept 8 counter-tariffs page refreshed with Sept 3 negotiation status (kanban t_b789b58a)
+
+- **`canada-september-8-counter-tariffs.html` — same page/URL updated, no new page.** Added a dated **"Negotiation status — September 3, 2026"** H2 section near the top (directly after the direct-answer box): as of Sept 3 no US-Canada deal has been reached and talks remain stalled; PM Carney is open to a pact only if terms keep Canadian auto and steel operations competitive; Canada pushed back on Commerce Secretary Lutnick and said talks can resume when the US is ready; talks are stalled because the US has not given assurances on tariff levels; the 15/25/50% counter-tariffs on C$27.6B of US goods remain scheduled for 12:01 a.m. ET, Sept 8. **No "deal reached" framing** — wording uses "As of September 3" and "Unless a deal changes the timeline, … take effect September 8."
+- **Source:** Bloomberg (Sept 3, 2026) — Carney says he's open to US pact if auto, steel terms are competitive — linked inline in the new section, in the talks-stalled body section, and added to the source note (source note re-labeled "negotiation status verified Sept 3, 2026").
+- **Consistency updates on the same page:** header meta now shows "Published August 31, 2026 · Updated September 3, 2026"; Article JSON-LD dateModified → 2026-09-03; takeaways Talks bullet, timeline (new Sept 3 row), "Why the US-Canada trade talks are stalled" body, and visible FAQ + FAQPage JSON-LD mirrors (stalled-talks + could-change answers) refreshed to the Sept 3 status. Slug, canonical, og:url, title and meta description unchanged.
+- **Sitemap:** lastmod for the URL → 2026-09-03.
+- **Tests:** 95/96 pass — the 1 failure ("drone tariff does NOT apply with today's date (before Sept 3 2026)") is a pre-existing date-rollover expectation that flipped on Sept 3, 2026 (the Section 232 UAS tariff's effective date = today); unrelated to this content-only change. No tariff-data.js/preset logic touched.
+- **Deployed:** Cloudflare Pages (tariff-calculator-2026), live verified byte-identical (local == production sha256 f2ca4841…).
+
 ## 2026-08-31 — Canada Sept 8 Counter-Tariffs preset added (kanban t_6d585b6a)
 
 - **NEW preset data file `presets/canada-sept8-counter-tariffs.js`** — the 'Canada Sept 8 Counter-Tariffs' preset (effective 2026-09-08, 12:01 a.m. ET) now lives in its own configurable data file, loaded by index.html BEFORE tariff-data.js. A future trade deal can be reflected by editing this one file (rates/category tiers/list size/sources) with zero calculator-logic changes and no risky deployment. `tariff-data.js` resolves `CANADA_RETALIATION` from it (window.CANADA_SEPT8_PRESET in browser, require() in Node) with a safe PENDING fallback.
