@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agent Risk Checklist: Meta Hatch &amp; Autonomous Agents</title>
-    <meta name="description" content="Autonomous consumer agents like Meta's Project Hatch hold memory, act on accounts, and can shop on Instagram. Six audit items for your AI agent risk checklist.">
-    <meta name="keywords" content="AI agent risk checklist, Meta Project Hatch, Meta Hatch privacy, is Meta AI agent safe, AI agent memory retention risk, AI agent purchase approval flow, AI agent payment risk small business, autonomous consumer agents, cyber insurance AI agents, does cyber insurance cover AI agents, AI agent permissions, AI agent business risk">
+    <meta name="description" content="AI agent risk checklist covering autonomous consumer agents (Meta Hatch), cloud credentials and LLM API access, permissions, and cyber-insurance gaps.">
+    <meta name="keywords" content="AI agent risk checklist, Meta Project Hatch, Meta Hatch privacy, is Meta AI agent safe, AI agent memory retention risk, AI agent purchase approval flow, AI agent payment risk small business, autonomous consumer agents, cyber insurance AI agents, does cyber insurance cover AI agents, AI agent permissions, AI agent business risk, AI agent security audit, cloud credential audit, AWS IAM audit, AI crawler credential theft">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://mybusinessaiaudit.com/ai-agent-risk-checklist">
     <meta property="og:title" content="AI Agent Risk Checklist: Meta Hatch &amp; Autonomous Agents">
-    <meta property="og:description" content="Autonomous consumer agents like Meta's Project Hatch hold memory, act on accounts, and can shop on Instagram. Six audit items for your AI agent risk checklist.">
+    <meta property="og:description" content="AI agent risk checklist covering autonomous consumer agents (Meta Hatch), cloud credentials and LLM API access, permissions, and cyber-insurance gaps.">
     <meta property="og:url" content="https://mybusinessaiaudit.com/ai-agent-risk-checklist">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="My Business AI Audit">
@@ -28,10 +28,10 @@
         "@id": "https://mybusinessaiaudit.com/ai-agent-risk-checklist"
       },
       "headline": "AI Agent Risk Checklist: Autonomous Consumer Agents Like Meta's Project Hatch",
-      "description": "Autonomous consumer agents like Meta's Project Hatch hold memory, act on accounts, and can shop on Instagram. Six audit items for your AI agent risk checklist.",
+      "description": "AI agent risk checklist covering autonomous consumer agents (Meta Hatch), cloud credentials and LLM API access, permissions, and cyber-insurance gaps.",
       "image": "https://mybusinessaiaudit.com/og-image.png",
       "datePublished": "2026-08-29",
-      "dateModified": "2026-08-29",
+      "dateModified": "2026-09-04",
       "author": {
         "@type": "Organization",
         "name": "ABD Legacy LLC",
@@ -47,7 +47,7 @@
         }
       },
       "about": ["AI agents", "Meta Project Hatch", "autonomous consumer agents", "AI risk audit", "small business"],
-      "keywords": "AI agent risk checklist, Meta Project Hatch, meta hatch privacy, is meta ai agent safe, ai agent memory retention risk, ai agent purchase approval flow, ai agent payment risk small business"
+      "keywords": "AI agent risk checklist, Meta Project Hatch, meta hatch privacy, is meta ai agent safe, ai agent memory retention risk, ai agent purchase approval flow, ai agent payment risk small business, AI agent security audit, cloud credential audit"
     },
     {
       "@type": "FAQPage",
@@ -157,8 +157,8 @@
     <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
     <article>
         <h1>AI Agent Risk Checklist: Autonomous Consumer Agents Like Meta's Project Hatch</h1>
-        <div class="meta"><span>Published August 29, 2026</span><span>My Business AI Audit</span></div>
-        <div class="tagline"><span>AI agents</span> <span>Audit checklist</span> <span>Consumer agents</span> <span>Meta Project Hatch</span></div>
+        <div class="meta"><span>Published August 29, 2026 · Updated September 4, 2026</span><span>My Business AI Audit</span></div>
+        <div class="tagline"><span>AI agents</span> <span>Audit checklist</span> <span>Consumer agents</span> <span>Meta Project Hatch</span> <span>Cloud credentials</span></div>
 
         <div class="answer-box">
             <span class="answer-label">The short answer</span>
@@ -168,8 +168,35 @@
 
         <p>Meta has made <strong>no official announcement</strong> about Project Hatch as of August 29, 2026 — the product is unshipped and the launch window is reported as late August or early September. What is already clear from verified reporting is the direction: consumer-grade agents that act on accounts, hold memory, and integrate with Meta's commerce and messaging surfaces. That direction is exactly what your AI agent risk checklist needs to cover, because it moves the risk from "what can an agent see?" to "what can an agent <em>do</em> with access it was given?"</p>
 
+        <div class="update-box">
+            <span class="update-label">Update — September 4, 2026</span>
+            <h2>Cloud credentials and LLM API access: six new audit items</h2>
+            <p>On September 3, 2026, Cybersecurity News reported FortiGuard Labs research on an <strong>LLMjacking operation</strong> that began with a single leaked AWS IAM key: a <strong>long-lived access key carrying AdministratorAccess</strong>, the highest AWS privilege (<a href="https://cybersecuritynews.com/llmjacking-attack/">cybersecuritynews.com, Sept 3 2026</a>). Attackers used the compromised identity to create a new IAM user inside the victim's account, subscribe to paid foundation models through AWS Marketplace, and run unauthorized model inference billed to the victim. Because the calls came from technically valid, permissioned credentials, they look identical to normal usage — signature-based defenses don't catch this class of attack. Add the six items below to your AI agent risk checklist; full walkthrough of the case is publishing alongside this update at <a href="/llmjacking-ai-api-key-theft">LLMjacking: How Leaked Cloud Keys Let Attackers Burn Your AI Budget</a>.</p>
+            <ol class="checklist-item">
+                <li>
+                    <p><strong>Inventory and rotate long-lived AWS IAM access keys.</strong> The reported Sept 2026 case traced entirely to one non-expiring admin key. List every IAM user and workload with a long-lived access key, rotate keys in service more than 90 days, and delete any key you cannot tie to an owner or workload. FortiGuard Labs explicitly treats long-lived, broad-scope IAM keys as a top-tier risk.</p>
+                </li>
+                <li>
+                    <p><strong>Revoke or downgrade any AdministratorAccess key not actively required.</strong> Check IAM policies for identities or keys carrying AdministratorAccess or an equivalent wildcard policy. Replace standing admin access with scoped policies, and treat any admin key that must remain as break-glass: short-lived, MFA-gated, and monitored. The reported attack was only possible because an admin-privilege key existed and was exposed.</p>
+                </li>
+                <li>
+                    <p><strong>Enforce least privilege for AI-agent and workload identities.</strong> Apply the same permissions rule you use for consumer agents to every identity that calls AI services: each agent or workload should reach only the models and actions its job requires. Remove human-style full access from automated identities, and audit the grants at the same cadence as your <a href="/articles/ai-agent-permissions-audit">AI agent permissions audit</a>.</p>
+                </li>
+                <li>
+                    <p><strong>Use short-lived, role-assumed credentials for LLM API integrations.</strong> Where an integration talks to AWS or LLM APIs, prefer <strong>IAM Roles Anywhere, OIDC federation, or role assumption</strong> so the credential expires instead of living in a config file, <code>.env</code>, or <code>/.aws/credentials</code>. This is the same short-lived-identity pattern covered by <a href="/ai-agent-identity-governance">agent identity governance</a> and the exposure path highlighted in <a href="/ai-crawler-credential-theft">AI crawler credential theft</a>.</p>
+                </li>
+                <li>
+                    <p><strong>Monitor paid AI/LLM API spend anomalies and unauthorized inference.</strong> Watch billing and logs for Marketplace agreements you did not approve, brand-new IAM users, unfamiliar IPs, access-denied spikes, and first-time model invocations from identities that never called a model before. Enable CloudTrail on every account and Bedrock invocation logging (disabled by default) so the usage is visible — FortiGuard's guidance is to treat these as corroborating signals, not to assume first-time usage is safe.</p>
+                </li>
+                <li>
+                    <p><strong>Audit which cloud identities can call AI/LLM APIs.</strong> Maintain a list of every identity — user, role, agent, and service account — with permission to subscribe to or invoke paid foundation models, plus every Marketplace agreement attached to the account. If the list contains an identity or agreement you do not recognize, treat it as a compromise signal, exactly as the reported case showed with a newly created IAM user preceding the unauthorized subscriptions.</p>
+                </li>
+            </ol>
+            <p>Source: Cybersecurity News — "LLMjacking Attack Uses Leaked AWS IAM Key to Steal Paid AI Model Access" (Guru Baran, Sept 3, 2026), covering FortiGuard Labs research (<a href="https://cybersecuritynews.com/llmjacking-attack/">cybersecuritynews.com/llmjacking-attack</a>). As reported, no victim organization or dollar amount has been published for this incident; details above stay within the source.</p>
+        </div>
+
         <h2>How this checklist is organized</h2>
-        <p>This page is the consolidated AI agent risk checklist for your business. Each risk category below links to the deep-dive audit on this site, and the final section — <strong>autonomous consumer agents</strong> — is the newest category, driven by the Meta Project Hatch reporting wave of August 2026.</p>
+        <p>This page is the consolidated AI agent risk checklist for your business. Each risk category below links to the deep-dive audit on this site. The update box above adds the <strong>cloud credentials and LLM API access</strong> category (September 2026, from the LLMjacking case); the final section below — <strong>autonomous consumer agents</strong> — covers the Meta Project Hatch reporting wave of August 2026.</p>
         <ul>
             <li><strong>AI agent security risks</strong> — agent escapes, sandbox failures, and the regulator response. See the <a href="/ai-agent-security-risks">AI agent security risks audit</a>.</li>
             <li><strong>AI agent permissions</strong> — least-privilege credentials and the access agents are actually granted. See the <a href="/articles/ai-agent-permissions-audit">AI agent permissions audit</a>.</li>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLMjacking: How Leaked AWS Keys Burn Your AI Budget</title>
+    <meta name="description" content="Leaked AWS IAM keys with AdministratorAccess let attackers burn a business's AI budget. Learn what LLMjacking is and how to protect LLM API keys.">
+    <meta name="keywords" content="LLMjacking, AI API key theft, AWS IAM AI agent security, how to protect LLM API keys, LLM API key security, can someone steal my AI API access, AWS IAM AdministratorAccess, Bedrock invocation logging, AI agent security audit">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mybusinessaiaudit.com/llmjacking-ai-api-key-theft">
+    <meta property="og:title" content="LLMjacking: How Leaked AWS Keys Burn Your AI Budget">
+    <meta property="og:description" content="Leaked AWS IAM keys with AdministratorAccess let attackers burn a business's AI budget. Learn what LLMjacking is and how to protect LLM API keys.">
+    <meta property="og:url" content="https://mybusinessaiaudit.com/llmjacking-ai-api-key-theft">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="My Business AI Audit">
+    <meta property="og:image" content="https://mybusinessaiaudit.com/og-image.png">
+    <meta property="og:image:alt" content="LLMjacking: how leaked cloud keys let attackers burn your AI budget">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://mybusinessaiaudit.com/llmjacking-ai-api-key-theft/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://mybusinessaiaudit.com/llmjacking-ai-api-key-theft"
+      },
+      "headline": "LLMjacking: How Leaked Cloud Keys Let Attackers Burn Your AI Budget",
+      "description": "Leaked AWS IAM keys with AdministratorAccess let attackers burn a business's AI budget. Learn what LLMjacking is and how to protect LLM API keys.",
+      "image": "https://mybusinessaiaudit.com/og-image.png",
+      "datePublished": "2026-09-04",
+      "dateModified": "2026-09-04",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://mybusinessaiaudit.com/og-image.png"
+        }
+      },
+      "about": ["LLMjacking", "AI API key theft", "AWS IAM security", "LLM API key protection", "small business", "cybersecurity"],
+      "keywords": "LLMjacking, AI API key theft, AWS IAM AI agent security, how to protect LLM API keys, can someone steal my AI API access"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://mybusinessaiaudit.com/llmjacking-ai-api-key-theft/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can someone steal my AI API access?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Any credential that can call a paid AI API is a target: an LLM provider key, a cloud IAM key, or a credential issued to an AI agent. In the September 2026 case, one leaked key let an attacker create a new IAM user and subscribe to paid models inside the victim's account - and that identity kept working after the original key was rotated."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is LLMjacking?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LLMjacking is a form of cloud abuse in which attackers hijack a business's paid access to large language models and AI APIs. Instead of stealing data or compute, they run model inference the legitimate account holder pays for, then often resell the access as cut-price AI chatbot subscriptions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do attackers steal AI API keys?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Keys leak through exposed .env files, code committed to public repositories, logs, phishing, and scanners posing as trusted AI crawlers. Once an attacker holds a broad credential, they can create identities and subscribe to paid models inside the victim's cloud account, as in the September 2026 case."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I know if my AI API key was stolen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Look for corroborating signals: IAM users or keys you did not create, Marketplace agreements or Bedrock subscriptions you never approved, inference spend climbing with no new workload, calls from unfamiliar IPs, and spikes in access-denied errors. None alone proves theft; together they warrant investigation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is AWS IAM and why does AdministratorAccess matter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AWS Identity and Access Management (IAM) controls which identities can do what inside an AWS account. AdministratorAccess is the highest permission AWS offers: an identity holding it can create users, change permissions, and sign up for paid services. In the September 2026 case, one leaked IAM key with AdministratorAccess was enough to do exactly that."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I do if I find unauthorized AI usage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Revoke or rotate the leaked credential immediately, then audit IAM and delete users and keys you did not create - rotation alone does not remove an attacker-created identity. Cancel Marketplace agreements or Bedrock subscriptions you never approved, turn on CloudTrail and Bedrock invocation logging to reconstruct the chain, and keep a record for your cloud provider and cyber insurer."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; }
+        .cta { display: inline-block; background: #2563eb; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; margin: 8px 0; }
+        .update-box { margin: 32px 0; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 8px; }
+        .update-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .update-box .update-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        .faq-item { margin-bottom: 18px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; color: #1a1a2e; }
+        .source { margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; color: #888; font-size: 0.85rem; }
+        .source a { color: #888; }
+        footer { margin-top: 24px; color: #888; font-size: 0.85rem; text-align: center; }
+        nav.site { margin-bottom: 20px; font-size: 0.9rem; }
+        nav.site a { margin-right: 16px; text-decoration: none; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+    </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
+    <article>
+        <h1>LLMjacking: How Leaked Cloud Keys Let Attackers Burn Your AI Budget</h1>
+        <div class="meta"><span>Published September 4, 2026</span><span>My Business AI Audit</span></div>
+        <div class="tagline"><span>LLMjacking</span><span>AI API key theft</span><span>LLM API key security</span></div>
+
+        <p>LLMjacking is what happens when a leaked cloud credential becomes someone else's free AI budget. On September 3, 2026, Cybersecurity News reported an intrusion &mdash; documented by security researchers at FortiGuard Labs &mdash; in which a leaked AWS IAM access key with AdministratorAccess let an attacker run paid AI model inference through the victim's own account and bill it to the victim. Can someone steal your AI API access? <strong>Yes.</strong> The warning signs are quiet, and for many small businesses the first signal is an invoice.</p>
+
+        <p>This guide explains what LLMjacking is, how the reported September 2026 attack worked, how to spot theft, and a five-step checklist to protect your LLM API keys.</p>
+
+        <h2 id="what">What is LLMjacking?</h2>
+
+        <p>LLMjacking is a form of cloud abuse in which attackers hijack a business's paid access to large language models and other AI APIs. Instead of mining cryptocurrency or exfiltrating data with stolen credentials, they run model inference that the legitimate account holder pays for. Stolen access is often resold as bargain AI chatbot subscriptions on Telegram and Discord, researchers report; one tracked campaign, Operation Bizarre Bazaar, has been linked to more than 35,000 attack sessions across more than 30 LLM providers.</p>
+
+        <h3>LLMjacking vs. cryptomining: attackers monetize your billing relationship</h3>
+
+        <p>The shift changes how you defend. Cryptomining abuse is loud; LLMjacking is quiet because what is stolen is not compute but the victim's billing relationship with the cloud provider. The calls are legitimate-looking requests to legitimate endpoints; the meter runs against the wrong account.</p>
+
+        <h3>Not just an API key: the case started with an AWS IAM key</h3>
+
+        <p>Most &ldquo;API key theft&rdquo; talk pictures an application key pasted into a public repository. This case started one level up. The leaked credential was an AWS IAM access key &mdash; the identity credential for the entire cloud account &mdash; carrying AdministratorAccess, the highest level of privilege an AWS identity can hold. Whoever holds it can create users, change permissions, and sign up for paid AI services in your name.</p>
+
+        <h2 id="attack">The September 2026 attack: one leaked AWS administrator key</h2>
+
+        <h3>How it unfolded</h3>
+
+        <p>Cybersecurity News reported on September 3, 2026, that FortiGuard Labs traced the intrusion to a long-lived AWS IAM access key carrying AdministratorAccess that had leaked. The attacker then:</p>
+
+        <ol>
+            <li><strong>Created a brand-new IAM user</strong> inside the victim's AWS account.</li>
+            <li><strong>Subscribed to foundation models</strong> through AWS Marketplace, issuing <code>CreateAgreementRequest</code> and <code>AcceptAgreementRequest</code> calls.</li>
+            <li><strong>Invoked the models directly</strong>, generating inference charges billed entirely to the compromised organization.</li>
+        </ol>
+
+        <p>In several similar cases, attackers also generated Bedrock service-specific API keys for the new identity &mdash; a second, less conspicuous inference path.</p>
+
+        <h3>Why it is so hard to detect</h3>
+
+        <p>The calls originate from technically valid, permissioned credentials, so at the network and API level the traffic looks identical to legitimate usage. Signature-based defenses do not catch it, because nothing about the traffic itself is inherently malicious. That is why FortiGuard recommends enabling AWS CloudTrail in every account and turning on Bedrock invocation logging &mdash; disabled by default &mdash; which captures request-level detail that CloudTrail alone misses.</p>
+
+        <h3>What the report does not say</h3>
+
+        <p>The report names no victim organization, explains no leak vector, and attaches no dollar figure to the unauthorized usage. Treat the chain as documented and the cost as unknown: dollar figures attached to LLMjacking elsewhere name legacy Claude models and come from earlier research, not this incident.</p>
+
+        <h2 id="signs">Can someone steal your AI API access?</h2>
+
+        <div class="update-box">
+            <span class="update-label">Straight answer</span>
+            <p><strong>Yes &mdash; and the theft can happen without the attacker ever seeing your application.</strong> A single leaked IAM key with AdministratorAccess is enough to create an identity and subscribe to paid foundation models inside your account. That identity keeps working even after you rotate the leaked key, because it is a separate user; you have to find and delete it.</p>
+        </div>
+
+        <p>Signs of AI API key theft rarely look like a classic breach. FortiGuard's guidance: act on corroborating signals, not any single event. Investigate:</p>
+
+        <ul>
+            <li><strong>IAM users or access keys you did not create</strong> &mdash; the strongest signal in this attack chain.</li>
+            <li><strong>AWS Marketplace agreements or Bedrock subscriptions you never approved.</strong></li>
+            <li><strong>Spend anomalies:</strong> inference or API charges climbing without a new workload behind them.</li>
+            <li><strong>Unfamiliar IP addresses or regions</strong> calling your AI APIs or hitting your AWS account.</li>
+            <li><strong>Enumeration behavior or spikes in access-denied errors</strong> as the attacker probes what the stolen identity can reach.</li>
+        </ul>
+
+        <p>One caution from FortiGuard: do not treat first-time Bedrock usage as automatically safe <em>or</em> automatically suspicious. It is actionable only when paired with a corroborating signal, such as a newly created identity or an unfamiliar IP.</p>
+
+        <h2 id="protect">How to protect LLM API keys: a 5-step checklist</h2>
+
+        <p>If you run AI workloads in AWS, or call LLM APIs from code, agents, or vendor integrations, work through this list. AWS IAM AI agent security comes down to which identities can call paid model APIs and how long their credentials live.</p>
+
+        <h3>1. Rotate long-lived IAM keys now</h3>
+
+        <p>The entire September 2026 chain hinged on a single non-expiring administrator key. Delete unused IAM access keys, rotate any older than 90 days, and treat any broad-scope key that touched code, logs, or CI as exposed.</p>
+
+        <h3>2. Apply least privilege &mdash; no standing AdministratorAccess</h3>
+
+        <p>No human or machine identity should hold AdministratorAccess by default. Scope IAM policies to the services and actions a workload actually needs, and review elevated permissions on a schedule. A key that can call only the one model API it needs is worth far less to an attacker.</p>
+
+        <h3>3. Use short-lived, role-assumed credentials for workloads and AI agents</h3>
+
+        <p>Prefer IAM roles with temporary credentials over long-lived access keys for anything automated, including AI agents; short-lived credentials expire on their own, so a leak stops being a standing backdoor. Where agents or vendors need access, use an identity layer that issues and revokes credentials centrally.</p>
+
+        <h3>4. Turn on AWS CloudTrail and Bedrock invocation logging</h3>
+
+        <p>CloudTrail across every account reconstructs the sequence of identity creation, credential issuance, and marketplace subscription. Bedrock invocation logging, disabled by default, captures request-level detail that shows which models ran and when. You cannot investigate what you did not record.</p>
+
+        <h3>5. Monitor LLM and API spend anomalies, new identities, and unfamiliar IPs</h3>
+
+        <p>Alert on inference and API spend, new IAM users and keys, new Marketplace agreements, and calls from unexpected regions. Budget alerts alone are not enough &mdash; pair them with identity and access signals so you catch the attacker before the bill spikes.</p>
+
+        <h2 id="respond">What to do if you find unauthorized AI usage</h2>
+
+        <ol>
+            <li><strong>Revoke the leaked credential immediately</strong> &mdash; rotate or delete the exposed IAM key.</li>
+            <li><strong>Audit IAM and delete attacker-created identities.</strong> Rotating the leaked key does not remove a user the attacker created; delete it and any keys attached to it.</li>
+            <li><strong>Cancel unauthorized subscriptions</strong> &mdash; Marketplace agreements and Bedrock model access you never approved.</li>
+            <li><strong>Turn on CloudTrail and Bedrock invocation logging</strong> to reconstruct what happened.</li>
+            <li><strong>Keep a record for your provider and insurer.</strong> Whether <a href="/ai-agent-cyber-insurance-coverage">cyber insurance covers AI agents</a> depends on what you can document.</li>
+        </ol>
+
+        <h2 id="bigger">The bigger picture: AI credentials are the new attack surface</h2>
+
+        <p>LLMjacking is the second act of a story this site has tracked all month. On August 31 we covered <a href="/ai-crawler-credential-theft">AI crawler credential theft</a>: scanners posing as ClaudeBot and GPTBot, with exact user-agent strings, hunting exposed <code>.env</code> files and cloud keys on sites that trust crawler names. LLMjacking is what stolen keys are for &mdash; running paid models on someone else's account &mdash; so a key harvested by a fake crawler and a key leaked into a repository end in the same place: billed to you.</p>
+
+        <p>The fix lives at the identity layer. Our guide to <a href="/ai-agent-identity-governance">AI agent identity governance</a> covers centrally managed, short-lived identities for AI agents &mdash; including the Okta Agent SSO approach that went GA in August &mdash; so credentials are issued, scoped, and revoked instead of living in files. The pattern repeats across providers, as our <a href="/openai-hugging-face-report-what-it-means">OpenAI Hugging Face AI agent hack</a> analysis showed. For a full sweep, see the <a href="/ai-agent-security-risks">AI agent security risks</a> primer and the <a href="/ai-agent-risk-checklist">AI agent risk checklist</a>, which now include IAM and API-key audit items.</p>
+
+        <h2 id="bottom">Bottom line for small businesses</h2>
+
+        <p>LLMjacking does not require exotic skills: one leaked administrator key, a few API calls, and the meter runs against your account. You do not need to run frontier AI to be a target. If you have not inventoried your cloud and API credentials this year, do it this week: a short audit plus the five steps above removes the chain the September 2026 case depended on.</p>
+
+        <p><a class="cta" href="/audit-tool.html" data-umami-event="click_to_audit_tool">Run the free AI audit tool</a></p>
+
+
+        <h2 id="faq">Frequently asked questions</h2>
+
+        <div class="faq-item">
+            <h3>Can someone steal my AI API access?</h3>
+            <p>Yes. Any credential that can call a paid AI API is a target: an LLM provider key, a cloud IAM key, or a credential issued to an AI agent. In the September 2026 case, one leaked key let an attacker create a new IAM user and subscribe to paid models inside the victim's account &mdash; and that identity kept working after the original key was rotated.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What is LLMjacking?</h3>
+            <p>LLMjacking is a form of cloud abuse in which attackers hijack a business's paid access to large language models and AI APIs. Instead of stealing data or compute, they run model inference the legitimate account holder pays for, then often resell the access as cut-price AI chatbot subscriptions.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How do attackers steal AI API keys?</h3>
+            <p>Keys leak through exposed <code>.env</code> files, code committed to public repositories, logs, phishing, and scanners posing as trusted AI crawlers. Once an attacker holds a broad credential, they can create identities and subscribe to paid models inside the victim's cloud account, as in the September 2026 case.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How do I know if my AI API key was stolen?</h3>
+            <p>Look for corroborating signals: IAM users or keys you did not create, Marketplace agreements or Bedrock subscriptions you never approved, inference spend climbing with no new workload, calls from unfamiliar IPs, and spikes in access-denied errors. None alone proves theft; together they warrant investigation.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What is AWS IAM and why does AdministratorAccess matter?</h3>
+            <p>AWS Identity and Access Management (IAM) controls which identities can do what inside an AWS account. AdministratorAccess is the highest permission AWS offers: an identity holding it can create users, change permissions, and sign up for paid services. In the September 2026 case, one leaked IAM key with AdministratorAccess was enough to do exactly that.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What should I do if I find unauthorized AI usage?</h3>
+            <p>Revoke or rotate the leaked credential immediately, then audit IAM and delete users and keys you did not create &mdash; rotation alone does not remove an attacker-created identity. Cancel Marketplace agreements or Bedrock subscriptions you never approved, turn on CloudTrail and Bedrock invocation logging to reconstruct the chain, and keep a record for your cloud provider and cyber insurer.</p>
+        </div>
+
+        <div class="source">
+            <p>Source: <a href="https://cybersecuritynews.com/llmjacking-attack/">Guru Baran, Cybersecurity News, &ldquo;LLMjacking Attack Uses Leaked AWS IAM Key to Steal Paid AI Model Access,&rdquo; September 3, 2026</a>. The security research described in the report is attributed to FortiGuard Labs.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/ai-crawler-credential-theft">AI crawler credential theft: fake ClaudeBot hunts cloud keys</a></li>
+                <li><a href="/ai-agent-identity-governance">Agent identity governance: secure your AI agents (2026)</a></li>
+                <li><a href="/openai-hugging-face-report-what-it-means">The OpenAI Hugging Face AI agent hack: what it means</a></li>
+                <li><a href="/ai-agent-security-risks">AI agent security risks</a></li>
+                <li><a href="/ai-agent-risk-checklist">AI agent risk checklist</a></li>
+                <li><a href="/ai-agent-cyber-insurance-coverage">Does cyber insurance cover AI agents?</a></li>
+            </ul>
+        </div>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
