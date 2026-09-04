@@ -1,6 +1,27 @@
 /*
  * Tariff Calculator 2026 — canonical tariff data
  * -------------------------------------------------
+ * Updated 2026-09-03 (t_a836cab0): Drone / UAS preset upgraded to the
+ * Sept 3, 2026 effective-date model from the Task 0 rule spec
+ * (drone-tariff-calculator-rule-spec.md, t_1151b7ec): the drone tier is
+ * now DERIVED from product attributes instead of a manual Annex tier pick.
+ * New opts for effectiveRate('…', 'drones', …):
+ *   droneThermal (true/false) — thermal-imaging capability flag
+ *   droneHeavy   (true/false) — MTOW > 25 kg (~55 lb) flag
+ *   blueUas      (true/false) — supplier on DoD Blue UAS Cleared List /
+ *                               Blue UAS Framework / FCC Conditional
+ *                               Approval List as of Sept 2, 2026
+ * Truth table (finished drone, Section 232 ad valorem):
+ *   China/other + thermal OR >25 kg            = 100% from Sept 3, 2026
+ *   China/other + non-thermal AND <=25 kg      = 25%  from Sept 3, 2026
+ *   Blue UAS-listed (as of Sept 2, 2026)       = 0% deferred until
+ *                                                Feb 9, 2027, then full
+ *   Allied (EU/JP/KR/TW/CH/LI)                 = total duty cap <=15%
+ *                                                incl Column 1 (origin-
+ *                                                conditional); UK <=10%
+ *   Entry before Sept 3, 2026                  = not subject
+ * Legacy opts.droneTier ('annex_i'|'annex_ii'|'annex_iii') still works
+ * for callers that pass it explicitly (tests, older article pages).
  * Updated 2026-08-31 (t_6d585b6a): CANADA_RETALIATION now resolves from
  * the configurable preset data file presets/canada-sept8-counter-tariffs.js
  * (window.CANADA_SEPT8_PRESET / require()) — a future trade deal is a
@@ -332,6 +353,22 @@
     // default tier used by the calculator when the importer does not
     // specify; heaviest exposure (100%) — Annex I.
     default_tier: 'annex_i',
+    // Blue UAS / FCC Conditional Approval deferral (Proclamation §7) —
+    // companies listed AS OF Sept 2, 2026 get the effective date moved to
+    // Feb 9, 2027 for the listed covered products and components; the full
+    // rate applies after that date. Allies are NOT deferred (see carve_outs).
+    blue_uas_deferral: {
+      list_reference_date: '2026-09-02',
+      deferral_ends: '2027-02-09',
+      label: 'DoD Blue UAS Cleared List / Blue UAS Framework / FCC Conditional Approval List (as of Sept 2, 2026)'
+    },
+    // Finished-drone tier derivation from product attributes (thermal
+    // imaging + MTOW), matching Proclamation §1(a)/§1(b).
+    attr_model: {
+      thermal_flag_rate_tier: 'annex_i',   // thermal imaging at ANY weight → 100%
+      heavy_flag_rate_tier: 'annex_i',     // MTOW > 25 kg (~55 lb) → 100%
+      standard_flag_rate_tier: 'annex_ii'  // non-thermal, <=25 kg → 25%
+    },
     carve_outs: {
       // "substantially all" hardware/software/technology must originate in
       // these countries (or the US): total (incl. Column 1) <= 15%
@@ -970,27 +1007,67 @@
     }
 
     // Section 232 UAS / drones — date-gated, effective 2026-09-03 (main)
-    // and 2027-02-09 (Annex III components). Tier is selectable via
-    // opts.droneTier ('annex_i' | 'annex_ii' | 'annex_iii'), default Annex I.
-    // Allied carve-outs cap the TOTAL rate (incl. Column 1): EU/JP/KR/TW/CH
-    // <= 15%, UK <= 10% — origin-conditional ("substantially all" components
-    // and tech certified to originate there or in the US).
+    // and 2027-02-09 (Annex III components + end of the Blue UAS deferral).
+    //
+    // Tier resolution (t_a836cab0, Sept 3, 2026 preset):
+    //   - Legacy callers may still pass opts.droneTier
+    //     ('annex_i' | 'annex_ii' | 'annex_iii') and get the manual-tier
+    //     behavior unchanged (tests, older article pages).
+    //   - The calculator UI now passes product ATTRIBUTES instead:
+    //     opts.droneThermal (bool), opts.droneHeavy (bool: MTOW > 25 kg /
+    //     ~55 lb), opts.blueUas (bool: supplier listed on DoD Blue UAS
+    //     Cleared List / Blue UAS Framework / FCC Conditional Approval List
+    //     as of Sept 2, 2026). Finished-drone truth table per rule spec:
+    //       thermal OR >25 kg            -> Annex I  (100%)
+    //       non-thermal AND <=25 kg      -> Annex II (25%)
+    //       Blue UAS-listed, D1 (Sept 3 2026 - Feb 8 2027) -> deferred 0%
+    //       Blue UAS-listed, D2 (Feb 9 2027+) -> full rate (deferral ended)
+    //       entry before Sept 3, 2026   -> not subject
+    //   Allied carve-outs cap the TOTAL rate (incl. Column 1): EU/JP/KR/TW/
+    //   CH/LI <= 15%, UK <= 10% — origin-conditional ("substantially all"
+    //   components and tech certified to originate there or in the US).
     var droneAdd = 0;
     var droneDetails = null;
     if (category === 'drones') {
       var uas = SECTION_232_UAS;
-      var tierKey = opts.droneTier && uas.tiers[opts.droneTier] ? opts.droneTier : uas.default_tier;
-      var tier = uas.tiers[tierKey];
-
       var droneQDateStr;
       if (opts.asOfDate) {
         droneQDateStr = String(opts.asOfDate).slice(0, 10);
       } else {
-        droneQDateStr = new Date().toISOString().slice(0, 10);
+        droneQDateStr = new Date().toISOString().slice(0, 10); // today
       }
-      var droneApplies = droneQDateStr >= tier.applies_from;
+      var attrMode = opts.droneThermal !== undefined ||
+        opts.droneHeavy !== undefined ||
+        opts.blueUas !== undefined;
+      var thermalFlag = opts.droneThermal === true || opts.droneThermal === 'yes' || opts.droneThermal === 1;
+      var heavyFlag = opts.droneHeavy === true || opts.droneHeavy === 'over' || opts.droneHeavy === 1;
+      var blueUasFlag = opts.blueUas === true || opts.blueUas === 'yes' || opts.blueUas === 'blue-uas' || opts.blueUas === 1;
 
-      if (droneApplies) {
+      var tierKey;
+      if (!attrMode && opts.droneTier && uas.tiers[opts.droneTier]) {
+        tierKey = opts.droneTier; // legacy explicit tier (annex_i/ii/iii)
+      } else if (attrMode) {
+        // Truth table: thermal imaging OR MTOW > 25 kg -> 100% Annex I;
+        // non-thermal AND <=25 kg -> 25% Annex II.
+        tierKey = (thermalFlag || heavyFlag)
+          ? uas.attr_model.thermal_flag_rate_tier
+          : uas.attr_model.standard_flag_rate_tier;
+      } else {
+        tierKey = uas.default_tier; // backward-compatible heavy-exposure default
+      }
+      var tier = uas.tiers[tierKey];
+
+      // Finished-drone not-subject window: entries before 12:01 a.m. ET
+      // Sept 3, 2026 are NOT subject to the Section 232 drone duty (D0).
+      var droneNotSubject = droneQDateStr < '2026-09-03';
+      var droneApplies = droneQDateStr >= tier.applies_from;
+      // Blue UAS deferral (Proclamation §7): listed suppliers' covered
+      // products pay 0% Section 232 until Feb 9, 2027, then the full rate.
+      var deferralEnds = (uas.blue_uas_deferral && uas.blue_uas_deferral.deferral_ends) || '2027-02-09';
+      var droneDeferred = blueUasFlag && droneApplies &&
+        droneQDateStr < deferralEnds && tierKey !== 'annex_iii';
+
+      if (droneApplies && !droneDeferred) {
         if (uas.carve_outs.combined_15.indexOf(countrySlug) !== -1) {
           // total (incl. Column 1) <= 15%
           droneAdd = Math.max(0, 0.15 - mfn - categoryAdd);
@@ -1004,6 +1081,12 @@
 
       droneDetails = {
         applies: droneApplies,
+        notSubject: droneNotSubject,
+        deferred: droneDeferred,
+        deferralEnds: deferralEnds,
+        blueUas: blueUasFlag,
+        thermal: thermalFlag,
+        heavy: heavyFlag,
         tier: tierKey,
         tierLabel: tier.label,
         rate: droneAdd,

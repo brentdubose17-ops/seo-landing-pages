@@ -63,7 +63,15 @@
                 "name": "How do I calculate the landed cost of a drone or UAS import under the Section 232 tariff?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Select 'Drones / UAS (Unmanned Aircraft) — Section 232' as the product category, choose your tier (100% for UAS over 25 kg, thermal-imaging UAS, docking stations, or Annex I components; 25% for UAS of 25 kg or less; 25% for Annex III components), your country of origin, and your import date. The calculator applies the Section 232 rate on top of the base duty and shows the effective date (September 3, 2026 for Annexes I and II, February 9, 2027 for Annex III), allied carve-outs, and total landed cost."
+                    "text": "Select 'Drones / UAS (Unmanned Aircraft) — Section 232' as the product category, choose your country of origin, answer the drone preset questions (supplier status — Blue UAS-listed vs standard; thermal-imaging capability yes/no; maximum takeoff weight over or under ~55 lb / 25 kg), and set your import date. The calculator derives the Section 232 rate automatically: thermal imaging or over 25 kg = 100%; non-thermal 25 kg or under = 25%; suppliers on the DoD Blue UAS Cleared List / Blue UAS Framework / FCC Conditional Approval List (as of Sept 2, 2026) are deferred (0%) until Feb 9, 2027, then pay the full rate; allied-origin (EU, Japan, Korea, Taiwan, Switzerland, Liechtenstein) drones are capped at 15% total incl. Column 1 (UK 10%), origin-conditional. Entries before Sept 3, 2026 are not subject. The result labels the Section 232 drone duty separately from other estimated duties and shows the total landed cost."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are Blue UAS-listed or allied-nation drone suppliers exempt from the drone tariff until February 9, 2027?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Only partly. Companies on the DoD Blue UAS Cleared List, the Blue UAS Framework, or the FCC's Conditional Approval List as of Sept 2, 2026 get their effective date deferred to Feb 9, 2027 — they pay no Section 232 drone duty on listed covered products until then, and the full rate applies after. Allied-nation suppliers (EU, Japan, Korea, Taiwan, Switzerland, Liechtenstein, UK) are NOT exempt: from Sept 3, 2026 they are capped at 15% total duty including the base Column 1 duty (UK: 10%), conditional on certifying that substantially all hardware, software, and technology originates in those countries or the US. That is a reduction, not an exemption, and it does not sunset on Feb 9, 2027."
                 }
             },
             {
@@ -170,6 +178,9 @@
             header h1 { font-size: 1.6rem; }
             .calculator { padding: 20px; }
             .blog-grid { grid-template-columns: 1fr; }
+            /* Wide reference tables scroll horizontally instead of
+               overflowing the page on small screens. */
+            .info table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         }
     </style>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
@@ -257,7 +268,7 @@
 </div>
 
 <section class="calc-section">
-    <div class="calculator">
+    <div class="calculator" id="calculator">
         <div class="form-row">
             <label for="direction">Shipping To</label>
             <select id="direction" onchange="onDirectionChange()">
@@ -297,13 +308,36 @@
             </select>
             <div style="font-size:0.8rem;color:#888;margin-top:4px;">Applies to 🇧🇷 Brazil. Brazil's stated agenda at the Aug 31 Rosa–Greer talks: expand the exemption list, reduce rates, or reassess the action. <strong>None of the what-if rates are in effect</strong> — the default estimate keeps the current 25% unless you select a scenario. Read the <a href="brazil-section-301-tariff-2026.html">Brazil tariff explainer</a>.</div>
         </div>
-        <div class="form-row" id="droneTierRow" style="display:none;">
-            <label for="droneTier">UAS / Drone Tier (Section 232)</label>
-            <select id="droneTier">
-                <option value="annex_i">100% tier — UAS &gt;25 kg, thermal-imaging UAS, docking stations, Annex I critical components (effective Sept 3, 2026)</option>
-                <option value="annex_ii">25% tier — UAS ≤25 kg, no thermal imaging (effective Sept 3, 2026)</option>
-                <option value="annex_iii">25% tier — Additional UAS components, Annex III (effective Feb 9, 2027)</option>
+        <div class="form-row" id="dronePanel" style="display:none;">
+            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-left:6px solid #2563eb;border-radius:10px;padding:12px 16px;margin-bottom:14px;">
+                <strong style="color:#1e40af;">🛸 Drone / UAS — Section 232 preset (effective Sept 3, 2026)</strong>
+                <div style="font-size:0.85rem;color:#1e40af;margin-top:4px;">Tariffs took effect <strong>Sept 3, 2026</strong>. China-origin 55lb+ or thermal drones = up to <strong>100%</strong>; 55lb-and-under camera drones = <strong>25%</strong>; <strong>Blue UAS-listed suppliers are deferred until Feb 9, 2027</strong>; allied-origin drones are capped at <strong>10–15%</strong> (origin-conditional). Answer the three questions below to get your rate.</div>
+            </div>
+            <label for="droneSupplier">Supplier Status</label>
+            <select id="droneSupplier">
+                <option value="standard">Standard supplier (not Blue UAS-listed)</option>
+                <option value="blue-uas">Blue UAS Cleared List / Blue UAS Framework / FCC Conditional Approval-listed supplier (as of Sept 2, 2026) — deferred to Feb 9, 2027</option>
             </select>
+            <div style="font-size:0.8rem;color:#888;margin:4px 0 10px;">Only DoD Blue UAS Cleared List / Blue UAS Framework / FCC Conditional Approval List companies (as of Sept 2, 2026) get the deferral. DJI and most China-made drones are <strong>not</strong> on the list and fall in the general origin bucket.</div>
+        </div>
+        <div class="form-row" id="droneAttrRow" style="display:none;">
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <div style="flex:1;min-width:200px;">
+                    <label for="droneThermal">Thermal-Imaging Capability</label>
+                    <select id="droneThermal">
+                        <option value="no">No — standard camera drone</option>
+                        <option value="yes">Yes — thermal-imaging drone (any weight)</option>
+                    </select>
+                </div>
+                <div style="flex:1;min-width:200px;">
+                    <label for="droneWeight">Maximum Takeoff Weight (MTOW)</label>
+                    <select id="droneWeight">
+                        <option value="over">Over ~55 lb (over 25 kg)</option>
+                        <option value="under">55 lb or under (25 kg or under)</option>
+                    </select>
+                </div>
+            </div>
+            <div style="font-size:0.8rem;color:#888;margin-top:4px;">The 100% tier starts <strong>above</strong> 25 kg (~55.1 lb) — a drone at exactly 55 lb is in the 25% tier. Thermal imaging at any weight → 100% tier.</div>
         </div>
         <div class="form-row">
             <label for="value">Shipment Value (USD)</label>
@@ -327,24 +361,28 @@
                     <span class="result-value" id="resultValue">$0</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">Estimated Duty Rate</span>
+                    <span class="result-label" id="labelRate">Estimated Duty Rate</span>
                     <span class="result-value" id="resultRate">0%</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">Estimated Duty Due</span>
+                    <span class="result-label" id="labelDuty">Estimated Duty Due</span>
                     <span class="result-value" id="resultDuty">$0</span>
+                </div>
+                <div class="result-item" id="baseDutyRow" style="display:none;">
+                    <span class="result-label" id="labelBaseDuty">Other est. duties (base MFN / non-232)</span>
+                    <span class="result-value" id="resultBaseDuty">$0</span>
                 </div>
                 <div class="result-item" id="truckloadRow" style="display:none;">
                     <span class="result-label">🚚 Tariff Cost per Truckload</span>
                     <span class="result-value" id="resultTruckload">$0</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">Estimated Total Landed Cost</span>
+                    <span class="result-label" id="labelTotal">Estimated Total Landed Cost</span>
                     <span class="result-value total" id="resultTotal">$0</span>
                 </div>
             </div>
             <div id="flags"></div>
-            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates including the <strong>Brazil 25% Section 301 duty</strong> (IN EFFECT July 22, 2026 — applied when you select <strong>Brazil</strong> as country of origin and a non-exempt product category; 1,600+ exempt HTS subheadings, Section 232 non-stacking, 12.5% forced-labor stack to 37.5%; model a post-talks reduction or removal with the <strong>Brazil Section 301 Scenario</strong> toggle), Section 301 (forced labor), Section 232 (polysilicon, drones/UAS), and the Canada Section 338 50% duty. The 50% Canada Section 338 duty (effective Aug 22, 2026 on ~$20B of Canadian goods; 569 HTSUS subheadings across the alcohol, dairy and motor-vehicle proclamations) IS included in the default rate when you select <strong>Canada</strong> and a covered product category (Automotive, Food &amp; Beverages, Dairy Products, Alcoholic Beverages, or Canada Section 338 Covered Goods). The 100%/25% drone/UAS Section 232 duty (effective Sept 3, 2026) is applied when the Drones / UAS category is selected. The 90-day ground beef out-of-quota waiver (up to 300,000 metric tons; announced Aug 21, 2026) is applied when the Ground Beef category is selected with an import date inside the waiver window (Aug 21 – Nov 19, 2026), returning a duty-free result subject to the cap. <strong>For US goods shipped TO Canada</strong>, switch "Shipping To" to <strong>Canada</strong> — Canada's confirmed counter-tariffs of <strong>15/25/50%</strong> on C$27.6B of US imports (629 tariff items, revised Aug 26; rate for rate matching the US duty) apply from <strong>September 8, 2026 at 12:01 a.m. ET</strong> to US-origin goods in the covered categories (steel/aluminum 50%, electronics/appliances/dairy 25%, farm equipment 15%); before then it shows as PENDING, and US goods already in transit on Sept 8 are exempt. A <strong>threatened 50% tariff on Canadian cars, trucks, auto parts &amp; steel</strong> (proposed effective <strong>January 1, 2027</strong>) can be modeled with the <strong>Auto &amp; Steel Tariff Scenario</strong> toggle — select <strong>Canada</strong> + <strong>Automotive</strong> or <strong>Steel &amp; Metals</strong> and choose the <strong>Threatened</strong> scenario. It is <strong>NOT included by default</strong>, so existing estimates are unchanged. 🚚 For the freight-side impact (fewer loads, tariff cost per truckload), see <a href="canada-tariff-trucking-freight-impact.html">How the 50% Canada Tariffs Hit Freight Volumes and Carriers</a>. Actual rates vary by HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database and USTR Chapter 99 headings 9903.05.20–9903.06.21.</p>
+            <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates including the <strong>Brazil 25% Section 301 duty</strong> (IN EFFECT July 22, 2026 — applied when you select <strong>Brazil</strong> as country of origin and a non-exempt product category; 1,600+ exempt HTS subheadings, Section 232 non-stacking, 12.5% forced-labor stack to 37.5%; model a post-talks reduction or removal with the <strong>Brazil Section 301 Scenario</strong> toggle), Section 301 (forced labor), Section 232 (polysilicon, drones/UAS), and the Canada Section 338 50% duty. The 50% Canada Section 338 duty (effective Aug 22, 2026 on ~$20B of Canadian goods; 569 HTSUS subheadings across the alcohol, dairy and motor-vehicle proclamations) IS included in the default rate when you select <strong>Canada</strong> and a covered product category (Automotive, Food &amp; Beverages, Dairy Products, Alcoholic Beverages, or Canada Section 338 Covered Goods). The 100%/25% drone/UAS Section 232 duty (effective Sept 3, 2026) is applied when the Drones / UAS category is selected — thermal imaging or over ~55 lb (25 kg) = 100%, non-thermal 25 kg or under = 25%, Blue UAS-listed suppliers (as of Sept 2, 2026) are deferred (0%) until Feb 9, 2027, and allied-origin drones are capped at 15% total incl. Column 1 (UK 10%, origin-conditional). The 90-day ground beef out-of-quota waiver (up to 300,000 metric tons; announced Aug 21, 2026) is applied when the Ground Beef category is selected with an import date inside the waiver window (Aug 21 – Nov 19, 2026), returning a duty-free result subject to the cap. <strong>For US goods shipped TO Canada</strong>, switch "Shipping To" to <strong>Canada</strong> — Canada's confirmed counter-tariffs of <strong>15/25/50%</strong> on C$27.6B of US imports (629 tariff items, revised Aug 26; rate for rate matching the US duty) apply from <strong>September 8, 2026 at 12:01 a.m. ET</strong> to US-origin goods in the covered categories (steel/aluminum 50%, electronics/appliances/dairy 25%, farm equipment 15%); before then it shows as PENDING, and US goods already in transit on Sept 8 are exempt. A <strong>threatened 50% tariff on Canadian cars, trucks, auto parts &amp; steel</strong> (proposed effective <strong>January 1, 2027</strong>) can be modeled with the <strong>Auto &amp; Steel Tariff Scenario</strong> toggle — select <strong>Canada</strong> + <strong>Automotive</strong> or <strong>Steel &amp; Metals</strong> and choose the <strong>Threatened</strong> scenario. It is <strong>NOT included by default</strong>, so existing estimates are unchanged. 🚚 For the freight-side impact (fewer loads, tariff cost per truckload), see <a href="canada-tariff-trucking-freight-impact.html">How the 50% Canada Tariffs Hit Freight Volumes and Carriers</a>. Actual rates vary by HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database and USTR Chapter 99 headings 9903.05.20–9903.06.21.</p>
         </div>
     </div>
 </section>
@@ -430,13 +468,17 @@
 <section class="info" id="drone-uas-tariff">
     <h2>🆕 Section 232: Drones / UAS Tariff (Effective Sept 3, 2026)</h2>
     <p>President Trump signed a proclamation on <strong>August 13, 2026</strong> under <strong>Section 232 of the Trade Expansion Act of 1962 (19 U.S.C. 1862)</strong> imposing new ad valorem tariffs on imports of <strong>unmanned aircraft systems (UAS, i.e. drones)</strong> and UAS components. The main duties take effect <strong>September 3, 2026 at 12:01 a.m. ET</strong> (21 days after signing); duties on additional components (Annex III) take effect <strong>February 9, 2027</strong> (180 days after signing). The duties apply in addition to any other duties, taxes, fees, exactions, and charges.</p>
-    <p><strong>Select "Drones / UAS (Unmanned Aircraft) — Section 232" from the product category dropdown</strong> (a tier selector will appear), choose your import date, and see the drone tariff rate in your landed-cost calculation. Read the full breakdown in our <a href="https://tariffcalculator2026.com/drone-tariff-section-232-september-3">drone tariff September 3 explainer</a> — what's covered at 100% vs 25%, allied carve-outs, and the FTZ/drawback rules that change your routing.</p>
+    <p><strong>Select "Drones / UAS (Unmanned Aircraft) — Section 232" from the product category dropdown</strong>, then answer the <strong>Supplier Status</strong> (Blue UAS-listed or standard), <strong>Thermal-Imaging</strong>, and <strong>Maximum Takeoff Weight</strong> questions, set your import date, and the calculator derives your Section 232 drone duty automatically — date-aware, so the Blue UAS deferral stops applying after Feb 9, 2027. Read the full breakdown in our <a href="https://tariffcalculator2026.com/drone-tariff-section-232-september-3">drone tariff September 3 explainer</a> — what's covered at 100% vs 25%, allied carve-outs, and the FTZ/drawback rules that change your routing.</p>
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-left:6px solid #2563eb;border-radius:10px;padding:14px 18px;margin:14px 0;">
+        <strong>📌 How to read your estimate:</strong> China-origin 55lb+ or thermal drone = <strong>up to 100%</strong>; 55lb-and-under camera drone (non-thermal) = <strong>25%</strong>; <strong>Blue UAS-listed suppliers are deferred until Feb 9, 2027</strong>; allied-origin drones are <strong>capped at 10–15%</strong> (origin-conditional, not exempt). Tariffs took effect <strong>Sept 3, 2026</strong>; the deferral clock for Blue UAS-listed suppliers runs until <strong>Feb 9, 2027</strong> — after that the full rate applies.
+    </div>
     <table>
         <thead><tr><th>Category</th><th>Rate</th><th>Effective</th><th>HTS Ch. 99</th></tr></thead>
         <tbody>
-            <tr><td><strong>100% tier (Annex I)</strong> — UAS with max take-off weight &gt;25 kg; UAS that integrate thermal imagers; UAS docking stations; certain critical components</td><td><strong>100%</strong></td><td><strong>Sept 3, 2026</strong></td><td>9903.08.21</td></tr>
+            <tr><td><strong>100% tier (Annex I)</strong> — UAS with max take-off weight &gt;25 kg (~55 lb); UAS that integrate thermal imagers (any weight); UAS docking stations; certain critical components</td><td><strong>100%</strong></td><td><strong>Sept 3, 2026</strong></td><td>9903.08.21</td></tr>
             <tr><td><strong>25% tier (Annex II)</strong> — UAS with max take-off weight ≤25 kg, no thermal imaging</td><td><strong>25%</strong></td><td><strong>Sept 3, 2026</strong></td><td>9903.08.22</td></tr>
             <tr><td><strong>25% components (Annex III)</strong> — additional UAS components (propellers/rotors, undercarriages, other aircraft parts) imported for use in UAS</td><td><strong>25%</strong></td><td><strong>Feb 9, 2027</strong></td><td>9903.08.2x</td></tr>
+            <tr><td><strong>Blue UAS Cleared List / Blue UAS Framework / FCC Conditional Approval-listed supplier</strong> (as of Sept 2, 2026) — listed covered products &amp; components</td><td><strong>0% — deferred</strong> (full rate from Feb 9, 2027)</td><td><strong>Deferral runs Sept 3, 2026 – Feb 8, 2027</strong></td><td>—</td></tr>
             <tr><td><strong>UK products</strong> (origin-conditional)</td><td><strong>≤10%</strong> total incl. Column 1</td><td>Sept 3, 2026</td><td>9903.08.23</td></tr>
             <tr><td><strong>EU / Japan / Korea / Taiwan / Switzerland / Liechtenstein</strong> (origin-conditional)</td><td><strong>≤15%</strong> total incl. Column 1</td><td>Sept 3, 2026</td><td>9903.08.24</td></tr>
         </tbody>
@@ -660,7 +702,8 @@ function estimateCssp() {
         populateCountries(direction);
         populateCategories(direction);
         document.getElementById('usmcaRow').style.display = 'none';
-        document.getElementById('droneTierRow').style.display = 'none';
+        document.getElementById('dronePanel').style.display = 'none';
+        document.getElementById('droneAttrRow').style.display = 'none';
         document.getElementById('autoScenarioRow').style.display = 'none';
         document.getElementById('brazilScenarioRow').style.display = 'none';
         document.getElementById('results').classList.remove('show');
@@ -680,9 +723,11 @@ function estimateCssp() {
         updateBrazilScenarioRow();
     });
 
-    // UAS / drone tier selector visibility
+    // UAS / drone preset questions visibility (thermal / weight / supplier)
     catSel.addEventListener('change', function () {
-        document.getElementById('droneTierRow').style.display = catSel.value === 'drones' ? 'block' : 'none';
+        var isDrone = catSel.value === 'drones';
+        document.getElementById('dronePanel').style.display = isDrone ? 'block' : 'none';
+        document.getElementById('droneAttrRow').style.display = isDrone ? 'block' : 'none';
         updateAutoScenarioRow();
         updateBrazilScenarioRow();
     });
@@ -771,7 +816,12 @@ function calculate() {
     var opts = { usmcaQualified: usmcaQualified };
     if (entryDate) opts.asOfDate = entryDate;
     if (category === 'drones') {
-        opts.droneTier = document.getElementById('droneTier').value;
+        // Drone preset: product attributes drive the Section 232 tier
+        // (thermal OR >25 kg -> 100%; non-thermal <=25 kg -> 25%), and the
+        // supplier-status flag drives the Blue UAS deferral to Feb 9 2027.
+        opts.droneThermal = document.getElementById('droneThermal').value === 'yes';
+        opts.droneHeavy = document.getElementById('droneWeight').value === 'over';
+        opts.blueUas = document.getElementById('droneSupplier').value === 'blue-uas';
     }
     if (direction === 'to-canada') {
         opts.direction = 'to-canada';
@@ -801,8 +851,41 @@ function calculate() {
     if (!res) return;
 
     var effectiveRate = res.rate;
-    var duty = value * effectiveRate;
-    var total = value + duty;
+    var drone = (category === 'drones' && res.breakdown.drone) ? res.breakdown.drone : null;
+
+    // Drone / UAS preset presentation — the Section 232 drone duty is the
+    // headline (rule spec s1/s4 UI copy): "Estimated Section 232 duty".
+    // The generic MFN/category base still applies on top; it is itemized in
+    // a separate row for drones so the headline number is the drone answer
+    // (100% / 25% / deferred 0% / allied cap), never a blended total.
+    var dutyRate = effectiveRate;
+    var droneBaseOther = 0;
+    var droneRateLabel = null;
+    if (drone) {
+        if (drone.notSubject) {
+            droneRateLabel = 'Not subject — entered for consumption before 12:01 a.m. ET Sept 3, 2026';
+            dutyRate = 0;
+        } else if (drone.deferred) {
+            droneRateLabel = 'Deferred — 0% Section 232 drone duty (Blue UAS-listed supplier, until Feb 9, 2027)';
+            dutyRate = 0;
+        } else if (drone.carve_out === 'combined_15') {
+            droneRateLabel = '≤15% total duty incl. Column 1 (allied cap — origin-conditional, not an exemption)';
+            dutyRate = effectiveRate; // total duty at the 15% cap
+        } else if (drone.carve_out === 'uk_10') {
+            droneRateLabel = '≤10% total duty incl. Column 1 (UK cap — origin-conditional, not an exemption)';
+            dutyRate = effectiveRate; // total duty at the 10% cap
+        } else {
+            if (drone.baseRate >= 1) {
+                droneRateLabel = '100% Section 232 drone duty (Annex I up-to-100% tier — heavy or thermal drones; applies on top of other duties)';
+            } else {
+                droneRateLabel = '25% Section 232 drone duty (Annex II — non-thermal drone, 25 kg / ~55 lb or under; applies on top of other duties)';
+            }
+            dutyRate = drone.rate; // the Section 232 slice only
+        }
+        droneBaseOther = Math.max(0, effectiveRate - dutyRate);
+    }
+    var duty = value * dutyRate;
+    var total = value * (1 + effectiveRate);
 
     var countryName = country === 'us' ? 'United States' : T.SECTION_301[country].name;
     var rateLabel = (effectiveRate * 100).toFixed(1) + '% (' + countryName + ' → ' + T.CATEGORY_MODIFIERS[category].name + ')';
@@ -810,10 +893,38 @@ function calculate() {
     if (country === 'brazil' && res.breakdown.brazil301 && brazilScenario !== 'current') {
         rateLabel += ' — Brazil post-talks what-if scenario (' + res.breakdown.brazil301.scenarioLabel + ')';
     }
+    if (droneRateLabel) {
+        rateLabel = droneRateLabel;
+    }
+    // Drone result-row labels — name the Section 232 slice explicitly so
+    // the number shown is the drone tariff answer, not a blended estimate.
+    var labelRate = document.getElementById('labelRate');
+    var labelDuty = document.getElementById('labelDuty');
+    var labelTotal = document.getElementById('labelTotal');
+    if (drone) {
+        if (labelRate) labelRate.textContent = 'Estimated Section 232 Drone Duty Rate';
+        if (labelDuty) labelDuty.textContent = 'Section 232 Drone Duty Due';
+        if (labelTotal) labelTotal.textContent = 'Estimated Total Landed Cost (incl. other est. duties)';
+    } else {
+        if (labelRate) labelRate.textContent = 'Estimated Duty Rate';
+        if (labelDuty) labelDuty.textContent = 'Estimated Duty Due';
+        if (labelTotal) labelTotal.textContent = 'Estimated Total Landed Cost';
+    }
     document.getElementById('resultValue').textContent = '$' + value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('resultRate').textContent = rateLabel;
     document.getElementById('resultDuty').textContent = '$' + duty.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('resultTotal').textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    // For drones the headline duty is the Section 232 slice; when base MFN /
+    // other duties also apply to the same value, itemize them in a separate
+    // row so the total still ties out.
+    var baseDutyRow = document.getElementById('baseDutyRow');
+    var baseDutyVal = document.getElementById('resultBaseDuty');
+    if (drone && droneBaseOther > 0.0000001 && baseDutyRow && baseDutyVal) {
+        baseDutyRow.style.display = 'flex';
+        baseDutyVal.textContent = '$' + (value * droneBaseOther).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    } else if (baseDutyRow) {
+        baseDutyRow.style.display = 'none';
+    }
 
     // Tariff cost per truckload — surfaces the freight/trucking impact
     // angle. The load value is the calculator's existing shipment-value
@@ -971,27 +1082,56 @@ function calculate() {
         flags.appendChild(brFlag);
     }
 
-    // Section 232 UAS / drones — status + rate tier
+    // Section 232 UAS / drones — status + rate tier (Sept 3, 2026 preset)
     if (res.breakdown.drone) {
         var dr = res.breakdown.drone;
-        if (!dr.applies) {
+        if (dr.notSubject) {
             var nd = document.createElement('div');
             nd.className = 'flag warn';
-            nd.innerHTML = '<strong>⚠️ Section 232 Drone / UAS Tariff — Not Yet In Effect</strong>The ' + (dr.baseRate * 100) + '% Section 232 tariff on ' + dr.tierLabel.toLowerCase() + ' is <strong>not yet in effect</strong> for this import date (effective ' + dr.effective + '). The rate shown above does NOT include the Section 232 duty. Select a date on or after ' + dr.effective + ' to see the new rate.';
+            nd.innerHTML = '<strong>⚠️ Section 232 Drone / UAS Tariff — Not Subject (entered before the effective date)</strong>The Section 232 drone tariff took effect <strong>12:01 a.m. ET Sept 3, 2026</strong> for goods entered for consumption on or after that time. This import date (' + dr.askedDate + ') cleared before the effective date, so <strong>no Section 232 drone duty applies</strong> — the estimate above includes only other estimated duties. Select an entry date on or after Sept 3, 2026 to model the tariff.';
             flags.appendChild(nd);
+        } else if (dr.deferred) {
+            var df = document.createElement('div');
+            df.className = 'flag info';
+            df.innerHTML = '<strong>✅ Blue UAS deferral — Deferred: 0% Section 232 drone duty until Feb 9, 2027</strong>'
+                + 'This supplier is on the DoD Blue UAS Cleared List / Blue UAS Framework / FCC Conditional Approval List (as of Sept 2, 2026), so the effective date is moved to <strong>Feb 9, 2027</strong>: <strong>0% Section 232 drone duty</strong> applies for entries ' + dr.effective + ' through Feb 8, 2027.'
+                + '<br><small>The full rate (<strong>' + (dr.baseRate * 100) + '%</strong> for ' + dr.tierLabel.toLowerCase() + ', HTS ' + dr.heading + ') applies to entries on or after <strong>Feb 9, 2027</strong>. Deferral applies to the listed covered products and components only. Allied-nation suppliers are NOT deferred — they are capped at 10–15% (origin-conditional), not exempt (Proclamation §4, §7).</small>';
+            flags.appendChild(df);
+        } else if (dr.blueUas) {
+            // Blue UAS-listed but past the Feb 9, 2027 deferral end (D2)
+            var de = document.createElement('div');
+            de.className = 'flag info';
+            de.innerHTML = '<strong>Blue UAS deferral ENDED — full Section 232 rate applies (on/after Feb 9, 2027)</strong>'
+                + 'The Blue UAS / FCC Conditional Approval deferral ended <strong>Feb 9, 2027</strong>. This listed supplier now pays the full rate: <strong>' + (dr.baseRate * 100) + '%</strong> for ' + dr.tierLabel.toLowerCase() + ' (HTS ' + dr.heading + ').'
+                + '<br><small>List status is as of Sept 2, 2026 (Proclamation §7); the deferral ran from Sept 3, 2026 through Feb 8, 2027.</small>';
+            flags.appendChild(de);
+        } else if (!dr.applies) {
+            // Legacy component tier (Annex III) before its Feb 9, 2027 start —
+            // kept for older data-layer callers; the UI preset never selects it.
+            var nl = document.createElement('div');
+            nl.className = 'flag warn';
+            nl.innerHTML = '<strong>⚠️ Section 232 Drone / UAS Tariff — Not Yet In Effect For This Import Date</strong>The ' + (dr.baseRate * 100) + '% Section 232 tariff on ' + dr.tierLabel.toLowerCase() + ' is <strong>not yet in effect</strong> for this import date (effective ' + dr.effective + '). The rate shown above does NOT include the Section 232 duty. Select a date on or after ' + dr.effective + ' to see the new rate.';
+            flags.appendChild(nl);
         } else {
             var d = document.createElement('div');
             d.className = 'flag info';
             var carveNote = '';
+            var certNote = '';
             if (dr.carve_out === 'combined_15') {
                 carveNote = '<br><small>⚠️ Allied carve-out: total duty (incl. Column 1) capped at <strong>15%</strong> — applies only if substantially all hardware, software, and technology is certified to originate in the EU, Japan, Korea, Taiwan, Switzerland, Liechtenstein, or the US (HTS 9903.08.24).</small>';
+                certNote = '<br><small>This is a <strong>reduction, not an exemption</strong>: the cap is conditional on the Commerce certification process. If certification is not met, the full ' + (dr.baseRate * 100) + '% rate applies. Allied caps do not sunset on Feb 9, 2027.</small>';
             } else if (dr.carve_out === 'uk_10') {
                 carveNote = '<br><small>⚠️ UK carve-out: total duty (incl. Column 1) capped at <strong>10%</strong> — applies only if substantially all hardware, software, and technology is certified to originate in the UK or the US (HTS 9903.08.23).</small>';
+                certNote = '<br><small>This is a <strong>reduction, not an exemption</strong>: the cap is conditional on the Commerce certification process. If certification is not met, the full ' + (dr.baseRate * 100) + '% rate applies.</small>';
             }
+            var attrLine = 'Thermal imaging: <strong>' + (dr.thermal ? 'Yes' : 'No') + '</strong> · MTOW: <strong>' + (dr.heavy ? 'Over ~55 lb (over 25 kg)' : '55 lb or under (25 kg or under)') + '</strong>.';
             d.innerHTML = '<strong>Section 232 — Drones / UAS Tariff</strong>'
                 + dr.tierLabel + ': <strong>' + (dr.baseRate * 100) + '%</strong> additional duty applied (HTS ' + dr.heading + ').'
+                + '<br><small>' + attrLine + '</small>'
                 + '<br><small>Effective ' + dr.effective + '. Signed Aug 13, 2026 under Section 232 (19 U.S.C. 1862). Applies in addition to other duties. ' + dr.scope + '.</small>'
                 + carveNote
+                + certNote
+                + '<br><small>Estimates only — not customs/legal advice. Product scope follows Proclamation 11055 annexes; see CBP guidance for the authoritative HTS classification. The Section 232 duty stacks on top of base Column-1 duties; the total above includes the calculator\'s country-average base estimate.</small>'
                 + '<br><small>Source: <a href="https://www.whitehouse.gov/presidential-actions/2026/08/adjusting-imports-of-unmanned-aircraft-systems-and-unmanned-aircraft-systems-components-into-the-united-states" target="_blank" rel="noopener">White House Proclamation (Aug 13, 2026)</a> · <a href="https://www.whitehouse.gov/fact-sheets/2026/08/fact-sheet-president-donald-j-trump-bolsters-national-security-and-strengthens-u-s-supply-chains-by-imposing-tariffs-on-drones-and-their-parts-and-components" target="_blank" rel="noopener">Fact Sheet</a></small>';
             flags.appendChild(d);
         }
@@ -1084,6 +1224,7 @@ function calculate() {
 
 // Populate blog articles
 var BLOG_ARTICLES = [
+    { title: "Drone Tariffs Up to 100% Take Effect: What Importers Pay Now", file: "drone-tariffs-100-percent-2026.html", desc: "The US Section 232 drone tariff took effect Sept 3, 2026: up to 100% on heavy and thermal-imaging drones, 25% on smaller non-thermal models, a Blue UAS deferral to Feb 9, 2027, and allied caps at 15% (UK 10%). What importers and public-safety fleets pay for DJI and China-made drones now.", featured: true },
     { title: "Brazil Tariff 2026: 25% Section 301 Tax & Monday's Talks", file: "brazil-section-301-tariff-2026.html", desc: "The US 25% Section 301 tariff on most Brazilian goods took effect July 22, 2026 — 1,600+ exempt HTS subheadings (~1,200 standard + ~430 aircraft lines), Section 232 non-stacking, and a 12.5% forced-labor stack to 37.5%. What Monday's Rosa-Greer talks (Aug 31) could change, plus how to model a rate cut or removal with the calculator's Brazil scenario toggle.", featured: true },
     { title: "China Tariff 2026: 7.5% Overcapacity Tariff Coming?", file: "china-overcapacity-tariff-7-5-percent.html", desc: "Bloomberg reports (Aug 24, 2026) the US is preparing a 7.5% Section 301 overcapacity tariff on Chinese goods, with findings targeted before the Sept. 24 Xi-Trump summit — it would push second-term duties to about 20%. Not finalized and not officially announced as of Aug 25; what importers should watch.", featured: true },
     { title: "Canada Counter-Tariffs September 2026: 15/25/50% Rates", file: "canada-september-8-counter-tariffs.html", desc: "The complete verified tier table for Canada's Sept 8 counter-tariffs: 629 items (revised Aug 26) — 413 at 50%, 195 at 25%, 21 at 15% — covering steel, aluminum, dairy, furniture, clothing, pulp and paper, electronics, appliances, machinery and more. What gets more expensive, what's exempt, and what changes if a US-Canada deal lands.", featured: true },
@@ -1115,6 +1256,30 @@ BLOG_ARTICLES.forEach(function (art) {
     card.innerHTML = badge + '<h3><a href="' + art.file + '">' + art.title + '</a></h3><p>' + art.desc + '</p>';
     grid.appendChild(card);
 });
+</script>
+
+<script>
+(function () {
+    // Deep link: /?product=drones preselects the Drones / UAS (Section 232) preset.
+    try {
+        var p = new URLSearchParams(window.location.search).get('product');
+        if (p === 'drones') {
+            var cat = document.getElementById('category');
+            if (cat) {
+                var found = false;
+                for (var i = 0; i < cat.options.length; i++) {
+                    if (cat.options[i].value === 'drones') { found = true; break; }
+                }
+                if (found) {
+                    cat.value = 'drones';
+                    if (typeof cat.dispatchEvent === 'function' && typeof Event === 'function') {
+                        cat.dispatchEvent(new Event('change'));
+                    }
+                }
+            }
+        }
+    } catch (e) {}
+})();
 </script>
 
 </body>
