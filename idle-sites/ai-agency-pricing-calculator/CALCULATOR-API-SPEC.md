@@ -2,7 +2,7 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-08-31 (Outcome-based pricing mode — task t_e54f18c1)
+**Last updated:** 2026-09-07 (Model Switching Cost / cost-of-keeping-up estimator — task t_6a685c3e)
 
 ---
 
@@ -479,6 +479,82 @@ Money is formatted with `fmt()` (compact `$1.5K` ≥ 10K, else toLocaleString).
 
 `compute_supply_estimated` on every estimate click (payload: horizon,
 grid_pass, relief, tokens_m).
+
+## 9. Model Switching Cost / Cost-of-Keeping-Up Estimator (NEW 2026-09-07)
+
+**Location:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/model-selection-muse-spark.html`
+(companion module on the model-selection page, `#cost-of-keeping-up` section;
+kanban t_6a685c3e, evidence brief t_6fb0e633). This estimator prices the
+re-decision cost of chasing model releases (Sep 1–3, 2026 week: Fable/Mythos
+5.1, Muse Spark 1.3, Gemini 3.8 Flash, GPT-6 Astra) so buyers can compare an
+upgrade cadence before migrating. Companion narrative lives at
+/blog/ai-model-fatigue-switching-costs/.
+
+### 9.1 Purpose
+
+Answer "should my business upgrade to the newest AI model?" with math: the
+per-migration cost does not shrink when release cadence speeds up, so switching
+every release is not a sound strategy. Outputs compare 1×/2×/4×/12× migrations
+per year at the same per-migration operating cost.
+
+### 9.2 Inputs (all client-side, live on `input`)
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `scCadence` | Upgrade cadence (migrations per year) | select | `4` | 1 \| 2 \| 4 \| 12 |
+| `scEvalHours` | Evaluation cycle time (person-hours per candidate set) | number | `80` | ≥ 0, step 4 |
+| `scMigrationHours` | Migration effort (person-hours per migration) | number | `40` | ≥ 0, step 4 |
+| `scLaborRate` | Loaded labor rate ($ per person-hour) | number | `85` | ≥ 0, step 5 |
+| `scRegressionRisk` | Prompt-regression risk (chance ≥1 workflow degrades) | range | `25` | 0–100%, step 5 |
+| `scRegressionHours` | Regression remediation (person-hours if it happens) | number | `16` | ≥ 0, step 2 |
+| `scLicenseDelta` | Licensing / commitment delta ($ per year; negative = savings) | number | `0` | −1,000,000–1,000,000, step 500 |
+| `scStabilizeWeeks` | Support / stabilization delay (weeks) | number | `2` | 0–52, step 0.5 |
+| `scStabilizeCost` | Stabilization cost ($ per week) | number | `1500` | ≥ 0, step 100 |
+| `scDowntimeHours` | Estimated business downtime (hours per migration) | number | `4` | ≥ 0, step 1 |
+| `scRevenuePerHour` | Revenue at risk ($ per downtime hour) | number | `1000` | ≥ 0, step 100 |
+
+### 9.3 Model
+
+```
+evalLab    = (evalHours + migrationHours) × laborRate
+regExp     = regressionRisk% × regressionHours × laborRate     (risk-weighted)
+stab       = stabilizationWeeks × stabilizationCostPerWeek
+downtime   = downtimeHours × revenuePerHour
+perMig     = evalLab + regExp + stab + downtime                (per-migration operating cost)
+
+annualCost(n) = n × perMig + licenseDelta                      (license applies once per year)
+```
+
+### 9.4 Outputs
+
+| Result ID | Meaning |
+|-----------|---------|
+| `rEvalLab` | Evaluation + migration labor per migration |
+| `rRegExp` | Expected prompt-regression remediation (risk-weighted) |
+| `rStab` | Support / stabilization per migration |
+| `rDowntime` | Business downtime opportunity cost per migration |
+| `rLicense` | Licensing / commitment delta (annual) |
+| `rAnnual` | Annual switching cost at selected cadence |
+| `rPerUpgrade` | Annual ÷ cadence (all-in per migration, license amortized) |
+| `lad1`/`lad2`/`lad4`/`lad12` | Annual switching cost at 1×/2×/4×/12× cadence (ladder) |
+| `lrow1`…`lrow12` | Ladder rows; selected cadence row gets `.sel` highlight |
+| `scVerdict` | Plain-language comparison of the selected cadence vs 1× and 12× |
+
+Defaults reproduce: $10,540 labor (80h + 40h + 25%×16h @ $85) + $3,000
+stabilization (2wk × $1,500) + $4,000 downtime (4h × $1,000) = **$17,540 per
+migration** → **$70,160/yr at 4×**, $17,540/yr at 1×, $210,480/yr at 12×.
+Verified by executing the real inline script under a node DOM stub (default,
+12×, 1×, license +$6,000, and zero-risk scenarios all match the formulas).
+
+### 9.5 Edge cases
+
+1. Any negative numeric input except `scLicenseDelta` clamps to 0.
+2. `scLicenseDelta` may be negative (savings); annual figure can go negative
+   only if license savings exceed operating cost.
+3. Cadence forced to ≥ 1; non-numeric input treated as 0.
+4. Currency formatting rounds to whole dollars (`usd()`); values display with
+   `$`/`,` and a leading `-` for negatives.
+5. Regression slider shows live `%` via `scRegressionRiskVal`.
 
 ## Changelog
 
