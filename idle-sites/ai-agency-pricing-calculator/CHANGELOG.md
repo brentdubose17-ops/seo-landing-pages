@@ -2,6 +2,14 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-09-07 — QA pass (kanban t_ace21357) on model-fatigue blog + companion — QA-APPROVED, publish pending
+
+- **QA audit complete** for blog /blog/ai-model-fatigue-switching-costs/ (t_190d0318) and companion /model-selection-muse-spark module (t_6a685c3e). Full checklist in workspace t_ace21357 QA-REPORT.md. Verdict: PASS with one metadata fix applied below.
+- **Meta description fix (companion):** trimmed 273c → **157c** ("Model selection in a fast-release market: Muse Spark 1.3, Gemini 3.8 Flash, Fable 5.1, GPT-6 Astra shipped in one week — price the switch before you upgrade.") and og:description synced to same 157c (was 207c). Original exceeded SERP display limits and pushed the switching-cost CTA below the fold; new version keeps topic keyword, all four model names, and the CTA in visible range. Title, canonical, robots unchanged. Blog meta (152c) already within limits — no change.
+- Blog/companion structured data (Article + FAQPage), H-tag hierarchy (1/10/13 and 1/8/15, no skips), FAQ visible==schema parity (6/6, 10/10), internal-link targets (13 + 11 unique, all resolve on disk), reciprocal interlinks (blog→companion ×3 CTA/related; companion→blog ×5), external source links (6/6 brief sources present) all verified. No duplicate IDs, no missing anchors, well-formed HTML.
+- Fact-check vs evidence brief (t_6fb0e633): all release names/dates/pricing signals present and matching (Fable/Mythos 5.1 Sep 1, Muse Spark 1.3 + Gemini 3.8 Flash/Cyber Sep 2, GPT-6 Astra Sep 3–4, Nvidia–HF $12.9B Sep 3; $0.75/$3.75 Gemini intro; Fable cache $1.00→$0.25; Astra 272K/1.05M; Gartner $2.59T/+47%). Estimator defaults independently recomputed: $17,540/migration → $70,160/yr @4×.
+- Remaining pre-publish chores (owned by t_36de53b6): add blog URL to sitemap.xml + llms.txt, deploy both files, verify live 200.
+
 ## 2026-09-07 — Model switching-cost & release-cadence module on /model-selection-muse-spark (kanban t_6a685c3e) — STAGED (QA t_ace21357 + publish t_36de53b6 pending)
 
 - **/model-selection-muse-spark.html updated as the companion pricing/model-selection asset for the model-fatigue story** (CNBC Sep 6, 2026; research brief t_6fb0e633). New top "Updated Sep 7, 2026" freshness box (Muse Spark 1.3 announced Sep 2 — rate card below still reflects 1.2 published pricing until 1.3 rates are verifiable; anchors to new module + blog), plus a full **"Release cadence changed the routing question: what 'keeping up' actually costs"** section (id `#cost-of-keeping-up`):
