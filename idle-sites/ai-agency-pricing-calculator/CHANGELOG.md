@@ -2,6 +2,13 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-09-07 — Model-fatigue cluster registered for nightly rank tracking (kanban t_135468c6) — no deploy
+
+- **Keywords registered** in ~/.hermes/seo-data/keywords.json under aiagencycalculator.com (169→174; backup keywords.json.bak-model-fatigue-t_135468c6). Nightly 02:00 scanner (seo-rank-scanner-nightly, bing-rss) covers from 2026-09-08 02:00 onward. All 5 map to the model-fatigue blog canonical /blog/ai-model-fatigue-switching-costs/ (companion /model-selection-muse-spark answers the model-selection subtopic but owns none of these as canonical).
+- Registered: 4 verbatim AEO queries from the t_6fb0e633 evidence brief ("which AI model should I use", "AI model release cadence", "is it worth upgrading AI models", "should my business upgrade to the newest AI model") + 1 verified cluster variant "AI model fatigue" (real SERP demand: CNBC #9, cryptobriefing #2, KuCoin #3 — live Sep 6-7 news wave). Two candidates NOT registered (no verified volume / padding): "cost of keeping up with AI models" (generic cost-of-AI SERP, no exact-match intent) and bare "model fatigue" (engineering/material-fatigue pollution).
+- **Day-0 rank baseline captured** (web_search API top-20 ×5, 100 rows): NO aiagencycalculator.com presence in any top-20 (pages live ~1-2h, not yet indexed). Snapshot filed: ~/.hermes/seo-data/serp-snapshots/model-fatigue-cluster-target-queries-2026-09-07.{md,json}. Zero-overlap verified against existing registry entries (dedupe check: no exact/case-insensitive/substring collisions in aiagencycalculator.com; nearest cross-domain only: findaiagency.com "which ai model should my agency use" — different domain + different phrasing).
+- **No overlap with existing keywords.json entries for aiagencycalculator.com.** No deploy — content-ops owns deploys; this commit is the tracking/registration record only. T+7 rank readout due 2026-09-14 09:00 (content-calendar.md), T+30 review 2026-10-07.
+
 ## 2026-09-07 — QA pass (kanban t_ace21357) on model-fatigue blog + companion — QA-APPROVED, publish pending
 
 - **QA audit complete** for blog /blog/ai-model-fatigue-switching-costs/ (t_190d0318) and companion /model-selection-muse-spark module (t_6a685c3e). Full checklist in workspace t_ace21357 QA-REPORT.md. Verdict: PASS with one metadata fix applied below.
