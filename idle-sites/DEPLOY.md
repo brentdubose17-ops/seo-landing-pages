@@ -46,8 +46,10 @@ Decisions taken with it:
 4. **The consistency gate runs before every upload** and a non-zero gate refuses
    the deploy. Per-site baselines hold only pre-existing defects of other
    owners' pages; see "The consistency gate" below.
-5. **Live comparison is beacon-aware**: CF injects a Web Analytics beacon into
-   HTML responses on custom domains, so only beacon-stripped hashes are compared.
+5. **Live comparison is edge-injection aware**: CF injects a Web Analytics beacon
+   **and** (on pages whose text carries an email address) its Email Address
+   Obfuscation markup into HTML responses on custom domains, so only
+   canonicalised hashes are compared (`site_consistency.strip_cf_edge_injection`).
 
 ## Why this rule exists
 
@@ -82,7 +84,8 @@ body still the older copy) and had to be re-deployed by its owner.
 6. **Deploy** from the staging dir under a per-project `flock` (so two workers
    cannot deploy the same project at the same time).
 7. **Verify** (with `--verify-live`): re-fetch every staged asset and compare
-   **beacon-stripped** sha256; CF Pages control files are skipped.
+   **edge-injection-canonicalised** sha256 (beacon + email obfuscation); CF Pages
+   control files are skipped.
 
 | file state | what ships |
 |---|---|
@@ -104,7 +107,7 @@ body still the older copy) and had to be re-deployed by its owner.
 --exclude-dirty=GLOB[..] accepted for compatibility; undeclared files are already held at HEAD
 --no-live-check          do not compare uncommitted files against live bytes
 --dry-run                stage + gate + report, no upload
---verify-live            after deploy, re-fetch the whole manifest and compare beacon-stripped sha256
+--verify-live            after deploy, re-fetch the whole manifest and compare edge-injection-canonicalised sha256
 --keep-stage             keep the staging dir and print its path
 --log=FILE               audit log (default ~/.hermes/logs/idle-site-deploys.log)
 ```
@@ -195,11 +198,13 @@ fixed entry is reported as stale so it can be deleted. Current state
 A gate failure is never ignored: it prints the failing files, refuses the
 upload, exits 1, and lands in `logs/publish-idle-site.log`.
 
-## Live verification and the Cloudflare beacon
+## Live verification and the Cloudflare edge injection
 
-The CF edge injects a Web Analytics beacon into HTML responses **on custom
-domains**, so raw live bytes never equal the uploaded bytes. Measured
-2026-09-10 on `tariffcalculator2026.com` (see `cf-beacon-strip.py`):
+The CF edge rewrites HTML responses **on custom domains**, so raw live bytes
+never equal the uploaded bytes. Two injections, both measured 2026-09-10:
+
+**(a) Web Analytics beacon** — on `tariffcalculator2026.com` (see
+`cf-beacon-strip.py`):
 
 | fetch shape | beacon |
 |---|---|
@@ -207,11 +212,24 @@ domains**, so raw live bytes never equal the uploaded bytes. Measured
 | no `Accept` header (python `urllib`, the publisher's verifier) | **present, +367 B** |
 | `*.pages.dev` (deployment origin) | absent |
 
+**(b) Email Address Obfuscation** (`t_d646632b`) — on
+`mybusinessaiaudit.com/articles/ai-agent-security-audit`: the response gains a
+`email-decode.min.js` loader script (~120 B) and the address is rewritten into a
+`data-cfemail` anchor whose hex payload is XORed with a **random per-response
+key**, so two consecutive fetches of the same URL hash differently. Beacon-only
+stripping therefore never converged there: a successful deploy reported
+`FAIL` + exit 1 on a page nobody had edited. `strip_cf_edge_injection()`
+canonicalises the payload back to the plain address, and the comparison is exact
+again — with the artifact sha on both sides (38,082 B / `535796cea1a8794c`).
+
 So the live comparison — the "already live byte-for-byte" classification *and*
-`--verify-live` — always compares **beacon-stripped** sha256. Evidence from this
-card: against production, the publisher's verifier reported 39 checked / 0
-mismatches with `_redirects` skipped, while the same fetches compared raw
-reported **32 of 39 DIFFERENT**.
+`--verify-live` — always compares **canonicalised** sha256. Evidence from
+`t_b9f85aaa`: against production, the publisher's verifier reported 39 checked /
+0 mismatches with `_redirects` skipped, while the same fetches compared raw
+reported **32 of 39 DIFFERENT**. Evidence from `t_d646632b`: 3 consecutive
+fetches of the email-bearing page canonicalise to the artifact hash while their
+raw hashes all differ; and a hand-edited preview deployment still reports a
+mismatch (the check is not neutered).
 
 Two further verifier details:
 

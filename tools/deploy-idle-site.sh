@@ -24,8 +24,8 @@
 #   4. run the consistency gate (site_consistency.py) over the staged artifact;
 #      a non-zero gate blocks the deploy and reports REFUSING TO PUBLISH,
 #   5. deploy from the staging dir under a per-project flock,
-#   6. re-fetch and compare beacon-stripped sha256 for the whole manifest
-#      (--verify-live), skipping CF Pages control files.
+#   6. re-fetch and compare edge-injection-canonicalised sha256 for the whole
+#      manifest (--verify-live), skipping CF Pages control files
 #
 # SEMANTICS CHANGE vs the pre-consolidation wrapper
 #   * Undeclared dirty files no longer BLOCK (exit 2). They cannot ship at all:
@@ -38,9 +38,12 @@
 #   * --allow-dirty=GLOB still means "also ship the worktree bytes of the files
 #     matching these globs"; it is translated to --include and logged loudly.
 #   * The "already live byte-for-byte" comparison and --verify-live are
-#     BEACON-AWARE (CF injects a Web Analytics beacon into HTML responses on
-#     custom domains, so a raw sha256 live check only ever matched by accident
-#     of curl's default Accept header).
+#     EDGE-INJECTION AWARE: CF injects a Web Analytics beacon into HTML responses
+#     on custom domains (so a raw sha256 live check only ever matched by accident
+#     of curl's default Accept header) and, on pages whose text carries an email
+#     address, its Email Address Obfuscation markup whose per-response random key
+#     made a beacon-only check impossible to satisfy (card t_d646632b). Both are
+#     canonicalised by site_consistency.strip_cf_edge_injection().
 #
 # USAGE
 #   deploy-idle-site.sh <site-key|site-dir> --files=<rel-path[,rel-path]> [options]
@@ -62,7 +65,8 @@
 #   --no-live-check        Do not compare uncommitted files against the live page.
 #   --dry-run              Stage + gate + report; no upload.
 #   --verify-live          After the deploy, re-fetch the whole manifest and
-#                          compare beacon-stripped sha256 (exit 1 on mismatch).
+#                          compare edge-injection-canonicalised sha256 (exit 1 on
+#                          mismatch).
 #   --keep-stage           Keep the staging dir and print its path.
 #   --log=FILE             Audit log (default ~/.hermes/logs/idle-site-deploys.log)
 #   -h | --help
