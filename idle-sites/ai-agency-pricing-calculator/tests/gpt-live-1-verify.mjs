@@ -355,6 +355,19 @@ API.applyPreset('shortcall');
 eq('preset short-call sets 0:40', text('rBilledSeconds'), '40 s');
 API.applyPreset('default');
 
+/* Free-tier rendering path must not print a tier number */
+getById('tier').value = 'free';
+API.update();
+eq('rendered: free tier checked line', text('rTierChecked'), 'Free tier \u2014 not supported');
+eq('rendered: free tier verdict', text('rTierVerdict'), 'Free tier is not supported for GPT-Live \u2014 pick a paid tier.');
+eq('rendered: free tier qualification line',
+  text('rTierQual'), 'Free tier is not supported for GPT-Live sessions \u2014 no session ceiling to compare against.');
+eq('rendered: free tier headroom', text('rHeadroom'), 'n/a on the Free tier');
+ok('rendered: no "NaN" leaks into the tier result elements',
+  !/NaN/.test([text('rTierChecked'), text('rTierVerdict'), text('rTierQual'), text('rHeadroom')].join(' ')));
+getById('tier').value = 'auto';
+API.update();
+
 /* --------------------------------------------------- D. export round-trip */
 const exp = exportModel(defaults);
 ok('export names the model and the as-of date', exp.model === 'gpt-live-1-two-meter-cost-v1' && exp.as_of === '2026-09-10');

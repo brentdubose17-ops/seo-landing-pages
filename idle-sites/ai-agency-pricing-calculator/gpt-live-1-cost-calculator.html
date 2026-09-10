@@ -160,7 +160,7 @@
         .preset-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
         .preset-row button { background: #fff; border: 1px solid #cfe3ff; color: #1d4ed8; font-size: 0.85rem; font-weight: 600; padding: 7px 12px; border-radius: 20px; cursor: pointer; }
         .preset-row button:hover { background: #eef2ff; }
-        pre.export { background: #fff; border: 1px dashed #c0c8d8; border-radius: 8px; padding: 14px; font-size: 0.72rem; line-height: 1.5; max-height: 320px; overflow: auto; white-space: pre; }
+        pre.export { background: #fff; border: 1px dashed #c0c8d8; border-radius: 8px; padding: 14px; font-size: 0.72rem; line-height: 1.5; max-height: 320px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
         @media (max-width: 600px) { body { padding: 16px 12px; } h1 { font-size: 1.6rem; } .calc { padding: 16px; } .calc .grid { grid-template-columns: 1fr; } .results .row { font-size: 0.92rem; } }
     </style>
 </head>
@@ -1080,7 +1080,9 @@ required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 36
             : (r.capacity.capacityLimited
                 ? 'Capacity-limited before budget-limited: you need ' + fmtNum(r.capacity.required, 2) + ' concurrent sessions but Tier ' + r.capacity.tier + ' allows ' + r.capacity.ceiling + '. Raise the tier \u2014 a cheaper backend model does not fix a session ceiling.'
                 : 'Capacity is not the binding constraint at this volume: ' + fmtNum(r.capacity.required, 2) + ' of ' + r.capacity.ceiling + ' sessions used.'));
-        set('rTierQual', 'Tier ' + r.capacity.tier + ' qualification: ' + (GPT_LIVE_MODEL.tiers[r.capacity.tier] ? (GPT_LIVE_MODEL.tiers[r.capacity.tier].paid + ' / ' + GPT_LIVE_MODEL.tiers[r.capacity.tier].perMonth) : '\u2014') + '; modelled spend is ' + fmtUsd(r.total.day) + '/day (' + fmtUsd(r.total.month) + '/' + monthLabel + ').');
+        set('rTierQual', r.capacity.freeSelected
+            ? 'Free tier is not supported for GPT-Live sessions \u2014 no session ceiling to compare against.'
+            : 'Tier ' + r.capacity.tier + ' qualification: ' + (GPT_LIVE_MODEL.tiers[r.capacity.tier] ? (GPT_LIVE_MODEL.tiers[r.capacity.tier].paid + ' / ' + GPT_LIVE_MODEL.tiers[r.capacity.tier].perMonth) : '\u2014') + '; modelled spend is ' + fmtUsd(r.total.day) + '/day (' + fmtUsd(r.total.month) + '/' + monthLabel + ').');
 
         r.capacity.tiers.forEach(function (t) {
             set('rTier' + t.tier + 'Util', fmtPct(t.utilisation));
