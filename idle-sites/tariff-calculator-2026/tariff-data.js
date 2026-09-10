@@ -833,8 +833,22 @@
    * measure is PENDING (0 duty). Each category resolves to its verified
    * dominant tier (category_tiers); the exact HTS line governs the real
    * rate — see representative_products for HS-level examples.
+   *
+   * opts.lineHs (optional): an explicit HTS line (e.g. '0402.10.10').
+   * When it matches a representative_products entry for the category, the
+   * applied rate becomes THAT line's verified tier (milk powder 50%,
+   * cheese 25%); otherwise the category default stands. Omit it for the
+   * unchanged category behaviour.
    */
+  // Normalize an HS/HTS code for line matching: digits only, so
+  // '0402.10.10' and '04021010' both match the same representative line.
+  function normalizeHsLine(v) {
+    if (v === undefined || v === null) return '';
+    return String(v).replace(/[^0-9]/g, '');
+  }
+
   function canadaRetaliationRate(category, opts) {
+    opts = opts || {};
     var ret = CANADA_RETALIATION;
     var qDateStr;
     if (opts.asOfDate) {
@@ -845,10 +859,34 @@
     var targeted = ret.sector_categories.indexOf(category) !== -1;
     var applies = targeted && qDateStr >= ret.effective;
     var tierRate = targeted ? (ret.category_tiers[category] || 0) : 0;
-    var rate = applies ? tierRate : 0;
+    // Optional explicit HS-line override (opts.lineHs): the exact HTS line
+    // governs the real rate, and tiers vary WITHIN a category — e.g. ch. 04
+    // cheese lines are 25% while the milk-powder lines are 50%. When the
+    // caller passes a line that matches an entry in representative_products
+    // for this category, that entry's verified `tier` is the applied rate.
+    // Otherwise (and when no lineHs is passed at all) the category_tiers
+    // default above is used, exactly as before.
+    var lineHs = normalizeHsLine(opts.lineHs);
+    var lineMatch = null;
+    if (lineHs && targeted) {
+      var repsAll = ret.representative_products || [];
+      lineMatch = repsAll.filter(function (p) {
+        return p.category === category && normalizeHsLine(p.hs) === lineHs;
+      })[0] || null;
+      if (!lineMatch && lineHs.length >= 6) {
+        // Subheading-level input (e.g. '040210'): accept it only when it
+        // resolves to exactly one representative line for this category.
+        var prefixed = repsAll.filter(function (p) {
+          return p.category === category && normalizeHsLine(p.hs).indexOf(lineHs) === 0;
+        });
+        if (prefixed.length === 1) lineMatch = prefixed[0];
+      }
+    }
+    var appliedTierRate = lineMatch ? lineMatch.tier : tierRate;
+    var rate = applies ? appliedTierRate : 0;
     // Normalize the numeric tier to the object key ('0.50' — String(0.5) is '0.5')
-    var tierKey = tierRate === 0.5 ? '0.50' : String(tierRate);
-    var tierInfo = tierRate ? ret.tiers[tierKey] : null;
+    var tierKey = appliedTierRate === 0.5 ? '0.50' : String(appliedTierRate);
+    var tierInfo = appliedTierRate ? ret.tiers[tierKey] : null;
     var reps = targeted
       ? ret.representative_products.filter(function (p) { return p.category === category; })
       : [];
@@ -877,6 +915,17 @@
           tierLabel: tierInfo ? tierInfo.label : null,
           tierItemCount: tierInfo ? tierInfo.item_count : null,
           tierReleaseNote: tierInfo ? tierInfo.release_note : null,
+          // Explicit HS-line override state (additive): when a specific
+          // product line was requested and matched a verified
+          // representative_products entry, `rate`/`tierLabel` above are that
+          // line's tier and `appliedSource` is 'line'. Otherwise
+          // 'category' and the category_tiers default is used.
+          lineRequested: lineHs || null,
+          lineMatched: !!lineMatch,
+          lineTier: lineMatch ? lineMatch.tier : null,
+          matchedProduct: lineMatch ? lineMatch.product : null,
+          matchedHs: lineMatch ? lineMatch.hs : null,
+          appliedSource: lineMatch ? 'line' : 'category',
           baseRate: ret.rate,
           effective: ret.effective,
           effectiveLabel: ret.effective_label,
@@ -909,7 +958,13 @@
    *                        Section 232 effective-date gating,
    *              direction: 'to-canada' — US-origin goods imported into
    *                        Canada; applies CANADA_RETALIATION to the six
-   *                        targeted sectors on/after 2026-09-08 }
+   *                        targeted sectors on/after 2026-09-08,
+   *              lineHs: string — optional explicit HTS line for the
+   *                        to-canada direction; when it matches a
+   *                        representative_products entry for the category,
+   *                        that line's verified tier is applied instead of
+   *                        the category default (milk powder 0402.10.10 ->
+   *                        50%, cheese 0406.20.11 -> 25%) }
    * Returns { rate, breakdown: {...} } where rate is the estimated
    * effective duty rate (decimal).
    */

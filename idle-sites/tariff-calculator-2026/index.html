@@ -289,6 +289,13 @@
                 <option value="">— Select product category —</option>
             </select>
         </div>
+        <div class="form-row" id="canadaLineRow" style="display:none;">
+            <label for="canadaLine">Specific product (optional)</label>
+            <select id="canadaLine" onchange="if (window.updateCanadaBanner) window.updateCanadaBanner();">
+                <option value="">— Category rate —</option>
+            </select>
+            <div style="font-size:0.8rem;color:#888;margin-top:4px;">🇨🇦 Canada direction. Optional: the exact HTS line governs the real rate, and tiers vary <strong>within</strong> a category (cheddar cheese 25% vs milk powder 50%). Leave on <strong>— Category rate —</strong> to use the category tier shown in the banner.</div>
+        </div>
         <div class="form-row" id="autoScenarioRow" style="display:none;">
             <label for="autoScenario">Auto &amp; Steel Tariff Scenario (Canada)</label>
             <select id="autoScenario">
@@ -674,6 +681,34 @@ function estimateCssp() {
         });
     }
 
+    // Optional per-line override (Canada direction only). Tiers vary WITHIN
+    // a category (cheddar cheese 25% vs milk powder 50%), so the verified
+    // representative lines from the official 629-item list are offered
+    // here; the chosen HS code is passed to the engine as opts.lineHs.
+    var lineSel = document.getElementById('canadaLine');
+
+    function populateCanadaLines() {
+        if (!lineSel) return;
+        var ret = T.CANADA_RETALIATION || {};
+        var reps = ret.representative_products || [];
+        var cat = catSel.value;
+        var rows = cat ? reps.filter(function (p) { return p.category === cat; }) : [];
+        if (!rows.length) rows = reps.slice();
+        lineSel.innerHTML = '';
+        var first = document.createElement('option');
+        first.value = '';
+        first.textContent = '— Category rate —';
+        lineSel.appendChild(first);
+        rows.forEach(function (p) {
+            var opt = document.createElement('option');
+            opt.value = p.hs;
+            opt.textContent = p.product + ' (HS ' + p.hs + ' — ' + (p.tier * 100).toFixed(0) + '%)';
+            lineSel.appendChild(opt);
+        });
+        lineSel.value = '';
+    }
+    window.populateCanadaLines = populateCanadaLines;
+
     function updateCanadaBanner() {
         var banner = document.getElementById('canadaBanner');
         if (!banner) return;
@@ -688,8 +723,14 @@ function estimateCssp() {
         var applies = entryDate >= ret.effective;
         var sectors = ret.sectors.map(function (s) { return s.label; }).join(', ');
         var catName = catSel.value && T.CATEGORY_MODIFIERS[catSel.value] ? T.CATEGORY_MODIFIERS[catSel.value].name : '';
-        var tierRate = catSel.value ? (ret.category_tiers[catSel.value] || 0) : 0;
-        var tierTxt = tierRate ? 'This category resolves to the <strong>' + (tierRate * 100).toFixed(0) + '% tier</strong> (official 629-item list, revised Aug 26; exact HTS line governs the rate).' : '';
+        var pickedLine = null;
+        if (lineSel && lineSel.value && ret.representative_products) {
+            pickedLine = ret.representative_products.filter(function (p) { return p.hs === lineSel.value; })[0] || null;
+        }
+        var tierRate = pickedLine ? pickedLine.tier : (catSel.value ? (ret.category_tiers[catSel.value] || 0) : 0);
+        var tierTxt = pickedLine
+            ? '<strong>' + pickedLine.product + '</strong> (HS ' + pickedLine.hs + ') is on the <strong>' + (pickedLine.tier * 100).toFixed(0) + '% tier</strong> (official 629-item list, revised Aug 26).'
+            : (tierRate ? 'This category resolves to the <strong>' + (tierRate * 100).toFixed(0) + '% tier</strong> (official 629-item list, revised Aug 26; the exact HTS line governs the rate — pick a specific product for its line rate).' : '');
         banner.style.display = 'block';
         banner.className = applies ? 'flag info' : 'flag warn';
         banner.innerHTML = applies
@@ -701,6 +742,11 @@ function estimateCssp() {
         var direction = dirSel.value;
         populateCountries(direction);
         populateCategories(direction);
+        // Per-line select is Canada-direction only (opt.lineHs passthrough)
+        var lineRow = document.getElementById('canadaLineRow');
+        if (lineRow) lineRow.style.display = direction === 'to-canada' ? 'block' : 'none';
+        if (direction === 'to-canada') populateCanadaLines();
+        else if (lineSel) lineSel.value = '';
         document.getElementById('usmcaRow').style.display = 'none';
         document.getElementById('dronePanel').style.display = 'none';
         document.getElementById('droneAttrRow').style.display = 'none';
@@ -728,8 +774,11 @@ function estimateCssp() {
         var isDrone = catSel.value === 'drones';
         document.getElementById('dronePanel').style.display = isDrone ? 'block' : 'none';
         document.getElementById('droneAttrRow').style.display = isDrone ? 'block' : 'none';
+        // Line options follow the selected category (Canada direction)
+        if (lineSel && dirSel.value === 'to-canada') populateCanadaLines();
         updateAutoScenarioRow();
         updateBrazilScenarioRow();
+        updateCanadaBanner();
     });
 
     // Auto & Steel Tariff Scenario (Canada + Automotive or Steel & Metals)
@@ -826,6 +875,11 @@ function calculate() {
     if (direction === 'to-canada') {
         opts.direction = 'to-canada';
         opts.usmcaQualified = false;
+        // Optional "Specific product" line — when selected, its verified
+        // HTS line tier is applied instead of the category default
+        // (milk powder 0402.10.10 -> 50% vs dairy category 25%).
+        var linePickEl = document.getElementById('canadaLine');
+        if (linePickEl && linePickEl.value) opts.lineHs = linePickEl.value;
     }
     // Auto & Steel Tariff Scenario: Canada + Automotive or Steel & Metals —
     // include the threatened 50% autos/steel (proposed effective Jan 1,
@@ -889,6 +943,11 @@ function calculate() {
 
     var countryName = country === 'us' ? 'United States' : T.SECTION_301[country].name;
     var rateLabel = (effectiveRate * 100).toFixed(1) + '% (' + countryName + ' → ' + T.CATEGORY_MODIFIERS[category].name + ')';
+    // Name the applied specific line so the headline rate is traceable
+    var crLine = (res.breakdown && res.breakdown.canadaRetaliation) ? res.breakdown.canadaRetaliation : null;
+    if (crLine && crLine.lineMatched && crLine.matchedProduct) {
+        rateLabel += ' — ' + crLine.matchedProduct + ' (HS ' + crLine.matchedHs + ')';
+    }
     if (includeProposed) rateLabel += ' — threatened autos/steel scenario (incl. proposed 50%)';
     if (country === 'brazil' && res.breakdown.brazil301 && brazilScenario !== 'current') {
         rateLabel += ' — Brazil post-talks what-if scenario (' + res.breakdown.brazil301.scenarioLabel + ')';
@@ -1201,11 +1260,15 @@ function calculate() {
             var crf = document.createElement('div');
             crf.className = 'flag info';
             var repLine = '';
-            if (cr2.representativeProducts && cr2.representativeProducts.length) {
+            if (cr2.lineMatched && cr2.matchedProduct) {
+                repLine = '<br><small><strong>Applied specific line:</strong> ' + cr2.matchedProduct +
+                    ' (HS ' + cr2.matchedHs + ', ' + (cr2.lineTier * 100).toFixed(0) + '% tier — official 629-item list). ' +
+                    'Other lines in this category can fall in a different tier; the exact HTS line governs the rate.</small>';
+            } else if (cr2.representativeProducts && cr2.representativeProducts.length) {
                 repLine = '<br><small><strong>Representative lines:</strong> ' +
                     cr2.representativeProducts.slice(0, 3).map(function (p) {
                         return p.product + ' (HS ' + p.hs + ', ' + (p.tier * 100).toFixed(0) + '%)';
-                    }).join(' · ') + ' — exact HTS line governs the rate.</small>';
+                    }).join(' · ') + ' — exact HTS line governs the rate. Tiers vary within a category — pick a Specific product above for its line rate.</small>';
             }
             var cr2PresetLabel = cr2.presetLabel || 'Canada Sept 8 Counter-Tariffs';
             crf.innerHTML = '<strong>' + cr2PresetLabel + ' — ' + (cr2.tierLabel || '') + ' Dollar-for-Dollar Duty (IN EFFECT)</strong>'

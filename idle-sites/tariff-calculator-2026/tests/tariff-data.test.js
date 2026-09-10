@@ -1224,6 +1224,119 @@ test('Canada retaliation: representative products return the verified tier rates
     before.breakdown.canadaRetaliation.effectiveLabel.includes('September 8'));
 });
 
+// ── Canada retaliation line-level override (t_31dba7b3) ─────────────
+// The exact HTS line governs the real rate, and tiers vary WITHIN a
+// category (ch. 04 cheddar cheese 25% vs milk-powder lines 50%).
+// opts.lineHs lets the calculator apply the verified per-line tier
+// instead of the category default, so a US milk-powder exporter sees
+// 50% — not the 25% dairy category headline.
+
+test('Canada retaliation: opts.lineHs applies the verified per-line tier (milk powder 50%, cheese 25%)', () => {
+  const D = '2026-09-08';
+  // Milk powder (HS 0402.10.10) — 50% tier on the official 629-item list
+  const milk = T.effectiveRate('us', 'dairy', { direction: 'to-canada', asOfDate: D, lineHs: '0402.10.10' });
+  assert.equal(milk.rate, 0.50, 'milk powder 0402.10.10 must apply the 50% line tier');
+  const mcr = milk.breakdown.canadaRetaliation;
+  assert.equal(mcr.applies, true);
+  assert.equal(mcr.appliedSource, 'line');
+  assert.equal(mcr.lineMatched, true);
+  assert.equal(mcr.lineTier, 0.50);
+  assert.equal(mcr.matchedHs, '0402.10.10');
+  assert.ok(/milk powder/i.test(mcr.matchedProduct), 'matchedProduct must name the milk-powder line');
+  assert.equal(mcr.tierLabel, '50%', 'tier label must follow the applied line tier');
+  assert.equal(mcr.tierItemCount, 413, 'tier item count must be the applied tier item count');
+  assert.equal(mcr.lineRequested, '04021010', 'lineRequested echoes the normalized 8-digit HS');
+  // Parent-card sample calc is now reproducible through the engine:
+  // $10,000 milk powder -> $5,000 (50%)
+  assert.equal(10000 * milk.rate, 5000, 'milk powder $10,000 must produce $5,000 at the 50% line tier');
+  // Cheese (HS 0406.20.11) stays on its own 25% line tier
+  const cheese = T.effectiveRate('us', 'dairy', { direction: 'to-canada', asOfDate: D, lineHs: '0406.20.11' });
+  assert.equal(cheese.rate, 0.25, 'cheese 0406.20.11 must keep its 25% line tier');
+  assert.equal(cheese.breakdown.canadaRetaliation.appliedSource, 'line');
+  assert.equal(cheese.breakdown.canadaRetaliation.matchedHs, '0406.20.11');
+  assert.equal(cheese.breakdown.canadaRetaliation.tierItemCount, 195);
+  assert.equal(10000 * cheese.rate, 2500, 'cheese $10,000 must produce $2,500 at the 25% line tier');
+  // HS normalization: digits-only and subheading inputs resolve to the line
+  const noDots = T.effectiveRate('us', 'dairy', { direction: 'to-canada', asOfDate: D, lineHs: '04021010' });
+  assert.equal(noDots.rate, 0.50, 'HS normalization: 04021010 === 0402.10.10');
+  // Other verified lines override their category defaults too
+  assert.equal(T.effectiveRate('us', 'electronics', { direction: 'to-canada', asOfDate: D, lineHs: '8517.13.00' }).rate, 0.50,
+    'smartphone line is 50% while the electronics category default is 25%');
+  assert.equal(T.effectiveRate('us', 'household-appliances', { direction: 'to-canada', asOfDate: D, lineHs: '8415.10.00' }).rate, 0.15,
+    'AC line is 15% while the appliances category default is 25%');
+  assert.equal(T.effectiveRate('us', 'paper', { direction: 'to-canada', asOfDate: D, lineHs: '4818.10.00' }).rate, 0.25,
+    'toilet-paper line is 25% while the paper category default is 50%');
+});
+
+test('Canada retaliation: lineHs falls back to the category tier for unknown/mismatched lines', () => {
+  const D = '2026-09-08';
+  const unknown = T.effectiveRate('us', 'dairy', { direction: 'to-canada', asOfDate: D, lineHs: '9999.99.99' });
+  assert.equal(unknown.rate, 0.25, 'an unmatched HS must fall back to the dairy category tier');
+  const ucr = unknown.breakdown.canadaRetaliation;
+  assert.equal(ucr.lineMatched, false);
+  assert.equal(ucr.appliedSource, 'category');
+  assert.equal(ucr.matchedProduct, null);
+  assert.equal(ucr.matchedHs, null);
+  // A line belonging to another category must not override this category
+  const mismatched = T.effectiveRate('us', 'steel', { direction: 'to-canada', asOfDate: D, lineHs: '0402.10.10' });
+  assert.equal(mismatched.rate, 0.50, 'steel keeps its 50% category tier');
+  assert.equal(mismatched.breakdown.canadaRetaliation.lineMatched, false,
+    'a milk-powder line must not override the steel category');
+  // Every representative line, applied to its own category, returns its own tier
+  T.CANADA_RETALIATION.representative_products.forEach(p => {
+    const r = T.effectiveRate('us', p.category, { direction: 'to-canada', asOfDate: D, lineHs: p.hs });
+    assert.equal(r.rate, p.tier, `${p.product} (${p.hs}) must apply its own line tier ${p.tier}`);
+    assert.equal(r.breakdown.canadaRetaliation.matchedHs, p.hs);
+  });
+});
+
+test('Canada retaliation: line selection stays date-gated and the no-lineHs default is unchanged', () => {
+  // Pre-Sept-8 with a specific line selected -> still PENDING (0%)
+  const before = T.effectiveRate('us', 'dairy', { direction: 'to-canada', asOfDate: '2026-09-07', lineHs: '0402.10.10' });
+  assert.equal(before.rate, 0, 'milk powder before Sept 8 must stay 0% (PENDING)');
+  const bcr = before.breakdown.canadaRetaliation;
+  assert.equal(bcr.applies, false);
+  assert.equal(bcr.lineMatched, true, 'the line still resolves — the measure is simply not in force yet');
+  assert.equal(bcr.lineTier, 0.50);
+  assert.equal(bcr.tierLabel, '50%');
+  // No lineHs -> the old category behaviour, for every targeted category
+  T.CANADA_RETALIATION.sector_categories.forEach(cat => {
+    const res = T.effectiveRate('us', cat, { direction: 'to-canada', asOfDate: '2026-09-09' });
+    assert.equal(res.rate, T.CANADA_RETALIATION.category_tiers[cat] || 0,
+      `${cat} category default must be unchanged`);
+    const cr = res.breakdown.canadaRetaliation;
+    assert.equal(cr.appliedSource, 'category');
+    assert.equal(cr.lineMatched, false);
+    assert.equal(cr.lineRequested, null);
+  });
+  // Verified headline category rates untouched: 25% dairy, 15% farm equipment
+  assert.equal(T.effectiveRate('us', 'dairy', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.25);
+  assert.equal(T.effectiveRate('us', 'farming-equipment', { direction: 'to-canada', asOfDate: '2026-09-09' }).rate, 0.15);
+});
+
+test('index.html: Canada "Specific product" line select renders, is Canada-only, and passes opts.lineHs (t_31dba7b3)', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  // The optional per-line select and its Canada-only row
+  assert.ok(html.includes('id="canadaLine"'), 'index.html must render the canadaLine select');
+  assert.ok(html.includes('id="canadaLineRow"'), 'index.html must wrap the select in canadaLineRow');
+  assert.ok(html.includes('Specific product (optional)'), 'the select must be labelled for users');
+  assert.ok(html.includes('— Category rate —'), 'the default option must be the category rate');
+  assert.ok(html.includes("direction === 'to-canada' ? 'block' : 'none'"),
+    'the line row must only be shown for the Canada direction');
+  // Populated from the verified representative products, passed to the engine
+  assert.ok(html.includes('populateCanadaLines'), 'the select must be populated from the preset data');
+  assert.ok(html.includes('representative_products'), 'the options come from representative_products');
+  assert.ok(html.includes('opts.lineHs = linePickEl.value'), 'the selected HS must be passed as opts.lineHs');
+  // Result card copy must stay in sync with the applied line (no contradictory rate)
+  assert.ok(html.includes('Applied specific line'), 'the result card must name the applied line when one is selected');
+  // The acceptance lines are selectable from the data the select is built from
+  const reps = T.CANADA_RETALIATION.representative_products;
+  assert.ok(reps.some(p => p.hs === '0402.10.10' && p.tier === 0.50), 'milk powder 0402.10.10 @50% must be selectable');
+  assert.ok(reps.some(p => p.hs === '0406.20.11' && p.tier === 0.25), 'cheese 0406.20.11 @25% must be selectable');
+});
+
 test('ACCEPTANCE: sample values for at least two categories produce the expected tier percentage (Sept 8 preset)', () => {
   // Steel $10,000 → 50% tier → $5,000 duty
   const steel = T.effectiveRate('us', 'steel', { direction: 'to-canada', asOfDate: '2026-09-08' });
