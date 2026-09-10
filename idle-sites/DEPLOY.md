@@ -220,7 +220,10 @@ key**, so two consecutive fetches of the same URL hash differently. Beacon-only
 stripping therefore never converged there: a successful deploy reported
 `FAIL` + exit 1 on a page nobody had edited. `strip_cf_edge_injection()`
 canonicalises the payload back to the plain address, and the comparison is exact
-again — with the artifact sha on both sides (38,082 B / `535796cea1a8794c`).
+again — every fetch and the artifact canonicalise to the same
+`sha256 227a93347af56e18` (38,081 B; the raw artifact is 38,082 B /
+`535796cea1a8794c`, one byte larger because the symmetric `</body>`-tail collapse
+in that function drops the whitespace the injected script displaces).
 
 So the live comparison — the "already live byte-for-byte" classification *and*
 `--verify-live` — always compares **canonicalised** sha256. Evidence from
