@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Vet an AI Agency: 7 Questions + 5 Clauses (2026)</title>
+<meta name="description" content="Anthropic's Sept 2026 report: a key reused 3 weeks, cloud admin in 3 hours. How to vet an AI agency with 7 questions + 5 clauses.">
+<link rel="canonical" href="https://findaiagency.com/how-to-vet-an-ai-agency">
+<meta name="keywords" content="how to vet an ai agency, AI agency security vetting, AI vendor risk assessment, AI agency contract, how to evaluate an ai agent, ai vendor risk management, AI API key rotation, agent revocation, incident disclosure window, Anthropic September 2026 threat report">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="How to Vet an AI Agency: 7 Questions + 5 Clauses (2026)">
+<meta property="og:description" content="Anthropic's Sept 2026 report: a key reused 3 weeks, cloud admin in 3 hours. How to vet an AI agency with 7 questions + 5 clauses.">
+<meta property="og:url" content="https://findaiagency.com/how-to-vet-an-ai-agency">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Find AI Agency">
+<meta property="og:image" content="https://findaiagency.com/how-to-vet-an-ai-agency-og.png">
+<meta property="og:image:alt" content="How to vet an AI agency: 7 questions and 5 contract clauses mapped to Anthropic's September 2026 threat report">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://findaiagency.com/how-to-vet-an-ai-agency#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://findaiagency.com/how-to-vet-an-ai-agency"
+      },
+      "headline": "How to Vet an AI Agency After Anthropic's September 2026 Threat Report",
+      "description": "Anthropic's Sept 2026 report: a key reused 3 weeks, cloud admin in 3 hours. How to vet an AI agency with 7 questions + 5 clauses.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://findaiagency.com/how-to-vet-an-ai-agency-og.png",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-09-10",
+      "dateModified": "2026-09-10",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://findaiagency.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://findaiagency.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://findaiagency.com/og-image.png"
+        }
+      },
+      "isAccessibleForFree": true,
+      "wordCount": 1500,
+      "about": [
+        "AI agency vetting",
+        "AI agency security vetting",
+        "AI vendor risk assessment",
+        "AI API key custody",
+        "agent access governance"
+      ],
+      "keywords": "how to vet an ai agency, AI agency security vetting, AI vendor risk assessment, AI agency contract, how to evaluate an ai agent, ai vendor risk management, AI API key rotation, agent revocation, incident disclosure window, Anthropic September 2026 threat report",
+      "mentions": [
+        {
+          "@type": "Organization",
+          "name": "Anthropic",
+          "url": "https://www.anthropic.com"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Claude"
+        },
+        {
+          "@type": "Organization",
+          "name": "Palo Alto Networks Unit 42",
+          "url": "https://unit42.paloaltonetworks.com"
+        }
+      ],
+      "citation": [
+        "https://www.anthropic.com/threat-intelligence-report-september-2026",
+        "https://cdn.sanity.io/files/4zrzovbb/website/e50be2e51e7695dc4b1366a37a245a597377d3b5.pdf",
+        "https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation",
+        "https://www.politico.com/news/2026/09/10/bad-actors-china-russia-weaponizing-anthropic-01070435",
+        "https://www.axios.com/2026/09/10/anthropic-claude-government-surveillance-threats"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://findaiagency.com/how-to-vet-an-ai-agency#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I vet an AI agency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Start with custody and financial questions before capability questions: whose legal entity holds the AI API keys, the rotation interval, the named owner who is alerted when a key is used unexpectedly, the incident disclosure window, log retention, and how the agent is revoked after termination. Anthropic's September 2026 threat report documents one stolen AI API key reused for roughly three weeks and a developer token turning into full cloud admin in roughly three hours, so the answers worth having are about detection and revocation windows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I evaluate an AI agent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evaluate an AI agent the way you evaluate a person with system access: what it can reach (egress allowlist and sandbox-versus-production separation), what identity it holds and how long that identity lives, what it logs, and who can revoke it within an hour. Anthropic's report notes that AI API keys and session tokens are targets and that the integrations built around AI - sandboxes, proxies and resellers - are part of the attack surface."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is an AI vendor risk assessment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A structured review of the model provider and of the agency that resells it: where the credentials live and who holds them, the rotation and alerting intervals, what a breach of the vendor would expose inside your environment, the disclosure track record, and the revocation path. Anthropic's September 2026 report makes it a client-side question - in its GTG-50020 case the keys lost were customers' keys stolen from customers' environments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a cheap AI reseller or API proxy safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Anthropic's customer guidance is that AI access should be purchased only through authorized channels. Its September 2026 report documents a fraudulent reseller operation offering cheap Claude access that was neither cheap nor actually Claude, where customer traffic was silently proxied to another model while the reseller installed a credential harvester and sold the victims' account credentials onward."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should our AI vendor contract include?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Five clauses: (1) key ownership and custody, naming the legal entity, scope, rotation interval and sub-processors; (2) incident disclosure with a named owner, a window measured in hours and supplier breaches included; (3) logging scope, storage location, retention and handover format; (4) termination and revocation with a stated period and written confirmation; (5) named individuals rather than one contractor holding every credential."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who should I hire to secure AI agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Either an agency willing to put key custody, rotation alerting, disclosure windows and a tested kill switch into the contract, or an independent reviewer who reports to you rather than to the agency deploying the agent. Avoid any arrangement where the party running the agent is the only party assessing its security, because Anthropic's September 2026 report shows AI vendors themselves are targets and that the credentials lost are customers' keys stolen from customers' environments."
+          }
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .update-box { margin: 32px 0; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 12px; }
+        .update-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .update-box .update-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+        blockquote { margin: 0 0 20px; padding: 14px 18px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; }
+        blockquote p { margin: 0; font-style: italic; }
+        .qlabel { display: inline-block; font-size: 0.72rem; font-weight: 700; color: #2563eb; background: #eef2ff; border-radius: 10px; padding: 1px 8px; margin-right: 6px; vertical-align: 1px; }
+        .faq-item p { margin: 0; }
+
+    </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>How to Vet an AI Agency After Anthropic's September 2026 Threat Report</h1>
+            <div class="meta"><span>Published September 10, 2026 &middot; Updated September 10, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>AI agency vetting</span><span>AI vendor risk</span><span>September 2026 update</span></div>
+        </header>
+
+        <p>Anthropic's September 2026 report closes its customer guidance with one sentence:</p>
+
+        <blockquote><p>"Organizations should treat AI keys and agent integrations with the same level of seriousness as they do production credentials - because attackers treat them with the same level of seriousness, too. AI access should be purchased only through authorized channels." [1]</p></blockquote>
+
+        <p>Here is how to vet an AI agency after that report: seven questions and five contract clauses, each mapped to a failure mode Anthropic documented between December 2025 and August 2026.</p>
+
+        <p>That sentence was written for the buyer of AI services, and the report documents what happens when those conditions are missing. One stolen AI API key was reused "for roughly three weeks to conduct secondary attacks" against entirely different organizations [1]. One compromise "escalated from a single stolen developer token to full administrative control of a victim's cloud environment in roughly three hours." [1] And one SaaS provider breach reached "roughly 200 of the SaaS company's downstream customer organizations" - the clients, not the platform [1].</p>
+
+        <p>None of those are exotic failures. They are custody failures: nobody could say whose name was on the key, who would notice it being used, or how fast it could be switched off. That is what the seven questions below surface.</p>
+
+        <h2 id="why-ai-agency-security-vetting-changed-in-september-2026">Why AI agency security vetting changed in September 2026</h2>
+
+        <p>Two things are new, and both land on the client.</p>
+
+        <p><strong>The AI supply chain is now a target in its own right.</strong> In the report's GTG-50020 case, an actor injected malicious instructions into an AI vendor's automated evaluation sandbox, and the sandbox handed over "the production AI API keys from multiple providers belonging to that vendor." [1] The same infrastructure then "attacked roughly thirty AI companies in about four days" [1]. The report is explicit about who was hurt: "the keys involved were customers' keys stolen from customers' environments. The actor never compromised Anthropic's own systems." [1] A botched integration leaks your secret, not the vendor's.</p>
+
+        <p><strong>Discount AI access is its own risk class.</strong> The report documents a fraudulent reseller "offering cheap Claude access - which turned out to be neither cheap nor actually Claude," with customer traffic silently proxied to another model while a credential harvester collected and resold the victims' credentials [1]. Hence "AI access should be purchased only through authorized channels." [1] If an agency quotes AI capacity far below list price, that is a security question, not a procurement win. The live <a href="/vendor-risk-tracker">AI vendor risk tracker</a> is worth a bookmark - vendor risk here moves weekly.</p>
+
+        <p>Why this belongs in a contract, not a technology review: reconnaissance, exploitation, tool development and data processing are "now delegated to AI models, which run in harnesses at machine speed and in parallel," and "the main distinguishing feature between these classes of actors is no longer sophistication but intent." [1] The barrier is intent and access, not skill.</p>
+
+        <h2 id="the-7-questions-to-ask-before-you-sign">The 7 questions to ask before you sign</h2>
+
+        <p>Ask each in writing, and ask for the answer in the contract rather than the pitch deck - a weak answer, then a good one.</p>
+
+        <p><strong>1. Whose name is on the AI API keys - ours, yours, or the agency's?</strong> <br>
+<em>Weak:</em> "It's all under our enterprise account." Good for billing, useless for accountability: if the key is theirs and the integration is yours, you sit in the shape of the ~200 organizations above [1]. <br>
+<em>Good:</em> A named legal entity, a named technical owner, a list of which integration uses which key, and confirmation the key is scoped to your tenant only.</p>
+
+        <p><strong>2. What is the key rotation interval, and who is alerted when a key is used outside normal hours?</strong> <br>
+<em>Weak:</em> "We rotate quarterly." Rotation without alerting does not help against a key reused for three weeks [1]. <br>
+<em>Good:</em> A rotation interval stated in days, an alerting owner by name and role, one documented alert that fired, and a retention window for those alerts.</p>
+
+        <p><strong>3. What can the agent reach <em>from</em> our integration - egress allowlist, sandbox versus production?</strong> <br>
+<em>Weak:</em> "The model can't do anything we don't tell it to." Prompt instructions are not a security boundary; GTG-50020 walked past one [1]. <br>
+<em>Good:</em> An egress allowlist, separate sandbox and production key sets, and a default-deny posture on outbound writes - the report's own line is that "AI API keys and session tokens are targets; the integrations customers build around AI such as sandboxes, proxies, and resellers are part of the attack surface." [1]</p>
+
+        <p><strong>4. What happens to our data and our keys if the agency's own vendor is breached?</strong> <br>
+<em>Weak:</em> "Our vendor is SOC 2, so we're covered." Certification describes their controls, not their subcontractor's blast radius. <br>
+<em>Good:</em> A named subcontractor list, the notification path when a supplier is hit, and what the agency would revoke, in what order, on your behalf.</p>
+
+        <p><strong>5. Who discloses an incident to us, within what window, in writing?</strong> <br>
+<em>Weak:</em> "We'd let you know right away." No owner, no clock, no medium. <br>
+<em>Good:</em> A named role, a window measured in hours, and a written medium with a fallback contact. Against a three-hour token-to-admin escalation [1], a week-long disclosure window is disclosure after the fact.</p>
+
+        <p><strong>6. What do you log, where does it live, and how long is it retained?</strong> <br>
+<em>Weak:</em> "Standard logging." Unverifiable. <br>
+<em>Good:</em> Authentication events, model invocations, outbound writes and key usage from unexpected identities; where the logs live; retention length; and the format you receive at handover. The standard to test against, from Unit 42: hunt for "bursty API requests, rapid 401/200 HTTP state shifts, parallel authentications and sudden model usage from unexpected identities." [2]</p>
+
+        <p><strong>7. How do we take the agent offline in under an hour without breaking the workflow?</strong> <br>
+<em>Weak:</em> "Just call us." You want a procedure, not a person. <br>
+<em>Good:</em> A written kill switch with a tested owner, a documented revocation order (keys, then sessions, then integrations), and a fallback mode for the business while the agent is down.</p>
+
+        <div class="cta"><a class="btn" href="/">Get matched with a vetted AI agency →</a></div>
+
+        <h2 id="ai-agency-contract-clauses-that-put-the-risk-on-a-named">AI agency contract clauses that put the risk on a named owner</h2>
+
+        <p>Five clauses make those answers enforceable:</p>
+
+        <ol>
+    <li><strong>Key ownership and custody.</strong> Name the legal entity holding each key, the scope, the rotation interval and the sub-processors - the clause that keeps the ~200-customer scenario [1] from becoming your scenario.</li>
+    <li><strong>Incident disclosure.</strong> Owner, window, medium, and a definition of "incident" that includes supplier breaches.</li>
+    <li><strong>Log retention and handover.</strong> What is retained, for how long, and in what format when the engagement ends - logs are the only evidence you will have after an agent-driven event.</li>
+    <li><strong>Termination and revocation.</strong> A stated period - hours, not weeks - in which all keys, sessions and integrations are revoked, with written confirmation.</li>
+    <li><strong>Named individuals, not just an entity.</strong> A single contractor holding every credential is a single point of failure; require a second named owner for key custody.</li>
+</ol>
+
+        <p>Our longer question set, including the procurement and access-control questions that sit outside this report, is at <a href="/ai-agency-security-vetting">AI agency security vetting</a>. If an agency pushes back on this section, the technical layer is covered by our <a href="/ai-agent-toolchain-security-audit">AI agent toolchain security audit</a> - the same audit path that finds the credentials, sandboxes and resellers this report is describing.</p>
+
+        <h2 id="the-machine-speed-test-how-to-evaluate-an-ai-agent">The machine-speed test: how to evaluate an AI agent</h2>
+
+        <p>Ask one question that forces the agency to evidence a control rather than a promise: <strong>which control would have caught a three-hour escalation from a developer token to cloud admin, or three weeks of reuse of a stolen AI key?</strong> [1]</p>
+
+        <ul>
+    <li>If the answer is that the vendor handles it, the risk is unassigned - and the vendor is a target too [1].</li>
+    <li>If the answer is the monthly report, the clock is wrong: three hours does not survive a monthly cadence.</li>
+    <li>A specific alert, a named owner and a tested response time means the agency has done this before.</li>
+</ul>
+
+        <p>The independent datapoint to hold them to is Palo Alto Networks' Unit 42, which responded to an intrusion where a human operator drove frontier models to compress "weeks of methodical intrusion tradecraft (using more than 50 MITRE ATT&amp;CK techniques) into less than 10 hours," an outcome "at the scale of a coordinated effort from multiple red teams, which would normally take human operators around two weeks," with no novel zero-day required [2]. Machine speed is why the questions should be about detection and revocation windows, not model preference.</p>
+
+        <p>A client-ready version of these checks, written for the business rather than the agency, is at <a href="https://mybusinessaiaudit.com/ai-cyberattack-preparedness-2026/">AI cyberattack preparedness checklist</a> - hand it over as proof.</p>
+
+        <p><strong>Bottom line on how to vet an AI agency:</strong> the one worth hiring can name who holds each key, when it was last rotated, who is alerted when it is used at 3am, and how fast the agent is revoked - and will put all four in writing. Score the answers with our <a href="/ai-vendor-risk-assessment">AI vendor risk assessment</a> framework.</p>
+
+        <h2 id="questions-people-actually-ask">Questions people actually ask</h2>
+
+        <p><em>Label key: [AC] = the question as phrased is a Google Autocomplete suggestion (probed 2026-09-10); [GAP] = no ranking page answers it. No People-Also-Ask data is claimed.</em></p>
+
+        <div class="faq-item">
+    <h3>How do I vet an AI agency?</h3>
+    <p><span class="qlabel">[GAP]</span> Start with custody and financial questions before capability ones: whose entity holds the AI keys, the rotation interval, the alert owner, the disclosure window, and the revocation procedure. Everything in the seven questions above is answerable in writing in under a week by any competent agency - and the inability to answer is itself the finding.</p>
+</div>
+
+        <div class="faq-item">
+    <h3>How do I evaluate an AI agent?</h3>
+    <p><span class="qlabel">[AC]</span> Evaluate the agent the way you evaluate a new employee with system access, not the way you evaluate software: what can it reach (egress and sandbox boundaries), what identity does it hold and for how long, what does it log, and who can revoke it within an hour. The report's agent-driven cases - a token-to-admin escalation in roughly three hours, and a stolen key used for roughly three weeks - are the two failure modes those four tests are aimed at [1].</p>
+</div>
+
+        <div class="faq-item">
+    <h3>What is an AI vendor risk assessment?</h3>
+    <p><span class="qlabel">[AC]</span> A structured review of the model provider and of the agency that resells it: where the credentials live and who holds them, the rotation and alerting intervals, what the vendor's own breach would expose in your environment, the disclosure track record, and the revocation path. This report's GTG-50020 case is the reason it is now a client-side question: the keys lost were "customers' keys stolen from customers' environments" [1].</p>
+</div>
+
+        <div class="faq-item">
+    <h3>Is a cheap AI reseller or API proxy safe?</h3>
+    <p><span class="qlabel">[GAP]</span> Anthropic's guidance is "AI access should be purchased only through authorized channels," and the report documents a reseller whose cheap Claude access "turned out to be neither cheap nor actually Claude," complete with a credential harvester [1]. If the discount requires routing your traffic through someone else's infrastructure, treat it as a supply-chain risk.</p>
+</div>
+
+        <div class="faq-item">
+    <h3>What should our AI vendor contract include?</h3>
+    <p><span class="qlabel">[GAP]</span> The five clauses above: key ownership and custody, incident disclosure with a window, log retention and handover, termination revocation with a stated period, and named individuals rather than a single contractor. Each maps to a documented September 2026 failure mode [1].</p>
+</div>
+
+        <div class="faq-item">
+    <h3>Who should I hire to secure AI agents?</h3>
+    <p><span class="qlabel">[GAP]</span> Either an agency willing to put key custody and incident response in the contract (this page is the question set for that conversation) or an independent reviewer who reports to you rather than to the agency. Avoid any arrangement where the party deploying the agent is also the only party assessing its security.</p>
+</div>
+
+        <div class="cta"><a class="btn" href="/">Find a vetted AI agency for your project →</a></div>
+
+        <h2 id="sources">Sources</h2>
+
+        <ol>
+    <li>Anthropic, "Detecting and countering misuse of AI: September 2026" (published 10 September 2026; the 154-page PDF is available from the same page) - <a href="https://www.anthropic.com/threat-intelligence-report-september-2026">https://www.anthropic.com/threat-intelligence-report-september-2026</a></li>
+    <li>Palo Alto Networks Unit 42, "An AI-Assisted Cyber Attack: Inside a Unit 42 Investigation," 2 September 2026 (updated 3 September 2026) - <a href="https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation">https://unit42.paloaltonetworks.com/ai-assisted-cyber-attack-inside-a-unit-42-investigation</a></li>
+    <li>POLITICO, "Bad actors in China and Russia are already weaponizing Anthropic's AI," 10 September 2026 (background on how broadly AI is now used in cyber operations) - <a href="https://www.politico.com/news/2026/09/10/bad-actors-china-russia-weaponizing-anthropic-01070435">https://www.politico.com/news/2026/09/10/bad-actors-china-russia-weaponizing-anthropic-01070435</a></li>
+    <li>Axios, "Governments use Claude to spy on people, Anthropic warns," 10 September 2026 (Anthropic's lead on automation of existing operations rather than new targets) - <a href="https://www.axios.com/2026/09/10/anthropic-claude-government-surveillance-threats">https://www.axios.com/2026/09/10/anthropic-claude-government-surveillance-threats</a></li>
+</ol>
+
+        <p><em>Quotations from [1] and [2] were matched against the fetched source text for this draft. Anthropic's threat intelligence lead is described as "head of threat intelligence" by Axios [4] and "head of threat research" by POLITICO [3] - cited here in context rather than merged.</em></p>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/ai-agency-security-vetting">How to Vet an AI Agency for Security (2026 Checklist)</a> (the pillar this article updates)</li>
+                <li><a href="/ai-agent-toolchain-security-audit">Agencies Using AI Agents? Audit Your Toolchain Now</a></li>
+                <li><a href="/vendor-risk-tracker">AI Vendor Risk Tracker</a> (vendor risk moves weekly)</li>
+                <li><a href="/ai-vendor-risk-assessment">AI Vendor Risk Assessment</a></li>
+                <li><a href="https://mybusinessaiaudit.com/ai-cyberattack-preparedness-2026/">AI Cyberattack Preparedness Checklist for Small Businesses</a> (client-side companion on My Business AI Audit)</li>
+            </ul>
+        </div>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
