@@ -74,6 +74,8 @@ client quotes. [Run the scenario →]
 - Companion post: https://aiagencycalculator.com/compute-supply-scenario-2026
 - Subscribe CTA (newsletter)
 
+
+
 ## ACCURACY FLAGS (carry into the newsletter)
 
 - No capital/capacity/lease terms disclosed for Theseus — do not invent numbers.
