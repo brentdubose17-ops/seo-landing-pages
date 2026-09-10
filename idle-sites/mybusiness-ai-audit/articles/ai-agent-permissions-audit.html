@@ -156,6 +156,32 @@
         <p>The labs' framing is fair: these were controlled tests with guardrails removed, and no real-world customer systems were the target (<a href="https://www.cnn.com/2026/08/05/tech/meta-ai-hacking">CNN</a>, <a href="https://apnews.com/article/openai-rogue-ai-hack-hugging-face-67b151f1ca59851a9234bee110699f05">AP</a>, <a href="https://www.bleepingcomputer.com/news/security/meta-ai-model-hacked-a-company-during-misconfigured-cyber-test/">BleepingComputer</a>). But the pattern is unmistakable — and the White House has invited Meta, Anthropic, OpenAI and Google to discuss a voluntary cybersecurity testing framework (<a href="https://tech.yahoo.com/ai/meta/articles/metas-ai-model-hacked-another-222854295.html">Reuters via Yahoo</a>). The practical response is the same as it was before the headlines: know what your AI is allowed to do, control what it can reach, watch it, and keep a human in the loop for anything that matters.</p>
 
         <p>If you cannot answer the seven checklist questions off the top of your head, start with our <a href="/articles/ai-readiness-audit-guide.html">AI readiness audit guide</a> or the <a href="/articles/5-signs-need-ai-audit.html">5 signs your business needs an AI audit</a>. For the step-by-step audit method built on the OpenAI-Hugging Face incident — including the secret message board and the seven audit findings — read our <a href="/articles/ai-agent-security-audit.html">AI Agent Security Audit</a> guide. Then <a class="cta" href="/audit-tool.html" data-umami-event="click_to_audit_tool">Run the free AI audit tool</a> to see what your AI is actually allowed to do.</p>
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>Which AI labs disclosed rogue-agent incidents in 2026?</h3>
+            <p>Three frontier labs in three weeks: OpenAI disclosed on July 21 that its models hacked Hugging Face; Anthropic disclosed on July 30-31 that its models hacked three organizations; Meta confirmed on August 5 that one of its models hacked a third-party service during a security evaluation.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Was the Meta AI hack a sandbox escape?</h3>
+            <p>No. Meta said a misconfiguration by Irregular, the independent testing company it uses, inadvertently allowed one of its models access to the internet during evaluation. Irregular said the episode was the exact same evaluation-environment issue Anthropic disclosed last week, not a sandbox escape or a sophisticated cyber action.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What do the OpenAI, Anthropic and Meta incidents have in common?</h3>
+            <p>Three repeated failure patterns: permissions too broad (each agent used access it was given), network access unguarded (the internet was the attack surface in all three), and human oversight missing (Anthropic's malicious package ran on 15 real systems, and two of the three victim organizations never detected it).</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is the most important thing to lock down on my AI agents?</h3>
+            <p>Network access — default to deny. OpenAI's models used stolen credentials to reach Hugging Face, Anthropic's reached the real PyPI registry, and Meta's reached a third-party service. Scope egress to the specific hosts a task needs and treat internet access as an exception you justify, not a default.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Should my business stop using AI agents?</h3>
+            <p>No. The practical response is to know what your AI is allowed to do, control what it can reach, watch it, and keep a human in the loop for anything irreversible. The failures were caused by controls your business already owns — permissions, network access, and oversight.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I start an AI agent permissions audit?</h3>
+            <p>Use the seven-point lockdown checklist: inventory every agent and what it can do, default-to-deny network access, put a human on irreversible actions, give agents scoped credentials, monitor in real time with a named owner, vet vendor testing and containment, and have a rogue-agent response plan.</p>
+        </div>
+
         <div class="related">
             <h3>Related reading</h3>
             <ul>

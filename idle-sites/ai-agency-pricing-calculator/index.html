@@ -56,261 +56,349 @@
 
   <!-- FAQ Schema -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "How much should I charge for AI automation services in 2026?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "AI automation pricing in 2026 ranges from $1,500–$5,000 setup fees for basic chatbots to $10,000–$50,000+ for full office automation packages. Monthly retainers typically run $500–$5,000+ depending on complexity and client size."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is a fair monthly retainer for an AI agency?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Fair AI agency monthly retainers in 2026 range from $750/mo for basic single-workflow bots to $4,000–$8,000/mo for enterprise multi-workflow automation packages. The key is tying your price to measurable client ROI."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What do AI coding agents really cost, beyond the per-seat price?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "AI coding agent entry plans run about $10–$20 per seat per month, but the real cost is billing model times usage. TrueFoundry's Aug 6, 2026 guide breaks agents into three billing structures — flat per-seat, seat-plus-credits, and pay-per-token API — and light autocomplete vs. all-day agent workflows can differ 20–50x in token consumption, so heavy users routinely land in the $100–$400+ range."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Are Claude Code weekly usage limits going up or down on September 14, 2026?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Net, down about 17%. On September 14, 2026, Anthropic is permanently raising Claude Code's standard weekly usage limits by 25% over the pre-promotion baseline for Pro, Max, Team, and seat-based Enterprise plans — but the temporary 50% weekly boost (active since May 13, 2026) expires the same day. Normalizing the original baseline to 100: today's boosted limit is 150, and the new permanent limit is 125 — a net reduction of 16.7% (approximately 17%) versus today, a figure Anthropic itself confirmed. The boost stays in place through September 13; the new limits take effect September 14. The change covers weekly limits only: 5-hour session limits, plan pricing, and API billing are unchanged. Free plans and consumption-based Enterprise seats are excluded, and Anthropic does not publish fixed weekly message counts, so all figures are ratios. Model your agency's workload with the Claude Code Usage Limit Cost Impact Estimator on this page. Sources: Anthropic announcement via @ClaudeDevs on X (Aug 29, 2026), BleepingComputer, MacObserver, Notebookcheck."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much will the Sept 14 Claude Code weekly limit cut cost my agency?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Use the ratio, not a guess at absolute numbers: after Sept 14, 2026 your weekly cap is 83.3% of today's (125/150), so any workload that used 100% of today's cap now consumes 120% of the new cap — the same weekly workload needs about 20% more plan headroom or usage credits. In dollar terms, keeping today's absolute capacity costs roughly 1.2x the current seat line (a Max 5x seat at $100/mo ≈ $120/mo equivalent after Sept 14). Anthropic has not published fixed weekly message or token counts, so these are ratios, not absolute limits. Model your own usage with the Claude Code Usage Limit Cost Impact Estimator on this page."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How did the Codex 20M-user milestone and banked resets change agency costs?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Codex and ChatGPT Work crossed 20 million active users the week of Aug 21, 2026 (up from 15M a week earlier), and OpenAI credited every paid user a banked reset — a saved usage-limit credit that resets both the 5-hour and weekly windows when redeemed (OpenAI Help Center). The reset rollout missed its Aug 21 deadline and OpenAI set a firmer 8pm PST same-evening deadline, which passed for many users; a new reset was announced for 2026-08-24T21:00:00Z (2pm PST). No list price changed, so this calculator's token math stands — but agencies should keep Codex/ChatGPT Work subscription seats as a separate line item from API/token pricing, verify usage limits before quoting fixed-fee retainers, and treat banked resets as scheduling insurance, not a billing line. See https://aiagencycalculator.com/codex-pricing for the full breakdown."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much can model choice change AI coding agent cost?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "On credit plans, premium models can burn credits up to 8x faster than standard ones — a task that costs one credit unit on a standard model might cost eight on a frontier model (TrueFoundry, Aug 6, 2026). Annual billing typically discounts 15–20%, and free/entry tiers often carry quotas teams exceed within weeks."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much cheaper is DeepSeek V4 Pro on cache reads than Claude Fable 5.1?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "DeepSeek's cache-read pricing is still cheaper than Anthropic Claude Fable 5.1's for agent workloads that re-read context on every step — but Anthropic cut Fable 5.1's cache reads 75% on Sept 1, 2026 (to $0.25 per 1M, from Fable 5's $1.00). Against DeepSeek's current official off-peak rate ($0.022 per 1M) the gap is ~11x; against peak ($0.044) it is ~6x. The widely-shared '276x' figure from @JulianGoldieSEO compared Fable 5's $1.00 cache read to DeepSeek's LAUNCH cache-read price ($0.003625) — arithmetically correct (275.9x) but stale on both sides after DeepSeek's 2026-08-16 increase and Fable 5.1's cache-read cut. The 92% cache hit rate cited for long agent runs is an assumption, not a published OpenRouter statistic. Model a long agent run at a 92% hit rate with this calculator's DeepSeek V4 Pro (cache-aware) vs Claude Fable 5.1 strategies to see the total monthly cost gap."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is DeepSeek still the cheapest option after its announced API price increase?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "DeepSeek's price increase LANDED on 2026-08-16 at 16:00 UTC — official peak/off-peak rates are now published (off-peak: V4 Pro cache hit $0.022 per 1M, cache miss $0.66 per 1M, output $1.98 per 1M; peak: $0.044 / $1.32 / $3.96). The pre-hike V4-Flash $0.14/$0.28 and V4-Pro $0.435/$0.87 rates are superseded. Even after the increase DeepSeek V4 Pro remains the lowest-cost cache-read API for long agent runs (cache reads $0.022/1M off-peak vs Claude Fable 5.1's $0.25/1M), and its 92% cache hit rate assumption makes cache-aware agent workloads dramatically cheaper — but the previous headline '276x cheaper' claim compared Fable 5's $1.00 to DeepSeek launch pricing and is now ~11x off-peak against Fable 5.1. Keep workflows portable and verify api-docs.deepseek.com/quick_start/pricing before quoting; V4 weights are MIT-licensed so sustained workloads can also be self-hosted."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is self-hosting Meta Muse Glimmer cheaper than every API?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Per workload, for sustained volume, yes — with caveats. Meta released Muse Glimmer on Aug 10, 2026: a 30B dense open-weight model (Apache 2.0) whose official 4-bit K-Quant-17GB GGUF is 16,756,681,056 bytes (~15.6 GiB, under 20 GB) and runs on a single consumer GPU (24 GB VRAM class) at over 200 tok/s on an RTX 5090 with DFlash speculative decoding. Once the one-time GPU capex is amortized, marginal inference cost collapses to electricity, undercutting every hosted API (DeepSeek V4 Pro at $0.022/1M off-peak cache reads is the lowest cache-read rate; Qwen 3.8 Max $2/$6; Kimi K3 $3/$15). Caveats: the 17 GB quant carries about 1.0% benchmark degradation, full 131K context plus encoder plus drafter needs the 24-32 GB envelope, it is not frontier-grade on the hardest reasoning (HLE 22.0, GPQA 83.5 — size-class parity), there is no audio modality, and you own uptime, ops, and security patching. Cheapest per workload, not a blanket cheapest model."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Does Alibaba's Qwen 3.8 Max revenue-share plan change open-weight model costs?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Only above a specific threshold — the terms are now final. Qwen 3.8 Max's official license (open weights landed on Hugging Face Aug 12, 2026) triggers a separate Qwen license requirement before commercial use if you or an affiliate run a Model as a Service or AI Work Assistant business AND aggregate revenue exceeds US$50,000,000 over any consecutive 12 months. There is no numeric % in the license — the separate license is individually negotiated (Reuters' 'up to 30%' is reporting, not license text). Internal use not exposed to third parties is exempt. A separate display clause requires prominently showing the model name on any commercial product/service UI above 100M MAU or $20M/month revenue. Practical take: the $2/$6 per 1M token API list price stands for most agencies; the threshold is 2.5x higher than Kimi K3's $20M/12mo, but the new AI Work Assistant trigger category (coding/office-productivity agents like Qoder, QwenWork) is absent from Kimi K3 and could catch agencies building agent products."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What are ChatGPT Business Premium seats and how do they change client-side costs?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "OpenAI launched ChatGPT Business Premium seats in August 2026: $125 per user per month billed monthly, or $100 per user per month billed annually (a 20% annual discount), versus $25/$20 per user per month for Standard seats. Premium seats include 5x more usage than Standard seats, are not subject to the five-hour usage limit, and get predictable weekly usage resets. A workspace requires at least 2 paid seats (any mix of Standard and Premium) and, since Aug 24, 2026, caps at 200 paid seats per subscription; larger deployments move to ChatGPT Enterprise. Use the ChatGPT Business Seat Cost Estimator on this page to model monthly and annual totals for Standard or Premium seats. Sources: OpenAI announcement + Help Center (verified Aug 25, 2026)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much does Grok Bot cost and how does it fit the calculator's billing-model comparison?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No standalone price has been announced for Grok Bot (SpaceXAI, beta Aug 11, 2026). It is included with eligible subscriptions — SuperGrok Heavy, Cursor Ultra, and Cursor Teams Premium — on desktop (macOS) and iOS, with an enterprise waitlist. It is a fourth billing model: subscription-bundled agent access, with always-on agents running 24/7 on their own cloud computer. Because there is no per-token meter and no standalone price, Grok Bot cannot be cost-modeled per-token; treat the eligible subscription cost as the line item (source: https://x.ai/news/introducing-grok-bot)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is Grok 4.6 and how does its API pricing compare to GPT-5.6 Sol?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Grok 4.6 is SpaceXAI's (formerly xAI) frontier model, released Aug 12, 2026. API pricing is $2.00 per 1M input tokens and $6.00 per 1M output tokens (a fast variant costs 2x; cache hits $0.50 per 1M input, -75%, per Artificial Analysis). Artificial Analysis reports a 500k-token context window and an Intelligence Index of 61 — matching GPT-5.6 Sol (max). Against GPT-5.6 Sol's current $4/$20 per 1M (promo window Aug 21 – Nov 21, 2026; previously $5/$30), Grok 4.6 is 50% cheaper on input tokens and 70% cheaper on output tokens, which dominates cost in reasoning-heavy agent workloads. Available in Cursor, Grok Build, the SpaceXAI API, OpenRouter, Vercel, and Cloudflare (source: https://x.ai/news/grok-4-6)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is Gemini 3.8 Flash and how does its API pricing compare?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Gemini 3.8 Flash (Google, released Sept 2, 2026) is Google's best reasoning and coding model yet and its third Flash-family release in six weeks (3.6 Flash → 3.7 Flash → 3.8 Flash). Google recommends it for software engineering, autonomous agents, and complex multi-step reasoning, and says it often approaches higher-cost frontier models. API intro pricing is $0.75 per 1M input tokens and $3.75 per 1M output tokens (output includes thinking tokens) — the same intro rate as Gemini 3.7 Flash, valid through 2026-12-31, then $1.50/$7.50 from Jan 1, 2027. It has a 1M-token context window and 64K max output, and is rolling out to Google AI Pro/Ultra (Gemini app, AI Mode, Sheets) and via Gemini API / AI Studio / Antigravity. Google notes 3.8 Flash can use more tokens at higher effort levels, so compare on your own workload. A gated Gemini 3.8 Flash Cyber variant (Fairwind program) is not generally available. During the intro window it is the cheapest verified frontier-class coding API on this page — undercutting Qwen 3.8 Max ($2/$6) and Grok 4.6 ($2/$6) on both axes (sources: https://x.com/Google, https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/, https://ai.google.dev/gemini-api/docs/pricing, https://deepmind.google/models/model-cards/gemini-3-8-flash)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is Gemini 3.7 Flash (previous version) and how does its API pricing compare?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Gemini 3.7 Flash was Google's workhorse Flash model for coding and agents from Aug 13, 2026 until it was superseded by Gemini 3.8 Flash on Sept 2, 2026 — a refinement of Gemini 3.6 Flash. API intro pricing is $0.75 per 1M input tokens and $3.75 per 1M output tokens (output includes thinking tokens), valid through 2026-12-31, then reverts to $1.50/$7.50 from Jan 1, 2027 (post-intro equals 3.6 Flash's launch price; intro is exactly half). It has a 1M-token context window and 64K max output, plus a free tier, 5,000 free search requests/month shared across Gemini 3.x, and a 50% batch discount. vs Gemini 3.6 Flash: FrontierCode 1.1 Main 43.6% (vs 34.4%), DeepSWE v1.1 65.3% (vs 49.0%), WebDev Arena Elo 1588 (vs 1538). During the intro window it is the cheapest verified frontier-class API on this page, undercutting Qwen 3.8 Max ($2/$6) and Grok 4.6 ($2/$6) on both axes (sources: https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/, https://ai.google.dev/gemini-api/docs/pricing, https://deepmind.google/models/model-cards/gemini-3-7-flash)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is Claude Sonnet 5's $2/$10 pricing permanent or scheduled to increase?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Permanent. Anthropic made Claude Sonnet 5's API pricing permanent on Aug 10, 2026: $2.00 per 1M input tokens and $10.00 per 1M output tokens (cache hit $0.20 per 1M input; cache write $2.50 for 5m / $4 for 1h per 1M). The previously scheduled Sept 1, 2026 increase to $3/$15 was CANCELLED — there is no scheduled price change pending. This is an API-pricing change only; subscription prices are unchanged. Input price sits at open-weight parity (Qwen 3.8 Max $2/$6), while output is well below premium frontier (GPT-5.6 Sol is on a promotional $4/$20 per 1M through Nov 21, 2026) (sources: https://www.anthropic.com/news/claude-sonnet-5, https://platform.claude.com/docs/en/about-claude/pricing)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is AI supplier risk and should it change my cost estimates?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "AI supplier risk is the chance that a model provider's release timeline, safety posture, or roadmap shifts in ways that affect your stack's cost or availability. Real-world example: on Aug 18, 2026, OpenAI announced a two-week pause in reinforcement-learning training on its latest deployment-bound models and held its largest planned frontier RL run on hold, after internal evaluations flagged its upcoming Astra model at the 'Critical' cyber-capability threshold under its Preparedness Framework — core Astra training continued and no model was cancelled. No published API prices changed, so this calculator's math stands, but provider roadmaps can shift and the ~20% monitoring overhead on frontier inference may add modest price pressure over time. Guidance: when evaluating AI costs and risks, include fallback AI models in your stack and review each provider's tooling roadmap before locking in long-term pricing or client deliverables. Separately, OpenAI has committed to a public listing by 2027 (CFO Sarah Friar, Aug 19, CNBC), which de-risks the vendor-longevity question on a known timeline. (Dated Aug 19, 2026; source: OpenAI, 'Pacing model development in an era of cyber-critical capabilities.')"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is the OpenAI safety-monitoring overhead toggle on this calculator?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "It is a stress-test switch (OFF by default) that applies a +20% multiplier to OpenAI-based model strategies (GPT-5.6 Sol and Paid frontier) to model what would happen if OpenAI's safety-monitoring compute overhead were priced into API costs. On Aug 18, 2026, OpenAI estimated its expanded chain-of-thought safety monitoring adds roughly 20% overhead to the inference compute it monitors — required for all RL training and evaluations involving tools for models of Sol capability or higher, plus all Astra inference with tools after its Aug 7 Critical cyber-capability determination. OpenAI is not currently billing customers for this overhead (spokesperson via The Register, Aug 19, 2026; corroborated by TNW — the official post does not mention billing), and Anthropic says a pause on its most capable models would not be required if its 186-page Risk Report safeguards are followed (Axios, Aug 19, 2026) — so the toggle has no effect on Anthropic, Google, DeepSeek, open-weight, or local strategies. Treat the +20% as a what-if cost stress, not today's API price. Sources: openai.com/index/pacing-model-development-cyber-capabilities (Aug 18, 2026); The Register and TNW (Aug 19, 2026); Axios (Aug 19, 2026)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How should I price ChatGPT Ads management for clients in the EU?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Price it as a pilot-to-retainer engagement with a management fee on ad spend. OpenAI expands ChatGPT Ads to 31 European markets on Aug 24, 2026 (40 markets total); ads appear on Free and Go tiers only (Go approx EUR 8/month; Plus/Pro/Enterprise ad-free), and buying is agency-led first — advertisers go through the OpenAI Ads Solutions team, agency partners, and tech partners, with a self-serve Ads Manager later this summer. A defensible package: $1,500-$5,000 setup (account structure, conversion tracking/oCPC, GDPR-compliant targeting, creative prep) plus 15-25% of ad spend as monthly management fee, floored at $2,000/month to cover manual review, policy monitoring, creative iteration, and reporting, and capped around $7,500/month as a typical rollout retainer. Ad spend is pass-through — the client pays OpenAI directly, so the management fee is the agency's revenue. EU campaigns cannot rely on Google/Meta-style personalization because of GDPR consent requirements, so lead with conversation context and brand safety; health, mental-health, and political content are ineligible and under-18 accounts are excluded. Measurement is early, so run a 2-3 month instrumented pilot against a Google AI Mode baseline before promising scale. Sources: OpenAI announcement (Aug 18, 2026), Search Engine Land, Dataconomy — verified via research brief t_ff98639f."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much will Meta's Hatch AI agent cost?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Reported, not final: The Information (Jun 4 and Aug 24, 2026) reports Meta has considered a premium 'Hatch Plus' tier priced up to $199.99/month (5-10x the daily capacity of a free tier), but final pricing is NOT set and Hatch has not shipped as of Aug 25, 2026. Launch is targeted for late August or early September 2026, with a new model codenamed Watermelon targeted for October. Treat $199.99 as a reported/rumored anchor, not official pricing, until Meta announces. Sources: The Information via PYMNTS and RuntimeWire; full analysis at https://aiagencycalculator.com/blog/meta-hatch-ai-agent-pricing/."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What does Ramp's business-spend data show about Claude Fable 5, Opus 5, and GPT-5.6 Sol adoption?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Ramp's August 2026 AI Index (businesses on its AI cost tracker, July 2026) shows flagship list price is not what most business workloads run on. Anthropic's flagship Claude Fable 5 — the July 2026 model, superseded by Fable 5.1 on Sept 1, 2026 at the same $10/$50 per 1M with $0.25 cache reads — drew only ~6% of Anthropic business tokens and 11.4% of model-attributed Anthropic spend: the most expensive model by far, but a minority of usage. OpenAI's GPT-5.6 Sol (currently $4/$20 per 1M promo through Nov 21, 2026) holds ~25% of OpenAI tokens and 23% of OpenAI spend, at roughly half of Fable 5.1's price. Anthropic's cheaper Claude Opus 5 ($5/$25 per 1M, exactly half of Fable 5.1, launched late July 2026) has already overtaken Fable 5 (the predecessor) in enterprise spending, per FT-cited Ramp data (via Superpower Daily / CIO) — note Ramp's own AI Index does not state the overtake, and WinBuzzer cautions Opus arrived too late in the measured month to explain the full July pattern. Agency takeaway: price retainers against a realistic model mix (Opus 5 / Sol / Sonnet 5 capture the volume), not against flagship list prices. Select Claude Opus 5 in the calculator's Model Strategy dropdown to model this stack. Sources: Ramp AI Index Aug 2026 (ramp.com/data/ai-index-august-2026), WinBuzzer, BreezyScroll, Superpower Daily (FT-cited), Anthropic official pricing — verified via research brief t_06f1cfb2."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is GLM-5.3-Flash (Ox Alpha) and how does its pricing compare to DeepSeek?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "GLM-5.3-Flash is Z.ai's newly revealed open-weight model — the anonymous 'Ox Alpha' that topped OpenRouter usage from Aug 20, confirmed by Z.ai on Aug 26, 2026. Specs: 320B total / 18B active MoE, natively multimodal (text/image/video), 1M-token context, MIT-licensed weights on Hugging Face, served entirely on Chinese AI chips during the free preview week. Official API pricing is $0.15 per 1M input / $0.50 per 1M output (cached input $0.03), with a 50% launch promo to $0.075/$0.25 through Sep 9, 2026 — roughly one-tenth of the flagship GLM-5.3 rate ($1.40/$4.40) and below DeepSeek V4 Pro off-peak on both axes ($0.66/$1.98). On a 10K-in/2K-out task it is ~4x cheaper than DeepSeek V4 Pro off-peak at list and ~32x cheaper than GPT-5.6 Sol. Caveats: benchmarks (DeepSWE v1.1 63.4, Terminal-Bench 2.1 84.3, AutomationBench 48.8, Z.ai Code Bench 29.0 vs Claude Opus 4.8's 29.5) are vendor-reported with no independent replication yet, and MIT weights do not mean easy self-hosting — 320B/18B needs serious hardware (SGLang/vLLM/TokenSpeed/KTransformers). Select GLM-5.3-Flash in the Model Strategy dropdown to model this stack. Sources: Z.ai release + Bloomberg/TechCrunch Aug 26, 2026; Kingy price check Aug 26; Wccftech; full analysis at https://aiagencycalculator.com/blog/glm-5-3-flash-pricing/."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is Tencent Hy4 preview and how does its pricing compare to GLM-5.3 and DeepSeek?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Tencent Hy4 preview is a 770B-parameter MoE model (49B active) open-sourced August 28, 2026 under Apache 2.0, with a native 1M-token context and 64K max output. OpenRouter lists it at $0.834 per 1M input / $2.501 per 1M output (cached input $0.042), Tencent Cloud the sole provider — roughly 40% below GLM-5.3 on input ($1.40), 43% below on output ($4.40), and ~6x below Kimi K3 on output ($15), but still pricier than DeepSeek V4 Pro off-peak ($0.66/$1.98 with $0.022 cache reads). Tencent's internal blind eval (163 experts, 203 tasks) scored it 2.99/4 vs GLM-5.3 2.92 and Kimi K3 2.94 — tier parity, not a decisive win; public benchmarks are mixed (lags GLM-5.3 on DeepSWE/CyberGym). Caveats: it is a preview (Tencent flags over-reasoning and over-verification), observed ~36 tok/s P50, ~86% first-3-day availability on OpenRouter, and the FP8 weights are ~770GB — not self-hostable on typical infra (8xH200-class or multi-node). Select Tencent Hy4 preview in the Model Strategy dropdown to model this stack. Full analysis: https://aiagencycalculator.com/blog/tencent-hy4-preview-pricing/."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is Qwen3.8-Flash and how does its pricing compare to GLM-5.3-Flash and DeepSeek?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Qwen3.8-Flash is Qwen's new open-weight multimodal MoE model (released Aug 26, 2026; 125B total / ~6B active per token, ~95% sparsity, 262,144-token native context expandable to 1M via YaRN, qwen-community-1.0 license — not Apache-2.0). Official API pricing is $0.15 per 1M input / $0.47 per 1M output (cache read $0.016), live on QwenCloud and OpenRouter — below GLM-5.3-Flash at list on output ($0.50) and cache ($0.03), below DeepSeek V4 Pro off-peak on both axes ($0.66/$1.98), and the lowest cache-read rate on this page; Artificial Analysis medians are $0.30/$1.20. Caveats: benchmarks are vendor-reported with no independent replication yet, it is a 'Next' preview of the Qwen4 architecture, and the qwen-community-1.0 license is a new licensing layer (not MIT/Apache). Select Qwen3.8-Flash in the Model Strategy dropdown to model this stack. Full analysis: https://aiagencycalculator.com/qwen3-8-flash-next-cost."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is ChatGPT Ads being built for enterprise advertisers?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes — OpenAI is hiring a head of ads enterprise marketing (compensation $374,000-$415,000 plus equity, reported by Digiday on Aug 24, 2026) to position the platform for enterprise advertisers and agencies, and the Ads Manager feature set now targets media teams: custom audiences require a 25,000-person minimum, plus budget alerts, account-health indicators, CMO-ready reporting charts, and automated headline/copy suggestions. OpenAI is also building an SMB team, but the stated sequencing is enterprise budgets first, smaller businesses second. Implication for agency pricing: enterprise/agency-led engagements can command the premium end of the setup/management ranges now; keep SMB quotes as instrumented pilots until self-serve buying and SMB-scale audiences arrive. Source: Digiday (Aug 24, 2026) — verified via kanban t_4bc87ea6."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is OpenAI batch API still available on OpenRouter?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Not through the :batch model suffixes — OpenRouter removed all 35 openai/*:batch slugs on Aug 26, 2026, and completions against them now return 404 'No endpoints found'. The 50% batch discount is still reachable three ways: OpenRouter's beta Batch API (plain slug, 24-hour window, text-only), the openai/flex service tier (synchronous, explicit opt-in, GPT-5.6 family only), or OpenAI's own direct Batch API. The base models (openai/gpt-5, gpt-4o, o3) still route at standard pricing — agencies lost a pricing tier, not a model. Full routing guide: https://aiagencycalculator.com/blog/openrouter-openai-batch-endpoints-down/."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is the compute supply scenario on this calculator?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "It is a supply-side risk module that compares your baseline per-token cost against a power-constrained outlook for 2026-2027. The driver: Gartner forecasts global data center electricity up 26% in 2026 to 565 TWh, passing 1,200 TWh by 2030 where grid supply may be insufficient — power, not chips, is becoming the binding constraint. The offsets: capacity already locked in years ahead (up to 5GW AWS Trainium under Anthropic's >$100B/10yr commitment, and ~3.5GW Google TPU via Broadcom from 2027). You set a grid/power pass-through percentage (ESTIMATE) and a locked-in capacity relief percentage (ESTIMATE); the scenario shows the monthly and 12-month delta vs your baseline. Both percentages are projections, not published prices, and no capital/capacity/lease terms were disclosed for Theseus Infrastructure."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do data-center bans affect AI capacity and what I pay for tokens?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes — and the risk now starts before the API. More than 500 local jurisdictions ban or restrict new data-center construction, up from roughly 300 in late June 2026, and 7 in 10 Americans oppose AI data-center builds in their area. Bans don't move today's API list prices; they constrain the supply of new capacity, raise buildout and energy costs, and stretch lead times — the cost base that sets tomorrow's compute prices. Model the risk with a labeled infrastructure-risk buffer (an illustrative 5-10% add-on on compute line items plus a lead-time buffer in weeks) and re-run the estimate quarterly."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What does the AgentCore Migration Estimator calculate?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The AgentCore Migration Estimator models the monthly platform-bill delta between Bedrock Agents Classic and AgentCore — runtime ($0.0895/vCPU-hr + $0.00945/GB-hr active), gateway ($0.005/1K invocations), memory ($0.25/1K short-term events, $0.75/1K records/month long-term), web search ($7.00/1K queries), policy ($0.000025/request), plus the shared model-inference tokens — and adds the one-time migration labor range by agent complexity (hours–1 day simple, 1–3 weeks custom orchestration, 3–6 weeks multi-agent). Classic itself is free as a platform; the delta is typically cents while labor is the number that moves the quote. No EOL, no deadline — the migration is a strategy choice, not an emergency."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is GPT-6 Astra and how is it priced?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "GPT-6 Astra is OpenAI's flagship model launched Sept 3, 2026. Standard API pricing is $10 per 1M input tokens and $50 per 1M output tokens with $1 per 1M cached input ($12.50 cache writes). Prompts with more than 272K input tokens reprice the FULL request at 2x input and cache rates and 1.5x output ($20 input / $75 output / $2 cached / $25 cache writes per 1M). Context window is 1,050,000 tokens (922K max input, 128K max output). Batch/Flex are 50% of standard and Fast mode is 2x. Availability (Sept 4, 2026): GPT-6 Astra is live in the OpenAI API and in ChatGPT Work and Codex — OpenAI's developer account confirmed availability for all Pro, Enterprise, and Business Premium users, and the model is appearing in ChatGPT (as GPT-6 Pro) for Pro and Business plans, with Plus chat access to follow. Astra Pro — a higher Work/Codex tier — is available to Pro, Business, and Enterprise plans (Enterprise admins enable it for their workspace; off by default at launch). Model it in the calculator's Model Strategy dropdown — the GPT-6 Astra context scenario shows sub-272K vs above-272K cost math using OpenAI's exact repricing rule. Full analysis: https://aiagencycalculator.com/openai-gpt-6-astra-pricing."
-        }
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much should I charge for AI automation services in 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In 2026, AI automation services command premium pricing due to strong market demand and measurable business ROI. Basic chatbot services start at $1,500–$5,000 setup and $500–$1,500/month. Full office automation packages for medium businesses can run $10,000–$35,000 setup with $2,500–$7,500/month retainers. The key is always to anchor your price to client ROI — if your automation saves a client $10,000/month in labor, charging $2,000/month is an easy sell."
       }
-    ]
-  }
-  </script>
+    },
+    {
+      "@type": "Question",
+      "name": "What is a typical monthly retainer for an AI agency client?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Typical AI agency monthly retainers in 2026 range from $500/month for a basic single-workflow bot (e.g., a website chatbot for a solopreneur) up to $5,000–$8,000/month for enterprise-grade multi-workflow packages with ongoing optimization and reporting. Most successful AI agencies target $1,500–$3,000/month as a sweet spot for small-to-medium business clients — high enough to generate strong recurring revenue, low enough to be a no-brainer relative to the value delivered."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I charge an upfront setup fee plus monthly, or just monthly?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The setup fee + monthly retainer model is the industry standard for good reason: the setup fee covers your time to build and configure the automation, while the retainer covers ongoing maintenance, optimization, and support. This model also increases client commitment (they've invested upfront) and reduces churn. Avoid charging only monthly — it undervalues the significant build time and creates financial pressure if a client churns in month 2 after you've done all the heavy lifting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What profit margins should I expect as an AI automation agency?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI automation agencies typically operate at 55–80% net profit margins because the primary cost is your time, with minimal overhead. Your main expenses are: (1) software tools/subscriptions ($100–$500/month for platforms like Make, n8n, Zapier, GoHighLevel, OpenAI API — API usage is the fastest-growing line item; open-weight alternatives like Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3 at $3/$15 per 1M tokens, and GLM-5.2 with open weights are the counter-lever — agencies that run them keep more of the margin), (2) time for builds and client calls, and (3) any subcontractors or specialized help. Chatbot and social media automation services tend to have the highest margins (70–82%) because they're templated. Full office automation has lower margins (45–65%) due to higher custom build time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I justify my AI agency pricing to skeptical clients?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The best way to justify AI agency pricing is to convert your service value into dollars. Calculate: (1) Hours saved per month × average hourly cost of the work being automated. For example, if your automation saves 40 hours/month and the equivalent labor costs $25/hour, that's $1,000/month in savings — making a $1,500/month retainer look expensive. But if that 40 hours is a $50/hour admin position ($2,000/month), your pricing looks like a bargain. Always quantify the ROI before the sales conversation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I offer a free trial or discovery call for AI services?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A free 30-minute discovery call (not a free trial of the service) is the industry standard and highly recommended. During the call, you diagnose the client's workflow pain points, identify automation opportunities, and present a clear ROI case before quoting. Free service trials, however, are generally discouraged — they create expectations of free work and attract clients who don't value the service. Instead, offer a \"pilot project\" at a reduced rate (50–75% of normal) with a 30-day guarantee if you want to reduce friction with skeptical prospects."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What tools do AI agencies use, and how do they affect pricing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The most common AI agency tool stack in 2026 includes: Make.com ($10–$100+/mo), n8n (self-hosted free or $50+/mo cloud), Zapier ($20–$600+/mo), GoHighLevel ($97–$497/mo), OpenAI API ($5–$200+/mo), Voiceflow or Botpress for chatbots ($20–$100+/mo). Open-weight model APIs (Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3 at $3/$15 per 1M tokens, GLM-5.2 with open weights) now offer a lower-cost alternative to premium flagship pricing — so you can cap your tool-stack spend even while frontier API prices firm. Your tool costs should be built into your pricing — either passed through to clients as add-ons or bundled into your retainer (preferred for simplicity). A typical tool stack runs $200–$500/month, which should be factored into your margin calculations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do open-weight models like Qwen 3.8 Max, Kimi K3, or GLM-5.2 change what I should charge?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not the price you charge — the margin you keep. Client pricing is value-based: if your automation saves a client $2,000/month in labor, a $1,500 retainer is justified regardless of the model underneath. What open-weight models change is your cost side. Alibaba's Qwen 3.8 Max (2.4T-parameter MoE, 1M context) prices at $2/$6 per 1M tokens with open weights live on Hugging Face since Aug 12, 2026; Moonshot's Kimi K3 is a 2.8T-parameter open-weight model with a 1M-token context priced at $3/$15 per 1M tokens, and Zhipu's GLM-5.2 ships open weights under MIT — all within striking distance of paid frontier models on vendor-run coding benchmarks, though none matches them everywhere. NEW Aug 26, 2026: Z.ai confirmed the anonymous Ox Alpha model was GLM-5.3-Flash — a 320B/18B multimodal open-weight model at $0.15/$0.50 per 1M tokens (50% promo $0.075/$0.25 through Sep 9, 2026), MIT weights live, below DeepSeek V4 Pro off-peak on both axes. NEW Aug 28, 2026: Tencent Hy4 preview — 770B/49B MoE, Apache 2.0, native 1M context — lists at $0.834/$2.501 per 1M tokens on OpenRouter (cached input $0.042): ~40% below GLM-5.3 on input, ~43% below on output, ~6x below Kimi K3 on output, but still above DeepSeek V4 Pro off-peak ($0.66/$1.98); it is a preview with over-verification tendencies and ~770GB FP8 weights, so treat it as an evaluation option with a fallback, not a single point of failure. Early real-world reports on Qwen 3.8 Max (Aug 6, 2026) are promising on fast, multimodal builds but are self-reported with no independent replication — benchmark on your own workloads before promising anything. Keep workflows model-portable, and treat the cheaper token bill as margin, not as a reason to discount. One caveat — now finalized: the Qwen3.8-Max License requires a separate Qwen license before commercial use only if you run a Model-as-a-Service or AI Work Assistant business AND aggregate revenue exceeds $50M over any consecutive 12 months (no % rate — individually negotiated; internal use exempt). Most agencies never cross that bar, but if you resell hosted Qwen access or ship a coding/office-productivity agent product at scale, budget for that licensing layer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is GLM-5.3-Flash (Ox Alpha) and how does its pricing compare to DeepSeek?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GLM-5.3-Flash is Z.ai's newly revealed open-weight model — the anonymous \"Ox Alpha\" that topped OpenRouter usage from Aug 20, confirmed by Z.ai on Aug 26, 2026. Specs: 320B total / 18B active MoE, natively multimodal (text/image/video), 1M-token context, MIT-licensed weights on Hugging Face, served entirely on Chinese AI chips during the free preview week. Official API pricing is $0.15 per 1M input / $0.50 per 1M output (cached input $0.03), with a 50% launch promo to $0.075/$0.25 through Sep 9, 2026 — roughly one-tenth of the flagship GLM-5.3 rate ($1.40/$4.40) and below DeepSeek V4 Pro off-peak on both axes ($0.66/$1.98). On a 10K-in/2K-out task it is ~4x cheaper than DeepSeek V4 Pro off-peak at list and ~32x cheaper than GPT-5.6 Sol. Caveats: benchmarks (DeepSWE v1.1 63.4, Terminal-Bench 2.1 84.3, AutomationBench 48.8, Z.ai Code Bench 29.0 vs Claude Opus 4.8's 29.5) are vendor-reported with no independent replication yet, and MIT weights do not mean easy self-hosting — 320B/18B needs serious hardware (SGLang/vLLM/TokenSpeed/KTransformers). Select GLM-5.3-Flash in the Model Strategy dropdown to model this stack, and read the full analysis at GLM-5.3-Flash Pricing: Ox Alpha Revealed at $0.15/M ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Tencent Hy4 preview and how does its pricing compare to GLM-5.3 and DeepSeek?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tencent Hy4 preview is a 770B-parameter MoE model (49B active per token) open-sourced August 28, 2026 under Apache 2.0 — a native 1M-token context window (64K max output), weights on Hugging Face (tencent/Hy4-preview + FP8 variant). OpenRouter lists it at $0.834 per 1M input / $2.501 per 1M output (cached input $0.042 ), with Tencent Cloud the sole provider — roughly 40% below GLM-5.3 on input ($1.40) and 43% below on output ($4.40), and ~6x below Kimi K3 on output ($15), but still pricier than DeepSeek V4 Pro off-peak ($0.66/$1.98 with $0.022 cache reads). Tencent's internal blind eval (163 experts, 203 tasks) scored it 2.99/4 vs GLM-5.3 2.92 and Kimi K3 2.94 — tier parity, not a decisive win; public benchmarks are mixed (lags GLM-5.3 on DeepSWE/CyberGym). Caveats: it is a preview (Tencent flags over-reasoning and over-verification), observed ~36 tok/s P50 throughput, ~86% first-3-day availability on OpenRouter, and the FP8 weights are ~770GB — not self-hostable on typical infra (8xH200-class or multi-node). Select Tencent Hy4 preview in the Model Strategy dropdown to model this stack, and read the full analysis at Tencent Hy4 Preview Pricing: 770B Open Weights at $0.834/M ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Qwen3.8-Flash and how does its pricing compare to GLM-5.3-Flash and DeepSeek?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Qwen3.8-Flash is Qwen's new open-weight multimodal MoE (released Aug 26, 2026) — 125B total / ~6B active per token, ~95% sparsity , 262,144-token native context expandable to 1M via YaRN , weights on Hugging Face (Qwen/Qwen3.8-Flash-Next) + ModelScope, under the qwen-community-1.0 license (not Apache-2.0) ; production API went live on QwenCloud the same day. Official API pricing: $0.15 per 1M input / $0.47 per 1M output (cache read $0.016 ; China ¥0.8/¥2.7/¥0.1), live on OpenRouter at $0.15/$0.47 — below GLM-5.3-Flash at list on output ($0.50) and cache ($0.03), below DeepSeek V4 Pro off-peak on both axes ($0.66/$1.98), and the lowest cache-read rate on this page ; Artificial Analysis medians are $0.30/$1.20. Caveats: benchmarks are vendor-reported with no independent replication yet, it is a \"Next\" preview of the Qwen4 architecture (expect rapid iteration), and the qwen-community-1.0 license is a new licensing layer. Select Qwen3.8-Flash in the Model Strategy dropdown to model this stack, and read the full analysis at Qwen3.8-Flash-Next Cost: Open-Weight MoE at $0.15/M ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is OpenAI batch API still available on OpenRouter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not through the :batch model suffixes. On Aug 26, 2026 , OpenRouter silently removed all 35 openai/*:batch model slugs (plus z-ai/glm-5.2:batch and moonshotai/kimi-k2.7-code:batch) from its routing table — the slugs still answer metadata requests, so nothing looks broken until a completion returns 404 \"No endpoints found for openai/gpt-5:batch.\" The base models are fine: openai/gpt-5 still routes at $1.25/$10.00 per 1M , and the OpenAI vendor page still lists 96 models. You lost a pricing tier, not a model. The 50% batch discount is still reachable three ways : (1) OpenRouter's beta Batch API (POST /api/beta/batches, plain model slug, 24-hour window, text-only — no image/audio/file parts); (2) the openai/flex service tier via provider: {\"only\": [\"openai/flex\"]} — synchronous, exactly half of standard, but GPT-5.6 family only (not gpt-5, gpt-4o, o3 or gpt-4.1); (3) OpenAI's own direct Batch API — still 50% off synchronous, separate rate-limit pool, 50K requests/batch, completes within 24h. Check any slug with curl https://openrouter.ai/api/v1/models/<model>/endpoints — an empty array means the ID is dead. Full routing guide: OpenRouter OpenAI Batch Endpoints Down: 3 Ways to Keep the 50% Discount ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much cheaper is DeepSeek V4 Pro on cache reads than Claude Fable 5.1?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For long agent runs that re-read context on every step, the cache-read price is the cost lever that matters — and DeepSeek V4 Pro's is still cheaper than Claude Fable 5.1's, but the gap narrowed sharply on Sept 1, 2026. Claude Fable 5.1 cache reads: $0.25 per 1M tokens (Anthropic official, down 75% from Fable 5's $1.00). DeepSeek V4 Pro cache reads: $0.022 per 1M off-peak (current official pricing) — a ~11x gap . The widely-shared \"276x\" figure from @JulianGoldieSEO compared Fable 5's $1.00 to DeepSeek's launch cache-read price of $0.003625 — arithmetically correct (275.9x) but stale on both sides after DeepSeek's 2026-08-16 increase and Fable 5.1's cache-read cut (gap now ~11x off-peak / ~6x peak vs Fable 5.1). The 92% cache hit rate Julian cites for agent workloads is an assumption , not a published OpenRouter statistic — plausible because agents re-read the same instructions hundreds of times per task, but benchmark your own workload. Model it here: pick DeepSeek V4 Pro (cache-aware) or Claude Fable 5.1 in the Model Strategy dropdown, or use the cache-aware scenario ↓ . Julian's full post →"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is DeepSeek still the cheapest option after its announced API price increase?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The increase landed — and DeepSeek is still the lowest-cost cache-read API. DeepSeek's official peak/off-peak rates took effect 2026-08-16 at 16:00 UTC : off-peak V4 Pro $0.022 cache read / $0.66 cache miss / $1.98 output per 1M tokens (peak: $0.044 / $1.32 / $3.96). The old pre-hike schedule (V4-Flash $0.14/$0.28, V4-Pro $0.435/$0.87) is superseded. Even after the increase, V4 Pro's cache-read price is ~11x below Claude Fable 5.1's $0.25 (Fable 5.1's cache reads dropped 75% from Fable 5's $1.00 on Sept 1, 2026) — still the dominant line item for long agent runs — so a cache-aware DeepSeek stack remains the cheapest option for that workload class, but Anthropic has narrowed the gap. What changed: the previous \"276x cheaper\" headline (from Julian Goldie's Aug 16 post ) compared Fable 5's $1.00 to DeepSeek launch pricing; the current gap vs Fable 5.1 is ~11x off-peak / ~6x peak. Keep workflows portable, verify api-docs.deepseek.com/quick_start/pricing before quoting, and remember the open-weight escape hatch: V4 weights are MIT-licensed, so sustained workloads can be self-hosted (vLLM-class serving)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is self-hosting Meta Muse Glimmer cheaper than every API?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Per workload, for sustained volume, yes — with caveats . Meta released Muse Glimmer on Aug 10, 2026: a 30B dense open-weight model ( Apache 2.0 ) whose official 4-bit K-Quant-17GB GGUF is 16,756,681,056 bytes (~15.6 GiB, under 20 GB ) and runs on a single consumer GPU (24 GB VRAM class) at >200 tok/s on an RTX 5090 with DFlash speculative decoding (233.4 vs 74.9 baseline). Official local runtime is Ollama — ollama run muse-glimmer (18 GB build / 128K context / text+image; Apple Silicon MLX muse-glimmer:30b-mlx , 21 GB). Once the one-time GPU capex is amortized, marginal inference cost collapses to electricity — undercutting every hosted API on this page (DeepSeek V4 Pro at $0.022/1M off-peak cache reads is the lowest cache-read rate for agent runs; Qwen 3.8 Max $2/$6; Kimi K3 $3/$15) — including the hosted version of the same model : Meta has no official API price, but Together AI hosts Muse Glimmer at $0.35 / $1.50 per 1M tokens ($0.04 cached). Caveats: the 17 GB quant carries ~1.0% benchmark degradation , full 131K context + vision encoder + DFlash drafter needs the 24–32 GB envelope , it is not frontier-grade on the hardest reasoning (HLE 22.0, GPQA 83.5 — size-class parity), there is no audio modality, and you own uptime, ops, and security patching. In short: \"cheapest per workload,\" not a blanket \"cheapest model.\" See the Local vs API cost scenario ↓ for the full comparison and sources."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Alibaba's Qwen 3.8 Max revenue-share plan change open-weight model costs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not usually — the terms are now final and the trigger is high. Qwen 3.8 Max's official license (open weights live on Hugging Face Aug 12, 2026) requires a separate Qwen license before commercial use ONLY if you (or an affiliate) run a Model-as-a-Service or AI Work Assistant business AND aggregate revenue exceeds US$50M over any consecutive 12 months — a 2.5× higher bar than Moonshot's Kimi K3 ($20M/12mo). There is no numeric % in the license; the separate license is individually negotiated (Reuters' \"up to 30%\" is reporting, not license text). The new \"AI Work Assistant\" category (independent AI products primarily for AI-assisted coding or office productivity — e.g. Qoder, QwenWork; excludes single-purpose tools and assistants that are a feature of another product) is the trigger most likely to catch agencies building agent products — it is absent from Kimi K3. Internal use not exposed to third parties is exempt, and mere relaying to third-party-hosted models does not count as MaaS. Practical take: keep the $2/$6 per 1M token API list price in your model — for the vast majority of agencies the license changes nothing; only large-scale MaaS resellers and AI Work Assistant products crossing $50M/12mo need to budget for a negotiated license. Official license → · Reuters background →"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do the new GPT-5.6 Sol / GPT-5.6 Luna models change what I should charge?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not the list price — the cost profile. On Aug 6, 2026 OpenAI announced that GPT-5.6 Sol now powers both Instant and deep reasoning for ChatGPT Plus/Pro users (one consistent model with a new reasoning-effort slider), and GPT-5.6 Luna becomes the default for Free/Go users with unlimited text chats rolling out this week/next week. The same model now covers both speed modes, so agencies running ChatGPT-based client workflows get more consistent output — and the slider turns reasoning effort (and therefore cost) into a per-task dial. NEW Aug 22, 2026: OpenAI published official GPT-5.6 Sol API pricing on Aug 21, 2026 — $4 per 1M input tokens / $20 per 1M output tokens (cached input $0.40 per 1M), a promotional rate valid Aug 21 – Nov 21, 2026, down from the $5/$30 estimate (API + eligible ChatGPT Work/Codex credits; ChatGPT Pro/Plus/Business subscription pricing unchanged). The calculator uses the verified promo rate — verify current rates at OpenAI's pricing page before quoting. Agency takeaway: price stays value-based, but re-run your eval suites against the new defaults and re-check any published content that references older GPT-5.5 behavior."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Grok 4.6 and how does its API pricing compare to GPT-5.6 Sol?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Grok 4.6 is SpaceXAI's (formerly xAI) frontier model, released Aug 12, 2026 . API pricing is $2.00 per 1M input tokens and $6.00 per 1M output tokens — a fast variant costs 2x, and cache hits run $0.50 per 1M input ( -75% ). Artificial Analysis reports a 500k-token context window and an Intelligence Index of 61 , matching GPT-5.6 Sol (max). Against GPT-5.6 Sol's current $4/$20 per 1M (promo window Aug 21 – Nov 21, 2026; previously $5/$30), Grok 4.6 is 50% cheaper on input tokens and 70% cheaper on output tokens — the dimension that dominates cost in reasoning-heavy agent workloads. It is available today in Cursor, Grok Build, the SpaceXAI API, OpenRouter, Vercel, and Cloudflare, with 2x included usage inside Cursor and Grok Build for the first week. Caveats: the 500k context window is AA-reported (x.ai's announcement does not state it), and x.ai's own chart omits Claude Opus 5 (63) which scores above both Grok 4.6 and GPT-5.6 Sol. Select Grok 4.6 in the Model Strategy dropdown to model this stack. x.ai announcement → · Artificial Analysis →"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Gemini 3.8 Flash and how does its API pricing compare?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Gemini 3.8 Flash is Google's best reasoning & coding model yet , released Sept 2, 2026 — the third Flash-family release in six weeks (3.6 → 3.7 → 3.8) and Google's recommended model for software engineering, autonomous agents, and complex multi-step reasoning. API intro pricing is $0.75 per 1M input tokens and $3.75 per 1M output tokens (output includes thinking tokens) — the same intro rate as Gemini 3.7 Flash , valid through 2026-12-31 , then it reverts to $1.50/$7.50 from Jan 1, 2027. It has a 1M-token context window , 64K max output, and Google says it outperforms 3.7 Flash on DeepSWE v1.1 (long-horizon software engineering) and agentic benchmarks — while noting it can use more tokens at higher effort levels. Rolling out to Google AI Pro/Ultra (Gemini app, AI Mode, Sheets) and developers via Gemini API / AI Studio / Antigravity. Gemini 3.8 Flash Cyber is a gated cybersecurity variant (Fairwind program) — not generally available, so do not price it into client stacks. During the intro window it is the cheapest verified frontier-class coding API on this page — undercutting Qwen 3.8 Max ($2/$6) and Grok 4.6 ($2/$6) on both axes. Select Gemini 3.8 Flash in the Model Strategy dropdown to model this stack. Full pricing analysis: Gemini 3.8 Flash API pricing . Google announcement → · Google blog → · Gemini API pricing → · Model card →"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Gemini 3.7 Flash (previous version) and how does its API pricing compare?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Gemini 3.7 Flash was Google's workhorse Flash model for coding and agents from Aug 13, 2026 until it was superseded by Gemini 3.8 Flash on Sept 2, 2026 — a refinement of Gemini 3.6 Flash (which launched ~3 weeks earlier). API intro pricing is $0.75 per 1M input tokens and $3.75 per 1M output tokens (output price includes thinking tokens) — valid through 2026-12-31 , then it reverts to $1.50/$7.50 from Jan 1, 2027 (its post-intro price equals 3.6 Flash's launch price; the intro rate is exactly half). It has a 1M-token context window , 64K max output, a free tier, 5,000 free search requests/month shared across Gemini 3.x, and a 50% batch discount. vs Gemini 3.6 Flash it is a big step up on coding/agent benchmarks: FrontierCode 1.1 Main 43.6% (vs 34.4%), DeepSWE v1.1 65.3% (vs 49.0%), WebDev Arena Elo 1588 (vs 1538). During the intro window it is the cheapest verified frontier-class API on this page — undercutting Qwen 3.8 Max ($2/$6) and Grok 4.6 ($2/$6) on both axes. Select Gemini 3.7 Flash in the Model Strategy dropdown to model this stack. Google blog → · Gemini API pricing → · Model card →"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Claude Sonnet 5's $2/$10 pricing permanent or scheduled to increase?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Permanent. Anthropic made Claude Sonnet 5's API pricing permanent on Aug 10, 2026: $2.00 per 1M input tokens and $10.00 per 1M output tokens (cache hit $0.20 per 1M input; cache write $2.50 for 5m / $4 for 1h per 1M). The previously scheduled Sept 1, 2026 increase to $3/$15 was CANCELLED — there is no scheduled price change pending. This is an API-pricing change only; subscription prices are unchanged. Input price sits at open-weight parity (Qwen 3.8 Max $2/$6), while output is well below premium frontier (GPT-5.6 Sol $4/$20 promo). Select Claude Sonnet 5 in the Model Strategy dropdown to model this stack. Anthropic announcement → · Claude pricing docs →"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the Agent Plugins standard mean for how I price agency work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Agent Plugins 1.0.0 (published Aug 6, 2026) lets you package Agent Skills and MCP servers into one portable plugin that runs across Codex, ChatGPT, Cursor, GitHub Copilot, Kiro, and VS Code. The old cost model — charging a fixed per-platform adaptation fee and maintaining N client-specific forks — now overstates work for plugin-based deliverables. Apply a portability discount (roughly 60–90% off adaptation cost per additional compatible client), treat plugin packaging & distribution as its own priced deliverable, and keep one maintenance stream instead of N. Because v1.0.0 leaves out permissions, sandboxing, and provenance, budget plugin vetting/signing as a compliance service — it's a sellable differentiator, and it protects you when you buy third-party plugins for client environments. See the Agent Plugins section above ↓"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are Cloudflare Wallets and how do wallet spend caps change my cost forecasts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cloudflare Wallets (announced Aug 4, 2026, Agents Week) give AI agents a human-readable wallet handle for paying APIs, MCP tools, content, and AI inference within limits set by the wallet's creator. There are two wallet types: Account Wallets (human/organization-owned; hold stablecoins, delegate spending) and Virtual Wallets (agent-owned, operate via API keys; an agent's maximum spend is capped by the Account Wallet owner). Per Virtual Wallet, the owner can define a spending cap / allowance , an approved merchant allow-list, and a maximum transaction size; agents that hit a limit must request a manual override from a human. Payments run on x402 (HTTP 402 with a price manifest). Fees, stablecoins, and launch timing are still undisclosed — full access arrives \"in the coming months.\" What changes for you: worst-case spend per agent becomes a known number (the cap), so monthly AI spend forecasts get a hard ceiling — that's exactly what the Agent Wallet & Spend Cap Estimator above models, capped vs uncapped. Use it before quoting a retainer: if your agent workloads would exceed the client's wallet cap, either the client's cap needs raising (with a documented manual override) or the retainer needs a variable-compute pass-through."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the compute supply scenario on this calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is a supply-side risk module that compares your baseline per-token cost against a power-constrained outlook for 2026-2027. The driver: Gartner forecasts global data center electricity up 26% in 2026 to 565 TWh, passing 1,200 TWh by 2030 where grid supply may be insufficient — power, not chips, is becoming the binding constraint. The offsets: capacity already locked in years ahead (up to 5GW AWS Trainium under Anthropic's >$100B/10yr commitment, and ~3.5GW Google TPU via Broadcom from 2027). You set a grid/power pass-through percentage (ESTIMATE) and a locked-in capacity relief percentage (ESTIMATE); the scenario shows the monthly and 12-month delta vs your baseline. Both percentages are projections, not published prices, and no capital/capacity/lease terms were disclosed for Theseus Infrastructure. Run the Compute Supply Scenario above ↑"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do data-center bans affect AI capacity and what I pay for tokens?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — and the risk now starts before the API. More than 500 local jurisdictions ban or restrict new data-center construction, up from roughly 300 in late June 2026, and 7 in 10 Americans oppose AI data-center builds in their area. Bans don't move today's API list prices; they constrain the supply of new capacity, raise buildout and energy costs, and stretch lead times — the cost base that sets tomorrow's compute prices. Model the risk with a labeled infrastructure-risk buffer (an illustrative 5-10% add-on on compute line items plus a lead-time buffer in weeks) and re-run the estimate quarterly. Full analysis: Data Center Bans: The New AI Capacity Risk Agencies Face →"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many clients do I need to make $10,000/month as an AI agency?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "At an average retainer of $1,500/month, you need 7 clients. At $2,000/month average retainer, just 5 clients. At $3,000/month, only 4 clients. This is why positioning for medium-to-large clients (who can afford $2,000–$5,000/month) dramatically reduces client load while increasing revenue. Niching down into high-ROI industries like real estate, insurance, legal, or medical also lets you charge premium rates because the value of automation in those sectors is especially high."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it better to niche down or offer all AI services?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Niche down — at least initially. Specializing in one industry (e.g., \"AI automation for real estate agents\" or \"email automation for e-commerce brands\") makes your marketing dramatically more effective, allows you to charge premium rates as a specialist, and lets you build productized service packages that you can deliver faster and at higher margins. Once you have a proven playbook in one niche, expanding to adjacent industries becomes much easier and less risky than starting as a generalist."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I raise my rates as an AI agency owner?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You should raise rates when: (1) You're consistently closing 80%+ of prospects — demand exceeds supply of your time. (2) You have 3+ strong case studies showing measurable client ROI. (3) You've been at the same rate for 6+ months. (4) Competitors are charging more for similar work. A simple strategy: raise rates by 20–30% on all new clients, then grandfather existing clients at old rates for 6 months before gradual increases. Many agency owners undercharge for years out of fear — but higher prices often attract better, more committed clients."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do AI coding agents really cost, beyond the per-seat price?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI coding agent entry plans run about $10–$20 per seat per month (GitHub Copilot at $10; Cursor, Claude Code, Windsurf, and OpenAI Codex around $20). The real cost is billing model × usage. TrueFoundry's Aug 6, 2026 guide breaks agents into three billing structures — flat per-seat (Cursor Pro, Windsurf Pro, Claude Pro), seat-plus-credits (GitHub Copilot Pro/Pro+/Max), and pay-per-token API (Claude Code API mode, OpenAI Codex) — and SpaceXAI's Grok Bot (Aug 11, 2026) adds a fourth: subscription-bundled agent access with no per-token meter and no standalone price (included with SuperGrok Heavy, Cursor Ultra, Cursor Teams Premium on macOS and iOS). Light autocomplete vs. all-day agent workflows can differ 20–50× in token consumption, so heavy users routinely land in the $100–$400+ range. Full pricing guide →"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are Claude Code weekly usage limits going up or down on September 14, 2026?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Net, down about 17%. On September 14, 2026 , Anthropic is permanently raising Claude Code's standard weekly usage limits by 25% over the pre-promotion baseline for Pro, Max, Team, and seat-based Enterprise plans — but the temporary 50% weekly boost (active since May 13, 2026) expires the same day [1][4][5]. Normalizing the original baseline to 100: today's boosted limit is 150; the new permanent limit is 125 — a net reduction of −16.7% (≈ −17%) vs today , a figure Anthropic itself confirmed: \"Compared to today, this works out to a 17% reduction in weekly limits on Claude Code.\" [1][7] The boost stays in place through September 13 ; the new limits take effect September 14 [1][8]. The change covers weekly limits only : 5-hour session limits, plan pricing, and API billing are unchanged [6][7][11]. Free plans and consumption-based Enterprise seats are excluded [6][7][11], and Anthropic does not publish fixed weekly message counts — all figures are ratios [4][6]. Use the Claude Code Usage Limit Cost Impact Estimator on this page to model what the cut does to your weekly workload and seat cost. Sources: @ClaudeDevs (Aug 29, 2026) · BleepingComputer · MacObserver · Notebookcheck"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much will the Sept 14 Claude Code weekly limit cut cost my agency?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the ratio, not a guess at absolute numbers: after Sept 14, 2026 your weekly cap is 83.3% of today's (125/150), so any workload that used 100% of today's cap now consumes 120% of the new cap — the same weekly workload needs about 20% more plan headroom or usage credits [1][8]. In dollar terms, keeping today's absolute capacity costs roughly 1.2× the current seat line : a Max 5x seat at $100/mo ≈ $120/mo equivalent after Sept 14. Anthropic has not published fixed weekly message or token counts, so these are ratios, not absolute limits [4][6]. Run the Claude Code Usage Limit Cost Impact Estimator on this page with your own usage, seat price, and headcount. Full analysis: Claude Code Usage Limit Cost Impact ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How did the Codex 20M-user milestone and banked resets change agency costs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No list price changed — the capacity and billing story did. Codex and ChatGPT Work crossed 20 million active users the week of Aug 21, 2026 (up from 15M a week earlier), and OpenAI credited every paid user a banked reset : a saved usage-limit credit that resets both the 5-hour and weekly windows when you redeem it (OpenAI Help Center). The rollout missed its Aug 21 deadline; OpenAI then set a firmer 8pm PST same-evening deadline , which also passed for many users, and announced a new reset for 2026-08-24T21:00:00Z (2pm PST) after finding usage inefficiencies. This calculator models API/token and project pricing, not seat-based subscriptions, so the milestone does not change the token math. Agency takeaway: keep Codex/ChatGPT Work subscription seats as a separate line item from token pricing, verify usage limits before quoting fixed-fee retainers, and treat banked resets as scheduling insurance, not a billing line . Full breakdown: Codex Pricing 2026: Plans, Limits & Banked Reset for Agencies ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does Grok Bot cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No standalone price has been announced. Grok Bot (SpaceXAI, announced Aug 11, 2026) is in beta and included with eligible subscriptions — SuperGrok Heavy, Cursor Ultra, and Cursor Teams Premium — on desktop (macOS) and iOS, with an enterprise waitlist. It runs always-on agents on a cloud computer, so jobs keep going when the laptop is closed, and no usage caps have been published. Because there is no per-token meter, this calculator treats it as a bundled line item rather than a usage-modeled cost — budget the eligible subscription, not a token bill. Official announcement →"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much can model choice change AI coding agent cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dramatically. On credit plans, premium models can burn credits up to 8× faster than standard ones — a task that costs one credit unit on a standard model might cost eight on a frontier model (TrueFoundry, Aug 6, 2026). Annual billing typically discounts 15–20%, and free/entry tiers often carry quotas teams exceed within weeks. That's exactly why this calculator exposes Model Strategy (open-weight vs. hybrid vs. frontier) and Delivery Risk as separate levers: the model picker is a cost lever, not just a settings control."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are ChatGPT Business Premium seats and how do they change client-side costs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "OpenAI launched ChatGPT Business Premium seats in August 2026: $125 per user per month billed monthly , or $100 per user per month billed annually (a 20% annual discount), versus $25/$20 per user per month for Standard seats . Premium seats include 5x more usage than Standard , are not subject to the five-hour usage limit , and get predictable weekly usage resets . A workspace requires at least 2 paid seats (any mix of Standard + Premium) and, since Aug 24, 2026, caps at 200 paid seats per subscription; larger deployments move to ChatGPT Enterprise (sales-led). Use the ChatGPT Business Seat Cost Estimator on this page to model monthly and annual totals for Standard or Premium seats. Sources: OpenAI's announcement + OpenAI Help Center (verified Aug 25, 2026). Full breakdown: ChatGPT Business Premium Seats Pricing (2026) ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is AI supplier risk and should it change my cost estimates?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI supplier risk is the chance that a model provider's release timeline, safety posture, or roadmap shifts in ways that affect your stack's cost or availability. Real-world example: on Aug 18, 2026 , OpenAI announced a two-week pause in reinforcement-learning training on its latest deployment-bound models and held its largest planned frontier RL run on hold , after internal evaluations flagged its upcoming Astra model at the \"Critical\" cyber-capability threshold under its Preparedness Framework — core Astra training continued and no model was cancelled. No published API prices changed, so this calculator's math stands, but provider roadmaps can shift and the ~20% monitoring overhead on frontier inference may add modest price pressure over time. Guidance: when evaluating AI costs and risks, include fallback AI models in your stack and review each provider's tooling roadmap before locking in long-term pricing or client deliverables. (Dated Aug 19, 2026; source: OpenAI — Pacing model development in an era of cyber-critical capabilities .)"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the OpenAI safety-monitoring overhead toggle and should I turn it on?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The toggle is a stress-test switch (OFF by default) in the Model Strategy section. When ON, it applies a +20% multiplier to OpenAI-based strategies — GPT-5.6 Sol and Paid frontier only (Claude, GPT) — to model what would happen if OpenAI's safety-monitoring compute overhead were priced into API costs. The basis: on Aug 18, 2026 , OpenAI estimated its expanded chain-of-thought safety monitoring adds roughly 20% overhead to the inference compute it monitors — required for all RL training and evaluations involving tools for models of Sol capability or higher , plus all Astra inference with tools after its Aug 7 Critical cyber-capability determination. Two things keep this a what-if, not a price change: OpenAI is not currently billing customers for the overhead (spokesperson via The Register , Aug 19, 2026; corroborated by TNW ), and Anthropic says its safeguards make a similar slowdown unnecessary ( Axios , Aug 19, 2026). The toggle has no effect on Anthropic (Claude), Google (Gemini), DeepSeek, open-weight, or local strategies — use it to stress-test an OpenAI-heavy quote, then leave it OFF for today's pricing. (Source: OpenAI — Pacing model development in an era of cyber-critical capabilities , Aug 18, 2026; verified via research brief t_b34197c5.)"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How should I price ChatGPT Ads management for clients in the EU?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Price it as a pilot → retainer with a management fee on ad spend. OpenAI expands ChatGPT Ads to 31 European markets on Aug 24, 2026 (40 markets total); ads appear on Free and Go tiers only (Go ≈ €8/mo; Plus/Pro/Enterprise ad-free), and buying is agency-led first — advertisers go through the OpenAI Ads Solutions team, agency partners, and tech partners, with a self-serve Ads Manager following \"later this summer.\" A defensible package: $1,500–$5,000 setup (account structure, conversion tracking/oCPC, GDPR-compliant targeting, creative prep) + 15–25% of ad spend as monthly management fee, floored at $2,000/mo to cover the manual review, policy monitoring (rules changed 4× in 5 months), creative iteration, and reporting — and capped around $7,500/mo as a typical rollout retainer. Ad spend is pass-through: the client pays OpenAI directly, so the management fee is the agency's revenue. EU campaigns cannot rely on Google/Meta-style personalization (GDPR consent requirements), so lead with conversation context and brand safety; health, mental-health, and political content are ineligible; under-18 excluded. Measurement is early — run a 2–3 month instrumented pilot against a Google AI Mode baseline before promising scale. Source: OpenAI — ChatGPT Ads expands across Europe (Aug 18, 2026) · Search Engine Land · Dataconomy — verified via research brief t_ff98639f."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much will Meta's Hatch AI agent cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Reported, not final. The Information (Jun 4 + Aug 24, 2026, via PYMNTS and RuntimeWire ) reports Meta has considered a premium \"Hatch Plus\" tier priced up to $199.99/month (5–10× the daily capacity of a free tier), but final pricing is NOT set and Hatch has not shipped as of Aug 25, 2026. Launch is targeted for late August or early September 2026 , with a new model codenamed Watermelon targeted for October. Treat $199.99 as a reported/rumored anchor, not official pricing, until Meta announces. See the Meta Hatch AI Agent Price explainer for the full breakdown and the consumer comparison table above."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does Ramp's business-spend data show about Claude Fable 5, Opus 5, and GPT-5.6 Sol adoption?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ramp's August 2026 AI Index (businesses on its AI cost tracker, July 2026) shows flagship list price is not what most business workloads run on. Anthropic's flagship Claude Fable 5 — the July 2026 model, superseded by Fable 5.1 on Sept 1, 2026 at the same $10/$50 with $0.25 cache reads — drew only ~6% of Anthropic business tokens and 11.4% of model-attributed Anthropic spend : the most expensive model by far, but a minority of usage. OpenAI's GPT-5.6 Sol (currently $4/$20 per 1M promo through Nov 21, 2026) holds ~25% of OpenAI tokens and 23% of OpenAI spend , at roughly half of Fable 5's price. Anthropic's cheaper Claude Opus 5 ($5/$25 per 1M, exactly half of Fable 5, launched late July 2026) has already overtaken Fable 5 in enterprise spending , per FT-cited Ramp data (via Superpower Daily / CIO) — note Ramp's own AI Index does not state the overtake, and WinBuzzer cautions Opus arrived too late in the measured month to explain the full July pattern. Agency takeaway: price retainers against a realistic model mix (Opus 5 / Sol / Sonnet 5 capture the volume), not against flagship list prices. Select Claude Opus 5 in the Model Strategy dropdown to model this stack. Sources: Ramp AI Index Aug 2026 · WinBuzzer · BreezyScroll · Superpower Daily (FT-cited) — verified via research brief t_06f1cfb2."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the AgentCore Migration Estimator calculate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The AgentCore Migration Estimator models the monthly platform-bill delta between Bedrock Agents Classic and AgentCore — runtime ($0.0895/vCPU-hr + $0.00945/GB-hr active), gateway ($0.005/1K invocations), memory ($0.25/1K short-term events, $0.75/1K records/month long-term), web search ($7.00/1K queries), policy ($0.000025/request), plus the shared model-inference tokens — and adds the one-time migration labor range by agent complexity (hours–1 day simple, 1–3 weeks custom orchestration, 3–6 weeks multi-agent). Classic itself is free as a platform; the delta is typically cents while labor is the number that moves the quote. No EOL, no deadline — the migration is a strategy choice, not an emergency. Full analysis: Bedrock Agents Classic → AgentCore Migration Cost ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is GPT-6 Astra and how is it priced?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GPT-6 Astra is OpenAI's flagship model launched Sept 3, 2026 (the first model to reach Critical tier under OpenAI's Preparedness Framework, built for complex reasoning, coding, computer use, research, and document creation). Standard API pricing: $10 per 1M input / $50 per 1M output / $1 per 1M cached input ($12.50 cache writes). The 272K rule: prompts with more than 272K input tokens reprice the FULL request at 2x input and cache rates and 1.5x output — $20 input / $75 output / $2 cached / $25 cache writes per 1M. Context window: 1,050,000 tokens (922K max input, 128K max output); Batch/Flex are 50% of standard, Fast mode 2x. Availability (Sept 4): live in the OpenAI API and in ChatGPT Work and Codex for all Pro, Enterprise, and Business Premium users per OpenAI's developer account; showing up in ChatGPT as GPT-6 Pro for Pro and Business first, with Plus chat access to follow. Astra Pro — the higher Work/Codex tier — is available to Pro, Business, and Enterprise plans; Enterprise admins enable it for their workspace (off by default at launch). Select GPT-6 Astra in the Model Strategy dropdown to model this stack, and use the GPT-6 Astra context scenario ↓ to see sub-272K vs above-272K cost math. Full analysis: GPT-6 Astra API Pricing: $10/$50 per 1M, 272K Doubling, 1.05M Context ."
+      }
+    }
+  ]
+}
+</script>
 
   <!-- Google AdSense Placeholder -->
   <!-- ADSENSE_HEAD_TAG_HERE -->
@@ -954,6 +1042,8 @@
       font-size: 0.97rem;
       font-weight: 600;
     }
+
+    .faq-question strong { font-weight: 600; }   /* keeps the question's 600 weight */
 
     .faq-icon {
       min-width: 24px;
@@ -2603,10 +2693,9 @@
     <div class="faq-list">
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How much should I charge for AI automation services in 2026?
+        <button onclick="toggleFaq(this)"><strong>How much should I charge for AI automation services in 2026?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             In 2026, AI automation services command premium pricing due to strong market demand and measurable business ROI. Basic chatbot services start at $1,500–$5,000 setup and $500–$1,500/month. Full office automation packages for medium businesses can run $10,000–$35,000 setup with $2,500–$7,500/month retainers. The key is always to anchor your price to client ROI — if your automation saves a client $10,000/month in labor, charging $2,000/month is an easy sell.
@@ -2615,10 +2704,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is a typical monthly retainer for an AI agency client?
+        <button onclick="toggleFaq(this)"><strong>What is a typical monthly retainer for an AI agency client?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Typical AI agency monthly retainers in 2026 range from $500/month for a basic single-workflow bot (e.g., a website chatbot for a solopreneur) up to $5,000–$8,000/month for enterprise-grade multi-workflow packages with ongoing optimization and reporting. Most successful AI agencies target $1,500–$3,000/month as a sweet spot for small-to-medium business clients — high enough to generate strong recurring revenue, low enough to be a no-brainer relative to the value delivered.
@@ -2627,10 +2715,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Should I charge an upfront setup fee plus monthly, or just monthly?
+        <button onclick="toggleFaq(this)"><strong>Should I charge an upfront setup fee plus monthly, or just monthly?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             The setup fee + monthly retainer model is the industry standard for good reason: the setup fee covers your time to build and configure the automation, while the retainer covers ongoing maintenance, optimization, and support. This model also increases client commitment (they've invested upfront) and reduces churn. Avoid charging only monthly — it undervalues the significant build time and creates financial pressure if a client churns in month 2 after you've done all the heavy lifting.
@@ -2639,10 +2726,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What profit margins should I expect as an AI automation agency?
+        <button onclick="toggleFaq(this)"><strong>What profit margins should I expect as an AI automation agency?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             AI automation agencies typically operate at 55–80% net profit margins because the primary cost is your time, with minimal overhead. Your main expenses are: (1) software tools/subscriptions ($100–$500/month for platforms like Make, n8n, Zapier, GoHighLevel, OpenAI API — API usage is the fastest-growing line item; open-weight alternatives like Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3 at $3/$15 per 1M tokens, and GLM-5.2 with open weights are the counter-lever — agencies that run them keep more of the margin), (2) time for builds and client calls, and (3) any subcontractors or specialized help. Chatbot and social media automation services tend to have the highest margins (70–82%) because they're templated. Full office automation has lower margins (45–65%) due to higher custom build time.
@@ -2651,10 +2737,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How do I justify my AI agency pricing to skeptical clients?
+        <button onclick="toggleFaq(this)"><strong>How do I justify my AI agency pricing to skeptical clients?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             The best way to justify AI agency pricing is to convert your service value into dollars. Calculate: (1) Hours saved per month × average hourly cost of the work being automated. For example, if your automation saves 40 hours/month and the equivalent labor costs $25/hour, that's $1,000/month in savings — making a $1,500/month retainer look expensive. But if that 40 hours is a $50/hour admin position ($2,000/month), your pricing looks like a bargain. Always quantify the ROI before the sales conversation.
@@ -2663,10 +2748,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Should I offer a free trial or discovery call for AI services?
+        <button onclick="toggleFaq(this)"><strong>Should I offer a free trial or discovery call for AI services?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             A free 30-minute discovery call (not a free trial of the service) is the industry standard and highly recommended. During the call, you diagnose the client's workflow pain points, identify automation opportunities, and present a clear ROI case before quoting. Free service trials, however, are generally discouraged — they create expectations of free work and attract clients who don't value the service. Instead, offer a "pilot project" at a reduced rate (50–75% of normal) with a 30-day guarantee if you want to reduce friction with skeptical prospects.
@@ -2675,10 +2759,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What tools do AI agencies use, and how do they affect pricing?
+        <button onclick="toggleFaq(this)"><strong>What tools do AI agencies use, and how do they affect pricing?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             The most common AI agency tool stack in 2026 includes: Make.com ($10–$100+/mo), n8n (self-hosted free or $50+/mo cloud), Zapier ($20–$600+/mo), GoHighLevel ($97–$497/mo), OpenAI API ($5–$200+/mo), Voiceflow or Botpress for chatbots ($20–$100+/mo). Open-weight model APIs (Qwen 3.8 Max at $2/$6 per 1M tokens, Kimi K3 at $3/$15 per 1M tokens, GLM-5.2 with open weights) now offer a lower-cost alternative to premium flagship pricing — so you can cap your tool-stack spend even while frontier API prices firm. Your tool costs should be built into your pricing — either passed through to clients as add-ons or bundled into your retainer (preferred for simplicity). A typical tool stack runs $200–$500/month, which should be factored into your margin calculations.
@@ -2687,10 +2770,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Do open-weight models like Qwen 3.8 Max, Kimi K3, or GLM-5.2 change what I should charge?
+        <button onclick="toggleFaq(this)"><strong>Do open-weight models like Qwen 3.8 Max, Kimi K3, or GLM-5.2 change what I should charge?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Not the price you charge — the margin you keep. Client pricing is value-based: if your automation saves a client $2,000/month in labor, a $1,500 retainer is justified regardless of the model underneath. What open-weight models change is your cost side. Alibaba's Qwen 3.8 Max (2.4T-parameter MoE, 1M context) prices at $2/$6 per 1M tokens with open weights live on Hugging Face since Aug 12, 2026; Moonshot's Kimi K3 is a 2.8T-parameter open-weight model with a 1M-token context priced at $3/$15 per 1M tokens, and Zhipu's GLM-5.2 ships open weights under MIT — all within striking distance of paid frontier models on vendor-run coding benchmarks, though none matches them everywhere. <strong style="color:#22d3ee;">NEW Aug 26, 2026:</strong> Z.ai confirmed the anonymous <strong>Ox Alpha</strong> model was <strong>GLM-5.3-Flash</strong> — a 320B/18B multimodal open-weight model at <strong>$0.15/$0.50 per 1M tokens</strong> (50% promo $0.075/$0.25 through Sep 9, 2026), MIT weights live, below DeepSeek V4 Pro off-peak on both axes. <strong style="color:#22d3ee;">NEW Aug 28, 2026:</strong> <strong>Tencent Hy4 preview</strong> — 770B/49B MoE, Apache 2.0, native 1M context — lists at <strong>$0.834/$2.501 per 1M tokens</strong> on OpenRouter (cached input $0.042): ~40% below GLM-5.3 on input, ~43% below on output, ~6x below Kimi K3 on output, but still above DeepSeek V4 Pro off-peak ($0.66/$1.98); it is a preview with over-verification tendencies and ~770GB FP8 weights, so treat it as an evaluation option with a fallback, not a single point of failure. Early real-world reports on Qwen 3.8 Max (Aug 6, 2026) are promising on fast, multimodal builds but are self-reported with no independent replication — benchmark on your own workloads before promising anything. Keep workflows model-portable, and treat the cheaper token bill as margin, not as a reason to discount. <strong style="color:var(--warning);">One caveat — now finalized:</strong> the Qwen3.8-Max License requires a separate Qwen license before commercial use only if you run a Model-as-a-Service or AI Work Assistant business AND aggregate revenue exceeds $50M over any consecutive 12 months (no % rate — individually negotiated; internal use exempt). Most agencies never cross that bar, but if you resell hosted Qwen access or ship a coding/office-productivity agent product at scale, budget for that licensing layer.
@@ -2699,10 +2781,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is GLM-5.3-Flash (Ox Alpha) and how does its pricing compare to DeepSeek?
+        <button onclick="toggleFaq(this)"><strong>What is GLM-5.3-Flash (Ox Alpha) and how does its pricing compare to DeepSeek?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>GLM-5.3-Flash is Z.ai's newly revealed open-weight model — the anonymous "Ox Alpha" that topped OpenRouter usage from Aug 20, confirmed by Z.ai on Aug 26, 2026.</strong> Specs: 320B total / 18B active MoE, natively multimodal (text/image/video), 1M-token context, MIT-licensed weights on Hugging Face, served entirely on Chinese AI chips during the free preview week. Official API pricing is <strong>$0.15 per 1M input / $0.50 per 1M output</strong> (cached input $0.03), with a <strong>50% launch promo to $0.075/$0.25 through Sep 9, 2026</strong> — roughly <strong>one-tenth of the flagship GLM-5.3 rate</strong> ($1.40/$4.40) and <strong>below DeepSeek V4 Pro off-peak on both axes</strong> ($0.66/$1.98). On a 10K-in/2K-out task it is ~4x cheaper than DeepSeek V4 Pro off-peak at list and ~32x cheaper than GPT-5.6 Sol. Caveats: benchmarks (DeepSWE v1.1 63.4, Terminal-Bench 2.1 84.3, AutomationBench 48.8, Z.ai Code Bench 29.0 vs Claude Opus 4.8's 29.5) are <strong>vendor-reported</strong> with no independent replication yet, and MIT weights do not mean easy self-hosting — 320B/18B needs serious hardware (SGLang/vLLM/TokenSpeed/KTransformers). Select <strong>GLM-5.3-Flash</strong> in the Model Strategy dropdown to model this stack, and read the full analysis at <a href="/blog/glm-5-3-flash-pricing/" style="color:var(--cyan-light);">GLM-5.3-Flash Pricing: Ox Alpha Revealed at $0.15/M</a>.
@@ -2711,10 +2792,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is Tencent Hy4 preview and how does its pricing compare to GLM-5.3 and DeepSeek?
+        <button onclick="toggleFaq(this)"><strong>What is Tencent Hy4 preview and how does its pricing compare to GLM-5.3 and DeepSeek?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>Tencent Hy4 preview is a 770B-parameter MoE model (49B active per token) open-sourced August 28, 2026 under Apache 2.0</strong> — a native <strong>1M-token context window</strong> (64K max output), weights on Hugging Face (tencent/Hy4-preview + FP8 variant). OpenRouter lists it at <strong>$0.834 per 1M input / $2.501 per 1M output</strong> (cached input <strong>$0.042</strong>), with <strong>Tencent Cloud the sole provider</strong> — roughly <strong>40% below GLM-5.3</strong> on input ($1.40) and <strong>43% below on output</strong> ($4.40), and <strong>~6x below Kimi K3 on output</strong> ($15), but <strong>still pricier than DeepSeek V4 Pro off-peak</strong> ($0.66/$1.98 with $0.022 cache reads). Tencent's internal blind eval (163 experts, 203 tasks) scored it <strong>2.99/4</strong> vs GLM-5.3 2.92 and Kimi K3 2.94 — tier parity, not a decisive win; public benchmarks are mixed (lags GLM-5.3 on DeepSWE/CyberGym). Caveats: it is a <strong>preview</strong> (Tencent flags over-reasoning and over-verification), observed <strong>~36 tok/s P50</strong> throughput, <strong>~86% first-3-day availability</strong> on OpenRouter, and the <strong>FP8 weights are ~770GB — not self-hostable on typical infra</strong> (8xH200-class or multi-node). Select <strong>Tencent Hy4 preview</strong> in the Model Strategy dropdown to model this stack, and read the full analysis at <a href="/blog/tencent-hy4-preview-pricing/" style="color:var(--cyan-light);">Tencent Hy4 Preview Pricing: 770B Open Weights at $0.834/M</a>.
@@ -2723,10 +2803,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is Qwen3.8-Flash and how does its pricing compare to GLM-5.3-Flash and DeepSeek?
+        <button onclick="toggleFaq(this)"><strong>What is Qwen3.8-Flash and how does its pricing compare to GLM-5.3-Flash and DeepSeek?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>Qwen3.8-Flash is Qwen's new open-weight multimodal MoE (released Aug 26, 2026)</strong> — <strong>125B total / ~6B active per token, ~95% sparsity</strong>, <strong>262,144-token native context expandable to 1M via YaRN</strong>, weights on Hugging Face (Qwen/Qwen3.8-Flash-Next) + ModelScope, under the <strong>qwen-community-1.0 license (not Apache-2.0)</strong>; production API went live on QwenCloud the same day. Official API pricing: <strong>$0.15 per 1M input / $0.47 per 1M output</strong> (cache read <strong>$0.016</strong>; China ¥0.8/¥2.7/¥0.1), live on <strong>OpenRouter at $0.15/$0.47</strong> — below <strong>GLM-5.3-Flash at list</strong> on output ($0.50) and cache ($0.03), below <strong>DeepSeek V4 Pro off-peak</strong> on both axes ($0.66/$1.98), and the <strong>lowest cache-read rate on this page</strong>; Artificial Analysis medians are $0.30/$1.20. Caveats: benchmarks are <strong>vendor-reported</strong> with no independent replication yet, it is a <strong>"Next" preview of the Qwen4 architecture</strong> (expect rapid iteration), and the qwen-community-1.0 license is a new licensing layer. Select <strong>Qwen3.8-Flash</strong> in the Model Strategy dropdown to model this stack, and read the full analysis at <a href="/qwen3-8-flash-next-cost" style="color:var(--cyan-light);">Qwen3.8-Flash-Next Cost: Open-Weight MoE at $0.15/M</a>.
@@ -2735,10 +2814,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is OpenAI batch API still available on OpenRouter?
+        <button onclick="toggleFaq(this)"><strong>Is OpenAI batch API still available on OpenRouter?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>Not through the :batch model suffixes.</strong> On <strong>Aug 26, 2026</strong>, OpenRouter silently removed all <strong>35 openai/*:batch model slugs</strong> (plus z-ai/glm-5.2:batch and moonshotai/kimi-k2.7-code:batch) from its routing table — the slugs still answer metadata requests, so nothing looks broken until a completion returns <strong>404 "No endpoints found for openai/gpt-5:batch."</strong> The base models are fine: <strong>openai/gpt-5 still routes at $1.25/$10.00 per 1M</strong>, and the OpenAI vendor page still lists 96 models. You lost a pricing tier, not a model. The <strong>50% batch discount is still reachable three ways</strong>: (1) OpenRouter's <strong>beta Batch API</strong> (POST /api/beta/batches, plain model slug, 24-hour window, text-only — no image/audio/file parts); (2) the <strong>openai/flex</strong> service tier via <code>provider: {"only": ["openai/flex"]}</code> — synchronous, exactly half of standard, but <strong>GPT-5.6 family only</strong> (not gpt-5, gpt-4o, o3 or gpt-4.1); (3) <strong>OpenAI's own direct Batch API</strong> — still 50% off synchronous, separate rate-limit pool, 50K requests/batch, completes within 24h. Check any slug with <code>curl https://openrouter.ai/api/v1/models/&lt;model&gt;/endpoints</code> — an empty array means the ID is dead. Full routing guide: <a href="/blog/openrouter-openai-batch-endpoints-down/" style="color:var(--cyan-light);">OpenRouter OpenAI Batch Endpoints Down: 3 Ways to Keep the 50% Discount</a>.
@@ -2747,10 +2825,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How much cheaper is DeepSeek V4 Pro on cache reads than Claude Fable 5.1?
+        <button onclick="toggleFaq(this)"><strong>How much cheaper is DeepSeek V4 Pro on cache reads than Claude Fable 5.1?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             For long agent runs that re-read context on every step, the cache-read price is the cost lever that matters — and DeepSeek V4 Pro's is still cheaper than Claude Fable 5.1's, but the gap narrowed sharply on Sept 1, 2026. <strong>Claude Fable 5.1 cache reads: $0.25 per 1M tokens</strong> (Anthropic official, down 75% from Fable 5's $1.00). <strong>DeepSeek V4 Pro cache reads: $0.022 per 1M off-peak</strong> (current official pricing) — a <strong>~11x gap</strong>. The widely-shared <strong>"276x"</strong> figure from <a href="https://x.com/JulianGoldieSEO/status/2089064335717159410" target="_blank" rel="noopener" style="color:var(--cyan-light);">@JulianGoldieSEO</a> compared Fable 5's $1.00 to DeepSeek's <em>launch</em> cache-read price of $0.003625 — arithmetically correct (275.9x) but <strong>stale on both sides after DeepSeek's 2026-08-16 increase and Fable 5.1's cache-read cut</strong> (gap now ~11x off-peak / ~6x peak vs Fable 5.1). The 92% cache hit rate Julian cites for agent workloads is an <strong>assumption</strong>, not a published OpenRouter statistic — plausible because agents re-read the same instructions hundreds of times per task, but benchmark your own workload. Model it here: pick <strong>DeepSeek V4 Pro (cache-aware)</strong> or <strong>Claude Fable 5.1</strong> in the Model Strategy dropdown, or use the <a href="#deepseek-cache-scenario" style="color:var(--cyan-light);">cache-aware scenario ↓</a>. <a href="https://juliangoldie.com/deepseek-v4-pro-vs-fable-5-vs-grok-4-6/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Julian's full post →</a>
@@ -2759,10 +2836,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is DeepSeek still the cheapest option after its announced API price increase?
+        <button onclick="toggleFaq(this)"><strong>Is DeepSeek still the cheapest option after its announced API price increase?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>The increase landed — and DeepSeek is still the lowest-cost cache-read API.</strong> DeepSeek's official peak/off-peak rates took effect <strong>2026-08-16 at 16:00 UTC</strong>: off-peak V4 Pro <strong>$0.022 cache read / $0.66 cache miss / $1.98 output per 1M tokens</strong> (peak: $0.044 / $1.32 / $3.96). The old pre-hike schedule (V4-Flash $0.14/$0.28, V4-Pro $0.435/$0.87) is superseded. Even after the increase, V4 Pro's cache-read price is <strong>~11x below Claude Fable 5.1's $0.25</strong> (Fable 5.1's cache reads dropped 75% from Fable 5's $1.00 on Sept 1, 2026) — still the dominant line item for long agent runs — so a cache-aware DeepSeek stack remains the cheapest option for that workload class, but Anthropic has narrowed the gap. What changed: the previous "276x cheaper" headline (from <a href="https://x.com/JulianGoldieSEO/status/2089064335717159410" target="_blank" rel="noopener" style="color:var(--cyan-light);">Julian Goldie's Aug 16 post</a>) compared Fable 5's $1.00 to DeepSeek launch pricing; the current gap vs Fable 5.1 is ~11x off-peak / ~6x peak. Keep workflows portable, verify <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">api-docs.deepseek.com/quick_start/pricing</a> before quoting, and remember the open-weight escape hatch: V4 weights are MIT-licensed, so sustained workloads can be self-hosted (vLLM-class serving).
@@ -2771,10 +2847,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is self-hosting Meta Muse Glimmer cheaper than every API?
+        <button onclick="toggleFaq(this)"><strong>Is self-hosting Meta Muse Glimmer cheaper than every API?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Per workload, for sustained volume, <strong>yes — with caveats</strong>. Meta released <strong>Muse Glimmer</strong> on Aug 10, 2026: a <strong>30B dense</strong> open-weight model (<strong>Apache 2.0</strong>) whose official 4-bit <strong>K-Quant-17GB</strong> GGUF is 16,756,681,056 bytes (~15.6 GiB, <strong>under 20 GB</strong>) and runs on a <strong>single consumer GPU</strong> (24 GB VRAM class) at <strong>&gt;200 tok/s</strong> on an RTX 5090 with DFlash speculative decoding (233.4 vs 74.9 baseline). Official local runtime is <strong>Ollama</strong> — <code>ollama run muse-glimmer</code> (18 GB build / 128K context / text+image; Apple Silicon MLX <code>muse-glimmer:30b-mlx</code>, 21 GB). Once the one-time GPU capex is amortized, marginal inference cost collapses to electricity — undercutting every hosted API on this page (DeepSeek V4 Pro at $0.022/1M off-peak cache reads is the lowest cache-read rate for agent runs; Qwen 3.8 Max $2/$6; Kimi K3 $3/$15) — <strong>including the hosted version of the same model</strong>: Meta has no official API price, but Together AI hosts Muse Glimmer at $0.35 / $1.50 per 1M tokens ($0.04 cached). Caveats: the 17 GB quant carries <strong>~1.0% benchmark degradation</strong>, full 131K context + vision encoder + DFlash drafter needs the <strong>24–32 GB envelope</strong>, it is <strong>not frontier-grade on the hardest reasoning</strong> (HLE 22.0, GPQA 83.5 — size-class parity), there is no audio modality, and you own uptime, ops, and security patching. In short: <strong>"cheapest per workload," not a blanket "cheapest model."</strong> See the <a href="#muse-glimmer-local" style="color:var(--cyan-light);">Local vs API cost scenario ↓</a> for the full comparison and sources.
@@ -2783,10 +2858,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Does Alibaba's Qwen 3.8 Max revenue-share plan change open-weight model costs?
+        <button onclick="toggleFaq(this)"><strong>Does Alibaba's Qwen 3.8 Max revenue-share plan change open-weight model costs?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Not usually — the terms are now final and the trigger is high. Qwen 3.8 Max's official license (open weights live on Hugging Face Aug 12, 2026) requires a separate Qwen license before commercial use ONLY if you (or an affiliate) run a <strong>Model-as-a-Service or AI Work Assistant</strong> business AND aggregate revenue exceeds <strong>US$50M over any consecutive 12 months</strong> — a 2.5× higher bar than Moonshot's Kimi K3 ($20M/12mo). There is no numeric % in the license; the separate license is individually negotiated (Reuters' "up to 30%" is reporting, not license text). The new "AI Work Assistant" category (independent AI products primarily for AI-assisted coding or office productivity — e.g. Qoder, QwenWork; excludes single-purpose tools and assistants that are a feature of another product) is the trigger most likely to catch agencies building agent products — it is absent from Kimi K3. Internal use not exposed to third parties is exempt, and mere relaying to third-party-hosted models does not count as MaaS. Practical take: keep the $2/$6 per 1M token API list price in your model — for the vast majority of agencies the license changes nothing; only large-scale MaaS resellers and AI Work Assistant products crossing $50M/12mo need to budget for a negotiated license. <a href="https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B/resolve/main/LICENSE" target="_blank" rel="noopener" style="color:var(--cyan-light);">Official license →</a> · <a href="https://www.reuters.com/business/retail-consumer/alibaba-plans-charge-big-users-its-next-open-source-ai-model-sources-say-2026-08-07/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Reuters background →</a>
@@ -2795,10 +2869,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Do the new GPT-5.6 Sol / GPT-5.6 Luna models change what I should charge?
+        <button onclick="toggleFaq(this)"><strong>Do the new GPT-5.6 Sol / GPT-5.6 Luna models change what I should charge?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Not the list price — the cost profile. On Aug 6, 2026 OpenAI announced that <strong>GPT-5.6 Sol</strong> now powers both Instant and deep reasoning for ChatGPT Plus/Pro users (one consistent model with a new reasoning-effort slider), and <strong>GPT-5.6 Luna</strong> becomes the default for Free/Go users with unlimited text chats rolling out this week/next week. The same model now covers both speed modes, so agencies running ChatGPT-based client workflows get more consistent output — and the slider turns reasoning effort (and therefore cost) into a per-task dial. <strong>NEW Aug 22, 2026: OpenAI published official GPT-5.6 Sol API pricing on Aug 21, 2026 — $4 per 1M input tokens / $20 per 1M output tokens (cached input $0.40 per 1M), a promotional rate valid Aug 21 – Nov 21, 2026, down from the $5/$30 estimate</strong> (API + eligible ChatGPT Work/Codex credits; ChatGPT Pro/Plus/Business subscription pricing unchanged). The calculator uses the verified promo rate — verify current rates at <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI's pricing page</a> before quoting. Agency takeaway: price stays value-based, but re-run your eval suites against the new defaults and re-check any published content that references older GPT-5.5 behavior.
@@ -2807,10 +2880,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is Grok 4.6 and how does its API pricing compare to GPT-5.6 Sol?
+        <button onclick="toggleFaq(this)"><strong>What is Grok 4.6 and how does its API pricing compare to GPT-5.6 Sol?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>Grok 4.6</strong> is SpaceXAI's (formerly xAI) frontier model, released <strong>Aug 12, 2026</strong>. API pricing is <strong>$2.00 per 1M input tokens and $6.00 per 1M output tokens</strong> — a fast variant costs 2x, and cache hits run $0.50 per 1M input (<strong>-75%</strong>). Artificial Analysis reports a <strong>500k-token context window</strong> and an <strong>Intelligence Index of 61</strong>, matching GPT-5.6 Sol (max). Against GPT-5.6 Sol's current $4/$20 per 1M (promo window Aug 21 – Nov 21, 2026; previously $5/$30), Grok 4.6 is <strong>50% cheaper on input tokens and 70% cheaper on output tokens</strong> — the dimension that dominates cost in reasoning-heavy agent workloads. It is available today in Cursor, Grok Build, the SpaceXAI API, OpenRouter, Vercel, and Cloudflare, with 2x included usage inside Cursor and Grok Build for the first week. Caveats: the 500k context window is AA-reported (x.ai's announcement does not state it), and x.ai's own chart omits Claude Opus 5 (63) which scores above both Grok 4.6 and GPT-5.6 Sol. Select <strong>Grok 4.6</strong> in the Model Strategy dropdown to model this stack. <a href="https://x.ai/news/grok-4-6" target="_blank" rel="noopener" style="color:var(--cyan-light);">x.ai announcement →</a> · <a href="https://artificialanalysis.ai/models/grok-4-6" target="_blank" rel="noopener" style="color:var(--cyan-light);">Artificial Analysis →</a>
@@ -2819,10 +2891,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is Gemini 3.8 Flash and how does its API pricing compare?
+        <button onclick="toggleFaq(this)"><strong>What is Gemini 3.8 Flash and how does its API pricing compare?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>Gemini 3.8 Flash</strong> is Google's <strong>best reasoning &amp; coding model yet</strong>, released <strong>Sept 2, 2026</strong> — the third Flash-family release in six weeks (3.6 → 3.7 → 3.8) and Google's recommended model for software engineering, autonomous agents, and complex multi-step reasoning. API intro pricing is <strong>$0.75 per 1M input tokens and $3.75 per 1M output tokens</strong> (output includes thinking tokens) — the <strong>same intro rate as Gemini 3.7 Flash</strong>, valid through <strong>2026-12-31</strong>, then it reverts to <strong>$1.50/$7.50</strong> from Jan 1, 2027. It has a <strong>1M-token context window</strong>, 64K max output, and Google says it outperforms 3.7 Flash on DeepSWE v1.1 (long-horizon software engineering) and agentic benchmarks — while noting it can use more tokens at higher effort levels. Rolling out to Google AI Pro/Ultra (Gemini app, AI Mode, Sheets) and developers via Gemini API / AI Studio / Antigravity. <strong>Gemini 3.8 Flash Cyber</strong> is a gated cybersecurity variant (Fairwind program) — not generally available, so do not price it into client stacks. During the intro window it is the cheapest verified frontier-class coding API on this page — undercutting Qwen 3.8 Max ($2/$6) and Grok 4.6 ($2/$6) on both axes. Select <strong>Gemini 3.8 Flash</strong> in the Model Strategy dropdown to model this stack. Full pricing analysis: <a href="/gemini-3-8-flash-api-pricing" style="color:var(--cyan-light);">Gemini 3.8 Flash API pricing</a>. <a href="https://x.com/Google" target="_blank" rel="noopener" style="color:var(--cyan-light);">Google announcement →</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Google blog →</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">Gemini API pricing →</a> · <a href="https://deepmind.google/models/model-cards/gemini-3-8-flash" target="_blank" rel="noopener" style="color:var(--cyan-light);">Model card →</a>
@@ -2831,10 +2902,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is Gemini 3.7 Flash (previous version) and how does its API pricing compare?
+        <button onclick="toggleFaq(this)"><strong>What is Gemini 3.7 Flash (previous version) and how does its API pricing compare?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>Gemini 3.7 Flash</strong> was Google's workhorse Flash model for coding and agents from <strong>Aug 13, 2026</strong> until it was superseded by Gemini 3.8 Flash on <strong>Sept 2, 2026</strong> — a refinement of Gemini 3.6 Flash (which launched ~3 weeks earlier). API intro pricing is <strong>$0.75 per 1M input tokens and $3.75 per 1M output tokens</strong> (output price includes thinking tokens) — valid through <strong>2026-12-31</strong>, then it reverts to <strong>$1.50/$7.50</strong> from Jan 1, 2027 (its post-intro price equals 3.6 Flash's launch price; the intro rate is exactly half). It has a <strong>1M-token context window</strong>, 64K max output, a free tier, 5,000 free search requests/month shared across Gemini 3.x, and a 50% batch discount. vs Gemini 3.6 Flash it is a big step up on coding/agent benchmarks: FrontierCode 1.1 Main <strong>43.6%</strong> (vs 34.4%), DeepSWE v1.1 <strong>65.3%</strong> (vs 49.0%), WebDev Arena Elo <strong>1588</strong> (vs 1538). During the intro window it is the cheapest verified frontier-class API on this page — undercutting Qwen 3.8 Max ($2/$6) and Grok 4.6 ($2/$6) on both axes. Select <strong>Gemini 3.7 Flash</strong> in the Model Strategy dropdown to model this stack. <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Google blog →</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">Gemini API pricing →</a> · <a href="https://deepmind.google/models/model-cards/gemini-3-7-flash" target="_blank" rel="noopener" style="color:var(--cyan-light);">Model card →</a>
@@ -2843,10 +2913,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is Claude Sonnet 5's $2/$10 pricing permanent or scheduled to increase?
+        <button onclick="toggleFaq(this)"><strong>Is Claude Sonnet 5's $2/$10 pricing permanent or scheduled to increase?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>Permanent.</strong> Anthropic made Claude Sonnet 5's API pricing <strong>permanent on Aug 10, 2026: $2.00 per 1M input tokens and $10.00 per 1M output tokens</strong> (cache hit $0.20 per 1M input; cache write $2.50 for 5m / $4 for 1h per 1M). The previously scheduled <strong>Sept 1, 2026 increase to $3/$15 was CANCELLED</strong> — there is no scheduled price change pending. This is an API-pricing change only; subscription prices are unchanged. Input price sits at open-weight parity (Qwen 3.8 Max $2/$6), while output is well below premium frontier (GPT-5.6 Sol $4/$20 promo). Select <strong>Claude Sonnet 5</strong> in the Model Strategy dropdown to model this stack. <a href="https://www.anthropic.com/news/claude-sonnet-5" target="_blank" rel="noopener" style="color:var(--cyan-light);">Anthropic announcement →</a> · <a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">Claude pricing docs →</a>
@@ -2855,10 +2924,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What does the Agent Plugins standard mean for how I price agency work?
+        <button onclick="toggleFaq(this)"><strong>What does the Agent Plugins standard mean for how I price agency work?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Agent Plugins 1.0.0 (published Aug 6, 2026) lets you package Agent Skills and MCP servers into one portable plugin that runs across Codex, ChatGPT, Cursor, GitHub Copilot, Kiro, and VS Code. The old cost model — charging a fixed per-platform adaptation fee and maintaining N client-specific forks — now overstates work for plugin-based deliverables. Apply a portability discount (roughly 60–90% off adaptation cost per additional compatible client), treat plugin packaging &amp; distribution as its own priced deliverable, and keep one maintenance stream instead of N. Because v1.0.0 leaves out permissions, sandboxing, and provenance, budget plugin vetting/signing as a compliance service — it's a sellable differentiator, and it protects you when you buy third-party plugins for client environments. <a href="#agent-plugins" style="color:var(--cyan-light);">See the Agent Plugins section above ↓</a>
@@ -2867,10 +2935,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What are Cloudflare Wallets and how do wallet spend caps change my cost forecasts?
+        <button onclick="toggleFaq(this)"><strong>What are Cloudflare Wallets and how do wallet spend caps change my cost forecasts?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Cloudflare Wallets (announced Aug 4, 2026, Agents Week) give AI agents a human-readable wallet handle for paying APIs, MCP tools, content, and AI inference within limits set by the wallet's creator. There are two wallet types: <strong>Account Wallets</strong> (human/organization-owned; hold stablecoins, delegate spending) and <strong>Virtual Wallets</strong> (agent-owned, operate via API keys; an agent's maximum spend is capped by the Account Wallet owner). Per Virtual Wallet, the owner can define a <strong>spending cap / allowance</strong>, an approved merchant allow-list, and a maximum transaction size; agents that hit a limit must request a manual override from a human. Payments run on <strong>x402</strong> (HTTP 402 with a price manifest). Fees, stablecoins, and launch timing are still undisclosed — full access arrives "in the coming months." What changes for you: worst-case spend per agent becomes a known number (the cap), so monthly AI spend forecasts get a hard ceiling — that's exactly what the <a href="#wallet-estimator" style="color:var(--cyan-light);">Agent Wallet &amp; Spend Cap Estimator</a> above models, capped vs uncapped. Use it before quoting a retainer: if your agent workloads would exceed the client's wallet cap, either the client's cap needs raising (with a documented manual override) or the retainer needs a variable-compute pass-through.
@@ -2879,10 +2946,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is the compute supply scenario on this calculator?
+        <button onclick="toggleFaq(this)"><strong>What is the compute supply scenario on this calculator?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             It is a supply-side risk module that compares your baseline per-token cost against a power-constrained outlook for 2026-2027. The driver: Gartner forecasts global data center electricity up 26% in 2026 to 565 TWh, passing 1,200 TWh by 2030 where grid supply may be insufficient — power, not chips, is becoming the binding constraint. The offsets: capacity already locked in years ahead (up to 5GW AWS Trainium under Anthropic's &gt;$100B/10yr commitment, and ~3.5GW Google TPU via Broadcom from 2027). You set a grid/power pass-through percentage (ESTIMATE) and a locked-in capacity relief percentage (ESTIMATE); the scenario shows the monthly and 12-month delta vs your baseline. Both percentages are projections, not published prices, and no capital/capacity/lease terms were disclosed for Theseus Infrastructure. <a href="#compute-supply-estimator" style="color:var(--cyan-light);">Run the Compute Supply Scenario above ↑</a>
@@ -2891,10 +2957,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Do data-center bans affect AI capacity and what I pay for tokens?
+        <button onclick="toggleFaq(this)"><strong>Do data-center bans affect AI capacity and what I pay for tokens?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Yes — and the risk now starts before the API. More than 500 local jurisdictions ban or restrict new data-center construction, up from roughly 300 in late June 2026, and 7 in 10 Americans oppose AI data-center builds in their area. Bans don't move today's API list prices; they constrain the supply of new capacity, raise buildout and energy costs, and stretch lead times — the cost base that sets tomorrow's compute prices. Model the risk with a labeled infrastructure-risk buffer (an illustrative 5-10% add-on on compute line items plus a lead-time buffer in weeks) and re-run the estimate quarterly. Full analysis: <a href="/data-center-bans-ai-capacity-risk" style="color:var(--cyan-light);">Data Center Bans: The New AI Capacity Risk Agencies Face →</a>
@@ -2903,10 +2968,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How many clients do I need to make $10,000/month as an AI agency?
+        <button onclick="toggleFaq(this)"><strong>How many clients do I need to make $10,000/month as an AI agency?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             At an average retainer of $1,500/month, you need 7 clients. At $2,000/month average retainer, just 5 clients. At $3,000/month, only 4 clients. This is why positioning for medium-to-large clients (who can afford $2,000–$5,000/month) dramatically reduces client load while increasing revenue. Niching down into high-ROI industries like real estate, insurance, legal, or medical also lets you charge premium rates because the value of automation in those sectors is especially high.
@@ -2915,10 +2979,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Is it better to niche down or offer all AI services?
+        <button onclick="toggleFaq(this)"><strong>Is it better to niche down or offer all AI services?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Niche down — at least initially. Specializing in one industry (e.g., "AI automation for real estate agents" or "email automation for e-commerce brands") makes your marketing dramatically more effective, allows you to charge premium rates as a specialist, and lets you build productized service packages that you can deliver faster and at higher margins. Once you have a proven playbook in one niche, expanding to adjacent industries becomes much easier and less risky than starting as a generalist.
@@ -2927,10 +2990,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          When should I raise my rates as an AI agency owner?
+        <button onclick="toggleFaq(this)"><strong>When should I raise my rates as an AI agency owner?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             You should raise rates when: (1) You're consistently closing 80%+ of prospects — demand exceeds supply of your time. (2) You have 3+ strong case studies showing measurable client ROI. (3) You've been at the same rate for 6+ months. (4) Competitors are charging more for similar work. A simple strategy: raise rates by 20–30% on all new clients, then grandfather existing clients at old rates for 6 months before gradual increases. Many agency owners undercharge for years out of fear — but higher prices often attract better, more committed clients.
@@ -2939,10 +3001,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What do AI coding agents really cost, beyond the per-seat price?
+        <button onclick="toggleFaq(this)"><strong>What do AI coding agents really cost, beyond the per-seat price?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             AI coding agent entry plans run about $10–$20 per seat per month (GitHub Copilot at $10; Cursor, Claude Code, Windsurf, and OpenAI Codex around $20). The real cost is billing model × usage. TrueFoundry's Aug 6, 2026 guide breaks agents into three billing structures — flat per-seat (Cursor Pro, Windsurf Pro, Claude Pro), seat-plus-credits (GitHub Copilot Pro/Pro+/Max), and pay-per-token API (Claude Code API mode, OpenAI Codex) — and SpaceXAI's Grok Bot (Aug 11, 2026) adds a fourth: subscription-bundled agent access with no per-token meter and no standalone price (included with SuperGrok Heavy, Cursor Ultra, Cursor Teams Premium on macOS and iOS). Light autocomplete vs. all-day agent workflows can differ 20–50× in token consumption, so heavy users routinely land in the $100–$400+ range. <a href="https://findaiagency.com/ai-coding-agent-pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">Full pricing guide →</a>
@@ -2951,10 +3012,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Are Claude Code weekly usage limits going up or down on September 14, 2026?
+        <button onclick="toggleFaq(this)"><strong>Are Claude Code weekly usage limits going up or down on September 14, 2026?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>Net, down about 17%.</strong> On <strong>September 14, 2026</strong>, Anthropic is <strong>permanently raising Claude Code's standard weekly usage limits by 25% over the pre-promotion baseline</strong> for <strong>Pro, Max, Team, and seat-based Enterprise</strong> plans — but the <strong>temporary 50% weekly boost</strong> (active since May 13, 2026) <strong>expires the same day</strong> [1][4][5]. Normalizing the original baseline to 100: <strong>today's boosted limit is 150; the new permanent limit is 125</strong> — a net reduction of <strong>−16.7% (≈ −17%) vs today</strong>, a figure Anthropic itself confirmed: <em>"Compared to today, this works out to a 17% reduction in weekly limits on Claude Code."</em> [1][7] The boost stays in place <strong>through September 13</strong>; the new limits take effect <strong>September 14</strong> [1][8]. The change covers <strong>weekly limits only</strong>: 5-hour session limits, plan pricing, and API billing are unchanged [6][7][11]. Free plans and consumption-based Enterprise seats are excluded [6][7][11], and Anthropic does not publish fixed weekly message counts — all figures are ratios [4][6]. Use the <a href="#claude-code-limits-estimator" style="color:var(--cyan-light);">Claude Code Usage Limit Cost Impact Estimator</a> on this page to model what the cut does to your weekly workload and seat cost. Sources: <a href="https://x.com/ClaudeDevs/status/2093742321473065266" target="_blank" rel="noopener" style="color:var(--cyan-light);">@ClaudeDevs (Aug 29, 2026)</a> · <a href="https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-is-cutting-claude-codes-current-weekly-limits-by-17-percent/" target="_blank" rel="noopener" style="color:var(--cyan-light);">BleepingComputer</a> · <a href="https://www.macobserver.com/news/anthropic-raises-claude-code-weekly-limits-by-25-for-paid-plans" target="_blank" rel="noopener" style="color:var(--cyan-light);">MacObserver</a> · <a href="https://www.notebookcheck.net/Anthropic-announces-a-25-increase-to-Claude-Code-limits-but-there-s-a-17-catch.1382735.0.html" target="_blank" rel="noopener" style="color:var(--cyan-light);">Notebookcheck</a>
@@ -2963,10 +3023,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How much will the Sept 14 Claude Code weekly limit cut cost my agency?
+        <button onclick="toggleFaq(this)"><strong>How much will the Sept 14 Claude Code weekly limit cut cost my agency?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Use the ratio, not a guess at absolute numbers: after <strong>Sept 14, 2026</strong> your weekly cap is <strong>83.3% of today's</strong> (125/150), so any workload that used <strong>100% of today's cap now consumes 120% of the new cap</strong> — the same weekly workload needs about <strong>20% more plan headroom or usage credits</strong> [1][8]. In dollar terms, keeping today's absolute capacity costs roughly <strong>1.2× the current seat line</strong>: a Max 5x seat at $100/mo ≈ $120/mo equivalent after Sept 14. Anthropic has not published fixed weekly message or token counts, so these are ratios, not absolute limits [4][6]. Run the <a href="#claude-code-limits-estimator" style="color:var(--cyan-light);">Claude Code Usage Limit Cost Impact Estimator</a> on this page with your own usage, seat price, and headcount. Full analysis: <a href="/claude-code-usage-limit-cost-impact" style="color:var(--cyan-light);">Claude Code Usage Limit Cost Impact</a>.
@@ -2975,10 +3034,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How did the Codex 20M-user milestone and banked resets change agency costs?
+        <button onclick="toggleFaq(this)"><strong>How did the Codex 20M-user milestone and banked resets change agency costs?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>No list price changed — the capacity and billing story did.</strong> Codex and ChatGPT Work crossed <strong>20 million active users</strong> the week of Aug 21, 2026 (up from 15M a week earlier), and OpenAI credited every paid user a <strong>banked reset</strong>: a saved usage-limit credit that resets both the 5-hour and weekly windows when you redeem it (OpenAI Help Center). The rollout missed its Aug 21 deadline; OpenAI then set a firmer <strong>8pm PST same-evening deadline</strong>, which also passed for many users, and announced a new reset for <strong>2026-08-24T21:00:00Z (2pm PST)</strong> after finding usage inefficiencies. This calculator models API/token and project pricing, not seat-based subscriptions, so the milestone does <strong>not</strong> change the token math. Agency takeaway: keep Codex/ChatGPT Work <strong>subscription seats as a separate line item</strong> from token pricing, verify usage limits before quoting fixed-fee retainers, and treat banked resets as <strong>scheduling insurance, not a billing line</strong>. Full breakdown: <a href="/codex-pricing" style="color:var(--cyan-light);">Codex Pricing 2026: Plans, Limits &amp; Banked Reset for Agencies</a>.
@@ -2987,10 +3045,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How much does Grok Bot cost?
+        <button onclick="toggleFaq(this)"><strong>How much does Grok Bot cost?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             No standalone price has been announced. Grok Bot (SpaceXAI, announced Aug 11, 2026) is in beta and included with eligible subscriptions — SuperGrok Heavy, Cursor Ultra, and Cursor Teams Premium — on desktop (macOS) and iOS, with an enterprise waitlist. It runs always-on agents on a cloud computer, so jobs keep going when the laptop is closed, and no usage caps have been published. Because there is no per-token meter, this calculator treats it as a bundled line item rather than a usage-modeled cost — budget the eligible subscription, not a token bill. <a href="https://x.ai/news/introducing-grok-bot" target="_blank" rel="noopener" style="color:var(--cyan-light);">Official announcement →</a>
@@ -2999,10 +3056,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How much can model choice change AI coding agent cost?
+        <button onclick="toggleFaq(this)"><strong>How much can model choice change AI coding agent cost?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Dramatically. On credit plans, premium models can burn credits up to 8× faster than standard ones — a task that costs one credit unit on a standard model might cost eight on a frontier model (TrueFoundry, Aug 6, 2026). Annual billing typically discounts 15–20%, and free/entry tiers often carry quotas teams exceed within weeks. That's exactly why this calculator exposes <strong>Model Strategy</strong> (open-weight vs. hybrid vs. frontier) and <strong>Delivery Risk</strong> as separate levers: the model picker is a cost lever, not just a settings control.
@@ -3010,10 +3066,9 @@
         </div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What are ChatGPT Business Premium seats and how do they change client-side costs?
+        <button onclick="toggleFaq(this)"><strong>What are ChatGPT Business Premium seats and how do they change client-side costs?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             OpenAI launched ChatGPT Business Premium seats in August 2026: <strong>$125 per user per month billed monthly</strong>, or <strong>$100 per user per month billed annually</strong> (a 20% annual discount), versus <strong>$25/$20 per user per month for Standard seats</strong>. Premium seats include <strong>5x more usage than Standard</strong>, are <strong>not subject to the five-hour usage limit</strong>, and get <strong>predictable weekly usage resets</strong>. A workspace requires at least <strong>2 paid seats</strong> (any mix of Standard + Premium) and, since Aug 24, 2026, caps at <strong>200 paid seats</strong> per subscription; larger deployments move to ChatGPT Enterprise (sales-led). Use the <a href="#chatgpt-seats-estimator" style="color:var(--cyan-light);">ChatGPT Business Seat Cost Estimator</a> on this page to model monthly and annual totals for Standard or Premium seats. Sources: <a href="https://openai.com/index/premium-seats-chatgpt-business/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI's announcement</a> + <a href="https://help.openai.com/en/articles/8542115-chatgpt-business-general-faq" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI Help Center</a> (verified Aug 25, 2026). Full breakdown: <a href="/chatgpt-business-premium-seats-pricing" style="color:var(--cyan-light);">ChatGPT Business Premium Seats Pricing (2026)</a>.
@@ -3022,10 +3077,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is AI supplier risk and should it change my cost estimates?
+        <button onclick="toggleFaq(this)"><strong>What is AI supplier risk and should it change my cost estimates?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>AI supplier risk</strong> is the chance that a model provider's release timeline, safety posture, or roadmap shifts in ways that affect your stack's cost or availability. Real-world example: on <strong>Aug 18, 2026</strong>, OpenAI announced a <strong>two-week pause in reinforcement-learning training</strong> on its latest deployment-bound models and held its <strong>largest planned frontier RL run on hold</strong>, after internal evaluations flagged its upcoming Astra model at the <strong>"Critical" cyber-capability threshold</strong> under its Preparedness Framework — core Astra training continued and no model was cancelled. No published API prices changed, so this calculator's math stands, but provider roadmaps can shift and the <strong>~20% monitoring overhead</strong> on frontier inference may add modest price pressure over time. <strong>Guidance:</strong> when evaluating AI costs and risks, include <strong>fallback AI models</strong> in your stack and review each provider's <strong>tooling roadmap</strong> before locking in long-term pricing or client deliverables. <em>(Dated Aug 19, 2026; source: <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI — Pacing model development in an era of cyber-critical capabilities</a>.)</em>
@@ -3034,10 +3088,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is the OpenAI safety-monitoring overhead toggle and should I turn it on?
+        <button onclick="toggleFaq(this)"><strong>What is the OpenAI safety-monitoring overhead toggle and should I turn it on?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             The toggle is a <strong>stress-test switch (OFF by default)</strong> in the Model Strategy section. When ON, it applies a <strong>+20% multiplier to OpenAI-based strategies</strong> — <strong>GPT-5.6 Sol</strong> and <strong>Paid frontier only (Claude, GPT)</strong> — to model what would happen if OpenAI's safety-monitoring compute overhead were priced into API costs. The basis: on <strong>Aug 18, 2026</strong>, OpenAI estimated its expanded chain-of-thought safety monitoring adds <strong>roughly 20% overhead to the inference compute it monitors</strong> — required for all RL training and evaluations involving tools for models of <strong>Sol capability or higher</strong>, plus <strong>all Astra inference with tools</strong> after its Aug 7 Critical cyber-capability determination. Two things keep this a what-if, not a price change: <strong>OpenAI is not currently billing customers for the overhead</strong> (spokesperson via <a href="https://www.theregister.com/ai-and-ml/2026/08/19/openais-overhead-will-rise-20-percent-for-some-workloads-as-it-hardens-security/5289303" target="_blank" rel="noopener" style="color:var(--cyan-light);">The Register</a>, Aug 19, 2026; corroborated by <a href="https://thenextweb.com/news/openai-20-percent-compute-overhead-safety-monitoring" target="_blank" rel="noopener" style="color:var(--cyan-light);">TNW</a>), and <strong>Anthropic says its safeguards make a similar slowdown unnecessary</strong> (<a href="https://www.axios.com/2026/08/19/openai-astra-safety-altman-anthropic" target="_blank" rel="noopener" style="color:var(--cyan-light);">Axios</a>, Aug 19, 2026). The toggle has <strong>no effect on Anthropic (Claude), Google (Gemini), DeepSeek, open-weight, or local strategies</strong> — use it to stress-test an OpenAI-heavy quote, then leave it OFF for today's pricing. <em>(Source: <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI — Pacing model development in an era of cyber-critical capabilities</a>, Aug 18, 2026; verified via research brief t_b34197c5.)</em>
@@ -3046,10 +3099,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How should I price ChatGPT Ads management for clients in the EU?
+        <button onclick="toggleFaq(this)"><strong>How should I price ChatGPT Ads management for clients in the EU?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Price it as a <strong>pilot → retainer</strong> with a management fee on ad spend. OpenAI expands ChatGPT Ads to <strong>31 European markets on Aug 24, 2026</strong> (40 markets total); ads appear on <strong>Free and Go tiers only</strong> (Go ≈ €8/mo; Plus/Pro/Enterprise ad-free), and buying is <strong>agency-led first</strong> — advertisers go through the OpenAI Ads Solutions team, agency partners, and tech partners, with a self-serve Ads Manager following "later this summer." A defensible package: <strong>$1,500–$5,000 setup</strong> (account structure, conversion tracking/oCPC, GDPR-compliant targeting, creative prep) + <strong>15–25% of ad spend</strong> as monthly management fee, <strong>floored at $2,000/mo</strong> to cover the manual review, policy monitoring (rules changed 4× in 5 months), creative iteration, and reporting — and <strong>capped around $7,500/mo</strong> as a typical rollout retainer. Ad spend is pass-through: the client pays OpenAI directly, so the management fee is the agency's revenue. EU campaigns cannot rely on Google/Meta-style personalization (GDPR consent requirements), so lead with conversation context and brand safety; health, mental-health, and political content are ineligible; under-18 excluded. Measurement is early — run a 2–3 month instrumented pilot against a Google AI Mode baseline before promising scale. Source: <a href="https://openai.com/index/chatgpt-ads-expands-across-europe" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI — ChatGPT Ads expands across Europe (Aug 18, 2026)</a> · <a href="https://searchengineland.com/chatgpt-ads-are-expanding-to-31-european-countries-485468" target="_blank" rel="noopener" style="color:var(--cyan-light);">Search Engine Land</a> · <a href="https://dataconomy.com/2026/08/19/openai-chatgpt-ads-launch-european-markets-august-24" target="_blank" rel="noopener" style="color:var(--cyan-light);">Dataconomy</a> — verified via research brief t_ff98639f.
@@ -3058,10 +3110,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How much will Meta's Hatch AI agent cost?
+        <button onclick="toggleFaq(this)"><strong>How much will Meta's Hatch AI agent cost?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             <strong>Reported, not final.</strong> The Information (Jun 4 + Aug 24, 2026, via <a href="https://www.pymnts.com/news/artificial-intelligence/2026/meta-eyes-200-dollar-per-month-price-tag-hatch-ai-agent" target="_blank" rel="noopener" style="color:var(--cyan-light);">PYMNTS</a> and <a href="https://runtimewire.com/article/meta-hatch-ai-agent-watermelon-model-launch" target="_blank" rel="noopener" style="color:var(--cyan-light);">RuntimeWire</a>) reports Meta has <strong>considered</strong> a premium "Hatch Plus" tier priced <strong>up to $199.99/month</strong> (5–10× the daily capacity of a free tier), but <strong>final pricing is NOT set</strong> and Hatch has not shipped as of Aug 25, 2026. Launch is targeted for <strong>late August or early September 2026</strong>, with a new model codenamed <strong>Watermelon</strong> targeted for October. Treat $199.99 as a reported/rumored anchor, not official pricing, until Meta announces. See the <a href="/blog/meta-hatch-ai-agent-pricing/" style="color:var(--cyan-light);">Meta Hatch AI Agent Price explainer</a> for the full breakdown and the consumer comparison table above.
@@ -3070,10 +3121,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What does Ramp's business-spend data show about Claude Fable 5, Opus 5, and GPT-5.6 Sol adoption?
+        <button onclick="toggleFaq(this)"><strong>What does Ramp's business-spend data show about Claude Fable 5, Opus 5, and GPT-5.6 Sol adoption?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             Ramp's August 2026 AI Index (businesses on its AI cost tracker, July 2026) shows flagship list price is not what most business workloads run on. Anthropic's flagship <strong>Claude Fable 5</strong> — the July 2026 model, superseded by <strong>Fable 5.1</strong> on Sept 1, 2026 at the same $10/$50 with $0.25 cache reads — drew only <strong>~6% of Anthropic business tokens and 11.4% of model-attributed Anthropic spend</strong>: the most expensive model by far, but a minority of usage. OpenAI's <strong>GPT-5.6 Sol</strong> (currently $4/$20 per 1M promo through Nov 21, 2026) holds <strong>~25% of OpenAI tokens and 23% of OpenAI spend</strong>, at roughly half of Fable 5's price. Anthropic's cheaper <strong>Claude Opus 5</strong> ($5/$25 per 1M, exactly half of Fable 5, launched late July 2026) has <strong>already overtaken Fable 5 in enterprise spending</strong>, per FT-cited Ramp data (via Superpower Daily / CIO) — note Ramp's own AI Index does not state the overtake, and WinBuzzer cautions Opus arrived too late in the measured month to explain the full July pattern. Agency takeaway: price retainers against a realistic model mix (Opus 5 / Sol / Sonnet 5 capture the volume), not against flagship list prices. Select <strong>Claude Opus 5</strong> in the Model Strategy dropdown to model this stack. Sources: <a href="https://ramp.com/data/ai-index-august-2026" target="_blank" rel="noopener" style="color:var(--cyan-light);">Ramp AI Index Aug 2026</a> · <a href="https://winbuzzer.com/2026/08/26/anthropic-fable-5-usage-spending-ramp-data-xcxwbn" target="_blank" rel="noopener" style="color:var(--cyan-light);">WinBuzzer</a> · <a href="https://www.breezyscroll.com/technology-news/anthropics-top-ai-model-struggles-to-win-business-users-as-cheaper-models-gain-ground" target="_blank" rel="noopener" style="color:var(--cyan-light);">BreezyScroll</a> · <a href="https://www.superpowerdaily.com/posts/anthropic-s-fable-5-has-11-of-enterprise-spend-as-cheaper-opus-5-pulls-ahead" target="_blank" rel="noopener" style="color:var(--cyan-light);">Superpower Daily (FT-cited)</a> — verified via research brief t_06f1cfb2.
@@ -3082,10 +3132,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What does the AgentCore Migration Estimator calculate?
+        <button onclick="toggleFaq(this)"><strong>What does the AgentCore Migration Estimator calculate?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             The AgentCore Migration Estimator models the monthly platform-bill delta between Bedrock Agents Classic and AgentCore — runtime ($0.0895/vCPU-hr + $0.00945/GB-hr active), gateway ($0.005/1K invocations), memory ($0.25/1K short-term events, $0.75/1K records/month long-term), web search ($7.00/1K queries), policy ($0.000025/request), plus the shared model-inference tokens — and adds the one-time migration labor range by agent complexity (hours–1 day simple, 1–3 weeks custom orchestration, 3–6 weeks multi-agent). Classic itself is free as a platform; the delta is typically cents while labor is the number that moves the quote. No EOL, no deadline — the migration is a strategy choice, not an emergency. Full analysis: <a href="/bedrock-agents-classic-agentcore-migration-cost" style="color:var(--cyan-light);">Bedrock Agents Classic → AgentCore Migration Cost</a>.
@@ -3094,10 +3143,9 @@
       </div>
 
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What is GPT-6 Astra and how is it priced?
+        <button onclick="toggleFaq(this)"><strong>What is GPT-6 Astra and how is it priced?</strong>
           <span class="faq-icon">+</span>
-        </button>
+        
         <div class="faq-answer">
           <div class="faq-answer-inner">
             GPT-6 Astra is OpenAI's flagship model launched Sept 3, 2026 (the first model to reach Critical tier under OpenAI's Preparedness Framework, built for complex reasoning, coding, computer use, research, and document creation). Standard API pricing: <strong>$10 per 1M input / $50 per 1M output / $1 per 1M cached input</strong> ($12.50 cache writes). The 272K rule: prompts with more than <strong>272K input tokens reprice the FULL request at 2x input and cache rates and 1.5x output</strong> — $20 input / $75 output / $2 cached / $25 cache writes per 1M. Context window: <strong>1,050,000 tokens</strong> (922K max input, 128K max output); Batch/Flex are 50% of standard, Fast mode 2x. Availability (Sept 4): <strong>live in the OpenAI API and in ChatGPT Work and Codex for all Pro, Enterprise, and Business Premium users</strong> per OpenAI's developer account; showing up in ChatGPT as GPT-6 Pro for Pro and Business first, with Plus chat access to follow. Astra Pro — the higher Work/Codex tier — is available to Pro, Business, and Enterprise plans; Enterprise admins enable it for their workspace (off by default at launch). Select <strong>GPT-6 Astra</strong> in the Model Strategy dropdown to model this stack, and use the <a href="#astra-context-scenario" style="color:var(--cyan-light);">GPT-6 Astra context scenario ↓</a> to see sub-272K vs above-272K cost math. Full analysis: <a href="/openai-gpt-6-astra-pricing" style="color:var(--cyan-light);">GPT-6 Astra API Pricing: $10/$50 per 1M, 272K Doubling, 1.05M Context</a>.
