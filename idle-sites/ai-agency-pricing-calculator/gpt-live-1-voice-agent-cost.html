@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT-Live-1 Voice Agent Cost per Minute: $0.05 Plus the Backend Bill</title>
+    <meta name="description" content="GPT-Live-1 bills $0.05 per minute of voice by the second, then bills the backend model, its tools and search separately. Worked per-call totals, the Realtime-2.1 comparison and concurrency sizing for a phone line.">
+    <meta name="keywords" content="gpt-live-1 pricing, gpt-live-1 voice agent cost, gpt-live-1 cost per minute, gpt-live-1 cost calculator, cost of an ai voice agent per minute, gpt-live-1 vs gpt-realtime-2.1 cost, how many concurrent calls gpt-live-1, gpt-live-1 total cost of ownership, gpt-live-1 15 second initialization billing, voice agent backend model cost delegation, concurrent session rate limits voice api, ai receptionist cost per call 2026, 0.05 per minute voice api">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aiagencycalculator.com/gpt-live-1-voice-agent-cost">
+    <meta property="og:title" content="GPT-Live-1 Voice Agent Cost per Minute: $0.05 Plus the Backend Bill" />
+    <meta property="og:description" content="The $0.05 per minute is only half the bill. Model voice seconds plus backend reasoning tokens, then size the concurrent sessions your call volume needs." />
+    <meta property="og:url" content="https://aiagencycalculator.com/gpt-live-1-voice-agent-cost">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aiagencycalculator">
+    <meta property="og:image" content="https://aiagencycalculator.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "GPT-Live-1 Voice Agent Cost per Minute: $0.05 Plus the Backend Bill",
+      "description": "GPT-Live-1 bills $0.05 per minute of voice by the second, then bills the backend model, its tools and search separately. Worked per-call totals, the Realtime-2.1 comparison and concurrency sizing for a phone line.",
+      "datePublished": "2026-09-10",
+      "dateModified": "2026-09-10",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC"
+      },
+      "mainEntityOfPage": "https://aiagencycalculator.com/gpt-live-1-voice-agent-cost",
+      "image": "https://aiagencycalculator.com/og-image.png",
+      "keywords": "gpt-live-1 pricing, gpt-live-1 voice agent cost, gpt-live-1 cost per minute, cost of an ai voice agent per minute, gpt-live-1 vs gpt-realtime-2.1 cost, how many concurrent calls gpt-live-1, voice agent backend model cost delegation, ai receptionist cost per call 2026"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does GPT-Live-1 cost per minute?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A GPT-Live-1 voice session costs $0.05 per minute, billed per second and not rounded up to the whole minute, with the backend model, its tool calls and any web search billed separately at that model's normal rates. [OpenAI-published]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is GPT-Live-1 billed per second or per minute?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both: the rate is per minute ($0.05) and the meter is per second. A 40-second call bills $0.0333, not $0.05, and a 4-minute call bills $0.2000. [OpenAI-published]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the backend model included in the $0.05 per minute?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The $0.05 buys only the voice layer. Backend Responses calls, tool calls and web search bill separately at the configured backend model's rates, so on our default call shape a 4-minute call is $0.2000 of voice alone, $0.2040 with a GPT-5.6 Luna backend, $0.2396 with GPT-5.6 Terra, $0.2720 with GPT-5.6 Sol and $0.3800 with GPT-6 Astra. [OpenAI-published rule; our arithmetic]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the minimum charge for a GPT-Live-1 session?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "$0.0125. Creating a WebRTC session bills 15 seconds of voice duration up front, credited against the running session rather than stacked on top, so the effective rule is max(session seconds, 15). OpenAI's own example bills a 90-second session as 90 seconds, not 105. The WebSocket guide documents no equivalent init charge. [OpenAI-published, WebRTC-scoped]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does 1,000 GPT-Live-1 calls a day cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At a 4-minute average, 1,000 calls a day is 4,000 voice minutes, or $200.00 a day of voice — $6,000 in a 30-day month ($6,200 over 31 days and $6,083 as a calendar-average month) before a single backend token. Add a GPT-5.6 Terra backend at 6 turns of 1,500 input / 300 output tokens and the two-meter total is $239.60 a day and $7,188.00 a month. [Our arithmetic from OpenAI rates]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many concurrent sessions does GPT-Live-1 allow?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rate limits are measured in concurrent sessions, not requests per minute: 25 on Tier 1, then 50, 200, 300 and 500 on Tiers 2 through 5. The Free tier cannot call the model. [OpenAI-published]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I size concurrency for 1,000 calls a day?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use concurrent = calls per day × average call seconds ÷ open-hours seconds, then apply a peak factor. 1,000 × 240 seconds over an 8-hour window is 8.33 sessions on average, or 20.83 at a 2.5× noon peak, which still fits inside Tier 1's 25. Over a 12-hour window it is 5.56 on average and 13.89 at peak. [Our formula; tier numbers OpenAI-published]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "At what call volume do I outgrow Tier 1?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "About 1,500 calls a day at a 4-minute average, a 10-hour window and a 2.5× peak: 1,500 calls lands exactly on the 25-session ceiling and 1,600 needs Tier 2. Measured on average concurrency instead of peak, Tier 1's ceiling is roughly 3,750 four-minute calls a day in a 10-hour window. [Our arithmetic; tier limits OpenAI-published]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is GPT-Live-1 cheaper than GPT-Realtime-2.1?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For typical call lengths, yes: $0.05 per minute flat against GPT-Realtime-2.1 audio at $32 per 1M input and $64 per 1M output audio tokens. At a planning assumption of 600 input and 600 output audio tokens per minute, Realtime audio is $0.0576 a minute and a 4-minute call $0.2304 versus $0.2000 flat; at 600 in / 1,200 out it is $0.0960 a minute and $0.3840 a call. Token metering only wins below roughly 481 output audio tokens per minute at 600 input (631 at 300 input, 781 with no input audio). The tokens-per-minute conversion is our assumption, not an OpenAI figure. [Rates OpenAI-published; conversion and break-even ours]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use a non-OpenAI backend model with GPT-Live-1?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. GPT-Live-1 delegates reasoning and tool calls to a backend text model, and OpenAI's announcement states that backend can be a third-party model — which is also the lever that moves the backend half of the bill. [OpenAI-published]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is migrating my Realtime integration to GPT-Live-1 not a model-ID swap?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because the integration changes, not just the model name. The event protocol is different (input_audio_buffer.append becomes session.input_audio.append; response.output_audio.delta becomes session.output_audio.delta), GPT-Live has no event marking the end of each spoken response, manual audio commits and voice-turn triggers are removed, and delegation to a backend model is new. GPT-Live does document both transports: WebRTC for browser apps and WebSockets for server-side audio. [OpenAI-published]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does muting the microphone stop the GPT-Live-1 meter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Active session time includes time when the user speaks, the assistant speaks, both are silent, or the backend is working — and muting microphone input does not close the session. Closing the session is what saves $0.05 per idle minute. [OpenAI-published]"
+          }
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 820px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.1rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.45rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.15rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.02rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        a, p, li, td, th { overflow-wrap: anywhere; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.92rem; }
+        th, td { padding: 9px 12px; text-align: left; border-bottom: 1px solid #e8e8f0; vertical-align: top; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        td.num, th.num { text-align: right; white-space: nowrap; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; margin-bottom: 6px; }
+        .shortanswer { padding: 20px 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 10px; margin: 0 0 24px; }
+        .shortanswer p { margin-bottom: 0; }
+        .label { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; background: #eef2ff; color: #1d4ed8; margin-right: 6px; }
+        .label.assume { background: #fff4e5; color: #a15c00; }
+        .label.openai { background: #e8f7ee; color: #10703c; }
+        .calc { margin: 24px 0 8px; padding: 22px; background: #f8f9ff; border: 1px solid #dfe6f5; border-radius: 12px; }
+        .calc h3 { margin-top: 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px 16px; margin: 12px 0 6px; }
+        .field label { display: block; font-size: 0.82rem; color: #555; font-weight: 600; margin-bottom: 4px; }
+        .field input, .field select { width: 100%; padding: 7px 9px; border: 1px solid #cdd6e6; border-radius: 7px; font-size: 0.95rem; background: #fff; color: #1a1a2e; }
+        .out { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 16px 0 4px; }
+        .out .card { background: #fff; border: 1px solid #e3e8f4; border-radius: 10px; padding: 12px 14px; }
+        .out .k { display: block; font-size: 0.76rem; color: #666; text-transform: uppercase; letter-spacing: 0.02em; font-weight: 700; }
+        .out .v { display: block; font-size: 1.18rem; font-weight: 700; color: #111; margin-top: 2px; }
+        .out .v small { font-weight: 500; color: #666; font-size: 0.8rem; }
+        .preset-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+        .preset-row button { background: #fff; border: 1px solid #cfe3ff; color: #1d4ed8; font-size: 0.85rem; font-weight: 600; padding: 7px 12px; border-radius: 20px; cursor: pointer; }
+        .preset-row button:hover { background: #eef2ff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 8px; }
+        .faq-item p { margin-bottom: 0; color: #333; font-size: 1rem; }
+        .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88rem; background: #f4f6fb; padding: 2px 6px; border-radius: 5px; overflow-wrap: anywhere; }
+        .tw { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+        .tw table { margin: 0; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; margin-left: 0; }
+        .related li { margin-bottom: 10px; }
+        .note { font-size: 0.85rem; color: #666; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.65rem; } table { font-size: 0.85rem; } th, td { padding: 8px 8px; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>GPT-Live-1 Voice Agent Cost per Minute: $0.05 Plus the Backend Bill</h1>
+            <div class="meta"><span>Published September 10, 2026</span><span>Updated September 10, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>GPT-Live-1 pricing</span> <span>Voice agent cost</span> <span>Capacity planning</span></div>
+        </header>
+
+        <div class="shortanswer">
+            <p><strong>The two-meter problem in one line:</strong> GPT-Live-1 bills voice at a flat <strong>$0.05 per
+            minute, charged by the second</strong>, while the backend half of the same call bills by the token at
+            whatever reasoner you delegate to — so the bill scales with <strong>how hard callers make the agent
+            think</strong>, not with how long they talk, and a 4-minute call is <strong>$0.2000
+            of voice plus anywhere from $0.0040 to $0.78 of
+            backend reasoning</strong> on the call shapes below.</p>
+        </div>
+
+        <p>The two meters are what separates GPT-Live-1 from every earlier voice API. The voice layer is priced like a
+        phone line and meters like a stopwatch; the reasoning layer is priced like text and meters like an API. You can
+        budget the first one from a call log and you cannot budget the second one without knowing your turn count,
+        token shape and tool-call share. This page prices both meters on the same call, sizes the concurrent-session
+        ceiling that actually constrains a phone line, and is deliberately explicit about which numbers are
+        OpenAI-published and which are our modelling assumptions. The interactive
+        <a href="https://aiagencycalculator.com/gpt-live-1-cost-calculator">GPT-Live-1 cost calculator</a> holds the full parameter set; the worked examples below are
+        produced by the same model code it runs.</p>
+
+        <h2>The billing model, exactly as OpenAI publishes it</h2>
+        <div class="tw"><table>
+            <tr><th>Rule</th><th>What it says</th><th>Where it is published</th></tr>
+            <tr><td>Voice rate</td><td>$0.05 per minute of voice session, per model</td><td>Model card, pricing page, cost guide <span class="label openai">OpenAI-published</span></td></tr>
+            <tr><td>Meter</td><td>Billed <strong>per second</strong>, with no round-up to the next whole minute</td><td>Model card: "Session duration is not rounded up to the next whole minute" <span class="label openai">OpenAI-published</span></td></tr>
+            <tr><td>Billable basis</td><td>Active session time: caller speaking, assistant speaking, mutual silence, or the backend working. Muting the mic does not close the session.</td><td>Voice latency &amp; cost guide <span class="label openai">OpenAI-published</span></td></tr>
+            <tr><td>WebRTC init</td><td>A <span class="mono">POST /v1/live/sessions</span> WebRTC session bills 15 seconds at creation, <strong>credited</strong> against duration once it runs — a floor, not an adder</td><td>Voice latency &amp; cost guide, WebRTC guide <span class="label openai">OpenAI-published</span></td></tr>
+            <tr><td>Backend</td><td>Backend Responses calls, tool calls and web search bill separately at the configured model's normal rates</td><td>Pricing page, cost guide, delegation guide <span class="label openai">OpenAI-published</span></td></tr>
+            <tr><td>Month length</td><td>OpenAI defines no month; every monthly figure here states its day count</td><td><span class="label assume">Our convention</span></td></tr>
+        </table></div>
+
+        <h3>Per-second billing in practice</h3>
+        <p>The rate is per minute and the meter is per second, which is why the arithmetic an agency quotes is not
+        "minutes × $0.05". On the published rate table:</p>
+        <div class="tw"><table>
+            <tr><th>Session length</th><th class="num">Billed seconds</th><th class="num">Voice cost</th><th>Note</th></tr>
+            <tr><td>0:40</td><td class="num">40 s</td><td class="num">$0.0333 (3.33¢)</td><td>No round-up: a 40-second call is not a $0.05 minute</td></tr>
+            <tr><td>0:05 (WebRTC)</td><td class="num">15 s</td><td class="num">$0.0125</td><td>The 15-second init floor governs: the shortest possible WebRTC session</td></tr>
+            <tr><td>0:05 (WebSocket)</td><td class="num">5 s</td><td class="num">$0.0042</td><td>No init charge is documented on the WebSocket path</td></tr>
+            <tr><td>1:30</td><td class="num">90 s</td><td class="num">$0.0750</td><td>OpenAI's own worked example: billed as 90 s, "not ... 105 seconds"</td></tr>
+            <tr><td>4:00</td><td class="num">240 s</td><td class="num">$0.2000</td><td>The default call shape used throughout this page</td></tr>
+            <tr><td>10:00</td><td class="num">600 s</td><td class="num">$0.50</td><td>Flat across the hour: no volume discount, no peak tariff</td></tr>
+        </table></div>
+        <p><strong>The init rule, stated as a formula:</strong> <span class="mono">billed_seconds = max(session_seconds,
+        15)</span> for WebRTC; <span class="mono">session_seconds</span> for WebSocket, where no init charge is
+        documented. The 15 seconds is credited rather than stacked — the reason OpenAI's 90-second example bills
+        as 90 seconds and not 105. Two consequences worth quoting to a client: the cheapest possible WebRTC session is
+        <strong>$0.0125</strong>, and an application that creates sessions before the caller is
+        ready to speak pays for the privilege. Reconnects are billed the same way, so a flaky transport is a line item
+        rather than a rounding error.</p>
+
+        <h3>What the $0.05 does not include</h3>
+        <ul>
+            <li><strong>The backend model.</strong> Delegated Responses calls bill at that model's published token rates, including cached input where supported.</li>
+            <li><strong>Tool calls and web search.</strong> Hosted tools such as web search bill at model rates on top of the turns that triggered them.</li>
+            <li><strong>Telephony and your own infrastructure.</strong> GPT-Live-1 is the voice layer; the carrier, number and any media path are separate vendors.</li>
+            <li><strong>Idle voice time.</strong> Silence and backend-waiting time are billable at $0.05 a minute; at a 30% idle share on the default shape that is $0.0600 per call and $60.00 a day across 1,000 calls. Closing the session is what stops that meter.</li>
+        </ul>
+
+        <h2>GPT-Live-1 (flat per minute) vs GPT-Realtime-2.1 (audio tokens)</h2>
+        <p>The comparison that matters for procurement is not interactivity — it is whether a flat per-minute rate
+        beats token-metered audio on <em>your</em> call shape. GPT-Realtime-2.1 meters audio at <strong>$32 per 1M
+        input and $64 per 1M output audio tokens</strong> (OpenAI-published, Standard tier). Converted to a
+        per-minute rate:</p>
+        <div class="tw"><table>
+            <tr><th>Token shape per voice minute</th><th class="num">Realtime-2.1 audio rate</th><th class="num">Realtime 4-min call</th><th class="num">GPT-Live-1 flat 4-min call</th><th>Cheaper</th></tr>
+            <tr><td>600 in / 600 out <span class="label assume">planning assumption</span></td><td class="num">$0.0576/min</td><td class="num">$0.2304</td><td class="num">$0.2000</td><td>Flat rate, by $0.0304</td></tr>
+            <tr><td>600 in / 1,200 out <span class="label assume">planning assumption</span></td><td class="num">$0.0960/min</td><td class="num">$0.3840</td><td class="num">$0.2000</td><td>Flat rate, by $0.1840</td></tr>
+            <tr><td>300 in / 600 out <span class="label assume">planning assumption</span></td><td class="num">$0.0480/min</td><td class="num">$0.1920</td><td class="num">$0.2000</td><td>Token metering, by $0.0080</td></tr>
+            <tr><td>600 in / 0 out (listen-only)</td><td class="num">$0.0192/min</td><td class="num">$0.0768</td><td class="num">$0.2000</td><td>Token metering, by $0.1232</td></tr>
+        </table></div>
+        <p><strong>Where the flat rate wins:</strong> any conversational call that talks as much as it listens. At 600
+        input and 600 output audio tokens per minute the flat rate is <strong>$0.05 against $0.0576</strong>; at 600 in
+        / 1,200 out it is $0.05 against $0.0960, and the 4-minute gap widens to
+        $0.1840 per call —
+        $184.00 a day
+        at 1,000 calls. <strong>Where token metering would have been cheaper:</strong> output-light sessions. The
+        break-even is the output-token rate at which Realtime audio equals $0.05 a minute — about
+        <strong>481 output audio tokens per minute at 600 input</strong>,
+        631 at 300 input, or 781 if there is no input audio at all (the Realtime
+        calculator prints the combined break-even for your own in:out mix:
+        1,042 tokens a minute at 1:1).</p>
+        <p class="note"><strong>Model the floor, not the total, when you compare:</strong> $32/$64 are
+        GPT-Realtime-2.1's <em>audio</em> rows. The same model also publishes text ($4/$24 per 1M) and image ($5 per
+        1M) rows, so a real Realtime session can bill more than audio tokens alone — the comparison above is a
+        floor for the token-metered side, which makes the flat rate's advantage, not its cost, the conservative
+        reading. The tokens-per-minute conversion itself is <em>our</em> planning assumption; OpenAI publishes no
+        fixed audio-token-per-minute figure.</p>
+        <p><strong>Normalize "$0.05 a minute" before you compare vendors.</strong> The same number buys three
+        different things: at OpenAI it is the <em>voice layer only</em> (backend, tools and search on top); Telnyx
+        publishes $0.05 per minute as an all-in voice-engine rate with the LLM and telephony stacked on it (its own
+        material puts a realistic all-in figure near $0.056 a minute); xAI's Grok Voice Agent API publishes a flat
+        $0.05 a minute on its own terms. Ranking sticker prices across those three is comparing a component to a
+        system. The safe quote for a client is always the two-meter total on this page: voice seconds plus backend
+        tokens, with the backend model named.</p>
+
+        <h2>Worked examples: what a phone line actually bills</h2>
+        <p>Every figure in this section is produced by the same cost model the
+        <a href="https://aiagencycalculator.com/gpt-live-1-cost-calculator">GPT-Live-1 cost calculator</a> runs, and the comparison table at the end of the section was
+        re-checked against the calculator's rendered output. The call shape is the calculator's default: <strong>6
+        reasoning turns of 1,500 input / 300 output tokens</strong> per call, a 35% tool-call share (with no separate
+        tool fee, so the share only changes turn shapes), a 30% idle share, WebRTC transport, and a 30-day month.</p>
+
+        <div class="calc" id="estimator">
+            <h3>Two-meter estimator (same model as the calculator)</h3>
+            <p class="note" style="margin-bottom:10px;">Change any field to re-price the call. Voice is OpenAI's
+            published $0.05/min per second with the 15-second WebRTC floor; the backend line uses each model's
+            published token rates. Volume, turn, token and tool inputs are modelling assumptions you own.</p>
+            <div class="preset-row" id="presetRow">
+                <button type="button" data-scenario="default">Default case (4:00 × 1,000 calls)</button>
+                <button type="button" data-scenario="luna">Cheap reasoner (Luna)</button>
+                <button type="button" data-scenario="astra">Expensive reasoner (Astra)</button>
+                <button type="button" data-scenario="blowout">Backend blowout</button>
+                <button type="button" data-scenario="shortcall">Short calls (0:40)</button>
+                <button type="button" data-scenario="capacity">Tier-1 stress (1,600/day @ 2.5×)</button>
+            </div>
+            <div class="grid">
+                <div class="field"><label for="callMin">Call minutes</label><input type="number" id="callMin" value="4" min="0" max="120" step="1"></div>
+                <div class="field"><label for="callSec">Call seconds</label><input type="number" id="callSec" value="0" min="0" max="59" step="5"></div>
+                <div class="field"><label for="callsPerDay">Calls per day</label><input type="number" id="callsPerDay" value="1000" min="0" max="200000" step="100"></div>
+                <div class="field"><label for="openHours">Open hours per day</label><input type="number" id="openHours" value="8" min="1" max="24" step="1"></div>
+                <div class="field"><label for="peakFactor">Peak factor (busy hour)</label><input type="number" id="peakFactor" value="1" min="1" max="5" step="0.25"></div>
+                <div class="field"><label for="backendModel">Backend model</label>
+                    <select id="backendModel">
+                        <option value="gpt-5.6-terra" selected>GPT-5.6 Terra (OpenAI's example)</option>
+                        <option value="gpt-5.6-luna">GPT-5.6 Luna (cost-sensitive)</option>
+                        <option value="gpt-6-astra">GPT-6 Astra (complex)</option>
+                        <option value="gpt-5.6-sol">GPT-5.6 Sol</option>
+                        <option value="gpt-5.6-cyber">GPT-5.6 Cyber</option>
+                        <option value="custom">Custom / third-party</option>
+                    </select></div>
+                <div class="field"><label for="turnsPerCall">Reasoning turns per call</label><input type="number" id="turnsPerCall" value="6" min="0" max="60" step="1"></div>
+                <div class="field"><label for="inTokens">Input tokens per turn</label><input type="number" id="inTokens" value="1500" min="0" max="200000" step="100"></div>
+                <div class="field"><label for="outTokens">Output tokens per turn</label><input type="number" id="outTokens" value="300" min="0" max="20000" step="50"></div>
+                <div class="field"><label for="toolShare">Turns that call a tool (%)</label><input type="number" id="toolShare" value="35" min="0" max="100" step="5"></div>
+                <div class="field"><label for="toolExtraTokens">Extra input tokens per tool call</label><input type="number" id="toolExtraTokens" value="0" min="0" max="200000" step="100"></div>
+                <div class="field"><label for="toolCost">Cost per tool invocation ($)</label><input type="number" id="toolCost" value="0" min="0" max="10" step="0.01"></div>
+                <div class="field"><label for="tier">Tier to check</label>
+                    <select id="tier">
+                        <option value="auto" selected>Auto — smallest tier that fits</option>
+                        <option value="1">Tier 1 — 25 concurrent sessions</option>
+                        <option value="2">Tier 2 — 50</option>
+                        <option value="3">Tier 3 — 200</option>
+                        <option value="4">Tier 4 — 300</option>
+                        <option value="5">Tier 5 — 500</option>
+                        <option value="free">Free — not supported for GPT-Live</option>
+                    </select></div>
+            </div>
+            <div class="out">
+                <div class="card"><span class="k">Voice per call</span><span class="v" id="oVoice">$0.2000 <small>(240 s billed)</small></span></div>
+                <div class="card"><span class="k">Backend per call</span><span class="v" id="oBackend">$0.0396 <small>16.5% of the bill</small></span></div>
+                <div class="card"><span class="k">Two-meter total per call</span><span class="v" id="oTotal">$0.2396</span></div>
+                <div class="card"><span class="k">Per day</span><span class="v" id="oDay">$239.60 <small>$200.00 voice</small></span></div>
+                <div class="card"><span class="k">Per 30-day month</span><span class="v" id="oMonth">$7,188.00</span></div>
+                <div class="card"><span class="k">Concurrent sessions needed</span><span class="v" id="oConc">8.33 avg <small>peak 8.33</small></span></div>
+            </div>
+            <p class="note" id="oVerdict" style="margin:14px 0 0;">Tier 1 (ceiling 25): the peak of 8.33 sessions fits, with headroom for 16.67 more. Budget is the binding constraint at this volume, not capacity.</p>
+            <p class="note" style="margin:10px 0 0;">Realtime-2.1 audio at 600 in / 600 out per minute would bill
+            <span id="oRt">$0.0576/min, i.e. $0.2304 for this call</span> — <span id="oRtVerdict">the flat
+            rate wins.</span> Sources and provenance: <a href="https://aiagencycalculator.com/gpt-live-1-cost-calculator">full calculator</a> (JSON export included).</p>
+        </div>
+
+        <h3>Example 1 — the default: 4:00 calls at 1,000 a day</h3>
+        <div class="tw"><table>
+            <tr><th>Line</th><th class="num">Per call</th><th class="num">Per day (1,000 calls)</th><th class="num">Per month (30 days)</th></tr>
+            <tr><td>Voice meter — 240 s × $0.05/min</td><td class="num">$0.2000</td><td class="num">$200.00</td><td class="num">$6,000.00</td></tr>
+            <tr><td>Backend meter — GPT-5.6 Terra, 6 turns × 1,500 in / 300 out</td><td class="num">$0.0396</td><td class="num">$39.60</td><td class="num">$1,188.00</td></tr>
+            <tr><td><strong>Two-meter total</strong></td><td class="num"><strong>$0.2396</strong></td><td class="num"><strong>$239.60</strong></td><td class="num"><strong>$7,188.00</strong></td></tr>
+        </table></div>
+        <p>The voice half is the number an agency can quote from a call log: <strong>$200.00 a day,
+        $6,000.00 in a 30-day month</strong> ($6,200.00 over 31 days,
+        $6,083.33 as a calendar-average month) — before a single backend token. The backend
+        half is small on this shape ($19.8% of the voice bill) precisely because Terra
+        is mid-priced and the turns are short. Change either and it stops being small.</p>
+
+        <h3>Example 2 — the same 4-minute call under every published backend</h3>
+        <div class="tw"><table>
+            <tr><th>Backend (6 turns × 1,500 in / 300 out)</th><th class="num">Backend $/call</th><th class="num">Backend as % of voice</th><th class="num">Total $/call</th><th class="num">Total $/day (1,000 calls)</th></tr>
+            <tr><td>GPT-5.6 Luna ($0.20 / $1.20 per 1M) — cost-sensitive</td><td class="num">$0.0040</td><td class="num">2.0%</td><td class="num">$0.2040</td><td class="num">$203.96</td></tr>
+            <tr><td>GPT-5.6 Terra ($2.00 / $12.00) — OpenAI's published example</td><td class="num">$0.0396</td><td class="num">19.8%</td><td class="num">$0.2396</td><td class="num">$239.60</td></tr>
+            <tr><td>GPT-5.6 Sol ($4.00 / $20.00, promo through Nov 21, 2026)</td><td class="num">$0.0720</td><td class="num">36.0%</td><td class="num">$0.2720</td><td class="num">$272.00</td></tr>
+            <tr><td>GPT-6 Astra ($10.00 / $50.00) — complex issues</td><td class="num">$0.1800</td><td class="num">90.0%</td><td class="num">$0.3800</td><td class="num">$380.00</td></tr>
+            <tr><td>GPT-6 Astra, long context + 10% data-residency uplift</td><td class="num">$0.3465</td><td class="num">173.2%</td><td class="num">$0.5465</td><td class="num">$546.50</td></tr>
+        </table></div>
+        <p><strong>The delegation choice is a bigger lever than the voice price.</strong> The voice meter is fixed at
+        $0.2000 for this call under every row; the backend meter ranges from
+        $0.0040 to $0.1800 — a
+        45× spread on the same conversation, set entirely
+        by which model the voice layer hands work to. At a $0.25-a-minute retail rate ($1.00 for a 4-minute call), the
+        gross margin on the call is 80.0% with no backend at all, 79.6%
+        on Luna, 76.0% on Terra and
+        62.0% on Astra.</p>
+
+        <h3>Example 3 — cheap voice, expensive reasoner: the backend blowout</h3>
+        <p>The failure mode to price before you sell it: keep the voice layer as the cheapest thing on the invoice and
+        point delegation at a frontier model with a high tool-call share. The calculator's "Backend blowout" preset
+        (GPT-6 Astra, 10 turns of 3,000 in / 800 out, 80% of turns calling a $0.01 tool with 1,200 extra input
+        tokens) produces:</p>
+        <div class="tw"><table>
+            <tr><th>Meter</th><th class="num">Per call</th><th class="num">Per day (1,000 calls)</th><th class="num">Per month (30 days)</th></tr>
+            <tr><td>Voice — unchanged 4:00 session</td><td class="num">$0.2000</td><td class="num">$200.00</td><td class="num">$6,000.00</td></tr>
+            <tr><td>Backend model tokens</td><td class="num">$0.7960</td><td class="num">$796.00</td><td class="num">$23,880.00</td></tr>
+            <tr><td>Tool invocations</td><td class="num">$0.0800</td><td class="num">$80.00</td><td class="num">$2,400.00</td></tr>
+            <tr><td><strong>Total</strong></td><td class="num"><strong>$1.0760</strong></td><td class="num"><strong>$1,076.00</strong></td><td class="num"><strong>$32,280.00</strong></td></tr>
+        </table></div>
+        <p>Voice is 18.6% of that bill; the backend is <strong>81.4%</strong>
+        — a backend bill of <strong>$0.8760</strong> against
+        $0.20 of voice, or 438% of the voice cost on a call
+        whose <em>voice</em> price never moved.
+        A second, tool-free stress case (12 turns of 4,000 in / 500 out on Astra) lands at
+        $0.78 of backend on a $0.20 voice bill: <strong>$0.98
+        a call, 4.9× the voice-only figure</strong> and
+        $29,400.00 a month at 1,000 calls a day. Neither case is exotic — both are the
+        natural result of a long, tool-using support call.</p>
+
+        <div class="cta">
+            <p><strong>Price your own call shape, both meters, in the full calculator</strong></p>
+            <a class="btn" href="https://aiagencycalculator.com/gpt-live-1-cost-calculator" data-umami-event="click_to_gpt_live_calculator">Open the GPT-Live-1 cost calculator →</a>
+            <p style="margin-top:12px;font-size:0.9rem;">Editable backend rates, cached-input share, tool fees,
+            long-context and data-residency uplifts, a concurrency planner against every tier, a Realtime break-even
+            and a JSON export you can hand to a client.</p>
+        </div>
+
+        <h2>Capacity planning: GPT-Live-1 limits are concurrent sessions, not requests per minute</h2>
+        <p>This is the second citable fact on the page, and the one that breaks launch-week calculations.
+        <strong>Rate limits for GPT-Live are measured in concurrent sessions</strong>, and the Free tier cannot call
+        the model at all. A phone line is therefore sized with Little's Law, not with a tokens-per-minute budget:</p>
+        <p><span class="mono">required_concurrent = (calls per day ÷ open hours) × average call seconds ÷ 3600 × peak factor</span></p>
+        <div class="tw"><table>
+            <tr><th>Tier</th><th class="num">Concurrent sessions</th><th>Qualification (OpenAI-published)</th><th class="num">4-min calls/day at the ceiling (10 h window, average)</th></tr>
+            <tr><td>Tier 1</td><td class="num">25</td><td>$5 paid and $100 a month of API spend</td><td class="num">3,750</td></tr>
+            <tr><td>Tier 2</td><td class="num">50</td><td>$50 and $500 a month</td><td class="num">7,500</td></tr>
+            <tr><td>Tier 3</td><td class="num">200</td><td>$100 and $1,000 a month</td><td class="num">30,000</td></tr>
+            <tr><td>Tier 4</td><td class="num">300</td><td>$250 and $5,000 a month</td><td class="num">45,000</td></tr>
+            <tr><td>Tier 5</td><td class="num">500</td><td>$1,000 and $200,000 a month</td><td class="num">75,000</td></tr>
+            <tr><td>Free</td><td class="num">not supported</td><td>GPT-Live sessions are unavailable on the Free tier</td><td class="num">—</td></tr>
+        </table></div>
+        <p>The right-hand column is our arithmetic on OpenAI's ceilings: a tier's concurrency limit covers its ceiling
+        × the minutes in your window ÷ your average call length. The practical version of the same table is
+        the volume ladder, at a 4-minute average call, a 10- or 12-hour window and a 2.5× busy-hour peak:</p>
+        <div class="tw"><table>
+            <tr><th>Calls/day</th><th>Window</th><th class="num">Average concurrent</th><th class="num">Peak at 2.5×</th><th class="num">Voice cost/day</th><th>Tier required</th></tr>
+            <tr><td>1,000</td><td>8 h</td><td class="num">8.33</td><td class="num">20.83</td><td class="num">$200.00</td><td>Tier 1 (25) — 83% of the ceiling</td></tr>
+            <tr><td>1,000</td><td>12 h</td><td class="num">5.56</td><td class="num">13.89</td><td class="num">$200.00</td><td>Tier 1 (25)</td></tr>
+            <tr><td>1,500</td><td>10 h</td><td class="num">10.00</td><td class="num">25.00</td><td class="num">$300.00</td><td>Tier 1 — exactly at the ceiling</td></tr>
+            <tr><td>1,600</td><td>10 h</td><td class="num">10.67</td><td class="num">26.67</td><td class="num">$320.00</td><td>Tier 2 (50) — the break point</td></tr>
+            <tr><td>2,500</td><td>10 h</td><td class="num">16.67</td><td class="num">41.67</td><td class="num">$500.00</td><td>Tier 2 (50)</td></tr>
+            <tr><td>5,000</td><td>10 h</td><td class="num">33.33</td><td class="num">83.33</td><td class="num">$1,000.00</td><td>Tier 3 (200)</td></tr>
+            <tr><td>10,000</td><td>12 h</td><td class="num">55.56</td><td class="num">138.89</td><td class="num">$2,000.00</td><td>Tier 3 (200)</td></tr>
+        </table></div>
+        <p><strong>Where Tier 1 actually breaks:</strong> on average concurrency, Tier 1's 25 sessions cover about
+        3,750 four-minute calls a day in a 10-hour window. Price the same line
+        against a realistic 2.5× noon peak and the ceiling arrives at
+        <strong>~1,500 calls a day</strong> —
+        1,600 calls a day already needs Tier 2 (peak
+        26.67 sessions) even though the average is only
+        10.67. At 5,000 calls a day in a 10-hour window the peak requirement is
+        83.33 sessions, which is why the answer to "how many concurrent calls can GPT-Live-1
+        handle?" is a tier question with a peak-factor clause, not a single number. Two operational corollaries: the
+        WebRTC 15-second init floor makes reconnect storms expensive, and the same concurrency budget is what your
+        carrier's trunk sizing has to match — a Tier-1 account cannot absorb an unlimited-retry client.</p>
+
+        <h2>Migration reality check: a protocol and delegation rewrite, not a model-ID swap</h2>
+        <p>GPT-Live-1 is not the Realtime API with a new model string. It documents two transports —
+        <strong>WebRTC for browser voice applications</strong> and <strong>WebSockets for server-side audio</strong>
+        (<span class="mono">wss://api.openai.com/v1/live/sessions</span>) — but the event contract differs from
+        Realtime, and delegation is new:</p>
+        <ul>
+            <li><strong>The event protocol changed.</strong> <span class="mono">input_audio_buffer.append</span> becomes
+            <span class="mono">session.input_audio.append</span>; <span class="mono">response.output_audio.delta</span>
+            becomes <span class="mono">session.output_audio.delta</span>.</li>
+            <li><strong>There is no event marking the end of each spoken response.</strong> Logic that waited for a
+            response boundary has to be rebuilt around session-level events.</li>
+            <li><strong>Manual turn control is gone.</strong> The migration guide is explicit: stream audio
+            continuously, GPT-Live decides when to speak, and manual audio commits and voice-turn triggers are
+            removed.</li>
+            <li><strong>Delegation is the new layer.</strong> The voice frontend delegates work to a backend model
+            instead of issuing ordinary structured function calls, which is also why a delegated backend
+            <em>does not automatically receive the waveform</em> — and why backend cost can accrue after the voice
+            session closes ("backend work may outlive the voice session").</li>
+            <li><strong>One model ID, one snapshot.</strong> <span class="mono">gpt-live-1</span> is its own default
+            snapshot; there is no dated variant to pin for reproducibility.</li>
+            <li><strong>A deliberately narrow endpoint surface.</strong> Live Sessions
+            (<span class="mono">v1/live/sessions</span>) is the supported endpoint; Chat Completions, Responses,
+            Realtime, Assistants, Batch, fine-tuning, embeddings, image generation and edits, video, speech/transcribe
+            and translation endpoints, and moderation are all documented as not supported for this model. Structured
+            outputs, fine-tuning and predicted outputs are unsupported features; streaming and function calling are
+            supported; the knowledge cutoff is July 31, 2025.</li>
+            <li><strong>Voices are fixed and custom voices are sales-gated.</strong> Twelve voices ship with the model
+            (Quartz, Ripple, Vesper, Willow, Stone, Gleam, Meridian, Bossa, Tempo, Beacon, Delta, Cinder), the default
+            session voice is <span class="mono">marin</span>, and custom voice access is a contact-sales request. Do
+            not model a custom-voice line item against a public rate — none is published.</li>
+        </ul>
+        <p>Budget the migration as engineering, not configuration: a transport and event-mapping rewrite, a
+        replacement for every turn-control assumption, and a new delegation path with its own tool and token budget.
+        The voice price does not change during that work; the schedule does.</p>
+
+        <h2>What the benchmarks do and do not say</h2>
+        <p>Every figure below is <strong>OpenAI-published and not independently reproduced</strong> — OpenAI's
+        announcement renders them as charts, and four of them were measured with a specific backend attached, which is
+        why the configuration column is part of the number rather than a footnote:</p>
+        <div class="tw"><table>
+            <tr><th>Evaluation (OpenAI-published)</th><th class="num">GPT-Live-1</th><th class="num">GPT-Realtime-2.1</th><th class="num">GPT-Realtime-2</th><th>Backend configuration</th></tr>
+            <tr><td>Full Duplex Bench v1.5 Interactivity</td><td class="num">80.10%</td><td class="num">45.4%</td><td class="num">47.8%</td><td>—</td></tr>
+            <tr><td>Full Duplex Bench v1 Turn-taking latency</td><td class="num">0.798 s</td><td class="num">1.41 s</td><td class="num">1.63 s</td><td>— (lower is better)</td></tr>
+            <tr><td>Tau3 (Voice) pass@1</td><td class="num">86.2%</td><td class="num">45.7%</td><td class="num">42.4%</td><td>GPT-Live-1 backend: Astra, medium reasoning effort</td></tr>
+            <tr><td>Tau Banking (Voice) pass@1</td><td class="num">32.0%</td><td class="num">12.4%</td><td class="num">10.3%</td><td>GPT-Live-1 backend: Astra, medium reasoning effort</td></tr>
+            <tr><td>Full Duplex Bench v3 Tool calling</td><td class="num">87.0%</td><td class="num">60.0%</td><td class="num">58.0%</td><td>GPT-Live-1 backend: Terra, low reasoning effort</td></tr>
+            <tr><td>Full Duplex Bench v3 Response quality</td><td class="num">90.0%</td><td class="num">88.0%</td><td class="num">81.0%</td><td>GPT-Live-1 backend: Terra, low reasoning effort</td></tr>
+            <tr><td>Artificial Analysis Conversational Dynamics</td><td class="num">97.3%</td><td class="num">95.7%</td><td class="num">95.3%</td><td>Reported by OpenAI on OpenAI's page</td></tr>
+        </table></div>
+        <ul>
+            <li><strong>Read the banking row before you sell a regulated workflow.</strong> Tau Banking (Voice) at
+            32.0% pass@1 means roughly <strong>two-thirds of the 97 published banking_knowledge tasks still fail</strong>
+            with an Astra-medium backend — a large improvement over 12.4%, and still not a number to put in front
+            of a compliance team as "solved".</li>
+            <li><strong>One internal inconsistency, flagged rather than reconciled.</strong> OpenAI's announcement prose
+            describes Full Duplex Bench performance as ahead "by 30 percentage points"; its own chart for the same
+            benchmark shows 80.10% against 45.4%, a 34.70-point gap. We quote the chart figures and attribute the prose
+            as prose — we do not silently average the two.</li>
+            <li><strong>Latency is a meter, too.</strong> A 0.798-second turn-taking figure is a product claim about
+            pacing; whether 0.8 s of dead air is acceptable in your vertical is a design decision, not a benchmark.</li>
+            <li><strong>Named deployments are vendor statements.</strong> OpenAI's page attributes Yelp Host and Hatch
+            (reservations and food orders) to Alex Levy, Yelp's CTO; a ~80% reduction in interruptions during thinking
+            pauses to Speak's co-founder and CTO Andrew Hsu as that vendor's own early evaluation; and quotes from Fin
+            (Jordan Neil, COO) and Cognition's Devin (Walden Yan, co-founder and CPO). Picsart, Heygen and OpenAI's own
+            Presence product are also named, with Presence gated behind an account director. None of these is an
+            independent measurement, and none includes a cost figure.</li>
+            <li><strong>$0.05 is an as-of price, not a permanent one.</strong> OpenAI states no expiry or permanence.
+            Date every quote: rate and tiers here are as of <strong>2026-09-10</strong>.</li>
+        </ul>
+
+        <h2>How to model your own voice-agent bill</h2>
+        <ol>
+            <li><strong>Log the voice meter first.</strong> Session seconds and the billed-seconds figure from the API
+            (not your audio playback time) give the irreducibly simple half: seconds ÷ 60 × $0.05.</li>
+            <li><strong>Log turns and tokens per call type.</strong> Backend cost is turn count × (input and output
+            tokens at the backend model's rates) — a 35% tool-call share with no extra tokens changes nothing, but
+            1,200 extra input tokens on 80% of turns changes everything.</li>
+            <li><strong>Choose the backend deliberately.</strong> Luna, Terra, Sol and Astra differ by up to
+            45× on an identical conversation. OpenAI
+            suggests Terra as the starting point, Luna for cost-sensitive volume and Astra for complex issues; a
+            third-party model is allowed.</li>
+            <li><strong>Size concurrency from the peak, not the average.</strong> Apply the formula above with your own
+            busy-hour factor, then check it against the tier ceiling — a capacity-limited line fails even when the
+            budget is fine.</li>
+            <li><strong>Re-check quarterly.</strong> Backend token rates move (Sol's promo runs through Nov 21, 2026),
+            and no independent reproduction of the benchmark figures exists yet.</li>
+        </ol>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>What does GPT-Live-1 cost per minute?</h3>
+            <p>A GPT-Live-1 voice session costs $0.05 per minute, billed per second and not rounded up to the whole minute, with the backend model, its tool calls and any web search billed separately at that model&#x27;s normal rates. [OpenAI-published]</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is GPT-Live-1 billed per second or per minute?</h3>
+            <p>Both: the rate is per minute ($0.05) and the meter is per second. A 40-second call bills $0.0333, not $0.05, and a 4-minute call bills $0.2000. [OpenAI-published]</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is the backend model included in the $0.05 per minute?</h3>
+            <p>No. The $0.05 buys only the voice layer. Backend Responses calls, tool calls and web search bill separately at the configured backend model&#x27;s rates, so on our default call shape a 4-minute call is $0.2000 of voice alone, $0.2040 with a GPT-5.6 Luna backend, $0.2396 with GPT-5.6 Terra, $0.2720 with GPT-5.6 Sol and $0.3800 with GPT-6 Astra. [OpenAI-published rule; our arithmetic]</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is the minimum charge for a GPT-Live-1 session?</h3>
+            <p>$0.0125. Creating a WebRTC session bills 15 seconds of voice duration up front, credited against the running session rather than stacked on top, so the effective rule is max(session seconds, 15). OpenAI&#x27;s own example bills a 90-second session as 90 seconds, not 105. The WebSocket guide documents no equivalent init charge. [OpenAI-published, WebRTC-scoped]</p>
+        </div>
+        <div class="faq-item">
+            <h3>What does 1,000 GPT-Live-1 calls a day cost?</h3>
+            <p>At a 4-minute average, 1,000 calls a day is 4,000 voice minutes, or $200.00 a day of voice — $6,000 in a 30-day month ($6,200 over 31 days and $6,083 as a calendar-average month) before a single backend token. Add a GPT-5.6 Terra backend at 6 turns of 1,500 input / 300 output tokens and the two-meter total is $239.60 a day and $7,188.00 a month. [Our arithmetic from OpenAI rates]</p>
+        </div>
+        <div class="faq-item">
+            <h3>How many concurrent sessions does GPT-Live-1 allow?</h3>
+            <p>Rate limits are measured in concurrent sessions, not requests per minute: 25 on Tier 1, then 50, 200, 300 and 500 on Tiers 2 through 5. The Free tier cannot call the model. [OpenAI-published]</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I size concurrency for 1,000 calls a day?</h3>
+            <p>Use concurrent = calls per day × average call seconds ÷ open-hours seconds, then apply a peak factor. 1,000 × 240 seconds over an 8-hour window is 8.33 sessions on average, or 20.83 at a 2.5× noon peak, which still fits inside Tier 1&#x27;s 25. Over a 12-hour window it is 5.56 on average and 13.89 at peak. [Our formula; tier numbers OpenAI-published]</p>
+        </div>
+        <div class="faq-item">
+            <h3>At what call volume do I outgrow Tier 1?</h3>
+            <p>About 1,500 calls a day at a 4-minute average, a 10-hour window and a 2.5× peak: 1,500 calls lands exactly on the 25-session ceiling and 1,600 needs Tier 2. Measured on average concurrency instead of peak, Tier 1&#x27;s ceiling is roughly 3,750 four-minute calls a day in a 10-hour window. [Our arithmetic; tier limits OpenAI-published]</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is GPT-Live-1 cheaper than GPT-Realtime-2.1?</h3>
+            <p>For typical call lengths, yes: $0.05 per minute flat against GPT-Realtime-2.1 audio at $32 per 1M input and $64 per 1M output audio tokens. At a planning assumption of 600 input and 600 output audio tokens per minute, Realtime audio is $0.0576 a minute and a 4-minute call $0.2304 versus $0.2000 flat; at 600 in / 1,200 out it is $0.0960 a minute and $0.3840 a call. Token metering only wins below roughly 481 output audio tokens per minute at 600 input (631 at 300 input, 781 with no input audio). The tokens-per-minute conversion is our assumption, not an OpenAI figure. [Rates OpenAI-published; conversion and break-even ours]</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can I use a non-OpenAI backend model with GPT-Live-1?</h3>
+            <p>Yes. GPT-Live-1 delegates reasoning and tool calls to a backend text model, and OpenAI&#x27;s announcement states that backend can be a third-party model — which is also the lever that moves the backend half of the bill. [OpenAI-published]</p>
+        </div>
+        <div class="faq-item">
+            <h3>Why is migrating my Realtime integration to GPT-Live-1 not a model-ID swap?</h3>
+            <p>Because the integration changes, not just the model name. The event protocol is different (input_audio_buffer.append becomes session.input_audio.append; response.output_audio.delta becomes session.output_audio.delta), GPT-Live has no event marking the end of each spoken response, manual audio commits and voice-turn triggers are removed, and delegation to a backend model is new. GPT-Live does document both transports: WebRTC for browser apps and WebSockets for server-side audio. [OpenAI-published]</p>
+        </div>
+        <div class="faq-item">
+            <h3>Does muting the microphone stop the GPT-Live-1 meter?</h3>
+            <p>No. Active session time includes time when the user speaks, the assistant speaks, both are silent, or the backend is working — and muting microphone input does not close the session. Closing the session is what saves $0.05 per idle minute. [OpenAI-published]</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/gpt-live-1-cost-calculator">GPT-Live-1 Cost Calculator: Voice + Backend Cost Per Call (2026)</a></li>
+                <li><a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</a></li>
+                <li><a href="/ai-agent-cost-blowups">AI Agent Costs: Blowups &amp; Loops — Why Agents Get Expensive</a></li>
+                <li><a href="/ai-model-cost-per-task-2026">AI Model Cost per Task 2026: Frontier vs Open-Weight Benchmarks</a></li>
+                <li><a href="/openai-inference-overhead-agency-pricing">OpenAI Inference Overhead: The 20% That Matters for AI Agency Pricing</a></li>
+                <li><a href="/total-cost-of-ownership-ai-automation-3-year-model">Total Cost of Ownership: A 3-Year AI Automation Model</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>OpenAI, "Introducing GPT-Live-1 in the API" (Sept 10, 2026) — primary announcement, pricing and availability, telephony support, named deployments, benchmark charts: <a href="https://openai.com/index/introducing-gpt-live-1-in-the-api/" rel="noopener">openai.com/index/introducing-gpt-live-1-in-the-api</a></li>
+            <li>OpenAI developer docs — GPT-Live-1 model card (rate, endpoints, concurrent-session rate limits, snapshots): <a href="https://developers.openai.com/api/docs/models/gpt-live-1" rel="noopener">developers.openai.com/api/docs/models/gpt-live-1</a></li>
+            <li>OpenAI API pricing (GPT-Live session rate; backend and Realtime-2.1 audio token rates): <a href="https://developers.openai.com/api/docs/pricing" rel="noopener">developers.openai.com/api/docs/pricing</a></li>
+            <li>OpenAI, voice latency &amp; cost guide (per-second billing, the 15-second WebRTC init charge and its credit, "total cost = voice + backend"): <a href="https://developers.openai.com/api/docs/guides/voice-latency-cost" rel="noopener">developers.openai.com/api/docs/guides/voice-latency-cost</a></li>
+            <li>OpenAI guides — Live Sessions getting started, migration, conversations, delegation, WebRTC and WebSockets transports, rate limits: <a href="https://developers.openai.com/api/docs/guides/live" rel="noopener">/guides/live</a> · <a href="https://developers.openai.com/api/docs/guides/live-migration" rel="noopener">/guides/live-migration</a> · <a href="https://developers.openai.com/api/docs/guides/live-delegation" rel="noopener">/guides/live-delegation</a> · <a href="https://developers.openai.com/api/docs/guides/voice-websockets" rel="noopener">/guides/voice-websockets</a> · <a href="https://developers.openai.com/api/docs/guides/rate-limits" rel="noopener">/guides/rate-limits</a></li>
+            <li>Mirrors read for corroboration (launch coverage; not the source of any rate): <a href="https://www.unite.ai/openais-gpt-live-1-arrives-in-the-api-at-0-05-per-minute/" rel="noopener">unite.ai</a> · <a href="https://the-decoder.com/openais-gpt-live-1-api-lets-developers-build-apps-that-talk-and-listen-at-the-same-time/" rel="noopener">the-decoder.com</a> · <a href="https://tbreak.com/openai-gpt-live-1-api/" rel="noopener">tbreak.com</a> · <a href="https://www.testingcatalog.com/openai-launches-gpt-live-1-for-full-duplex-voice-agents/" rel="noopener">testingcatalog.com</a></li>
+            <li>Competitor coverage the page does not rely on: gptlives.com's calculator (ranked for `gpt-live-1 cost calculator`, contains no occurrence of the published $0.05 rate) and aireiter.com's pricing-status page (argues the price is unpublished; contradicted by OpenAI's model card and pricing page as of 2026-09-10). Transport claims from vendor blogs are not used — OpenAI's WebSocket guide documents the server-side path.</li>
+            <li>Cross-vendor $0.05 context (third-party vendor pages, read for comparison only): Telnyx voice-AI-agent pricing (all-in engine rate, LLM and telephony on top) — <a href="https://telnyx.com/pricing/voice-ai-agents" rel="noopener">telnyx.com/pricing/voice-ai-agents</a>; xAI Grok Voice Agent API — <a href="https://x.ai/news/grok-voice-agent-api" rel="noopener">x.ai/news/grok-voice-agent-api</a>.</li>
+        </ul>
+        <p class="note">Accuracy note: the $0.05 per minute session rate, the per-second billing rule with no round-up,
+        the 15-second WebRTC initialization charge and its credit rule, the backend-billed-separately rule, the
+        concurrent-session tier ceilings (25/50/200/300/500, Free tier unsupported), the GPT-Realtime-2.1 audio token
+        rates ($32 per 1M input, $64 per 1M output) and the benchmark figures are OpenAI-published as of
+        <strong>September 10, 2026</strong> and are reproduced from the pages listed above — none of them has been
+        independently reproduced by us, and no part of this page is a quote or estimate from OpenAI. AI voice agents in
+        regulated workflows should be scoped against the published Tau Banking (Voice) pass rate of 32.0%, not against
+        general-purpose benchmarks. The per-call totals, per-day and per-month figures, concurrency requirements,
+        break-even token rates and margin percentages are our arithmetic on those published rates using the modelling
+        inputs printed next to each table (call length, volume, open hours, peak factor, reasoning turns, token shape,
+        tool share, idle share, cache share, month length). The 600 in / 1,200 out and 600 in / 600 out audio-tokens-
+        per-minute conversions are planning assumptions; OpenAI publishes no fixed conversion. Model and rate changes
+        after September 10, 2026 are not reflected. Interactive figures can be reproduced by hand or with the
+        <a href="https://aiagencycalculator.com/gpt-live-1-cost-calculator">GPT-Live-1 cost calculator</a>, which shares the same published cost model and exports the
+        full parameter set as JSON.</p>
+        <p class="note">Transport note: GPT-Live-1 documents two transports — WebRTC for browser applications and
+        WebSockets for server-side integrations (<span class="mono">wss://api.openai.com/v1/live/sessions</span>) —
+        and the 15-second initialization charge is stated as WebRTC-scoped. Third-party posts that describe the model
+        as WebRTC-exclusive, or that report the server-side path erroring out for a GPT-Live model ID, are contradicted
+        by OpenAI's own WebSocket guide; the migration warning on this page rests on the event-protocol and delegation
+        changes instead.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+    <script src="/gpt-live-1-cost-model.js"></script>
+    <script>
+    (function () {
+        var LIBS = (typeof window !== 'undefined') ? window.GPT_LIVE_MODEL_JS : null;
+        if (!LIBS || typeof document === 'undefined') { return; }
+        var computeModel = LIBS.computeModel, MODEL = LIBS.GPT_LIVE_MODEL;
+        var SCENARIOS = {
+            default:    { callMin: 4, callSec: 0, callsPerDay: 1000, openHours: 8, peakFactor: 1, backendModel: 'gpt-5.6-terra', turnsPerCall: 6, inTokens: 1500, outTokens: 300, toolShare: 35, toolExtraTokens: 0, toolCost: 0, tier: 'auto' },
+            luna:       { callMin: 4, callSec: 0, callsPerDay: 1000, openHours: 8, peakFactor: 1, backendModel: 'gpt-5.6-luna', turnsPerCall: 6, inTokens: 1500, outTokens: 300, toolShare: 35, toolExtraTokens: 0, toolCost: 0, tier: 'auto' },
+            astra:      { callMin: 4, callSec: 0, callsPerDay: 1000, openHours: 8, peakFactor: 1, backendModel: 'gpt-6-astra', turnsPerCall: 6, inTokens: 1500, outTokens: 300, toolShare: 35, toolExtraTokens: 0, toolCost: 0, tier: 'auto' },
+            blowout:    { callMin: 4, callSec: 0, callsPerDay: 1000, openHours: 8, peakFactor: 1, backendModel: 'gpt-6-astra', turnsPerCall: 10, inTokens: 3000, outTokens: 800, toolShare: 80, toolExtraTokens: 1200, toolCost: 0.01, tier: 'auto' },
+            shortcall:  { callMin: 0, callSec: 40, callsPerDay: 1000, openHours: 8, peakFactor: 1, backendModel: 'gpt-5.6-terra', turnsPerCall: 6, inTokens: 1500, outTokens: 300, toolShare: 35, toolExtraTokens: 0, toolCost: 0, tier: 'auto' },
+            capacity:   { callMin: 4, callSec: 0, callsPerDay: 1600, openHours: 10, peakFactor: 2.5, backendModel: 'gpt-5.6-terra', turnsPerCall: 6, inTokens: 1500, outTokens: 300, toolShare: 35, toolExtraTokens: 0, toolCost: 0, tier: '1' }
+        };
+        var FIELDS = ['callMin', 'callSec', 'callsPerDay', 'openHours', 'peakFactor', 'backendModel', 'turnsPerCall', 'inTokens', 'outTokens', 'toolShare', 'toolExtraTokens', 'toolCost', 'tier'];
+
+        function el(id) { return document.getElementById(id); }
+        function money(x, dp) { return '$' + x.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp }); }
+
+        function read() {
+            var v = function (id, d) { var n = parseFloat(el(id) && el(id).value); return isFinite(n) ? n : d; };
+            var p = {
+                transport: 'webrtc', longContext: false, dataResidency: false, cachedSharePct: 0,
+                idleSharePct: 30, realtimeAudioInPerMin: 600, realtimeAudioOutPerMin: 600, monthDays: 30
+            };
+            p.callMm = v('callMin', 4); p.callSs = v('callSec', 0);
+            p.callsPerDay = v('callsPerDay', 1000); p.operatingHoursPerDay = Math.max(0.5, v('openHours', 8));
+            p.peakFactor = Math.max(1, v('peakFactor', 1));
+            p.turnsPerCall = v('turnsPerCall', 6); p.inTokensPerTurn = v('inTokens', 1500);
+            p.outTokensPerTurn = v('outTokens', 300); p.toolSharePct = v('toolShare', 35);
+            p.toolExtraInTokens = v('toolExtraTokens', 0); p.toolCostPerInvocation = v('toolCost', 0);
+            p.backendModel = (el('backendModel') && el('backendModel').value) || 'gpt-5.6-terra';
+            p.tier = (el('tier') && el('tier').value) || 'auto';
+            return p;
+        }
+
+        function update() {
+            var p = read();
+            var r = computeModel(p);
+            var billed = r.voice.billedSeconds;
+            el('oVoice').innerHTML = money(r.voice.perCall, 4) + ' <small>(' + billed + ' s billed' + (r.voice.initApplied ? ', 15 s init floor applied' : '') + ')</small>';
+            el('oBackend').innerHTML = money(r.backend.perCall, 4) + ' <small>' + (r.backend.shareOfTotal * 100).toFixed(1) + '% of the bill</small>';
+            el('oTotal').textContent = money(r.total.perCall, 4);
+            el('oDay').innerHTML = money(r.total.day, 2) + ' <small>' + money(r.voice.day, 2) + ' voice</small>';
+            el('oMonth').textContent = money(r.total.month, 2) + ' (30-day)';
+            el('oConc').innerHTML = r.capacity.average.toFixed(2) + ' avg <small>peak ' + r.capacity.required.toFixed(2) + '</small>';
+            var v;
+            if (r.capacity.freeSelected) {
+                v = 'The Free tier cannot call GPT-Live-1: pick a paid tier or remove the volume.';
+            } else if (r.capacity.required > MODEL.tiers[5].ceiling) {
+                v = 'Required peak of ' + r.capacity.required.toFixed(2) + ' sessions exceeds Tier 5\u2019s ceiling of ' + MODEL.tiers[5].ceiling + '. The line is capacity-limited before it is budget-limited: split traffic or queue calls.';
+            } else if (r.capacity.fits) {
+                v = 'Tier ' + r.capacity.tier + ' (ceiling ' + r.capacity.ceiling + '): the peak of ' + r.capacity.required.toFixed(2) + ' sessions fits, with headroom for ' + r.capacity.headroom.toFixed(2) + ' more' + (r.capacity.utilisation !== null ? ' (' + (r.capacity.utilisation * 100).toFixed(0) + '% of the ceiling used).' : '.');
+            } else {
+                v = 'Capacity-limited: a peak of ' + r.capacity.required.toFixed(2) + ' sessions exceeds the selected ceiling of ' + r.capacity.ceiling + '. Tier ' + r.capacity.requiredTier + ' is the smallest tier that fits.';
+            }
+            el('oVerdict').textContent = v;
+            el('oRt').textContent = money(r.realtime.perMinute, 4) + '/min, i.e. ' + money(r.realtime.perCall, 4) + ' for this call';
+            el('oRtVerdict').textContent = r.realtime.tokenMeteringCheaper
+                ? 'token metering would have been cheaper on this call shape.'
+                : 'the flat rate wins on this call shape.';
+        }
+
+        FIELDS.forEach(function (id) {
+            var n = el(id);
+            if (n && n.addEventListener) { n.addEventListener('input', update); n.addEventListener('change', update); }
+        });
+        var btns = document.querySelectorAll('#presetRow button');
+        for (var i = 0; i < btns.length; i++) {
+            (function (b) {
+                if (b.addEventListener) {
+                    b.addEventListener('click', function () {
+                        var s = SCENARIOS[b.getAttribute('data-scenario')];
+                        if (!s) { return; }
+                        FIELDS.forEach(function (k) { if (el(k) && s[k] !== undefined) { el(k).value = s[k]; } });
+                        update();
+                    });
+                }
+            })(btns[i]);
+        }
+        try { update(); } catch (e) { /* static figures above stay in place */ }
+    })();
+    </script>
+</body>
+</html>
