@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT-Live-1 Cost Calculator: Voice + Backend Cost Per Call (2026)</title>
+    <meta name="description" content="GPT-Live-1 costs two meters, not one: $0.05 per minute of voice plus a separate backend reasoning bill. Calculate both, per call, per day and per month — and size the concurrent sessions you need for your call volume.">
+    <meta name="keywords" content="gpt-live-1 pricing, gpt-live-1 cost calculator, gpt-live-1 cost per minute, openai voice api cost, full duplex voice agent cost, 0.05 per minute voice api, voice agent backend cost, concurrent session rate limits voice api, voice api capacity planning, gpt-live-1 backend model cost, live sessions pricing, ai phone agent cost calculator">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aiagencycalculator.com/gpt-live-1-cost-calculator">
+    <meta property="og:title" content="GPT-Live-1 Cost Calculator: Voice + Backend Cost Per Call (2026)" />
+    <meta property="og:description" content="The $0.05 per minute is only half the bill. Model voice seconds plus backend reasoning tokens, then size the concurrent sessions your call volume needs.">
+    <meta property="og:url" content="https://aiagencycalculator.com/gpt-live-1-cost-calculator">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="AI Agency Pricing Calculator" />
+    <meta property="og:image" content="https://aiagencycalculator.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "GPT-Live-1 Cost Calculator: Voice + Backend Cost Per Call (2026)",
+      "description": "GPT-Live-1 costs two meters, not one: $0.05 per minute of voice plus a separate backend reasoning bill. Calculate both, per call, per day and per month — and size the concurrent sessions you need for your call volume.",
+      "datePublished": "2026-09-10",
+      "dateModified": "2026-09-10",
+      "author": {"@type": "Organization", "name": "ABD Legacy LLC"},
+      "publisher": {"@type": "Organization", "name": "ABD Legacy LLC"},
+      "mainEntityOfPage": "https://aiagencycalculator.com/gpt-live-1-cost-calculator",
+      "image": "https://aiagencycalculator.com/og-image.png",
+      "keywords": "gpt-live-1 pricing, gpt-live-1 cost per minute, voice agent backend cost, concurrent session rate limits voice api"
+    },
+    {
+      "@type": "WebApplication",
+      "name": "GPT-Live-1 Voice + Backend Cost Calculator",
+      "url": "https://aiagencycalculator.com/gpt-live-1-cost-calculator",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Any (browser)",
+      "isAccessibleForFree": true,
+      "featureList": [
+        "Voice cost at $0.05 per minute billed by the second with the 15-second WebRTC init credit",
+        "Backend reasoning cost as a separate line at editable per-model token rates",
+        "Total cost per call, per day and per month with the month convention printed",
+        "Concurrency planner against the 25/50/200/300/500 concurrent-session tier ceilings",
+        "GPT-Realtime-2.1 token-metering comparison with break-even token rate",
+        "Shareable parameter link and machine-readable JSON export"
+      ],
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does GPT-Live-1 cost per minute?",
+          "acceptedAnswer": {"@type": "Answer", "text": "A GPT-Live-1 voice session is billed at $0.05 per minute of active session time (OpenAI-published rate, as of September 10, 2026). Billing is by the second with no round-up to the next whole minute, so a 40-second call bills $0.0333 and a 4-minute call bills $0.2000. Backend reasoning is billed separately and is not included in the $0.05."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is GPT-Live-1 billed per second or per minute?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Per second. OpenAI states the $0.05 per minute rate is not rounded up to the next whole minute, so 40 seconds of session time bills $0.0333 rather than a full minute. The one exception is session creation: a WebRTC session bills 15 seconds while it initializes, and that amount is credited against duration charges, which makes 15 seconds a floor rather than an extra charge."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is the backend model included in the $0.05 per minute?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. GPT-Live-1 voice time and backend reasoning are two separate meters. Backend Responses calls use the normal pricing for the configured model and tools, so the backend bill scales with how hard the agent thinks, not with how long the caller talks. On the calculator's default — 6 reasoning turns of 1,500 input and 300 output tokens per call on GPT-5.6 Terra — the backend adds $0.0396 per 4-minute call on top of $0.2000 of voice time."}
+        },
+        {
+          "@type": "Question",
+          "name": "How many concurrent sessions does Tier 1 allow?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Tier 1 allows 25 concurrent GPT-Live sessions. Tier 2 allows 50, Tier 3 allows 200, Tier 4 allows 300 and Tier 5 allows 500; the Free tier is not supported for GPT-Live. Rate limits are measured in concurrent sessions, and Tier 1 qualification starts at $5 paid and $100 per month of API spend."}
+        },
+        {
+          "@type": "Question",
+          "name": "How do I size concurrency for 1,000 calls a day?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Use Little's Law on your busy window: concurrent sessions = (calls per day ÷ operating hours) × average call seconds ÷ 3600 × peak factor. At 1,000 calls a day over 8 hours with 4-minute calls that is 125 calls per hour × 240 seconds ÷ 3600 = 8.33 concurrent sessions on average, or 20.8 at a 2.5× peak — which still fits Tier 1's ceiling of 25."}
+        },
+        {
+          "@type": "Question",
+          "name": "What does the 15-second session-init charge actually cost?",
+          "acceptedAnswer": {"@type": "Answer", "text": "15 seconds of voice time is $0.0125 at the $0.05 per minute rate. It is not an adder: OpenAI's cost guide says the amount billed at session creation is credited against duration charges, and its own worked example bills a 90-second session as 90 seconds, not 105. So the effective rule is a 15-second floor, and OpenAI documents it for WebRTC session creation only; the WebSocket guide states no init charge."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use a non-OpenAI backend model?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. OpenAI's announcement says a GPT-Live-1 session can delegate reasoning and tool calls to a backend text model like GPT-6 Astra or a third-party model, and the backend is billed at that model's own rates. That is why this calculator lets you type any input and output token rate instead of picking only from OpenAI's price list."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is $0.05 per minute the whole bill for a phone agent?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. Billed voice time includes periods when the user speaks, the assistant speaks, both are silent, or the backend is working, so idle time and thinking time are billed at $0.05 per minute; muting the microphone does not close the session. On top of that, backend model calls, tool calls and web search are billed separately. The two-meter total in this calculator is the number to quote, not the voice rate alone."}
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.8; color: #333; max-width: 760px; margin: 0 auto; padding: 40px 20px; }
+        article { background: #fff; }
+        h1 { font-size: 2rem; margin-bottom: 20px; color: #111; line-height: 1.3; }
+        h2 { font-size: 1.4rem; margin: 34px 0 12px; color: #222; }
+        h3 { font-size: 1.1rem; margin: 22px 0 8px; color: #222; }
+        p { margin-bottom: 16px; color: #444; }
+        ul, ol { margin: 0 0 16px 22px; }
+        li { margin-bottom: 8px; color: #444; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .meta { color: #888; font-size: 0.9rem; margin-bottom: 26px; border-bottom: 1px solid #eee; padding-bottom: 14px; display: flex; flex-wrap: wrap; gap: 14px; }
+        .tagline { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 0.92rem; }
+        th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #ececf2; vertical-align: top; }
+        th { background: #f8f9ff; font-size: 0.85rem; color: #1a1a2e; }
+        td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h2 { font-size: 1.1rem; margin-top: 0; }
+        .related ul { list-style: none; padding: 0; margin-left: 0; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+
+        /* Calculator widget */
+        .calc { background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; padding: 24px; margin: 24px 0; }
+        .calc h2 { border-bottom: none; margin: 0 0 6px; padding: 0; font-size: 1.35rem; }
+        .calc .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; margin-top: 16px; }
+        .calc .field { display: flex; flex-direction: column; }
+        .calc .field.full { grid-column: 1 / -1; }
+        .calc label { font-size: 0.85rem; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+        .calc label .hint { font-weight: 400; color: #888; }
+        .calc input[type="number"], .calc select { padding: 8px 10px; border: 1px solid #d0d5e0; border-radius: 6px; font-size: 0.95rem; background: #fff; color: #1a1a2e; width: 100%; }
+        .calc input[type="range"] { width: 100%; margin: 6px 0 2px; accent-color: #2563eb; }
+        .calc .range-val { font-size: 0.85rem; color: #2563eb; font-weight: 600; }
+        .calc .radio-row { display: flex; gap: 16px; margin: 4px 0 10px; flex-wrap: wrap; }
+        .calc .radio-row label { font-weight: 400; font-size: 0.95rem; display: flex; align-items: center; gap: 5px; }
+        .calc .radio-row input { accent-color: #2563eb; }
+        .calc .check-row { display: flex; align-items: center; gap: 7px; font-size: 0.92rem; font-weight: 400; color: #333; margin: 6px 0 0; }
+        .calc .check-row input { accent-color: #2563eb; }
+        .calc .group-head { grid-column: 1 / -1; margin-top: 8px; border-top: 1px dashed #cfe3ff; padding-top: 14px; font-size: 0.95rem; font-weight: 700; color: #1d4ed8; }
+        .results { margin-top: 20px; background: #fff; border: 1px solid #e8e8f0; border-radius: 10px; padding: 20px; }
+        .results .big { font-size: 1.7rem; font-weight: 800; color: #111; line-height: 1.2; margin-bottom: 4px; }
+        .results .big .sub { font-size: 0.9rem; font-weight: 400; color: #666; }
+        .results .row { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #f0f0f5; font-size: 0.98rem; }
+        .results .row:last-child { border-bottom: none; }
+        .results .row .k { color: #555; }
+        .results .row .v { font-weight: 600; color: #111; text-align: right; font-variant-numeric: tabular-nums; }
+        .results .row.total { border-top: 2px solid #e8e8f0; margin-top: 6px; padding-top: 12px; }
+        .results .row.total .v { color: #2563eb; font-size: 1.15rem; }
+        .results .row.sub .k { padding-left: 14px; color: #777; font-size: 0.92rem; }
+        .results .row.warn .v { color: #b45309; }
+        .results h3 { font-size: 1rem; color: #1d4ed8; margin: 22px 0 4px; }
+        .price-card { margin-top: 16px; background: #f0f7ff; border: 1px solid #cfe3ff; border-radius: 10px; padding: 16px 18px; }
+        .price-card h4 { font-size: 0.95rem; color: #1d4ed8; margin-bottom: 8px; }
+        .price-card .line { display: flex; justify-content: space-between; gap: 12px; font-size: 0.95rem; padding: 4px 0; }
+        .price-card .line .v { font-weight: 700; color: #111; font-variant-numeric: tabular-nums; }
+        .note { font-size: 0.82rem; color: #888; margin-top: 10px; }
+        .formula { background: #fff; border: 1px dashed #c0c8d8; border-radius: 8px; padding: 14px 18px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85rem; color: #333; margin: 12px 0 4px; overflow-x: auto; white-space: pre-wrap; }
+        .badge { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.78rem; padding: 3px 10px; border-radius: 20px; font-weight: 600; margin-right: 8px; }
+        .preset-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
+        .preset-row button { background: #fff; border: 1px solid #cfe3ff; color: #1d4ed8; font-size: 0.85rem; font-weight: 600; padding: 7px 12px; border-radius: 20px; cursor: pointer; }
+        .preset-row button:hover { background: #eef2ff; }
+        pre.export { background: #fff; border: 1px dashed #c0c8d8; border-radius: 8px; padding: 14px; font-size: 0.72rem; line-height: 1.5; max-height: 320px; overflow: auto; white-space: pre; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } h1 { font-size: 1.6rem; } .calc { padding: 16px; } .calc .grid { grid-template-columns: 1fr; } .results .row { font-size: 0.92rem; } }
+    </style>
+</head>
+<body>
+<article>
+    <header>
+        <h1>GPT-Live-1 Cost Calculator: What a Voice Agent Really Costs Per Call</h1>
+        <div class="meta">
+            <span>Published September 10, 2026</span>
+            <span>Updated September 10, 2026</span>
+            <span>By ABD Legacy LLC</span>
+        </div>
+        <div class="tagline">
+            <span class="badge">Voice: $0.05/min</span>
+            <span class="badge">Billed by the second</span>
+            <span class="badge">Backend billed separately</span>
+            <span class="badge">Concurrency-planned</span>
+        </div>
+    </header>
+
+    <p><strong>The short answer:</strong> GPT-Live-1 is billed on <em>two meters</em>, and the $0.05 per minute you have read about is only the first one. Voice time is $0.05 per minute, billed by the second, with no round-up &mdash; but the agent's backend reasoning, tool calls and web search are billed separately at the backend model's normal token rates. On the default case on this page (4-minute calls, 1,000 calls a day, 6 reasoning turns per call on GPT-5.6 Terra) voice alone is <strong>$200.00 per day</strong> and the backend adds <strong>$39.60 per day</strong> on top. Change the backend from Terra to GPT-6 Astra and the backend line becomes <strong>$180.00 per day</strong> &mdash; within 10% of the voice bill, for a model that is doing the thinking, not the talking.</p>
+
+    <p>That failure mode is the reason this calculator exists. Nearly every published breakdown of the GPT-Live-1 API stops at the $0.05 per minute figure, which is a <em>voice</em> number. A production phone agent is a voice session plus a reasoning workload, and the second half scales with how hard the caller's request is, not with how long the call lasts. It also has a capacity dimension nobody models: GPT-Live session limits are measured in <strong>concurrent sessions</strong>, not dollars, so a deployment can run out of session headroom before it runs out of budget.</p>
+
+    <p>Everything below is computed live from editable inputs. Published OpenAI rates are labelled as such; every modelling assumption (call mix, token shapes, peak factor, month definition) is labelled as ours and is editable. The machine-readable export at the bottom of the calculator is the exact parameter set and result set the article and this page cite.</p>
+
+    <div class="calc" id="calc">
+        <h2>GPT-Live-1 Voice + Backend Cost Estimator</h2>
+        <p class="note" style="margin-top:2px;">All rates shown as of <strong id="asOfDate">2026-09-10</strong>. Rate inputs marked <em>OpenAI rate</em> are OpenAI-published; inputs marked <em>your assumption</em> are modelling choices and are editable. Nothing here is billed by this site.</p>
+
+        <div class="preset-row">
+            <button type="button" data-preset="default">Default case (4:00 &times; 1,000 calls)</button>
+            <button type="button" data-preset="luna">Cheap reasoner (Luna)</button>
+            <button type="button" data-preset="astra">Expensive reasoner (Astra)</button>
+            <button type="button" data-preset="blowout">Backend blowout</button>
+            <button type="button" data-preset="shortcall">Short calls (0:40)</button>
+        </div>
+
+        <div class="grid">
+            <div class="field full">
+                <label>Transport <span class="hint">(&mdash; the 15-second init charge is documented for WebRTC session creation only)</span></label>
+                <div class="radio-row">
+                    <label><input type="radio" name="transport" id="trWebrtc" value="webrtc" checked> WebRTC (browser) &mdash; 15 s init floor</label>
+                    <label><input type="radio" name="transport" id="trWs" value="websocket"> WebSocket (server) &mdash; no documented init charge</label>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="callsPerDay">Calls per day <span class="hint">(your assumption)</span></label>
+                <input type="number" id="callsPerDay" value="1000" min="0" max="1000000" step="10">
+            </div>
+            <div class="field">
+                <label>Average call length, mm:ss <span class="hint">(your assumption)</span></label>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <input type="number" id="callMm" value="4" min="0" max="600" step="1" aria-label="Average call minutes">
+                    <span style="color:#888;">:</span>
+                    <input type="number" id="callSs" value="0" min="0" max="59" step="1" aria-label="Average call seconds">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="operatingHoursPerDay">Operating hours per day <span class="hint">(busy window)</span></label>
+                <input type="number" id="operatingHoursPerDay" value="8" min="0.5" max="24" step="0.5">
+            </div>
+            <div class="field">
+                <label for="peakFactor">Peak factor <span class="hint">(busy-hour multiplier)</span></label>
+                <input type="number" id="peakFactor" value="1" min="1" max="10" step="0.1">
+            </div>
+
+            <div class="field full group-head">Backend reasoning (the second meter)</div>
+
+            <div class="field">
+                <label for="backendModel">Backend model <span class="hint">(delegated reasoner)</span></label>
+                <select id="backendModel">
+                    <option value="gpt-5.6-terra" selected>GPT-5.6 Terra &mdash; OpenAI's own example config</option>
+                    <option value="gpt-5.6-luna">GPT-5.6 Luna &mdash; cost-sensitive / high volume</option>
+                    <option value="gpt-6-astra">GPT-6 Astra &mdash; complex reasoning</option>
+                    <option value="gpt-5.6-sol">GPT-5.6 Sol &mdash; promo through 2026-11-21</option>
+                    <option value="gpt-5.6-cyber">GPT-5.6 Cyber</option>
+                    <option value="custom">Custom / third-party (type your own rates)</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="inRate">Input rate, $ per 1M tokens <span class="hint">(<span id="inRateSrc">OpenAI rate</span>)</span></label>
+                <input type="number" id="inRate" value="2.00" min="0" max="1000" step="0.01">
+            </div>
+            <div class="field">
+                <label for="outRate">Output rate, $ per 1M tokens <span class="hint">(<span id="outRateSrc">OpenAI rate</span>)</span></label>
+                <input type="number" id="outRate" value="12.00" min="0" max="1000" step="0.01">
+            </div>
+            <div class="field">
+                <label for="cachedRate">Cached input rate, $ per 1M tokens</label>
+                <input type="number" id="cachedRate" value="0.20" min="0" max="1000" step="0.01">
+            </div>
+            <div class="field">
+                <label for="cachedSharePct">Share of input tokens served from cache <span class="hint">(your assumption)</span></label>
+                <input type="number" id="cachedSharePct" value="0" min="0" max="100" step="5">
+            </div>
+            <div class="field full">
+                <label class="check-row"><input type="checkbox" id="longContext"> Use long-context rate column <span class="hint">(the published short/long boundary is not stated; use this when your context exceeds it)</span></label>
+                <label class="check-row"><input type="checkbox" id="dataResidency"> Data-residency endpoint (+10% uplift on models released on or after 2026-03-05)</label>
+            </div>
+
+            <div class="field">
+                <label for="turnsPerCall">Reasoning turns per call <span class="hint">(your assumption)</span></label>
+                <input type="number" id="turnsPerCall" value="6" min="0" max="500" step="1">
+            </div>
+            <div class="field">
+                <label for="inTokensPerTurn">Input tokens per turn <span class="hint">(your assumption)</span></label>
+                <input type="number" id="inTokensPerTurn" value="1500" min="0" max="2000000" step="100">
+            </div>
+            <div class="field">
+                <label for="outTokensPerTurn">Output tokens per turn <span class="hint">(your assumption)</span></label>
+                <input type="number" id="outTokensPerTurn" value="300" min="0" max="2000000" step="100">
+            </div>
+            <div class="field">
+                <label for="toolSharePct">Share of turns that call a tool or web search <span class="hint">(your assumption)</span></label>
+                <input type="range" id="toolSharePct" min="0" max="100" value="35" step="5">
+                <span class="range-val" id="toolShareVal">35%</span>
+            </div>
+            <div class="field">
+                <label for="toolCostPerInvocation">Cost per tool/search invocation, $ <span class="hint">(hosted tool or your wrapper; web search itself bills at model rates)</span></label>
+                <input type="number" id="toolCostPerInvocation" value="0.00" min="0" max="100" step="0.001">
+            </div>
+            <div class="field">
+                <label for="toolExtraInTokens">Extra input tokens per tool turn <span class="hint">(search results injected into context)</span></label>
+                <input type="number" id="toolExtraInTokens" value="0" min="0" max="2000000" step="100">
+            </div>
+
+            <div class="field">
+                <label for="idleSharePct">Share of the call that is billed silence / backend work <span class="hint">(your assumption)</span></label>
+                <input type="number" id="idleSharePct" value="30" min="0" max="100" step="5">
+            </div>
+            <div class="field">
+                <label for="tier">Plan tier for the concurrency check</label>
+                <select id="tier">
+                    <option value="auto" selected>Auto &mdash; smallest tier that fits</option>
+                    <option value="1">Tier 1 &mdash; 25 concurrent sessions</option>
+                    <option value="2">Tier 2 &mdash; 50 concurrent sessions</option>
+                    <option value="3">Tier 3 &mdash; 200 concurrent sessions</option>
+                    <option value="4">Tier 4 &mdash; 300 concurrent sessions</option>
+                    <option value="5">Tier 5 &mdash; 500 concurrent sessions</option>
+                    <option value="free">Free tier (not supported for GPT-Live)</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="monthDays">Month definition <span class="hint">(OpenAI defines no month; state yours)</span></label>
+                <select id="monthDays">
+                    <option value="30" selected>30 days &mdash; $200/day &rarr; $6,000/mo</option>
+                    <option value="31">31 days &mdash; $200/day &rarr; $6,200/mo</option>
+                    <option value="30.4167">365 &divide; 12 &mdash; $200/day &rarr; $6,083.33/mo</option>
+                </select>
+            </div>
+
+            <div class="field full group-head">GPT-Realtime-2.1 comparison (what token metering would have cost)</div>
+            <div class="field">
+                <label for="realtimeAudioInPerMin">Audio input tokens per minute <span class="hint">(your assumption &mdash; OpenAI publishes no tokens-per-minute conversion)</span></label>
+                <input type="number" id="realtimeAudioInPerMin" value="600" min="0" max="1000000" step="10">
+            </div>
+            <div class="field">
+                <label for="realtimeAudioOutPerMin">Audio output tokens per minute <span class="hint">(your assumption)</span></label>
+                <input type="number" id="realtimeAudioOutPerMin" value="600" min="0" max="1000000" step="10">
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="big">Total cost per call: <span id="rTotalPerCallBig">&mdash;</span> <span class="sub">voice <span id="rBigVoice">&mdash;</span> + backend <span id="rBigBackend">&mdash;</span></span></div>
+
+            <h3>1. Voice meter ($0.05/min, billed by the second)</h3>
+            <div class="row"><span class="k">Session duration used</span><span class="v" id="rSessionDur">&mdash;</span></div>
+            <div class="row"><span class="k">Billed voice seconds (init rule applied)</span><span class="v" id="rBilledSeconds">&mdash;</span></div>
+            <div class="row sub"><span class="k">Init rule</span><span class="v" id="rInitNote">&mdash;</span></div>
+            <div class="row"><span class="k">Voice cost per call</span><span class="v" id="rVoicePerCall">&mdash;</span></div>
+            <div class="row"><span class="k">Of which is billed silence / backend work</span><span class="v" id="rIdlePerCall">&mdash;</span></div>
+            <div class="row"><span class="k">Voice cost per day</span><span class="v" id="rVoiceDay">&mdash;</span></div>
+            <div class="row"><span class="k">Voice cost per month <span class="hint" id="rVoiceMonthDef"></span></span><span class="v" id="rVoiceMonth">&mdash;</span></div>
+            <div class="row sub"><span class="k">Same day rate at other month lengths</span><span class="v" id="rVoiceMonthAlt">&mdash;</span></div>
+
+            <h3>2. Backend meter (separate bill, separate scaling law)</h3>
+            <div class="row"><span class="k">Backend model tokens per call</span><span class="v" id="rBackendModelPerCall">&mdash;</span></div>
+            <div class="row"><span class="k">Tool / web-search spend per call</span><span class="v" id="rBackendToolPerCall">&mdash;</span></div>
+            <div class="row"><span class="k">Backend total per call</span><span class="v" id="rBackendPerCall">&mdash;</span></div>
+            <div class="row"><span class="k">Backend as a share of total cost</span><span class="v" id="rBackendShare">&mdash;</span></div>
+            <div class="row"><span class="k">Backend cost per day</span><span class="v" id="rBackendDay">&mdash;</span></div>
+            <div class="row"><span class="k">Backend cost per month <span class="hint" id="rBackendMonthDef"></span></span><span class="v" id="rBackendMonth">&mdash;</span></div>
+            <div class="row sub"><span class="k">Effective backend cost per voice minute</span><span class="v" id="rBackendPerVoiceMin">&mdash;</span></div>
+
+            <h3>3. Total (the number to quote)</h3>
+            <div class="row total"><span class="k">Total per call</span><span class="v" id="rTotalPerCall">&mdash;</span></div>
+            <div class="row"><span class="k">Total per day</span><span class="v" id="rTotalDay">&mdash;</span></div>
+            <div class="row"><span class="k">Total per month <span class="hint" id="rTotalMonthDef"></span></span><span class="v" id="rTotalMonth">&mdash;</span></div>
+            <div class="row sub"><span class="k">Same day rate at other month lengths</span><span class="v" id="rTotalMonthAlt">&mdash;</span></div>
+            <div class="row"><span class="k">Voice share of total</span><span class="v" id="rVoiceShare">&mdash;</span></div>
+
+            <h3>4. Concurrency planner (capacity, not budget)</h3>
+            <div class="row"><span class="k">Calls per hour in the busy window</span><span class="v" id="rCallsPerHour">&mdash;</span></div>
+            <div class="row"><span class="k">Average concurrent sessions needed</span><span class="v" id="rAvgConcurrent">&mdash;</span></div>
+            <div class="row total"><span class="k">Peak concurrent sessions needed</span><span class="v" id="rReqConcurrent">&mdash;</span></div>
+            <div class="row sub"><span class="k">Derivation</span><span class="v" id="rConcDerivation">&mdash;</span></div>
+            <div class="row"><span class="k">Tier checked against</span><span class="v" id="rTierChecked">&mdash;</span></div>
+            <div class="row"><span class="k">Headroom at the peak</span><span class="v" id="rHeadroom">&mdash;</span></div>
+            <div class="row"><span class="k">Verdict</span><span class="v" id="rTierVerdict">&mdash;</span></div>
+            <div class="row sub"><span class="k">Tier qualification floor</span><span class="v" id="rTierQual">&mdash;</span></div>
+            <table id="tierTable">
+                <thead><tr><th>Tier</th><th class="num">Ceiling</th><th class="num">Utilisation at peak</th><th>Fits?</th></tr></thead>
+                <tbody>
+                    <tr><td>Tier 1</td><td class="num">25</td><td class="num" id="rTier1Util">&mdash;</td><td id="rTier1Fit">&mdash;</td></tr>
+                    <tr><td>Tier 2</td><td class="num">50</td><td class="num" id="rTier2Util">&mdash;</td><td id="rTier2Fit">&mdash;</td></tr>
+                    <tr><td>Tier 3</td><td class="num">200</td><td class="num" id="rTier3Util">&mdash;</td><td id="rTier3Fit">&mdash;</td></tr>
+                    <tr><td>Tier 4</td><td class="num">300</td><td class="num" id="rTier4Util">&mdash;</td><td id="rTier4Fit">&mdash;</td></tr>
+                    <tr><td>Tier 5</td><td class="num">500</td><td class="num" id="rTier5Util">&mdash;</td><td id="rTier5Fit">&mdash;</td></tr>
+                    <tr><td>Free</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td>Not supported</td></tr>
+                </tbody>
+            </table>
+
+            <h3>5. Voice-only quick reference (WebRTC, $0.05/min)</h3>
+            <div class="row"><span class="k">4:00 call</span><span class="v" id="rRef240">&mdash;</span></div>
+            <div class="row"><span class="k">1:30 call (OpenAI's own worked example)</span><span class="v" id="rRef90">&mdash;</span></div>
+            <div class="row"><span class="k">0:40 call</span><span class="v" id="rRef40">&mdash;</span></div>
+            <div class="row"><span class="k">0:05 call, WebRTC (15 s floor)</span><span class="v" id="rRef5w">&mdash;</span></div>
+            <div class="row"><span class="k">0:05 call, WebSocket (no documented floor)</span><span class="v" id="rRef5s">&mdash;</span></div>
+
+            <div class="price-card">
+                <h4>GPT-Realtime-2.1 token metering, for comparison</h4>
+                <div class="line"><span>Audio cost per minute at your token rates ($32/M in, $64/M out)</span><span class="v" id="rRtPerMin">&mdash;</span></div>
+                <div class="line"><span>Audio cost per call</span><span class="v" id="rRtPerCall">&mdash;</span></div>
+                <div class="line"><span>Flat-rate break-even at your in:out audio token mix</span><span class="v" id="rRtBreakEven">&mdash;</span></div>
+                <div class="line"><span>Verdict</span><span class="v" id="rRtVerdict">&mdash;</span></div>
+                <p class="note" id="rRtNote">$32/M and $64/M are GPT-Realtime-2.1's <em>audio</em> rows. The same model also has text ($4/$24) and image ($5 in) rows, so an audio-only comparison is a modelling floor, not a full Realtime bill.</p>
+            </div>
+
+            <div class="formula" id="formulaBlock">billed_voice_seconds = max(session_seconds, 15)          # WebRTC session creation only
+voice_cost           = billed_voice_seconds / 60 * $0.05
+backend_cost         = sum over turns of (in_tokens * in_rate + cached_in * cached_rate + out_tokens * out_rate) / 1e6
+                       + tool_turns * tool_cost_per_invocation
+total_cost           = voice_cost + backend_cost
+required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 3600 * peak_factor</div>
+
+            <div class="preset-row">
+                <button type="button" id="btnCopyLink">Copy shareable link</button>
+                <button type="button" id="btnDownload">Download JSON model</button>
+            </div>
+            <p class="note" id="exportNote">Machine-readable export: the parameters above, the computed results, which numbers are OpenAI-published and which are our assumptions, and the month convention. This is the exact model the page and the article cite. The default parameter set is also served as a file at <a href="/gpt-live-1-cost-model.json">/gpt-live-1-cost-model.json</a>.</p>
+            <pre class="export" id="rExportJSON">&mdash;</pre>
+        </div>
+
+        <p class="note">Nothing on this page is financial advice or a quote from OpenAI. The $0.05 per minute rate, the backend token rates, the 15-second init rule (WebRTC) and the 25/50/200/300/500 concurrent-session ceilings are OpenAI-published as of 2026-09-10; every volume, token-shape, cache, tool, idle-share, peak-factor and month input is a modelling assumption you can change.</p>
+    </div>
+
+    <h2>How the two meters work</h2>
+
+    <p><strong>Meter one is duration.</strong> A GPT-Live-1 session is billed on active session time at $0.05 per minute. OpenAI's cost guide defines active session time as including periods when the user speaks, the assistant speaks, both are silent, and the backend is working &mdash; and it notes that muting the microphone does not close the session. Two consequences follow: silence is billable, and delegating a slow reasoning task to the backend does not pause the voice meter. Billing is by the second with no round-up, so a 40-second call is $0.0333 rather than a full minute.</p>
+
+    <p><strong>Meter two is reasoning.</strong> Backend Responses calls use the normal pricing for the configured model and tools, and OpenAI's cost guide says to include model input and output tokens, cached input where supported, and any applicable image or tool charges &mdash; plus the cost of any other services your application calls. The published WebRTC example delegates to GPT-5.6 Terra with hosted web search, so the default on this page uses Terra at its list rates: $2.00 per 1M input tokens, $0.20 cached input, $12.00 per 1M output tokens (short-context column).</p>
+
+    <p><strong>The 15-second session-init rule, precisely.</strong> Creating a WebRTC session with <code>POST /v1/live/sessions</code> bills 15 seconds of voice duration while the session initializes, and that amount is credited against duration charges once the session starts running. OpenAI's own worked example bills a 90-second session as 90 seconds, "not 105 seconds". The net effect is therefore a 15-second floor, <code>max(session_seconds, 15)</code>, not a 15-second adder &mdash; and both of the primary statements scope it to WebRTC session creation. The WebSocket guide documents no init charge, which is why transport is a toggle here.</p>
+
+    <p><strong>Usage accounting.</strong> For reconciliation, <code>session.usage.updated</code> replaces a cumulative duration snapshot rather than adding to it; record the final <code>usage.seconds</code> from <code>session.closed</code> once. Backend work can also outlive the voice session, so a deployment can accrue backend cost with zero voice cost and the reverse.</p>
+
+    <h2>Why the backend line decides whether this product works</h2>
+
+    <p>The voice meter is linear, predictable and cheap: 4 minutes is 20 cents, no matter what the caller asks. The backend meter is neither. It scales with turns, with context, with how many turns trigger a tool or a search, and with the price of the model you delegated to. On this page's defaults the backend is a modest $0.0396 per call against $0.2000 of voice time. Switch to Astra, OpenAI's suggested model for complex customer issues, and the same token shape costs $0.1800 per call &mdash; roughly 5&times; the Terra backend, or 90% of the entire voice bill.</p>
+
+    <p>That is the "cheap voice, expensive reasoning" failure mode in one number. A deployment priced on the $0.05 per minute rate, then handed to an expensive reasoner with a high tool-call share, can double or triple its unit economics without a single line of its voice code changing. The calculator's backend-share line exists to make that visible before it shows up on an invoice.</p>
+
+    <table>
+        <thead><tr><th>Backend (6 turns &times; 1,500 in / 300 out)</th><th class="num">Backend $/call</th><th class="num">Voice $/call</th><th class="num">Backend share of total</th></tr></thead>
+        <tbody>
+            <tr><td>GPT-5.6 Luna &mdash; cost-sensitive</td><td class="num">$0.00396</td><td class="num">$0.2000</td><td class="num">1.9%</td></tr>
+            <tr><td>GPT-5.6 Terra &mdash; OpenAI's example config</td><td class="num">$0.0396</td><td class="num">$0.2000</td><td class="num">16.5%</td></tr>
+            <tr><td>GPT-5.6 Sol &mdash; promo through 2026-11-21</td><td class="num">$0.0720</td><td class="num">$0.2000</td><td class="num">26.5%</td></tr>
+            <tr><td>GPT-6 Astra &mdash; complex reasoning</td><td class="num">$0.1800</td><td class="num">$0.2000</td><td class="num">47.4%</td></tr>
+        </tbody>
+    </table>
+    <p class="note">Derived from OpenAI's published per-1M token rates (Standard, short-context column) applied to the same token shape; reproduce any row in the calculator above. Cache-write tokens are not modelled because they are paid once per cached prefix rather than per turn.</p>
+
+    <h2>Sizing the line: concurrency, not dollars</h2>
+
+    <p>GPT-Live rate limits are measured in concurrent sessions, and the ceilings are 25 / 50 / 200 / 300 / 500 for Tiers 1&ndash;5. The Free tier is not supported. That makes capacity a first-class cost question: a deployment can be comfortably affordable and still fail at 9&nbsp;a.m. because too many callers are talking at once.</p>
+
+    <p>The sizing formula is Little's Law applied to a call centre line:</p>
+
+    <div class="formula">concurrent_sessions = (calls_per_day / operating_hours) &times; average_call_seconds / 3600 &times; peak_factor</div>
+
+    <p>At 1,000 calls a day in an 8-hour window with 4-minute calls, that is 125 calls per hour &times; 240 seconds &divide; 3600 = 8.33 concurrent sessions on average. A 2.5&times; busy-hour peak takes it to 20.8 &mdash; still inside Tier 1's ceiling of 25, with roughly 17% headroom left. Push the same call volume into a 4-hour window, or let average calls run to 6 minutes, and the peak requirement crosses 25 and you are capacity-limited before you are budget-limited: the constraint is session headroom, not spend, and the fix is a tier change rather than a cheaper model.</p>
+
+    <p>It is worth noticing how far apart the two constraints sit. Tier 1 qualification starts at $5 paid and $100 per month of API spend, and the default case on this page burns $200.00 of voice time <em>per day</em>. Spend is not what limits a voice deployment of this size; concurrent sessions are. That is exactly why the planner is on the page.</p>
+
+    <h2>What is not included in the $0.05 per minute</h2>
+
+    <ul>
+        <li><strong>Backend model tokens</strong> &mdash; input, cached input and output tokens at the delegated model's rates.</li>
+        <li><strong>Tool calls and web search</strong> &mdash; billed at model rates, and search results injected into context are input tokens you pay for.</li>
+        <li><strong>Any other service in your call path</strong> &mdash; telephony, transcription you run yourself, your own retrieval stack. OpenAI's cost guide says to include them in your estimate.</li>
+        <li><strong>Idle voice time</strong> &mdash; already inside the $0.05, and easy to forget: it is roughly $0.05 per idle minute, and closing the session is what stops it.</li>
+        <li><strong>Custom voices</strong> &mdash; sales-gated with no published rate, so they are deliberately not modelled.</li>
+    </ul>
+
+    <h2>Methodology and provenance</h2>
+
+    <p>Every number on this page is either (a) an OpenAI-published rate reproduced from the pages listed under Sources, (b) arithmetic derived from those rates, or (c) a modelling assumption labelled as such in the calculator and in the JSON export. Default parameters and their provenance: voice rate, init seconds and scope, tier ceilings and backend rates are OpenAI-published; calls per day (1,000), call length (4:00), operating window (8 h), peak factor (1&times;), turns per call (6), tokens per turn (1,500 in / 300 out), tool-call share (35%), cached-input share (0%), idle share (30%) and the 30-day month are our modelling choices, chosen to match a mid-size phone-support deployment and fully editable.</p>
+
+    <p>The month convention is printed on every monthly row because OpenAI defines no month. This page's default is a 30-day month ($200.00 per day = $6,000.00); the same day rate is $6,200.00 over 31 days and $6,083.33 at 365&divide;12, and both alternatives are shown next to the primary figure.</p>
+
+    <p>Known limits of this model. The published short-context / long-context rate boundary is not stated by OpenAI, so the long-context toggle is manual. Cache-write tokens are not modelled. The tokens-per-minute rates in the Realtime comparison are ours, because OpenAI publishes no conversion from audio minutes to audio tokens &mdash; that is why the comparison prints a break-even token rate as well as a cost. Tool and search spend is a per-invocation input, not an estimate of search-result token volume. And no benchmark figure on this page is presented as independently reproduced: OpenAI's published evaluations are OpenAI's.</p>
+
+    <h2 id="faq">Frequently asked questions</h2>
+
+    <div class="faq-item">
+        <h3>What does GPT-Live-1 cost per minute?</h3>
+        <p>A GPT-Live-1 voice session is billed at $0.05 per minute of active session time (OpenAI-published rate, as of September 10, 2026). Billing is by the second with no round-up to the next whole minute, so a 40-second call bills $0.0333 and a 4-minute call bills $0.2000. Backend reasoning is billed separately and is not included in the $0.05.</p>
+    </div>
+    <div class="faq-item">
+        <h3>Is GPT-Live-1 billed per second or per minute?</h3>
+        <p>Per second. OpenAI states the $0.05 per minute rate is not rounded up to the next whole minute, so 40 seconds of session time bills $0.0333 rather than a full minute. The one exception is session creation: a WebRTC session bills 15 seconds while it initializes, and that amount is credited against duration charges, which makes 15 seconds a floor rather than an extra charge.</p>
+    </div>
+    <div class="faq-item">
+        <h3>Is the backend model included in the $0.05 per minute?</h3>
+        <p>No. GPT-Live-1 voice time and backend reasoning are two separate meters. Backend Responses calls use the normal pricing for the configured model and tools, so the backend bill scales with how hard the agent thinks, not with how long the caller talks. On the calculator's default &mdash; 6 reasoning turns of 1,500 input and 300 output tokens per call on GPT-5.6 Terra &mdash; the backend adds $0.0396 per 4-minute call on top of $0.2000 of voice time.</p>
+    </div>
+    <div class="faq-item">
+        <h3>How many concurrent sessions does Tier 1 allow?</h3>
+        <p>Tier 1 allows 25 concurrent GPT-Live sessions. Tier 2 allows 50, Tier 3 allows 200, Tier 4 allows 300 and Tier 5 allows 500; the Free tier is not supported for GPT-Live. Rate limits are measured in concurrent sessions, and Tier 1 qualification starts at $5 paid and $100 per month of API spend.</p>
+    </div>
+    <div class="faq-item">
+        <h3>How do I size concurrency for 1,000 calls a day?</h3>
+        <p>Use Little's Law on your busy window: concurrent sessions = (calls per day &divide; operating hours) &times; average call seconds &divide; 3600 &times; peak factor. At 1,000 calls a day over 8 hours with 4-minute calls that is 125 calls per hour &times; 240 seconds &divide; 3600 = 8.33 concurrent sessions on average, or 20.8 at a 2.5&times; peak &mdash; which still fits Tier 1's ceiling of 25.</p>
+    </div>
+    <div class="faq-item">
+        <h3>What does the 15-second session-init charge actually cost?</h3>
+        <p>15 seconds of voice time is $0.0125 at the $0.05 per minute rate. It is not an adder: OpenAI's cost guide says the amount billed at session creation is credited against duration charges, and its own worked example bills a 90-second session as 90 seconds, not 105. So the effective rule is a 15-second floor, and OpenAI documents it for WebRTC session creation only; the WebSocket guide states no init charge.</p>
+    </div>
+    <div class="faq-item">
+        <h3>Can I use a non-OpenAI backend model?</h3>
+        <p>Yes. OpenAI's announcement says a GPT-Live-1 session can delegate reasoning and tool calls to a backend text model like GPT-6 Astra or a third-party model, and the backend is billed at that model's own rates. That is why this calculator lets you type any input and output token rate instead of picking only from OpenAI's price list.</p>
+    </div>
+    <div class="faq-item">
+        <h3>Is $0.05 per minute the whole bill for a phone agent?</h3>
+        <p>No. Billed voice time includes periods when the user speaks, the assistant speaks, both are silent, or the backend is working, so idle time and thinking time are billed at $0.05 per minute; muting the microphone does not close the session. On top of that, backend model calls, tool calls and web search are billed separately. The two-meter total in this calculator is the number to quote, not the voice rate alone.</p>
+    </div>
+
+    <h2>Sources</h2>
+    <ul>
+        <li><a href="https://openai.com/index/introducing-gpt-live-1-in-the-api/" rel="noopener nofollow" target="_blank">OpenAI &mdash; Introducing GPT-Live-1 in the API</a> (announcement, September 10, 2026): $0.05 per minute, backend delegation, rate-limit framing.</li>
+        <li><a href="https://developers.openai.com/api/docs/models/gpt-live-1" rel="noopener nofollow" target="_blank">GPT-Live-1 model card</a>: model ID, supported endpoints, concurrent-session rate limits, Free tier not supported.</li>
+        <li><a href="https://developers.openai.com/api/docs/pricing" rel="noopener nofollow" target="_blank">OpenAI API pricing</a>: GPT-Live session rate, per-1M backend token rates (short and long context), data-residency uplift, GPT-Realtime-2.1 rows.</li>
+        <li><a href="https://developers.openai.com/api/docs/guides/voice-latency-cost" rel="noopener nofollow" target="_blank">Voice latency and cost guide</a>: the 15-second WebRTC initialization charge and its credit rule; the worked 90-second example; the billable-time definition.</li>
+        <li><a href="https://developers.openai.com/api/docs/guides/live" rel="noopener nofollow" target="_blank">Live sessions guide</a> and <a href="https://developers.openai.com/api/docs/guides/live-conversations" rel="noopener nofollow" target="_blank">conversations guide</a>: duration billing, transports, session lifecycle and usage events.</li>
+        <li><a href="https://developers.openai.com/api/docs/guides/live-delegation" rel="noopener nofollow" target="_blank">Delegation guide</a> and <a href="https://developers.openai.com/api/docs/guides/voice-webrtc" rel="noopener nofollow" target="_blank">WebRTC guide</a>: backend model choice, service tiers, the GPT-5.6 Terra example.</li>
+        <li><a href="https://developers.openai.com/api/docs/guides/voice-websockets" rel="noopener nofollow" target="_blank">WebSocket guide</a> and <a href="https://developers.openai.com/api/docs/guides/rate-limits" rel="noopener nofollow" target="_blank">rate-limit guide</a>: the server-side transport and the tier qualification thresholds.</li>
+    </ul>
+
+    <div class="related">
+        <h2>Related calculators and cost breakdowns</h2>
+        <ul>
+            <li><a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator</a> &mdash; per-token vs outcome-based pricing for agent workloads.</li>
+            <li><a href="/ai-model-cost-per-task-2026">AI model cost per task (2026)</a> &mdash; what a single completed task costs on each frontier model.</li>
+            <li><a href="/astra-model-cost-outlook">GPT-6 Astra cost outlook</a> &mdash; the expensive-reasoner case modelled above.</li>
+            <li><a href="/ai-agent-cost-blowups">AI agent cost blowups</a> &mdash; how agent bills escape their first estimate.</li>
+            <li><a href="/">AI Agency Pricing Calculator</a> &mdash; what to charge a client for the deployment once the cost is known.</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>ABD Legacy LLC &middot; aiagencycalculator.com &middot; Rates and limits as of 2026-09-10. Not affiliated with OpenAI.</p>
+    </footer>
+</article>
+
+<script id="gpt-live-cost-model">
+(function () {
+    'use strict';
+
+    /* == GPT-LIVE-MODEL:BEGIN == */
+    var GPT_LIVE_MODEL = {
+        id: 'gpt-live-1-two-meter-cost-v1',
+        asOf: '2026-09-10',
+        voice: {
+            /* OpenAI-published (model card + pricing page + voice latency & cost guide) */
+            ratePerMinute: 0.05,
+            ratePerSecond: 0.05 / 60,
+            initSeconds: 15,
+            initScope: 'webrtc',
+            rounding: 'none',
+            billableBasis: 'active_session'
+        },
+        month: { primaryDays: 30, altDays: 31, avgDays: 365 / 12 },
+        backends: {
+            /* OpenAI-published, Standard tier, $ per 1M tokens (short / long context) */
+            'gpt-5.6-terra': { label: 'GPT-5.6 Terra', inRate: 2.00, cachedRate: 0.20, cacheWriteRate: 2.50, outRate: 12.00, longInRate: 4.00, longCachedRate: 0.40, longCacheWriteRate: 5.00, longOutRate: 18.00, published: true },
+            'gpt-5.6-luna': { label: 'GPT-5.6 Luna', inRate: 0.20, cachedRate: 0.02, cacheWriteRate: 0.25, outRate: 1.20, longInRate: 0.40, longCachedRate: 0.04, longCacheWriteRate: 0.50, longOutRate: 1.80, published: true },
+            'gpt-6-astra': { label: 'GPT-6 Astra', inRate: 10.00, cachedRate: 1.00, cacheWriteRate: 12.50, outRate: 50.00, longInRate: 20.00, longCachedRate: 2.00, longCacheWriteRate: 25.00, longOutRate: 75.00, published: true },
+            'gpt-5.6-sol': { label: 'GPT-5.6 Sol', inRate: 4.00, cachedRate: 0.40, cacheWriteRate: 5.00, outRate: 20.00, longInRate: 8.00, longCachedRate: 0.80, longCacheWriteRate: 10.00, longOutRate: 30.00, published: true },
+            'gpt-5.6-cyber': { label: 'GPT-5.6 Cyber', inRate: 12.50, cachedRate: 1.25, cacheWriteRate: 15.625, outRate: 75.00, longInRate: null, longCachedRate: null, longCacheWriteRate: null, longOutRate: null, published: true },
+            'custom': { label: 'Custom / third-party', inRate: 2.00, cachedRate: 0.20, cacheWriteRate: 2.50, outRate: 12.00, longInRate: 4.00, longCachedRate: 0.40, longCacheWriteRate: 5.00, longOutRate: 18.00, published: false }
+        },
+        tiers: {
+            1: { ceiling: 25, paid: '$5 paid', perMonth: '$100/mo' },
+            2: { ceiling: 50, paid: '$50 paid', perMonth: '$500/mo' },
+            3: { ceiling: 200, paid: '$100 paid', perMonth: '$1,000/mo' },
+            4: { ceiling: 300, paid: '$250 paid', perMonth: '$5,000/mo' },
+            5: { ceiling: 500, paid: '$1,000 paid', perMonth: '$200,000/mo' }
+        },
+        freeTier: { supported: false, note: 'Free tier is not supported for GPT-Live sessions.' },
+        realtime: {
+            /* OpenAI-published, Standard, $ per 1M tokens, GPT-Realtime-2.1 */
+            model: 'gpt-realtime-2.1',
+            audioInRate: 32.00, audioCachedRate: 0.40, audioOutRate: 64.00,
+            textInRate: 4.00, textOutRate: 24.00, imageInRate: 5.00,
+            scope: 'audio rows only'
+        },
+        dataResidencyUplift: 0.10,
+        serviceTiers: ['auto', 'default', 'flex', 'priority']
+    };
+
+    var GPT_LIVE_DEFAULTS = {
+        transport: 'webrtc',
+        callsPerDay: 1000,
+        callMm: 4,
+        callSs: 0,
+        operatingHoursPerDay: 8,
+        peakFactor: 1.0,
+        backendModel: 'gpt-5.6-terra',
+        /* inRate / cachedRate / outRate are deliberately absent: they are
+           resolved from backendModel unless the caller (or the UI) supplies an
+           explicit override, so switching models moves the bill by default. */
+        longContext: false,
+        dataResidency: false,
+        cachedSharePct: 0,
+        turnsPerCall: 6,
+        inTokensPerTurn: 1500,
+        outTokensPerTurn: 300,
+        toolSharePct: 35,
+        toolCostPerInvocation: 0,
+        toolExtraInTokens: 0,
+        idleSharePct: 30,
+        realtimeAudioInPerMin: 600,
+        realtimeAudioOutPerMin: 600,
+        tier: 'auto',
+        monthDays: 30
+    };
+
+    /* Which parameters are OpenAI-published and which are our modelling assumptions.
+       The export carries this so a citation can separate sourced from assumed. */
+    var GPT_LIVE_PROVENANCE = {
+        'voice.ratePerMinute': 'openai-published',
+        'voice.ratePerSecond': 'derived',
+        'voice.initSeconds': 'openai-published',
+        'voice.initScope': 'openai-published',
+        'voice.rounding': 'openai-published',
+        'voice.billableBasis': 'openai-published',
+        'backends.*.inRate': 'openai-published',
+        'backends.*.cachedRate': 'openai-published',
+        'backends.*.outRate': 'openai-published',
+        'backends.*.long*.Rate': 'openai-published',
+        'dataResidencyUplift': 'openai-published',
+        'tiers.*.ceiling': 'openai-published',
+        'freeTier.supported': 'openai-published',
+        'realtime.audioInRate': 'openai-published',
+        'realtime.audioOutRate': 'openai-published',
+        'callsPerDay': 'our-assumption',
+        'callMm': 'our-assumption',
+        'callSs': 'our-assumption',
+        'operatingHoursPerDay': 'our-assumption',
+        'peakFactor': 'our-assumption',
+        'turnsPerCall': 'our-assumption',
+        'inTokensPerTurn': 'our-assumption',
+        'outTokensPerTurn': 'our-assumption',
+        'toolSharePct': 'our-assumption',
+        'toolCostPerInvocation': 'our-assumption',
+        'toolExtraInTokens': 'our-assumption',
+        'cachedSharePct': 'our-assumption',
+        'idleSharePct': 'our-assumption',
+        'realtimeAudioInPerMin': 'our-assumption',
+        'realtimeAudioOutPerMin': 'our-assumption',
+        'monthDays': 'our-assumption'
+    };
+
+    var GPT_LIVE_SOURCES = {
+        'P1': 'https://openai.com/index/introducing-gpt-live-1-in-the-api/',
+        'P2': 'https://developers.openai.com/api/docs/models/gpt-live-1',
+        'P3': 'https://developers.openai.com/api/docs/pricing',
+        'P4': 'https://developers.openai.com/api/docs/guides/voice-latency-cost',
+        'P5': 'https://developers.openai.com/api/docs/guides/live',
+        'P6': 'https://developers.openai.com/api/docs/guides/live-migration',
+        'P7': 'https://developers.openai.com/api/docs/guides/live-conversations',
+        'P8': 'https://developers.openai.com/api/docs/guides/live-delegation',
+        'P9': 'https://developers.openai.com/api/docs/guides/voice-webrtc',
+        'P10': 'https://developers.openai.com/api/docs/guides/voice-websockets',
+        'P11': 'https://developers.openai.com/api/docs/guides/rate-limits'
+    };
+
+    function num(v, fallback) {
+        var n = (v === null || v === undefined || v === '') ? NaN : Number(v);
+        if (!isFinite(n)) { return (fallback === undefined ? 0 : fallback); }
+        return n;
+    }
+
+    function nonNegative(v, fallback) {
+        var n = num(v, fallback);
+        return n < 0 ? 0 : n;
+    }
+
+    /* Contract signature from the verified facts sheet (section C). */
+    function billedVoiceSeconds(sessionSeconds, transport, initSeconds) {
+        var s = nonNegative(sessionSeconds, 0);
+        var init = (initSeconds === undefined ? GPT_LIVE_MODEL.voice.initSeconds : initSeconds);
+        if (transport === GPT_LIVE_MODEL.voice.initScope) {
+            return Math.max(s, init);
+        }
+        return s;
+    }
+
+    /* Contract signature from the verified facts sheet (section C). */
+    function voiceCostUsd(sessionSeconds, transport, ratePerSecond) {
+        var rate = (ratePerSecond === undefined ? GPT_LIVE_MODEL.voice.ratePerSecond : ratePerSecond);
+        return billedVoiceSeconds(sessionSeconds, transport) * rate;
+    }
+
+    function rateOr(override, fallback) {
+        var n = (override === null || override === undefined || override === '') ? NaN : Number(override);
+        return isFinite(n) ? n : fallback;
+    }
+
+    function backendRates(p) {
+        var model = GPT_LIVE_MODEL.backends[p.backendModel] || GPT_LIVE_MODEL.backends['custom'];
+        var inRate = rateOr(p.inRate, model.inRate);
+        var cachedRate = rateOr(p.cachedRate, model.cachedRate);
+        var outRate = rateOr(p.outRate, model.outRate);
+        if (p.longContext && model.longInRate !== null) {
+            inRate = model.longInRate;
+            cachedRate = model.longCachedRate;
+            outRate = model.longOutRate;
+        }
+        var uplift = p.dataResidency ? (1 + GPT_LIVE_MODEL.dataResidencyUplift) : 1;
+        return {
+            inRate: inRate * uplift,
+            cachedRate: cachedRate * uplift,
+            outRate: outRate * uplift,
+            uplift: uplift,
+            label: model.label,
+            published: model.published
+        };
+    }
+
+    function concurrency(p, sessionSeconds) {
+        var hours = num(p.operatingHoursPerDay, 8);
+        var callsPerHour = hours > 0 ? (num(p.callsPerDay, 0) / hours) : 0;
+        var avg = callsPerHour * sessionSeconds / 3600;
+        var peak = num(p.peakFactor, 1) < 1 ? 1 : num(p.peakFactor, 1);
+        var required = avg * peak;
+        return { callsPerHour: callsPerHour, average: avg, peakFactor: peak, required: required };
+    }
+
+    function autoTier(required) {
+        var order = [1, 2, 3, 4, 5];
+        for (var i = 0; i < order.length; i++) {
+            if (required <= GPT_LIVE_MODEL.tiers[order[i]].ceiling) { return order[i]; }
+        }
+        return 5;
+    }
+
+    function computeModel(params) {
+        var p = {};
+        var key;
+        for (key in GPT_LIVE_DEFAULTS) {
+            if (GPT_LIVE_DEFAULTS.hasOwnProperty(key)) { p[key] = GPT_LIVE_DEFAULTS[key]; }
+        }
+        if (params) {
+            for (key in params) {
+                if (params.hasOwnProperty(key) && params[key] !== undefined && params[key] !== null) {
+                    p[key] = params[key];
+                }
+            }
+        }
+
+        var sessionSeconds = nonNegative(p.callMm, 0) * 60 + nonNegative(p.callSs, 0);
+        var billed = billedVoiceSeconds(sessionSeconds, p.transport);
+        var initApplied = billed > sessionSeconds;
+        var voicePerCall = billed / 60 * GPT_LIVE_MODEL.voice.ratePerMinute;
+
+        var rates = backendRates(p);
+        var cachedShare = Math.min(1, Math.max(0, nonNegative(p.cachedSharePct, 0) / 100));
+        var toolShare = Math.min(1, Math.max(0, nonNegative(p.toolSharePct, 0) / 100));
+        var turns = nonNegative(p.turnsPerCall, 0);
+        var inTokensPerTurn = nonNegative(p.inTokensPerTurn, 0);
+        var outTokensPerTurn = nonNegative(p.outTokensPerTurn, 0);
+        var cachedInPerTurn = inTokensPerTurn * cachedShare;
+        var uncachedInPerTurn = inTokensPerTurn - cachedInPerTurn;
+
+        var perTurnModelCost = (uncachedInPerTurn * rates.inRate + cachedInPerTurn * rates.cachedRate + outTokensPerTurn * rates.outRate) / 1e6;
+        var toolTurns = turns * toolShare;
+        var toolTokenCost = toolTurns * nonNegative(p.toolExtraInTokens, 0) * rates.inRate / 1e6;
+        var backendModelPerCall = turns * perTurnModelCost + toolTokenCost;
+        var backendToolPerCall = toolTurns * nonNegative(p.toolCostPerInvocation, 0);
+        var backendPerCall = backendModelPerCall + backendToolPerCall;
+
+        var callsPerDay = nonNegative(p.callsPerDay, 0);
+        var totalPerCall = voicePerCall + backendPerCall;
+        var monthDays = num(p.monthDays, GPT_LIVE_MODEL.month.primaryDays);
+        var voiceDay = voicePerCall * callsPerDay;
+        var backendDay = backendPerCall * callsPerDay;
+        var totalDay = totalPerCall * callsPerDay;
+
+        var idleShare = Math.min(1, Math.max(0, nonNegative(p.idleSharePct, 0) / 100));
+        var idlePerCall = voicePerCall * idleShare;
+
+        var conc = concurrency(p, sessionSeconds);
+        var requiredTier = autoTier(conc.required);
+        var selectedTier = String(p.tier === undefined ? 'auto' : p.tier);
+        var chosenTier = (selectedTier === 'auto') ? requiredTier : parseInt(selectedTier, 10);
+        var freeSelected = (selectedTier === 'free');
+        var chosenCeiling = freeSelected ? 0 : GPT_LIVE_MODEL.tiers[chosenTier].ceiling;
+        var fits = !freeSelected && conc.required <= chosenCeiling;
+        var headroom = chosenCeiling - conc.required;
+        var utilisation = chosenCeiling > 0 ? (conc.required / chosenCeiling) : null;
+        var capacityLimited = !freeSelected && !fits;
+
+        var rtIn = nonNegative(p.realtimeAudioInPerMin, 0);
+        var rtOut = nonNegative(p.realtimeAudioOutPerMin, 0);
+        var rt = GPT_LIVE_MODEL.realtime;
+        var rtPerMin = (rtIn * rt.audioInRate + rtOut * rt.audioOutRate) / 1e6;
+        var rtPerCall = rtPerMin * (sessionSeconds / 60);
+        var ratio = rtIn > 0 ? (rtOut / rtIn) : 0;
+        var breakevenIn = (ratio >= 0) ? (0.05 * 1e6 / (rt.audioInRate + ratio * rt.audioOutRate)) : null;
+        var breakevenTotal = (breakevenIn === null) ? null : breakevenIn * (1 + ratio);
+
+        var share = totalPerCall > 0 ? (backendPerCall / totalPerCall) : 0;
+        var voiceShare = totalPerCall > 0 ? (voicePerCall / totalPerCall) : 0;
+
+        return {
+            modelId: GPT_LIVE_MODEL.id,
+            asOf: GPT_LIVE_MODEL.asOf,
+            params: p,
+            voice: {
+                sessionSeconds: sessionSeconds,
+                billedSeconds: billed,
+                initApplied: initApplied,
+                perCall: voicePerCall,
+                day: voiceDay,
+                month: voiceDay * monthDays,
+                monthAlt31: voiceDay * 31,
+                monthAltAvg: voiceDay * (365 / 12),
+                idlePerCall: idlePerCall,
+                idleDay: idlePerCall * callsPerDay,
+                shareOfTotal: voiceShare
+            },
+            backend: {
+                rates: rates,
+                modelPerCall: backendModelPerCall,
+                toolPerCall: backendToolPerCall,
+                perCall: backendPerCall,
+                day: backendDay,
+                month: backendDay * monthDays,
+                monthAlt31: backendDay * 31,
+                monthAltAvg: backendDay * (365 / 12),
+                shareOfTotal: share,
+                perVoiceMinute: sessionSeconds > 0 ? (backendPerCall / (sessionSeconds / 60)) : null,
+                toolTurns: toolTurns
+            },
+            total: {
+                perCall: totalPerCall,
+                day: totalDay,
+                month: totalDay * monthDays,
+                monthAlt31: totalDay * 31,
+                monthAltAvg: totalDay * (365 / 12),
+                callsPerDay: callsPerDay
+            },
+            capacity: {
+                callsPerHour: conc.callsPerHour,
+                average: conc.average,
+                peakFactor: conc.peakFactor,
+                required: conc.required,
+                requiredTier: requiredTier,
+                selectedTier: selectedTier,
+                tier: chosenTier,
+                ceiling: chosenCeiling,
+                fits: fits,
+                headroom: headroom,
+                utilisation: utilisation,
+                capacityLimited: capacityLimited,
+                freeSelected: freeSelected,
+                tiers: [1, 2, 3, 4, 5].map(function (t) {
+                    var ceiling = GPT_LIVE_MODEL.tiers[t].ceiling;
+                    return {
+                        tier: t,
+                        ceiling: ceiling,
+                        fits: conc.required <= ceiling,
+                        headroom: ceiling - conc.required,
+                        utilisation: conc.required / ceiling
+                    };
+                })
+            },
+            realtime: {
+                perMinute: rtPerMin,
+                perCall: rtPerCall,
+                breakevenInPerMin: breakevenIn,
+                breakevenTotalPerMin: breakevenTotal,
+                tokenMeteringCheaper: rtPerMin < GPT_LIVE_MODEL.voice.ratePerMinute
+            },
+            monthDays: monthDays
+        };
+    }
+
+    function exportModel(params, results) {
+        var r = results || computeModel(params);
+        return {
+            model: r.modelId,
+            as_of: r.asOf,
+            generated_from: 'https://aiagencycalculator.com/gpt-live-1-cost-calculator',
+            month_definition: {
+                primary_days: r.monthDays,
+                alternatives: { alt_31_days: 31, alt_365_over_12: 365 / 12 },
+                note: 'OpenAI defines no month; each monthly figure states the day count used.'
+            },
+            published_constants: {
+                voice_rate_per_minute_usd: GPT_LIVE_MODEL.voice.ratePerMinute,
+                voice_billing_rounding: GPT_LIVE_MODEL.voice.rounding,
+                voice_init_seconds: GPT_LIVE_MODEL.voice.initSeconds,
+                voice_init_scope: GPT_LIVE_MODEL.voice.initScope,
+                billable_time_basis: GPT_LIVE_MODEL.voice.billableBasis,
+                backend_rates_per_1m_usd: GPT_LIVE_MODEL.backends,
+                concurrent_session_tier_ceilings: GPT_LIVE_MODEL.tiers,
+                free_tier_supported: GPT_LIVE_MODEL.freeTier.supported,
+                realtime_comparison_model: GPT_LIVE_MODEL.realtime,
+                data_residency_uplift: GPT_LIVE_MODEL.dataResidencyUplift,
+                service_tiers: GPT_LIVE_MODEL.serviceTiers
+            },
+            provenance: GPT_LIVE_PROVENANCE,
+            sources: GPT_LIVE_SOURCES,
+            parameters: r.params,
+            results: {
+                voice_cost_usd_per_call: r.voice.perCall,
+                voice_billed_seconds_per_call: r.voice.billedSeconds,
+                backend_model_usd_per_call: r.backend.modelPerCall,
+                backend_tools_usd_per_call: r.backend.toolPerCall,
+                backend_usd_per_call: r.backend.perCall,
+                backend_share_of_total: r.backend.shareOfTotal,
+                total_usd_per_call: r.total.perCall,
+                voice_usd_per_day: r.voice.day,
+                backend_usd_per_day: r.backend.day,
+                total_usd_per_day: r.total.day,
+                voice_usd_per_month: r.voice.month,
+                backend_usd_per_month: r.backend.month,
+                total_usd_per_month: r.total.month,
+                peak_concurrent_sessions_required: r.capacity.required,
+                average_concurrent_sessions_required: r.capacity.average,
+                tier_checked: r.capacity.tier,
+                tier_fits: r.capacity.fits,
+                capacity_limited_before_budget_limited: r.capacity.capacityLimited,
+                realtime_usd_per_minute: r.realtime.perMinute,
+                flat_rate_breakeven_audio_tokens_per_min: r.realtime.breakevenTotalPerMin
+            },
+            formulas: {
+                billed_voice_seconds: 'max(session_seconds, 15) if transport == "webrtc" else session_seconds',
+                voice_cost: 'billed_voice_seconds / 60 * 0.05',
+                backend_cost: 'sum(turns * (uncached_in * in_rate + cached_in * cached_rate + out_tokens * out_rate) / 1e6) + tool_turns * tool_cost_per_invocation',
+                total_cost: 'voice_cost + backend_cost',
+                required_concurrent_sessions: 'calls_per_day / operating_hours * avg_call_seconds / 3600 * peak_factor'
+            },
+            assumptions_note: 'Parameters marked "our-assumption" in provenance are modelling choices, not OpenAI figures. Rates marked "openai-published" are reproduced from the sources above as of the as_of date.'
+        };
+    }
+    /* == GPT-LIVE-MODEL:END == */
+
+    /* ------------------------------------------------------------------
+       UI wiring. Everything below only touches the DOM; the model above is
+       pure and is exercised directly by the verification harness.
+       ------------------------------------------------------------------ */
+
+    var MONTH_LABEL = { 30: '30-day month', 31: '31-day month', 30.4167: '365/12 month' };
+
+    function el(id) { return document.getElementById(id); }
+
+    function fmtUsd(v, digits) {
+        var d = (digits === undefined) ? 2 : digits;
+        var n = num(v, 0);
+        var sign = n < 0 ? '-' : '';
+        var abs = Math.abs(n);
+        var parts = abs.toFixed(d).split('.');
+        var whole = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return sign + '$' + whole + (parts[1] ? '.' + parts[1] : '');
+    }
+
+    function fmtUsdCents(v, digits) {
+        var d = (digits === undefined) ? 4 : digits;
+        return fmtUsd(v, d) + ' (' + (num(v, 0) * 100).toFixed(2) + '\u00A2)';
+    }
+
+    function fmtPct(v, digits) {
+        return (num(v, 0) * 100).toFixed(digits === undefined ? 1 : digits) + '%';
+    }
+
+    function fmtNum(v, digits) {
+        return num(v, 0).toFixed(digits === undefined ? 2 : digits);
+    }
+
+    function fmtInt(v) {
+        return Math.round(num(v, 0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function fmtDuration(seconds) {
+        var s = Math.round(num(seconds, 0));
+        var m = Math.floor(s / 60);
+        var rest = s - m * 60;
+        return m + ':' + (rest < 10 ? '0' : '') + rest;
+    }
+
+    function radioValue(name, fallback) {
+        var nodes = document.querySelectorAll('input[name="' + name + '"]');
+        for (var i = 0; i < nodes.length; i++) {
+            if (nodes[i].checked) { return nodes[i].value; }
+        }
+        return fallback;
+    }
+
+    /* A rate field counts as an override only when it differs from the selected
+       model's published rate; otherwise the model's rate is used, so switching
+       models visibly moves the backend line. */
+    function rateOverride(inputId, published) {
+        var node = el(inputId);
+        if (!node) { return null; }
+        var v = num(node.value, NaN);
+        if (!isFinite(v)) { return null; }
+        return (Math.abs(v - published) < 1e-9) ? null : v;
+    }
+
+    function readParams() {
+        var modelSel = el('backendModel');
+        var modelKey = modelSel ? modelSel.value : GPT_LIVE_DEFAULTS.backendModel;
+        var model = GPT_LIVE_MODEL.backends[modelKey] || GPT_LIVE_MODEL.backends['custom'];
+        return {
+            transport: radioValue('transport', GPT_LIVE_DEFAULTS.transport),
+            callsPerDay: nonNegative(el('callsPerDay') && el('callsPerDay').value, GPT_LIVE_DEFAULTS.callsPerDay),
+            callMm: nonNegative(el('callMm') && el('callMm').value, GPT_LIVE_DEFAULTS.callMm),
+            callSs: nonNegative(el('callSs') && el('callSs').value, GPT_LIVE_DEFAULTS.callSs),
+            operatingHoursPerDay: nonNegative(el('operatingHoursPerDay') && el('operatingHoursPerDay').value, GPT_LIVE_DEFAULTS.operatingHoursPerDay),
+            peakFactor: nonNegative(el('peakFactor') && el('peakFactor').value, GPT_LIVE_DEFAULTS.peakFactor),
+            backendModel: modelKey,
+            inRate: rateOverride('inRate', model.inRate),
+            cachedRate: rateOverride('cachedRate', model.cachedRate),
+            outRate: rateOverride('outRate', model.outRate),
+            longContext: !!(el('longContext') && el('longContext').checked),
+            dataResidency: !!(el('dataResidency') && el('dataResidency').checked),
+            cachedSharePct: nonNegative(el('cachedSharePct') && el('cachedSharePct').value, 0),
+            turnsPerCall: nonNegative(el('turnsPerCall') && el('turnsPerCall').value, GPT_LIVE_DEFAULTS.turnsPerCall),
+            inTokensPerTurn: nonNegative(el('inTokensPerTurn') && el('inTokensPerTurn').value, GPT_LIVE_DEFAULTS.inTokensPerTurn),
+            outTokensPerTurn: nonNegative(el('outTokensPerTurn') && el('outTokensPerTurn').value, GPT_LIVE_DEFAULTS.outTokensPerTurn),
+            toolSharePct: nonNegative(el('toolSharePct') && el('toolSharePct').value, GPT_LIVE_DEFAULTS.toolSharePct),
+            toolCostPerInvocation: nonNegative(el('toolCostPerInvocation') && el('toolCostPerInvocation').value, 0),
+            toolExtraInTokens: nonNegative(el('toolExtraInTokens') && el('toolExtraInTokens').value, 0),
+            idleSharePct: nonNegative(el('idleSharePct') && el('idleSharePct').value, GPT_LIVE_DEFAULTS.idleSharePct),
+            realtimeAudioInPerMin: nonNegative(el('realtimeAudioInPerMin') && el('realtimeAudioInPerMin').value, 0),
+            realtimeAudioOutPerMin: nonNegative(el('realtimeAudioOutPerMin') && el('realtimeAudioOutPerMin').value, 0),
+            tier: el('tier') ? el('tier').value : 'auto',
+            monthDays: num(el('monthDays') && el('monthDays').value, GPT_LIVE_MODEL.month.primaryDays)
+        };
+    }
+
+    function set(id, text) {
+        var node = el(id);
+        if (node) { node.textContent = text; }
+    }
+
+    function update() {
+        var p = readParams();
+        var r = computeModel(p);
+        var monthLabel = MONTH_LABEL[p.monthDays] || (p.monthDays + '-day month');
+
+        set('rTotalPerCallBig', fmtUsd(r.total.perCall, 4));
+        set('rBigVoice', fmtUsd(r.voice.perCall, 4));
+        set('rBigBackend', fmtUsd(r.backend.perCall, 4));
+
+        set('rSessionDur', fmtDuration(r.voice.sessionSeconds) + ' (' + fmtNum(r.voice.sessionSeconds, 0) + ' s)');
+        set('rBilledSeconds', fmtNum(r.voice.billedSeconds, 0) + ' s');
+        set('rInitNote', p.transport === 'webrtc'
+            ? (r.voice.initApplied
+                ? 'WebRTC: 15 s init floor applied (session shorter than 15 s)'
+                : 'WebRTC: 15 s init credited \u2014 ' + fmtNum(r.voice.sessionSeconds, 0) + ' s session bills ' + fmtNum(r.voice.billedSeconds, 0) + ' s, not ' + fmtNum(r.voice.sessionSeconds + 15, 0) + ' s')
+            : 'WebSocket: no init charge documented \u2014 bills ' + fmtNum(r.voice.billedSeconds, 0) + ' s');
+        set('rVoicePerCall', fmtUsdCents(r.voice.perCall));
+        set('rIdlePerCall', fmtUsdCents(r.voice.idlePerCall) + ' at ' + fmtNum(p.idleSharePct, 0) + '% silence/backend time');
+        set('rVoiceDay', fmtUsd(r.voice.day));
+        set('rVoiceMonthDef', '(' + monthLabel + ')');
+        set('rVoiceMonth', fmtUsd(r.voice.month));
+        set('rVoiceMonthAlt', '31-day ' + fmtUsd(r.voice.monthAlt31) + ' \u00b7 365/12 ' + fmtUsd(r.voice.monthAltAvg));
+
+        set('rBackendModelPerCall', fmtUsdCents(r.backend.modelPerCall));
+        set('rBackendToolPerCall', fmtUsdCents(r.backend.toolPerCall) + ' (' + fmtNum(r.backend.toolTurns, 2) + ' tool turns/call)');
+        set('rBackendPerCall', fmtUsdCents(r.backend.perCall));
+        set('rBackendShare', fmtPct(r.backend.shareOfTotal) + ' of the total bill');
+        set('rBackendDay', fmtUsd(r.backend.day));
+        set('rBackendMonthDef', '(' + monthLabel + ')');
+        set('rBackendMonth', fmtUsd(r.backend.month));
+        set('rBackendPerVoiceMin', r.backend.perVoiceMinute === null ? '\u2014' : fmtUsdCents(r.backend.perVoiceMinute));
+
+        set('rTotalPerCall', fmtUsdCents(r.total.perCall));
+        set('rTotalDay', fmtUsd(r.total.day));
+        set('rTotalMonthDef', '(' + monthLabel + ')');
+        set('rTotalMonth', fmtUsd(r.total.month));
+        set('rTotalMonthAlt', '31-day ' + fmtUsd(r.total.monthAlt31) + ' \u00b7 365/12 ' + fmtUsd(r.total.monthAltAvg));
+        set('rVoiceShare', fmtPct(r.voice.shareOfTotal) + ' voice / ' + fmtPct(r.backend.shareOfTotal) + ' backend');
+
+        set('rCallsPerHour', fmtNum(r.capacity.callsPerHour, 2));
+        set('rAvgConcurrent', fmtNum(r.capacity.average, 2) + ' sessions');
+        set('rReqConcurrent', fmtNum(r.capacity.required, 2) + ' sessions');
+        set('rConcDerivation', '(' + fmtInt(p.callsPerDay) + ' calls/day \u00f7 ' + fmtNum(p.operatingHoursPerDay, 1) + ' h) \u00d7 ' + fmtNum(r.voice.sessionSeconds, 0) + ' s \u00f7 3600 \u00d7 ' + fmtNum(r.capacity.peakFactor, 2) + ' peak = ' + fmtNum(r.capacity.required, 2));
+        set('rTierChecked', r.capacity.freeSelected
+            ? 'Free tier \u2014 not supported'
+            : 'Tier ' + r.capacity.tier + ' (ceiling ' + r.capacity.ceiling + ')' + (String(p.tier) === 'auto' ? ' \u2014 auto-selected as the smallest tier that fits' : ''));
+        set('rHeadroom', r.capacity.freeSelected
+            ? 'n/a on the Free tier'
+            : (r.capacity.headroom >= 0
+                ? fmtNum(r.capacity.headroom, 2) + ' sessions spare (' + fmtPct(r.capacity.utilisation) + ' used)'
+                : fmtNum(-r.capacity.headroom, 2) + ' sessions short'));
+        set('rTierVerdict', r.capacity.freeSelected
+            ? 'Free tier is not supported for GPT-Live \u2014 pick a paid tier.'
+            : (r.capacity.capacityLimited
+                ? 'Capacity-limited before budget-limited: you need ' + fmtNum(r.capacity.required, 2) + ' concurrent sessions but Tier ' + r.capacity.tier + ' allows ' + r.capacity.ceiling + '. Raise the tier \u2014 a cheaper backend model does not fix a session ceiling.'
+                : 'Capacity is not the binding constraint at this volume: ' + fmtNum(r.capacity.required, 2) + ' of ' + r.capacity.ceiling + ' sessions used.'));
+        set('rTierQual', 'Tier ' + r.capacity.tier + ' qualification: ' + (GPT_LIVE_MODEL.tiers[r.capacity.tier] ? (GPT_LIVE_MODEL.tiers[r.capacity.tier].paid + ' / ' + GPT_LIVE_MODEL.tiers[r.capacity.tier].perMonth) : '\u2014') + '; modelled spend is ' + fmtUsd(r.total.day) + '/day (' + fmtUsd(r.total.month) + '/' + monthLabel + ').');
+
+        r.capacity.tiers.forEach(function (t) {
+            set('rTier' + t.tier + 'Util', fmtPct(t.utilisation));
+            set('rTier' + t.tier + 'Fit', t.fits ? 'Fits' + (t.tier === r.capacity.requiredTier ? ' (smallest)' : '') : 'Exceeds');
+        });
+
+        set('rRef240', fmtUsdCents(voiceCostUsd(240, 'webrtc')));
+        set('rRef90', fmtUsdCents(voiceCostUsd(90, 'webrtc')));
+        set('rRef40', fmtUsdCents(voiceCostUsd(40, 'webrtc')));
+        set('rRef5w', fmtUsdCents(voiceCostUsd(5, 'webrtc')));
+        set('rRef5s', fmtUsdCents(voiceCostUsd(5, 'websocket')));
+
+        set('rRtPerMin', fmtUsdCents(r.realtime.perMinute));
+        set('rRtPerCall', fmtUsdCents(r.realtime.perCall));
+        set('rRtBreakEven', r.realtime.breakevenTotalPerMin === null
+            ? '\u2014'
+            : fmtInt(r.realtime.breakevenTotalPerMin) + ' audio tokens/min total (at your in:out mix)');
+        set('rRtVerdict', r.realtime.tokenMeteringCheaper
+            ? 'Token metering would be cheaper than the $0.05/min flat rate at this token mix.'
+            : 'The $0.05/min flat rate wins at this token mix \u2014 by ' + fmtPct((r.realtime.perMinute - 0.05) / r.realtime.perMinute) + '.');
+
+        set('rExportJSON', JSON.stringify(exportModel(p, r), null, 2));
+
+        var inSrc = el('inRateSrc');
+        var outSrc = el('outRateSrc');
+        var model = GPT_LIVE_MODEL.backends[p.backendModel] || GPT_LIVE_MODEL.backends['custom'];
+        var drift = (p.inRate !== null && p.inRate !== undefined) || (p.outRate !== null && p.outRate !== undefined);
+        if (inSrc) { inSrc.textContent = drift ? 'edited \u2014 your rate' : (model.published ? 'OpenAI rate' : 'your rate'); }
+        if (outSrc) { outSrc.textContent = inSrc ? inSrc.textContent : ''; }
+        if (el('asOfDate')) { el('asOfDate').textContent = GPT_LIVE_MODEL.asOf; }
+        if (el('toolShareVal')) { el('toolShareVal').textContent = fmtNum(p.toolSharePct, 0) + '%'; }
+
+        return r;
+    }
+
+    function fillRatesFromModel() {
+        var sel = el('backendModel');
+        if (!sel) { return; }
+        var model = GPT_LIVE_MODEL.backends[sel.value] || GPT_LIVE_MODEL.backends['custom'];
+        if (el('inRate')) { el('inRate').value = model.inRate; }
+        if (el('cachedRate')) { el('cachedRate').value = model.cachedRate; }
+        if (el('outRate')) { el('outRate').value = model.outRate; }
+    }
+
+    var PRESETS = {
+        default: { callsPerDay: 1000, callMm: 4, callSs: 0, operatingHoursPerDay: 8, peakFactor: 1, backendModel: 'gpt-5.6-terra', turnsPerCall: 6, inTokensPerTurn: 1500, outTokensPerTurn: 300, toolSharePct: 35, toolCostPerInvocation: 0, toolExtraInTokens: 0, cachedSharePct: 0, longContext: false, dataResidency: false, idleSharePct: 30, transport: 'webrtc', tier: 'auto', monthDays: 30 },
+        luna: { backendModel: 'gpt-5.6-luna', toolSharePct: 35, turnsPerCall: 6, inTokensPerTurn: 1500, outTokensPerTurn: 300 },
+        astra: { backendModel: 'gpt-6-astra', toolSharePct: 35, turnsPerCall: 6, inTokensPerTurn: 1500, outTokensPerTurn: 300 },
+        blowout: { backendModel: 'gpt-6-astra', toolSharePct: 80, turnsPerCall: 10, inTokensPerTurn: 3000, outTokensPerTurn: 800, toolExtraInTokens: 1200, toolCostPerInvocation: 0.01, callsPerDay: 1000, callMm: 4, callSs: 0 },
+        shortcall: { callMm: 0, callSs: 40, callsPerDay: 1000, backendModel: 'gpt-5.6-terra' }
+    };
+
+    function writeParams(p) {
+        if (p.transport) {
+            var tr = (p.transport === 'websocket') ? el('trWs') : el('trWebrtc');
+            if (tr) { tr.checked = true; }
+        }
+        ['callsPerDay', 'callMm', 'callSs', 'operatingHoursPerDay', 'peakFactor', 'cachedSharePct', 'turnsPerCall', 'inTokensPerTurn', 'outTokensPerTurn', 'toolSharePct', 'toolCostPerInvocation', 'toolExtraInTokens', 'idleSharePct', 'realtimeAudioInPerMin', 'realtimeAudioOutPerMin', 'monthDays'].forEach(function (k) {
+            if (p[k] !== undefined && el(k)) { el(k).value = p[k]; }
+        });
+        if (p.backendModel && el('backendModel')) { el('backendModel').value = p.backendModel; }
+        if (p.tier !== undefined && el('tier')) { el('tier').value = p.tier; }
+        if (p.longContext !== undefined && el('longContext')) { el('longContext').checked = !!p.longContext; }
+        if (p.dataResidency !== undefined && el('dataResidency')) { el('dataResidency').checked = !!p.dataResidency; }
+    }
+
+    function applyPreset(name) {
+        var p = PRESETS[name];
+        if (!p) { return; }
+        var merged = {};
+        var k;
+        for (k in GPT_LIVE_DEFAULTS) { if (GPT_LIVE_DEFAULTS.hasOwnProperty(k)) { merged[k] = GPT_LIVE_DEFAULTS[k]; } }
+        for (k in p) { if (p.hasOwnProperty(k)) { merged[k] = p[k]; } }
+        writeParams(merged);
+        if (merged.backendModel) {
+            if (el('backendModel')) { el('backendModel').value = merged.backendModel; }
+            var model = GPT_LIVE_MODEL.backends[merged.backendModel];
+            if (model && el('inRate')) { el('inRate').value = model.inRate; el('cachedRate').value = model.cachedRate; el('outRate').value = model.outRate; }
+        }
+        update();
+    }
+
+    function encodeParams(p) {
+        var json = JSON.stringify(p);
+        var b64 = (typeof btoa === 'function') ? btoa(unescape(encodeURIComponent(json))) : '';
+        return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    function decodeParams(hash) {
+        var m = /[#&]p=([A-Za-z0-9_-]+)/.exec(hash || '');
+        if (!m) { return null; }
+        try {
+            var b64 = m[1].replace(/-/g, '+').replace(/_/g, '/');
+            while (b64.length % 4) { b64 += '='; }
+            var json = (typeof atob === 'function') ? decodeURIComponent(escape(atob(b64))) : '';
+            return JSON.parse(json);
+        } catch (e) { return null; }
+    }
+
+    function shareableUrl() {
+        var p = readParams();
+        var base = (typeof location !== 'undefined' && location.href) ? String(location.href).split('#')[0] : 'https://aiagencycalculator.com/gpt-live-1-cost-calculator';
+        return base + '#p=' + encodeParams(p);
+    }
+
+    function downloadJson() {
+        var p = readParams();
+        var data = JSON.stringify(exportModel(p), null, 2);
+        try {
+            var blob = new Blob([data], { type: 'application/json' });
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'gpt-live-1-cost-model.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+        } catch (e) { /* download unsupported: the export block above is copyable */ }
+        return data;
+    }
+
+    function copyText(text, noteId, noteText) {
+        try {
+            if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text);
+                set(noteId, noteText);
+                return true;
+            }
+        } catch (e) { /* fall through */ }
+        set(noteId, 'Copy failed in this browser \u2014 select the export block below instead.');
+        return false;
+    }
+
+    function bind() {
+        var ids = ['callsPerDay', 'callMm', 'callSs', 'operatingHoursPerDay', 'peakFactor', 'inRate', 'cachedRate', 'outRate', 'cachedSharePct', 'turnsPerCall', 'inTokensPerTurn', 'outTokensPerTurn', 'toolSharePct', 'toolCostPerInvocation', 'toolExtraInTokens', 'idleSharePct', 'realtimeAudioInPerMin', 'realtimeAudioOutPerMin'];
+        ids.forEach(function (id) {
+            var node = el(id);
+            if (node && node.addEventListener) {
+                node.addEventListener('input', update);
+                node.addEventListener('change', update);
+            }
+        });
+        ['backendModel', 'tier', 'monthDays'].forEach(function (id) {
+            var node = el(id);
+            if (node && node.addEventListener) { node.addEventListener('change', update); }
+        });
+        if (el('backendModel') && el('backendModel').addEventListener) {
+            el('backendModel').addEventListener('change', function () { fillRatesFromModel(); update(); });
+        }
+        ['trWebrtc', 'trWs'].forEach(function (id) {
+            var node = el(id);
+            if (node && node.addEventListener) { node.addEventListener('change', update); }
+        });
+        ['longContext', 'dataResidency'].forEach(function (id) {
+            var node = el(id);
+            if (node && node.addEventListener) { node.addEventListener('change', update); }
+        });
+        var presets = document.querySelectorAll('[data-preset]');
+        for (var i = 0; i < presets.length; i++) {
+            (function (btn) {
+                if (btn.addEventListener) {
+                    btn.addEventListener('click', function () { applyPreset(btn.getAttribute('data-preset')); });
+                }
+            })(presets[i]);
+        }
+        if (el('btnCopyLink') && el('btnCopyLink').addEventListener) {
+            el('btnCopyLink').addEventListener('click', function () { copyText(shareableUrl(), 'exportNote', 'Shareable link copied \u2014 it encodes every parameter above.'); });
+        }
+        if (el('btnDownload') && el('btnDownload').addEventListener) {
+            el('btnDownload').addEventListener('click', function () { downloadJson(); set('exportNote', 'JSON model downloaded (gpt-live-1-cost-model.json).'); });
+        }
+    }
+
+    function init() {
+        var restored = decodeParams((typeof location !== 'undefined' && location.hash) ? location.hash : '');
+        if (restored) {
+            var k;
+            for (k in GPT_LIVE_DEFAULTS) {
+                if (GPT_LIVE_DEFAULTS.hasOwnProperty(k) && restored[k] === undefined) { restored[k] = GPT_LIVE_DEFAULTS[k]; }
+            }
+            writeParams(restored);
+        }
+        bind();
+        update();
+    }
+
+    if (typeof window !== 'undefined') {
+        window.GPT_LIVE = {
+            model: GPT_LIVE_MODEL,
+            defaults: GPT_LIVE_DEFAULTS,
+            provenance: GPT_LIVE_PROVENANCE,
+            sources: GPT_LIVE_SOURCES,
+            billedVoiceSeconds: billedVoiceSeconds,
+            voiceCostUsd: voiceCostUsd,
+            computeModel: computeModel,
+            exportModel: exportModel,
+            update: update,
+            readParams: readParams,
+            writeParams: writeParams,
+            applyPreset: applyPreset,
+            shareableUrl: shareableUrl,
+            PRESETS: PRESETS
+        };
+    }
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = {
+            GPT_LIVE_MODEL: GPT_LIVE_MODEL,
+            GPT_LIVE_DEFAULTS: GPT_LIVE_DEFAULTS,
+            GPT_LIVE_PROVENANCE: GPT_LIVE_PROVENANCE,
+            GPT_LIVE_SOURCES: GPT_LIVE_SOURCES,
+            billedVoiceSeconds: billedVoiceSeconds,
+            voiceCostUsd: voiceCostUsd,
+            computeModel: computeModel,
+            exportModel: exportModel
+        };
+    }
+
+    if (typeof document !== 'undefined' && document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', init);
+    }
+})();
+</script>
+</body>
+</html>

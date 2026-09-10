@@ -556,7 +556,184 @@ Verified by executing the real inline script under a node DOM stub (default,
    `$`/`,` and a leading `-` for negatives.
 5. Regression slider shows live `%` via `scRegressionRiskVal`.
 
+## 10. GPT-Live-1 voice + backend two-meter calculator (NEW 2026-09-10)
+
+**Location:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/gpt-live-1-cost-calculator.html`
+— standalone page (single file, inline JS, no backend), kanban **t_5e4b91ac**,
+fact basis the verified source pack from t_1c163248 (`gpt-live-1-billing-facts.md`,
+attached to that task). The canonical model is a marked block inside the page's
+inline script and is also shipped as two deployable assets:
+`gpt-live-1-cost-model.js` (same code as a CommonJS/browser module) and
+`gpt-live-1-cost-model.json` (default parameter set + results + provenance).
+
+Purpose: price the **full** GPT-Live-1 bill — voice duration *plus* delegated
+backend reasoning — and size the concurrent sessions a call volume actually
+needs. Existing third-party coverage of the release stops at $0.05/min, which is
+only the voice half.
+
+### 10.1 Interfaces (exact names are the contract)
+
+```
+billedVoiceSeconds(sessionSeconds, transport, initSeconds = 15)
+    -> max(sessionSeconds, 15) when transport === 'webrtc'
+    -> sessionSeconds          otherwise (no init charge documented for WebSocket)
+voiceCostUsd(sessionSeconds, transport, ratePerSecond = 0.05 / 60)
+computeModel(params) -> results
+exportModel(params)  -> machine-readable payload (also rendered in #rExportJSON)
+```
+
+### 10.2 Inputs (all client-side, live on `input` / `change`)
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `trWebrtc` / `trWs` (name `transport`) | Transport | radio | `webrtc` | webrtc \| websocket |
+| `callsPerDay` | Calls per day | number | `1000` | ≥ 0, step 10 |
+| `callMm` / `callSs` | Average call length mm:ss | number | `4` / `0` | mm ≥ 0, ss 0–59 |
+| `operatingHoursPerDay` | Operating hours per day | number | `8` | 0.5–24, step 0.5 |
+| `peakFactor` | Peak factor (busy hour) | number | `1` | 1–10, step 0.1 |
+| `backendModel` | Backend model | select | `gpt-5.6-terra` | terra \| luna \| astra \| sol \| cyber \| custom |
+| `inRate` / `cachedRate` / `outRate` | Backend token rates ($/1M) | number | from `backendModel` | ≥ 0 |
+| `cachedSharePct` | Share of input tokens cached | number | `0` | 0–100 |
+| `longContext` | Use long-context rate column | checkbox | off | boolean |
+| `dataResidency` | Data-residency +10% uplift | checkbox | off | boolean |
+| `turnsPerCall` | Reasoning turns per call | number | `6` | ≥ 0 |
+| `inTokensPerTurn` / `outTokensPerTurn` | Tokens per turn | number | `1500` / `300` | ≥ 0 |
+| `toolSharePct` | Share of turns triggering tool/search | range | `35` | 0–100, step 5 |
+| `toolCostPerInvocation` | $ per tool/search invocation | number | `0.00` | ≥ 0 |
+| `toolExtraInTokens` | Extra input tokens per tool turn | number | `0` | ≥ 0 |
+| `idleSharePct` | Share of call that is billed silence/backend work | number | `30` | 0–100 |
+| `tier` | Tier for the concurrency check | select | `auto` | auto \| 1–5 \| free |
+| `monthDays` | Month definition | select | `30` | 30 \| 31 \| 30.4167 |
+| `realtimeAudioInPerMin` / `OutPerMin` | Realtime comparison token rates | number | `600` / `600` | ≥ 0 |
+
+A rate field is treated as an override only when it differs from the selected
+model's published rate, so switching `backendModel` moves the backend line by
+default while an edited rate still wins. Presets: `default`, `luna`, `astra`,
+`blowout`, `shortcall` (buttons carry `data-preset`).
+
+### 10.3 Model
+
+```
+billed_voice_seconds = max(session_seconds, 15) if webrtc else session_seconds
+voice_cost           = billed_voice_seconds / 60 * 0.05
+per_turn_model_cost  = (uncached_in * in_rate + cached_in * cached_rate + out_tokens * out_rate) / 1e6
+backend_model_cost   = turns * per_turn_model_cost + (turns * tool_share) * extra_tool_tokens * in_rate / 1e6
+backend_tool_cost    = (turns * tool_share) * tool_cost_per_invocation
+backend_cost         = backend_model_cost + backend_tool_cost
+total_cost           = voice_cost + backend_cost
+calls_per_hour       = calls_per_day / operating_hours
+avg_concurrent       = calls_per_hour * session_seconds / 3600
+required_concurrent  = avg_concurrent * peak_factor        # Little's Law, peak-scaled
+tier                 = smallest tier with ceiling >= required_concurrent (auto)
+capacity_limited_before_budget_limited = required_concurrent > tier_ceiling
+```
+
+Published constants (all OpenAI, `$ per 1M tokens`, Standard, short/long context
+columns): Terra 2.00/0.20/12.00 (long 4.00/0.40/18.00); Luna 0.20/0.02/1.20 (long
+0.40/0.04/1.80); Astra 10.00/1.00/50.00 (long 20.00/2.00/75.00); Sol
+4.00/0.40/20.00 (long 8.00/0.80/30.00); Cyber 12.50/1.25/75.00 (no long column);
+data-residency uplift ×1.10; tier ceilings 25/50/200/300/500 with Free not
+supported; Realtime comparison `gpt-realtime-2.1` audio rows $32/$64 per 1M.
+Everything else in the model (volumes, token shapes, cache share, tool share,
+idle share, peak factor, month length, Realtime tokens/min) is a labelled
+assumption and is editable.
+
+### 10.4 Outputs
+
+Voice: `rSessionDur`, `rBilledSeconds`, `rInitNote`, `rVoicePerCall`,
+`rIdlePerCall`, `rVoiceDay`, `rVoiceMonth`, `rVoiceMonthAlt`. Backend:
+`rBackendModelPerCall`, `rBackendToolPerCall`, `rBackendPerCall`,
+`rBackendShare`, `rBackendDay`, `rBackendMonth`, `rBackendPerVoiceMin`. Totals:
+`rTotalPerCall`, `rTotalPerCallBig`, `rTotalDay`, `rTotalMonth`,
+`rTotalMonthAlt`, `rVoiceShare`. Capacity: `rCallsPerHour`, `rAvgConcurrent`,
+`rReqConcurrent`, `rConcDerivation`, `rTierChecked`, `rHeadroom`, `rTierVerdict`,
+`rTierQual`, `rTier1Util`…`rTier5Util` / `rTier1Fit`…`rTier5Fit`. Realtime:
+`rRtPerMin`, `rRtPerCall`, `rRtBreakEven`, `rRtVerdict`. Quick reference:
+`rRef240`, `rRef90`, `rRef40`, `rRef5w`, `rRef5s`. Export: `rExportJSON`,
+plus `#btnCopyLink` (shareable `#p=<base64url params>` URL) and `#btnDownload`.
+
+Defaults reproduce: voice $0.2000/call → **$200.00/day → $6,000.00/month
+(30-day)**; Terra backend 6 × (1,500/300) = $0.0396/call → $39.60/day; total
+$0.2396/call → $239.60/day → $7,188.00/month; concurrency 8.33 average / 20.83
+at a 2.5× peak → Tier 1 (25) fits. Astra backend on the same shape = $0.1800/call
+(47.4% of the two-meter total). 0:40 call = $0.0333 (3.33¢). 0:05 WebRTC call =
+the 15 s floor = $0.0125; 0:05 WebSocket call = $0.0042. Realtime audio rows at
+600/600 tokens per minute = $0.0576/min; flat-rate break-even = 1,041.67 audio
+tokens/min at a 1:1 in:out mix.
+
+### 10.5 Verified
+
+`node tests/gpt-live-1-verify.mjs gpt-live-1-cost-calculator.html` — **102/102**.
+The harness does not re-implement anything: it extracts the page's real inline
+script, runs it in a `node:vm` sandbox with a DOM stub built from the page's own
+markup (so the defaults under test are the page's defaults), and asserts (a) the
+facts-sheet checkpoints `billed(90,'webrtc')==90`, `billed(5,'webrtc')==15`,
+`billed(240,'webrtc')==240`, `cost(40,'webrtc')==0.0333333`,
+`cost(240,'webrtc')==0.2`, `cost(90,'webrtc')==0.075`; (b) every acceptance
+figure above; (c) the rendered text of the real output elements; (d) the export
+round-trips to identical results; (e) each preset visibly moves the totals;
+(f) every output id the script writes exists in the shipped HTML. Add `--emit
+<path>` to regenerate `gpt-live-1-cost-model.js` from the page (single source of
+truth). `site_consistency.py` on the page: **0 errors, 0 warnings**. Headless
+Chrome render check: see §10.7.
+
+### 10.6 Honesty constraints carried from the fact sheet
+
+1. The 15 s init floor is **WebRTC-scoped**; the WebSocket path has no
+   documented init charge, so transport is a toggle, not an assumption.
+2. Billable time ≠ talk time (silence and backend work are billed; muting does
+   not close the session) — exposed as `idleSharePct`, not hidden.
+3. Backend rates must travel with the backend model: switching the selector is
+   what changes the bill.
+4. Every monthly row prints its month convention; OpenAI defines no month.
+5. The Realtime comparison is a **floor** (audio rows only; text and image rows
+   exist) and its tokens-per-minute rates are ours — which is why a break-even
+   token rate is printed next to the cost.
+6. `session.usage.updated` replaces a cumulative snapshot; record final
+   `usage.seconds` from `session.closed` once. Documented in the page's
+   "How the two meters work" section.
+7. No benchmark figure is presented as independently reproduced, and custom
+   voices (sales-gated, no published rate) are deliberately not modelled.
+
+### 10.7 Deploy
+
+```bash
+~/seo-pages/tools/deploy-idle-site.sh ai-agency-pricing-calculator \
+  --files=gpt-live-1-cost-calculator.html \
+  --files=gpt-live-1-cost-model.js,gpt-live-1-cost-model.json --verify-live
+```
+
+Live: `https://aiagencycalculator.com/gpt-live-1-cost-calculator` (plus
+`/gpt-live-1-cost-model.json` for the machine-readable export). The page is the
+calculator companion to the GPT-Live-1 pricing angle page published by
+t_000de443; it is internal-linked from `/ai-agent-api-cost-calculator`,
+`/ai-model-cost-per-task-2026`, `/astra-model-cost-outlook` and
+`/ai-agent-cost-blowups` **once those pages are re-deployed with the links** —
+until then the links are one-directional (this page → those pages).
+
 ## Changelog
+
+- **2026-09-10** — GPT-Live-1 voice + backend **two-meter** cost calculator added
+  (task t_5e4b91ac; fact basis the verified source pack from t_1c163248,
+  `gpt-live-1-billing-facts.md`). New standalone page
+  `gpt-live-1-cost-calculator.html`: voice cost at $0.05/min billed by the second
+  with the WebRTC 15 s init **floor** (`max(d,15)`, transport toggle because the
+  init charge is WebRTC-scoped), backend reasoning as a separate editable-rate
+  line with tool/search spend and cached-input support, totals per call/day/month
+  with the month convention printed on every monthly row (30 / 31 / 365÷12), a
+  Little's-Law concurrency planner against the 25/50/200/300/500 concurrent-
+  session ceilings with the Free-tier exclusion and a
+  "capacity-limited-before-budget-limited" verdict, a GPT-Realtime-2.1 audio
+  token-metering comparison with a printed break-even token rate, and a
+  machine-readable JSON export (in-page + `gpt-live-1-cost-model.json` +
+  `gpt-live-1-cost-model.js`). Verified: `node tests/gpt-live-1-verify.mjs` — 102
+  checks (facts-sheet checkpoints, acceptance figures, DOM rendering, export
+  round-trip, preset switching, output-id integrity) all pass;
+  `site_consistency.py` 0 errors / 0 warnings; headless-Chrome render check.
+  Defaults: $0.2000 voice + $0.0396 Terra backend per 4-minute call → $200.00/day
+  voice, $239.60/day two-meter, $6,000.00/month voice (30-day), 8.33 concurrent
+  (20.83 at 2.5× peak) → Tier 1 fits. Internal links to the four cost pages;
+  companion angle page published separately by t_000de443.
 
 - **2026-08-29** — Compute Supply Scenario added (task t_1cecd86a, Theseus
   Infrastructure chain t_a54f7304 → t_6abde9f4 → t_395ea2fa → t_c4c2693f
