@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Per-Seat vs Per-Token AI Pricing: 10-Seat Worked Comparison</title>
+    <meta name="description" content="OpenAI publishes no price for ChatGPT for Financial Services. Per-seat vs per-token, worked for a 10-person team, with the crossover point and every input labelled.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aiagencycalculator.com/vertical-ai-pricing-vs-token-pricing">
+    <meta property="og:title" content="Per-Seat vs Per-Token AI Pricing: 10-Seat Worked Comparison">
+    <meta property="og:description" content="OpenAI publishes no price for ChatGPT for Financial Services. Per-seat vs per-token, worked for a 10-person team, with the crossover point and every input labelled.">
+    <meta property="og:url" content="https://aiagencycalculator.com/vertical-ai-pricing-vs-token-pricing">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aiagencycalculator">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Per-Seat Vertical AI Bundles vs Per-Token Pricing: A 10-Person Worked Comparison",
+  "description": "Metered per-token inference and per-seat vertical bundles that include licensed premium data are two different pricing shapes. This page shows the published anchors, a worked comparison for a 10-person client team, the crossover point in usage intensity, and why premium-data seats cannot be resold through an agency.",
+  "datePublished": "2026-09-10",
+  "dateModified": "2026-09-10",
+  "author": {
+    "@type": "Organization",
+    "name": "ABD Legacy LLC"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ABD Legacy LLC"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://aiagencycalculator.com/vertical-ai-pricing-vs-token-pricing"
+  }
+}</script>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does ChatGPT for Financial Services cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "OpenAI has not published a price. The announcement page offers no list price at all: availability is limited to \u201celigible financial institutions\u201d and the only commercial call to action is \u201cContact financial services sales.\u201d American Banker asked OpenAI what determines eligibility and reported that the company did not respond. Because no figure is published, this page models the seat as a multiple k of OpenAI's published ChatGPT Business standard seat ($20 per user per month billed annually, $25 monthly), showing k = 1, 2, 3 and 5, and never presents a modelled number as a Finserv price."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it cheaper to pay per seat or per token for a 10-person team?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on usage intensity per user, not on team size. Metered inference at GPT-6 Astra list rates costs $10 per million input tokens and $50 per million output tokens. A per-seat bundle at the published ChatGPT Business premium-seat precedent of $100 per user per month billed annually costs $12,000 per year for 10 seats. At a 10:1 input-to-output token ratio, the crossover is a seat rate of $100 divided by $15 per million input-equivalent tokens, or about 6.7 million input tokens per user per month \u2014 roughly 167 model-assisted research tasks per user per month, about 8 per working day. Below that intensity, metered is cheaper; above it, the seat bundle is cheaper."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the crossover point between per-seat and per-token AI pricing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Crossover tasks per user per month = monthly seat rate divided by the metered cost of one task. With GPT-6 Astra at $10 per million input tokens and $50 per million output tokens, and a modelled task of 40,000 input plus 4,000 output tokens costing $0.60, the formula is: crossover = seat rate / 0.60. At a $20 seat that is about 33 tasks per user per month; at $100 it is about 167; at $125 (monthly billing) it is about 208. Team size cancels out of the comparison, because both shapes scale linearly with the number of users. Team size only re-enters the maths through a seat minimum, a fixed platform fee, or unused seats."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can an agency resell ChatGPT for Financial Services seats to a client?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Premium-data seats are not resellable through an agency. OpenAI's Financial Services Terms restrict PitchBook data to internal business operations and internal research and analysis, prohibit redistribution, and state that ownership of Output does not include Partner Data; Reuters News is limited to professional users employed by eligible financial firms domiciled or incorporated in the United States. An agency is not that user, and an export or sharing feature does not expand those rights. The client has to hold the entitlement in its own name, so an agency cannot buy seats and mark them up. Agency revenue on a seat bundle is a services fee, and the resellable layer stays the metered API, where the industry norm is a 3\u201310x markup on raw model cost."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the per-seat bundle replace the client's existing data subscriptions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. OpenAI says the built-in datasets arrive with \u201cno separate contracts to negotiate or connectors to set up,\u201d and it is working with S&amp;P Capital IQ, LSEG, MSCI, Dow Jones Factiva and Moody's on shared sign-in and entitlement integrations. So the bundle does not replace subscriptions a firm already pays for. Total cost of ownership for a client is the seat bundle plus the data subscriptions the firm already holds, which is why a seat-only quote understates the real line item."
+      }
+    }
+  ]
+}</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .answer-box { margin: 24px 0; padding: 20px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 10px 10px 0; }
+        .answer-box p { margin-bottom: 8px; }
+        .answer-box p:last-child { margin-bottom: 0; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        a, p, li { overflow-wrap: anywhere; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+        .table-wrap table { margin: 0; min-width: 100%; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; vertical-align: top; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        .sources { margin-top: 32px; padding-top: 20px; border-top: 1px solid #e8e8f0; font-size: 0.9rem; color: #666; }
+        .sources h3 { font-size: 1.05rem; margin-bottom: 10px; color: #333; }
+        .sources ul { list-style: none; padding: 0; margin-bottom: 0; }
+        .sources li { margin-bottom: 6px; font-size: 0.9rem; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        /* ── Crossover estimator (2026-09-10 t_3a504684) ── */
+        .xover { margin: 32px 0; padding: 28px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; }
+        .xover h2 { margin-top: 0; border-bottom: none; }
+        .xover .est-intro { font-size: 0.95rem; color: #555; margin-bottom: 20px; }
+        .xover .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; margin-bottom: 20px; }
+        .xover .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .xover .form-group label { font-size: 0.8rem; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.05em; }
+        .xover .form-group select, .xover .form-group input[type="number"] { background: #fff; border: 1px solid #d8d8e8; border-radius: 8px; padding: 12px 14px; color: #1a1a2e; font-size: 0.95rem; width: 100%; }
+        .xover .form-group select:focus, .xover .form-group input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
+        .xover .form-hint { font-size: 0.75rem; color: #888; margin-top: 4px; line-height: 1.5; }
+        .xover .btn { display: inline-block; background: #2563eb; color: #fff; padding: 14px 28px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+        .xover .btn:hover { background: #1d4ed8; }
+        .xover .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-top: 20px; }
+        .xover .result-card { background: #fff; border: 1px solid #e8e8f0; border-radius: 10px; padding: 18px; text-align: center; }
+        .xover .result-card.primary { border-color: #2563eb; background: #f0f4ff; }
+        .xover .result-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #777; font-weight: 700; margin-bottom: 8px; }
+        .xover .result-value { font-size: 1.4rem; font-weight: 900; color: #111; line-height: 1.1; }
+        .xover .result-card.primary .result-value { color: #2563eb; }
+        .xover .result-sub { font-size: 0.75rem; color: #888; margin-top: 4px; }
+        .xover .insight-box { margin-top: 18px; padding: 16px 20px; background: #fff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-size: 0.92rem; color: #333; }
+        .xover .est-footnote { margin-top: 14px; font-size: 0.78rem; color: #777; line-height: 1.7; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>Per-Seat Vertical AI Bundles vs Per-Token Pricing: A 10-Person Worked Comparison</h1>
+            <div class="meta"><span>Published September 10, 2026</span><span>Updated September 10, 2026</span><span>By ABD Legacy LLC</span></div>
+        </header>
+
+        <div class="answer-box">
+            <p><strong>OpenAI publishes no price for ChatGPT for Financial Services.</strong> Availability is gated to &ldquo;eligible financial institutions&rdquo; and the only commercial call to action on the announcement page is &ldquo;Contact financial services sales.&rdquo; So this page prices the <em>shape</em> instead of inventing a figure: a per-seat vertical bundle (seats &times; seat rate &times; 12, licensed premium data included) against the metered per-token model our calculator already prices at <strong>$10 per million input tokens and $50 per million output tokens</strong>. For a 10-person team the crossover is roughly <strong>167 model-assisted tasks per user per month</strong> at the $100 premium-seat precedent — below that, metered inference is cheaper; above it, the bundle is.</p>
+        </div>
+
+        <p>Two pricing shapes now compete for the same client budget, and they are not interchangeable. On <strong>September 10, 2026</strong> OpenAI introduced <strong>ChatGPT for Financial Services</strong>, which bundles licensed financial data (Daloopa, PitchBook, LSEG News, Crunchbase) into a per-seat ChatGPT Work experience on GPT-6 Astra. That is a different unit of sale from the tokens-and-markup model most AI agencies quote with. This page works the comparison for a 10-person client team, shows the crossover point, and states the one caveat that changes agency margin maths: premium-data seats are <strong>not resellable through an agency</strong>.</p>
+
+        <h2>Per-seat vs per-token: the two shapes side by side</h2>
+        <div class="table-wrap">
+        <table>
+            <tr><th></th><th>Per-token metered inference</th><th>Per-seat vertical bundle</th></tr>
+            <tr><td><strong>Unit of sale</strong></td><td>1M tokens in / out, per model, per month</td><td>One seat, per user, per month (annual or monthly)</td></tr>
+            <tr><td><strong>Who buys it</strong></td><td>You (the agency or the client builds on your app)</td><td>The client, directly from the vendor, under the client's own entitlement</td></tr>
+            <tr><td><strong>Data layer</strong></td><td>Whatever you bring: scraping, your own connectors, open web</td><td>Licensed premium data hosted by the vendor, included in the seat</td></tr>
+            <tr><td><strong>Price basis</strong></td><td>Published list rate per million tokens</td><td>Published seat precedent for the base plan; vertical seat rate often unpublished</td></tr>
+            <tr><td><strong>Scales with</strong></td><td>Usage intensity (tokens burned)</td><td>Head-count (seats provisioned)</td></tr>
+            <tr><td><strong>Agency can resell it?</strong></td><td><strong>Yes</strong> — mark up the metered cost inside your own product or managed service</td><td><strong>No</strong> — partner-data terms forbid redistribution and the entitlement is the client's</td></tr>
+            <tr><td><strong>Prices well</strong></td><td>Custom builds, agents, high-volume automation</td><td>Analyst-shaped knowledge work inside one licensed vertical</td></tr>
+            <tr><td><strong>Cannot price</strong></td><td>Value of a licensed data corpus the client cannot otherwise access</td><td>Anything above the seat: implementation, integration, workflow design</td></tr>
+        </table>
+        </div>
+        <p>The practical consequence: the per-token calculator answers &ldquo;what does it cost to run this workload?&rdquo; It cannot answer &ldquo;what does it cost to buy this capability?&rdquo; That second question is now the per-seat one.</p>
+
+        <h2>Does OpenAI publish a price for ChatGPT for Financial Services?</h2>
+        <p><strong>No.</strong> The September 10, 2026 announcement carries no list price, no seat minimum, no contract length and no stated eligibility test. Availability is described as being for &ldquo;eligible financial institutions,&rdquo; with a &ldquo;Contact financial services sales&rdquo; call to action. <em>American Banker</em> reported the same day that OpenAI did not immediately respond when asked what determines eligibility. Treat every Finserv figure you see in the wild as modelled, not published — including the ones on this page.</p>
+        <p>What <em>is</em> published, per vendor sources, is the surrounding price structure:</p>
+        <div class="table-wrap">
+        <table>
+            <tr><th>Item</th><th>Value</th><th>Status</th></tr>
+            <tr><td>GPT-6 Astra API (metered leg)</td><td>$10 / 1M input tokens, $50 / 1M output tokens; Fast mode 2&times; speed at 2&times; price</td><td><strong>Published</strong> (OpenAI model page)</td></tr>
+            <tr><td>ChatGPT Business standard seat</td><td>$20/user/month billed annually, $25 monthly</td><td><strong>Published</strong> (OpenAI business pricing)</td></tr>
+            <tr><td>ChatGPT Business premium seat</td><td>$100/user/month billed annually, $125 monthly</td><td><strong>Published</strong> — used here as the premium-seat <em>precedent</em></td></tr>
+            <tr><td><strong>ChatGPT for Financial Services seat</strong></td><td><strong>None published anywhere</strong> — contact sales only</td><td><strong>Unknown</strong> (do not quote a figure as OpenAI's)</td></tr>
+            <tr><td>Premium data layer (Daloopa, PitchBook, LSEG News, Crunchbase, Quartr, Nasdaq/FMP, Fiscal AI)</td><td>Priced via the seat; the terms define <em>use rights</em>, not a price — partner data is internal-use, no redistribution, output excludes partner data, and Reuters News is limited to professional users at eligible US firms</td><td><strong>Published as terms</strong></td></tr>
+            <tr><td>Minimum seats / contract length</td><td>Not stated for Finserv</td><td><strong>Unknown</strong></td></tr>
+            <tr><td>ChatGPT Enterprise (context only)</td><td>~$60/user/month with a 150-seat minimum</td><td><strong>Third-party estimate</strong>, not vendor-published</td></tr>
+        </table>
+        </div>
+        <p>Two clarifications worth keeping straight, because aggregators blur them: the enterprise <strong>ChatGPT for Financial Services</strong> product is not the consumer personal-finance experience in ChatGPT (launched May 15, 2026 for Pro users in the US); and the &ldquo;Financial Services Terms&rdquo; regime covers OpenAI's financial plugins and Finserv together, so partner-data restrictions should be cited as the <em>Financial Services</em> regime rather than as Finserv-only.</p>
+        <p>For context on the vertical race, dated: Anthropic has been in this vertical since <strong>July 15, 2025</strong> with Claude for Financial Services and a partner-connector model, and a <strong>$1.5 billion</strong> joint venture with Blackstone, Hellman &amp; Friedman and Goldman Sachs was reported on <strong>May 4, 2026</strong> (a figure <em>Anthropic has not confirmed</em>), followed by a May 5, 2026 briefing with financial-services agent templates and Microsoft 365 add-ins. OpenAI's September 2026 entry is the first time licensed premium data is indexed and hosted by the model vendor itself.</p>
+
+        <h2>Step 1: the per-token estimate our calculator produces today</h2>
+        <p>Our calculator prices a workload from three inputs: the model's list rates, the monthly input-token volume, and the monthly output-token volume. The formula is:</p>
+        <blockquote>metered $/month = (input tokens &divide; 1,000,000 &times; $10) + (output tokens &divide; 1,000,000 &times; $50)</blockquote>
+        <p>To keep the comparison concrete I need a usage unit. <strong>Modelled input (ours, not a vendor figure):</strong> one model-assisted research task consumes <strong>40,000 input tokens and 4,000 output tokens</strong> — a 10:1 input-to-output ratio, which is what document-heavy research and drafting looks like. At Astra list rates, that is:</p>
+        <blockquote>$0.40 input + $0.20 output = <strong>$0.60 per task</strong> (40,000 &divide; 1,000,000 &times; $10 = $0.40; 4,000 &divide; 1,000,000 &times; $50 = $0.20)</blockquote>
+        <p>Four usage intensities, each applied to <strong>10 users</strong>:</p>
+        <div class="table-wrap">
+        <table>
+            <tr><th>Intensity</th><th>Tasks / user / month</th><th>Input tokens / user</th><th>Output tokens / user</th><th>Metered / user / month</th><th>Metered, 10 users / year</th></tr>
+            <tr><td>Light</td><td>50</td><td>2.0M</td><td>0.2M</td><td>$30</td><td><strong>$3,600</strong></td></tr>
+            <tr><td>Medium</td><td>150</td><td>6.0M</td><td>0.6M</td><td>$90</td><td><strong>$10,800</strong></td></tr>
+            <tr><td>Heavy</td><td>300</td><td>12.0M</td><td>1.2M</td><td>$180</td><td><strong>$21,600</strong></td></tr>
+            <tr><td>Very heavy</td><td>600</td><td>24.0M</td><td>2.4M</td><td>$360</td><td><strong>$43,200</strong></td></tr>
+        </table>
+        </div>
+        <p>Check the arithmetic on any row: tasks &times; $0.60 &times; 10 users &times; 12 months. Medium = 150 &times; $0.60 = $90 per user per month, &times; 10 users = $900 per month, &times; 12 = $10,800. <strong>Inputs: 40k/4k tokens per task (modelled), $10/$50 per 1M tokens (published), 10 users (assumed).</strong></p>
+
+        <h2>Step 2: the per-seat vertical bundle for the same team</h2>
+        <p>The seat shape is simpler: <code>annual bundle = seats &times; seat rate &times; 12</code>. The only input we do not have is the Finserv seat rate, so we hold it as a variable instead of a number: <strong>seat_finserv = k &times; the published standard ChatGPT Business seat ($20/user/month annual)</strong>, with k shown at 1, 2, 3 and the premium-seat precedent of 5.</p>
+        <div class="table-wrap">
+        <table>
+            <tr><th>k</th><th>Modelled seat rate</th><th>Basis</th><th>10 seats / month</th><th>10 seats / year</th></tr>
+            <tr><td>1&times;</td><td>$20/user/month</td><td>Published standard seat, annual billing</td><td>$200</td><td><strong>$2,400</strong></td></tr>
+            <tr><td>2&times;</td><td>$40/user/month</td><td>Modelled</td><td>$400</td><td><strong>$4,800</strong></td></tr>
+            <tr><td>3&times;</td><td>$60/user/month</td><td>Modelled</td><td>$600</td><td><strong>$7,200</strong></td></tr>
+            <tr><td>5&times;</td><td>$100/user/month</td><td><strong>Published</strong> premium-seat precedent (annual billing)</td><td>$1,000</td><td><strong>$12,000</strong></td></tr>
+            <tr><td>—</td><td>$125/user/month</td><td><strong>Published</strong> premium-seat precedent, monthly billing</td><td>$1,250</td><td><strong>$15,000</strong></td></tr>
+        </table>
+        </div>
+        <p>Read the $20 and $100/$125 rows as published prices for <em>other</em> OpenAI seats, and the $40 and $60 rows as our interpolation. None of them is a ChatGPT for Financial Services price — OpenAI has not published one. What the $100 precedent buys you is a scale check: OpenAI's own premium tier sits <strong>5&times; above</strong> its standard tier, so a vertical bundle with licensed data included should be expected to price well above a standard seat, not at it.</p>
+        <p>One more input the seat quote normally omits: the client's <strong>existing data subscriptions do not go away</strong>. OpenAI says the built-in datasets arrive with &ldquo;no separate contracts to negotiate or connectors to set up,&rdquo; and it is working with S&amp;P Capital IQ, LSEG, MSCI, Dow Jones Factiva and Moody's on shared sign-in and entitlement integrations. So total cost of ownership = Finserv seats <strong>+</strong> the subscriptions the firm still pays for.</p>
+
+        <h2>The crossover: where metered stops being cheaper</h2>
+        <p>Set the two shapes equal. Working in per-user monthly terms, with metered cost per user = $15 per million input tokens equivalent (10:1 input-to-output at $10/$50 per million), the crossover is:</p>
+        <blockquote>crossover usage per user = seat rate &divide; $15 per million input-equivalent tokens<br>or, in tasks at $0.60 each: <strong>crossover tasks per user = seat rate &divide; 0.60</strong></blockquote>
+        <div class="table-wrap">
+        <table>
+            <tr><th>Seat rate (per user / month)</th><th>Status</th><th>Metered is cheaper below</th><th>In tasks / user / month</th><th>Per working day</th></tr>
+            <tr><td>$20</td><td>Published standard</td><td>1.33M input tokens</td><td>33</td><td>~1.6</td></tr>
+            <tr><td>$40</td><td>Modelled</td><td>2.67M input tokens</td><td>67</td><td>~3.2</td></tr>
+            <tr><td>$60</td><td>Modelled</td><td>4.00M input tokens</td><td>100</td><td>~4.8</td></tr>
+            <tr><td>$100</td><td>Published premium precedent</td><td>6.67M input tokens</td><td><strong>167</strong></td><td><strong>~7.9</strong></td></tr>
+            <tr><td>$125</td><td>Published premium precedent, monthly</td><td>8.33M input tokens</td><td>208</td><td>~9.9</td></tr>
+        </table>
+        </div>
+        <p>Three things fall out of that table:</p>
+        <ul>
+            <li><strong>Team size cancels out.</strong> Both shapes scale linearly per user, so the crossover is a per-user usage number, not a head-count number. A 3-person team and a 30-person team cross at the same intensity — this is the opposite of what most &ldquo;when does per-seat win&rdquo; intuition assumes.</li>
+            <li><strong>Team size re-enters only through a floor.</strong> A seat minimum or a fixed platform fee is the only thing that makes head-count matter. Example: a 3-person team forced onto a 10-seat minimum at $100/user/month pays $12,000/year for three active users — an effective <strong>$4,000 per active user per year</strong>, versus <strong>$3,240</strong> for the same three users at medium intensity (150 tasks each) on metered inference. Minimums, not seats, are what turn the bundle into a bad deal for small teams.</li>
+            <li><strong>The metered number is the honest ceiling to compare against.</strong> $12,000/year is what 10 premium-precedent seats cost — and also what <strong>240 million output tokens</strong> (20M/month team-wide, 2M per user) or <strong>1.2 billion input tokens</strong> of Astra inference cost. If the client's real usage sits under that, metered plus a services fee is the better-argued quote.</li>
+        </ul>
+
+        <h2>Model the crossover for your own team</h2>
+        <div class="xover" id="crossover-estimator">
+            <p class="est-intro">Every rate below is a published OpenAI list price or a labelled model input. Change the seats, the usage intensity and the seat rate to see which shape is cheaper and where the crossover falls.</p>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="xvSeats">Seats (users)</label>
+                    <input type="number" id="xvSeats" min="1" max="500" value="10" step="1" />
+                    <div class="form-hint">Team size. Both shapes scale with it, so it does not move the crossover.</div>
+                </div>
+                <div class="form-group">
+                    <label for="xvTasks">Tasks per user / month</label>
+                    <input type="number" id="xvTasks" min="1" max="2000" value="150" step="1" />
+                    <div class="form-hint">Modelled task = 40,000 input + 4,000 output tokens = $0.60 at Astra list rates.</div>
+                </div>
+                <div class="form-group">
+                    <label for="xvSeat">Seat rate ($/user/month, annual billing)</label>
+                    <select id="xvSeat">
+                        <option value="20">$20 — published standard seat</option>
+                        <option value="40">$40 — modelled 2&times; standard</option>
+                        <option value="60">$60 — modelled 3&times; standard</option>
+                        <option value="100" selected>$100 — published premium-seat precedent</option>
+                        <option value="125">$125 — published premium seat, monthly billing</option>
+                    </select>
+                    <div class="form-hint">No ChatGPT for Financial Services seat rate is published; these are the labelled anchors.</div>
+                </div>
+            </div>
+            <button class="btn" onclick="calculateCrossover()">&#8644; Compare the two shapes</button>
+            <div id="xv-results" style="display:none;">
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-label">Metered / year</div>
+                        <div class="result-value" id="xv-metered">—</div>
+                        <div class="result-sub" id="xv-metered-sub">—</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Seats / year</div>
+                        <div class="result-value" id="xv-seats">—</div>
+                        <div class="result-sub" id="xv-seats-sub">—</div>
+                    </div>
+                    <div class="result-card primary">
+                        <div class="result-label">Crossover intensity</div>
+                        <div class="result-value" id="xv-crossover">—</div>
+                        <div class="result-sub">tasks / user / month</div>
+                    </div>
+                </div>
+                <div class="insight-box"><strong>&#128204; Read-out</strong><div id="xv-note">—</div></div>
+                <p class="est-footnote">Model: metered = seats &times; tasks &times; $0.60 &times; 12; seats = seats &times; seat rate &times; 12; crossover tasks = seat rate &divide; 0.60. Published inputs: GPT-6 Astra $10 per 1M input / $50 per 1M output tokens; ChatGPT Business seats $20 standard and $100 premium per user per month (annual billing; $25 / $125 monthly). Modelled inputs: 40,000 input + 4,000 output tokens per task. No ChatGPT for Financial Services seat rate is published by OpenAI as of September 10, 2026 — the Finserv seat price, seat minimum and contract length are all unknown, so treat every bundle figure here as a labelled model, not a quote.</p>
+            </div>
+        </div>
+
+        <h2>The caveat that changes agency margin maths: these seats are not resellable</h2>
+        <p>If you have been pricing AI by buying tokens and reselling them at a 3&ndash;10&times; markup, the per-seat vertical bundle breaks that mechanism. <strong>Premium-data seats are not resellable through an agency.</strong> The restrictions are in OpenAI's Financial Services Terms, not in a blog post:</p>
+        <ul>
+            <li><strong>Partner data is internal-use.</strong> PitchBook data is licensed &ldquo;for your internal business operations, including internal research and analysis,&rdquo; with prohibitions on model training, grounding, reconstitution, bulk export, CRM loading and competing products.</li>
+            <li><strong>Output excludes Partner Data.</strong> The terms say ownership of Output does not include Partner Data, and that &ldquo;an export or sharing feature does not expand the rights granted under those terms.&rdquo;</li>
+            <li><strong>Reuters News is person-restricted.</strong> It is available only to professional users employed by eligible financial firms domiciled or incorporated in the United States — an agency's staff are not those users.</li>
+        </ul>
+        <p>So the client has to hold the entitlement in its own name, and the agency cannot stand between the vendor and the client as a reseller. A deliverable built on Partner Data cannot be redistributed by the agency either. What that does to the revenue mix:</p>
+        <div class="table-wrap">
+        <table>
+            <tr><th>Agency revenue lever</th><th>Per-token / API shape</th><th>Per-seat vertical bundle</th></tr>
+            <tr><td>Licence resale margin</td><td>Yes — markup on metered cost (industry norm 3&ndash;10&times; raw model cost)</td><td><strong>No</strong> — banned by partner-data terms; entitlement is the client's</td></tr>
+            <tr><td>Pass-through COGS line</td><td>Yes — you hold the API account</td><td>None — the licence never touches your P&amp;L</td></tr>
+            <tr><td>Implementation / integration fee</td><td>Yes</td><td>Yes — and it becomes the primary line</td></tr>
+            <tr><td>Workflow build in the client's own templates</td><td>Possible</td><td>Yes — admins publish Excel/Word/PowerPoint templates and style guides, so the work lands in the client's existing deliverable chain</td></tr>
+            <tr><td>Evidence-trace and review design</td><td>Your own tooling</td><td>Yes — granular citations back to tables and passages are a configuration and review-workflow job</td></tr>
+            <tr><td>Governance, admin, enablement</td><td>Yes</td><td>Yes — SAML SSO, SCIM, role-based access, retention and log export all need an owner</td></tr>
+        </table>
+        </div>
+        <p>Modelled illustration (ours, not a published price): on a $12,000/year seat contract, a reseller model would have booked roughly $2,400 at a 20% margin — and on a non-resellable seat that revenue is <strong>$0</strong>. The same engagement has to be repriced as a services engagement against the licence value. If your standard services attach is 20&ndash;30% of licence value, that is a $2,400&ndash;$3,600/year services line you have to scope, sell and defend on its own merits — implementation, template and style-guide configuration, eval and evidence-review workflows, governance and enablement. The honest framing for the client is that you are not the vendor's channel here; you are the integrator, and the metered API remains the only layer you can buy, mark up and resell.</p>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+<h3>Q: How much does ChatGPT for Financial Services cost?</h3>
+<p>A: OpenAI has not published a price. The announcement page offers no list price at all: availability is limited to &ldquo;eligible financial institutions&rdquo; and the only commercial call to action is &ldquo;Contact financial services sales.&rdquo; American Banker asked OpenAI what determines eligibility and reported that the company did not respond. Because no figure is published, this page models the seat as a multiple k of OpenAI's published ChatGPT Business standard seat ($20 per user per month billed annually, $25 monthly), showing k = 1, 2, 3 and 5, and never presents a modelled number as a Finserv price.</p>
+</div>
+<div class="faq-item">
+<h3>Q: Is it cheaper to pay per seat or per token for a 10-person team?</h3>
+<p>A: It depends on usage intensity per user, not on team size. Metered inference at GPT-6 Astra list rates costs $10 per million input tokens and $50 per million output tokens. A per-seat bundle at the published ChatGPT Business premium-seat precedent of $100 per user per month billed annually costs $12,000 per year for 10 seats. At a 10:1 input-to-output token ratio, the crossover is a seat rate of $100 divided by $15 per million input-equivalent tokens, or about 6.7 million input tokens per user per month — roughly 167 model-assisted research tasks per user per month, about 8 per working day. Below that intensity, metered is cheaper; above it, the seat bundle is cheaper.</p>
+</div>
+<div class="faq-item">
+<h3>Q: What is the crossover point between per-seat and per-token AI pricing?</h3>
+<p>A: Crossover tasks per user per month = monthly seat rate divided by the metered cost of one task. With GPT-6 Astra at $10 per million input tokens and $50 per million output tokens, and a modelled task of 40,000 input plus 4,000 output tokens costing $0.60, the formula is: crossover = seat rate / 0.60. At a $20 seat that is about 33 tasks per user per month; at $100 it is about 167; at $125 (monthly billing) it is about 208. Team size cancels out of the comparison, because both shapes scale linearly with the number of users. Team size only re-enters the maths through a seat minimum, a fixed platform fee, or unused seats.</p>
+</div>
+<div class="faq-item">
+<h3>Q: Can an agency resell ChatGPT for Financial Services seats to a client?</h3>
+<p>A: No. Premium-data seats are not resellable through an agency. OpenAI's Financial Services Terms restrict PitchBook data to internal business operations and internal research and analysis, prohibit redistribution, and state that ownership of Output does not include Partner Data; Reuters News is limited to professional users employed by eligible financial firms domiciled or incorporated in the United States. An agency is not that user, and an export or sharing feature does not expand those rights. The client has to hold the entitlement in its own name, so an agency cannot buy seats and mark them up. Agency revenue on a seat bundle is a services fee, and the resellable layer stays the metered API, where the industry norm is a 3–10x markup on raw model cost.</p>
+</div>
+<div class="faq-item">
+<h3>Q: Does the per-seat bundle replace the client's existing data subscriptions?</h3>
+<p>A: No. OpenAI says the built-in datasets arrive with &ldquo;no separate contracts to negotiate or connectors to set up,&rdquo; and it is working with S&amp;P Capital IQ, LSEG, MSCI, Dow Jones Factiva and Moody's on shared sign-in and entitlement integrations. So the bundle does not replace subscriptions a firm already pays for. Total cost of ownership for a client is the seat bundle plus the data subscriptions the firm already holds, which is why a seat-only quote understates the real line item.</p>
+</div>
+
+        <h2>Bottom line for 2026</h2>
+        <p>Quote the shape, then the number. Per-token metered inference stays the resellable layer and prices cleanly at $10/$50 per million tokens on Astra; per-seat vertical bundles with licensed premium data are a <em>capability purchase</em> the client makes directly, at a rate OpenAI has not published. For a 10-person team the two shapes cross at roughly 167 tasks per user per month at the $100 premium-seat precedent — below that, run metered inference and sell services on top; above it, the bundle is the cheaper capability and your revenue is the implementation, workflow, evidence-review and governance work around it. The mistake to avoid is quoting a markup on seats you cannot buy.</p>
+
+        <div class="cta">
+            <p><strong>Price the workload, then price the capability</strong></p>
+            <a class="btn" href="#crossover-estimator" data-umami-event="click_to_crossover_estimator">Model your own crossover ↑</a>
+            <p style="margin-top:12px;font-size:0.9rem;">Or open the <a href="/ai-agent-api-cost-calculator" data-umami-event="click_to_api_calc">per-token AI Agent API cost calculator →</a> — and read <a href="/chatgpt-business-premium-seats-pricing" data-umami-event="click_to_seats">what OpenAI's per-seat pricing actually costs</a>.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="https://findaiagency.com/openai-vertical-ai-bundles-agencies">OpenAI's Vertical AI Bundles for Agencies: What ChatGPT for Financial Services Signals (findaiagency.com)</a> — the agency-margin consequence of the same launch</li>
+                <li><a href="/ai-agency-pricing-models-explained">AI Agency Pricing Models Explained</a> — the pricing-shape page this note extends</li>
+                <li><a href="/chatgpt-business-premium-seats-pricing">ChatGPT Business Premium Seats: Pricing, Usage Limits &amp; Comparison</a> — the published seat anchors used above</li>
+                <li><a href="/openai-gpt-6-astra-pricing">GPT-6 Astra API Pricing</a> — the metered leg at $10/$50 per 1M tokens</li>
+                <li><a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator</a> — per-token workload estimation</li>
+                <li><a href="/ai-agent-cost-blowups">AI Agent Cost Blowups</a> — what happens when metered usage runs away</li>
+            </ul>
+        </div>
+
+        <div class="sources">
+            <h3>Sources</h3>
+            <ul>
+                <li>OpenAI: <em>Introducing ChatGPT for Financial Services</em> (September 10, 2026) — primary source, Cloudflare-403 to scripted fetch; body recovered and cross-checked via an archived Wayback snapshot and an r.jina.ai reader mirror, and corroborated by the outlets below</li>
+                <li>OpenAI: <em>Financial Services Terms</em> (live September 10, 2026) — partner-data use restrictions, Output/Partner Data exclusion, Reuters News professional-user limit</li>
+                <li>OpenAI: <em>GPT-6 Astra</em> — $10 per 1M input / $50 per 1M output tokens; Fast mode 2&times; price</li>
+                <li>OpenAI: <em>Business pricing</em> — ChatGPT Business seats $20/$25 and $100/$125 per user per month</li>
+                <li>American Banker: <em>OpenAI launches financial tool for Wall Street bankers</em> (September 10, 2026) — eligibility question unanswered</li>
+                <li>CNBC: <em>OpenAI's ChatGPT for Financial Services targets work of junior bankers</em> (September 10, 2026)</li>
+                <li>Business Insider: <em>OpenAI's ChatGPT for Financial Services boosts data for bankers</em> (September 10, 2026)</li>
+                <li>Reuters (read via its Portuguese syndication at UOL, translated and labelled as such): OpenAI plans to expand the product beyond investment banking and equity research (September 10, 2026)</li>
+                <li>Anthropic: <em>Claude for Financial Services</em> (page dateline July 15, 2025)</li>
+                <li>Fortune: Anthropic's $1.5B enterprise-services joint venture (May 5, 2026) — figure reported by The Wall Street Journal and not confirmed by Anthropic</li>
+                <li>inference.net: ChatGPT Enterprise pricing estimate, ~$60/user/month with a 150-seat minimum (dated 2026-03-10) — <strong>third-party estimate, not vendor-published</strong></li>
+            </ul>
+        </div>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; All rights reserved.</p>
+    </footer>
+    <script>
+    // ── Per-seat vs per-token crossover estimator (2026-09-10, t_3a504684) ──
+    // Published inputs: GPT-6 Astra $10/1M input, $50/1M output (OpenAI model page);
+    // ChatGPT Business seats $20 standard / $100 premium per user/month annual
+    // (business pricing page). Modelled input: 40,000 input + 4,000 output tokens
+    // per task = $0.60 at list rates. No ChatGPT for Financial Services seat rate is
+    // published (contact-sales only, 2026-09-10) — seat rates here are labelled anchors.
+    function fmtUsd(n) {
+        return "$" + Math.round(n).toLocaleString("en-US");
+    }
+    function calculateCrossover() {
+        var seats = parseInt(document.getElementById("xvSeats").value, 10);
+        var tasks = parseInt(document.getElementById("xvTasks").value, 10);
+        var seatRate = parseFloat(document.getElementById("xvSeat").value);
+        if (!(seats > 0) || !(tasks > 0) || !(seatRate > 0)) { return; }
+        var taskCost = 0.60;
+        var meteredYear = seats * tasks * taskCost * 12;
+        var seatsYear = seats * seatRate * 12;
+        var crossoverTasks = seatRate / taskCost;
+        document.getElementById("xv-metered").textContent = fmtUsd(meteredYear);
+        document.getElementById("xv-metered-sub").textContent = fmtUsd(meteredYear / 12) +
+            "/month at " + tasks.toLocaleString("en-US") + " tasks/user";
+        document.getElementById("xv-seats").textContent = fmtUsd(seatsYear);
+        document.getElementById("xv-seats-sub").textContent = seats + " seats at $" + seatRate + "/user/month";
+        document.getElementById("xv-crossover").textContent = Math.round(crossoverTasks);
+        var delta = Math.abs(seatsYear - meteredYear);
+        var winner = meteredYear < seatsYear ? "metered inference" : "the seat bundle";
+        var note = "At " + tasks.toLocaleString("en-US") + " tasks per user per month, " + winner +
+            " is cheaper by " + fmtUsd(delta) + " per year (" + fmtUsd(delta / 12) + "/month). " +
+            "Crossover: " + Math.round(crossoverTasks) + " tasks per user per month (" +
+            (crossoverTasks / 21).toFixed(1) + " per working day). Below that, metered wins; above it, seats win. " +
+            "Team size does not move the crossover — both shapes scale per user.";
+        document.getElementById("xv-note").textContent = note;
+        document.getElementById("xv-results").style.display = "block";
+    }
+    </script>
+</body>
+</html>
