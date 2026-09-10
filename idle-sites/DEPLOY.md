@@ -85,7 +85,9 @@ body still the older copy) and had to be re-deployed by its owner.
    cannot deploy the same project at the same time).
 7. **Verify** (with `--verify-live`): re-fetch every staged asset and compare
    **edge-injection-canonicalised** sha256 (beacon + email obfuscation); CF Pages
-   control files are skipped.
+   control files are skipped, and an asset whose own URL a `_redirects` rule
+   rewrites is verified against the file that URL actually serves and reported as
+   a visible `skip` (see "Redirect-shadowed artifacts" below).
 
 | file state | what ships |
 |---|---|
@@ -106,6 +108,7 @@ body still the older copy) and had to be re-deployed by its owner.
 --allow-dirty=GLOB[..]   undeclared dirty files matching these globs ALSO ship from the worktree
 --exclude-dirty=GLOB[..] accepted for compatibility; undeclared files are already held at HEAD
 --no-live-check          do not compare uncommitted files against live bytes
+--strict-redirects       fail (instead of verify) an asset whose own URL a _redirects rule rewrites
 --dry-run                stage + gate + report, no upload
 --verify-live            after deploy, re-fetch the whole manifest and compare edge-injection-canonicalised sha256
 --keep-stage             keep the staging dir and print its path
@@ -233,6 +236,36 @@ reported **32 of 39 DIFFERENT**. Evidence from `t_d646632b`: 3 consecutive
 fetches of the email-bearing page canonicalise to the artifact hash while their
 raw hashes all differ; and a hand-edited preview deployment still reports a
 mismatch (the check is not neutered).
+
+**(c) A `_redirects` rule can rewrite an artifact's own URL** (`t_040d3b82`) —
+`findaiagency/_redirects` line 13 maps `/best-ai-agencies-for-small-business`
+(which is `url_path_for("best-ai-agencies-for-small-business.html")`) to
+`/best-ai-agencies-for-small-business-2026` with a `301`. The fetch returns the
+**other artifact's** bytes, so the stub's own URL can never serve the stub's
+bytes: every findaiagency publish ended `FAIL` + exit 1 *after a good upload*
+(two `DELEGATED-FAIL` lines on 2026-09-10; one file in the whole fleet — the
+probe `tests/t_d646632b/probe_redirect_shadow.py` reports 1/136 on findaiagency,
+0 everywhere else).
+
+`verify_live()` now records the redirect hops and reports that row as a visible,
+non-fatal
+
+```
+    skip  best-ai-agencies-for-small-business.html  (301 -> /best-ai-agencies-for-small-business-2026, verified as best-ai-agencies-for-small-business-2026.html)
+```
+
+**only** when the response provably is another file in the same manifest
+byte-for-byte (canonicalised) **and** that target file's own live copy verifies.
+Anything else — the target path is not in the manifest, its live bytes differ
+from its artifact, or the target itself does not verify — stays a hard mismatch
+with the reason printed and exit 1. `--strict-redirects` forces the old hard
+failure for every shadowed artifact; the classification (path, hop status, final
+URL, target) is recorded in the manifest under
+`live_verification.redirect_served`, and `redirect_unverified` lists the rejected
+ones, so a skip can never hide a stale stub silently. Evidence: a preview
+deployment carrying a deliberately edited redirect target is reported as two
+mismatches (never a skip), while the same preview verified against its own
+artifact passes — `tests/t_040d3b82/ac2_preview_stale.py`.
 
 Two further verifier details:
 

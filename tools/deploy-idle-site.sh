@@ -25,7 +25,9 @@
 #      a non-zero gate blocks the deploy and reports REFUSING TO PUBLISH,
 #   5. deploy from the staging dir under a per-project flock,
 #   6. re-fetch and compare edge-injection-canonicalised sha256 for the whole
-#      manifest (--verify-live), skipping CF Pages control files
+#      manifest (--verify-live), skipping CF Pages control files; a file whose URL
+#      a _redirects rule rewrites is verified against the file that URL serves and
+#      reported as a visible `skip` (card t_040d3b82) instead of failing forever
 #
 # SEMANTICS CHANGE vs the pre-consolidation wrapper
 #   * Undeclared dirty files no longer BLOCK (exit 2). They cannot ship at all:
@@ -63,6 +65,10 @@
 #   --exclude-dirty=GLOB[..] Accepted for compatibility; undeclared files are
 #                          held at HEAD/dropped automatically now (logged).
 #   --no-live-check        Do not compare uncommitted files against the live page.
+#   --strict-redirects     Pass through to the publisher: treat an artifact whose
+#                          own URL is rewritten by a _redirects rule as a hard
+#                          live mismatch, instead of verifying it against the file
+#                          that URL actually serves (card t_040d3b82).
 #   --dry-run              Stage + gate + report; no upload.
 #   --verify-live          After the deploy, re-fetch the whole manifest and
 #                          compare edge-injection-canonicalised sha256 (exit 1 on
@@ -86,7 +92,7 @@ LOG_DEFAULT="$HOME/.hermes/logs/idle-site-deploys.log"
 TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
 die() { echo "ERROR: $*" >&2; exit 2; }
-usage() { sed -n '2,76p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,83p' "$0" | sed 's/^# \{0,1\}//'; }
 
 SITE_ARG=""
 declare -a DECLARED=()
@@ -98,6 +104,7 @@ BASE_URL=""
 LIVE_CHECK=1
 DRY_RUN=0
 VERIFY_LIVE=0
+STRICT_REDIRECTS=0
 KEEP_STAGE=0
 LOG="$LOG_DEFAULT"
 
@@ -112,6 +119,7 @@ while [ $# -gt 0 ]; do
     --base-url=*)      BASE_URL="${1#--base-url=}" ;;
     --log=*)           LOG="${1#--log=}" ;;
     --no-live-check)   LIVE_CHECK=0 ;;
+    --strict-redirects) STRICT_REDIRECTS=1 ;;
     --dry-run)         DRY_RUN=1 ;;
     --verify-live)     VERIFY_LIVE=1 ;;
     --keep-stage)      KEEP_STAGE=1 ;;
@@ -156,6 +164,7 @@ done
 [ "$DRY_RUN" = 1 ] && ARGS+=(--dry-run)
 [ "$VERIFY_LIVE" != 1 ] && ARGS+=(--no-verify-live)
 [ "$LIVE_CHECK" != 1 ] && ARGS+=(--no-live-dirty-check)
+[ "$STRICT_REDIRECTS" = 1 ] && ARGS+=(--strict-redirects)
 [ "$KEEP_STAGE" = 1 ] && ARGS+=(--keep-staging)
 
 # --- undeclared dirty files: allow-dirty ships, everything else is held at HEAD ---------
