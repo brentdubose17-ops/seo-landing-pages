@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What a 10,000-Agent Run Actually Costs: 130B Output Tokens, 88 Hours, Millions of Dollars</title>
-    <meta name="description" content="The OpenAI agent run priced: 10,000 concurrent agents, 88 hours, 2.7M messages, ~130B output tokens. Per-agent-hour maths, a 100/1,000/10,000-agent scaling table, and the cost nobody modelled.">
+    <title>Cost of Running 10,000 AI Agents: The OpenAI Run, Modelled</title>
+    <meta name="description" content="OpenAI published no cost for its 10,000-agent run. The published workload &mdash; 88 hours, 2.7M messages, ~130B tokens &mdash; priced per agent-hour, with every assumption labelled.">
     <meta name="keywords" content="cost of running 10000 AI agents, AI agent fleet compute cost, agent swarm token cost 2026, OpenAI Navier-Stokes 10000 agents, how much did the OpenAI math run cost, many agents long horizon cost, agent fleet cost anchor, multi-agent run cost, per agent hour cost, agent context re-read cost">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aiagencycalculator.com/multi-agent-run-cost-anchor/">
-    <meta property="og:title" content="What a 10,000-Agent Run Actually Costs: 130B Output Tokens, 88 Hours, Millions of Dollars" />
+    <meta property="og:title" content="Cost of Running 10,000 AI Agents: The OpenAI Run, Modelled" />
     <meta property="og:description" content="The published workload shape of a 10,000-agent, 88-hour run, priced per agent-hour and per message, with a scaling table for 100 / 1,000 / 10,000 agents and the verification cost nobody modelled." />
     <meta property="og:url" content="https://aiagencycalculator.com/multi-agent-run-cost-anchor/" />
     <meta property="og:type" content="article">
@@ -21,8 +21,8 @@
   "@graph": [
     {
       "@type": "Article",
-      "headline": "What a 10,000-Agent Run Actually Costs: 130B Output Tokens, 88 Hours, Millions of Dollars",
-      "description": "The OpenAI agent run priced: 10,000 concurrent agents, 88 hours, 2.7M messages, ~130B output tokens. Per-agent-hour maths, a 100/1,000/10,000-agent scaling table, and the cost nobody modelled.",
+      "headline": "Cost of Running 10,000 AI Agents: The OpenAI Run, Modelled",
+      "description": "OpenAI published no cost for its 10,000-agent run. The published workload — 88 hours, 2.7M messages, ~130B tokens — priced per agent-hour, with every assumption labelled.",
       "datePublished": "2026-09-10",
       "dateModified": "2026-09-10",
       "author": {
@@ -61,7 +61,7 @@
           "name": "Why do AI agent fleets cost more than agents times hours suggests?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Because inter-agent traffic is the part that does not scale linearly. Two effects compound: per-agent message volume rises as the fleet grows (more peers to talk to, more re-reads), and every message is re-read as context on the way into the model. Holding the 10,000-agent run as the calibration point and assuming message rate grows with fleet size to the 0.30 power — our assumption, labelled inferred — the marginal cost of the next agent runs $623 at 100 agents, $1,044 at 1,000 and $1,885 at 10,000: a 3.0x rise in slope while the average cost per agent still looks flat."
+            "text": "Because inter-agent traffic in a swarm is the part that does not scale linearly. Two effects compound: per-agent message volume rises as the fleet grows (more peers to talk to, more re-reads), and every message is re-read as context on the way into the model. Holding the 10,000-agent run as the calibration point and assuming message rate grows with fleet size to the 0.30 power — our assumption, labelled inferred — the marginal cost of the next agent runs $623 at 100 agents, $1,044 at 1,000 and $1,885 at 10,000: a 3.0x rise in slope while the average cost per agent still looks flat."
           }
         },
         {
@@ -135,7 +135,7 @@
 <body>
     <article>
         <header>
-            <h1>What a 10,000-Agent Run Actually Costs: 130B Output Tokens, 88 Hours, Millions of Dollars</h1>
+            <h1>Cost of Running 10,000 AI Agents: The OpenAI Run, Modelled</h1>
             <div class="meta"><span>Published September 10, 2026</span><span>Updated September 10, 2026</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>Agent fleet cost</span> <span>Per agent-hour</span> <span>Scaling 100 &rarr; 10,000 agents</span> <span>Verification cost</span></div>
         </header>
@@ -177,7 +177,8 @@
         their work was used, and the Clay Mathematics Institute has accepted nothing &mdash; its eligibility bar is peer-reviewed
         publication plus two years of community acceptance. And the run used an <strong>unreleased internal model</strong>, so it is
         <strong>not reproducible on any public endpoint</strong>. Nothing below is a claim that a proof is accepted; this is the
-        economics of a claimed workload.</p>
+        economics of a claimed workload. For when to fan out at all, see our decision guide:
+        <a href="https://findaiagency.com/agent-fleet-cost-guardrails">agent fleets are a budget line, not a feature flag</a>.</p>
         <p><strong>Where the money language comes from.</strong> Not from OpenAI's post, which contains no cost language at all.
         OpenAI's chief research officer <strong>Mark Chen</strong> told reporters costs ran <em>"emphatically in the millions of
         dollars"</em> (AFP). The phrase "millions of dollars in computing power" is <strong>AFP's framing, not an OpenAI quote</strong>.
@@ -217,8 +218,8 @@
         <p>To price the workload you need a total, and OpenAI published none. So we assume one, and we label the assumption
         every single time it produces a dollar figure:
         <span class="label assume">inferred</span> <strong>$5M&ndash;$15M all-in, mid $10M</strong>. That band is our modelling choice.
-        It is bracketed low enough to sit below the third-party all-in range ($10M&ndash;$40M) and high enough to stay above the
-        third-party output-only estimate ($6.5M), and it is the only knob in this section.</p>
+        Its $5M low end sits below the third-party output-only estimate ($6.5M) and its $10M mid equals the low end of the
+        third-party all-in range ($10M&ndash;$40M); every dollar figure it produces is labelled inferred.</p>
         <div class="tw">
         <table>
             <tr><th>Assumed all-in total <span class="label assume">inferred</span></th><th class="num">$ / 1M output tokens</th><th class="num">$ / agent-hour</th><th class="num">$ / message</th><th class="num">vs $10&ndash;$15/M frontier output band</th><th class="num">vs our published Astra output rate ($50/M)</th></tr>
@@ -268,7 +269,7 @@
         agent count. <strong>This is the optimistic floor, and it is the number a budget built from a small pilot will land on.</strong>
         It is also wrong, because it assumes agents do not talk to each other. They sent 2.7 million messages.</p>
 
-        <h2>Why agent fleets scale super-linearly: message volume &times; context re-reads</h2>
+        <h2>Why agent swarms cost more than agents &times; hours: message volume &times; context re-reads</h2>
         <p>Agent-hours scale linearly with agents &times; hours. Token cost does not, because of the messages. Two effects
         compound, and both are modelled here with a single exponent
         <span class="label assume">inferred</span> <strong>e = 0.30</strong>:</p>
@@ -375,7 +376,7 @@
         <div class="tw">
         <table>
             <tr><th>#</th><th>Assumption</th><th>Value</th><th>Why it is what it is</th></tr>
-            <tr><td>A1</td><td>All-in total for the run</td><td>$5M&ndash;$15M (mid $10M) <span class="label assume">inferred</span></td><td>OpenAI published no figure. The band brackets the third-party output-only estimate ($6.5M) and sits below the third-party all-in range ($10M&ndash;$40M).</td></tr>
+            <tr><td>A1</td><td>All-in total for the run</td><td>$5M&ndash;$15M (mid $10M) <span class="label assume">inferred</span></td><td>OpenAI published no figure. The band deliberately straddles the third-party reference points: it spans from below their output-only estimate ($6.5M) to inside their all-in range ($10M&ndash;$40M).</td></tr>
             <tr><td>A2</td><td>Cost allocated per output token</td><td>flat $/1M output tokens <span class="label assume">inferred</span></td><td>A convenience denominator that makes the implied rate <em>loaded</em> &mdash; it carries input, retries and infra, so it is not comparable to a list price.</td></tr>
             <tr><td>A3</td><td>Hours held constant across fleet sizes</td><td>88 h at every agent count <span class="label assume">inferred</span></td><td>Prices a proportionally larger workload, not the same job finished faster. A faster fleet would not cost agents &times; more.</td></tr>
             <tr><td>A4</td><td>Message rate grows with fleet size</td><td>e = 0.30 (fleet messages ~ A^1.3) <span class="label assume">inferred</span></td><td>The most important assumption on the page: e = 0 is the naive linear case, e &gt; 0 models fan-out and re-reads. Tested at 0.0 / 0.3 / 0.5.</td></tr>
@@ -421,7 +422,7 @@
         </div>
         <div class="faq-item">
             <h3>Why do AI agent fleets cost more than agents times hours suggests?</h3>
-            <p>Because inter-agent traffic is the part that does not scale linearly. Two effects compound: per-agent message
+            <p>Because inter-agent traffic in a swarm is the part that does not scale linearly. Two effects compound: per-agent message
             volume rises as the fleet grows (more peers to talk to, more re-reads), and every message is re-read as context on the
             way into the model. Holding the 10,000-agent run as the calibration point and assuming message rate grows with fleet
             size to the 0.30 power &mdash; our assumption, labelled inferred &mdash; the marginal cost of the next agent runs $623
@@ -457,7 +458,7 @@
                 <li><a href="/gpt-live-1-cost-calculator">GPT-Live-1 Cost Calculator: Published Rate Card</a></li>
                 <li><a href="/ai-model-cost-per-task-2026">AI Model Cost per Task 2026: Frontier vs Open-Weight Benchmarks</a></li>
                 <li><a href="/ai-compute-costs-2026">AI Compute Costs in 2026: Why Project Costs Keep Rising</a></li>
-                <li><a href="https://findaiagency.com/agent-fleet-cost-guardrails">Agent Fleets Are a Budget Line, Not a Feature Flag: When to Fan Out</a> (the buyer-side counterpart &mdash; the fan-out decision guide, and how to ask for fleet work to be quoted)</li>
+                <li><a href="https://findaiagency.com/agent-fleet-cost-guardrails">Should You Fan Out to More AI Agents? Fleet-Cost Guardrails</a> (the buyer-side counterpart &mdash; the fan-out decision guide, and how to ask for fleet work to be quoted)</li>
                 <li><a href="/ai-agent-api-cost-calculator#calc">Estimate a fleet: agents &times; calls/day &times; tokens per call</a></li>
             </ul>
         </div>
