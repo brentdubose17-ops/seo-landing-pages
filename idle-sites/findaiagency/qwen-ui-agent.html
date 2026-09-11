@@ -113,6 +113,9 @@
         .related li{margin-bottom: 10px;}
         footer{margin-top: 40px;padding: 24px 0 0;text-align: center;font-size: 0.85rem;color: #888;border-top: 1px solid #eee;}
         @media (max-width: 600px){body{padding: 16px 12px;}article{padding: 24px 16px;}h1{font-size: 1.6rem;}}
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    @media (max-width: 600px) { a, p, li, th, td { overflow-wrap: anywhere; } }
     </style>
 </head>
 <body>
@@ -158,7 +161,7 @@
 
         <h2>Benchmarks: How Qwen UI Agent Compares</h2>
         <p>The headline numbers, as reported by the Qwen team in its technical report and repo (self-reported, not third-party audited):</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Benchmark</th><th>Qwen-UI-Agent</th><th>Honest read</th></tr>
             </thead>
@@ -172,7 +175,7 @@
                 <tr><td>OSWorld-v2</td><td>40.0% (partial-progress)</td><td>Partial-progress score, <strong>not</strong> a raw success rate</td></tr>
                 <tr><td>BrowseComp-ZH</td><td>75.0%</td><td>Repo news item only</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>The honest read: on mobile and browser tasks, the self-reported scores put Qwen-UI-Agent at or ahead of the frontier models. On hard desktop tasks it's more nuanced — Claude Opus 4.8 still leads OSWorld-Verified, and OSWorld-v2 is a partial-progress score, meaning the agent gets partway through tasks rather than completing them. In a client conversation: leading on mobile and browser, competitive-but-trailing on the hardest desktop work, with every number vendor-reported.</p>
 
         <h2>What Can GUI Agents Automate?</h2>

@@ -88,6 +88,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    @media (max-width: 600px) { a, p, li, th, td { overflow-wrap: anywhere; } }
     </style>
 </head>
 <body>
@@ -120,13 +123,13 @@
 
         <p>His comparison is unflattering: "Vibe coding to me smells exactly like script kiddies did in the early 2000s. People applying PHP scripts they just downloaded offline that they don't understand anything of."</p>
 
-        <table>
+        <div class="table-wrap"><table>
             <tr><th></th><th>Vibe coding</th><th>Agentic engineering</th></tr>
             <tr><td>Directed by</td><td>Prompts describing the desired outcome</td><td>Problems described; agents propose the route; humans review it</td></tr>
             <tr><td>Who looks at the code</td><td>Nobody — output accepted as-is</td><td>Humans or a second agent audit architecture, tests, diffs</td></tr>
             <tr><td>Speed vs risk</td><td>Very fast, architecture decays</td><td>Fast, with a review layer that manages risk</td></tr>
             <tr><td>Right use case</td><td>Prototypes, internal tools, throwaway scripts</td><td>Client production systems, existing codebases</td></tr>
-        </table>
+        </table></div>
 
         <h2>The pushback: DHH's own cautionary tale</h2>
         <p>The most useful part of the episode for agencies is that DHH does not argue vibe coding is harmless. His own company tried it — and had to undo it:</p>

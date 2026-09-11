@@ -109,6 +109,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    @media (max-width: 600px) { a, p, li, th, td { overflow-wrap: anywhere; } }
     </style>
 </head>
 <body>
@@ -132,7 +135,7 @@
 
         <h2>What Muse Glimmer is (verified specs)</h2>
         <p>The specifications below are from Meta's <a href="https://huggingface.co/meta-models/Muse-Glimmer-30B" rel="noopener">official model card</a> and NVIDIA's <a href="https://blogs.nvidia.com/blog/local-ai-open-source-models-agents-nemotron" rel="noopener">local AI models blog</a> — treat them as the authoritative numbers:</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Spec</th><th>Verified value</th><th>Source</th></tr>
             </thead>
@@ -145,7 +148,7 @@
                 <tr><td>Speed</td><td>&gt;200 tok/s on RTX 5090 (74.9 baseline → 233.4 with DFlash speculative decoding, 3.1×)</td><td>NVIDIA; Meta model card</td></tr>
                 <tr><td>Inputs/outputs</td><td>Multimodal: text + image in, text out</td><td>Meta model card</td></tr>
             </tbody>
-        </table>
+        </table></div>
 
         <p>Meta's card lists intended uses that map almost directly onto agency work: <strong>local agents, function calling, local coding, and LLM-as-a-judge evaluation</strong> — and it names OpenClaw and Hermes Agent scaffolds as targets. On benchmarks it leads its size class on MCP Atlas (75.5), DeepSearch QA (74.6), SWE-Bench Pro (51.2), and AIME 2026 (94.7), per the model card.</p>
 
@@ -174,7 +177,7 @@
 
         <h2>Local vs hosted API: when to choose which</h2>
         <p>The decision is workload-shaped, not model-shaped. Use this as a starting framework:</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Choose local (Muse Glimmer on one GPU)</th><th>Choose hosted API</th></tr>
             </thead>
@@ -185,7 +188,7 @@
                 <tr><td>You have ops capacity to own uptime, updates, and security patching</td><td>You want the vendor to own uptime, SLAs, and patching</td></tr>
                 <tr><td>Workload tolerates ~1.0% quant degradation and size-class reasoning</td><td>Workload needs frontier-grade reasoning on the hardest tasks</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>For most agencies the honest answer is <strong>hybrid</strong>: local for the high-volume grunt work (evals, triage, background agents, structured extraction), hosted frontier for client-facing complex work. That is the same routing discipline covered in our <a href="/muse-spark-for-small-agent-tasks">Muse Spark model-routing guide</a> — the local tier just got dramatically cheaper to run.</p>
 
         <h2>Cost and operational implications</h2>
