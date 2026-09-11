@@ -220,7 +220,7 @@
     ceramics:     { add: 0.040, name: 'Ceramics & Glass' },
     polysilicon:  { add: 0,     name: 'Polysilicon & Solar (Section 232)' },
     drones:       { add: 0,     name: 'Drones / UAS (Unmanned Aircraft) — Section 232' },
-    'ground-beef':{ add: 0,     name: 'Ground Beef — 90-Day Out-of-Quota Waiver (Aug 21, 2026)' },
+    'ground-beef':{ add: 0,     name: 'Ground Beef — Proclamation 11059 Beef TRQ Increase (Sept–Nov 2026)' },
     'canada-s338':{ add: 0,     name: 'Canada Section 338 Covered Goods — 50% Duty (effective Aug 22, 2026)' },
     dairy:        { add: 0.046, name: 'Dairy Products' },
     alcohol:      { add: 0.046, name: 'Alcoholic Beverages' },
@@ -391,24 +391,36 @@
   };
 
   /*
-   * Ground beef — 90-day out-of-quota tariff waiver
-   * -------------------------------------------------
+   * Ground beef — Proclamation 11059 beef TRQ increase (IN FORCE)
+   * -------------------------------------------------------------
    * Announced Friday morning, Aug 21, 2026 (Truth Social post, confirmed
-   * by White House official): for the next 90 days the United States will
-   * allow up to 300,000 metric tons of product for ground beef (lean beef
-   * trimmings) to be imported with NO out-of-quota tariff, in exchange
-   * for an exporter commitment to sell at 25% below current market prices.
-   * Baseline TRQ mechanics (Additional US Note 3, Ch. 2 HTSUS): in-quota
-   * imports face 4.4 cents/kg; imports above quota face a 26.4% tariff.
-   * The out-of-quota duty is WAIVED under the deal (duty-free result);
-   * whether the baseline 4.4-cent in-quota duty still applies was NOT
-   * answered by officials (NY Post, Aug 21, 2026) — flagged as ambiguity.
-   * Executive order to be signed within two weeks of announcement; no EO
-   * text, HTS scope, country list, or claiming mechanics published as of
-   * Aug 21, 2026. 90-day clock start (announcement vs. EO signature) not
-   * yet specified — this model uses announcement date (Aug 21) as the
-   * operative start and computes the window through Nov 19, 2026.
-   * HTS precedent (Proclamation 11010, Feb 6, 2026): 0201.30.5091,
+   * by a White House official): up to 300,000 metric tons of product for
+   * ground beef (lean beef trimmings) would enter without the out-of-quota
+   * tariff, with a 25% below-market price expectation.
+   * What actually issued is the instrument of record: PROCLAMATION 11059
+   * of August 26, 2026 ("Further Ensuring Affordable Beef for the American
+   * Consumer"), published in the Federal Register 2026-08-31 at 91 FR 55989
+   * (FR Doc. 2026-17842). It is a proclamation, NOT the executive order the
+   * Aug 21 announcement described.
+   * Mechanism: for calendar year 2026 the aggregate IN-QUOTA quantity for
+   * lean beef trimmings (Additional U.S. Note 3, Ch. 2 HTSUS) is increased
+   * by 300,000 mt, administered first come, first served in three 30-day
+   * tranches — 100,000 mt Sept 1-30, 100,000 mt Oct 1-30, and 100,000 mt
+   * Oct 31-Nov 30, 2026 or until filled, whichever is earlier.
+   * Duty treatment (clause 5): the added tonnage enters subject to the
+   * IN-QUOTA RATE OF DUTY (4.4 cents/kg for HTSUS 0201.30.50/0202.30.50,
+   * Col. 1 general — verified against the USITC HTS API 2026-09-10), so the
+   * relief is NOT duty-free: what the covered entries avoid is the 26.4%
+   * out-of-quota rate. The Aug 21 "does the 4.4c/kg still apply?" question
+   * is therefore ANSWERED (yes).
+   * Allocation (clause 4): the entire additional quantity goes to "other
+   * countries or areas"; the Proclamation 11010 Argentina increase of
+   * 80,000 mt is unaffected (clause 8).
+   * 25% discount (clause 6(b)): USDA + USTR must monitor whether imports
+   * entered under the added in-quota quantity are sold at 25% below the
+   * market price for lean beef trimmings; if not, they notify the President,
+   * who may eliminate what remains. Benchmark = trimmings, not retail.
+   * Covered HTS lines (clause 2 — scope, not precedent): 0201.30.5091,
    * 0201.30.5097, 0202.30.5091, 0202.30.5097.
    * Price benchmarks (BLS via Al Jazeera; FRED via NY Post): ground beef
    * $5.55/lb Jan 2025 -> $6.89/lb July 2026 (+24% since Jan 2025, +10% YoY);
@@ -419,25 +431,45 @@
    */
   var GROUND_BEEF_WAIVER = {
     category: 'ground-beef',
-    announced: '2026-08-21',
-    duration_days: 90,
-    window_start: '2026-08-21',
-    window_end: '2026-11-19', // 90 days from announcement (Aug 21 + 90)
+    announced: '2026-08-21',     // Truth Social post (history; superseded by the proclamation)
+    instrument: 'Proclamation 11059 of August 26, 2026 — "Further Ensuring Affordable Beef for the American Consumer"',
+    instrument_type: 'Presidential proclamation (not an executive order)',
+    signed: '2026-08-26',
+    published: '2026-08-31',
+    federal_register: '91 FR 55989 (FR Doc. 2026-17842)',
+    authority: 'Section 404(b) of the Uruguay Round Agreements Act (19 U.S.C. 3601(b)); 19 U.S.C. 3601(a) and (d)(3); Section 604 of the Trade Act of 1974 (19 U.S.C. 2483); 3 U.S.C. 301. HTSUS modified per the Annex; USTR may make further technical/ministerial corrections by Federal Register notice (clause 5(b)).',
+    duration_days: 91,           // Sept 1 - Nov 30, 2026 inclusive (three 30-day tranches)
+    window_start: '2026-09-01',
+    window_end: '2026-11-30',
+    // Clause 3: 300,000 mt, first come first served, three 30-day tranches.
+    tranches: [
+      { n: 1, mt: 100000, opens: '2026-09-01', closes: '2026-09-30' },
+      { n: 2, mt: 100000, opens: '2026-10-01', closes: '2026-10-30' },
+      { n: 3, mt: 100000, opens: '2026-10-31', closes: '2026-11-30', note: 'open until the added quantity is filled or Nov 30, 2026, whichever is earlier' }
+    ],
+    administration: 'first come, first served; CBP administers the added in-quota quantity and must ensure all eligible countries have full access (clause 5(c))',
+    allocation: 'the entire additional 300,000 mt is allocated to "other countries or areas" (clause 4); the Proclamation 11010 Argentina increase of 80,000 mt is unaffected (clause 8)',
     volume_mt: 300000,
     volume_lb_approx: 661400000, // 300,000 MT x 2,204.62 lb/MT
-    in_quota_rate: 0.044,        // USD/kg — 4.4 cents/kg (specific duty)
+    in_quota_rate: 0.044,        // USD/kg — 4.4 cents/kg (specific duty; HTSUS 0201.30.50 / 0202.30.50 Col. 1 general)
     out_quota_rate: 0.264,       // 26.4% ad valorem above quota
-    target_discount: 0.25,       // exporter commitment: 25% below market
+    in_quota_rate_applies: true, // clause 5: the added tonnage is subject to the IN-QUOTA rate of duty
+    duty_free: false,            // the relief avoids the 26.4% out-of-quota rate; it is not duty-free
+    target_discount: 0.25,       // monitored condition (clause 6(b)) — not an exporter price guarantee
+    discount_mechanism: 'The Secretary of Agriculture and the USTR shall monitor whether imports entered under the added in-quota quantity are sold at a price 25% below the market price for lean beef trimmings; if they are not, they must notify the President, who may eliminate what remains of the increase (clause 6(b)). The benchmark is lean beef trimmings prices, not retail.',
     retail_price: {
       jan_2025: 5.55,            // USD/lb — when Trump took office
       dec_2025: 6.69,            // USD/lb — record since 1980s (WH fact sheet)
       jul_2026: 6.89             // USD/lb — July 2026 avg (BLS via Al Jazeera / FRED via NY Post)
     },
+    hts_scope: ['0201.30.5091', '0201.30.5097', '0202.30.5091', '0202.30.5097'],
     hts_precedent: ['0201.30.5091', '0201.30.5097', '0202.30.5091', '0202.30.5097'],
-    eo_status: 'Executive order to be signed within two weeks of the Aug 21, 2026 announcement. No EO text, HTS scope, country list, or claiming mechanics published as of Aug 21, 2026.',
-    baseline_duty_unanswered: true,
-    status: 'Announced August 21, 2026. For the next 90 days, up to 300,000 metric tons of product for ground beef (lean beef trimmings) may be imported with NO out-of-quota tariff (normally 26.4%), in exchange for an exporter commitment that the beef is sold at 25% below current market prices. EO pending within two weeks; claiming mechanics unpublished. Whether the baseline 4.4-cent/kg in-quota duty still applies has not been answered.',
+    proclamation_status: 'IN FORCE — Proclamation 11059 signed Aug 26, 2026 and published Aug 31, 2026 (91 FR 55989, FR Doc. 2026-17842). The 2026 in-quota quantity is increased by 300,000 mt for lean beef trimmings under HTSUS 0201.30.5091/5097 and 0202.30.5091/5097, released first come, first served in three 100,000 mt tranches (Sept 1-30; Oct 1-30; Oct 31-Nov 30, 2026 or until filled). Entries are subject to the in-quota rate of duty (4.4 cents/kg) instead of the 26.4% out-of-quota rate.',
+    status: 'IN FORCE. Proclamation 11059 (Aug 26, 2026; published Aug 31, 2026 — 91 FR 55989) increases the 2026 in-quota quantity of the beef TRQ by 300,000 mt for lean beef trimmings (HTSUS 0201.30.5091, 0201.30.5097, 0202.30.5091, 0202.30.5097), administered first come, first served in three 30-day tranches from Sept 1 to Nov 30, 2026, or until the added quantity is filled. The entire additional quantity is allocated to "other countries or areas"; the Proclamation 11010 Argentina increase (80,000 mt) is unaffected. Entries pay the in-quota rate of duty (4.4 cents/kg) — this is NOT a duty-free entry; what is avoided is the 26.4% out-of-quota rate. The proclamation anticipates discounted sale prices and directs USDA and USTR to monitor whether the imports sell at 25% below the market price for lean beef trimmings; if not, the President may eliminate what remains of the increase.',
     source_citations: [
+      'Federal Register: Proclamation 11059 — Further Ensuring Affordable Beef for the American Consumer (Aug 31, 2026, 91 FR 55989, FR Doc. 2026-17842) — https://www.federalregister.gov/documents/2026/08/31/2026-17842/further-ensuring-affordable-beef-for-the-american-consumer',
+      'Federal Register API: document 2026-17842 (signing date 2026-08-26; publication 2026-08-31; pages 55989-55994; subtype Proclamation)',
+      'USITC HTSUS Chapter 2 (0201.30.50 / 0202.30.50, Col. 1 general 4.4¢/kg) — verified 2026-09-10 via hts.usitc.gov reststop export',
       'Politico: Trump pauses quota tariff on 300,000 tons of beef ahead of midterms (Aug 21, 2026)',
       'CNBC: Trump to allow import of 300,000 MT ground beef without tariff (Aug 21, 2026)',
       'Al Jazeera: Trump waives out-of-quota beef tariffs for 90 days to lower prices (Aug 21, 2026)',
@@ -1302,10 +1334,12 @@
       };
     }
 
-    // Ground beef — 90-day out-of-quota tariff waiver (announced Aug 21, 2026).
-    // Date-gated on the 90-day window. Under the cap and inside the window
-    // the out-of-quota duty (normally 26.4%) is WAIVED -> duty-free rate 0.
-    // Outside the window the out-of-quota rate applies.
+    // Ground beef — Proclamation 11059 beef TRQ increase (IN FORCE).
+    // Date-gated on the tranche window (Sept 1 - Nov 30, 2026). Inside the
+    // window the added in-quota quantity avoids the 26.4% out-of-quota rate,
+    // so the ad valorem add modelled here is 0; the entry is NOT duty-free —
+    // the 4.4¢/kg in-quota rate of duty applies (flagged in the result UI).
+    // Outside the window the 26.4% out-of-quota rate applies.
     var beefAdd = 0;
     var beefDetails = null;
     if (category === 'ground-beef') {
@@ -1320,7 +1354,7 @@
       var beefApplies = beefQDateStr >= gw.window_start && beefQDateStr <= gw.window_end;
 
       if (beefApplies) {
-        beefAdd = 0; // out-of-quota tariff waived — duty-free under the cap
+        beefAdd = 0; // 26.4% out-of-quota rate avoided under the added in-quota quantity
       } else {
         beefAdd = gw.out_quota_rate; // 26.4% out-of-quota rate applies
       }
@@ -1334,15 +1368,27 @@
         windowEnd: gw.window_end,
         durationDays: gw.duration_days,
         announced: gw.announced,
+        instrument: gw.instrument,
+        instrumentType: gw.instrument_type,
+        signed: gw.signed,
+        published: gw.published,
+        federalRegister: gw.federal_register,
+        authority: gw.authority,
+        tranches: gw.tranches,
+        administration: gw.administration,
+        allocation: gw.allocation,
         volumeMt: gw.volume_mt,
         volumeLbApprox: gw.volume_lb_approx,
         inQuotaRate: gw.in_quota_rate,
         outQuotaRate: gw.out_quota_rate,
+        inQuotaApplies: gw.in_quota_rate_applies,
+        dutyFree: gw.duty_free,
         targetDiscount: gw.target_discount,
+        discountMechanism: gw.discount_mechanism,
         retailPrice: gw.retail_price,
+        htsScope: gw.hts_scope,
         htsPrecedent: gw.hts_precedent,
-        eoStatus: gw.eo_status,
-        baselineDutyUnanswered: gw.baseline_duty_unanswered,
+        proclamationStatus: gw.proclamation_status,
         status: gw.status,
         source_citations: gw.source_citations
       };
