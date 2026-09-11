@@ -139,6 +139,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -162,7 +165,7 @@
         <p>Context for how fast this market moves: Tencent's Hy3 shipped on July 6, 2026 at 295B total parameters, 21B active, and a 256K context window. Fifty-three days later, Hy4 preview is <strong>2.6x larger with 4x the context</strong>. Tencent frames the jump as "We scaled Hy4 preview on three fronts: model size, context length, and training data" — a scaling release, not a claimed algorithmic breakthrough. The iteration speed in Chinese open weights has not slowed, and pricing pressure on the whole open-weight ladder keeps compounding.</p>
 
         <h2>Hy4 preview specs at a glance</h2>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Spec</th><th>Value</th></tr>
             </thead>
@@ -177,11 +180,11 @@
                 <tr><td><strong>API routes</strong></td><td><code>tencent/hy4-preview</code> on OpenRouter; Tencent Cloud sole provider</td></tr>
                 <tr><td><strong>Deployment paths</strong></td><td>vLLM (<code>vllm/vllm-openai:hy4-preview</code>) and SGLang (<code>lmsysorg/sglang:hy4-preview</code>) prebuilt images, tensor-parallel 8, speculative decoding enabled</td></tr>
             </tbody>
-        </table>
+        </table></div>
 
         <h2>Hy4 preview pricing vs the open-weight class and frontier</h2>
         <p>The price is the adoption driver. Hy4 preview undercuts GLM-5.3 by roughly <strong>40% on input and 43% on output</strong>, and undercuts Kimi K3 by about <strong>6x on output</strong>. Cached input at $0.042/M is a ~20x discount off the input rate — the number that matters for agentic workloads that resend a large system prompt and a growing tool-call history on every turn.</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Model</th><th>Input per 1M</th><th>Output per 1M</th><th>Notes</th></tr>
             </thead>
@@ -194,7 +197,7 @@
                 <tr><td>Kimi K3 (Moonshot)</td><td>$3</td><td>$15</td><td>Open weights; Hy4 preview is ~6x cheaper on output</td></tr>
                 <tr><td>GPT-5.6 Sol (OpenAI)</td><td>$4</td><td>$20</td><td>Promo through Nov 21, 2026; cached input $0.40</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p style="font-size:0.85rem;color:#666;">Rates as published Aug 28, 2026. Hy4 preview rates are OpenRouter's published list (Tencent Cloud sole provider). DeepSeek V4 Pro rates are DeepSeek's official off-peak rates effective Aug 16, 2026. Tencent's domestic pricing (~¥6/$18 per 1M) reported via KuCoin flash and Tencent materials; international rates on OpenRouter differ.</p>
 
         <p>Run the per-task math on a typical agent workload — 10K input tokens, 2K output tokens per task:</p>
@@ -217,7 +220,7 @@
 
         <h2>Can you actually serve it? The 770GB answer</h2>
         <p>Short answer: <strong>not on hardware you own, unless you own a lot of it.</strong></p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Precision</th><th>Weights alone</th><th>Fits on 8xH100 (640GB)?</th><th>Fits on 8xH200 (1.1TB)?</th></tr>
             </thead>
@@ -225,7 +228,7 @@
                 <tr><td>BF16</td><td>~1.54 TB</td><td>No</td><td>No (no room for KV cache)</td></tr>
                 <tr><td>FP8</td><td>~770 GB</td><td>No</td><td>Yes, with room for KV cache</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>770B parameters at one byte each is 770GB before you allocate a single token of KV cache. An 8xH100 node tops out at 640GB of VRAM, so the FP8 checkpoint does not fit — you need H200-class cards or multi-node tensor parallelism. This is the practical difference between Hy4 and Hy3's single-GPU GGUFs: Hy3 at 295B was squeezable; Hy4 at 770B is not, and no amount of llama.cpp cleverness makes a 770B model a laptop model. Tencent recommends vLLM and SGLang for production, both with prebuilt images exposing an OpenAI-compatible endpoint. For most teams that means the API, not the weights. The Apache 2.0 license still matters — no vendor can revoke your right to run it, and you can fine-tune and redistribute — but "open weights" and "weights you can afford to serve" are different things at this scale.</p>
 
         <h2>The caveats Tencent published themselves</h2>

@@ -119,6 +119,9 @@
         .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -161,7 +164,7 @@
 <h3>Data Throughput Limits</h3>
 <p>SaaS platforms impose rate limits. OpenAI’s default tier caps at 3,000 RPM (requests per minute). Custom solutions can handle <strong>10,000+ RPM</strong> with proper load balancing. If your application requires burst capacity—like processing holiday sales data—custom infrastructure avoids throttling.</p>
 
-<table>
+<div class="table-wrap"><table>
   <tr>
     <th>Metric</th>
     <th>Custom AI</th>
@@ -202,7 +205,7 @@
     <td>$150,000+ (wasteful)</td>
     <td>$30,000–$60,000</td>
   </tr>
-</table>
+</table></div>
 
 <h2>3. Customization, Integration, and the Data Debt Trap</h2>
 <p>Customization is the primary reason businesses build their own AI. But the cost of customization extends beyond code—it includes data preparation, integration engineering, and ongoing tuning. Most competitors ignore the "data debt trap" that can cripple custom projects.</p>

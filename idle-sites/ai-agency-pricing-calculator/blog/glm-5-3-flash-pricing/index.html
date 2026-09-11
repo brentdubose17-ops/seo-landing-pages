@@ -131,6 +131,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -153,7 +156,7 @@
         <p>Two caveats on the 100T figure: it is a system-level capacity claim from Z.ai and its hosting partners, not a service-level guarantee or a personal quota — and it is not independently audited. What it does signal is that a Chinese lab can serve frontier-class open weights at mass scale without NVIDIA hardware. That is the supply-chain story underneath the price story.</p>
 
         <h2>GLM-5.3-Flash specs at a glance</h2>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Spec</th><th>Value</th></tr>
             </thead>
@@ -168,11 +171,11 @@
                 <tr><td><strong>Deployment paths</strong></td><td>SGLang, vLLM, TokenSpeed, KTransformers</td></tr>
                 <tr><td><strong>Serving claim</strong></td><td>Preview week ran entirely on Chinese AI chips (system-level, not independently verified)</td></tr>
             </tbody>
-        </table>
+        </table></div>
 
         <h2>GLM-5.3-Flash pricing vs DeepSeek, GPT-5.6 Sol, and the open-weight class</h2>
         <p>The headline is the price. GLM-5.3-Flash is roughly <strong>one-tenth the cost of the flagship GLM-5.3</strong> ($1.40/$4.40), and it lands below DeepSeek's post-increase rates on both axes:</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Model</th><th>Input per 1M</th><th>Output per 1M</th><th>Notes</th></tr>
             </thead>
@@ -185,7 +188,7 @@
                 <tr><td>Qwen 3.8 Max (Alibaba)</td><td>$2</td><td>$6</td><td>Open weights since Aug 12; license threshold $50M/12mo</td></tr>
                 <tr><td>Kimi K3 (Moonshot)</td><td>$3</td><td>$15</td><td>Open weights; 1M context</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p style="font-size:0.85rem;color:#666;">Rates as published Aug 26, 2026. DeepSeek V4 Pro rates are DeepSeek's official off-peak rates effective Aug 16, 2026. GLM-5.3-Flash promo ends 24:00 September 9, 2026 UTC+8. Promo/cache figures from Z.ai's published pricing and Kingy's price check of Aug 26, 2026.</p>
 
         <p>Run the per-task math on a typical agent workload — 10K input tokens, 2K output tokens per task:</p>

@@ -162,6 +162,9 @@
         .preset-row button:hover { background: #eef2ff; }
         pre.export { background: #fff; border: 1px dashed #c0c8d8; border-radius: 8px; padding: 14px; font-size: 0.72rem; line-height: 1.5; max-height: 320px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
         @media (max-width: 600px) { body { padding: 16px 12px; } h1 { font-size: 1.6rem; } .calc { padding: 16px; } .calc .grid { grid-template-columns: 1fr; } .results .row { font-size: 0.92rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0 20px; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -364,7 +367,7 @@
             <div class="row"><span class="k">Headroom at the peak</span><span class="v" id="rHeadroom">&mdash;</span></div>
             <div class="row"><span class="k">Verdict</span><span class="v" id="rTierVerdict">&mdash;</span></div>
             <div class="row sub"><span class="k">Tier qualification floor</span><span class="v" id="rTierQual">&mdash;</span></div>
-            <table id="tierTable">
+            <div class="table-wrap"><table id="tierTable">
                 <thead><tr><th>Tier</th><th class="num">Ceiling</th><th class="num">Utilisation at peak</th><th>Fits?</th></tr></thead>
                 <tbody>
                     <tr><td>Tier 1</td><td class="num">25</td><td class="num" id="rTier1Util">&mdash;</td><td id="rTier1Fit">&mdash;</td></tr>
@@ -374,7 +377,7 @@
                     <tr><td>Tier 5</td><td class="num">500</td><td class="num" id="rTier5Util">&mdash;</td><td id="rTier5Fit">&mdash;</td></tr>
                     <tr><td>Free</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td>Not supported</td></tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <h3>5. Voice-only quick reference (WebRTC, $0.05/min)</h3>
             <div class="row"><span class="k">4:00 call</span><span class="v" id="rRef240">&mdash;</span></div>
@@ -426,7 +429,7 @@ required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 36
 
     <p>That is the "cheap voice, expensive reasoning" failure mode in one number. A deployment priced on the $0.05 per minute rate, then handed to an expensive reasoner with a high tool-call share, can double or triple its unit economics without a single line of its voice code changing. The calculator's backend-share line exists to make that visible before it shows up on an invoice.</p>
 
-    <table>
+    <div class="table-wrap"><table>
         <thead><tr><th>Backend (6 turns &times; 1,500 in / 300 out)</th><th class="num">Backend $/call</th><th class="num">Voice $/call</th><th class="num">Backend share of total</th></tr></thead>
         <tbody>
             <tr><td>GPT-5.6 Luna &mdash; cost-sensitive</td><td class="num">$0.00396</td><td class="num">$0.2000</td><td class="num">1.9%</td></tr>
@@ -434,7 +437,7 @@ required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 36
             <tr><td>GPT-5.6 Sol &mdash; promo through 2026-11-21</td><td class="num">$0.0720</td><td class="num">$0.2000</td><td class="num">26.5%</td></tr>
             <tr><td>GPT-6 Astra &mdash; complex reasoning</td><td class="num">$0.1800</td><td class="num">$0.2000</td><td class="num">47.4%</td></tr>
         </tbody>
-    </table>
+    </table></div>
     <p class="note">Derived from OpenAI's published per-1M token rates (Standard, short-context column) applied to the same token shape; reproduce any row in the calculator above. Cache-write tokens are not modelled because they are paid once per cached prefix rather than per turn.</p>
 
     <h2>Sizing the line: concurrency, not dollars</h2>
