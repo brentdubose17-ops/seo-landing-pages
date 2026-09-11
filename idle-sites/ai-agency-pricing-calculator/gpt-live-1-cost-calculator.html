@@ -403,7 +403,7 @@ required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 36
                 <button type="button" id="btnCopyLink">Copy shareable link</button>
                 <button type="button" id="btnDownload">Download JSON model</button>
             </div>
-            <p class="note" id="exportNote">Machine-readable export: the parameters above, the computed results, which numbers are OpenAI-published and which are our assumptions, and the month convention. This is the exact model the page and the article cite. The default parameter set is also served as a file at <a href="/gpt-live-1-cost-model.json">/gpt-live-1-cost-model.json</a>.</p>
+            <p class="note" id="exportNote">Machine-readable export: the parameters above, the computed results, which numbers are OpenAI-published and which are our assumptions, and the month convention. This is the exact model the page and the article cite. The default parameter set is also served as a file at <a href="/gpt-live-1-cost-model.json">/gpt-live-1-cost-model.json</a>. <strong>Copy shareable link</strong> encodes the whole parameter set in the URL hash, and the backend model travels with it &mdash; a shared link reopens on the same backend and the same cost, with any rate you edited yourself carried as an explicit override.</p>
             <pre class="export" id="rExportJSON">&mdash;</pre>
         </div>
 
@@ -1264,6 +1264,18 @@ required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 36
                 if (GPT_LIVE_DEFAULTS.hasOwnProperty(k) && restored[k] === undefined) { restored[k] = GPT_LIVE_DEFAULTS[k]; }
             }
             writeParams(restored);
+            /* The shareable hash carries backendModel, not the published rates:
+               readParams() writes a rate as null when it equals the selected
+               model's published rate, so the rates travel implicitly with the
+               model key. Seed the three rate inputs from the restored model
+               first (a fresh load still holds the rates the HTML shipped, i.e.
+               Terra's), then let a non-null rate in the hash win as an explicit
+               user override. Without this an Astra/Luna deep link was priced at
+               Terra's rates. */
+            fillRatesFromModel();
+            ['inRate', 'cachedRate', 'outRate'].forEach(function (id) {
+                if (restored[id] !== undefined && restored[id] !== null && el(id)) { el(id).value = restored[id]; }
+            });
         }
         bind();
         update();

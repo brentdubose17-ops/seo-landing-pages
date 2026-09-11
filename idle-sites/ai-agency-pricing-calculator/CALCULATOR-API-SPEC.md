@@ -612,6 +612,21 @@ model's published rate, so switching `backendModel` moves the backend line by
 default while an edited rate still wins. Presets: `default`, `luna`, `astra`,
 `blowout`, `shortcall` (buttons carry `data-preset`).
 
+#### 10.2.1 Shareable `#p=` deep links (contract)
+
+`#btnCopyLink` puts `#p=<base64url(JSON of readParams())>` on the page URL. The
+hash always carries `backendModel` but writes a rate as `null` whenever the rate
+input equals that model's published rate (a rate becomes a number only when the
+reader edited it). Restoring therefore re-seeds the three rate inputs from the
+restored model: `init()` calls `fillRatesFromModel()` after `writeParams(restored)`
+and only then applies a non-null `inRate` / `cachedRate` / `outRate` from the hash.
+A link is equivalent to the page that produced it — what "Copy shareable link"
+saves after selecting a backend or clicking a preset reopens on the same model,
+the same rates and the same totals. (Fixed 2026-09-10, t_d76a69db: previously
+`writeParams()` never touched the rate inputs, so an Astra/Luna link reopened with
+the rates the HTML shipped — Terra's — and `rateOverride()` read that mismatch as
+a user override, pricing the call at Terra's rates.)
+
 ### 10.3 Model
 
 ```
@@ -664,7 +679,7 @@ tokens/min at a 1:1 in:out mix.
 
 ### 10.5 Verified
 
-`node tests/gpt-live-1-verify.mjs gpt-live-1-cost-calculator.html` — **102/102**.
+`node tests/gpt-live-1-verify.mjs gpt-live-1-cost-calculator.html` — **176/176**.
 The harness does not re-implement anything: it extracts the page's real inline
 script, runs it in a `node:vm` sandbox with a DOM stub built from the page's own
 markup (so the defaults under test are the page's defaults), and asserts (a) the
@@ -673,7 +688,15 @@ facts-sheet checkpoints `billed(90,'webrtc')==90`, `billed(5,'webrtc')==15`,
 `cost(240,'webrtc')==0.2`, `cost(90,'webrtc')==0.075`; (b) every acceptance
 figure above; (c) the rendered text of the real output elements; (d) the export
 round-trips to identical results; (e) each preset visibly moves the totals;
-(f) every output id the script writes exists in the shipped HTML. Add `--emit
+(f) every output id the script writes exists in the shipped HTML; (g) the
+shareable `#p=` deep-link round-trip — for each of the `default`, `luna`, `astra`,
+`blowout`, `shortcall` scenarios and an Astra link with an edited input rate, the
+link produced by `shareableUrl()` reopens (fresh DOM reset, hash applied, `init()`
+re-run) on the identical model, rates, rate-source labels, rendered totals, share
+and export payload as the page that produced it, with the published rate and the
+reader's edited rate asserted by name. Section (g) fails on the pre-fix page
+(Astra reopens at $0.0396 instead of $0.1800, blowout at $0.2552 / 56.1% instead
+of $0.8760 / 81.4%), so it is a real regression guard. Add `--emit
 <path>` to regenerate `gpt-live-1-cost-model.js` from the page (single source of
 truth). `site_consistency.py` on the page: **0 errors, 0 warnings**. Headless
 Chrome render check: see §10.7.
@@ -794,6 +817,24 @@ maths in sync, and the button/`onchange` handlers recompute visibly.
 ```
 
 ## Changelog
+
+- **2026-09-10** — GPT-Live-1 calculator **shareable `#p=` deep links fixed**
+  (task t_d76a69db). A link produced by "Copy shareable link" lost the backend
+  rate overrides on restore, so every non-Terra link mispriced the call
+  (measured live: Astra reopened at $0.0396 instead of $0.1800; the blowout
+  scenario at $0.2552 / 56.1% instead of $0.8760 / 81.4%). `init()` now calls
+  `fillRatesFromModel()` after `writeParams(restored)` and applies a non-null
+  `inRate` / `cachedRate` / `outRate` from the hash only as a real user override
+  (contract in §10.2.1); the page's export note states that the model travels
+  with the link. `tests/gpt-live-1-verify.mjs` gained a deep-link section: a
+  fresh DOM reset, the hash from `shareableUrl()`, then `init()` re-run for the
+  default / Luna / Astra / blowout / shortcall scenarios plus an Astra link with
+  an edited input rate, asserting the identical model, rate inputs, rate-source
+  labels, rendered totals, backend share and export payload. Harness **176/176**
+  (was 106) and the new section fails on the pre-fix page, so it is a real
+  regression guard. `site_consistency.py` on the page: 0 errors / 0 warnings.
+  Deployed with `--files=gpt-live-1-cost-calculator.html,
+  tests/gpt-live-1-verify.mjs,CALCULATOR-API-SPEC.md`.
 
 - **2026-09-10** — AI inference as a **share of gross margin consumed** added as
   an additive estimator on the homepage calculator (`#inference-margin-estimator`,

@@ -368,6 +368,131 @@ ok('rendered: no "NaN" leaks into the tier result elements',
 getById('tier').value = 'auto';
 API.update();
 
+/* ------------------------------------ G. shareable #p= deep-link round-trip */
+/* A link produced by "Copy shareable link" must reopen on the same numbers as
+   clicking the matching preset. Regression guard: the hash carries backendModel,
+   and readParams() writes a rate as null when it equals the selected model's
+   published rate, so restoring has to re-seed the rate inputs from the restored
+   model before applying a real (non-null) override. Before the fix, an Astra or
+   Luna link reopened with the rates the HTML shipped (Terra's) and mispriced. */
+
+function resetDom() {
+  for (const [id, s] of seed) {
+    const node = getById(id);
+    if (!node) continue;
+    node.value = s.value;
+    node.checked = !!s.checked;
+    node._text = '';
+  }
+}
+
+/* Mirrors what the page does when the reader picks a backend in the select
+   (change handler -> fillRatesFromModel() + update()). */
+function selectModel(key) {
+  getById('backendModel').value = key;
+  const m = API.model.backends[key] || API.model.backends.custom;
+  if (m) {
+    getById('inRate').value = m.inRate;
+    getById('cachedRate').value = m.cachedRate;
+    getById('outRate').value = m.outRate;
+  }
+  API.update();
+}
+
+function scenarioSnapshot() {
+  let res = null;
+  try { res = JSON.parse(text('rExportJSON')).results; } catch (e) { res = null; }
+  return {
+    model: getById('backendModel').value,
+    rates: [getById('inRate').value, getById('cachedRate').value, getById('outRate').value].join('|'),
+    ratesNumeric: [getById('inRate').value, getById('cachedRate').value, getById('outRate').value]
+      .map((v) => String(parseFloat(v))).join('|'),
+    rateLabels: [text('inRateSrc'), text('outRateSrc')].join('|'),
+    totalPerCall: text('rTotalPerCall'),
+    totalDay: text('rTotalDay'),
+    backendPerCall: text('rBackendPerCall'),
+    backendShare: text('rBackendShare'),
+    results: res
+  };
+}
+
+function deepLinkCase(label, prepare) {
+  resetDom();                                /* start from the shipped page state */
+  prepare();
+  const url = API.shareableUrl();
+  const hash = url.slice(url.indexOf('#'));
+  ok(`deep link (${label}): shareable link carries a #p= payload`,
+    /^#p=[A-Za-z0-9_-]+$/.test(hash), hash.slice(0, 32));
+  const before = scenarioSnapshot();
+  resetDom();
+  sandbox.location.hash = hash;
+  initFn();                                  /* fresh page load off the link */
+  const after = scenarioSnapshot();
+  eq(`deep link (${label}): backend model survives the restore`, after.model, before.model);
+  eq(`deep link (${label}): rate inputs survive the restore`, after.ratesNumeric, before.ratesNumeric);
+  eq(`deep link (${label}): rate-source labels survive the restore`, after.rateLabels, before.rateLabels);
+  eq(`deep link (${label}): total per call matches the pre-link page`, after.totalPerCall, before.totalPerCall);
+  eq(`deep link (${label}): backend per call matches the pre-link page`, after.backendPerCall, before.backendPerCall);
+  eq(`deep link (${label}): backend share matches the pre-link page`, after.backendShare, before.backendShare);
+  eq(`deep link (${label}): total per day matches the pre-link page`, after.totalDay, before.totalDay);
+  ok(`deep link (${label}): export round-trips identically`,
+    JSON.stringify(after.results) === JSON.stringify(before.results));
+  return after;
+}
+
+const linkDefault = deepLinkCase('default preset', () => API.applyPreset('default'));
+near('deep link (default preset): total per call stays $0.2396', linkDefault.results.total_usd_per_call, 0.2396, 1e-12);
+eq('deep link (default preset): still the Terra backend', linkDefault.model, 'gpt-5.6-terra');
+
+const linkLuna = deepLinkCase('Luna', () => selectModel('gpt-5.6-luna'));
+near('deep link (Luna): backend per call is the Luna figure ($0.00396), not Terra', linkLuna.results.backend_usd_per_call, 0.00396, 1e-12);
+near('deep link (Luna): restored input rate is Luna published $0.20', parseFloat(linkLuna.rates.split('|')[0]), 0.2, 1e-12);
+
+const linkAstra = deepLinkCase('Astra', () => selectModel('gpt-6-astra'));
+near('deep link (Astra): backend per call is the Astra figure ($0.1800), not Terra', linkAstra.results.backend_usd_per_call, 0.18, 1e-12);
+near('deep link (Astra): restored input rate is Astra published $10.00', parseFloat(linkAstra.rates.split('|')[0]), 10, 1e-12);
+near('deep link (Astra): restored output rate is Astra published $50.00', parseFloat(linkAstra.rates.split('|')[2]), 50, 1e-12);
+eq('deep link (Astra): rate label does not claim a user edit', linkAstra.rateLabels.split('|')[0], 'OpenAI rate');
+
+const linkBlowout = deepLinkCase('blowout preset', () => API.applyPreset('blowout'));
+near('deep link (blowout): backend per call is the blowout figure ($0.8760)', linkBlowout.results.backend_usd_per_call, 0.876, 1e-9);
+ok('deep link (blowout): backend dominates the bill (81.4% share)',
+  Math.abs(linkBlowout.results.backend_share_of_total - 0.81375) < 5e-4,
+  String(linkBlowout.results.backend_share_of_total));
+
+const linkOverride = deepLinkCase('Astra with an edited input rate', () => {
+  selectModel('gpt-6-astra');
+  getById('inRate').value = '5.00';
+  API.update();
+});
+near('deep link (edited rate): restored input rate keeps the reader edit ($5.00)',
+  parseFloat(linkOverride.rates.split('|')[0]), 5, 1e-12);
+near('deep link (edited rate): edited rate wins over Astra published ($0.1350/call)',
+  linkOverride.results.backend_usd_per_call, 0.135, 1e-12);
+ok('deep link (edited rate): the published Astra rate is NOT substituted',
+  Math.abs(linkOverride.results.backend_usd_per_call - 0.18) > 1e-6,
+  String(linkOverride.results.backend_usd_per_call));
+eq('deep link (edited rate): rate label reports the edit', linkOverride.rateLabels.split('|')[0], 'edited \u2014 your rate');
+
+const linkShortcall = deepLinkCase('shortcall preset', () => API.applyPreset('shortcall'));
+near('deep link (shortcall): 0:40 call bills 40 s', linkShortcall.results.voice_billed_seconds_per_call, 40, 0);
+
+/* a link naming a model that does not exist must not price at Terra */
+getById('backendModel').value = 'gpt-6-astra';
+API.update();
+const badHash = '#p=' + Buffer.from(JSON.stringify({ backendModel: 'gpt-does-not-exist' }), 'utf8').toString('base64url');
+resetDom();
+sandbox.location.hash = badHash;
+initFn();
+ok('deep link with an unknown model key still prices without NaN',
+  !/NaN/.test([text('rTotalPerCall'), text('rBackendPerCall'), text('rTotalDay')].join(' ')) &&
+  ['inRate', 'cachedRate', 'outRate'].every((id) => isFinite(parseFloat(getById(id).value))),
+  `${getById('backendModel').value} / ${text('rTotalPerCall')} / ${getById('inRate').value}`);
+/* leave the page in its shipped default state for the remaining sections */
+resetDom();
+sandbox.location.hash = '';
+API.applyPreset('default');
+
 /* --------------------------------------------------- D. export round-trip */
 const exp = exportModel(defaults);
 ok('export names the model and the as-of date', exp.model === 'gpt-live-1-two-meter-cost-v1' && exp.as_of === '2026-09-10');
