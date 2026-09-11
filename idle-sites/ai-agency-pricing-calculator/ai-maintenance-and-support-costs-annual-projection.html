@@ -111,6 +111,9 @@
         .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -188,7 +191,7 @@
 <h2>Three-Year Cost Projection: Low, Mid, and High Volume Scenarios</h2>
 <p>The table below projects total annual maintenance costs — compute, retraining, labeling, labor, monitoring, and security — for three deployment sizes. Build costs are assumed at <strong>$150,000 (low), $350,000 (mid), and $800,000 (high)</strong>, which aligns with typical agency-delivered AI systems.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr>
 <th>Scenario</th>
 <th>Year 1</th>
@@ -221,13 +224,13 @@
 <td>$725,000</td>
 <td>24%–36%</td>
 </tr>
-</table>
+</table></div>
 <p>Note the gradient: the percentage of build cost <strong>increases with volume</strong> because inference compute and data labeling scale with usage, not just model complexity. This is the #1 mistake in agency pricing — quoting a flat 25% retainer on a high-volume system that will actually consume 35%.</p>
 
 <h2>Build vs. Buy vs. Rent: 3-Year TCO Decision Matrix</h2>
 <p>One of the most consequential decisions for annual maintenance costs is the deployment model. The table below compares three common paths to production AI.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr>
 <th>Criteria</th>
 <th>Self-Hosted Open Source</th>
@@ -270,7 +273,7 @@
 <td>High</td>
 <td>High (prompt/context lock-in)</td>
 </tr>
-</table>
+</table></div>
 <p>Self-hosting wins on 3-year TCO for high-volume workloads but demands serious MLOps talent. API services win on speed-to-market but expose you to repricing and migration risk. The right answer depends on your volume, data sensitivity, and in-house engineering capacity — not on which vendor has the best marketing.</p>
 
 <h2>Pricing Strategy for Agencies: Building a Maintainable Retainer Margin</h2>
@@ -323,7 +326,7 @@
 
 <h2>The Drift Risk Scorecard: Assessing a Client's Maintenance Multiplier</h2>
 <p>Before pricing any AI retainer, run this checklist to determine the maintenance multiplier. Assign High, Medium, or Low to each factor, then average the results.</p>
-<table>
+<div class="table-wrap"><table>
 <tr>
 <th>Risk Factor</th>
 <th>Low (×0.15)</th>
@@ -360,7 +363,7 @@
 <td>Moderate</td>
 <td>High (healthcare, finance)</td>
 </tr>
-</table>
+</table></div>
 <p>A client scoring mostly "High" should be quoted at <strong>30% of build cost per year, minimum</strong>, and likely more if request volume is substantial. A client scoring mostly "Low" can reasonably be quoted at 15% to 18%, which keeps you competitive against agencies that don't model drift at all.</p>
 
 <h2>Frequently Asked Questions</h2>

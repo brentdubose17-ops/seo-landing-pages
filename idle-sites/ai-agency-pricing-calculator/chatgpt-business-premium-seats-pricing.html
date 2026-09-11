@@ -138,6 +138,9 @@
         .seat-est .insight-box { margin-top: 18px; padding: 16px 20px; background: #fff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-size: 0.92rem; color: #333; }
         .seat-est .est-footnote { margin-top: 14px; font-size: 0.78rem; color: #777; line-height: 1.7; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
     <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
 </head>
@@ -165,7 +168,7 @@
         <p>There is no fixed credit or dollar equivalent for Premium's included usage — consumption depends on model and task, and included usage is separate from the workspace credit pool.</p>
 
         <h2>Standard vs Premium vs Team/Enterprise: comparison table</h2>
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>Feature</th><th>Standard seat</th><th>Premium seat</th><th>Team / Enterprise</th></tr>
             <tr><td><strong>Price (monthly billing)</strong></td><td>$25/user/month</td><td>$125/user/month</td><td>Team = same as Business (renamed). Enterprise = sales-led, custom pricing</td></tr>
             <tr><td><strong>Price (annual billing)</strong></td><td>$20/user/month</td><td>$100/user/month</td><td>Enterprise = custom contract</td></tr>
@@ -177,18 +180,18 @@
             <tr><td><strong>Maximum seats</strong></td><td colspan="2">200 paid seats per subscription (since Aug 24, 2026)</td><td>Above 200 seats → Enterprise</td></tr>
             <tr><td><strong>Billing methods</strong></td><td colspan="2">Self-serve: credit/debit card only</td><td>Invoice, PO, bank transfer, wire, ACH, net terms (Enterprise only)</td></tr>
             <tr><td><strong>Ideal fit</strong></td><td>Most team members</td><td>Power users, developers, heavy daily usage</td><td>Large orgs, compliance-heavy (ZDR, BAAs)</td></tr>
-        </table>
+        </table></div>
         <p>Key point: <strong>Team is not a separate tier anymore</strong> — ChatGPT Team was renamed to ChatGPT Business on August 29, 2025, so the comparison is really Standard vs Premium on Business, with Enterprise as the step up for larger or sales-led deployments.</p>
 
         <h2>Annual vs monthly billing: the real cost</h2>
         <p>Annual billing saves 20% on every seat. Per-seat math from OpenAI's official list prices:</p>
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>Scenario</th><th>Monthly billing</th><th>Annual billing</th><th>Annual savings</th></tr>
             <tr><td>1 Premium seat</td><td>$125/mo → $1,500/yr</td><td>$100/mo → $1,200/yr</td><td>$300/yr (20%)</td></tr>
             <tr><td>5 Premium seats</td><td>$625/mo → $7,500/yr</td><td>$500/mo → $6,000/yr</td><td>$1,500/yr (20%)</td></tr>
             <tr><td>1 Standard seat</td><td>$25/mo → $300/yr</td><td>$20/mo → $240/yr</td><td>$60/yr (20%)</td></tr>
             <tr><td>10 Standard + 5 Premium (mixed)</td><td>$875/mo</td><td>—</td><td>—</td></tr>
-        </table>
+        </table></div>
         <p>Billing mechanics to budget around:</p>
         <ul>
             <li><strong>Adding seats</strong> triggers an immediate prorated charge for the rest of the billing cycle (OpenAI's worked example: adding 3 Standard + 1 Premium on day 10 of a $875/mo plan costs $133.33 immediately).</li>

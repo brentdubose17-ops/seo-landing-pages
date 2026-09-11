@@ -93,6 +93,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -106,13 +109,13 @@
         <p><strong>What happened.</strong> DeepSeek's new peak/off-peak API pricing for the <strong>V4 model family took effect at 16:00 UTC on August 16, 2026</strong> — the schedule DeepSeek published on its official pricing page and confirmed in its Aug 13, 2026 changelog entry. Off-peak rates are <strong>half of peak rates</strong>; peak hours are <strong>01:00–04:00 and 06:00–10:00 UTC</strong>. The old "significant increase expected" warning is gone — the concrete numbers are now live on <a href="https://api-docs.deepseek.com/quick_start/pricing/" rel="noopener">api-docs.deepseek.com/quick_start/pricing</a> (verified August 16, 2026).</p>
 
         <h2>What the new DeepSeek V4 rates are (per 1M tokens)</h2>
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>Model</th><th>Input, cache hit</th><th>Input, cache miss</th><th>Output</th><th>Window</th></tr>
             <tr><td><strong>V4-Flash</strong></td><td>$0.007</td><td>$0.22</td><td>$0.66</td><td>OFF-PEAK</td></tr>
             <tr><td><strong>V4-Flash</strong></td><td>$0.014</td><td>$0.44</td><td>$1.32</td><td>PEAK</td></tr>
             <tr><td><strong>V4-Pro</strong></td><td>$0.022</td><td>$0.66</td><td>$1.98</td><td>OFF-PEAK</td></tr>
             <tr><td><strong>V4-Pro</strong></td><td>$0.044</td><td>$1.32</td><td>$3.96</td><td>PEAK</td></tr>
-        </table>
+        </table></div>
         <p><strong>Previous (pre-hike, effective until 16:00 UTC Aug 16):</strong> V4-Flash $0.0028 (cache hit) / $0.14 (cache miss) / $0.28 output; V4-Pro $0.003625 / $0.435 / $0.87.</p>
 
         <h2>How much did prices actually go up?</h2>

@@ -125,6 +125,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -278,7 +281,7 @@
 
 <p>One of the biggest TCO decisions is whether to use managed API services, self-host open-source models, or a hybrid approach. Each has drastically different cost curves. This table compares a representative mid-market workload — 1,000 automated processes running 5 million inferences per month — over three years.</p>
 
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Cost Category</th><th>Open-Source (Self-Hosted)</th><th>Managed API (GPT-4.1/Claude)</th><th>Hybrid (Fine-Tuned Open + Managed)</th></tr></thead>
 <tbody>
 <tr><td>Year 1 — licensing/API</td><td>$0 (open-source)</td><td>$120,000</td><td>$40,000 (small API usage)</td></tr>
@@ -296,7 +299,7 @@
 <tr><td><strong>Year 3 total</strong></td><td><strong>$127,000</strong></td><td><strong>$126,600</strong></td><td><strong>$97,200</strong></td></tr>
 <tr><td><strong>3-Year TCO</strong></td><td><strong>$517,000</strong></td><td><strong>$526,600</strong></td><td><strong>$429,200</strong></td></tr>
 </tbody>
-</table>
+</table></div>
 
 <p>The hybrid model wins on total cost because it uses fine-tuned open-source models for predictable, high-volume inference and reserves managed APIs for complex, low-frequency tasks where quality matters most. The self-hosted option carries high engineering and maintenance burden that most mid-market teams underestimate. The fully-managed API route is simplest but locks you into per-token costs that only become competitive at very low volumes.</p>
 

@@ -109,6 +109,9 @@
         .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -137,13 +140,13 @@
 
 <p>Here is the direct comparison of the four models used across the US market:</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr><th>Pricing Model</th><th>Typical 2026 Cost Range</th><th>Risk Allocation</th><th>Best Fit Scenario</th><th>Watch-Outs</th></tr>
 <tr><td><strong>Hourly / Time &amp; Materials</strong></td><td>$150–$650/hr</td><td>Client bears all scope and timeline risk</td><td>Ill-defined exploratory sprints, R&amp;D, or small augmentation tasks</td><td>Unlimited scope creep; no incentive for efficiency</td></tr>
 <tr><td><strong>Fixed-Bid / Project-Based</strong></td><td>$25k–$500k+</td><td>Agency carries delivery risk, but quotes high for unknowns</td><td>Well-specified use cases (chatbots, document extraction) with clear success metrics</td><td>Change requests become profit centers; scope is often artificially narrowed</td></tr>
 <tr><td><strong>Monthly Retainer</strong></td><td>$5k–$150k+/mo</td><td>Shared ongoing risk; agile prioritization</td><td>Ongoing product iteration, continuous model monitoring, data pipeline maintenance</td><td>Minimum guarantees may force low-value work; termination clauses can be punitive</td></tr>
 <tr><td><strong>Outcome-Based / Success Fees</strong></td><td>Varies (often +20–40% premium on fixed)</td><td>Agency shares risk; takes equity or deferred payment</td><td>High-value, measurable use cases like sales lead gen or fraud detection</td><td>Pricing can be opaque; requires robust measurement infrastructure</td></tr>
-</table>
+</table></div>
 
 <p>From our analysis of 400+ projects surveyed between 2024 and 2025, the average contract duration for AI agency engagements spans 6–12 months. Fixed-bid structures dominate the first 6 months, transitioning to monthly retainers for ongoing maintenance and retraining. Do not sign a fixed-bid contract without explicitly defining what happens post-launch—most agencies will push you into a retainer immediately after go-live to cover model drift.</p>
 
@@ -155,12 +158,12 @@
 
 <p>The table below provides 2026 cost benchmarks by tier:</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr><th>Agency Tier</th><th>Hourly Rate (2026)</th><th>Typical Project Cost</th><th>Team Composition</th><th>Who Should Choose This</th></tr>
 <tr><td><strong>Boutique / Solo Consultant</strong></td><td>$150–$250/hr</td><td>$10k–$80k</td><td>1–3 senior engineers; one lead owns the full project</td><td>Startups, small businesses, or specific niche tasks (e.g., building a single custom chatbot)</td></tr>
 <tr><td><strong>Mid-Size Specialist Agency</strong></td><td>$250–$400/hr</td><td>$50k–$250k</td><td>3–8 cross-functional team: ML eng, data eng, product manager, UX designer</td><td>Growth-stage companies requiring production-grade systems with MLOps, monitoring and integrations</td></tr>
 <tr><td><strong>Enterprise / White-Label Agency</strong></td><td>$400–$650/hr</td><td>$500k–$2M+</td><td>5–15+ dedicated staff; includes project management, QA, security, compliance officers</td><td>Fortune 500, healthcare, fintech with strict SOC2, HIPAA, or GDPR compliance needs</td></tr>
-</table>
+</table></div>
 
 <p>According to 2025 benchmark data from multi-vendor procurement analyses, mid-size specialist agencies provide the best cost-to-value ratio for most projects between $100k and $500k. They have the depth to handle MLOps infrastructure, but they lack the bloated overhead of enterprise firms that often bill $200/hour more for account management and sales attrition.</p>
 
@@ -188,13 +191,13 @@
 
 <p>Compare this against a mid-size agency that can deliver a production MVP in 8–14 weeks for $150k–$250k, but charges a monthly retainer of $15k–$40k post-launch. For the first year, the agency route will cost anywhere from $400k–$600k, saving $100k–$200k versus in-house. Critically, the in-house team also takes 4–6 months to hire and onboard before any code is written—meaning your first product ships 3–4 months later, which is often the difference between leading your market and playing catch-up.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr><th>Cost Factor (Year 1)</th><th>In-House AI Team (3–4 people)</th><th>Agency Engagement (Mid-Size)</th><th>Hybrid (Agency + Internal PM)</th></tr>
 <tr><td><strong>Hardware &amp; Software</strong></td><td>$50k–$150k (tooling, infra)</td><td>Often bundled in project fee</td><td>$50k–$150k (agency handles infra)</td></tr>
 <tr><td><strong>Payroll / Fees</strong></td><td>$450k–$650k (salaries + benefits)</td><td>$200k–$250k (project fee) + $10k–$20k/mo retainer (~$350k–$450k total)</td><td>Agency fees $300k–$400k + PM salary $120k–$180k</td></tr>
 <tr><td><strong>Time to First Production MVP</strong></td><td>6–9 months (including hiring)</td><td>2–3 months</td><td>2–3 months</td></tr>
 <tr><td><strong>Failure Risk / Severance</strong></td><td>High; you bear full cost of trial and error</td><td>Shared; kill criteria in contract</td><td>Shared; PM protects internal IP</td></tr>
-</table>
+</table></div>
 
 <p>For most mid-market companies in 2026, the hybrid approach—hiring a highly skilled internal product manager (or a "chief AI officer" consultant) to oversee one or two specialized agencies—yields the best balance of external speed and internal IP ownership. Your internal PM sets the vision, manages the vendor burn rate, and handles the change-request process, while the agency provides the raw engineering muscle without the permanent payroll burden.</p>
 

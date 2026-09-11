@@ -155,6 +155,9 @@
         .formula { background: #fff; border: 1px dashed #c0c8d8; border-radius: 8px; padding: 14px 18px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88rem; color: #333; margin: 12px 0 4px; overflow-x: auto; white-space: pre-wrap; }
         .pill { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 3px 10px; border-radius: 20px; font-weight: 600; margin-right: 6px; }
         @media (max-width: 600px) { .calc .grid { grid-template-columns: 1fr; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -176,7 +179,7 @@
         <p>Julian Goldie (@JulianGoldieSEO) tested Muse Spark inside Hermes Agent and reported it is <em>"incredibly fast for smaller tasks, making your AI team more efficient"</em> — while <em>"big models still win for complex work."</em> <a href="https://x.com/JulianGoldieSEO/status/2085474745726992833" rel="noopener">Source: X post, Aug 6, 2026</a>.</p>
 
         <h2 id="muse-at-a-glance">Muse Spark at a glance</h2>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Model</th><th>Price in/out ($/M)</th><th>AA cost/task*</th><th>Use it for</th></tr>
             </thead>
@@ -186,7 +189,7 @@
                 <tr><td>GPT-5.6 Sol (max)</td><td><strong>$4.00 / $20.00</strong> (official promo Aug 21 – Nov 21, 2026)</td><td>$1.23 (AA ref at pre-cut $5/$30)</td><td>Deep reasoning, effort-dialed complex work</td></tr>
                 <tr><td>Gemini 3.6 Flash (previous version — 3.8 Flash is current as of Sept 2, 2026)</td><td>$1.50 / $7.50</td><td>$0.56</td><td>High-velocity tasks where speed is measured; 3.6 Flash rate = 3.7/3.8 post-intro rate</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p><em>*Artificial Analysis cost-per-task, Aug 2026 — a reference point, not a quote. No independent speed benchmark exists for Muse Spark yet (Speed: N/A), so size pilot workloads on your own data.</em></p>
 
         <h2>Use it for small, structured, high-volume work</h2>
@@ -218,7 +221,7 @@
         <p><strong>Should my business upgrade to the newest AI model?</strong> Not on cadence. Upgrade only when a release closes a real capability gap, fixes a security or reliability issue you are exposed to, or shows proven ROI on your own workloads. Most of what shipped in the Sep 1&ndash;3 window were <strong>point releases</strong> — upgrades of existing model lines — and a point release is a log entry, not a migration project.</p>
 
         <h3>The September 2026 release week, priced for buyers</h3>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Date (2026)</th><th>Release</th><th>Type</th><th>What changes on your bill</th></tr>
             </thead>
@@ -228,7 +231,7 @@
                 <tr><td>Wed Sep 2</td><td><strong>Google Gemini 3.8 Flash + Gemini 3.8 Flash Cyber</strong></td><td>Point release — third Flash model in six weeks</td><td>$0.75/$3.75 per 1M intro, same as the prior Flash — the price spread against the $10/$50 frontier tier is itself a buying input. <a href="/gemini-3-8-flash-api-pricing">Gemini 3.8 Flash pricing →</a></td></tr>
                 <tr><td>Thu Sep 3&ndash;4</td><td><strong>OpenAI GPT-6 Astra</strong></td><td>Step-change launch (staged rollout)</td><td>$10/$50 per 1M headline; prompts past <strong>272K input reprice the full request</strong>; 1.05M context. Staged access (limited orgs &rarr; Plus/Pro/Business/Enterprise &rarr; API/Azure/Bedrock) means your migration path depends on your account class. <a href="/openai-gpt-6-astra-pricing">Astra pricing →</a> · <a href="/astra-model-cost-outlook">Astra cost outlook →</a></td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p><em>Type classification per Noah Faro (Farsight), as reported by CNBC Sep 6, 2026: the Anthropic, Meta and Google rollouts were point releases — unlike OpenAI's bigger GPT-6 Astra launch. Market context, not a release: Nvidia officially agreed to buy Hugging Face for $12.9B on Sep 3, 2026 (CNBC) — a consolidation signal, not a reason to change your stack. Full timeline and sources: <a href="/blog/ai-model-fatigue-switching-costs/">the model-fatigue analysis</a>.</em></p>
         <p>Three of the four releases were upgrades of existing lines, and Google alone has shipped three Flash-class models in six weeks. At that cadence, the marginal release is rarely worth a migration by itself — the leaderboard moves faster than any single upgrade's payback period. What you actually pay is not the API rate; it is the <em>re-decision cost</em> you eat every time you chase one. That cost is what the estimator below measures.</p>
 

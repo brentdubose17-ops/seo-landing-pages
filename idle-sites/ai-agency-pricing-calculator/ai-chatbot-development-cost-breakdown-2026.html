@@ -109,6 +109,9 @@
         .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -146,7 +149,7 @@
 
 <p>Understanding what you're paying for is essential to negotiating a fair quote. Here's how a typical $45,000 mid-tier chatbot budget breaks down across components.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr>
 <th>Component</th>
 <th>% of Total Budget</th>
@@ -201,7 +204,7 @@
 <td>$4,500-$6,750</td>
 <td>Discovery, documentation, communication</td>
 </tr>
-</table>
+</table></div>
 
 <p>Notice that LLM API usage — the actual runtime cost of the model — is included as a line item. Many agencies quote API costs as "pass-through" expenses, but they should be front and center in your budget because they scale with usage. The largest line items are prompt engineering, UI development, and integrations — all of which are one-time engineering investments that determine the bot's ceiling of usefulness.</p>
 
@@ -209,7 +212,7 @@
 
 <p>The "build vs. buy" question has a third option in 2026: no-code platforms. The choice between these three paths is the single biggest cost driver in your project.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr>
 <th>Selection Criteria</th>
 <th>No-Code Platform</th>
@@ -258,7 +261,7 @@
 <td>1K-10K conversations/month, in-house AI team</td>
 <td>10K+ conversations, complex workflows, compliance</td>
 </tr>
-</table>
+</table></div>
 
 <p>No-code platforms like Voiceflow, Tidio, and Chatbase have improved dramatically and are legitimate options for simple use cases. But they cap out quickly — you cannot fine-tune a model, build a custom RAG pipeline with hybrid search, or achieve deep CRM integration on a no-code platform.</p>
 <p>Open-source frameworks like LangChain with a cloud vector database offer a middle ground. You still need engineering talent, but you avoid the 150-300% agency markup. If you have an in-house AI team, this path often delivers enterprise-quality results at 50-70% of the custom development price.</p>
@@ -285,7 +288,7 @@
 
 <p>Geography is one of the largest levers on chatbot development cost. The same mid-tier chatbot that costs $45,000 in the US might cost $25,000 in Eastern Europe and $15,000 in India.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr>
 <th>Region</th>
 <th>Blended Hourly Rate (2026)</th>
@@ -310,7 +313,7 @@
 <td>$8,000-$18,000</td>
 <td>Medium-High; communication gaps, quality variance</td>
 </tr>
-</table>
+</table></div>
 
 <p>However, pure hourly rate is a misleading metric. Offshore teams frequently take 30-50% longer to deliver due to communication overhead, and the cost of rework often erases the savings. A 2024 industry survey found that offshore chatbot projects had a 45% higher defect rate than onshore projects, requiring additional QA cycles.</p>
 <p>My recommendation for 2026: use near-shore teams (Eastern Europe for US companies, Mexico or Colombia for US-based firms needing closer alignment) for projects under $30,000, and reserve onshore agencies for enterprise projects where compliance and communication are critical. The sweet spot is a hybrid — onshore discovery and prompt engineering, offshore development of integrations and infrastructure.</p>

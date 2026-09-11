@@ -117,6 +117,9 @@
         .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -164,7 +167,7 @@
 
 <h2>True TCO Comparison: Three Production Architectures at 100K–1M Tasks/Year</h2>
 <p>The table below compares three common agency delivery models at three volume levels. All figures are annualized, fully loaded, and based on 2025–2026 benchmark pricing.</p>
-<table>
+<div class="table-wrap"><table>
 <tr><th>Cost Component</th><th>API-Only (GPT-4o mini)</th><th>API + RAG/Vector DB</th><th>Self-Hosted Open-Weight + RAG</th></tr>
 <tr><td>Month-1 setup cost</td><td>$0–$500</td><td>$5,000–$15,000</td><td>$15,000–$40,000</td></tr>
 <tr><td>Inference cost per 100K tasks</td><td>$3,000–$8,000</td><td>$8,000–$15,000</td><td>$3,000–$12,000 (GPU + power)</td></tr>
@@ -177,7 +180,7 @@
 <tr><td><strong>Total at 250K tasks/yr</strong></td><td><strong>$145K–$230K</strong></td><td><strong>$190K–$350K</strong></td><td><strong>$240K–$470K</strong></td></tr>
 <tr><td><strong>Total at 1M tasks/yr</strong></td><td><strong>$250K–$400K</strong></td><td><strong>$360K–$700K</strong></td><td><strong>$420K–$850K</strong></td></tr>
 <tr><td>Marginal cost per additional task</td><td>$0.002–$0.01</td><td>$0.005–$0.02</td><td>$0.003–$0.015</td></tr>
-</table>
+</table></div>
 <p>Note how API-only looks cheapest at low volume but converges with RAG-based approaches at the 250K-task mark. Self-hosted never wins on cost below 1M tasks annually—the ML engineering salary alone outweighs any token savings.</p>
 
 <h2>The Pilot-to-Production Multiplier: Why Month 8 Kills Projects</h2>

@@ -128,6 +128,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -177,7 +180,7 @@
 
         <h2>Where Qwen3.8-Flash-Next lands in the model pricing comparison table</h2>
         <p>Before you rebuild client quotes, see how it stacks against the field — we track the full set on the <a href="/ai-model-cost-per-task-2026">AI Model Cost per Task 2026 page</a>. Qwen3.8-Flash-Next slots into the cheap-open-weight tier:</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Model</th><th>Open-weight?</th><th>Active params</th><th>Input $/1M</th><th>Output $/1M</th><th>Notes</th></tr>
             </thead>
@@ -192,7 +195,7 @@
                 <tr><td>Claude Opus 5 (Anthropic)</td><td>No</td><td>—</td><td>$5.00</td><td>$25.00</td><td>Top-tier API</td></tr>
                 <tr><td>GPT-5.6 Sol (OpenAI)</td><td>No</td><td>—</td><td>$5.00</td><td>$30.00</td><td>List; promo pricing may apply</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>Rates verified 2026-08-27/28 via QwenCloud, OpenRouter, and Artificial Analysis; DeepSeek V4 Flash is date/peak-sensitive after the Aug 16 raise (up to 371% at peak). All USD per 1M tokens. Qwen3.8-Flash undercuts DeepSeek V4 Flash on official pricing and lands at <strong>roughly a quarter of DeepSeek V4 Pro's off-peak price</strong> — Intelligent Living frames it as matching V4 Pro's coding score (SWE-bench Pro 62.5 vs 55.4, vendor-reported) at about a quarter of the cost.</p>
 
         <h2>Open-weight vs API cost 2026: the agency decision</h2>

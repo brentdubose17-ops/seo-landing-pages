@@ -126,6 +126,11 @@
 }
 </script>
     <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+  <style>
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  code, a { overflow-wrap: break-word; }
+  img { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body>
     <article>
@@ -163,7 +168,7 @@
         <h3>The 50M-token break-even rule — and when it breaks</h3>
         <p>Roughly <strong>50M tokens per month is the 2026 break-even</strong> between cloud and local agent stacks. Above it, local is 10–60x cheaper because marginal cost approaches zero. Run your own amortization with a <a href="/total-cost-of-ownership-ai-automation-3-year-model">3-year total cost of ownership model</a> before buying. The rule breaks for low volume (under ~1.7M tokens/day), burst-only usage, all-frontier workloads, or zero privacy requirement — cloud's $0 capex and instant scale win there.</p>
 
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th scope="col">Approach</th><th scope="col">Upfront cost</th><th scope="col">Per-token cost</th><th scope="col">Latency</th><th scope="col">Privacy</th><th scope="col">Best for</th></tr>
             </thead>
@@ -173,7 +178,7 @@
                 <tr><td>Cloud API agents</td><td>$0</td><td>~$5–25 per MTok frontier (Opus 5); ~$0.65/rollout agent run</td><td>100–300 ms/step</td><td>Data leaves device; check vendor retention</td><td>Low volume, burst demand, frontier reasoning</td></tr>
                 <tr><td>Hybrid</td><td>Hardware + subscription</td><td>~$0.415/rollout (escalated steps only)</td><td>Fast for cloud steps, slower local</td><td>Local by default; PII-flagged cloud only</td><td>Volume + quality balance for agencies</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p><strong>Cost assumptions:</strong> hardware amortized over 3 years; electricity ~$200/year for an RTX-class build; benchmark figures are Perplexity-run on Terminal Bench 2.1 and vendor-reported, not independently reproduced; cloud rates are August 2026 list prices (Anthropic Opus 5 $5/$25 per MTok); DGX Spark price is the $4,679–4,699 street range from Aug 2026 (launch price $3,999, Oct 2025; sources: betterclaw, Logicity).</p>
 
         <h2>What Hardware Do You Need to Run AI Agents on Your Own Hardware?</h2>

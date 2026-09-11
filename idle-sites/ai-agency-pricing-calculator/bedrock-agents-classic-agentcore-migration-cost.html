@@ -148,6 +148,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -201,7 +204,7 @@
         <p>For an agency, the practical takeaway is that the AgentCore bill is a function of four inputs you already control: <strong>active runtime hours, tool-call volume, memory events, and web-search volume</strong>. Collect those four numbers from a client's existing agents — or estimate them from session patterns — and the platform bill is arithmetic. The <a href="https://aiagencycalculator.com/#agentcore-estimator">AgentCore Migration Estimator</a> does that math from exactly these inputs, so the quote and the client's eventual AWS bill are built from the same assumptions.</p>
 
         <h2>Cost Comparison: Classic vs AgentCore, Line by Line</h2>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr>
                     <th>Line item</th>
@@ -248,7 +251,7 @@
                     <td><strong>Case study — one first-hand report:</strong> a simple single-agent migration, ~4 hours of labor, tokens dominating the bill [10]</td>
                 </tr>
             </tbody>
-        </table>
+        </table></div>
         <p>The worked example deserves its framing: it is <strong>one first-hand report from a DEV.to AWS Builder</strong>, not an AWS guarantee or a benchmark [10]. Directionally it matches AWS's own claim that AgentCore's harness is more token-efficient than Classic's internal prompts [1]. For a quote, treat the platform delta as roughly neutral and spend your estimating effort on labor.</p>
         <p>Read the table as a <strong>meter inventory, not a price list to memorize</strong>. The only lines an agency should model per client are runtime hours (agents × sessions × active runtime), gateway invocations (tool calls), memory events, and web-search volume — plus the shared inference tokens, which dominate. Everything else on the AgentCore price sheet is rounding error at agency scale, and modeling it separately is how migration scare quotes get inflated.</p>
 

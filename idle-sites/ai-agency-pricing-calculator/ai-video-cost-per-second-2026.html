@@ -139,6 +139,9 @@
         .model-name { font-weight: 700; color: #111; }
         .vendor { color: #555; font-size: 0.9rem; }
         @media (max-width: 600px) { .calc .grid { grid-template-columns: 1fr; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -220,7 +223,7 @@ Example — fal MiniMax H3 Max, 480p promo ($0.0125/s, thru Sep 7 2026):
 
         <h2>Per-second video pricing table (Sep 2026)</h2>
         <p>Current as of Sep 2, 2026. The Gemini Omni 1.1 Flash row is highlighted — it went GA Aug 27, 2026 and sets the new per-second floor at standard list rates. fal MiniMax H3 Max's 75%-off promo ($0.0125/s 480p, $0.02/s 768p through Sep 7, 2026) is listed separately as the promo tier.</p>
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>Model (vendor)</th><th>Price per second</th><th>Released</th><th>Notes</th></tr>
             <tr>
                 <td><span class="model-name">Gemini Omni 1.1 Flash</span> <span class="badge new">NEW</span><br><span class="vendor">Google</span></td>
@@ -276,7 +279,7 @@ Example — fal MiniMax H3 Max, 480p promo ($0.0125/s, thru Sep 7 2026):
                 <td>—</td>
                 <td>fal.ai promo pricing (75% off) through Sep 7, 2026, then reverts to $0.05/s (480p) and $0.08/s (768p) list; free 5 clips/day; 5s clip renders &lt;3s</td>
             </tr>
-        </table>
+        </table></div>
 
         <h2>What 30 / 60 / 90-second videos cost (worked examples)</h2>
         <p>Straight multiplication on the table above. These are raw API generation costs — before agency markup, retries, or client pricing.</p>
@@ -348,7 +351,7 @@ Example — fal MiniMax H3 Max, 480p promo ($0.0125/s, thru Sep 7 2026):
             <li>fal.ai, Gemini Omni Flash 1.1 Text to Video (Google partner listing, per-second billing): <a href="https://fal.ai/models/google/gemini-omni-flash/v1.1/text-to-video" rel="noopener">fal.ai</a></li>
             <li>The Decoder, "Google's Gemini Omni 1.1 Flash makes AI video generation cheaper and more flexible" (Aug 27, 2026): <a href="https://the-decoder.com/googles-gemini-omni-1-1-flash-makes-ai-video-generation-cheaper-and-more-flexible" rel="noopener">the-decoder.com</a></li>
             <li>fal.ai, MiniMax H3 Max model pages — 75%-off promo $0.0125/s (480p) / $0.02/s (768p) through Sep 7, 2026, then $0.05/$0.08 list; free 5/day: <a href="https://fal.ai/models/minimax/h3-max/text-to-video" rel="noopener">fal.ai — text-to-video</a> · <a href="https://fal.ai/models/minimax/h3-max/image-to-video" rel="noopener">image-to-video</a></li>
-            <li>levelsio on X — "New price for Minimax H3 Max dropped… $0.0125/s*60s*60m*24h*30.5d=$32,940/mo… I'm at $15K/mo revenue now" (Sep 2, 2026): <a href="https://x.com/levelsio/status/2095232980159479957" rel="noopener">x.com/levelsio</a></li>
+            <li>levelsio on X — "New price for Minimax H3 Max dropped… $0<wbr>.0125<wbr>/s*60s*60m*24h*30<wbr>.5d<wbr>=$32,940<wbr>/mo… I'm at $15K/mo revenue now" (Sep 2, 2026): <a href="https://x.com/levelsio/status/2095232980159479957" rel="noopener">x.com/levelsio</a></li>
             <li>Unifically, Sora API pricing + Sept 24, 2026 shutdown: <a href="https://unifically.com/blogs/sora-api" rel="noopener">unifically.com</a></li>
             <li>CostBench, Kling API pricing: <a href="https://costbench.com/software/ai-media-apis/kling-api" rel="noopener">costbench.com</a></li>
             <li>Melies, Runway ML pricing ($0.01/credit; Gen-4 Turbo 5 cr/s, Gen-4.5 12 cr/s): <a href="https://melies.co/runway-ml-pricing" rel="noopener">melies.co</a></li>

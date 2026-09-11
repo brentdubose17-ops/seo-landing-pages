@@ -110,6 +110,9 @@
         .assumption-note strong { color: #334155; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -135,7 +138,7 @@
 
         <h2>Claude vs OpenAI list prices (Aug 2026)</h2>
         <p>First-party list prices per 1M tokens, USD:</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Model</th><th>Input $/1M</th><th>Output $/1M</th><th>Coding-agent note</th></tr>
             </thead>
@@ -147,11 +150,11 @@
                 <tr><td><strong>GPT-5.6 Terra</strong> (OpenAI)</td><td>$2</td><td>$12</td><td>Mid tier; long-context $4/$18</td></tr>
                 <tr><td><strong>GPT-5.6 Luna</strong> (OpenAI)</td><td>$0.20</td><td>$1.20</td><td>Budget tier; long-context $0.40/$1.80</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p style="font-size:0.85rem;color:#666;">Anthropic prices from anthropic.com/pricing Aug 29, 2026. OpenAI figures are the Aug 4, 2026 vendor-page re-read captured by VerticalAPI (Sol $5/$30; cached input ~$0.50/M), corroborated by BenchLM. Anthropic bills 1M-token context at standard rates; OpenAI charges a long-prompt premium (parentheses).</p>
 
         <h2>Coding-workload cost math with stated assumptions</h2>
-        <p>List prices don't tell you your bill — token volume does. We modeled one <strong>heavy agentic-coding developer</strong> at roughly <strong>30M input and 3M output tokens per month</strong>:</p>        <table>            <thead>
+        <p>List prices don't tell you your bill — token volume does. We modeled one <strong>heavy agentic-coding developer</strong> at roughly <strong>30M input and 3M output tokens per month</strong>:</p>        <div class="table-wrap"><table>            <thead>
                 <tr><th>Model</th><th>Est. monthly API cost</th><th>vs cheapest frontier</th></tr>
             </thead>
             <tbody>
@@ -160,7 +163,7 @@
                 <tr><td>Claude Sonnet 5 ($2/$10 intro)</td><td>~$90</td><td>Cheaper mid tier (intro window)</td></tr>
                 <tr><td>GPT-5.6 Terra ($2/$12)</td><td>~$96</td><td>Comparable mid tier</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>Two caveats that can flip this math:</p>
         <ul>
             <li><strong>Long context.</strong> Anthropic bills 1M context at standard rates; OpenAI charges a long-prompt premium ($10/$45 for Sol). If most input tokens sit in long-context windows, Sol can run roughly 50% above the standard-rate estimate — the structural advantage is Anthropic's.</li>

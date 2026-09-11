@@ -142,6 +142,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -175,7 +178,7 @@
             <figcaption>InferenceX benchmark, August 25, 2026 — OpenAI's self-reported measurements. Source: OpenAI / SemiAnalysis.</figcaption>
         </figure>
 
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Model tested</th><th>Work per watt (peak, Jalapeño vs comparison)</th><th>End-to-end latency</th><th>Min time-between-tokens (tok/s/user)</th><th>Throughput at previous-best latency</th></tr>
             </thead>
@@ -184,7 +187,7 @@
                 <tr><td>DeepSeek R1 670B</td><td>≈1.7× (19,641 vs 11,781)</td><td>≈3.6× lower (1.65 s vs 5.99 s)</td><td>≈4.1× (1.43 vs 5.90 ms)</td><td>≈104.3× (12,258 vs 118)</td></tr>
                 <tr><td>Kimi K2.5 1T</td><td>≈1.5× (18,195 vs 11,862)</td><td>≈3.4× lower (1.56 s vs 5.31 s)</td><td>≈3.8× (1.44 vs 5.48 ms)</td><td>≈56.1× (6,744 vs 120)</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p style="font-size:0.85rem;color:#666;">Source: OpenAI, InferenceX benchmark (SemiAnalysis), August 25, 2026, self-reported.</p>
 
         <p>The headline is the "throughput at previous-best latency" column. Keeping the same response speed, a Jalapeño system serves tens to over a hundred times more requests per kilowatt than the comparison Blackwell systems — because the comparison systems could only hit that latency target at drastically reduced batch sizes. That is the kind of efficiency that shows up in a provider's cost per successful request.</p>
@@ -206,7 +209,7 @@
             <figcaption>AI model pricing trend, Jan 2025 – Aug 2026: input $ per million tokens (log scale). Source: vendor pricing pages via CloudZero, PricePerToken, Google.</figcaption>
         </figure>
 
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Date</th><th>Event</th><th>Model</th><th>Input $/M</th><th>Output $/M</th></tr>
             </thead>
@@ -222,7 +225,7 @@
                 <tr><td>2026 (thru Dec 31)</td><td>Gemini 3.7 Flash introductory</td><td>3.7 Flash</td><td>$0.75</td><td>$3.75</td></tr>
                 <tr><td>Jan 1, 2027</td><td>Gemini 3.7 Flash reverts</td><td>3.7 Flash</td><td>$1.50</td><td>$7.50</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p style="font-size:0.85rem;color:#666;">Current mid-tier snapshot (Aug 2026): Claude Sonnet 5 $2/$10, GPT-5.6 Terra $2/$12, Gemini 3.1 Pro $2/$12, Claude Haiku 4.5 $1/$5.</p>
 
         <p>Two price cuts on the same flagship family in 22 days — Terra and Luna on July 30, Sol on August 21 — is a pattern, not a promotion. And the chips that make inference cheaper are only beginning to deploy: OpenAI plans "very small volumes" of Jalapeño inside its compute infrastructure by end of 2026, with a more significant ramp in 2027, and Gen 2 and Gen 3 are already on the roadmap. OpenAI says it will keep buying Nvidia and other partners' accelerators for training and inference in the meantime.</p>

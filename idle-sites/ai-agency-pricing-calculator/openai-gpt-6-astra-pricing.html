@@ -153,6 +153,9 @@
         .alert-update { margin: 0 0 24px; padding: 16px 20px; background: #fff7ed; border: 1px solid #fdba74; border-radius: 10px; color: #7c2d12; font-size: 0.95rem; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; }
+    code, a { overflow-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -178,7 +181,7 @@
 
         <h2>The full GPT-6 Astra rate card (re-verified Sept 4, 2026)</h2>
         <p>All figures are USD per 1M tokens from OpenAI's official model page (<code>gpt-6-astra</code>) and pricing page. "Standard" is the default tier; Batch and Flex are priced at 50% of Standard; Fast mode is 2x the applicable rates.</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Tier</th><th>Input</th><th>Cached input</th><th>Cache writes</th><th>Output</th></tr>
             </thead>
@@ -190,7 +193,7 @@
                 <tr><td>Fast mode — up to 272K</td><td>$20.00</td><td>$2.00</td><td>$25.00</td><td>$100.00</td></tr>
                 <tr><td>Fast mode — over 272K</td><td>$40.00</td><td>$4.00</td><td>$50.00</td><td>$150.00</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>Reasoning tokens bill at output rates, so a max-effort Astra run can burn output tokens well beyond the visible answer. Cache writes are billed at 1.25x the uncached input rate, so a prefix you cache but reuse only once is more expensive than fresh input — caching pays only after roughly two reads.</p>
 
         <h2>The 272K rule: input doubles, output goes 1.5x — for the whole request</h2>
@@ -208,7 +211,7 @@
 
         <h2>What GPT-6 Astra costs per task (worked examples)</h2>
         <p>The pricing headline understates the real cost question: most agency tasks stay under 272K input tokens, but GPT-6 Astra's reason to exist is the long, tool-driven runs that don't. Two worked examples on official rates:</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Workload</th><th>GPT-6 Astra</th><th>GPT-5.6 Sol (promo $4/$20)</th><th>Delta</th></tr>
             </thead>
@@ -216,7 +219,7 @@
                 <tr><td>10K-in / 2K-out task (sub-272K)</td><td><strong>~$0.20</strong> ($0.10 in + $0.10 out)</td><td>~$0.08 ($0.04 in + $0.04 out)</td><td>Astra ~2.5x Sol</td></tr>
                 <tr><td>300K-in / 5K-out run (past 272K → full request repriced)</td><td><strong>~$6.375</strong> ($6.00 in at $20/1M + $0.375 out at $75/1M)</td><td>n/a below — Sol long-context input bills $8/1M → ~$2.50</td><td>~2.5x Sol; ~2x Astra's own sub-272K price for the same tokens</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>The second row is the number to internalize: the <em>same</em> 300K-in / 5K-out request priced at sub-272K rates would cost about <strong>$3.25</strong> ($3.00 in at $10/1M + $0.25 out at $50/1M). Crossing 272K pushes it to <strong>$6.375</strong> ($6.00 in at $20/1M + $0.375 out at $75/1M) — the input line doubles while the output line rises 50%, a ~96% bill increase on the same tokens. For a fleet of long-context agents, that is a cliff driven entirely by the threshold, which is why the calculator models the sub-272K and above-272K bands separately. (Long-context rates for GPT-5.6 Sol per OpenAI's pricing page: $8 input / $30 output per 1M; illustrative math only — verify before quoting.)</p>
 
         <h2>What agencies should do with the GPT-6 Astra price</h2>
