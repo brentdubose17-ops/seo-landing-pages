@@ -55,6 +55,9 @@
         .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -98,7 +101,7 @@
 
 <p>Once you have your register, score each candidate using a weighted rubric. This is the single most important decision you'll make in the entire implementation, and it's the one most companies skip.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr>
 <th>Criteria</th>
 <th>Weight</th>
@@ -141,7 +144,7 @@
 <td>5 = no compliance impact; 1 = heavily regulated (HIPAA, SOX, GDPR)</td>
 <td>2 — financial records, audit trail needed</td>
 </tr>
-</table>
+</table></div>
 
 <p>Multiply each score by its weight and sum the results. A process scoring <strong>3.5 or higher</strong> is a strong automation candidate. Between 2.5 and 3.5, automate with human-in-the-loop review. Below 2.5, don't automate — the exception-handling cost will exceed the labor savings.</p>
 
@@ -153,7 +156,7 @@
 
 <p>The biggest terminology trap in 2026 is treating "AI automation" as a single product category. There are three distinct families, and each solves a different problem. Choosing the wrong one is the second most common reason pilots fail.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr>
 <th>Dimension</th>
 <th>RPA (UiPath, Power Automate Desktop)</th>
@@ -196,7 +199,7 @@
 <td>Very scalable; per-operation pricing</td>
 <td>Highly scalable; compute cost scales with usage</td>
 </tr>
-</table>
+</table></div>
 
 <p>The rule of thumb: <strong>RPA for systems without APIs, iPaaS for API-to-API plumbing, and AI agents for unstructured data and language workflows.</strong> Most real-world deployments at enterprise scale combine at least two of the three — an RPA bot to open a PDF, an LLM agent to extract and interpret the content, and an iPaaS layer to push the structured result into the ERP.</p>
 

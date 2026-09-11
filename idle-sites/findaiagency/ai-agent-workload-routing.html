@@ -97,6 +97,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -126,7 +129,7 @@
         <p>On August 16, 2026, <a href="https://x.com/JulianGoldieSEO/status/2089064335717159410" rel="noopener">@JulianGoldieSEO posted</a>: "the number nobody's talking about is 276. Not the intelligence score. The cache read gap. Agents re-read your instructions on EVERY step... DeepSeek's cache reads cost ~276x less than Fable 5's. With a 92% hit rate..." The arithmetic is correct on DeepSeek's launch pricing:</p>
         <blockquote>$1.00 (Fable 5 cache read) ÷ $0.003625 (DeepSeek V4 Pro cache hit) = <strong>275.9x ≈ 276x</strong></blockquote>
         <p><strong>The caveats that matter — there are now two.</strong> First, DeepSeek raised prices the same day: its GA release note (<a href="https://api-docs.deepseek.com/news/news260813" rel="noopener">news260813</a>) took effect <strong>16:00 UTC on August 16, 2026</strong>. Second, Anthropic cut Fable 5.1's cache reads from $1.00 to <strong>$0.25 on September 1, 2026</strong> (see our <a href="/claude-fable-5-1-mythos-5-1-pricing">Claude Fable 5.1 price breakdown</a>). Under current official pricing the cache-read gap is ~<strong>11x off-peak</strong> ($0.25 ÷ $0.022) and ~<strong>6x peak</strong> ($0.25 ÷ $0.044) — still a real gap, but a fraction of the original 276x. Any proposal quoting 276x without the date is stale twice over.</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Model</th><th>Input (miss)</th><th>Cache read</th><th>Output</th><th>Effective as of</th></tr>
             </thead>
@@ -138,7 +141,7 @@
                 <tr><td><strong>DeepSeek V4 Pro</strong> (launch, for reference)</td><td>$0.435</td><td>$0.003625</td><td>$0.87</td><td>Until Aug 16, 2026 16:00 UTC</td></tr>
                 <tr><td><strong>Grok 4.6</strong></td><td>$2.00</td><td>—</td><td>$6.00</td><td>Artificial Analysis, Aug 16, 2026</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p class="note" style="font-size:0.85rem;color:#666;">All prices USD per 1M tokens. Fable 5.1 pricing per Anthropic's Sept 1, 2026 release; Fable 5.1 keeps the $10/$50 input/output rate of Fable 5 and cuts cache reads 75%. The 92% cache hit rate cited in the original post is an author claim that is not exposed on public OpenRouter surfaces — treat it as a planning assumption, not a verified metric.</p>
 
         <h2>What the premium actually buys: the verified gap</h2>
@@ -152,7 +155,7 @@
 
         <h2>Workload-to-model decision table</h2>
         <p>Route by <strong>frequency × value</strong>. High-value, low-frequency steps justify premium pricing because one bad answer costs the engagement. High-frequency, routine steps multiply whatever price you pay — run those on the cheapest adequate tier, and cache pricing decides the winner.</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Workload type</th><th>Examples</th><th>Model cost tier</th><th>Why</th></tr>
             </thead>
@@ -164,7 +167,7 @@
                 <tr><td>Routine agent loops</td><td>Boilerplate, scaffolding, test generation, log triage, retries</td><td><strong>Budget / cache-priced</strong> (DeepSeek V4 Pro off-peak)</td><td>Context re-read every step; $0.022 vs $0.25 cache read is the ~11x that shows up in the bill</td></tr>
                 <tr><td>High-volume extraction / RAG</td><td>Document parsing, metadata extraction, chunked retrieval passes</td><td><strong>Budget / cache-priced</strong> (DeepSeek V4 Pro off-peak)</td><td>Long runs of re-reads; cache-hit pricing decides the total, not the headline rate</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>The operating rule: <strong>premium for the decision points, cache-priced for the loops.</strong> An agency that runs the whole job on Fable 5.1 pays ~90x for steps where DeepSeek would have delivered the same routine output, and an agency that runs the whole job on DeepSeek risks the architecture step where the 7-point gap lives.</p>
 
         <h2>Building this into an agency pricing calculator</h2>

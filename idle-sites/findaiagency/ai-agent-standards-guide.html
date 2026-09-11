@@ -93,6 +93,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -108,7 +111,7 @@
         <p>This guide tracks the four standards that matter most for agencies right now — MCP for software connections, Agent Plugins for portable skills, AGENTS.md for agent instructions, and the new Model Hardware Standard (MHS) for physical devices. We update it as the lane moves.</p>
 
         <h2>The agent standards at a glance</h2>
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>Standard</th><th>What it does</th><th>Why agencies care</th><th>Read more</th></tr>
             <tr>
                 <td><strong>MCP</strong> (Model Context Protocol)</td>
@@ -134,7 +137,7 @@
                 <td>Opens a new client vertical: physical AI integration for research and manufacturing, scoped against Anthropic's "hours or minutes" setup claim.</td>
                 <td><a href="/model-hardware-standard-mhs">Model Hardware Standard (MHS) explained</a></td>
             </tr>
-        </table>
+        </table></div>
 
         <h2>MCP: the software connector</h2>
         <p>The Model Context Protocol is the base layer of the standards stack — the protocol agents use to reach software and data. On July 28, 2026, MCP shipped its largest revision since launch: the 2026-07-28 spec <strong>removed protocol-level sessions</strong> entirely. No more <code>initialize</code> handshake, no <code>Mcp-Session-Id</code> — every request is self-describing, and any request can land on any server instance behind a plain load balancer.</p>

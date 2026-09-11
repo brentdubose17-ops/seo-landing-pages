@@ -109,6 +109,9 @@
         .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -132,7 +135,7 @@
 <p>Realistically, a single engineer cannot build, integrate, document, and maintain a robust automation pipeline alone. Most successful in-house programs need at least two roles: a workflow architect who understands business processes and an automation engineer who can build the technical stack. A two-person team runs $340K–$520K annually, before you account for the cost of the AI/ML platform licenses, API credits, and monitoring tools they will need.</p>
 <p>There is also the opportunity cost of engineering time. If you pull existing software engineers off product development to build automation, you are not losing just their salary — you are losing the revenue they would have generated shipping your actual product. Industry surveys consistently place the true cost of an internal automation initiative at 2.5–3.5x the raw salary figure once fully burdened.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr><th>Cost Component</th><th>Agency (12 months)</th><th>Agency (24 months)</th><th>In-House 1 FTE (12 months)</th><th>In-House 2 FTE (24 months)</th></tr>
 <tr><td>Engagement / Salaries</td><td>$120K–$360K</td><td>$240K–$720K</td><td>$130K–$180K</td><td>$520K–$720K</td></tr>
 <tr><td>Benefits & Overhead (30–45%)</td><td>Included</td><td>Included</td><td>$40K–$80K</td><td>$160K–$320K</td></tr>
@@ -140,7 +143,7 @@
 <tr><td>Recruiting / Replacement costs</td><td>$0</td><td>$0</td><td>$25K–$60K</td><td>$50K–$120K (attrition risk)</td></tr>
 <tr><td>Maintenance & Monitoring Hours</td><td>Often included</td><td>Often included</td><td>20–40% of FTE hours</td><td>20–40% of FTE hours</td></tr>
 <tr><td><strong>Effective Annual TCO</strong></td><td><strong>$120K–$370K</strong></td><td><strong>$240K–$740K</strong></td><td><strong>$195K–$335K</strong></td><td><strong>$740K–$1.19M</strong></td></tr>
-</table>
+</table></div>
 <p>The table above assumes the agency maintainer window is equivalent to your internal engineer's productive hours. Most agencies cap maintenance at a set number of hours per month, while internal teams face the reality that <strong>20–40% of an automation team's annual hours go to maintenance, monitoring, and fixing broken integrations</strong> — API version changes, model drift, and silent failures that are rarely itemized in the initial internal budget.</p>
 
 <h2>Time-to-Production: Weeks vs. Quarters</h2>
@@ -187,11 +190,11 @@
 <h2>A Practical Decision Matrix: Criticality vs. Complexity</h2>
 <p>Not all automation decisions warrant the same treatment. A simple, low-risk workflow like "auto-file expense reports" does not need a $150K project or a $170K engineer. A high-stakes, complex workflow like "AI-driven claims adjudication with regulatory audit trails" absolutely does.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr><th>Process Complexity</th><th>High Business Criticality</th><th>Low Business Criticality</th></tr>
 <tr><td><strong>High Complexity</strong> (multi-system, conditional logic, custom ML)</td><td><strong>Hybrid recommended:</strong> Agency builds + internal shadow engineer for handoff. Contract for full documentation and training.</td><td><strong>Agency project:</strong> Fixed-scope, one-time build. Add maintenance retainer only if ROI justifies it.</td></tr>
 <tr><td><strong>Low Complexity</strong> (single-system, straightforward rules)</td><td><strong>In-house or low-code:</strong> Start with existing ops staff + no-code tool. It is too simple to externalize long-term.</td><td><strong>Do not build:</strong> Automate only if ROI is clear. Otherwise skip.</td></tr>
-</table>
+</table></div>
 <p>Use this rule of thumb: <strong>choose an agency if your annual automation budget is under $250K</strong>. You will not attract or retain senior engineering talent at that level. Choose in-house if you already employ a data engineering or integration team with spare capacity — you already own the talent, so the marginal cost of adding automation work is lower. Choose hybrid if the workflow is business-critical AND your organization intends to build lasting internal AI capability.</p>
 
 <h2>The Build-Then-Transfer Playbook: The Angle Most Articles Miss</h2>

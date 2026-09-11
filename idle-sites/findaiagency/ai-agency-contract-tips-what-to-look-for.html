@@ -109,6 +109,9 @@
         .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -147,14 +150,14 @@
 
 <h3>The IP ownership matrix</h3>
 
-<table>
+<div class="table-wrap"><table>
 <tr><th>Asset</th><th>Buyout Ownership</th><th>License (Vendor Retains Title)</th><th>Co-Development</th></tr>
 <tr><td>Base foundational model (e.g., OpenAI, Anthropic, open-source weights)</td><td>Not applicable — third-party IP</td><td>Standard API or self-hosted license</td><td>N/A</td></tr>
 <tr><td>Custom source code (pipelines, tooling, wrappers)</td><td>Full assignment to buyer — ideal</td><td>Perpetual license; buyer cannot resell</td><td>Joint ownership; royalty sharing</td></tr>
 <tr><td>Fine-tuned model weights</td><td>Full assignment to buyer — highest leverage</td><td>Buyer pays for access; weight file stays with vendor</td><td>Shared; both parties can use but not sell without consent</td></tr>
 <tr><td>Project-specific prompts / prompt templates</td><td>Buyer-owned, usually straightforward</td><td>Vendor may reuse for other clients</td><td>Unusual — avoid</td></tr>
 <tr><td>Model outputs / generated data</td><td>Buyer-owned by default — but confirm in writing</td><td>Restricted internal use</td><td>Clarify if outputs feed vendor benchmarks</td></tr>
-</table>
+</table></div>
 
 <p>Your negotiation goal is the first column for everything except the base foundation model. Anything less than full assignment on the fine-tuned weights and project-specific prompts erodes your bargaining position when you need changes, expansions, or a competitor vendor in year two.</p>
 
@@ -166,13 +169,13 @@
 
 <h3>Comparing the three common pricing structures</h3>
 
-<table>
+<div class="table-wrap"><table>
 <tr><th>Feature</th><th>Fixed-Bid</th><th>Time &amp; Materials</th><th>Monthly Retainer</th></tr>
 <tr><td>Cost predictability</td><td>High — but agencies pad quotes 30–50% for AI risk</td><td>Low — final cost can double if scope shifts</td><td>Medium — predictable monthly, but indefinite duration</td></tr>
 <tr><td>Scope-creep risk</td><td>Agency resists changes; quality suffers</td><td>High — every change is a change order</td><td>Moderate — ongoing refinement expected</td></tr>
 <tr><td>Agility for AI iteration</td><td>Poor — discovery often reveals new needs</td><td>Good — flexible by design</td><td>Best — continuous retraining and tuning</td></tr>
 <tr><td>Best fit</td><td>Well-defined, narrow use cases (e.g., simple classifier implementation)</td><td>Early-stage pilots with evolving requirements</td><td>Production systems requiring ongoing fine-tuning and support</td></tr>
-</table>
+</table></div>
 
 <p>Whichever structure you choose, the contract must include three cost controls. First, a hard cap on pass-through variable costs (inference, compute, API tokens, third-party model usage) — expressed as a monthly or project total, with the agency required to seek written approval before exceeding it. Second, an itemized list of which variable costs are included in the quoted fee versus billed separately, attached as a schedule to the contract. Without this schedule, you cannot verify whether a "token overage" charge is legitimate or a padding mechanism. Third, a commitment that the agency provides monthly consumption reports broken down by spend category, so you can track actual usage against the model's output value.</p>
 
@@ -228,14 +231,14 @@
 
 <p>When you review any AI agency contract, sort each term into one of three buckets. This rubric gives you a practical decision framework that prevents you from conceding essential protections while arguing over cosmetic details.</p>
 
-<table>
+<div class="table-wrap"><table>
 <tr><th>Category</th><th>Negotiable</th><th>Non-Negotiable (Must Have)</th><th>Walk Away If…</th></tr>
 <tr><td>Pricing</td><td>Payment milestones; discount for multi-quarter commitment</td><td>Cap on variable compute/inference spend; itemized pass-through costs</td><td>Agency refuses to disclose variable cost structure or cap</td></tr>
 <tr><td>IP &amp; Data</td><td>Licensing terms for pre-existing tooling</td><td>Full ownership of fine-tuned weights and project prompts; no reuse of your data for agency training</td><td>Agency insists on ownership or unrestricted reuse rights to your data</td></tr>
 <tr><td>Performance</td><td>Exact credit percentages in SLA remedy</td><td>Quantifiable accuracy thresholds defined in an exhibit; remediation period at no cost</td><td>Agency refuses to commit to any measurable quality metric</td></tr>
 <tr><td>Exit</td><td>Length of transition support (30 vs. 90 days)</td><td>Source-code escrow (for projects over $50K); data export on termination; weight file delivery in open format</td><td>Agency requires 12+ month lock-in or charges six figures for model handoff</td></tr>
 <tr><td>Compliance</td><td>Which specific security audits apply to subprocessors</td><td>Data residency commitments in writing; SOC 2 Type II (or equivalent) evidence</td><td>Agency resists any data residency commitment or uses undisclosed subprocessors</td></tr>
-</table>
+</table></div>
 
 <p>If your agency proposal hits two or more walk-away conditions, move on to another vendor, regardless of how compelling the demo looks. The Find AI Agency directory can help you compare candidates on these dimensions before you ever enter contract negotiation.</p>
 

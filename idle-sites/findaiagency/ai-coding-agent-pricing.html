@@ -136,6 +136,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -153,7 +156,7 @@
         <h2>The four AI coding agent billing models</h2>
         <p>Every major tool — Cursor, GitHub Copilot, Windsurf, Claude, OpenAI Codex, and now Grok Bot — maps to one of four billing structures, per TrueFoundry's August 6, 2026 guide:</p>
 
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Billing model</th><th>Examples</th><th>How it works</th><th>What to watch</th></tr>
             </thead>
@@ -163,7 +166,7 @@
                 <tr><td><strong>Pay-per-token API</strong></td><td>Claude Code (API mode), OpenAI Codex, Muse Code (beta)</td><td>No per-seat charge; billing follows token consumption at published API rates.</td><td>Token volume is harder to estimate than seat count; teams without usage visibility routinely misbudget API-based plans, and sustained high-volume agent workloads can make it the most expensive option. Newest entrant Muse Code (beta, no GA date confirmed) enters at $1.25/M input and $4.25/M output, with a data-sharing contributor tier and enterprise zero-data-retention starting.</td></tr>
                 <tr><td><strong>Subscription-bundled agent access</strong></td><td>Grok Bot (SpaceXAI) — SuperGrok Heavy, Cursor Ultra, Cursor Teams Premium</td><td>No per-token meter and no standalone price: always-on agents run 24/7 on their own cloud computer and are bundled into eligible subscription tiers. Beta, desktop (macOS) and iOS; enterprise waitlist.</td><td>No standalone pricing announced, so apples-to-apples comparison is impossible until GA; authentication mechanics are undisclosed; beta access is gated by the eligible tiers — and the Cursor deal behind two of them closed August 14, 2026 (SpaceX's $60B all-stock acquisition of Cursor), after which OpenAI said it will wind down OpenAI model supply to Cursor effective November 12, 2026.</td></tr>
             </tbody>
-        </table>
+        </table></div>
 
         <p><strong>Grok Bot also breaks the tool-interop assumption.</strong> SpaceXAI says its bots can sign into and work across apps, tools, and websites — including platforms with no clean API or MCP — while Claude Code, OpenAI Codex, and Muse Code rely on MCP (and documented APIs) for tool interop. That matters for the budget conversation: an agent that works where the work lives can replace more manual steps, but with no standalone price and undisclosed authentication mechanics, agencies should treat it as a beta evaluation, not a budget line item.</p>
 
@@ -185,7 +188,7 @@
 
         <h2>Claude Code weekly limits change September 14: +25% permanent baseline, net −17% vs today</h2>
         <p><strong>On August 29, 2026, Anthropic announced that starting September 14, 2026 it is permanently raising Claude Code's standard weekly usage limits by 25% over the pre-promotion baseline for Pro, Max, Team, and seat-based Enterprise plans — and the temporary 50% weekly boost (active since May 13, 2026, extended through the summer) expires the same day</strong> (<a href="https://x.com/ClaudeDevs/status/2093742321473065266" rel="noopener">@ClaudeDevs, Aug 29, 2026</a>; <a href="https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-is-cutting-claude-codes-current-weekly-limits-by-17-percent" rel="noopener">BleepingComputer</a>). Anthropic confirmed the net effect itself: "Compared to today, this works out to a 17% reduction in weekly limits on Claude Code."</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Period</th><th>Claude Code weekly limit (relative to pre-promotion baseline)</th></tr>
             </thead>
@@ -194,7 +197,7 @@
                 <tr><td>Today — temporary +50% boost (through September 13, 2026)</td><td>150%</td></tr>
                 <tr><td>From September 14, 2026 (permanent)</td><td>125%</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>Going from 150 to 125 is a 16.7% cut (25 ÷ 150), which Anthropic and every major outlet round to about <strong>17%</strong>. A workload consuming 100% of today's boosted cap will consume <strong>120% of the new cap</strong> (150 ÷ 125 = 1.2) starting September 14.</p>
         <p><strong>Plan scope:</strong> the change applies to <strong>Pro, Max (5x and 20x), Team (standard and premium seats), and seat-based Enterprise</strong> plans. Free and consumption-based (pay-as-you-go) Enterprise seats are excluded. It is a weekly-capacity change only — five-hour session limits, plan pricing, Claude chat, Claude Cowork, and Console API pay-per-token pricing are unchanged. For Pro and Max, Claude apps and Claude Code draw from the same weekly bucket; Team plans give individual member limits, not an org-wide pool.</p>
         <p><strong>One documentation note:</strong> as of August 30, 2026, Anthropic's Help Center promo article still lists the 50% boost as running through August 31 at 11:59 PM PT; the September 14 date comes from Anthropic's announcement on X. Plan on the September 14 schedule, since it is the company's stated date.</p>
@@ -209,7 +212,7 @@
         <h2>The seven cost variables that predict spend</h2>
         <p>TrueFoundry's guide argues six factors predict spend better than the headline number — and OpenAI's August 11, 2026 agent-import wave added a seventh: migration and import effort. Together:</p>
 
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>#</th><th>Variable</th><th>Why it matters</th></tr>
             </thead>
@@ -222,7 +225,7 @@
                 <tr><td>6</td><td><strong>Plan tier fit</strong></td><td>Free and entry tiers often carry quotas production teams exceed within weeks.</td></tr>
                 <tr><td>7</td><td><strong>Migration / import effort</strong></td><td>Since OpenAI's Aug 11, 2026 import wave, moving an established Claude Code or Cursor setup into ChatGPT Work/Codex is an import plus a review pass instead of a days-long rebuild — but post-import validation (permissions, MCP auth, hooks, placeholder templates, plugin re-auth) is still billable work, and import is one-way into OpenAI.</td></tr>
             </tbody>
-        </table>
+        </table></div>
 
         <h2>What pricing pages tend to omit</h2>
         <ul>
@@ -251,7 +254,7 @@
         <h2>Agent harness rankings (August 2026): Claude Code vs Codex CLI</h2>
         <p><strong>Claude Code ranks #1 and Codex CLI ranks #2 in the August 2026 agent harness rankings — and the deciding layer is the harness, not the model.</strong> Machine Brief's rankings (August 24, 2026) put Claude Code first, Codex CLI second, Cursor third, with Gemini CLI and GitHub Copilot rounding out the top five. explainx.ai's updated top-10 list (published July 22, 2026; updated August 24, 2026) agrees on the top two and fills out the field: Claude Code, Codex CLI/ChatGPT Work, Cursor, Google Antigravity, GitHub Copilot (agent mode), Devin, Windsurf, Factory (Droid), Amazon Q Developer, and Replit Agent.</p>
 
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Rank</th><th>Harness</th><th>Machine Brief (Aug 24, 2026)</th><th>explainx.ai (updated Aug 24, 2026)</th></tr>
             </thead>
@@ -262,7 +265,7 @@
                 <tr><td>4</td><td><strong>Gemini CLI / Antigravity</strong></td><td>Gemini CLI rounds out the top five.</td><td>#4 — Google Antigravity, which explainx says replaced Gemini CLI as Google's primary coding-agent surface.</td></tr>
                 <tr><td>5</td><td><strong>GitHub Copilot</strong></td><td>Rounds out the top five; unaffected by the Cursor–OpenAI split — Microsoft keeps OpenAI models for Copilot.</td><td>#5 — GitHub Copilot (agent mode).</td></tr>
             </tbody>
-        </table>
+        </table></div>
 
         <blockquote>"Claude Code ranks first on depth of hooks, subagents and dynamic workflows, and is named the default choice for long autonomous coding sessions. Codex CLI leads on cloud, pull-request-shaped autonomy. Cursor holds in-editor workflows, with Gemini CLI and GitHub Copilot rounding out the top five." — Machine Brief, August 24, 2026</blockquote>
 
@@ -275,7 +278,7 @@
         <p><strong>Cursor says OpenAI models served about 5% of its user traffic.</strong> Cursor co-founder and CEO Michael Truell responded on August 29, 2026 that "OpenAI models serve about 5% of Cursor user traffic, and we're speaking with the OpenAI team to resolve this" — meaning the other ~95% already flows through Anthropic Claude, Google Gemini, and xAI Grok, including Grok 4.5, which Cursor and SpaceXAI shipped in July 2026 and which is available on every Cursor plan (wccftech, Aug 29, 2026; Cryptobriefing, Aug 29, 2026; Cursor docs).</p>
         <p><strong>Anthropic is expanding Claude compute for Cursor, not retreating.</strong> Anthropic co-founder and Chief Compute Officer Tom Brown said "we'll continue to increase compute to support Claude models in Cursor," building on the existing Anthropic–SpaceX Colossus 1 compute partnership announced May 6, 2026 (wccftech, Aug 29, 2026; Anthropic, May 6, 2026). For agency budgeting, the practical read: Claude capacity in Cursor is expanding in the near term even as OpenAI models leave.</p>
 
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Factor</th><th>Cursor</th><th>Claude Code</th><th>GitHub Copilot</th></tr>
             </thead>
@@ -286,7 +289,7 @@
                 <tr><td><strong>Pricing signal (Aug 2026)</strong></td><td>Pro $20/mo; Pro+ / Ultra 3x/20x limits; usage-based overage</td><td>Pro $20/mo, Max $100/$200; API per-token</td><td>Pro $10/mo; Pro+, Max credit tiers</td></tr>
                 <tr><td><strong>August 2026 harness rank</strong></td><td>#3 (Machine Brief; explainx.ai)</td><td>#1 (Machine Brief; explainx.ai)</td><td>#5 (Machine Brief; explainx.ai)</td></tr>
             </tbody>
-        </table>
+        </table></div>
 
         <p><strong>What the verdict changes for agencies:</strong> Cursor remains a strong in-editor harness — but its OpenAI-model workflows have a hard end date. Agencies should audit which Cursor workflows actually depend on OpenAI models (Cursor's own claim is ~5% of traffic, and per-team mixes vary), test Claude Code and Copilot on their own repos before November 12 rather than switching blind, and re-price per-developer model spend now that Claude compute in Cursor is expanding and OpenAI access is shrinking. See the full timeline in <a href="/openai-cursor-partnership-end">OpenAI Is Cutting Off Cursor: What It Means for AI Coding Agents</a>, and run the per-developer cost math on <a href="https://aiagencycalculator.com/cursor-model-cost-shift" rel="noopener" data-umami-event="click_to_cursor_cost_shift">aiagencycalculator.com/cursor-model-cost-shift</a>.</p>
 
@@ -327,7 +330,7 @@
         <p><strong>Two pricing implications follow.</strong> First, projects priced on "agent hours" are pricing the wrong unit: the billable unit is the review, the architecture call, and the sign-off. Second, DHH's stated operating procedure is two-model cross-review — one frontier model does the work, a differently sourced model reviews it — which adds a second token bill but catches one vendor's agent blind spots. On production work, that second-model review is a real cost line agencies should quote explicitly rather than absorb.</p>
 
         <h3>Projects vs retainers: how the debate settles the engagement model</h3>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Mode</th><th>Right work</th><th>Typical structure</th><th>Price signal</th></tr>
             </thead>
@@ -335,7 +338,7 @@
                 <tr><td><strong>Vibe coding</strong></td><td>Prototypes, internal tools, one-off scripts, greenfield demos</td><td>Fixed-fee project; fast, disposable</td><td>Low. Priced as output, not as a system.</td></tr>
                 <tr><td><strong>Agent-accelerated development (agentic engineering)</strong></td><td>Production systems, existing codebases, anything with a second user or a renewal date</td><td>Retainer or sprint-plus-review; continuous direction and audit</td><td>Premium. Priced on the review and governance layer, plus token cost.</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>DHH's own workflow is the retainer argument: agents drafted or closed PRs on a regular schedule, and he made "the final determination" on a shortlist (<a href="https://youtube.com/watch?v=NYFGCESmikA&t=9807" rel="noopener">2:43:27</a>). Continuous work needs a continuous engagement — a retainer with a defined review capacity — because the agent work never stops between milestones. A project quote assumes work ends at delivery; agentic engineering doesn't, and the pricing should say so.</p>
 
         <h3>Refreshing the "end of manual programming" claim</h3>
