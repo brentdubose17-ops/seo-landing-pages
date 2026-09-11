@@ -810,6 +810,13 @@ maths in sync, and the button/`onchange` handlers recompute visibly.
   ("What percentage of revenue does AI inference cost?" — visible 42→43 = schema
   42→43). Main pricing calculator untouched: regression harness 10/10 against a
   pre-change baseline; new factor harness 46/46; consistency gate clean.
+
+Live verification for section 11 (deployment 6ae0aa38-3da9-4829-9e72-083cfa736c01):
+`tests/inference-margin-browser-verify.py` 19/19 (desktop + mobile 390px),
+`tests/inference-margin-mobile-audit.py` 7/7 (zero overflow contributed by the new
+section; card font sizes identical to the existing estimator), `tests/inference-margin-verify.mjs`
+46/46, existing-calculator regression 10/10, consistency gate 0 errors / 0 warnings.
+
 - **2026-09-10** — GPT-Live-1 voice + backend **two-meter** cost calculator added
   (task t_5e4b91ac; fact basis the verified source pack from t_1c163248,
   `gpt-live-1-billing-facts.md`). New standalone page
