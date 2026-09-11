@@ -2,6 +2,39 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-11 — Preset `status` mis-attributed the Sept 29, 2026 import bans to Proclamations 11046/11047/11048 (kanban t_5e5baa16)
+
+- **Defect (live, verified by bytes).** `presets/canada-sept8-counter-tariffs.js` shipped this clause
+  inside its `status` string: `The import bans and added duties take effect 12:01 a.m. ET on Tuesday,
+  September 29, 2026 (Proclamations 11046, 11047 and 11048);` — wrong attribution. **11046 (alcohol),
+  11047 (dairy) and 11048 (motor vehicles) are the July 20, 2026 proclamations** that imposed the 50%
+  duties effective Aug 19 → Aug 22, 2026 (they are *cited inside* the Sept 8 texts, not authored by
+  them). The Sept 29 bans are the **five proclamations signed Sept 8, 2026** (alcohol exclusion, dairy
+  exclusion, motor-vehicle exclusion, alcohol scope modification, motor-vehicle scope modification),
+  still **unnumbered in the Federal Register** as of 2026-09-11 (FR API, proclamations published
+  Sept 1–30, returns only 11060 — Labor Day, signed Sept 4). Pre-fix live sha256
+  `7b70e80e…91831f` (12,549 B), shipped by t_b3e29762.
+- **Fix — text only, one substring.** `(Proclamations 11046, 11047 and 11048)` →
+  `(five Section 338 proclamations signed Sept 8, 2026; not yet numbered in the Federal Register)`.
+  +56 bytes, 136 lines before and after, and `before.replace(old, new, 1) == after` holds on the full
+  file bytes. No other site reference to 11046/11047/11048 was touched — those are all correct
+  (index.html / news / us-canada-tariffs-2026 / canada-tariff-trucking-freight-impact /
+  canada-retaliatory-tariffs-september-2026 / tariff-data.js `SECTION_338_CANADA`), and the counter-
+  tariffs page's in-transit sentence (`…the existing 50% duty under Proclamations 11046 (alcohol),
+  11047 (dairy) and 11048 (motor vehicles)`) is preserved verbatim.
+- **Verification.** `node --test tests/` **127/127 pass** (before and after, normalised output
+  identical); `tests/canada-line-dom-harness.js` output **byte-identical** (32/32 PASS, all rates and
+  duties unchanged: dairy 25% / milk powder 50% / cheese 25% / steel 50% / farming-equipment 15%);
+  per-field digest of all 18 non-`status` fields **identical** (`non_status_sha256` c83424a0…), with
+  the 48 category-row + 56 line-row + 4 headline-row duty numbers identical
+  (`numbers_sha256` cc84e372…) — so the calculator output is numerically unchanged.
+  Deployed declared-files-only (`--files=presets/canada-sept8-counter-tariffs.js --verify-live`,
+  deployment `6346223b-1960-4147-bd6b-9394f4c4f032`), gate 34 checked / 0 errors. Live now: 12,605 B,
+  sha256 `7563eabed5e9aa019b547379573498cf689b964fd4bc8836a85091525768ff2c`; `Proclamations 11046,
+  11047 and 11048` = **0** occurrences live, `11046` = **0** in the preset. The counter-tariffs page is
+  unchanged by this card (live 60,364 B, sha256 `67f3c4f2…d74b`, canon `cd5043d4…07c8`, identical
+  before and after the deploy) and still carries `11046` once, in the correct in-transit sentence.
+
 ## 2026-09-11 — Site-wide phone/tablet horizontal-overflow fix: 23 of 33 pages scrolled sideways (kanban t_88c62f1c)
 
 - **Defect (measured before the change, live + local agree).** `documentElement.scrollWidth` exceeded
