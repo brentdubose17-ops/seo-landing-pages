@@ -123,6 +123,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -158,7 +161,7 @@
 
         <h2>What FLUX 3 Video costs to produce client work</h2>
         <p>Use BFL's <a href="https://docs.bfl.ai/quick_start/pricing.md" data-umami-event="click_to_flux3_pricing" rel="noopener">pricing docs</a> — the press numbers differ slightly (The Decoder quotes v2v at $0.41/$0.53; docs say $0.43/$0.54). Docs win.</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Mode</th><th>HD</th><th>FHD</th><th>Draft</th></tr>
             </thead>
@@ -166,7 +169,7 @@
                 <tr><td>Text-to-video / Image-to-video</td><td>$0.17/sec</td><td>$0.29/sec</td><td>$0.06/sec</td></tr>
                 <tr><td>Video continuation</td><td>$0.43/sec</td><td>$0.54/sec</td><td>$0.12/sec</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>1 credit = $0.01, and API and Playground cost the same. Worked examples from the docs: a <strong>10-second HD t2v clip is $1.70</strong>, a <strong>20-second FHD spot is $5.80</strong>, and a 20-second draft is <strong>$0.60</strong>. A 10-second HD v2v continuation is $4.30. The optional FLUX Video Upscale tool runs $0.07/megapixel-second (Precise) or $0.10 (Creative) — upscaling a 10-second clip to 1080p is roughly $1.39–$1.98, a natural billable add-on.</p>
         <p>Here is the agency margin spine: <strong>iteration costs cents, delivery bills at creative rates.</strong> A client revision loop that would burn hours of editor time costs a few dollars of drafts. Run the numbers for your own packages with the <a href="https://aiagencycalculator.com/ai-video-cost-per-second-2026" data-umami-event="click_to_aiagencycalculator" rel="noopener">AI video cost per second calculator</a>.</p>
 

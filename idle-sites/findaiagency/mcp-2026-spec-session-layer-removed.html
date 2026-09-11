@@ -103,6 +103,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -123,14 +126,14 @@
         <p>That one change ripples through everything downstream: server-initiated flows were redesigned as Multi Round-Trip Requests, <code>Mcp-Method</code>/<code>Mcp-Name</code> headers enable gateway routing, list results carry cache hints, and Roots/Sampling/Logging are deprecated with a twelve-month window.[1]</p>
 
         <h2>Request model: before and after</h2>
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>Aspect</th><th>2025-11-25 spec (before)</th><th>2026-07-28 spec (after)</th></tr>
             <tr><td>Session establishment</td><td><code>initialize</code> handshake required</td><td>No handshake; optional <code>server/discover</code></td></tr>
             <tr><td>Client binding</td><td><code>Mcp-Session-Id</code> header pinned client to one instance</td><td>Any request lands on any instance</td></tr>
             <tr><td>Load balancing</td><td>Sticky sessions / shared session stores</td><td>Plain round-robin, no shared storage</td></tr>
             <tr><td>State</td><td>Implicit via session</td><td>Explicit handle passed as tool argument</td></tr>
             <tr><td>Server-initiated flows</td><td>Legacy channel</td><td>Multi Round-Trip Requests (SEP-2322)</td></tr>
-        </table>
+        </table></div>
 
         <h2>The tooling is following the spec</h2>
         <p>Two vendor moves the same month show the direction. <strong>QF-Test 11.0.1</strong> (released August 13, 2026, by Quality First Software) is the maintenance release of the UI test-automation tool whose MCP server capability debuted in <strong>11.0.0 on July 29</strong>.[5][6] That capability lets external agents such as Claude Code or GitHub Copilot control the applications QF-Test drives — including legacy apps that would otherwise never gain MCP support — and 11.0.1 fixes AI/MCP edge cases such as decoding LLM output from the Claude Code CLI.[6][7] The vendor promoted it via an August 17 webinar on AI agents and MCP.[6] The same packaging trend shows up in <a href="/agent-plugins-for-ai-agencies">Agent Plugins</a>, the open standard that makes agent skills and MCP servers portable across Codex, ChatGPT, Cursor, Copilot, Kiro, and VS Code.</p>

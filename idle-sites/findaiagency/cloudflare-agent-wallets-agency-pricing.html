@@ -107,6 +107,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -151,7 +154,7 @@
 
         <h2>How to price x402 micropayments into retainers</h2>
         <p>Until Cloudflare publishes a fee schedule, you cannot quote a real per-request number. What you <em>can</em> do is build the line item now and label it an estimate. A workable framework:</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Retainer line</th><th>How to model it</th><th>Status</th></tr>
             </thead>
@@ -161,7 +164,7 @@
                 <tr><td>Payment-layer fees (x402 micropayments)</td><td>Estimated per-request micro-fee × paid-request volume; add allowance-cap breach scenarios</td><td><strong>NEW — estimate only, no published fees</strong></td></tr>
                 <tr><td>Wallet administration</td><td>Setup, guardrail configuration, spend monitoring, monthly reconciliation</td><td><strong>NEW — billable service</strong></td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p>Illustrative example (assume, don't quote): if an agent makes 5,000 paid requests a month and the eventual micro-fee lands near a penny per request, that is roughly <strong>$50/month of payment-layer cost</strong> on top of tokens — before loops. Double the paid requests or add a retry-heavy workflow and it compounds the same way token cost does. The number is placeholder; the line item is not.</p>
         <p>Two pricing rules follow:</p>
         <ol>

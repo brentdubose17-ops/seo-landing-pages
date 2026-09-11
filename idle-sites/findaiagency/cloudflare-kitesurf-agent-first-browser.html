@@ -98,6 +98,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -115,7 +118,7 @@
         <h2>The benchmark that should reset agency cost assumptions</h2>
         <p>Cloudflare published a mid-range benchmark — medians of five Browser Run quick-action runs across a 14-URL corpus comparing Kitesurf to a warm Chromium pool (the "warm pool" is Chromium with JIT + cached resources). The results don't declare a single winner — they declare two different tools for two different cost structures.</p>
 
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Metric</th><th>Kitesurf</th><th>Chromium (warm pool)</th><th>Relative</th></tr>
             </thead>
@@ -127,7 +130,7 @@
                 <tr><td>Wall time: screenshot</td><td>1,148 ms</td><td>637 ms</td><td>1.8&times; <em>slower</em></td></tr>
                 <tr><td>Wall time: HTML extraction</td><td>820 ms</td><td>472 ms</td><td>1.7&times; <em>slower</em></td></tr>
             </tbody>
-        </table>
+        </table></div>
 
         <p>Cloudflare's own framing of its data is clear: "Chromium wins the stopwatch because a JIT that has already seen this page always beats a cold software renderer — and today it does, by about 1.7x. Most of that gap comes from rasterization and JPEG/PNG encoding, which we will keep optimizing. But Kitesurf wins on memory and CPU, the things that actually drive your bill, by 3-7x compared to what Chromium uses. Less memory means we can run more sessions, scale better, and fundamentally lower both our costs and yours."</p>
 
