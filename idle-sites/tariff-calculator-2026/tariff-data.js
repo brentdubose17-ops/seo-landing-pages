@@ -221,7 +221,7 @@
     polysilicon:  { add: 0,     name: 'Polysilicon & Solar (Section 232)' },
     drones:       { add: 0,     name: 'Drones / UAS (Unmanned Aircraft) — Section 232' },
     'ground-beef':{ add: 0,     name: 'Ground Beef — Proclamation 11059 Beef TRQ Increase (Sept–Nov 2026)' },
-    'canada-s338':{ add: 0,     name: 'Canada Section 338 Covered Goods — 50% Duty (effective Aug 22, 2026)' },
+    'canada-s338':{ add: 0,     name: 'Canada Section 338 Covered Goods — 50% Duty (in effect Aug 22, 2026; scope change Sept 15, 2026; import bans Sept 29, 2026)' },
     dairy:        { add: 0.046, name: 'Dairy Products' },
     alcohol:      { add: 0.046, name: 'Alcoholic Beverages' },
     'household-appliances': { add: 0.027, name: 'Household Appliances' },
@@ -526,6 +526,48 @@
     covered_categories: ['auto', 'food', 'dairy', 'alcohol', 'canada-s338'],
     exceptions: ['energy products', 'potash', 'fish', 'critical minerals', 'items already under Section 232'],
     pre_existing_stack: ['steel', 'lumber', 'autos'],
+
+    // --- September 8, 2026 Section 338 modification (card t_c39d6c22, 2026-09-11) ---
+    // TWO FORWARD EFFECTIVE DATES. Primary source, White House fact sheet of
+    // Sept 8, 2026: "The import bans will take effect on September 29, 2026, and
+    // the product additions and removals will take effect on September 15, 2026."
+    // The motor-vehicle scope proclamation runs the same clock: the changes are
+    // effective for goods entered or withdrawn from warehouse "on or after
+    // 12:01 a.m. eastern time on September 15, 2026."
+    scope_change: {
+      effective: '2026-09-15 12:01 AM ET',
+      effective_label: 'September 15, 2026, 12:01 a.m. ET',
+      added: [
+        'specialty cheeses', 'modified fats and oils', 'bovine hides and upholstery leather',
+        'certain raw and dressed furskins', 'recreational motorboats', 'specialty paper',
+        'some steel and aluminum items', 'metal fittings and welding inputs', 'golf carts',
+        'furniture and lamps', 'all-terrain vehicles (ATVs)', 'additional dairy products'
+      ],
+      removed: [
+        'rock salt', 'cement', 'toilet paper', 'fishing-rod parts',
+        'whiskies, liqueurs and cordials in containers over 4 litres'
+      ],
+      authority: 'Section 338 proclamations signed Sept 8, 2026 — scope modification of the July 20, 2026 actions',
+      note: 'Entry-date rule: a removal is relief only for goods entered for consumption, or withdrawn from warehouse, on or after Sept 15, 2026. Entries dated earlier in September keep the duty that applied on the entry date.'
+    },
+    import_bans: {
+      effective: '2026-09-29',
+      effective_label: 'September 29, 2026',
+      products: [
+        'beer, wines, cider and other fermented drinks (incl. malt beer, certain grape wines)',
+        'high-proof beverage alcohol and many major spirits categories (incl. certain rye whiskies and other liquors)',
+        'non-alcoholic beer',
+        'whey products and molasses',
+        'motorcycles, mopeds and cycles fitted with internal-combustion piston engines over 800 cc',
+        'certain dairy products'
+      ],
+      value_affected: 'banned products total under $1 billion in trade value',
+      unentered_rule: 'Goods subject to a ban that were imported but not yet entered for consumption, or withdrawn from warehouse for consumption, prior to Sept 29, 2026 remain subject to the 50 percent duty rate established by Proclamation 11048 (motor-vehicle ban proclamation, Sept 8, 2026).',
+      note: 'Unlike the 50% duty, a ban is not a rate — the named goods may not be imported for consumption on or after Sept 29, 2026.'
+    },
+    usmca_note: 'Section 338 applies to all covered goods regardless of whether a good originates under the U.S.-Mexico-Canada Agreement (USMCA) — a USMCA certificate of origin does not remove the duty or a ban (White House fact sheet, Sept 8, 2026).',
+    stacking_note: 'Section 338 duties apply IN ADDITION TO tariffs imposed under Section 232 of the Trade Expansion Act of 1962 (White House fact sheet, Sept 8, 2026) — the two layer, they do not substitute for one another.',
+    gsa_directive: 'The President directed USTR and GSA to remove Canadian-origin products from GSA Multiple Award Schedules, which the fact sheet says manage over $50 billion in federal procurement; AP reported the effect as Canadian products becoming ineligible for large, long-term federal contracts until Canada allows what the President called full and fair reciprocity.',
     // Granular product scope — compiled from The Guardian's full category
     // inventory (Aug 22, 2026) + AP's "hockey sticks to tongue depressors"
     // framing + USTR statement shorthand (wine, hockey sticks, cement,
@@ -540,7 +582,7 @@
       medical_wood: ['tongue depressors']
     },
     hs_note: 'Verified official enumeration (research brief t_cb75bfd7, Chicago Fed Jul 2026, WH Proclamations 11046/47/48): 569 eight-digit HTSUS subheadings across three proclamations — alcoholic beverages (HTS heading 9903.03.12, 61 codes), dairy (9903.03.13, 52 codes), motor vehicles (9903.03.14, 456 codes), capturing ~$24B / 5.5% of annual Canadian import value. USMCA does NOT shield covered goods. Excluded: energy, potash, Section 232 goods, fish, critical minerals. Official line-level HTS list lives in the three July 20, 2026 Section 338 proclamations / USTR statement PDF (Federal Register d/2026-14997, 91 FR 46663).',
-    status: 'IN EFFECT — the 50% additional duty took effect Saturday, Aug 22, 2026 at 12:01 a.m. EDT (04:01 GMT) after U.S.–Canada talks failed to finalize a deal. USTR Jamieson Greer: "Tonight, Canada declined to finalize the trade deal under the terms agreed earlier this week." Canada said it will match tariffs dollar for dollar starting Sept 8, 2026 (US steel, dairy, appliances, agricultural machinery, paper, electronics).',
+    status: 'IN EFFECT — the 50% additional duty took effect Saturday, Aug 22, 2026 at 12:01 a.m. EDT (04:01 GMT) after U.S.–Canada talks failed to finalize a deal. USTR Jamieson Greer: Tonight, Canada declined to finalize the trade deal under the terms agreed earlier this week. TWO FORWARD DATES (proclamations signed Sept 8, 2026, hours after Canada\'s C$27.6B counter-tariffs took effect at 12:01 a.m. ET that day): (1) the product additions and removals to this 50% list take effect September 15, 2026 at 12:01 a.m. ET — ADDED specialty cheeses, modified fats and oils, bovine hides and upholstery leather, certain raw and dressed furskins, recreational motorboats, specialty paper, some steel and aluminum items, metal fittings and welding inputs, golf carts, furniture and lamps, ATVs and additional dairy; REMOVED rock salt, cement, toilet paper, fishing-rod parts and whiskies, liqueurs and cordials in containers over 4 litres; and (2) IMPORT BANS take effect September 29, 2026 on Canadian beer, wines, cider and other fermented drinks, high-proof beverage alcohol and many major spirits categories, non-alcoholic beer, whey products and molasses, motorcycles/mopeds/cycles with internal-combustion piston engines over 800 cc, and certain dairy products (banned products total under $1B in trade value; goods imported but not entered before Sept 29 remain at the 50% rate under Proclamation 11048). The Sept 8 fact sheet states these Section 338 tariffs apply to all covered goods REGARDLESS of USMCA origin and IN ADDITION TO Section 232 duties. USTR and GSA were directed to remove Canadian-origin products from GSA Multiple Award Schedules (over $50B in federal procurement). Canada\'s side is unchanged: the C$27.6B counter-tariff package (629 items; fish and seafood removed Aug 26; copper wire, wood charcoal, glass containers, printed images and gypsum tiles added at 50%) has been in effect since Sept 8, 2026 with no further instrument, and PM Carney said Sept 11 that Ottawa is still studying whether to adjust. The announced 50% increase on Canadian autos, auto parts and steel from January 1, 2027 is a stated intention, NOT law in force.',
     source_citations: [
       'USTR: Ambassador Greer Issues Statement on President Trump Imposing Section 338 Tariffs on Canada (Jul 20, 2026) — https://ustr.gov/about/policy-offices/press-office/press-releases/2026/july/ambassador-greer-issues-statement-president-trump-imposing-section-338-tariffs-canada',
       'White House Fact Sheet: Trump Imposes Additional Tariffs on Canada (Jul 20, 2026) — https://www.whitehouse.gov/fact-sheets/2026/07/fact-sheet-president-donald-j-trump-imposes-additional-tariffs-on-canada/',
@@ -553,7 +595,20 @@
       'ZeroHedge: Canada-US Trade War Erupts, Setting New 50% Tariffs On Canadian Goods (Aug 22, 2026) — rejected-offer rates 25/15/10 — https://www.zerohedge.com/political/canada-us-trade-war-erupts-setting-new-50-tariffs-canadian-goods',
       'NPR: U.S.-Canada trade talks collapse (Aug 22, 2026) — https://www.npr.org/2026/08/22/nx-s1-5941584/us-canada-tariffs',
       'CBC: American tariffs on Canadian goods take effect after trade talks fall apart (Aug 22, 2026) — https://www.cbc.ca/news/canada/canada-us-tariffs-trump-imposes-new-50-per-cent-levy-on-canadian-goods-august-22-9.7311417',
-      'The Guardian: Canada vows dollar for dollar response as US puts 50% tariffs on some goods (Aug 22, 2026) — https://www.theguardian.com/world/2026/aug/22/canada-tariffs-trump-trade-deal-talks-fail'
+      'The Guardian: Canada vows dollar for dollar response as US puts 50% tariffs on some goods (Aug 22, 2026) — https://www.theguardian.com/world/2026/aug/22/canada-tariffs-trump-trade-deal-talks-fail',
+      // Sept 8, 2026 modification — primary sources first (t_c39d6c22, 2026-09-11)
+      'White House Fact Sheet: President Donald J. Trump Responds to Canada\'s Retaliation (Sept 8, 2026) — https://www.whitehouse.gov/fact-sheets/2026/09/fact-sheet-president-donald-j-trump-responds-to-canadas-retaliation',
+      'USTR: Ambassador Greer Issues Statement on President Trump\'s Response to Canada\'s Continued Retaliation (Sept 8, 2026) — https://ustr.gov/about/policy-offices/press-office/press-releases/2026/september/ambassador-greer-issues-statement-president-trumps-response-canadas-continued-retaliation-against',
+      'WH Proclamation: Modifying the Scope of Products of Canada Subject to the Additional Duties (motor vehicles, Sept 8, 2026) — effective 12:01 a.m. ET Sept 15, 2026 — https://www.whitehouse.gov/presidential-actions/2026/09/modifying-the-scope-of-products-of-canada-subject-to-the-additional-duties-imposed-to-offset-canadian-discrimination-against-the-united-states-with-respect-to-motor-vehicles',
+      'WH Proclamation: Excluding Certain Canadian Products from Importation into the United States (motor vehicles, Sept 8, 2026) — ban effective Sept 29, 2026 — https://www.whitehouse.gov/presidential-actions/2026/09/excluding-certain-canadian-products-from-importation-into-the-united-states-in-response-to-continued-discrimination-against-the-commerce-of-the-united-states-with-respect-to-motor-vehicles',
+      'White House Presidential Actions index — Canada proclamations of Sept 8-9, 2026 (checked 2026-09-11) — https://www.whitehouse.gov/presidential-actions',
+      'WardsAuto: Trump escalates Canada trade war with new tariffs, import bans (Sept 9, 2026) — https://www.wardsauto.com/news/trump-escalates-canada-trade-war-with-new-tariffs-import-bans/829929',
+      'Bloomberg via Business Standard: US widens Canada trade war with import bans, new tariffs (Sept 9, 2026) — https://www.business-standard.com/world-news/us-widens-canada-trade-war-with-import-bans-new-tariffs-on-key-products-126090900171_1.html',
+      'AP via CityNews Toronto: Trump widens trade war with Canada beyond tariffs (Sept 9, 2026) — https://toronto.citynews.ca/2026/09/09/donald-trump-us-canada-trade-war-tariffs-response',
+      'Reason/Volokh (Ilya Somin): Trump Expands Illegal Section 338 Tariffs (Sept 9, 2026) — https://reason.com/volokh/2026/09/09/trump-expands-illegal-section-338-tariffs-against-canadian-imports-and-bans-some-entirely',
+      'Reuters: Mexico, Washington sprint toward bilateral trade deal before US elections (Sept 11, 2026) — https://kfgo.com/2026/09/11/mexico-washington-sprint-toward-bilateral-trade-deal-before-us-elections',
+      'Canada\'s National Observer: Canada is still studying Trump\'s latest trade attack — Carney (Sept 11, 2026) — https://www.nationalobserver.com/2026/09/11/news/canada-still-studying-trumps-latest-trade-attack-carney',
+      'C.H. Robinson Edge Report September 2026 — customs page (published Sept 3, 2026) — https://www.chrobinson.com/en-us/resources/insights-and-advisories/north-america-freight-insights/sep-2026-freight-market-update/customs'
     ]
   };
 
@@ -1426,6 +1481,11 @@
         preExistingStack: SECTION_338_CANADA.pre_existing_stack,
         productScope: SECTION_338_CANADA.product_scope,
         status: SECTION_338_CANADA.status,
+        scopeChange: SECTION_338_CANADA.scope_change,
+        importBans: SECTION_338_CANADA.import_bans,
+        stackingNote: SECTION_338_CANADA.stacking_note,
+        usmcaNote: SECTION_338_CANADA.usmca_note,
+        gsaDirective: SECTION_338_CANADA.gsa_directive,
         source_citations: SECTION_338_CANADA.source_citations
       };
     }
