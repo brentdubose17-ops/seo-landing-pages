@@ -1,0 +1,27 @@
+# ~/seo-pages IS the published artifact: the Cloudflare Pages project
+# `seo-landing-pages` is a direct upload of this directory, and the daily
+# runner (seo-pipeline-runner.sh) does `git add -A`. So anything committed
+# here becomes a live URL, and the sitemap generator walks the directory.
+#
+# Keep scratch, quarantine and tool state out of the tree.
+#
+# Deliberately NOT listed here yet, because tracked copies already exist and a
+# .gitignore that matches them could silently drop currently-published files
+# from the next whole-directory upload (see card t_0e949206 §6):
+#   .wrangler/     24 tracked files (findaiagency.com/.wrangler/cache/*, ...)
+#   *.bak-*         3 tracked files (idle-sites/ai-agency-pricing-calculator/*)
+# Cleaning those up is its own card.
+
+.rejected/
+.quarantine/
+__pycache__/
+*.py[cod]
+.venv/
+.idea/
+.DS_Store
+*.tmp
+*.orig
+*.rej
+*.swp
+*~
+node_modules/
