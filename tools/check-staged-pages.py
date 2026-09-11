@@ -26,15 +26,19 @@ SCOPE: staged .html files under all-sites/, findaiagency.com/, peptidesbeat.com/
 sparkdoc.app/ — the model-written root/blog trees, which have no publish-time gate
 at all (they ship via wrangler in seo-pipeline.py / all-sites-content.py, not via
 ~/seo-pages/tools/deploy-idle-site.sh). idle-sites/ is deliberately OUT: measured
-2026-09-11, 11 legitimate files there (redirect stubs in deploy-*/ and full/,
-3 of them < 1 KB) would be blocked, and that tree already has two gates — the
-writer gate and publish-idle-site.py's site_consistency gate at deploy time.
+2026-09-11 at this check's own 1 KB floor, 3 legitimate files there
+(mybusiness-ai-audit/full/index.html 313 B, ozempic-providers-2026/full/index.html
+316 B, findaiagency/full/blog/index.html 3,650 B with no </body>) would be blocked,
+and that tree already has two gates — the writer gate and publish-idle-site.py's
+site_consistency gate at deploy time. (An earlier note here said 11; that was the
+count at the writers' 4 KB floor, see gate_hook_ruleset.py in the t_34e42066
+workspace, which now prints both floors.)
 
 USAGE
     tools/check-staged-pages.py --staged        # what the pre-commit hook runs
     tools/check-staged-pages.py --all           # dry-run the whole scope
     tools/check-staged-pages.py PATH [PATH...]  # check worktree files
-    tools/check-staged-pages.py --docs <file>   # check one file, print the rule set
+    tools/check-staged-pages.py --docs           # print the rule set (no paths inspected)
 
 EXIT: 0 = clean, 1 = at least one staged page failed (commit blocked),
       2 = usage. If the gate module itself cannot be imported the check is
