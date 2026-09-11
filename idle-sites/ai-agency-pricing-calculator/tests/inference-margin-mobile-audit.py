@@ -27,7 +27,10 @@ import os
 from playwright.sync_api import sync_playwright
 
 SITE = os.path.expanduser("~/seo-pages/idle-sites/ai-agency-pricing-calculator/")
-PRE_SRC = SITE + "index.html.bak-t_9b19d6a2-pre-inference"
+# the pre-change snapshot lives OUTSIDE the publish tree (an untracked .bak in the site
+# dir could be shipped by a sibling's raw `wrangler pages deploy`); the same bytes are
+# also git commit 922ee9f^ if the snapshot ever goes missing.
+PRE_SRC = os.path.expanduser("~/.hermes/backups/aiagencycalculator-index-pre-t_9b19d6a2.html")
 POST_SRC = SITE + "index.html"
 
 PROBE = """() => {
