@@ -357,6 +357,50 @@
 
 <p>Indemnification deserves its own paragraph. You want the agency to indemnify you against third-party claims arising from model outputs, training data the agency supplied, and IP infringement — and you want proof of insurance, including technology E&amp;O and cyber liability, with limits stated in the contract.</p>
 
+<h3>Model IDs are aliases, not products</h3>
+
+<p>The risk matrix above treats "provider retires your base model" as an event you can see coming: a sunset date is announced, and your 90-day notice obligation starts running. That is the easy case. The harder case is the one where the model string in your code never changes at all. A contract that names a model by its API alias is pinning a pointer, not a product. When the vendor re-points that alias, the model your system calls can change without a single line of code changing on your side — and without any notice you had a contractual right to receive. Nothing has to be deprecated for the "Model deprecation" row above to fail you. You can watch the mechanism work in the open today: DeepSeek's API documentation says the legacy names <code>deepseek-v4-flash</code> and <code>deepseek-v4-flash-vision-exp</code> are "still accepted", but that requests sent under those names are "served by the DeepSeek-V4.1-Flash model and billed at the Flash price". Same alias, different model, different price.</p>
+
+<p><strong>The 2026-09-10 / 2026-09-11 DeepSeek episode, and why the ending matters less than the exposure.</strong> On 2026-09-10, DeepSeek's launch news page for DeepSeek-V4.1-Flash, together with a footnote on its API documentation, said that from 12:00 Beijing time / 04:00 UTC on September 14, 2026, requests naming <code>deepseek-v4-pro</code> would be routed to V4.1-Flash at V4.1-Flash rates until V4.1 Pro launched. On 2026-09-11, between 07:47 and 16:55 UTC, that footnote was replaced with a retraction: "In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged." As of September 11, 2026, the vendor's news page still advertises the routing plan while its API documentation retracts it — two first-party pages contradicting each other. V4 Pro continues to be served at its own published rates, and no reroute is in force.</p>
+
+<p>Read that as a buyer rather than as a model watcher. For about a day, a client who had pinned <code>deepseek-v4-pro</code> in production had a written, first-party plan to be served a different model, at a different price, on a date that no clause required anyone to tell them about — with no contractual right to notice, no right to re-test the replacement, and no right to re-price or walk away. The plan was withdrawn, so the exposure never landed. What matters is not what the vendor decided; it is that the exposure lived in the alias, and the same sequence can run on any provider, in either direction, at any time. Five clauses close it:</p>
+
+<div class="table-wrap"><table>
+<tr>
+<th>Clause to insist on</th>
+<th>What it must say</th>
+<th>What it protects against</th>
+</tr>
+<tr>
+<td>Pinned model version in the SOW</td>
+<td>Name the model version you are buying — not only the API alias — as a contracted deliverable, and confirm the version pinning and dependency disclosure the IP matrix above already requires</td>
+<td>Acceptance criteria written against one model version and enforced against another</td>
+</tr>
+<tr>
+<td>Contractual notice for any forced re-route</td>
+<td>Written notice to a named contact before the model that serves you changes, on a stated notice period — the same 90 days this page asks for on deprecation — and never only as a footnote on a provider's documentation page</td>
+<td>A routing change announced where you had no obligation to be looking</td>
+</tr>
+<tr>
+<td>Right to re-run evaluations</td>
+<td>You may re-run the frozen held-out test set described in the acceptance-criteria section above against the replacement model, and accept or reject the result before it serves your users</td>
+<td>A quality regression the vendor's launch benchmarks cannot see because they are not your task</td>
+</tr>
+<tr>
+<td>Price-change notice</td>
+<td>Any change to the effective per-token price — including one caused by routing or by a peak / off-peak reclassification rather than by a new list price — needs notice and your written acceptance</td>
+<td>An unchanged model name with a changed invoice</td>
+</tr>
+<tr>
+<td>Exit or re-price right</td>
+<td>If the routed model fails your evaluation, you may exit the affected scope without penalty, hold fees at the evaluated rate, or require the agency to fund migration back to a version that passes</td>
+<td>Being locked into a build that no longer meets the criteria you paid for</td>
+</tr>
+</table></div>
+
+<p>None of that asks a vendor to promise stability it cannot deliver. It asks your agency to own, in writing, the model dependency it built on — which is the same standard the rest of this guide applies to scope, data rights, and handover. If you want the arithmetic on what a re-route does to a bill when a flagship tier is swapped for a cheaper model, <a href="https://aiagencycalculator.com/deepseek-v4-1-flash-pricing">what the DeepSeek Flash reroute costs you</a> works it through line by line.
+</p>
+
 <h2>5. Commercial Terms, Pricing &amp; Exit Rights</h2>
 
 <p>AI pricing has converged on four structures. Each shifts risk differently.</p>
