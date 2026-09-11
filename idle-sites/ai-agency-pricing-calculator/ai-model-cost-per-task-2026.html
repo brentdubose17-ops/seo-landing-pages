@@ -188,6 +188,14 @@
             <li><strong>Sustained volume flips the answer to self-host.</strong> Open weights (Muse Glimmer 30B local, DeepSeek V4 MIT weights, Qwen 3.8 Max, Qwen 3.8 Flash-Next FP8 at 172.78 GiB, Kimi K3) run at electricity-cost marginal inference once hardware is amortized.</li>
         </ul>
 
+        <p>Routing decides which model reasons; it does not decide how the work is metered. Point the same
+        routing table at a voice interface and the meter splits in two &mdash; duration billed by the second,
+        reasoning billed by the token &mdash; so one call runs on two cost curves at once and a per-task figure
+        stops being the whole answer. The <a href="/gpt-live-1-voice-agent-cost" data-umami-event="click_to_gpt_live_1_voice_agent_cost">two-meter voice
+        agent cost model (voice seconds plus backend reasoning tokens)</a> prices a cheap-reasoner preset and an
+        expensive-reasoner preset against an identical $0.05-per-minute voice meter, so the pair is what you
+        quote rather than the model alone.</p>
+
         <h2>How to compute your agency's real cost per task</h2>
         <ol>
             <li>Instrument a pilot: log input/output tokens per task type for 100–500 real tasks.</li>

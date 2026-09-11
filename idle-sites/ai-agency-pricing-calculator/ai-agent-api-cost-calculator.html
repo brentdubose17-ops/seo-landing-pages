@@ -307,6 +307,15 @@ Outcome-based mode:
   Per-token monthly = loaded (same workload)
   Delta = outcomeMonthly − loaded   (negative = outcome cheaper)</div>
 
+        <p>One dimension the token math above does not carry is capacity. An API budget scales with spend, but
+        the voice layer of the same stack is limited in <strong>concurrent sessions</strong> &mdash; GPT-Live-1
+        runs 25 / 50 / 200 / 300 / 500 across Tiers 1&ndash;5, and the Free tier cannot call the model at all
+        &mdash; so a phone deployment can be comfortably affordable and still fail at the busy hour. The
+        <a href="/gpt-live-1-voice-agent-cost" data-umami-event="click_to_gpt_live_1_voice_agent_cost">concurrent-session sizing for a
+        voice line (sessions, not requests per minute)</a> applies Little's Law to a call centre line and shows
+        where 1,000 and 1,500 calls a day land against the Tier 1 ceiling. Size calls, not RPM, before you quote
+        the retainer.</p>
+
         <h2>Reference: current per-1M rates (Aug 2026) — the inputs for your own math</h2>
         <p>Same reference table as our <a href="/ai-model-cost-per-task-2026">per-task cost benchmarks</a>, current as of Aug 28, 2026. Rates move fast — re-verify before quoting a client.</p>
         <table>
