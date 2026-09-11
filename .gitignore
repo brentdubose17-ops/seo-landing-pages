@@ -30,3 +30,33 @@ __pycache__/
 *.swp
 *~
 node_modules/
+
+# ---------------------------------------------------------------------------
+# t_495d6699: the published root must not carry internal log sinks or test
+# suites either. ~/seo-pages IS the artifact (whole-tree upload to the CF Pages
+# project `seo-landing-pages`, no prune), so every line a live pipeline tee'd
+# into logs/ was a public URL.
+#
+#  * log WRITERS were relocated to ~/.hermes/logs/seo-pages/ in the same change
+#    (all-sites-pipeline.sh, idle-site-pipeline.sh, seo-pipeline-runner.sh), and
+#    the two readers that stat the all-sites pipeline log were re-pointed with
+#    them (daily-stack-health.sh, abd-legacy-watchdog.sh).
+#  * the 16 `idle-sites/*/tests/*` files are untracked but deliberately STILL ON
+#    DISK: cron b292e9710c4d (2026-12-01) runs
+#    `cd ~/seo-pages/idle-sites/tariff-calculator-2026 && node --test
+#    tests/tariff-data.test.js`, and the tarif/calculator harnesses are run by
+#    hand. They are out of HEAD, so they are out of the artifact.
+#  * `tests/`, not `*/tests/`: in a .gitignore a `*` does not cross `/`, so the
+#    card's literal `*/tests/` matches `idle-sites/tests/` but NOT
+#    `idle-sites/<site>/tests/`. Measured with
+#    `git -c core.excludesFile=<f> check-ignore --no-index -v` before choosing.
+#  * no pattern below matches a tracked file -- a pattern that does silently
+#    drops that file from the next whole-tree upload (card t_0e949206 §6).
+#    Proof at any time: `git ls-files -i -c --exclude-standard` prints nothing.
+#  * `all-sites/logs/` and `idle-sites/logs/` are redundant with `logs/`; kept so
+#    the intent survives a future edit of this file.
+# ---------------------------------------------------------------------------
+logs/
+all-sites/logs/
+idle-sites/logs/
+tests/
