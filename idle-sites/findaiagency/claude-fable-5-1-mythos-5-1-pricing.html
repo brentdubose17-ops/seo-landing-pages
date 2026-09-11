@@ -108,6 +108,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -124,7 +127,7 @@
 
         <h2>Claude Fable 5.1 price: $10/$50 per million tokens, cheaper cache reads</h2>
         <p>Anthropic's published API pricing for Claude Fable 5.1 (API ID <code>claude-fable-5-1</code>):</p>
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>Spec</th><th>Claude Fable 5.1</th></tr>
             <tr><td>Input (per 1M tokens)</td><td>$10</td></tr>
             <tr><td>Output (per 1M tokens)</td><td>$50</td></tr>
@@ -133,19 +136,19 @@
             <tr><td>Max output</td><td>128K tokens</td></tr>
             <tr><td>Thinking</td><td>Adaptive, always on; default effort high</td></tr>
             <tr><td>Availability</td><td>GA — Claude API, Bedrock, Vertex, Foundry</td></tr>
-        </table>
+        </table></div>
         <p>The cache-read cut is the headline. Fable 5.1 reads cached input at <strong>$0.25/1M</strong> versus $1.00 for Fable 5 — a 75% reduction. Anthropic estimates <strong>~25% lower cost for typical token-billed workloads</strong> and <strong>up to ~45% lower for context-heavy agentic work</strong>, where cache reads dominate. Batch API keeps the standard 50% input/output discount.</p>
 
         <h2>Claude API pricing 2026: Fable 5.1 vs Opus 5 vs GPT-5.6 Sol</h2>
         <p>Here is how Fable 5.1 stacks up against the models agencies actually route between (verified against Anthropic's Sept 1, 2026 release notes and OpenAI's current GPT-5.6 Sol promo rates):</p>
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>Model</th><th>Input / 1M</th><th>Output / 1M</th><th>Context</th><th>Notes</th></tr>
             <tr><td>Claude Fable 5.1</td><td>$10</td><td>$50</td><td>1M</td><td>New GA flagship; $0.25 cache reads</td></tr>
             <tr><td>Claude Fable 5</td><td>$10</td><td>$50</td><td>1M</td><td>Prior flagship; $1.00 cache reads</td></tr>
             <tr><td>Claude Opus 5</td><td>$5</td><td>$25</td><td>1M</td><td>Value tier for most workloads</td></tr>
             <tr><td>GPT-5.6 Sol</td><td>$4</td><td>$20</td><td>~1M</td><td>Promo rate through Nov 21, 2026; then expected $5/$30</td></tr>
             <tr><td>Gemini 3.8 Flash <span style="font-size:0.8rem;color:#888;">(Sept 2, 2026)</span></td><td>$0.75*</td><td>$3.75*</td><td>—</td><td>Google's best reasoning &amp; coding model yet; recommended for SWE and autonomous agents; Flash-first cadence</td></tr>
-        </table>
+        </table></div>
         <p><em>*Introductory rate through December 31, 2026; $1.50/$7.50 thereafter. Gemini 3.8 Flash context window not stated in launch coverage as of Sept 2, 2026.</em></p>
         <p><strong>Google's countermove landed the next day.</strong> On September 2, 2026 — the day after Fable 5.1 — Google released <a href="/gemini-3-8-flash-pricing-coding-agents">Gemini 3.8 Flash</a>, its third Flash in six weeks, at $0.75/$3.75 per 1M through December 31 (introductory). Google calls it its best reasoning and coding model yet, says it tops the DeepSWE v1.1 leaderboard at a fraction of the cost of larger frontier models, and recommends it for software engineering and autonomous agent workloads — while Pro releases remain paused since early 2026. That makes the "cheapest frontier coding model 2026" conversation a four-way race (Fable 5.1, Sol, Grok 4.6, Gemini 3.8 Flash), and it is exactly why <a href="/ai-agent-workload-routing">workload routing</a>, not brand loyalty, is the agency skill that matters.</p>
         <p>On Anthropic's published benchmarks, Fable 5.1 leads the coding pack: <strong>Terminal-Bench 4.0 at 55.8%</strong> (Fable 5: 42.0%, Opus 5: 52.3%, GPT-5.6 Sol: 37.3%), <strong>CursorBench 3.2.0 at 73.4%</strong> (Opus 5: 70.0%, Sol: 67.2%), and <strong>Terminal-Bench-Science 0.1 at 52.6%</strong> (Opus 5: 29.0%, Sol: 22.4%). Fable 5.1 is the strongest argument yet for the <em>"best AI model for coding agents 2026"</em> label — but the right pick still depends on workload (see our <a href="/ai-coding-agent-pricing">AI coding agent pricing guide</a> and <a href="/openai-vs-anthropic-business-2026">OpenAI vs Anthropic for business</a>, plus the <a href="/gpt-6-astra-computer-use-agencies">GPT-6 Astra computer-use comparison</a>, for the full routing picture). Model your own per-task costs in the <a href="https://aiagencycalculator.com/ai-agent-api-cost-calculator" rel="noopener">AI agent API cost calculator</a>.</p>

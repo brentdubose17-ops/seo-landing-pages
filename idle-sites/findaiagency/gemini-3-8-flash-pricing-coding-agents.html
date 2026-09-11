@@ -98,6 +98,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -118,7 +121,7 @@
 
         <h2>Gemini 3.8 Flash vs Claude Fable 5.1 vs GPT-5.6 Sol: the 2026 comparison</h2>
         <p>Here is the field agencies are actually routing between as of September 2, 2026, with pricing verified against official sources and the model pages on this site:</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Model</th><th>Released</th><th>Input / 1M</th><th>Output / 1M</th><th>Positioning</th></tr>
             </thead>
@@ -129,7 +132,7 @@
                 <tr><td>Gemini 3.7 Flash</td><td>Aug 13, 2026</td><td>$0.75*</td><td>$3.75*</td><td>Prior workhorse; Google price-matched 3.6 Flash to the same intro rate</td></tr>
                 <tr><td>Grok 4.6</td><td>Aug 12, 2026</td><td>$2</td><td>$6</td><td>SpaceXAI 500K-context model; Artificial Analysis scores it equal to GPT-5.6 Sol at 50%+ lower input price</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p><em>*Introductory rate through December 31, 2026; $1.50/$7.50 thereafter (Ars Technica; Thurrott; 9to5Google). **Promotional through at least November 21, 2026; expected (not guaranteed) to revert to $5/$30 after the window.</em></p>
 
         <p><strong>On Google's reported benchmarks, 3.8 Flash is a frontier-adjacent coding model at a workhorse price.</strong> Google says 3.8 Flash is at the <strong>top of the DeepSWE v1.1 leaderboard</strong> for long-horizon software engineering, outperforming most larger frontier models at "a fraction of the cost," and that it beats 3.7 Flash and other frontier models on finance and legal agent benchmarks (Vals Finance Agent V2, Harvey's Legal Agent Benchmark) while scoring <strong>54.9% on HLE-Verified</strong> for multi-step reasoning (9to5Google). The gains over 3.7 Flash are marginal in most tests but larger in coding evaluations, and Google attributes the jump to a design choice — "3.8 Flash works harder," running extra reasoning steps and iterative tool calls at higher effort levels (Ars Technica; 9to5Google). Ars also notes 3.8 Flash improves on 3.7 Flash in the OSWorld-2.0 computer-use test but still trails Claude Opus there.</p>

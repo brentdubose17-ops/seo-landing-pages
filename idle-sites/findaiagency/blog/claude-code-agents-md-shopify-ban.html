@@ -111,6 +111,9 @@
         .related li{margin-bottom: 10px;}
         footer{margin-top: 40px;padding: 24px 0 0;text-align: center;font-size: 0.85rem;color: #888;border-top: 1px solid #eee;}
         @media (max-width: 600px){body{padding: 16px 12px;}article{padding: 24px 16px;}h1{font-size: 1.6rem;}}
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -149,12 +152,12 @@
         <p>The supported-agents list on agents.md is long: Codex, Cursor, Gemini CLI, GitHub Copilot, Aider, Devin, Windsurf, Junie, Jules, Amp, and more. Claude Code is not on it.</p>
 
         <h2>AGENTS.md vs CLAUDE.md vs .agents/skills</h2>
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>File / convention</th><th>What it is</th><th>Who reads it</th><th>Status</th></tr>
             <tr><td>AGENTS.md</td><td>Open, tool-neutral instructions for coding agents ("README for agents")</td><td>Codex, Cursor, Gemini CLI, Copilot, Aider, Devin, Windsurf, and more</td><td>Open standard, AAIF stewarded</td></tr>
             <tr><td>CLAUDE.md</td><td>Claude Code's native memory / instructions file</td><td>Claude Code only</td><td>Vendor-specific</td></tr>
             <tr><td>.agents/skills</td><td>Cross-tool skills directory convention (Lütke's shorthand)</td><td>Codex CLI and other tools</td><td>Convention; not part of the agents.md spec</td></tr>
-        </table>
+        </table></div>
         <p>Two notes. First, .agents/skills is Lütke's shorthand for the skills-directory convention that Codex CLI and others use; it is not documented on the agents.md spec site, and Claude Code's analog is .claude/skills. Second, the practical difference agencies care about: AGENTS.md is portable across tools, CLAUDE.md is not. If a repo standardizes on AGENTS.md, every agent that reads it works from the same instructions.</p>
 
         <h2>The split-brain problem, explained</h2>

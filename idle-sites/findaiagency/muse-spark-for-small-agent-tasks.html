@@ -109,6 +109,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -129,7 +132,7 @@
         <p><strong>Not proven yet:</strong> there is no independent speed or latency benchmark for Muse Spark — Artificial Analysis lists <em>Speed: N/A</em> — and no published small-task evals specific to the model. "Fast for small tasks" is a practitioner report, not a benchmark. Treat it as dated attribution, not measured throughput.</p>
 
         <h2>What the pricing table says about routing</h2>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Model</th><th>Intelligence index*</th><th>Price in/out ($/M)</th><th>AA cost/task</th><th>Speed (tok/s)</th></tr>
             </thead>
@@ -143,7 +146,7 @@
                 <tr><td>Gemini 3.6 Flash</td><td>52</td><td>1.50 / 7.50</td><td>$0.56</td><td>213</td></tr>
                 <tr><td>DeepSeek V4 Flash 0731 <span style="font-size:0.8rem;color:#888;">(pre-hike rate)*</span></td><td>52</td><td>—</td><td>$0.03</td><td>106</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p><em>*Artificial Analysis Intelligence Index (9 evals), Aug 2026. Cost-per-task figures are reference points, not quotes — no independent speed benchmark exists for Muse Spark yet, so size pilot workloads on your own data.</em></p>
         <p><em>**Gemini 3.8 Flash launched Sept 2, 2026 at the same introductory rate Google set for 3.7 Flash: $0.75/1M input and $3.75/1M output through December 31, 2026, then $1.50/$7.50. Gemini 3.7 Flash launched Aug 13, 2026 at that intro rate — exactly half of Gemini 3.6 Flash's launch price — with Google price-matching 3.6 Flash to the same intro rate through Dec 31, 2026. Artificial Analysis had not published an Intelligence Index, cost-per-task, or speed figure for 3.8 Flash as of launch day; Google-reported DeepSWE v1.1 and HLE-Verified figures had not been independently verified (<a href="https://9to5google.com/2026/09/02/gemini-3-8-flash-launch/" rel="noopener">9to5Google</a>; <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/" rel="noopener">Google blog, 3.7 Flash</a>; <a href="https://ai.google.dev/gemini-api/docs/pricing" rel="noopener">Gemini API pricing docs</a>).</em></p>
         <p><em>***Claude Sonnet 5 (Anthropic) API pricing is <strong>PERMANENT</strong>: $2.00 per 1M input tokens / $10.00 per 1M output tokens, made permanent by Anthropic on Aug 10, 2026. The previously scheduled Sept 1, 2026 increase to $3/$15 was <strong>CANCELLED</strong> — there is no scheduled price change pending. Cache: $0.20 per 1M cached input; cache write $2.50 (5m) / $4 (1h) per 1M. API-pricing change only; subscription prices unchanged (<a href="https://www.anthropic.com/news/claude-sonnet-5" rel="noopener">Anthropic announcement</a>; <a href="https://platform.claude.com/docs/en/about-claude/pricing" rel="noopener">Claude Platform pricing docs</a>).</em></p>
