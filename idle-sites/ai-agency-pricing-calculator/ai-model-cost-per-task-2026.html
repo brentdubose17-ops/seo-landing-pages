@@ -118,6 +118,9 @@
         .related ul { list-style: none; padding: 0; }
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        a, p, li, td, th { overflow-wrap: anywhere; }
+        .tw { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+        .tw table { margin: 0; min-width: 100%; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } }
     </style>
 </head>
@@ -134,15 +137,18 @@
         <p><strong>Capacity context:</strong> Anthropic's reported <strong>$45 billion Nscale commitment</strong> and its <strong>SpaceX Colossus 1 compute deal</strong> signal real Claude capacity growth — but also pricing pressure ahead of the record IPO. For the full breakdown, see <a href="https://findaiagency.com/anthropic-45b-compute-deal" rel="noopener">Anthropic's $45B Nscale compute deal: what it means for Claude capacity and pricing</a>.</p>
 
         <h2>Published per-task reference points (Artificial Analysis, Aug 2026)</h2>
+        <div class="tw">
         <table>
             <tr><th>Model</th><th>Reference cost per task</th><th>Source</th></tr>
             <tr><td>Meta Muse Spark 1.2</td><td>~$0.40</td><td>Artificial Analysis (Aug 2026)</td></tr>
             <tr><td>Claude Opus 5</td><td>~$2.34</td><td>Artificial Analysis (Aug 2026)</td></tr>
             <tr><td>DeepSeek V4 Flash (pre-hike)</td><td>~$0.03</td><td>Artificial Analysis (Aug 2026; pre-Aug 16 rates)</td></tr>
         </table>
+        </div>
         <p>These are vendor-independent benchmark figures, not our own measurements. Note the DeepSeek row is the <strong>pre-hike</strong> reference — after the <a href="/deepseek-v4-api-price-increase-2026">Aug 16, 2026 increase</a>, the per-task cost for DeepSeek V4 depends heavily on peak vs off-peak and cache hits.</p>
 
         <h2>Current per-1M rates (Aug 28, 2026) — the inputs for your own math</h2>
+        <div class="tw">
         <table>
             <tr><th>Model</th><th>Input ($/1M)</th><th>Output ($/1M)</th><th>Notes</th></tr>
             <tr><td>Qwen 3.8 Flash (Alibaba)</td><td>$0.15</td><td>$0.47</td><td>Open-weight 125B MoE, ~6B active (~95% sparsity), multimodal; qwen-community-1.0 license; cache read $0.016; 1M context (YaRN); verified Aug 27–28, 2026</td></tr>
@@ -159,10 +165,12 @@
             <tr><td>GPT-5.6 Sol</td><td>$4.00</td><td>$20.00</td><td>Official OpenAI promo rate (Aug 21 – Nov 21, 2026); cached input $0.40; previously $5/$30</td></tr>
             <tr><td><strong>GPT-6 Astra</strong></td><td><strong>$10.00</strong></td><td><strong>$50.00</strong></td><td><strong>NEW Sept 3, 2026 — OpenAI flagship; $1 cached input / $12.50 cache writes; prompts &gt;272K input reprice the full request to $20/$75 per 1M; 1.05M context</strong></td></tr>
         </table>
+        </div>
         <p><strong>OpenAI's discount experiment (Jul 27 – Aug 14, 2026):</strong> when Terra and Luna were discounted 50% via OpenRouter, daily Terra token usage rose <strong>5.6x</strong> and Luna <strong>13.8x</strong>, while Sol at list price rose only <strong>1.1x</strong> (control); ~1/3 of users who tried a discounted model kept using it after expiry. Terra/Luna went from 0.7% to 7.8% of OpenRouter tokens. For the agency-pricing breakdown, see <a href="/openai-discounts-token-usage">OpenAI's discount experiment: what 13.8x usage growth means for agency pricing</a>.</p>
 
         <h2>Cost per task on a typical 10K-in / 2K-out workload</h2>
         <p>Illustrative math (input tokens ÷ 1M × input price + output tokens ÷ 1M × output price), not a benchmark claim — your real token counts will differ:</p>
+        <div class="tw">
         <table>
             <tr><th>Model</th><th>Input cost</th><th>Output cost</th><th>Total per task</th></tr>
             <tr><td>Qwen 3.8 Flash</td><td>$0.0015</td><td>$0.0009</td><td><strong>~$0.0024</strong></td></tr>
@@ -177,6 +185,7 @@
             <tr><td>GPT-5.6 Sol</td><td>$0.040</td><td>$0.040</td><td><strong>~$0.080</strong></td></tr>
             <tr><td><strong>GPT-6 Astra</strong></td><td><strong>$0.100</strong></td><td><strong>$0.100</strong></td><td><strong>~$0.200</strong> — 2.5x Sol on this workload; over 272K input the full request reprices to $20/$75 per 1M</td></tr>
         </table>
+        </div>
         <p>At 10K tasks/month, that spread is <strong>$24/mo (Qwen 3.8 Flash) to $2,000/mo (GPT-6 Astra)</strong> on identical volume — GPT-6 Astra (Sept 3, 2026) at $10/$50 per 1M bills ~$0.20/task vs GPT-5.6 Sol's ~$0.08 (Sol's Aug 21 promo cut $5/$30 → $4/$20 dropped Sol from $1,100 to $800/mo on this volume). This is why model routing is a margin lever, not a footnote. The demand side of those prices is firming up too: Anthropic's reported <a href="/anthropic-65b-run-rate-agency-pricing">$65B run rate</a> signals a vendor with real pricing power behind Claude's per-token rates.</p>
 
         <h2>What the 2026 data says about routing</h2>

@@ -120,6 +120,9 @@
         .related ul { list-style: none; padding: 0; }
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        a, p, li, td, th { overflow-wrap: anywhere; }
+        .tw { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+        .tw table { margin: 0; min-width: 100%; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
     </style>
 </head>
@@ -149,6 +152,7 @@
         <p>The surprise is the pattern, not the price level. One Cursor user's 70-day workflow averaged <strong>$0.06 per request</strong>, then produced a single <strong>$2.78</strong> request and projected to about $416 a month. GitHub Copilot users on metered billing reported <strong>$6 on one feature request</strong> and <strong>8% of a monthly quota burned in two hours</strong>; legacy multipliers price GPT-5.5 at 57x a base request. OpenClaw users hit <strong>$141 overnight</strong> from a misconfigured heartbeat, and <strong>$800 in a month</strong> on setups they considered normal.</p>
 
         <h2>The blowups, priced</h2>
+        <div class="tw">
         <table>
             <thead>
                 <tr><th>Scenario</th><th>Reported cost</th><th>What it shows</th></tr>
@@ -162,6 +166,7 @@
                 <tr><td>OpenClaw misconfigured heartbeat</td><td>$141 overnight; $800/month</td><td>Ambient background activity bills like full calls</td></tr>
             </tbody>
         </table>
+        </div>
 
         <p>The inverse case is worth pricing too: the cheapest line item can hide the most expensive one. Hold
         the voice layer fixed at a 4:00 session ($0.20 a call) and point delegation at GPT-6 Astra with 10 turns

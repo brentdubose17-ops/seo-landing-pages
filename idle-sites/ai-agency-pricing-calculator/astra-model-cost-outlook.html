@@ -112,6 +112,9 @@
         .assumption-note strong { color: #334155; }
         .placeholder-row td { background: #fffbf0; color: #92400e; font-style: italic; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        a, p, li, td, th { overflow-wrap: anywhere; }
+        .tw { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+        .tw table { margin: 0; min-width: 100%; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } table { font-size: 0.8rem; } th, td { padding: 8px 6px; } }
     </style>
 </head>
@@ -156,6 +159,7 @@
 
         <h2>Cost-comparison table: Astra vs the 2026 frontier</h2>
         <p>Shipped-model rows are sourced from our own pricing pages (<a href="/gpt-5.6-sol-api-pricing" data-umami-event="click_to_gpt56_sol_pricing">GPT-5.6 Sol API pricing</a>, <a href="/claude-pricing" data-umami-event="click_to_claude_pricing">Claude pricing</a>) and OpenAI's pricing page as of August 31, 2026. The Astra row is a speculative placeholder.</p>
+        <div class="tw">
         <table>
             <thead>
                 <tr><th>Model</th><th>Vendor</th><th>Known / estimated pricing (per 1M in / out, list)</th><th>Coding benchmark</th><th>Agent features</th><th>Availability</th></tr>
@@ -203,6 +207,7 @@
                 </tr>
             </tbody>
         </table>
+        </div>
 
         <h3>How to read this table (speculative methodology)</h3>
         <p>The Astra row is a <strong>placeholder, not a price</strong>. We built it from the leak evidence (TestingCatalog's report of the mozaik-alpha-fdm outputs and "Max effort" token burn), the Kingy AI rumor-tracker caveats (leaks unverified, no model card, no catalog entry), the $2,000 counterfactual from OpenAI's Aug 1 post, and the Cursor bar from OpenAI's Aug 28 decision. Every shipped-model row sources from our own pricing pages and OpenAI's pricing page. Nothing in the Astra row should be quoted to a client as a rate. The moment OpenAI publishes a model card or API id, this row gets real numbers — see the update checklist below.</p>
