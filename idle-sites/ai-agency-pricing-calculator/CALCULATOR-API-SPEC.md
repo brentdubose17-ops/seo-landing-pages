@@ -816,6 +816,85 @@ maths in sync, and the button/`onchange` handlers recompute visibly.
   --files=index.html --verify-live
 ```
 
+## 12. Token Waste / Context Governance factor (NEW 2026-09-11)
+
+Section id `#token-governance-estimator` on `index.html`, immediately after
+`#inference-margin-estimator`. Model file: `token-governance-model.js` (UMD, loaded by
+`<script src="/token-governance-model.js">`; exposes `window.TokenGovernance`).
+Spec: `SPEC-token-waste-context-governance-factor.md` (kanban t_8813edb2);
+shipped by kanban t_1cb93770 with the page `/why-ai-bills-rise-when-prices-fall/`.
+
+**One-line purpose:** price the bill, not the token — given a fixed business workload,
+compute the monthly token bill after context re-reads and wasted tokens, and show that the
+unit price fell 20-33% while the bill rose anyway.
+
+### Inputs (12)
+
+| id | meaning | default | range |
+|---|---|---|---|
+| `twTasks` | agent tasks completed per month | 10000 | 1 - 10,000,000 |
+| `twContext` | context tokens per model call | 150000 | 1 - 2,000,000 |
+| `twOutput` | output tokens per call | 8000 | 1 - 500,000 |
+| `twCalls` | calls per task (context re-read multiplier) | 3.0 | 1 - 20, step 0.1 |
+| `twWaste` | wasted-token rate, % of paid tokens with no accepted output | 25 | 0 - 60 |
+| `twPrune` | context pruning / compaction on | off | — |
+| `twSurcharge` | apply the >272K long-context pricing | on | — |
+| `twInPrice` / `twOutPrice` | $ per 1M (promo sheet) | 4.00 / 20.00 | 0 - 100 / 0 - 200 |
+| `twCacheShare` | share of re-reads served from cache | 0 | 0 - 95 |
+| `twAgents` | agents running the workload | 5 | 1 - 1,000 |
+| `twCap` | monthly spend cap per agent ($, 0 = uncapped) | 1000 | 0 - 1,000,000 |
+
+Constants (not UI inputs): `longThreshold = 272000`, surcharge 2x input / 1.5x output,
+cached input 10% of input, cache write 1.25x, prior (pre-cut / post-promo) sheet $5.00/$30.00,
+`promoEndsOn = 2026-11-21`.
+
+### Formula
+
+```
+growth           = prune ? 1 : (calls + 1) / 2
+per-call input   = context * growth
+cliff active     = applySurcharge && per-call input > 272000     -> 2x in / 1.5x out for the FULL request
+billed input     = tasks * context * growth * calls / (1 - waste)
+billed output    = tasks * output * calls / (1 - waste)
+monthly cost     = billed in * effective in rate / 1e6 + billed out * effective out rate / 1e6
+```
+
+`waste` is the share of **paid** tokens, so the overhead multiplier is `1 / (1 - W)` — at
+25% waste you pay **1.33x**, not 1.25x. Do not flip this convention without changing the label.
+
+### Outputs (17)
+
+`monthlyCost`, `costPerTask`, `floorCostBase` (per-token estimate), `floorCostTriggered`,
+`governancePremium`, `governanceMultiple`, `reReadCost`, `wasteCost`, `surchargeCost`,
+`monthlyCostNoSurcharge`, `billedInputTokens` / `billedOutputTokens`, `reReadInputTokens`,
+`wasteTokensTotal`, `sensitivityPerPct`, `marginalCallCost`, `promoDelta` / `promoDeltaPct`,
+`breachDay`, plus the day-1.4/15.8 budget-breach inputs. DOM ids: `tw-cost`, `tw-cost-sub`,
+`tw-floor`, `tw-floor-sub`, `tw-premium`, `tw-reread`, `tw-waste`, `tw-surcharge`,
+`tw-in-tokens`, `tw-out-tokens`, `tw-multiplier`, `tw-sensitivity`, `tw-promo`, `tw-breach`,
+`tw-prior`, `tw-price-effect`, `tw-volume-effect`, `tw-net-change`, `tw-note`.
+
+### API surface
+
+| surface | contract |
+|---|---|
+| `TokenGovernance.compute(inputs)` | pure; returns the 17 outputs; call `validate` first |
+| `TokenGovernance.compare(baselineInputs, actualInputs)` | `{priceEffect, volumeEffect, totalChange, check}` with `check === 0` |
+| `TokenGovernance.PRESETS.governed` / `.ungoverned` | 1.2 calls / 5% / prune, and 3 calls / 25% / no prune |
+| `TokenGovernance.MODEL` | the verified rate table incl. `promoEndsOn` |
+| `?tw=governed` / `?tw=ungoverned` | applies a preset on load (deep-linkable from the article) |
+| `window.__twLastResult` | last computed result object (read by tests) |
+
+Umami event `token_governance_estimated` fires on the non-silent path only. Never `alert()`
+on first paint: `calculateTokenGovernance(true)` runs silent on `DOMContentLoaded`.
+
+### Tests
+
+`node tests/token-governance-verify.mjs` → **123 assertions, exit 0** (the three
+decompositions sum exactly: `floorCostTriggered + reReadCost + wasteCost = monthlyCost`,
+`minimum + re-read + waste tokens = billed tokens`, `priceEffect + volumeEffect = totalChange`).
+Local headless check: defaults render `$105,600.00` ungoverned and `$9,600.00` governed, no
+overflow at 320/360/390/414 px.
+
 ## Changelog
 
 - **2026-09-10** — GPT-Live-1 calculator **shareable `#p=` deep links fixed**

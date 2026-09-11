@@ -1635,6 +1635,193 @@
     </div>
   </section>
 
+
+  <!-- Token Waste & Context Governance factor (card t_8813edb2 / t_1cb93770) -->
+  <section class="section" id="token-governance-estimator">
+    <div class="section-title">Token Waste &amp; <span class="g">Context Governance</span></div>
+    <div class="card">
+      <div class="card-title">🔥 Why the bill rises while the price falls</div>
+      <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:20px; line-height:1.7;">
+        GPT-5.6 Sol is <strong style="color:var(--white)">$4 per 1M input / $20 per 1M output</strong> — a
+        <strong style="color:var(--white)">20% cut on input and a 33% cut on output</strong>, promotional at least
+        through <strong style="color:var(--white)">November 21, 2026</strong>. Prompts above
+        <strong style="color:var(--white)">272K input tokens bill at 2× input and 1.5× output for the full
+        request</strong>. Meanwhile agents re-send context on every call and retry loops burn tokens that produce
+        nothing. This estimator prices the bill instead of the token: same tasks, two governance regimes.
+        The arithmetic and its sources: <a href="/why-ai-bills-rise-when-prices-fall/" style="color:var(--cyan-light);">why AI bills rise when prices fall</a>.
+      </p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="twScenario">Governance Scenario</label>
+          <select id="twScenario" onchange="applyTwPreset()">
+            <option value="ungoverned" selected>Ungoverned — unbounded loops, no pruning, no caps</option>
+            <option value="governed">Governed — compaction on, capped loops, spend alerts</option>
+            <option value="custom">Custom — enter your own numbers</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="twTasks">Agent Tasks Completed per Month</label>
+          <input type="number" id="twTasks" min="1" max="10000000" value="10000" step="100" oninput="markTwCustom()" />
+        </div>
+        <div class="form-group">
+          <label for="twContext">Context Tokens per Model Call</label>
+          <input type="number" id="twContext" min="1" max="2000000" value="150000" step="1000" oninput="markTwCustom()" />
+          <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:4px;line-height:1.5;">
+            System prompt + tool instructions + retrieved context. The work is held constant — this is the business workload.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="twOutput">Output Tokens per Call</label>
+          <input type="number" id="twOutput" min="1" max="500000" value="8000" step="500" oninput="markTwCustom()" />
+        </div>
+        <div class="form-group">
+          <label for="twCalls">Calls per Task (Context Re-Read Multiplier)</label>
+          <input type="number" id="twCalls" min="1" max="20" value="3" step="0.1" oninput="markTwCustom()" />
+          <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:4px;line-height:1.5;">
+            How many times one task re-sends its context. Ungoverned agents loop; 3× is the common blow-up. No vendor publishes an industry average, so the default is <strong>illustrative</strong>.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="twWaste">Wasted-Token Rate (% of Paid Tokens with No Accepted Output)</label>
+          <input type="number" id="twWaste" min="0" max="60" value="25" step="1" oninput="markTwCustom()" />
+          <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:4px;line-height:1.5;">
+            At 25% you pay <strong>1.33×</strong> for the same accepted work. Illustrative default.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="twPrune"><input type="checkbox" id="twPrune" onchange="markTwCustom()" /> Context pruning / compaction on</label>
+        </div>
+        <div class="form-group">
+          <label for="twSurcharge"><input type="checkbox" id="twSurcharge" checked onchange="markTwCustom()" /> Apply OpenAI's long-context pricing above 272K input tokens</label>
+        </div>
+        <div class="form-group">
+          <label for="twInPrice">Input Price ($ / 1M tokens)</label>
+          <input type="number" id="twInPrice" min="0" max="100" value="4.00" step="0.01" oninput="markTwCustom()" />
+        </div>
+        <div class="form-group">
+          <label for="twOutPrice">Output Price ($ / 1M tokens)</label>
+          <input type="number" id="twOutPrice" min="0" max="200" value="20.00" step="0.01" oninput="markTwCustom()" />
+        </div>
+        <div class="form-group">
+          <label for="twCacheShare">Share of Re-Reads Served from Cache (%)</label>
+          <input type="number" id="twCacheShare" min="0" max="95" value="0" step="5" oninput="markTwCustom()" />
+          <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:4px;line-height:1.5;">
+            Optional. Cached input bills at $0.40/1M (10%) with writes at $5.00/1M (1.25×) — OpenAI's published rates. Needs a stable prefix.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="twAgents">Agents Running This Workload</label>
+          <input type="number" id="twAgents" min="1" max="1000" value="5" step="1" oninput="markTwCustom()" />
+        </div>
+        <div class="form-group">
+          <label for="twCap">Monthly Spend Cap per Agent ($, 0 = uncapped)</label>
+          <input type="number" id="twCap" min="0" max="1000000" value="1000" step="100" oninput="markTwCustom()" />
+        </div>
+      </div>
+      <button class="btn-calculate" onclick="calculateTokenGovernance()">🔥 Price the Bill, Not the Token</button>
+      <div id="token-governance-results" style="margin-top:20px;">
+        <div class="results-grid">
+          <div class="result-card primary">
+            <div class="result-label">Governance-Adjusted Monthly Token Cost</div>
+            <div class="result-value" id="tw-cost">$105,600.00</div>
+            <div class="result-sub" id="tw-cost-sub">per completed task: $10.56 · 13.89× the per-token estimate</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Per-Token Estimate (one clean pass)</div>
+            <div class="result-value" id="tw-floor">$7,600.00</div>
+            <div class="result-sub" id="tw-floor-sub">10,000 tasks × 150K context + 8K output at $4/$20</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Governance Premium</div>
+            <div class="result-value" id="tw-premium">$98,000.00</div>
+            <div class="result-sub" id="tw-premium-sub">what governance would recover</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Re-Read Premium</div>
+            <div class="result-value" id="tw-reread">$64,800.00</div>
+            <div class="result-sub" id="tw-reread-sub">7,500.0M input tokens re-sent</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Wasted Spend</div>
+            <div class="result-value" id="tw-waste">$26,400.00</div>
+            <div class="result-sub" id="tw-waste-sub">3,000.0M tokens, 25% of what you pay for</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Long-Context Cliff (&gt;272K)</div>
+            <div class="result-value" id="tw-surcharge">$51,200.00</div>
+            <div class="result-sub" id="tw-surcharge-sub">every billed token at 2× input / 1.5× output</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Billed Tokens / Month</div>
+            <div class="result-value" id="tw-in-tokens">12000.0M</div>
+            <div class="result-sub" id="tw-out-tokens">320.0M output</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Governance Multiple</div>
+            <div class="result-value" id="tw-multiplier">13.89×</div>
+            <div class="result-sub" id="tw-multiplier-sub">vs the per-token estimate</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Cost per +1pt of Token Waste</div>
+            <div class="result-value" id="tw-sensitivity">$1,408.00</div>
+            <div class="result-sub" id="tw-sensitivity-sub">one more call per task: $59,280.00</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Promo-Expiry Exposure (Nov 22, 2026)</div>
+            <div class="result-value" id="tw-promo">+$28,800.00</div>
+            <div class="result-sub" id="tw-promo-sub">same workload on the $5/$30 list price (+27.3%)</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Monthly Budget Exhausted</div>
+            <div class="result-value" id="tw-breach">day 1.4</div>
+            <div class="result-sub" id="tw-breach-sub">5 agents × $1,000 cap vs $105,600/month</div>
+          </div>
+        </div>
+        <div class="results-grid" style="margin-top:16px;">
+          <div class="result-card">
+            <div class="result-label">Governed, pre-cut ($5/$30)</div>
+            <div class="result-value" id="tw-prior">$12,505.26</div>
+            <div class="result-sub" id="tw-prior-sub">same workload, same behaviour, list sheet</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Price Effect (the Sol cut)</div>
+            <div class="result-value" id="tw-price-effect">-$2,905.26</div>
+            <div class="result-sub" id="tw-price-effect-sub">at governed volume — negative means the cut saved money</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Volume + Governance Effect</div>
+            <div class="result-value" id="tw-volume-effect">+$96,000.00</div>
+            <div class="result-sub" id="tw-volume-effect-sub">the behaviour change at these inputs</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Net Month-over-Month Change</div>
+            <div class="result-value" id="tw-net-change">+$93,094.74</div>
+            <div class="result-sub" id="tw-net-change-sub">price effect + volume effect, exactly</div>
+          </div>
+        </div>
+        <div class="insight-box roi">
+          <div class="box-label">📌 How to read this</div>
+          <div class="box-text" id="tw-note"></div>
+        </div>
+        <p style="margin-top:12px;">
+          <button class="btn-calculate" style="font-size:0.85rem;padding:8px 16px;" onclick="copyTwArithmetic()">📋 Copy the arithmetic</button>
+        </p>
+      </div>
+      <p style="color:var(--text-secondary); font-size:0.78rem; margin-top:16px; line-height:1.7;">
+        <strong style="color:var(--white)">Sources &amp; assumptions.</strong> Prices, the 20%/33% cut, the 272K long-context
+        rule, the 1.25× cache-write rate and the Nov 21, 2026 promo expiry are OpenAI's own model and pricing pages,
+        read 2026-09-11. The $5.00/$30.00 list rate is from AWS's Bedrock price-reduction notice (2026-08-21). Re-read
+        depth and waste rate have <strong style="color:var(--white)">no published industry average</strong> — those defaults
+        are illustrative; the prices and the cliff rule are not. This covers API consumption: if your team uses Sol
+        through ChatGPT seats, the cut does not lower your bill. Fault, context and agentic-loop evidence:
+        <a href="https://www.bain.com/insights/ai-in-telecom-the-opex-reckoning/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Bain (2026-09-10)</a>,
+        <a href="https://www.ibm.com/think/insights/ai-agent-token-spend-management" target="_blank" rel="noopener" style="color:var(--cyan-light);">IBM (2026-09-10)</a>,
+        <a href="https://azure.microsoft.com/en-us/blog/the-economics-of-agent-optimization-how-ai-agent-governance-controls-cost-and-proves-roi/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Microsoft Azure (2026-09-10)</a>,
+        <a href="https://www.unite.ai/llm-token-waste-agentic-ai-context-governance-costs/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Unite.AI (2026-09-11)</a>.
+      </p>
+    </div>
+  </section>
+
   <!-- Agent Failure & Retry Cost Estimator -->
   <section class="section" id="failure-estimator">
     <div class="section-title">Agent Failure &amp; <span class="g">Retry Cost</span> Estimator</div>
@@ -2301,6 +2488,8 @@
         <li><a href="https://cloud.google.com/api-gateway/docs/quotas" target="_blank" rel="noopener" style="color:var(--cyan-light);">API Gateway quotas and limits</a></li>
       </ul>
       <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:10px;">Changelog</div>
+      <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-09-11:</strong> Added the <strong>Token Waste &amp; Context Governance factor</strong> (<a href="#token-governance-estimator" style="color:var(--cyan-light);">#token-governance-estimator</a> — spec kanban t_8813edb2, ship t_1cb93770) and the analysis page <a href="/why-ai-bills-rise-when-prices-fall/" style="color:var(--cyan-light);">Why is my AI bill going up when model prices are falling?</a>. It prices the <em>bill</em>, not the token: <code>billed tokens = useful tokens / (1 − waste)</code>, <code>per-call input = context × (calls + 1) / 2</code> while nothing is pruned, and OpenAI's own rule that <strong>prompts above 272K input tokens bill at 2× input / 1.5× output for the full request</strong>. Headline, on a held-constant workload of 10,000 tasks a month at 150K context and 8K output per call: <strong>$105,600/month ungoverned against $9,600/month governed</strong> — 11.0×, or <strong>$10.56 against $0.96 per completed task</strong> — while the GPT-5.6 Sol rate stays at the promotional <strong>$4.00/$20.00 per 1M</strong> (a 20% input / 33% output cut, promotional at least through <strong>November 21, 2026</strong>). On the same window the price effect is <strong>−$2,905.26/month</strong> and the volume + governance effect is <strong>+$96,000.00/month</strong>; the long-context cliff alone is $51,200.00 of the ungoverned bill. Model: <code>token-governance-model.js</code>, loaded as its own script, 123 assertions passing; re-read depth and waste rate defaults are illustrative (no vendor publishes an average), every price and the 272K rule are OpenAI's. Umami event <code>token_governance_estimated</code>. Live: publisher check 88 rows compared / 0 mismatches. Sources: <a href="https://developers.openai.com/api/docs/models/gpt-5.6-sol" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI — GPT-5.6 Sol model page</a> · <a href="https://developers.openai.com/api/docs/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">OpenAI pricing</a> · <a href="https://aws.amazon.com/about-aws/whats-new/2026/08/bedrock-openai-gpt-56-sol-reduced-pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">AWS Bedrock notice (2026-08-21)</a> · <a href="https://www.bain.com/insights/ai-in-telecom-the-opex-reckoning/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Bain (2026-09-10)</a> · <a href="https://www.ibm.com/think/insights/ai-agent-token-spend-management" target="_blank" rel="noopener" style="color:var(--cyan-light);">IBM (2026-09-10)</a> · <a href="https://azure.microsoft.com/en-us/blog/the-economics-of-agent-optimization-how-ai-agent-governance-controls-cost-and-proves-roi/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Microsoft Azure (2026-09-10)</a> · <a href="https://www.unite.ai/llm-token-waste-agentic-ai-context-governance-costs/" target="_blank" rel="noopener" style="color:var(--cyan-light);">Unite.AI (2026-09-11)</a> · <a href="https://www.consulting.us/news/13938/ai-spending-is-booming-but-profits-do-not-always-follow-mckinsey-report" target="_blank" rel="noopener" style="color:var(--cyan-light);">Consulting.us / McKinsey (2026-09-10)</a>.
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
         <strong>2026-09-11:</strong> Added <strong>DeepSeek V4.1-Flash</strong> as a selectable model strategy plus a dedicated <strong>model-row table and worked example</strong> (<a href="#deepseek-v41-flash" style="color:var(--cyan-light);">#deepseek-v41-flash</a> — kanban t_0371431a, from the verified fact sheet t_16f75d78). DeepSeek launched V4.1-Flash on <strong>Sept 10, 2026</strong> under the API name <code>deepseek-flash</code>: 552B MoE (8B prefill / 16B decode), <strong>native vision</strong>, <strong>1M-token context</strong>, MIT weights, and off-peak <strong>$0.15 input / $0.60 output / $0.003 cached input per 1M</strong> with the peak band exactly 2× (<strong>$0.30 / $1.20 / $0.006</strong>; peak = Mon–Fri 01:00–04:00 and 06:00–10:00 UTC). That is a <strong>100× spread</strong> between the peak input rate and the off-peak cached-input rate on the same model — the row exists to show it, so it is rendered from the calculator's own <code>DS41_PRICES</code> data rather than typed into markup. Modeling: <code>MODEL_COMPUTE_FACTOR.ds41flash = 0.84</code> / <code>MODEL_MARGIN_BONUS.ds41flash = +8</code> — the cheapest per-token API factor on this page (4.4× below V4 Pro off-peak on cache reads, 5.3× below the previous lowest cache read at $0.016); <code>local</code> keeps the per-workload crown and the #muse-glimmer-local text now states the ranking explicitly. <strong>Legacy rows carry visible badges:</strong> <code>deepseek-v4-flash</code> and <code>deepseek-v4-flash-vision-exp</code> are retired IDs that are <strong>aliased</strong> (still accepted, served by V4.1-Flash, billed at the Flash price), and <code>deepseek-v4-pro</code> is <strong>NOT retired</strong> — the announced 04:00 UTC Sept 14 reroute to V4.1-Flash was <strong>WITHDRAWN by DeepSeek on Sept 11</strong>, so its row reads "retirement announced 2026-09-10, withdrawn 2026-09-11" and no migration deadline is published. Also updated the two stale "lowest cache-read" claims (the DeepSeek price-increase banner text and the local-vs-API ranking sentence). Sources: <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">DeepSeek API pricing</a> · <a href="https://www.deepseek.com/en/news/deepseek-v4-1-flash/" target="_blank" rel="noopener" style="color:var(--cyan-light);">DeepSeek news — V4.1-Flash launch</a> · <a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash" target="_blank" rel="noopener" style="color:var(--cyan-light);">HF model card</a> (all fetched 2026-09-11).
         <strong>2026-09-04:</strong> <strong>GPT-6 Astra availability refresh — confirmed live in the API and ChatGPT Work/Codex</strong> (kanban t_840506ed). OpenAI's developer account confirmed GPT-6 Astra is available in the OpenAI API and in ChatGPT Work and Codex for all Pro, Enterprise, and Business Premium users; ChatGPT shows it as GPT-6 Pro for Pro/Business plans first, Plus chat access to follow. Added <strong>Astra Pro tier coverage</strong>: Pro/Business/Enterprise plans also get the higher Work/Codex tier, priced separately in Work/Codex credits on top of the included allowance (250 credits per 1M input / 25 cached / 1,250 output; Fast 2.5x in Work/Codex; Codex CLI 0.153.0+); Enterprise admins enable Astra for their workspace — off by default at launch. Rate card unchanged and re-verified Sept 4 (OpenAI model + pricing docs, kingy.ai Sept 4 access matrix, 9to5Mac, HuggingNews). FAQ/schema/helper/copy/meta updated; calculator strategy unchanged (<code>astra</code> 1.32/−8, 272K scenario). Full analysis updated: <a href="/openai-gpt-6-astra-pricing" style="color:var(--cyan-light);">GPT-6 Astra API Pricing: LIVE Sept 4 — $10/$50 per 1M, 272K Doubling, 1.05M Context</a>.
@@ -3417,6 +3606,7 @@
   </div>
 </footer>
 
+<script src="/token-governance-model.js"></script>
 <script>
 // ── Pricing Data ──
 const BASE_SETUP = {
@@ -4967,6 +5157,208 @@ function calculateCacheScenario() {
   document.getElementById('cache-results').style.display = 'block';
   document.getElementById('cache-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+
+
+// ── Token Waste / Context Governance factor ──
+// Spec: SPEC-token-waste-context-governance-factor.md (kanban t_8813edb2);
+// published on the article /why-ai-bills-rise-when-prices-fall/ (t_1cb93770).
+// Model: token-governance-model.js (window.TokenGovernance), loaded above.
+// Every rate in the model is OpenAI's own, re-verified 2026-09-11: $4.00/$20.00
+// per 1M promotional through 2026-11-21, cached input $0.40, cache writes 1.25x,
+// and >272K input tokens billed at 2x input / 1.5x output for the full request.
+function twGetNum(id, dflt) {
+  const el = document.getElementById(id);
+  if (!el) return dflt;
+  const n = parseFloat(el.value);
+  return isFinite(n) ? n : dflt;
+}
+function twGetCheck(id, dflt) {
+  const el = document.getElementById(id);
+  return el ? !!el.checked : dflt;
+}
+function twSetText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+function twSetValue(id, v) {
+  const el = document.getElementById(id);
+  if (el) el.value = v;
+}
+function twMoney(n) { return TokenGovernance.fmtUSD(n); }
+function twTimes(n) { return (Math.round(n * 100) / 100).toFixed(2) + '×'; }
+function twPct1(n) { return (Math.round(n * 10) / 10).toFixed(1) + '%'; }
+
+function twReadInputs() {
+  return {
+    tasksPerMonth: twGetNum('twTasks', 10000),
+    contextTokensPerCall: twGetNum('twContext', 150000),
+    outputTokensPerCall: twGetNum('twOutput', 8000),
+    callsPerTask: twGetNum('twCalls', 3),
+    wasteRatePct: twGetNum('twWaste', 25),
+    prune: twGetCheck('twPrune', false),
+    applySurcharge: twGetCheck('twSurcharge', true),
+    cacheSharePct: twGetNum('twCacheShare', 0),
+    agents: twGetNum('twAgents', 5),
+    capPerAgentMonthly: twGetNum('twCap', 1000),
+    inputPrice: twGetNum('twInPrice', 4.00),
+    outputPrice: twGetNum('twOutPrice', 20.00),
+    priorInputPrice: 5.00,
+    priorOutputPrice: 30.00,
+    longContextThreshold: 272000,
+    surchargeInputMult: 2,
+    surchargeOutputMult: 1.5
+  };
+}
+
+function applyTwPreset() {
+  if (typeof TokenGovernance === 'undefined') return;
+  const sel = document.getElementById('twScenario');
+  if (!sel) return;
+  const p = TokenGovernance.PRESETS[sel.value];
+  if (p) {
+    twSetValue('twCalls', p.callsPerTask);
+    twSetValue('twWaste', p.wasteRatePct);
+    const prune = document.getElementById('twPrune');
+    if (prune) prune.checked = !!p.prune;
+    twSetValue('twCacheShare', p.cacheSharePct);
+  }
+  calculateTokenGovernance(true);
+}
+
+function markTwCustom() {
+  const sel = document.getElementById('twScenario');
+  if (sel && sel.value !== 'custom') sel.value = 'custom';
+  calculateTokenGovernance(true);
+}
+
+function copyTwArithmetic() {
+  const note = document.getElementById('tw-note');
+  const lines = [
+    'Governance-adjusted monthly token cost: ' + document.getElementById('tw-cost').textContent,
+    'Per-token estimate (one clean pass): ' + document.getElementById('tw-floor').textContent,
+    'Re-read premium: ' + document.getElementById('tw-reread').textContent,
+    'Wasted spend: ' + document.getElementById('tw-waste').textContent,
+    'Long-context cliff: ' + document.getElementById('tw-surcharge').textContent,
+    '',
+    note ? note.textContent : ''
+  ].join('\n');
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(lines);
+      return;
+    }
+  } catch (e) { /* clipboard unavailable — fall through */ }
+  window.prompt('Copy the arithmetic:', lines);
+}
+
+function calculateTokenGovernance(opts) {
+  if (typeof TokenGovernance === 'undefined') return;
+  const silent = opts === true || (opts && opts.silent === true);
+  const inp = twReadInputs();
+  const errs = TokenGovernance.validate(inp);
+  if (errs.length) {
+    if (!silent) alert(errs[0]);
+    return;
+  }
+  const r = TokenGovernance.compute(inp);
+
+  twSetText('tw-cost', twMoney(r.monthlyCost));
+  twSetText('tw-cost-sub', 'per completed task: ' + twMoney(r.costPerTask) +
+    (r.governanceMultiple === null ? '' : ' · ' + twTimes(r.governanceMultiple) + ' the per-token estimate'));
+  twSetText('tw-floor', twMoney(r.floorCostBase));
+  twSetText('tw-floor-sub', Math.round(r.inputs.tasksPerMonth).toLocaleString('en-US') + ' tasks × ' +
+    Math.round(r.inputs.contextTokensPerCall / 1000) + 'K context + ' +
+    Math.round(r.inputs.outputTokensPerCall / 1000) + 'K output at $' +
+    r.inputs.inputPrice.toFixed(2) + '/$' + r.inputs.outputPrice.toFixed(2));
+  twSetText('tw-premium', twMoney(r.governancePremium));
+  twSetText('tw-premium-sub', r.governancePremium > 0 ? 'what governance would recover' : 'no governance premium at these inputs');
+  twSetText('tw-reread', twMoney(r.reReadCost));
+  twSetText('tw-reread-sub', TokenGovernance.fmtM(r.reReadInputTokens) + ' input tokens re-sent');
+  twSetText('tw-waste', twMoney(r.wasteCost));
+  twSetText('tw-waste-sub', TokenGovernance.fmtM(r.wasteTokensTotal) + ' tokens, ' +
+    twPct1(r.inputs.wasteRatePct) + ' of what you pay for');
+  twSetText('tw-surcharge', r.surchargeActive ? twMoney(r.surchargeCost) : '—');
+  twSetText('tw-surcharge-sub', r.surchargeActive
+    ? 'every billed token at 2× input / 1.5× output (avg call ' + Math.round(r.perCallInputTokens).toLocaleString('en-US') + ' tokens)'
+    : 'not triggered — average call ' + Math.round(r.perCallInputTokens).toLocaleString('en-US') + ' tokens');
+  twSetText('tw-in-tokens', TokenGovernance.fmtM(r.billedInputTokens));
+  twSetText('tw-out-tokens', TokenGovernance.fmtM(r.billedOutputTokens) + ' output');
+  twSetText('tw-multiplier', r.governanceMultiple === null ? '—' : twTimes(r.governanceMultiple));
+  twSetText('tw-multiplier-sub', 'vs the per-token estimate');
+  twSetText('tw-sensitivity', twMoney(r.sensitivityPerPct));
+  twSetText('tw-sensitivity-sub', r.marginalCallCost === null ? 'marginal call cost unavailable'
+    : 'one more call per task: ' + twMoney(r.marginalCallCost));
+  twSetText('tw-promo', '+' + twMoney(r.promoDelta) + ' (' + twPct1(r.promoDeltaPct) + ')');
+  twSetText('tw-promo-sub', 'same workload on the $5/$30 list price');
+  twSetText('tw-breach', r.breachDay === null ? 'no cap set' : 'day ' + r.breachDay.toFixed(1));
+  twSetText('tw-breach-sub', r.budget === null ? 'set a monthly cap per agent to see the breach day'
+    : Math.round(r.inputs.agents).toLocaleString('en-US') + ' agents × ' + twMoney(r.inputs.capPerAgentMonthly) + ' cap vs ' + twMoney(r.monthlyCost) + '/month');
+
+  // Month-over-month counterfactual: this workload run governed, pre-cut vs post-cut,
+  // against what the current inputs actually bill. priceEffect + volumeEffect = totalChange.
+  const governed = Object.assign({}, inp, {
+    callsPerTask: TokenGovernance.PRESETS.governed.callsPerTask,
+    wasteRatePct: TokenGovernance.PRESETS.governed.wasteRatePct,
+    prune: true,
+    cacheSharePct: 0
+  });
+  const c = TokenGovernance.compare(governed, inp);
+  twSetText('tw-prior', twMoney(c.baselinePriorCost));
+  twSetText('tw-prior-sub', 'same workload, same behaviour, $5/$30 list sheet');
+  twSetText('tw-price-effect', twMoney(c.priceEffect));
+  twSetText('tw-price-effect-sub', 'at governed volume — negative means the cut saved money');
+  twSetText('tw-volume-effect', (c.volumeEffect >= 0 ? '+' : '') + twMoney(c.volumeEffect));
+  twSetText('tw-volume-effect-sub', 'the behaviour change at these inputs');
+  twSetText('tw-net-change', (c.totalChange >= 0 ? '+' : '') + twMoney(c.totalChange));
+  twSetText('tw-net-change-sub', 'price effect + volume effect, exactly');
+
+  const drivers = [
+    ['context re-reads', r.reReadCost],
+    ['wasted tokens', r.wasteCost],
+    ['minimum tokens', r.floorCostTriggered]
+  ].sort(function (a, b) { return b[1] - a[1]; });
+  let note = 'Same ' + Math.round(r.inputs.tasksPerMonth).toLocaleString('en-US') + ' tasks at ' +
+    Math.round(r.inputs.contextTokensPerCall / 1000) + 'K context and ' +
+    Math.round(r.inputs.outputTokensPerCall / 1000) + 'K output per call bill ' + twMoney(r.monthlyCost) +
+    ' a month across ' + Math.round(r.totalCallsPerMonth).toLocaleString('en-US') + ' model calls — ' +
+    twTimes(r.governanceMultiple) + ' the per-token estimate of ' + twMoney(r.floorCostBase) +
+    '. The two biggest drivers are ' + drivers[0][0] + ' at ' + twMoney(drivers[0][1]) + ' and ' +
+    drivers[1][0] + ' at ' + twMoney(drivers[1][1]) + '. ';
+  note += r.surchargeActive
+    ? 'The long-context cliff is active (average call ' + Math.round(r.perCallInputTokens).toLocaleString('en-US') + ' tokens), repricing the full request at 2× input and 1.5× output and costing ' + twMoney(r.surchargeCost) + '. '
+    : 'The long-context cliff is not triggered at this average call size. ';
+  note += 'OpenAI\'s $4/$20 rate is promotional at least through November 21, 2026 — the same workload on the list price would cost ' + twMoney(r.monthlyCostPrior) + ' (+' + twPct1(r.promoDeltaPct) + '). ';
+  note += 'This covers API consumption; if your team uses Sol through ChatGPT seats, the cut does not lower your bill.';
+  twSetText('tw-note', note);
+
+  window.__twLastResult = r;
+  if (!silent) {
+    const box = document.getElementById('token-governance-results');
+    if (box) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (typeof trackUmami === 'function') {
+      trackUmami('token_governance_estimated', {
+        cost: Math.round(r.monthlyCost),
+        multiple: r.governanceMultiple === null ? null : Math.round(r.governanceMultiple * 100) / 100,
+        calls: r.inputs.callsPerTask,
+        waste: r.inputs.wasteRatePct,
+        prune: r.inputs.prune,
+        cliff: r.surchargeActive
+      });
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const sel = document.getElementById('twScenario');
+  if (sel) {
+    try {
+      const p = new URLSearchParams(window.location.search).get('tw');
+      if (p === 'governed' || p === 'ungoverned') sel.value = p;
+    } catch (e) { /* no URL API — keep the default */ }
+    applyTwPreset();
+  }
+  calculateTokenGovernance(true);
+});
 
 // ── Umami event tracking: model selection + calculator runs ──
 // Added 2026-08-13 (kanban t_622a9a4b) so the team can see which model
