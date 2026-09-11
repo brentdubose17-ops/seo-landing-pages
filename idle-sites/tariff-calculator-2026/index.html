@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tariff Calculator 2026 — Free Import Duty Calculator">
     <meta name="twitter:description" content="Calculate import duties instantly with 2026 Section 301 tariff rates for 60 countries.">
-    <meta name="dateModified" content="2026-08-28">
+    <meta name="dateModified" content="2026-09-10">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -26,7 +26,7 @@
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript",
-        "dateModified": "2026-08-28"
+        "dateModified": "2026-09-10"
     }
     </script>
     <script type="application/ld+json">
@@ -105,6 +105,22 @@
                     "@type": "Answer",
                     "text": "No. The rebate covers domestic interprovincial rail and marine moves only — a cross-border shipment must start and end in Canada to qualify. Your US-bound steel still faces US Section 232 steel tariffs (the calculator does not currently model 232 steel rates, so its steel estimate is a lower bound). Steel is exempt from the Section 338 50% duty (energy products, potash, fish, critical minerals, and Section 232 items are exempt). If you buy Canadian steel for a Canadian destination, the rail/marine rebate can cut that leg's freight cost by 50%."
                 }
+            },
+            {
+                "@type": "Question",
+                "name": "Is the 50% surtax on canned vegetables in force yet?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Nothing came into force on September 9, 2026. What the Canadian International Trade Tribunal submitted that day is a recommendation to the Governor in Council for a three-year tariff-rate quota on canned vegetable goods, with above-quota surtaxes of 50% (year 1), 45% (year 2) and 40% (year 3) and an in-quota volume of 13,000,000 kg (about 28.66 million lb) in year 1, rising 2% a year. Only the Governor in Council can adopt it; Finance Minister Francois-Philippe Champagne said the government will review the report and announce its decision in due course. The measure actually in force is the 10% provisional safeguard surtax, effective June 19, 2026 for up to 200 days (last full day January 4, 2027), or until replaced by final measures."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do US canned vegetables lose their tariff exemption under the recommendation?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, but only if the recommendation is adopted. The in-force 10% provisional safeguard surtax does not apply to goods originating in the United States, Mexico, Chile, Israel or a developing country listed in Schedule 2 to the Order. The CITT recommendation is a global measure minus named exclusions (Mexico, Israel and other CIFTA beneficiaries, Chile, Panama, Peru, Colombia, South Korea, Honduras and GPT beneficiaries), and the United States is not among the exclusions: the Tribunal found US imports account for a substantial share of imports and contribute importantly to the serious injury. If adopted, US canned vegetables would face the same in-quota and above-quota treatment as other covered origins. Until then, US-origin goods remain outside the in-force 10% measure."
+                }
             }
         ]
     }
@@ -129,6 +145,28 @@
         .checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
         .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; }
         .checkbox-row label { margin: 0; font-weight: 500; }
+
+        /* --- calculator mode switcher + TRQ surtax mode (t_e2d32b63) --- */
+        .calc-modes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; border-bottom: 2px solid #e5e7eb; }
+        .calc-mode { flex: 1 1 240px; font-family: inherit; text-align: left; padding: 12px 16px; background: #f3f4f6; border: 1px solid #d1d5db; border-bottom: none; border-radius: 10px 10px 0 0; font-size: 0.95rem; font-weight: 600; color: #374151; cursor: pointer; transition: background 0.2s, color 0.2s; }
+        .calc-mode:hover { background: #e5e7eb; }
+        .calc-mode.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+        .calc-mode small { display: block; font-weight: 400; font-size: 0.76rem; opacity: 0.85; margin-top: 3px; }
+        .hint { font-size: 0.8rem; color: #888; margin-top: 4px; }
+        .trq-status { background: #fff7ed; border: 1px solid #fdba74; border-left: 6px solid #ea580c; border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; font-size: 0.9rem; color: #7c2d12; }
+        .trq-status strong { color: #9a3412; }
+        .trq-outcome { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 14px; }
+        .trq-outcome .box { border-radius: 10px; padding: 12px 14px; border: 1px solid #d1d5db; background: #fff; }
+        .trq-outcome .box .k { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.03em; color: #6b7280; }
+        .trq-outcome .box .v { font-size: 1.2rem; font-weight: 700; margin-top: 4px; }
+        .trq-outcome .box.free { background: #ecfdf5; border-color: #6ee7b7; }
+        .trq-outcome .box.free .v { color: #047857; }
+        .trq-outcome .box.surtax { background: #fef2f2; border-color: #fca5a5; }
+        .trq-outcome .box.surtax .v { color: #b91c1c; }
+        .trq-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 10px 0 4px; }
+        .trq-table th, .trq-table td { padding: 7px 9px; border-bottom: 1px solid #e5e7eb; text-align: left; vertical-align: top; }
+        .trq-table thead th { background: #e5e7eb; }
+        .trq-permalink { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.82rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f9fafb; color: #374151; }
 
         .results { display: none; margin-top: 20px; }
         .results.show { display: block; }
@@ -269,6 +307,11 @@
 
 <section class="calc-section">
     <div class="calculator" id="calculator">
+        <div class="calc-modes" id="calcModes" role="tablist" aria-label="Calculator mode">
+            <button type="button" class="calc-mode active" id="modeBtnAv" role="tab" aria-selected="true" onclick="setCalcMode('av')">Standard duty (ad valorem)<small>Country + category + value → estimated duty and landed cost</small></button>
+            <button type="button" class="calc-mode" id="modeBtnTrq" role="tab" aria-selected="false" onclick="setCalcMode('trq')">TRQ surtax — canned vegetables<small>Tariff-rate quota: duty-free within quota, 50% / 45% / 40% above it (proposed)</small></button>
+        </div>
+        <div id="avModeWrap">
         <div class="form-row">
             <label for="direction">Shipping To</label>
             <select id="direction" onchange="onDirectionChange()">
@@ -391,7 +434,163 @@
             <div id="flags"></div>
             <p style="margin-top: 12px; font-size:0.85rem; color:#888;">* Estimates based on 2026 US tariff rates including the <strong>Brazil 25% Section 301 duty</strong> (IN EFFECT July 22, 2026 — applied when you select <strong>Brazil</strong> as country of origin and a non-exempt product category; 1,600+ exempt HTS subheadings, Section 232 non-stacking, 12.5% forced-labor stack to 37.5%; model a post-talks reduction or removal with the <strong>Brazil Section 301 Scenario</strong> toggle), Section 301 (forced labor), Section 232 (polysilicon, drones/UAS), and the Canada Section 338 50% duty. The 50% Canada Section 338 duty (effective Aug 22, 2026 on ~$20B of Canadian goods; 569 HTSUS subheadings across the alcohol, dairy and motor-vehicle proclamations) IS included in the default rate when you select <strong>Canada</strong> and a covered product category (Automotive, Food &amp; Beverages, Dairy Products, Alcoholic Beverages, or Canada Section 338 Covered Goods). The 100%/25% drone/UAS Section 232 duty (effective Sept 3, 2026) is applied when the Drones / UAS category is selected — thermal imaging or over ~55 lb (25 kg) = 100%, non-thermal 25 kg or under = 25%, Blue UAS-listed suppliers (as of Sept 2, 2026) are deferred (0%) until Feb 9, 2027, and allied-origin drones are capped at 15% total incl. Column 1 (UK 10%, origin-conditional). The 90-day ground beef out-of-quota waiver (up to 300,000 metric tons; announced Aug 21, 2026) is applied when the Ground Beef category is selected with an import date inside the waiver window (Aug 21 – Nov 19, 2026), returning a duty-free result subject to the cap. <strong>For US goods shipped TO Canada</strong>, switch "Shipping To" to <strong>Canada</strong> — Canada's counter-tariffs of <strong>15/25/50%</strong> on C$27.6B of US imports (629 tariff items, revised Aug 26; rate for rate matching the US duty) are <strong>IN EFFECT since September 8, 2026 at 12:01 a.m. ET</strong> for US-origin goods in the covered categories (steel/aluminum 50%, electronics/appliances/dairy 25%, farm equipment 15%); entry dates on/after Sept 8 get the tiered duty (earlier dates show as PENDING, 0 duty), and US goods already in transit on Sept 8 are exempt. A <strong>threatened 50% tariff on Canadian cars, trucks, auto parts &amp; steel</strong> (proposed effective <strong>January 1, 2027</strong>) can be modeled with the <strong>Auto &amp; Steel Tariff Scenario</strong> toggle — select <strong>Canada</strong> + <strong>Automotive</strong> or <strong>Steel &amp; Metals</strong> and choose the <strong>Threatened</strong> scenario. It is <strong>NOT included by default</strong>, so existing estimates are unchanged. 🚚 For the freight-side impact (fewer loads, tariff cost per truckload), see <a href="canada-tariff-trucking-freight-impact.html">How the 50% Canada Tariffs Hit Freight Volumes and Carriers</a>. Actual rates vary by HTS classification, trade agreements, and exclusions. For official rates, consult the USITC HTS database and USTR Chapter 99 headings 9903.05.20–9903.06.21.</p>
         </div>
+        </div><!-- /#avModeWrap -->
+
+        <a id="trq-calculator"></a>
+        <div id="trqPanel" style="display:none;">
+            <div class="trq-status" role="note">
+                <strong>⚖️ Status: RECOMMENDED BY THE CITT — NOT ADOPTED (as of September 10, 2026).</strong>
+                <p style="margin: 8px 0 6px;">On <strong>September 9, 2026</strong> the Canadian International Trade Tribunal submitted its <a href="https://decisions.citt-tcce.gc.ca/citt-tcce/s/en/521601/1/document.do" target="_blank" rel="noopener">GC-2025-001 report</a> recommending a <strong>three-year tariff-rate quota (TRQ)</strong> on canned vegetable goods. <strong>Nothing changed on Sept 9, 2026.</strong> The measure actually <em>in force</em> is the <strong>10% provisional safeguard surtax</strong> (<a href="https://www.cbsa-asfc.gc.ca/publications/cn-ad/cn26-14-eng.html" target="_blank" rel="noopener">CBSA Customs Notice 26-14</a>; <a href="https://www.canada.ca/en/department-finance/news/2026/06/canada-announces-provisional-safeguard-tariff-on-imports-of-canned-vegetables-to-protect-canadian-producers.html" target="_blank" rel="noopener">Finance Canada announcement</a>), effective <strong>June 19, 2026</strong> for up to 200 days (last full day <strong>January 4, 2027</strong>), and it <strong>exempts goods from the US, Mexico, Chile, Israel and developing countries</strong>. Finance Minister François-Philippe Champagne is <em>reviewing</em> the report; only the Governor in Council can adopt it, and adoption would end the US exemption for the first time. <strong>This mode models the proposed regime, not current law.</strong></p>
+                <p style="margin: 0; font-size: 0.85rem;">Full explainer: <a href="canada-canned-vegetable-surtax.html">Canada's canned-vegetable safeguard: 10% now, up to 50% above quota →</a><br>Last verified September 10, 2026.</p>
+            </div>
+            <div class="form-row">
+                <label for="trqProduct">Product category (canned goods in scope)</label>
+                <select id="trqProduct"></select>
+                <div class="hint">Scope per CBSA Customs Notice 26-14: corn; peas; green beans; wax beans; mixes of peas and carrots; mixed vegetables; white, black, red and pinto beans; chickpeas. <strong>Vegetables in glass jars are excluded</strong>, and <strong>frozen vegetables are not covered</strong> by the CITT finding or the recommended remedy.</div>
+            </div>
+            <div class="form-row">
+                <label for="trqVolume">Annual import volume</label>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <input type="number" id="trqVolume" min="1" step="1000" placeholder="e.g. 30000000" style="flex:2;min-width:170px;">
+                    <select id="trqUnit" style="flex:1;min-width:150px;">
+                        <option value="lb">pounds (lb)</option>
+                        <option value="kg">kilograms (kg)</option>
+                        <option value="mt">metric tonnes (t = 1,000 kg)</option>
+                    </select>
+                </div>
+                <div class="hint" id="trqVolumeHint"></div>
+            </div>
+            <div class="form-row">
+                <label for="trqYear">TRQ year — drives the threshold <em>and</em> the rate</label>
+                <select id="trqYear"></select>
+                <div class="hint">Per the CITT recommendation the in-quota volume rises 2% a year and the above-quota surtax declines <strong>50% → 45% → 40%</strong> (¶301–302, ¶309).</div>
+            </div>
+            <div class="form-row">
+                <label for="trqQuota">Quota status</label>
+                <select id="trqQuota">
+                    <option value="not-exhausted">Not exhausted — my volume can draw on the quota</option>
+                    <option value="exhausted">Exhausted / projected to be exhausted — the quota is already filled when my goods enter</option>
+                </select>
+                <div class="hint">The recommendation is a first-come, first-served quarterly allocation with no country allocation (¶302). If the quota is already filled when your goods enter, the surtax applies to the whole volume regardless of its size.</div>
+            </div>
+            <div class="form-row">
+                <label for="trqQuotaLb">Assumption: in-quota threshold (lb) — editable</label>
+                <input type="number" id="trqQuotaLb" min="1" step="1000">
+                <div class="hint" id="trqQuotaHint"></div>
+            </div>
+            <div class="form-row">
+                <label for="trqValue">Declared value of the annual volume (USD) — optional</label>
+                <input type="number" id="trqValue" min="0" step="1000" placeholder="e.g. 100000">
+                <div class="hint">Leave blank for rates only. The surtax is charged on the above-quota share of this value.</div>
+            </div>
+            <button class="calc-btn" onclick="runTrq()">Calculate TRQ Surtax</button>
+
+            <div class="results" id="trqResults">
+                <div class="result-card">
+                    <div class="result-item">
+                        <span class="result-label">Product</span>
+                        <span class="result-value" id="trqOutProduct">—</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Annual volume</span>
+                        <span class="result-value" id="trqOutVolume">—</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">In-quota volume — duty-free</span>
+                        <span class="result-value" id="trqOutWithin">—</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Above-quota volume — surtax rate</span>
+                        <span class="result-value" id="trqOutAbove">—</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Estimated TRQ surtax due</span>
+                        <span class="result-value total" id="trqOutDuty">—</span>
+                    </div>
+                </div>
+                <div id="trqOutcome"></div>
+                <div id="trqFlags"></div>
+                <div id="trqScheduleWrap"></div>
+                <p class="hint" style="margin-top:10px;">Model note: the surtax is applied to the volume above the in-quota threshold, at that TRQ year's rate. Rates are the CITT's recommended figures, not law. Above-quota imports stay legal — a TRQ does not cap the quantity that may be imported, it only changes the price of the volume above the line.</p>
+                <label for="trqPermalink" style="font-size:0.8rem;color:#888;display:block;margin-top:10px;">Shareable link to this calculation</label>
+                <input type="text" id="trqPermalink" class="trq-permalink" readonly onclick="this.select()">
+                <div class="hint">Deep-link format: <code>?mode=trq&amp;volume=30000000&amp;unit=lb&amp;year=1&amp;category=corn&amp;quota=not-exhausted&amp;value=100000</code></div>
+            </div>
+        </div>
     </div>
+</section>
+
+<section class="info" id="trq-canned-vegetables">
+    <h2>TRQ Surtax on Canned Vegetables — What the CITT Recommended (and What Is Actually in Force)</h2>
+
+    <div class="trq-status" role="note" id="trq-status-caveat">
+        <strong>Current status: the 10% provisional surtax is in force — the TRQ surtax is only recommended.</strong>
+        <p style="margin:8px 0 6px;">Two different measures are being confused in the news coverage, so keep them apart:</p>
+        <ul style="margin:0 0 8px 20px;">
+            <li><strong>IN FORCE — 10% provisional safeguard surtax.</strong> Effective <strong>June 19, 2026</strong> on canned vegetable goods imported into Canada, for a period of <strong>up to 200 days</strong> (last full day <strong>January 4, 2027</strong>) or until replaced by final measures. It <strong>does not apply</strong> to goods originating in Canada, the <strong>United States</strong>, Mexico, <strong>Chile</strong>, or Israel / another CIFTA beneficiary, or in a developing country listed in Schedule 2 to the Order. Source: <a href="https://www.cbsa-asfc.gc.ca/publications/cn-ad/cn26-14-eng.html" target="_blank" rel="noopener">CBSA Customs Notice 26-14</a>; <a href="https://www.canada.ca/en/department-finance/news/2026/06/canada-announces-provisional-safeguard-tariff-on-imports-of-canned-vegetables-to-protect-canadian-producers.html" target="_blank" rel="noopener">Finance Canada announcement</a>.</li>
+            <li><strong>RECOMMENDED — NOT ADOPTED. Three-year TRQ at 50% / 45% / 40% above quota.</strong> The <a href="https://decisions.citt-tcce.gc.ca/citt-tcce/s/en/521601/1/document.do" target="_blank" rel="noopener">CITT's GC-2025-001 report</a> (submitted to the Governor in Council <strong>September 9, 2026</strong>) recommends a tariff-rate quota that <strong>includes the United States</strong>. Finance Minister François-Philippe Champagne said the government "will review it in detail with a view to determine appropriate actions" and will "announce its decision in due course" (<a href="https://www.canada.ca/en/department-finance/news/2026/09/statement-by-the-minister-of-finance-on-the-canadian-international-trade-tribunal-s-report-on-global-imports-of-canned-and-frozen-vegetables.html" target="_blank" rel="noopener">Finance Canada, September 9, 2026</a>). No implementing order existed as of <strong>September 10, 2026</strong>. <strong>Do not treat 50% / 45% / 40% as current law.</strong></li>
+        </ul>
+        <p style="margin:0;font-size:0.85rem;">Last verified September 10, 2026.</p>
+    </div>
+
+    <h3>The recommended remedy, exactly as reported</h3>
+    <table class="trq-table">
+        <thead><tr><th>TRQ year</th><th>In-quota volume (duty-free)</th><th>Above-quota surtax</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Year 1</strong></td><td>13,000,000 kg (≈ 28,660,094 lb)</td><td><strong>50%</strong></td></tr>
+            <tr><td><strong>Year 2</strong></td><td>13,260,000 kg (≈ 29,233,296 lb)</td><td><strong>45%</strong></td></tr>
+            <tr><td><strong>Year 3</strong></td><td>13,525,200 kg (≈ 29,817,962 lb)</td><td><strong>40%</strong></td></tr>
+        </tbody>
+    </table>
+    <p style="font-size:0.85rem;color:#666;margin-top:4px;">In-quota imports carry <strong>no surtax</strong> (¶302). The in-quota volume is set "at around the total volume of imports for calendar year 2024" for year 1 and rises 2% a year (¶301–302, ¶309). The kg figures are the report's own numbers; the pound conversions are this page's arithmetic at 2.2046226218 lb/kg. 13,000,000 kg ≈ 28.66 million lb — <strong>the "about 30 million pounds" in the wire copy is a rounding of this figure</strong>, not a separate threshold. The above-quota surtax is a declining schedule, not a flat "40% to 50%" band.</p>
+
+    <h3>Worked examples (Year 1, 50% above-quota rate)</h3>
+    <table class="trq-table">
+        <thead><tr><th>Scenario</th><th>Annual volume</th><th>Duty-free (in quota)</th><th>Above quota</th><th>Surtax due <span style="font-weight:400;">(on a $100,000 value)</span></th><th>Load in the calculator</th></tr></thead>
+        <tbody>
+            <tr><td><strong>A — exactly at the line</strong></td><td>28,660,094 lb (13,000,000 kg)</td><td>28,660,094 lb</td><td>0 lb</td><td><strong>$0</strong> — fully duty-free</td><td><a href="?mode=trq&amp;volume=28660094&amp;unit=lb&amp;year=1&amp;category=corn&amp;quota=not-exhausted&amp;value=100000#trq-calculator">open</a></td></tr>
+            <tr><td><strong>B — the 30 million lb case</strong></td><td>30,000,000 lb (13,607,771 kg)</td><td>28,660,094 lb</td><td>1,339,906 lb (4.5% of volume) at <strong>50%</strong></td><td><strong>$2,233.18</strong> — the cost delta versus a fully duty-free position</td><td><a href="?mode=trq&amp;volume=30000000&amp;unit=lb&amp;year=1&amp;category=corn&amp;quota=not-exhausted&amp;value=100000#trq-calculator">open</a></td></tr>
+            <tr><td><strong>C — just over the line</strong></td><td>29,000,000 lb (13,154,179 kg)</td><td>28,660,094 lb</td><td>339,906 lb (1.2% of volume) at <strong>50%</strong></td><td><strong>$586.04</strong> — shows the cliff edge: one extra pound starts the surtax on the volume above the line</td><td><a href="?mode=trq&amp;volume=29000000&amp;unit=lb&amp;year=1&amp;category=corn&amp;quota=not-exhausted&amp;value=100000#trq-calculator">open</a></td></tr>
+            <tr><td><strong>D — quota already filled</strong></td><td>30,000,000 lb (13,607,771 kg)</td><td>0 lb</td><td>30,000,000 lb at <strong>50%</strong></td><td><strong>$50,000</strong> — the whole volume pays the surtax once the quota is exhausted</td><td><a href="?mode=trq&amp;volume=30000000&amp;unit=lb&amp;year=1&amp;category=corn&amp;quota=exhausted&amp;value=100000#trq-calculator">open</a></td></tr>
+        </tbody>
+    </table>
+    <p style="font-size:0.85rem;color:#666;">The $100,000 value in the "surtax due" column is an illustrative assumption so the delta is visible in dollars — set your own value in the calculator. The duty scales with the above-quota <em>share</em> of the value, so the rate is what matters: 50% of the value of the above-quota volume.</p>
+
+    <h3>Above-quota imports remain legal — this is a tariff-rate quota, not a ban</h3>
+    <p>A TRQ does not cap how much may be imported; it only changes the price of the volume above the line. The Tribunal's own words:</p>
+    <ul style="margin:6px 0 6px 20px;">
+        <li>"the recommended TRQ does not preclude additional imports. It would only affect their prices." <span style="color:#666;">(CITT GC-2025-001 ¶306)</span></li>
+        <li>"a TRQ does not restrict sourcing availability or limits the quantities of canned vegetable goods that can be imported." <span style="color:#666;">(¶326)</span></li>
+        <li>"TRQs have the least impact on food availability because they do not impose limits on the volume of imported goods" <span style="color:#666;">(¶318)</span></li>
+    </ul>
+
+    <h3>Who the recommendation covers</h3>
+    <p>It is a <strong>global measure minus named exclusions</strong>, not a list of named countries: it applies to canned vegetable goods from all sources <strong>except</strong> Mexico, Israel and other CIFTA beneficiaries, Chile, Panama, Peru, Colombia, South Korea, Honduras, and GPT (developing-country) beneficiaries — which means it <strong>does include the United States</strong>, China and EU members (the EU asked to be excluded and was refused). US imports are included because they "do account for a substantial share of imports and contribute importantly to the serious injury" (¶255).</p>
+    <p><strong>Product scope (in force and recommended alike):</strong> canned corn; peas; green beans; wax beans; mixes of peas and carrots; mixed vegetables; white, black, red and pinto beans; chickpeas — the 14 tariff classification numbers in Appendix A to the Order (CBSA Customs Notice 26-14). Vegetables in <strong>glass jars are excluded</strong>; <strong>frozen vegetables are not covered</strong> by either the injury finding or the recommended remedy.</p>
+
+    <h3>Canned-vegetable TRQ surtax — FAQ</h3>
+    <div style="background:#f8f9ff;border-radius:10px;padding:16px 20px;margin-bottom:14px;">
+        <p><strong>Q: Is the 50% surtax on canned vegetables in force yet?</strong></p>
+        <p>A: No. Nothing came into force on September 9, 2026. What the CITT submitted that day is a <em>recommendation</em> to the Governor in Council for a three-year tariff-rate quota with above-quota surtaxes of 50% (year 1), 45% (year 2) and 40% (year 3). Only the Cabinet can adopt it, and Finance Minister François-Philippe Champagne said the government will review the report and "announce its decision in due course". The measure actually in force is the 10% provisional safeguard surtax, effective June 19, 2026 for up to 200 days (last full day January 4, 2027).</p>
+    </div>
+    <div style="background:#f8f9ff;border-radius:10px;padding:16px 20px;margin-bottom:14px;">
+        <p><strong>Q: Do US canned vegetables lose their tariff exemption under the recommendation?</strong></p>
+        <p>A: Yes — that is the key change, and it would happen only on adoption. The in-force 10% provisional surtax exempts goods originating in the United States, Mexico, Chile, Israel and developing countries. The CITT recommendation is a global measure minus named exclusions, and the US is not among the exclusions: the Tribunal found US imports "do account for a substantial share of imports and contribute importantly to the serious injury" (¶255). If the recommendation is adopted, US canned vegetables would face the same in-quota / above-quota treatment as other covered origins. Until then, US-origin goods remain outside the in-force 10% measure.</p>
+    </div>
+
+    <h3>Sources</h3>
+    <table class="trq-table">
+        <thead><tr><th>#</th><th>Source</th><th>Used for</th></tr></thead>
+        <tbody>
+            <tr><td>[1]</td><td><a href="https://decisions.citt-tcce.gc.ca/citt-tcce/s/en/521601/1/document.do" target="_blank" rel="noopener">CITT, GC-2025-001 report (September 9, 2026)</a></td><td>In-quota volumes, 50/45/40 surtax schedule, US inclusion, TRQ-not-a-quota quotes (¶255, ¶301–302, ¶306, ¶309, ¶318, ¶326)</td></tr>
+            <tr><td>[2]</td><td><a href="https://citt-tcce.gc.ca/en/news/tribunal-submits-report-concerning-certain-vegetable-goods" target="_blank" rel="noopener">CITT news release</a></td><td>Sept 9, 2026 submission date</td></tr>
+            <tr><td>[3]</td><td><a href="https://www.cbsa-asfc.gc.ca/publications/cn-ad/cn26-14-eng.html" target="_blank" rel="noopener">CBSA Customs Notice 26-14</a></td><td>In-force 10% rate, June 19, 2026, up-to-200-days, exemptions, product scope</td></tr>
+            <tr><td>[4]</td><td><a href="https://www.canada.ca/en/department-finance/news/2026/06/canada-announces-provisional-safeguard-tariff-on-imports-of-canned-vegetables-to-protect-canadian-producers.html" target="_blank" rel="noopener">Finance Canada — provisional safeguard announcement</a></td><td>Measure announcement, exemptions</td></tr>
+            <tr><td>[5]</td><td><a href="https://www.canada.ca/en/department-finance/news/2026/09/statement-by-the-minister-of-finance-on-the-canadian-international-trade-tribunal-s-report-on-global-imports-of-canned-and-frozen-vegetables.html" target="_blank" rel="noopener">Finance Canada — Minister's statement (September 9, 2026)</a></td><td>"Review it in detail", provisional measure remains in place</td></tr>
+            <tr><td>[6]</td><td><a href="https://globalimportblog.bakermckenzie.com/2026/06/30/canada-implements-provisional-safeguard-measure-on-imports-of-canned-vegetables/" target="_blank" rel="noopener">Baker McKenzie — Canada implements provisional safeguard measure</a></td><td>200-day window (June 19, 2026 to January 4, 2027)</td></tr>
+        </tbody>
+    </table>
+    <p style="font-size:0.85rem;color:#888;">Verified September 10, 2026 against the CITT's own report. Estimates only — consult a licensed customs broker for official duty determinations.</p>
 </section>
 
 <section class="info">
@@ -646,6 +845,7 @@ function estimateCssp() {
 </footer>
 
 <script src="presets/canada-sept8-counter-tariffs.js"></script>
+<script src="presets/canada-trq-canned-vegetables.js"></script>
 <script src="tariff-data.js"></script>
 <script>
 (function () {
@@ -1358,6 +1558,339 @@ BLOG_ARTICLES.forEach(function (art) {
                     }
                 }
             }
+        }
+    } catch (e) {}
+})();
+</script>
+
+<script>
+/* ---------------------------------------------------------------------------
+ * TRQ surtax mode — calculator wiring (kanban t_e2d32b63)
+ *
+ * Data and arithmetic live in tariff-data.js: `T.TRQ_CANNED_VEG` (resolved
+ * from presets/canada-trq-canned-vegetables.js) and `T.trqCannedVegSurtax()`.
+ * The CITT recommendation is NOT law and every render says so.
+ *
+ * Shareable deep link:
+ *   /?mode=trq&volume=30000000&unit=lb&year=1&category=corn
+ *      &quota=not-exhausted&value=100000#trq-calculator
+ * `?mode=trq` on its own opens the mode pre-filled with the 30,000,000 lb
+ * worked example from the fact pack.
+ * ------------------------------------------------------------------------- */
+(function () {
+    var LB_PER_KG = 2.2046226218;
+    var SITE = 'https://tariffcalculator2026.com/';
+
+    function el(id) { try { return document.getElementById(id); } catch (e) { return null; } }
+    function num(v) { var n = parseFloat(v); return isFinite(n) ? n : null; }
+    function fmt(n, dp) {
+        if (n == null || !isFinite(n)) return '\u2014';
+        return Number(n).toLocaleString('en-US', { minimumFractionDigits: dp || 0, maximumFractionDigits: dp || 0 });
+    }
+    function money(n) {
+        if (n == null || !isFinite(n)) return '\u2014';
+        return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function pct(r) { return (Math.round(r * 1000) / 10) + '%'; }
+    function setAttr(node, name, value) { if (node && node.setAttribute) { try { node.setAttribute(name, value); } catch (e) {} } }
+    function data() { return window.TARIFF_DATA || null; }
+    function preset() { var t = data(); return t && t.TRQ_CANNED_VEG ? t.TRQ_CANNED_VEG : null; }
+
+    function yearRow(year) {
+        var p = preset();
+        if (!p || !p.years) return null;
+        for (var i = 0; i < p.years.length; i++) {
+            if (Number(p.years[i].year) === Number(year)) return p.years[i];
+        }
+        return null;
+    }
+    function unitToLb(value, unit) {
+        if (unit === 'kg') return value * LB_PER_KG;
+        if (unit === 'mt') return value * 1000 * LB_PER_KG;
+        return value;
+    }
+    function unitName(unit) { return unit === 'kg' ? 'kg' : (unit === 'mt' ? 'metric tonnes' : 'lb'); }
+    function optionExists(sel, value) {
+        if (!sel || !sel.options) return false;
+        for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === value) return true; }
+        return false;
+    }
+
+    function ensureOptions() {
+        var p = preset();
+        if (!p) return;
+        var prod = el('trqProduct'), yr = el('trqYear');
+        if (prod && (!prod.options || !prod.options.length)) {
+            (p.product_scope || []).forEach(function (it) {
+                var o = document.createElement('option');
+                o.value = it.value; o.textContent = it.label;
+                prod.appendChild(o);
+            });
+        }
+        if (yr && (!yr.options || !yr.options.length)) {
+            (p.years || []).forEach(function (r) {
+                var o = document.createElement('option');
+                o.value = String(r.year);
+                o.textContent = 'Year ' + r.year + ' \u2014 in-quota ' + fmt(r.in_quota_kg) + ' kg (' + fmt(r.in_quota_lb) +
+                    ' lb), above-quota ' + pct(r.above_quota_surtax);
+                yr.appendChild(o);
+            });
+        }
+    }
+
+    function currentYear() {
+        var yr = el('trqYear'), p = preset();
+        return (yr && yr.value) ? Number(yr.value) : (p ? p.default_year : 1);
+    }
+
+    function resetThresholdToYear() {
+        var row = yearRow(currentYear()), box = el('trqQuotaLb');
+        if (row && box) box.value = String(row.in_quota_lb);
+        updateHints();
+    }
+
+    function updateHints() {
+        var p = preset();
+        var row = yearRow(currentYear());
+        var vol = el('trqVolume');
+        var unit = el('trqUnit') ? el('trqUnit').value : 'lb';
+        var vh = el('trqVolumeHint'), qh = el('trqQuotaHint');
+        var raw = vol ? num(vol.value) : null;
+        if (vh) {
+            if (raw != null && raw > 0) {
+                var lbv = unitToLb(raw, unit);
+                vh.innerHTML = '\u2248 ' + (unit === 'lb' ? fmt(lbv / LB_PER_KG) + ' kg' : fmt(lbv) + ' lb') +
+                    ' (converted at 2.2046226218 lb/kg).';
+            } else {
+                vh.innerHTML = 'Your pounds or kilograms per year. The in-quota line is quoted in kilograms by the Tribunal and shown in pounds here.';
+            }
+        }
+        if (qh) {
+            if (!p || !row) { qh.innerHTML = 'TRQ preset data unavailable.'; return; }
+            var lb = el('trqQuotaLb') ? num(el('trqQuotaLb').value) : null;
+            var edited = (lb != null && Math.round(lb) !== row.in_quota_lb);
+            qh.innerHTML = 'CITT recommended in-quota volume for Year ' + row.year + ': <strong>' + fmt(row.in_quota_kg) +
+                ' kg = ' + fmt(row.in_quota_lb) + ' lb</strong> (GC-2025-001 \u00b6302). ' +
+                (edited
+                    ? '<strong>Edited:</strong> you are modelling your own threshold.'
+                    : 'The source quotes kilograms; the pound figure is this page\u2019s conversion. It is an <strong>assumption</strong> taken from the recommendation \u2014 not current law \u2014 and the wire\u2019s "about 30 million pounds" is a rounding of it.');
+        }
+    }
+
+    function setFlag(html, cls) {
+        var f = el('trqFlags');
+        if (!f) return;
+        var d = document.createElement('div');
+        d.className = 'flag ' + (cls || 'info');
+        d.innerHTML = html;
+        f.innerHTML = '';
+        f.appendChild(d);
+    }
+
+    function buildQuery() {
+        var parts = ['mode=trq'];
+        var vol = el('trqVolume') ? num(el('trqVolume').value) : null;
+        var unit = el('trqUnit') ? el('trqUnit').value : 'lb';
+        if (vol != null && vol > 0) parts.push('volume=' + Math.round(vol));
+        parts.push('unit=' + (unit || 'lb'));
+        parts.push('year=' + currentYear());
+        var cat = el('trqProduct') ? el('trqProduct').value : '';
+        if (cat) parts.push('category=' + encodeURIComponent(cat));
+        var q = el('trqQuota') ? el('trqQuota').value : '';
+        if (q) parts.push('quota=' + encodeURIComponent(q));
+        var val = el('trqValue') ? num(el('trqValue').value) : null;
+        if (val != null && val > 0) parts.push('value=' + Math.round(val));
+        return '?' + parts.join('&') + '#trq-calculator';
+    }
+
+    function syncUrl(withHistory) {
+        var q = buildQuery();
+        var pl = el('trqPermalink');
+        if (pl) pl.value = SITE + q;
+        if (withHistory) {
+            try {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, '', q);
+                }
+            } catch (e) {}
+        }
+    }
+
+    function setCalcMode(mode) {
+        var isTrq = mode === 'trq';
+        var av = el('avModeWrap'), trq = el('trqPanel');
+        var bAv = el('modeBtnAv'), bTrq = el('modeBtnTrq');
+        if (av) av.style.display = isTrq ? 'none' : 'block';
+        if (trq) trq.style.display = isTrq ? 'block' : 'none';
+        if (bAv) { bAv.className = isTrq ? 'calc-mode' : 'calc-mode active'; setAttr(bAv, 'aria-selected', isTrq ? 'false' : 'true'); }
+        if (bTrq) { bTrq.className = isTrq ? 'calc-mode active' : 'calc-mode'; setAttr(bTrq, 'aria-selected', isTrq ? 'true' : 'false'); }
+        var filled = false;
+        if (isTrq) {
+            ensureOptions();
+            var p = preset();
+            var vol = el('trqVolume');
+            if (vol && !vol.value) {
+                vol.value = String((p && p.default_volume_lb) ? p.default_volume_lb : 30000000);
+                var val = el('trqValue');
+                if (val && !val.value) val.value = '100000';
+                filled = true;
+            }
+            resetThresholdToYear();
+            updateHints();
+            if (filled) runTrq();
+        }
+        syncUrl(false);
+        return isTrq;
+    }
+
+    function runTrq() {
+        var t = data(), p = preset();
+        var results = el('trqResults');
+        if (results) results.className = 'results show';
+        if (!t || !p || typeof t.trqCannedVegSurtax !== 'function') {
+            setFlag('<strong>TRQ data unavailable</strong>The preset data file did not load, so no surtax can be modelled.', 'warn');
+            return;
+        }
+        var volEl = el('trqVolume');
+        var unit = el('trqUnit') ? el('trqUnit').value : 'lb';
+        var raw = volEl ? num(volEl.value) : null;
+        if (raw == null || raw <= 0) {
+            setFlag('<strong>Enter a volume</strong>Add a positive annual import volume in ' + unitName(unit) + ' to model the TRQ surtax.', 'warn');
+            if (el('trqOutcome')) el('trqOutcome').innerHTML = '';
+            if (el('trqScheduleWrap')) el('trqScheduleWrap').innerHTML = '';
+            if (el('trqOutDuty')) el('trqOutDuty').textContent = '\u2014';
+            return;
+        }
+
+        var year = currentYear();
+        var quotaLb = el('trqQuotaLb') ? num(el('trqQuotaLb').value) : null;
+        var exhausted = !!(el('trqQuota') && el('trqQuota').value === 'exhausted');
+        var value = el('trqValue') ? num(el('trqValue').value) : null;
+        var category = el('trqProduct') ? el('trqProduct').value : '';
+
+        var r = t.trqCannedVegSurtax({
+            volumeLb: unitToLb(raw, unit),
+            year: year,
+            quotaExhausted: exhausted,
+            valueUsd: value,
+            inQuotaLb: quotaLb
+        });
+        if (!r) { setFlag('<strong>Could not compute</strong>Check the selected TRQ year and the volume.', 'warn'); return; }
+
+        var prodLabel = category;
+        (p.product_scope || []).forEach(function (it) { if (it.value === category) prodLabel = it.label; });
+
+        if (el('trqOutProduct')) el('trqOutProduct').textContent = prodLabel || '\u2014';
+        if (el('trqOutVolume')) el('trqOutVolume').textContent = fmt(r.volumeLb) + ' lb (' + fmt(r.volumeKg) + ' kg)';
+        if (el('trqOutWithin')) el('trqOutWithin').textContent = fmt(r.withinQuotaLb) + ' lb \u2014 duty-free (0%)';
+        if (el('trqOutAbove')) el('trqOutAbove').textContent = fmt(r.aboveQuotaLb) + ' lb \u2014 ' + pct(r.surtaxRate) + ' surtax';
+        if (el('trqOutDuty')) {
+            el('trqOutDuty').textContent = (r.dutyUsd != null)
+                ? money(r.dutyUsd) + '  (' + pct(r.surtaxRate) + ' of ' + money(r.aboveQuotaValueUsd) + ' above-quota value)'
+                : pct(r.surtaxRate) + ' \u2014 add a declared value for dollars';
+        }
+
+        var outcome = el('trqOutcome');
+        if (outcome) {
+            var effRate = (r.valueUsd != null && r.valueUsd > 0) ? (r.dutyUsd / r.valueUsd) : (r.aboveQuotaShare * r.surtaxRate);
+            outcome.innerHTML = '<div class="trq-outcome">'
+                + '<div class="box free"><div class="k">Within quota \u2014 Year ' + r.year + '</div><div class="v">Duty-free (0%)</div>'
+                + '<div class="hint">' + fmt(r.withinQuotaLb) + ' lb at no surtax</div></div>'
+                + '<div class="box surtax"><div class="k">Above quota \u2014 Year ' + r.year + '</div><div class="v">' + pct(r.surtaxRate) + ' surtax</div>'
+                + '<div class="hint">' + fmt(r.aboveQuotaLb) + ' lb' + (r.dutyUsd != null ? ' \u2192 ' + money(r.dutyUsd) : '') + '</div></div>'
+                + '<div class="box"><div class="k">Effective rate on the whole volume</div><div class="v">' + pct(effRate) + '</div>'
+                + '<div class="hint">' + (r.dutyUsd != null ? money(r.dutyUsd) + ' on ' + money(r.valueUsd) : 'rate only \u2014 add a value for dollars') + '</div></div>'
+                + '</div>';
+        }
+
+        var flags = [];
+        flags.push('<strong>\u2696\ufe0f Proposed measure \u2014 not in force.</strong>The CITT recommended this TRQ on <strong>September 9, 2026</strong>; the Governor in Council has not adopted it. What is in force is the <strong>10% provisional safeguard surtax</strong> (June 19, 2026, up to 200 days), which <strong>exempts US, Mexican, Chilean, Israeli and developing-country goods</strong>. <a href="#trq-canned-vegetables">Status details and sources \u2193</a>');
+        if (r.quotaExhausted) {
+            flags.push('<strong>Quota treated as exhausted</strong>Every pound is priced at the above-quota rate. The recommendation is first-come, first-served, so a filled quota means later entries cannot draw on it however small they are.');
+        } else if (r.aboveQuotaLb > 0) {
+            flags.push('<strong>' + fmt(r.aboveQuotaLb) + ' lb sits above the in-quota line</strong>' + pct(r.aboveQuotaShare) + ' of your volume. Above-quota imports remain <strong>legal</strong> \u2014 a TRQ does not cap how much may be imported, it only makes the volume above the line more expensive (\u00b6306, \u00b6326).');
+        } else {
+            flags.push('<strong>Your volume is inside the quota</strong>No surtax is applied to in-quota imports (\u00b6302). Above-quota imports would still be legal \u2014 they would just pay the surtax ("the recommended TRQ does not preclude additional imports. It would only affect their prices.", \u00b6306).');
+        }
+        if (r.inQuotaOverridden) {
+            flags.push('<strong>Edited threshold</strong>Modelling an in-quota threshold of ' + fmt(r.inQuotaLb) + ' lb instead of the recommendation\u2019s ' +
+                fmt(r.inQuotaSourceKg) + ' kg (' + fmt(r.inQuotaSourceKg * (p.kg_to_lb || LB_PER_KG)) + ' lb).');
+        }
+        var fbox = el('trqFlags');
+        if (fbox) {
+            var fhtml = '';
+            for (var fi = 0; fi < flags.length; fi++) {
+                fhtml += '<div class="flag ' + (fi === 0 ? 'warn' : 'info') + '">' + flags[fi] + '</div>';
+            }
+            fbox.innerHTML = fhtml;
+        }
+
+        var wrap = el('trqScheduleWrap');
+        if (wrap) {
+            var rows = '';
+            (p.years || []).forEach(function (yy) {
+                var over = (yy.year === r.year) ? quotaLb : null;
+                var rr = t.trqCannedVegSurtax({ volumeLb: r.volumeLb, year: yy.year, quotaExhausted: exhausted, valueUsd: r.valueUsd, inQuotaLb: over });
+                if (!rr) return;
+                rows += '<tr' + (yy.year === r.year ? ' style="background:#eff6ff;"' : '') + '>'
+                    + '<td><strong>Year ' + yy.year + '</strong>' + (yy.year === r.year ? ' \u2190 selected' : '') + '</td>'
+                    + '<td>' + fmt(rr.inQuotaLb) + ' lb <span style="color:#888;">(' + fmt(yy.in_quota_kg) + ' kg)</span></td>'
+                    + '<td>' + fmt(rr.withinQuotaLb) + ' lb \u2014 duty-free (0%)</td>'
+                    + '<td>' + fmt(rr.aboveQuotaLb) + ' lb \u2014 <strong>' + pct(rr.surtaxRate) + '</strong></td>'
+                    + '<td>' + (rr.dutyUsd != null ? money(rr.dutyUsd) : '\u2014') + '</td></tr>';
+            });
+            wrap.innerHTML = '<h4 style="margin:16px 0 2px;">Outcomes by TRQ year for this volume (recommended rates)</h4>'
+                + '<table class="trq-table"><thead><tr><th>TRQ year</th><th>In-quota threshold</th><th>Within quota</th><th>Above quota</th><th>Surtax due</th></tr></thead><tbody>'
+                + rows + '</tbody></table>'
+                + '<p class="hint">Duty-free within quota; <strong>50%</strong>, <strong>45%</strong> and <strong>40%</strong> on the above-quota volume in years 1, 2 and 3. The in-quota volume rises 2% a year (CITT \u00b6309). Recommended figures only.</p>';
+        }
+
+        updateHints();
+        syncUrl(true);
+    }
+
+    window.setCalcMode = setCalcMode;
+    window.runTrq = runTrq;
+    window.trqSyncThreshold = resetThresholdToYear;
+    window.trqUpdateHints = updateHints;
+
+    try {
+        ensureOptions();
+        var yr = el('trqYear');
+        if (yr && yr.addEventListener) yr.addEventListener('change', resetThresholdToYear);
+        var qb = el('trqQuotaLb');
+        if (qb && qb.addEventListener) qb.addEventListener('input', updateHints);
+        var volEl = el('trqVolume');
+        if (volEl && volEl.addEventListener) volEl.addEventListener('input', updateHints);
+
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('mode') === 'trq') {
+            var v = params.get('volume');
+            if (v && volEl) volEl.value = v;
+            var u = params.get('unit');
+            var uEl = el('trqUnit');
+            if (u && uEl && (u === 'lb' || u === 'kg' || u === 'mt')) uEl.value = u;
+            var y = params.get('year');
+            if (y && yr) yr.value = y;
+            var c = params.get('category');
+            var cEl = el('trqProduct');
+            if (c && cEl && optionExists(cEl, c)) cEl.value = c;
+            var q = params.get('quota');
+            var qEl = el('trqQuota');
+            if (q && qEl && (q === 'exhausted' || q === 'not-exhausted')) qEl.value = q;
+            var val = params.get('value');
+            var vEl = el('trqValue');
+            if (val && vEl) vEl.value = val;
+            setCalcMode('trq');
+            runTrq();
+            if (typeof setTimeout === 'function') {
+                setTimeout(function () {
+                    var a = el('trq-calculator');
+                    if (a && a.scrollIntoView) a.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 80);
+            }
+        } else {
+            syncUrl(false);
         }
     } catch (e) {}
 })();

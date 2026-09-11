@@ -587,6 +587,150 @@
   })();
 
   /*
+   * Canada TRQ — canned vegetables (CITT GC-2025-001 recommendation, NOT adopted)
+   * --------------------------------------------------------------------------
+   * The CITT's September 9, 2026 report recommends a THREE-YEAR TARIFF-RATE
+   * QUOTA on canned vegetable goods, including imports from the US:
+   *   Year 1: in-quota 13,000,000 kg (28,660,094 lb), above-quota surtax 50%
+   *   Year 2: in-quota 13,260,000 kg (29,233,296 lb), above-quota surtax 45%
+   *   Year 3: in-quota 13,525,200 kg (29,817,962 lb), above-quota surtax 40%
+   *   In-quota imports: no surtax (duty-free).
+   * (CITT GC-2025-001 ¶301–302; the in-quota volume rises 2%/yr, ¶309.)
+   *
+   * A TRQ is NOT a quota: above-quota imports remain legal and the quantity
+   * that may be imported is not limited — only the price changes
+   * (¶306 "the recommended TRQ does not preclude additional imports. It
+   * would only affect their prices."; ¶326; ¶318).
+   *
+   * STATUS: RECOMMENDED, NOT ADOPTED. The measure in force is the 10%
+   * provisional safeguard surtax (CBSA Customs Notice 26-14), effective
+   * June 19, 2026 for up to 200 days, which EXEMPTS US, Mexican, Chilean,
+   * Israeli and developing-country goods. Adoption would end the US
+   * exemption. Never present these TRQ rates as current law.
+   *
+   * DATA FILE: rates/thresholds live in
+   * presets/canada-trq-canned-vegetables.js (window.CANADA_TRQ_PRESET in
+   * the browser, require() in Node) so adoption or amendment is a
+   * data-file edit with no calculator-logic change.
+   */
+  var TRQ_CANNED_VEG = (function () {
+    var preset = null;
+    if (typeof window !== 'undefined' && window.CANADA_TRQ_PRESET) {
+      preset = window.CANADA_TRQ_PRESET;
+    } else if (typeof require === 'function') {
+      try { preset = require('./presets/canada-trq-canned-vegetables.js'); } catch (e) { preset = null; }
+    }
+    if (preset && preset.preset_key === 'canada-trq-canned-vegetables') {
+      return preset;
+    }
+    // Safe fallback: expose the preset identity and no rates rather than
+    // wrong rates. The calculator renders a "data file not loaded" notice.
+    return {
+      preset_key: 'canada-trq-canned-vegetables',
+      preset_label: 'Canada TRQ — Canned Vegetables',
+      status: 'PENDING — preset data file not loaded (presets/canada-trq-canned-vegetables.js).',
+      status_short: 'Data unavailable',
+      recommendation_date: '2026-09-09',
+      kg_to_lb: 2.2046226218,
+      years: [],
+      default_year: 1,
+      default_volume_lb: 0,
+      in_force: { rate: 0.10, effective: '2026-06-19' },
+      product_scope: [],
+      legal_quotes: [],
+      sources: [],
+      verified: null
+    };
+  })();
+
+  /*
+   * trqCannedVegSurtax(opts) — the TRQ arithmetic behind the calculator's
+   * 'TRQ surtax' mode.
+   *
+   * @param opts { volumeLb: number  — annual import volume in POUNDS,
+   *              volumeKg: number  — alternative: volume in KILOGRAMS
+   *                                  (one of the two is required),
+   *              year: 1|2|3       — TRQ year (default 1); drives BOTH the
+   *                                  in-quota threshold and the surtax rate,
+   *              quotaExhausted: bool (default false) — when true the whole
+   *                                  volume is treated as above-quota, because
+   *                                  a filled quota means later imports cannot
+   *                                  draw on it regardless of their own size,
+   *              valueUsd: number  — optional declared value of the whole
+   *                                  annual volume; duty is apportioned to the
+   *                                  above-quota share of it }
+   * Returns {
+   *   year, inQuotaKg, inQuotaLb, surtaxRate, surtaxPct,
+   *   volumeKg, volumeLb, withinQuotaLb, aboveQuotaLb, aboveQuotaShare,
+   *   quotaExhausted, valueUsd, aboveQuotaValueUsd, dutyUsd,
+   *   dutyPer1000AboveQuotaValue, status, presetLabel, verified }
+   * or null when the year is unknown / volume is not a positive number.
+   */
+  function trqCannedVegSurtax(opts) {
+    opts = opts || {};
+    var rows = TRQ_CANNED_VEG.years || [];
+    if (!rows.length) return null;
+
+    var wantYear = opts.year == null ? TRQ_CANNED_VEG.default_year : Number(opts.year);
+    var row = null;
+    for (var i = 0; i < rows.length; i++) {
+      if (Number(rows[i].year) === wantYear) { row = rows[i]; break; }
+    }
+    if (!row) return null;
+
+    var volumeLb = null;
+    if (opts.volumeLb != null && opts.volumeLb !== '') volumeLb = Number(opts.volumeLb);
+    else if (opts.volumeKg != null && opts.volumeKg !== '') volumeLb = Math.round(Number(opts.volumeKg) * TRQ_CANNED_VEG.kg_to_lb);
+    if (volumeLb == null || !isFinite(volumeLb) || volumeLb <= 0) return null;
+
+    var inQuotaLb = row.in_quota_lb;
+    var inQuotaSourceKg = row.in_quota_kg;
+    if (opts.inQuotaLb != null && opts.inQuotaLb !== '' && isFinite(Number(opts.inQuotaLb)) && Number(opts.inQuotaLb) > 0) {
+      inQuotaLb = Number(opts.inQuotaLb); // user-edited assumption
+    }
+    var exhausted = !!opts.quotaExhausted;
+    var withinQuotaLb = exhausted ? 0 : Math.min(volumeLb, inQuotaLb);
+    var aboveQuotaLb = volumeLb - withinQuotaLb;
+
+    var valueUsd = null;
+    if (opts.valueUsd != null && opts.valueUsd !== '') {
+      var v = Number(opts.valueUsd);
+      if (isFinite(v) && v > 0) valueUsd = v;
+    }
+    var aboveQuotaValueUsd = null;
+    var dutyUsd = null;
+    if (valueUsd != null) {
+      aboveQuotaValueUsd = volumeLb > 0 ? valueUsd * (aboveQuotaLb / volumeLb) : 0;
+      dutyUsd = aboveQuotaValueUsd * row.above_quota_surtax;
+    }
+
+    return {
+      year: Number(row.year),
+      presetLabel: TRQ_CANNED_VEG.preset_label,
+      status: TRQ_CANNED_VEG.status,
+      statusShort: TRQ_CANNED_VEG.status_short,
+      verified: TRQ_CANNED_VEG.verified,
+      inForce: TRQ_CANNED_VEG.in_force,
+      inQuotaKg: inQuotaLb / TRQ_CANNED_VEG.kg_to_lb,
+      inQuotaSourceKg: inQuotaSourceKg,
+      inQuotaOverridden: inQuotaLb !== row.in_quota_lb,
+      inQuotaLb: inQuotaLb,
+      surtaxRate: row.above_quota_surtax,
+      surtaxPct: Math.round(row.above_quota_surtax * 100),
+      volumeKg: volumeLb / TRQ_CANNED_VEG.kg_to_lb,
+      volumeLb: volumeLb,
+      withinQuotaLb: withinQuotaLb,
+      aboveQuotaLb: aboveQuotaLb,
+      aboveQuotaShare: volumeLb > 0 ? aboveQuotaLb / volumeLb : 0,
+      quotaExhausted: exhausted,
+      valueUsd: valueUsd,
+      aboveQuotaValueUsd: aboveQuotaValueUsd,
+      dutyUsd: dutyUsd,
+      dutyPer1000AboveQuotaValue: row.above_quota_surtax * 1000
+    };
+  }
+
+  /*
    * Brazil — Section 301 25% additional duty (IN EFFECT July 22, 2026)
    * ----------------------------------------------------------------
    * Separate USTR action: investigation initiated July 15, 2025 under
@@ -1351,6 +1495,8 @@
     GROUND_BEEF_WAIVER: GROUND_BEEF_WAIVER,
     SECTION_338_CANADA: SECTION_338_CANADA,
     CANADA_RETALIATION: CANADA_RETALIATION,
+    TRQ_CANNED_VEG: TRQ_CANNED_VEG,
+    trqCannedVegSurtax: trqCannedVegSurtax,
     BRAZIL_301: BRAZIL_301,
     TRUCKING_IMPACT: TRUCKING_IMPACT,
     REJECTED_DEAL_PRESET: REJECTED_DEAL_PRESET,

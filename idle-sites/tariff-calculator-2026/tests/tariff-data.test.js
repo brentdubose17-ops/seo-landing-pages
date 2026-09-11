@@ -1790,3 +1790,205 @@ test('Brazil blog post: CTA points to Country of Origin: Brazil (discoverable fr
   assert.ok(/Tariff Calculator 2026/.test(post), 'blog CTA must link the calculator');
   assert.ok(/scenario toggle/.test(post), 'blog CTA must reference the post-talks scenario toggle');
 });
+
+/* ==========================================================================
+ * Canada TRQ — canned vegetables (kanban t_e2d32b63)
+ * CITT GC-2025-001 recommendation: 3-year TRQ, in-quota 13,000,000 kg yr1
+ * (+2%/yr), above-quota surtax 50% -> 45% -> 40%, in-quota duty-free.
+ * The recommendation is NOT adopted; the 10% provisional surtax is in force.
+ * ========================================================================== */
+
+const TRQ = T.TRQ_CANNED_VEG;
+
+test('TRQ preset is loaded from presets/canada-trq-canned-vegetables.js', () => {
+  assert.ok(TRQ, 'TRQ_CANNED_VEG must be exported');
+  assert.equal(TRQ.preset_key, 'canada-trq-canned-vegetables');
+  assert.equal(TRQ.kg_to_lb, 2.2046226218);
+});
+
+test('TRQ years carry the CITT figures verbatim (kg from ¶301-302, rates 50/45/40)', () => {
+  assert.equal(TRQ.years.length, 3, 'three TRQ years');
+  assert.deepEqual(
+    TRQ.years.map(r => [r.year, r.in_quota_kg, r.above_quota_surtax]),
+    [[1, 13000000, 0.50], [2, 13260000, 0.45], [3, 13525200, 0.40]]
+  );
+  // +2%/yr escalation (¶309)
+  assert.equal(Math.round(13000000 * 1.02), 13260000);
+  assert.equal(Math.round(13260000 * 1.02), 13525200);
+});
+
+test('TRQ pound conversions are exact derivations of the kg figures', () => {
+  assert.deepEqual(TRQ.years.map(r => r.in_quota_lb), [28660094, 29233296, 29817962]);
+  // the wire's "about 30 million pounds" is a rounding of year 1 — the tool must not use 30M as the threshold
+  assert.notEqual(TRQ.years[0].in_quota_lb, 30000000);
+});
+
+test('TRQ status is the recommendation, not adopted law', () => {
+  assert.match(TRQ.status, /RECOMMENDED/);
+  assert.match(TRQ.status, /NOT ADOPTED/);
+  assert.equal(TRQ.recommendation_date, '2026-09-09');
+  assert.equal(TRQ.in_force.rate, 0.10);
+  assert.equal(TRQ.in_force.effective, '2026-06-19');
+  assert.match(TRQ.in_force.exemptions, /United States/);
+});
+
+test('TRQ product scope is the canned (metal-can) list; glass jars and frozen excluded', () => {
+  const vals = TRQ.product_scope.map(p => p.value);
+  ['corn', 'peas', 'green-beans', 'wax-beans', 'peas-carrots', 'mixed-vegetables',
+   'white-beans', 'black-beans', 'red-beans', 'pinto-beans', 'chickpeas'].forEach(v => {
+    assert.ok(vals.includes(v), `product scope must include ${v}`);
+  });
+  assert.ok(TRQ.scope_exclusions.some(s => /glass jars/i.test(s)), 'glass jars must be excluded');
+  assert.ok(TRQ.scope_exclusions.some(s => /Frozen vegetables are not covered/i.test(s)), 'frozen must be out of scope');
+});
+
+test('trqCannedVegSurtax: the 30M lb worked example splits at 28,660,094 lb and pays 50% above it', () => {
+  const r = T.trqCannedVegSurtax({ volumeLb: 30000000, year: 1 });
+  assert.equal(r.inQuotaLb, 28660094);
+  assert.equal(r.withinQuotaLb, 28660094);
+  assert.equal(r.aboveQuotaLb, 1339906);
+  assert.equal(r.surtaxRate, 0.50);
+  assert.equal(r.surtaxPct, 50);
+  assert.equal(r.quotaExhausted, false);
+});
+
+test('trqCannedVegSurtax: dollar duty scales with the above-quota share of value', () => {
+  const r = T.trqCannedVegSurtax({ volumeLb: 30000000, year: 1, valueUsd: 100000 });
+  // 1,339,906 / 30,000,000 = 4.4664% of the value, taxed at 50%
+  assert.ok(Math.abs(r.aboveQuotaValueUsd - 4466.3533) < 0.01, `aboveQuotaValueUsd ${r.aboveQuotaValueUsd}`);
+  assert.ok(Math.abs(r.dutyUsd - 2233.1767) < 0.01, `dutyUsd ${r.dutyUsd}`);
+  assert.equal(r.dutyPer1000AboveQuotaValue, 500);
+  // no value -> rates only, no invented dollars
+  assert.equal(T.trqCannedVegSurtax({ volumeLb: 30000000, year: 1 }).dutyUsd, null);
+});
+
+test('trqCannedVegSurtax: the surtax declines 50% -> 45% -> 40% by year', () => {
+  [[1, 0.50], [2, 0.45], [3, 0.40]].forEach(([year, rate]) => {
+    const r = T.trqCannedVegSurtax({ volumeLb: 30000000, year });
+    assert.equal(r.surtaxRate, rate, `year ${year} rate`);
+    assert.equal(r.surtaxPct, Math.round(rate * 100));
+  });
+  // year 3's higher threshold also lifts the duty-free volume
+  const y3 = T.trqCannedVegSurtax({ volumeLb: 30000000, year: 3 });
+  assert.equal(y3.inQuotaLb, 29817962);
+  assert.equal(y3.aboveQuotaLb, 182038);
+});
+
+test('trqCannedVegSurtax: in-quota volume is duty-free (no surtax)', () => {
+  const r = T.trqCannedVegSurtax({ volumeLb: 25000000, year: 1, valueUsd: 100000 });
+  assert.equal(r.withinQuotaLb, 25000000);
+  assert.equal(r.aboveQuotaLb, 0);
+  assert.equal(r.dutyUsd, 0);
+  assert.equal(r.aboveQuotaShare, 0);
+  // exactly at the line is still fully in quota
+  const at = T.trqCannedVegSurtax({ volumeLb: 28660094, year: 1, valueUsd: 100000 });
+  assert.equal(at.aboveQuotaLb, 0);
+  assert.equal(at.dutyUsd, 0);
+});
+
+test('trqCannedVegSurtax: one pound over the line starts the surtax (cliff edge)', () => {
+  const r = T.trqCannedVegSurtax({ volumeLb: 28660095, year: 1, valueUsd: 100000 });
+  assert.equal(r.aboveQuotaLb, 1);
+  assert.ok(r.dutyUsd > 0, 'surtax must be non-zero above the line');
+  // the just-over example used in the worked-example table
+  const c = T.trqCannedVegSurtax({ volumeLb: 29000000, year: 1, valueUsd: 100000 });
+  assert.equal(c.aboveQuotaLb, 339906);
+  assert.ok(Math.abs(c.dutyUsd - 586.0448) < 0.01, `expected 586.04, got ${c.dutyUsd}`);
+});
+
+test('trqCannedVegSurtax: an exhausted quota prices the whole volume above the line', () => {
+  const r = T.trqCannedVegSurtax({ volumeLb: 30000000, year: 1, quotaExhausted: true, valueUsd: 100000 });
+  assert.equal(r.withinQuotaLb, 0);
+  assert.equal(r.aboveQuotaLb, 30000000);
+  assert.equal(r.aboveQuotaShare, 1);
+  assert.equal(r.dutyUsd, 50000);
+});
+
+test('trqCannedVegSurtax: kg input works and round-trips to the exact lb threshold', () => {
+  const r = T.trqCannedVegSurtax({ volumeKg: 13000000, year: 1 });
+  assert.equal(r.volumeLb, 28660094);
+  assert.equal(r.aboveQuotaLb, 0, '13,000,000 kg must be exactly at the year-1 line');
+  assert.ok(Math.abs(r.volumeKg - 13000000) < 1, `kg round trip ${r.volumeKg}`);
+});
+
+test('trqCannedVegSurtax: the in-quota threshold is overridable (editable assumption)', () => {
+  const r = T.trqCannedVegSurtax({ volumeLb: 30000000, year: 1, inQuotaLb: 30000000 });
+  assert.equal(r.inQuotaOverridden, true);
+  assert.equal(r.aboveQuotaLb, 0);
+  assert.equal(r.inQuotaSourceKg, 13000000);
+  const base = T.trqCannedVegSurtax({ volumeLb: 30000000, year: 1 });
+  assert.equal(base.inQuotaOverridden, false);
+});
+
+test('trqCannedVegSurtax: rejects nonsense input instead of guessing', () => {
+  assert.equal(T.trqCannedVegSurtax({ volumeLb: 0, year: 1 }), null);
+  assert.equal(T.trqCannedVegSurtax({ volumeLb: -5, year: 1 }), null);
+  assert.equal(T.trqCannedVegSurtax({ year: 1 }), null);
+  assert.equal(T.trqCannedVegSurtax({ volumeLb: 1000, year: 9 }), null);
+  assert.equal(T.trqCannedVegSurtax({}), null);
+});
+
+test('TRQ preset survives a missing data file (no silent fallback to wrong rates)', () => {
+  // The preset module is the single source of truth; require() it directly.
+  const p = require('../presets/canada-trq-canned-vegetables.js');
+  assert.equal(p.preset_key, 'canada-trq-canned-vegetables');
+  assert.equal(p.years[0].in_quota_kg, 13000000);
+  assert.equal(p.years[2].above_quota_surtax, 0.40);
+});
+
+test('index.html: TRQ surtax mode is present, deep-linkable and does not replace the ad valorem mode', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  // mode switcher + panel
+  assert.ok(/id="calcModes"/.test(html), 'index.html must have the mode switcher');
+  assert.ok(/id="modeBtnTrq"/.test(html), 'index.html must have the TRQ mode button');
+  assert.ok(/id="modeBtnAv"/.test(html), 'index.html must keep the ad valorem mode button');
+  assert.ok(/id="avModeWrap"/.test(html), 'index.html must wrap the existing form in avModeWrap');
+  assert.ok(/id="trqPanel"/.test(html), 'index.html must have the TRQ panel');
+  assert.ok(/id="avModeWrap"/.test(html) && /id="direction"/.test(html) && /id="category"/.test(html) && /id="value"/.test(html),
+    'the existing calculator controls must be untouched');
+  // inputs
+  ['trqProduct', 'trqVolume', 'trqUnit', 'trqYear', 'trqQuota', 'trqQuotaLb', 'trqValue', 'trqPermalink'].forEach(id => {
+    assert.ok(html.includes(`id="${id}"`), `index.html must have #${id}`);
+  });
+  // threshold shown as an editable assumption
+  assert.ok(/Assumption: in-quota threshold \(lb\) — editable/.test(html), 'threshold must be labelled an editable assumption');
+  assert.ok(/13,000,000 kg \(≈ 28,660,094 lb\)/.test(html), 'the kg source figure and its lb conversion must be on screen');
+  // deep link wiring
+  assert.ok(/params\.get\('mode'\) === 'trq'/.test(html), 'index.html must handle ?mode=trq');
+  assert.ok(/url\.search/.test(html.toLowerCase()) || /URLSearchParams/.test(html), 'deep link must read the query string');
+  assert.ok(/default_volume_lb/.test(html), 'the mode must prefill the worked-example volume');
+  // 30M lb prefill + worked examples
+  assert.ok(/30,000,000 lb/.test(html), 'the 30M lb worked example must render');
+  assert.ok(/just over the line/.test(html), 'the second (cliff-edge) example must render');
+  // status caveat + sources on screen
+  assert.ok(/RECOMMENDED BY THE CITT — NOT ADOPTED/.test(html), 'the not-adopted status flag must be visible');
+  assert.ok(/cbsa-asfc\.gc\.ca\/publications\/cn-ad\/cn26-14-eng\.html/.test(html), 'must link CBSA Customs Notice 26-14');
+  assert.ok(/canada\.ca\/en\/department-finance\/news\/2026\/06\/canada-announces-provisional-safeguard-tariff/.test(html),
+    'must link the Finance Canada announcement');
+  assert.ok(/decisions\.citt-tcce\.gc\.ca/.test(html), 'must link the CITT report');
+  // legality note
+  assert.ok(/recommended TRQ does not preclude additional imports/.test(html), 'must carry the "still legal" quote');
+  // FAQ parity for the two new Q&As (gate rule: visible == FAQPage count)
+  ['Is the 50% surtax on canned vegetables in force yet?',
+   'Do US canned vegetables lose their tariff exemption under the recommendation?'].forEach(q => {
+    const inSchema = (html.match(new RegExp(q.replace(/[?]/g, '\\?'), 'g')) || []).length;
+    assert.ok(inSchema >= 2, `"${q}" must appear in both the visible FAQ and the FAQPage schema`);
+  });
+});
+
+test('index.html: TRQ data layer is wired to this page (preset script + accessor exports)', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  const data = fs.readFileSync(path.join(__dirname, '..', 'tariff-data.js'), 'utf8');
+  assert.ok(/<script src="presets\/canada-trq-canned-vegetables\.js"><\/script>/.test(html),
+    'index.html must load the TRQ preset before tariff-data.js');
+  assert.ok(html.indexOf('canada-trq-canned-vegetables.js') < html.indexOf('src="tariff-data.js"'),
+    'preset must load before tariff-data.js');
+  assert.ok(/TRQ_CANNED_VEG: TRQ_CANNED_VEG/.test(data), 'tariff-data.js must export TRQ_CANNED_VEG');
+  assert.ok(/trqCannedVegSurtax: trqCannedVegSurtax/.test(data), 'tariff-data.js must export trqCannedVegSurtax');
+  assert.ok(/window\.setCalcMode = setCalcMode/.test(html), 'setCalcMode must be global for the mode buttons');
+  assert.ok(/window\.runTrq = runTrq/.test(html), 'runTrq must be global for the calculate button');
+});
