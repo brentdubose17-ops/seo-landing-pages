@@ -2,6 +2,62 @@
 
 All notable changes to the calculator asset (aiagencycalculator.com) are documented here.
 
+## 2026-09-11 — The last 30 pages stop scrolling sideways on a phone: 392–1248 px → the viewport at 320/360/390/414 px (kanban t_db57165a)
+
+- **Defect (pre-existing, live until this change):** the 2026-09-10 sitemap sweep (`t_cc4b7740`) left **30 of the 66 pages** scrolling horizontally at a 390×844 viewport, worst `scrollWidth` **1248px** (`/blog/local-ai-agents-portable-computer-costs/`). Re-measured on the live URLs before touching anything: all 30 still overflowed, every number identical to the sweep — so this was not a stale list. Four pages from that list had already been fixed on `t_ec106ca5`.
+- **Root cause, measured per page (3 different causes hiding behind one symptom):**
+  1. **27 pages — a bare `<table>` with no scroll container at all (53 tables).** The table sits directly in `<article>` (`overflow-x: visible`), so the widest table's min-content width propagates to the document: `/ai-automation-pricing-guide-2026` renders `ARTICLE > TABLE` at **516 / 477 / 492px** with **0** `.table-wrap` on the page and drags the document to 544px. The "60–66 offender elements" counts are the table's own `<tr>/<th>/<td>` descendants — none of them clip, because nothing above them scrolls. `/blog/local-ai-agents-portable-computer-costs/` is the extreme case: a **1200px-wide `<img>`** (858px past the viewport) on a page that ships **no stylesheet at all** (0 `<style>` blocks, no `<link rel="stylesheet">`).
+  2. **3 pages whose overflow is a long unbreakable token, not a table** — `/codex-pricing` (its single table was already wrapped; the 418px came from a long URL/model-id token in an `<a>`), `/gpt-5.6-cyber-model-cost-risk-calculations` and `/mcp-2026-spec-drops-sessions-pricing-impact` (both have **0** `<table>` elements).
+  3. **`/ai-video-cost-per-second-2026` — 0 page-level offender elements at 408px.** An element-count reading says "nothing overflows"; the culprit was one unbreakable **text token**, `$0.0125/s*60s*60m*24h*30.5d=$32,940/mo…`, exactly the class of defect the homepage card found.
+- **The fix is the site's own `.table-wrap` convention, applied additively to each page's existing `<style>` block** (the markup older pages such as `index.html`, `codex-pricing` and `vertical-ai-pricing-vs-token-pricing` already carry):
+  ```css
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+  .table-wrap table { margin: 0; }
+  code, a { overflow-wrap: break-word; }
+  ```
+  and each bare `<table>` wrapped in `<div class="table-wrap"> … </div>` — **53 tables across 27 pages**. The wrapper's `20px 0` replaces the table's own `20px 0` inside a block-formatting context, so desktop spacing is bit-for-bit what it was (proven below, not asserted). `/ai-video-cost-per-second-2026` additionally got **5 `<wbr>`** break points inside that one token (renders identically, adds no text). The classless blog page got a minimal `<style>` block (the page's first) with a **margin-less** wrapper — a `20px 0` margin there would have grown the desktop document by 8px, because a page with no stylesheet has no table margin to replace — plus `img { max-width: 100%; height: auto; }` for its 1200px image.
+- **Why this convention and not `t_ec106ca5`'s `.tw` + `a, p, li, td, th { overflow-wrap: anywhere; }`:** both conventions exist on this site. `anywhere` is the better mobile result (it compresses a table to the wrapper so nothing scrolls at all), but it *does* move desktop geometry — the `t_ec106ca5` entry documents astra's document height moving 9864→9656 and its columns redistributing, all of it attributable to that one rule. Across 30 pages at once I chose the provably desktop-inert path the card prescribes for bare tables outside a bordered card: wrappers only. The trade-off is honest — every wrapped table wider than its wrapper **scrolls inside it**, verified reachable, rather than re-flowing. Bringing these 30 pages onto `.tw`/`anywhere` is a separate, deliberate design change, not something to smuggle in as "the mobile fix".
+- **Measured before → after** (`scrollWidth` px, live URLs in a 390×844-emulated Chromium, then the same script against the local artifacts):
+
+  | page | before@390 | after 320 / 360 / 390 / 414 | mobile checks | desktop fingerprint |
+  |---|---|---|---|---|
+  | `/ai-automation-pricing-guide-2026` | 544 | 320 / 360 / 390 / 414 | 32/32 | 6/6 |
+  | `/freelance-ai-developer-vs-agency-pricing-comparison` | 527 | 320 / 360 / 390 / 414 | 32/32 | 6/6 |
+  | `/ai-maintenance-and-support-costs-annual-projection` | 602 | 320 / 360 / 390 / 414 | 32/32 | 6/6 |
+  | `/ai-chatbot-development-cost-breakdown-2026` | 639 | 320 / 360 / 390 / 414 | 32/32 | 6/6 |
+  | `/how-to-budget-for-ai-automation` | 724 | 320 / 360 / 390 / 414 | 32/32 | 6/6 |
+  | `/monthly-retainer-vs-project-pricing-ai` | 545 | 320 / 360 / 390 / 414 | 40/40 | 6/6 |
+  | `/ai-agency-pricing-models-explained` | 728 | 320 / 360 / 390 / 414 | 24/24 | 6/6 |
+  | `/ai-implementation-cost-by-industry-2026` | 669 | 320 / 360 / 390 / 414 | 24/24 | 6/6 |
+  | `/chatgpt-business-premium-seats-pricing` | 530 | 320 / 360 / 390 / 414 | 24/24 | 6/6 |
+  | `/ai-automation-roi-calculator-guide` | 558 | 320 / 360 / 390 / 414 | 32/32 | 6/6 |
+  | `/cost-of-hiring-an-ai-agency-2026` | 597 | 320 / 360 / 390 / 414 | 32/32 | 6/6 |
+  | `/total-cost-of-ownership-ai-automation-3-year-model` | 491 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+  | `/blog/openai-jalapeno-chip-inference-costs/` | 478 | 320 / 360 / 390 / 414 | 24/24 | 6/6 |
+  | `/enterprise-ai-integration-pricing-tiers` | 753 | 320 / 360 / 390 / 414 | 24/24 | 6/6 |
+  | `/model-selection-muse-spark` | 516 | 320 / 360 / 390 / 414 | 24/24 | 6/6 |
+  | `/qwen3-8-flash-next-cost` | 488 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+  | `/hidden-costs-of-ai-automation` | 460 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+  | `/bedrock-agents-classic-agentcore-migration-cost` | 479 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+  | `/cursor-model-cost-shift` | 422 | 320 / 360 / 390 / 414 | 24/24 | 6/6 |
+  | `/grok-bot-pricing-agency-cost` | 435 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+  | `/blog/ai-model-fatigue-switching-costs/` | 430 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+  | `/blog/local-ai-agents-portable-computer-costs/` | 1248 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+  | `/deepseek-v4-api-price-increase-2026` | 415 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+  | `/gemini-3-8-flash-api-pricing` | 411 | 320 / 360 / 390 / 414 | 24/24 | 6/6 |
+  | `/openai-gpt-6-astra-pricing` | 402 | 320 / 360 / 390 / 414 | 24/24 | 6/6 |
+  | `/ai-agent-migration-service` | 466 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+  | `/codex-pricing` | 418 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+  | `/gpt-5.6-cyber-model-cost-risk-calculations` | 402 | 320 / 360 / 390 / 414 | 8/8 | 6/6 |
+  | `/mcp-2026-spec-drops-sessions-pricing-impact` | 392 | 320 / 360 / 390 / 414 | 8/8 | 6/6 |
+  | `/ai-video-cost-per-second-2026` | 408 | 320 / 360 / 390 / 414 | 16/16 | 6/6 |
+
+- **Desktop neutrality, per page, not asserted** (`1280×900`, pre-patch revision vs post-patch): **30/30 pages pass 6/6** — every id-bearing element keeps its box within 1px, table column widths identical, **document height identical** and `scrollWidth` identical, and the DOM grows by exactly the wrapper `<div>`s plus `<wbr>`s and nothing else. Two examples: `/codex-pricing` `docH 6621→6621`, `wraps 1→1` (guard only, no wrapper needed); `/blog/local-ai-agents-portable-computer-costs/` `docH 3815→3815`, `all-elements 198→199` (exactly one wrapper).
+- **Verified live after deploy:** 30/30 URLs pass the mobile check at 320/360/390/414 (**8/8–40/40** depending on table count) with **0 page-level offenders** and every wrapper reachable (`scrollLeft = max` brings the far-right header inside the viewport); **30/30 live pages are byte-identical to the deployed artifact** after `strip_cf_edge_injection` on both sides (`live_sha256.json`); the publisher's own manifest check reports **86 live rows compared, 0 mismatches**. Consistency gate: **0 errors, 13 pre-existing warnings, 1 baselined** (404.html json-ld) — unchanged.
+- **Deployed:** `bash ~/seo-pages/tools/deploy-idle-site.sh ai-agency-pricing-calculator --files=<all 30 pages> --verify-live` → deployment **`fd8b0635-93a5-4e56-b00f-964ba4db24da`**, gate_errors 0, `git_head 2a400c4`.
+- **Tooling added (workspace `t_db57165a`, not shipped — the deploy prunes `tests/`):** `mcheck.py` (phone check that understands `.table-wrap` **and** `.tw` — `tests/mobile-overflow-390.py` only asserts wrapper reachability for `.table-wrap`, so a `.tw` page prints a vacuous PASS), `probe_tokens.py` (DOM binary descent + Range-per-token probe with JSON output), `dcompare.py` (desktop fingerprint with the DOM-growth allowance), `run_batch.py` (patch + verify a whole batch, auto-inserting `<wbr>`s from the probe when a page still fails).
+- **Finding (separate, not fixed here):** `/blog/local-ai-agents-portable-computer-costs/` ships with **no stylesheet at all** — it was rendering with browser defaults at every viewport, which is why an 1200px image was dragging the page 858px sideways. This change makes it mobile-safe, but the page is still unstyled relative to every sibling post. Tracked as a follow-up card.
+- **Housekeeping:** `monthly-retainer-vs-project-pricing-ai.html` also carried pre-existing **uncommitted but already-live** content changes (published by the deployment logged at 02:31Z and never committed). They are included in this commit so `git HEAD` matches production; without that, the next deploy that did not declare the file would have silently reverted the live page to the old revision.
 ## 2026-09-11 — /gpt-live-1-voice-agent-cost deep-links the four model-swapped calculator scenarios (kanban t_b3b7001e)
 
 - **Why the links were withheld until now:** the article discussed the default / Luna / Astra / blowout scenarios but linked only the calculator's front door, because a `#p=` link for a non-Terra backend reopened at Terra's rates (Astra read $0.0396 instead of $0.1800; blowout $0.2552 / 56.1% instead of $0.8760 / 81.4%). t_d76a69db fixed `init()` — the three rate inputs are re-seeded from the restored `backendModel` *before* a non-null `inRate`/`cachedRate`/`outRate` from the hash is applied as an explicit override (contract: `CALCULATOR-API-SPEC.md` §10.2.1) — and that fix is live (deployment `e28aa281-3f51-4afe-8ee5-11b7671d83b0`). These links were generated against the fixed calculator.
