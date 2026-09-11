@@ -2,7 +2,7 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-09-07 (Model Switching Cost / cost-of-keeping-up estimator — task t_6a685c3e)
+**Last updated:** 2026-09-10 (AI inference as a share of gross margin consumed — task t_9b19d6a2)
 
 ---
 
@@ -20,6 +20,7 @@ independent estimators in one page:
 | 5 | **ChatGPT Business Seat Cost Estimator** (NEW 2026-08-25) | `calculateChatgptSeats()` | `#chatgpt-seats-estimator` |
 | 6 | **Compute Supply Scenario** (NEW 2026-08-29) | `calculateSupply()` | `#compute-supply-estimator` |
 | 7 | **Claude Code Usage Limit Cost Impact Estimator** (NEW 2026-08-30) | `calculateClaudeCodeLimits()` | `#claude-code-limits-estimator` |
+| 8 | **AI Inference as a Margin Line Estimator** (NEW 2026-09-10) | `calculateInferenceMargin()` | `#inference-margin-estimator` |
 
 All calculators are client-side. No API keys, no server round-trips (except the
 optional email-capture worker on result unlock).
@@ -711,8 +712,104 @@ t_000de443; it is internal-linked from `/ai-agent-api-cost-calculator`,
 `/ai-agent-cost-blowups` **once those pages are re-deployed with the links** —
 until then the links are one-directional (this page → those pages).
 
+## 11. AI Inference as a Margin Line Estimator (NEW 2026-09-10)
+
+**Location:** `index.html`, section `#inference-margin-estimator`, immediately after
+the main rate-table section (function `calculateInferenceMargin()`).
+
+Purpose: express AI inference as a **share of gross margin consumed** instead of a
+tool-cost line, so the reader sees what inference does to the margin they keep.
+Reference case: @levelsio (Pieter Levels), Sept 9, 2026 15:21:24 UTC — self-reported
+margin of 99.4% without AI inference and 93% with it (mostly Photo AI), i.e. a
+6.4-point gross-margin cost.
+
+### 11.1 Inputs
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `infPreset` | Reference Case | select | `levelsio` (preloaded) \| `custom` | — |
+| `infRevenue` | Monthly Revenue ($) | number | `100000` | 1–100,000,000, step 1000 |
+| `infCogs` | Monthly Cost of Goods EXCLUDING AI Inference ($) | number | `600` | 0–100,000,000, step 100 |
+| `infSpend` | Monthly AI Inference Spend ($) | number | `6400` | 0–100,000,000, step 100 |
+
+The reference case is entered **per $100,000 of monthly revenue**: the operator never
+disclosed revenue and the 6.4-point drop is a ratio, so any revenue base reproduces
+99.4% → 93.0% exactly. Editing any input flips the select to `custom`
+(`markInferenceCustom()`); re-selecting the preset restores the reference values and
+recomputes.
+
+### 11.2 Model
+
+```
+cogsTotal      = cogs + spend                      // COGS with inference
+gmDollars      = revenue - cogs                    // gross margin before inference
+gmBefore       = gmDollars / revenue * 100         // 99.4% on the reference case
+gmAfter        = (revenue - cogsTotal) / revenue * 100   // 93.0% on the reference case
+deltaPts       = gmBefore - gmAfter                // 6.4 points (the margin cost)
+pctOfGrossMargin = spend / gmDollars * 100         // 6.44% -> "6.4%" (null if gmDollars <= 0)
+pctOfRevenue   = spend / revenue * 100             // 6.4%
+cogsShare      = spend / cogsTotal * 100           // 91.4% (null if cogsTotal == 0)
+multiple       = cogs > 0 ? spend / cogs : null    // 10.7x
+```
+
+There is **no** dependency on `calculatePricing()` or any other estimator in the file:
+the factor is additive, and every existing input/output pair is untouched.
+
+### 11.3 Outputs
+
+| Result ID | Meaning | Reference case |
+|-----------|---------|----------------|
+| `im-margin-before` | Gross margin without inference | `99.4%` |
+| `im-margin-after` | Gross margin with inference | `93.0%` |
+| `im-delta` | Margin cost of inference (points, 1 dp) | `6.4 pts` |
+| `im-pct-gm` | Inference as % of gross margin consumed | `6.4%` |
+| `im-pct-rev` | Inference as % of revenue | `6.4%` |
+| `im-cogs-share` | Inference share of all COGS | `91.4%` |
+| `im-note` | Step-by-step arithmetic for the current inputs | — |
+
+All money sub-lines use `imMoney()` (negative-safe). The section's intro, the result
+cards and the note are **shipped pre-rendered** with the reference numbers, so a client
+that does not execute JavaScript still reads 99.4% → 93.0%; `DOMContentLoaded` calls
+`calculateInferenceMargin(true)` (silent = no alert, no scroll) to keep the DOM and the
+maths in sync, and the button/`onchange` handlers recompute visibly.
+
+### 11.4 Verified
+
+- `node tests/inference-margin-verify.mjs index.html` → **46/46** (reference case
+  99.4% → 93.0% / 6.4 pts / 6.4% consumed / 91.4% COGS; static no-JS values;
+  scale-invariance at a $212,000/mo revenue proxy; zero-inference; 60% COGS with
+  non-inference COGS; zero COGS; inference overrunning the margin; invalid/negative
+  guards).
+- `node ~/.hermes/scripts/calc-regression-harness.mjs verify index.html
+  tests/calc-regression-baseline-t_9b19d6a2.json` → **10/10** against a baseline
+  captured from the pre-change file.
+- `python3 ~/.hermes/scripts/site_consistency.py index.html` → 0 errors / 0 warnings
+  (FAQ visible 43 == FAQPage mainEntity 43; one `<h1>`; both JSON-LD blocks parse).
+
+### 11.5 Deploy
+
+```bash
+~/seo-pages/tools/deploy-idle-site.sh ai-agency-pricing-calculator \
+  --files=index.html --verify-live
+```
+
 ## Changelog
 
+- **2026-09-10** — AI inference as a **share of gross margin consumed** added as
+  an additive estimator on the homepage calculator (`#inference-margin-estimator`,
+  section 11 above; task t_9b19d6a2). Inputs: monthly revenue, monthly COGS
+  excluding inference, monthly inference spend. Outputs: gross margin without vs
+  with inference, the margin cost in points, inference as % of gross margin
+  consumed, as % of revenue, and as a share of all COGS. Reference case preloaded
+  and selectable — @levelsio, Sept 9 2026 15:21:24 UTC, "Without AI inference my
+  profit margin is now 99.4%… With AI inference (mostly Photo AI) it goes down to
+  93%!" — entered per $100,000 of monthly revenue because revenue was never
+  disclosed and the 6.4-point drop is a scale-free ratio. Uses the verified fact
+  pack from t_43f34fc4 (and its C3 correction: no claim that inference exceeds the
+  $25,000/mo eliminated SaaS stack). New FAQ + FAQPage schema entry
+  ("What percentage of revenue does AI inference cost?" — visible 42→43 = schema
+  42→43). Main pricing calculator untouched: regression harness 10/10 against a
+  pre-change baseline; new factor harness 46/46; consistency gate clean.
 - **2026-09-10** — GPT-Live-1 voice + backend **two-meter** cost calculator added
   (task t_5e4b91ac; fact basis the verified source pack from t_1c163248,
   `gpt-live-1-billing-facts.md`). New standalone page
