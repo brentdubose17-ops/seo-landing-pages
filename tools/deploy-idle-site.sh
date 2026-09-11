@@ -64,6 +64,18 @@
 #                          shipped from the worktree (escape hatch, logged).
 #   --exclude-dirty=GLOB[..] Accepted for compatibility; undeclared files are
 #                          held at HEAD/dropped automatically now (logged).
+#   --strict-include       Abort (rc 2) when --files names an EXCLUDED path
+#                          (tests/, full/, deploy_main/, CHANGELOG.md,
+#                          .wrangler/, editor leftovers) instead of ignoring it
+#                          with a visible note + a publisher-log event (the
+#                          default - card t_d5f7f382: "declare every changed
+#                          file" made a correct run die silently).
+#   --strict-dirty         Refuse to publish (rc 1) when a dirty file is LIVE
+#                          byte-for-byte with its uncommitted worktree copy yet
+#                          differs from HEAD. The publisher carries such a file
+#                          forward, which only holds until a run that cannot
+#                          compare live ships HEAD and rolls the page back - so
+#                          with this flag it refuses until the file is committed.
 #   --no-live-check        Do not compare uncommitted files against the live page.
 #   --strict-redirects     Pass through to the publisher: treat an artifact whose
 #                          own URL is rewritten by a _redirects rule as a hard
@@ -81,6 +93,12 @@
 #   (The old exit code 2 for "guard blocked" is gone: nothing blocks any more —
 #    undeclared content simply cannot be published. Callers that special-cased
 #    rc=2 still print the publisher's output, which carries the real diagnosis.)
+#   rc=2 also covers a bad --files entry: a declared path that does not exist,
+#   or (with --strict-include) one excluded by policy. A declared-but-EXCLUDED
+#   path is otherwise IGNORED with a loud note and a publisher-log event
+#   instead of killing the run (card t_d5f7f382).
+#   Every non-zero exit is audited below as DELEGATED-FAIL with the publisher's
+#   own `ERROR: ...` line, and the publisher logs an `aborted` event.
 #
 # Docs: ~/seo-pages/idle-sites/DEPLOY.md  (flow) ·
 #       ~/.hermes/scripts/PUBLISH-IDLE-SITE.md (internals, gate, beacon, revert)
@@ -92,7 +110,11 @@ LOG_DEFAULT="$HOME/.hermes/logs/idle-site-deploys.log"
 TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
 die() { echo "ERROR: $*" >&2; exit 2; }
-usage() { sed -n '2,83p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() {
+  # print the header comment block (everything before `set -uo pipefail`)
+  sed -n "2,$(( $(grep -n '^set -uo pipefail' "$0" | head -1 | cut -d: -f1) - 1 ))p" "$0" \
+    | sed 's/^# \{0,1\}//'
+}
 
 SITE_ARG=""
 declare -a DECLARED=()
@@ -105,6 +127,8 @@ LIVE_CHECK=1
 DRY_RUN=0
 VERIFY_LIVE=0
 STRICT_REDIRECTS=0
+STRICT_INCLUDE=0
+STRICT_DIRTY=0
 KEEP_STAGE=0
 LOG="$LOG_DEFAULT"
 
@@ -120,6 +144,8 @@ while [ $# -gt 0 ]; do
     --log=*)           LOG="${1#--log=}" ;;
     --no-live-check)   LIVE_CHECK=0 ;;
     --strict-redirects) STRICT_REDIRECTS=1 ;;
+    --strict-include)  STRICT_INCLUDE=1 ;;
+    --strict-dirty)    STRICT_DIRTY=1 ;;
     --dry-run)         DRY_RUN=1 ;;
     --verify-live)     VERIFY_LIVE=1 ;;
     --keep-stage)      KEEP_STAGE=1 ;;
@@ -165,6 +191,8 @@ done
 [ "$VERIFY_LIVE" != 1 ] && ARGS+=(--no-verify-live)
 [ "$LIVE_CHECK" != 1 ] && ARGS+=(--no-live-dirty-check)
 [ "$STRICT_REDIRECTS" = 1 ] && ARGS+=(--strict-redirects)
+[ "$STRICT_INCLUDE" = 1 ] && ARGS+=(--strict-include)
+[ "$STRICT_DIRTY" = 1 ]   && ARGS+=(--strict-dirty)
 [ "$KEEP_STAGE" = 1 ] && ARGS+=(--keep-staging)
 
 # --- undeclared dirty files: allow-dirty ships, everything else is held at HEAD ---------
@@ -239,7 +267,8 @@ case "$rc" in
      else
        log_line "DELEGATED-OK site=$SITE_KEY branch=$BRANCH project=${PROJECT:-$SITE_KEY} declared=$(printf '%s,' "${DECLARED[@]}") allowed=$(printf '%s,' "${ALLOWED[@]:-}") held=$(printf '%s,' "${HELD[@]:-}") rc=$rc"
      fi ;;
-  *) log_line "DELEGATED-FAIL site=$SITE_KEY branch=$BRANCH project=${PROJECT:-$SITE_KEY} declared=$(printf '%s,' "${DECLARED[@]}") rc=$rc tail=$(tail -2 <<< "$out" | tr '\n' ' ')" ;;
+  *) err="$(grep -m1 '^ERROR:' <<< "$out" || true)"
+     log_line "DELEGATED-FAIL site=$SITE_KEY branch=$BRANCH project=${PROJECT:-$SITE_KEY} declared=$(printf '%s,' "${DECLARED[@]}") rc=$rc err=${err:-$(tail -2 <<< "$out" | tr '\n' ' ')}" ;;
 esac
 echo
 echo "   audit: $LOG   |   publisher log: ~/.hermes/scripts/logs/publish-idle-site.log"

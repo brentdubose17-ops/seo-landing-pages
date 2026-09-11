@@ -94,9 +94,11 @@ body still the older copy) and had to be re-deployed by its owner.
 | `--files` declared | worktree bytes (this run's own work) |
 | `--allow-dirty` glob | worktree bytes, logged loudly as `[undeclared, SHIPPED …]` |
 | `--exclude-dirty` glob | held back — tracked file reset to `HEAD` bytes, untracked dropped (now automatic for undeclared files) |
-| undeclared dirty, already live byte-for-byte | worktree bytes (no live change) |
+| undeclared dirty, already live byte-for-byte | worktree bytes (no live change) — reported as `LIVE-BUT-UNCOMMITTED` with its `HEAD` vs live hash, and refused with `--strict-dirty` |
 | undeclared dirty, not live | **the `HEAD` bytes ship; the in-flight edit does not** (no block, no leak) |
+| untracked + undeclared | dropped from the artifact, reported (if it is live, this deploy removes it) |
 | committed, unchanged | committed bytes |
+| declared but excluded (`tests/`, `CHANGELOG.md`, …) | nothing — reported loudly and ignored; the rest of the publish proceeds |
 
 ## Options
 
@@ -109,15 +111,26 @@ body still the older copy) and had to be re-deployed by its owner.
 --exclude-dirty=GLOB[..] accepted for compatibility; undeclared files are already held at HEAD
 --no-live-check          do not compare uncommitted files against live bytes
 --strict-redirects       fail (instead of verify) an asset whose own URL a _redirects rule rewrites
+--strict-include         abort (rc 2) when --files names an excluded path instead of ignoring it
+--strict-dirty           refuse (rc 1) when a dirty file is live byte-for-byte with its uncommitted
+                         worktree copy yet differs from HEAD
 --dry-run                stage + gate + report, no upload
 --verify-live            after deploy, re-fetch the whole manifest and compare edge-injection-canonicalised sha256
 --keep-stage             keep the staging dir and print its path
 --log=FILE               audit log (default ~/.hermes/logs/idle-site-deploys.log)
 ```
 
-Exit codes: `0` ok · `1` gate refusal / deploy failure / live mismatch · `2` usage
-error. (`2` used to mean "guard blocked"; nothing blocks any more — undeclared
-content simply cannot ship.)
+Exit codes: `0` ok · `1` gate refusal / deploy failure / live mismatch ·
+`refused-live-but-uncommitted` · `2` usage error. (`2` used to mean "guard
+blocked"; nothing blocks any more — undeclared content simply cannot ship.
+`2` also covers a bad `--files` entry: a declared path that does not exist, or
+one excluded by policy under `--strict-include`.) A declared-but-excluded path
+is otherwise *ignored* with a loud note and a publisher-log event, because the
+shared-dir workflow says "declare every changed file" and `tests/*.py` /
+`CHANGELOG.md` can never ship — see "Silent failure modes fixed" below.
+
+`--files=CHANGELOG.md` therefore succeeds (rc=0, note + `include-excluded`
+event) unless you pass `--strict-include`.
 
 ## Examples
 
@@ -279,6 +292,39 @@ Two further verifier details:
   after a preview deploy and matched 30s later; three pages also needed a retry
   against production. Without the retry these are reported as verification
   failures.
+
+## Silent failure modes fixed (card t_d5f7f382, 2026-09-11)
+
+Both were invisible in the audit trail and affected every idle site.
+
+**(a) `--files` naming an excluded path aborted the run silently.** The shared-dir
+workflow says "declare every changed file", which includes newly added
+`tests/*.py` and `CHANGELOG.md` — both excluded from the artifact by design.
+`overlay_paths()` raised a bare `SystemExit`, so the run died with rc=1, one line
+that read like an informational note, and **no event in
+`~/.hermes/scripts/logs/publish-idle-site.log`**. Now the path is reported as
+`!! --include <path>: EXCLUDED ... IGNORED, not published`, recorded in the
+manifest (`include_ignored`), logged (`include-excluded`) and the publish
+continues. `--strict-include` brings the abort back (rc=2, logged). Missing
+declared files stay fatal (`include-missing`, rc=2). Every abort — including
+argparse usage errors and a held lock — now prints `ERROR: ...` and logs an
+`aborted` event.
+
+**(b) A live-but-uncommitted page could be rolled back with only a bland note.**
+`worktree == live != HEAD` is a page that reached production without a commit.
+It is carried forward so *this* deploy does not revert it, but any run that
+cannot compare live (`--no-live-check`, no domain, a failed fetch) ships the
+`HEAD` bytes and silently reverts it. The publisher now prints a
+`LIVE-BUT-UNCOMMITTED` block (file, `HEAD` sha vs live sha, "COMMIT THEM"),
+logs `dirty-reconcile`, records it in the manifest under `live_but_uncommitted`,
+and reports the skipped/uncheckable cases with their rollback consequence.
+`--strict-dirty` refuses to publish (rc=1) instead.
+
+Found live by (b) on 2026-09-11:
+`mybusiness-ai-audit/signs-your-business-needs-ai-automation.html` had
+`worktree == live` (canonical sha `6c28f9b1…`, 28,943 B) and `HEAD`
+`262f4e35…` (29,330 B) — a 239-insertion/157-deletion edit that is live and
+uncommitted. Filed to content-ops.
 
 ## Who calls it
 
