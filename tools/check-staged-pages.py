@@ -61,6 +61,24 @@ def repo_root() -> str:
                           text=True, check=True).stdout.strip()
 
 
+DEFAULT_REPO = os.path.expanduser("~/seo-pages")
+
+
+def resolve_root(manual: bool) -> str | None:
+    """The repo to inspect.
+
+    In hook mode (--staged) the cwd is the repo git already gave us, so a failure
+    here means 'not a repo' and the caller fails open. In manual mode the tool is
+    about ~/seo-pages, so fall back to it rather than refusing to answer."""
+    try:
+        return repo_root()
+    except Exception:
+        pass
+    if manual and os.path.isdir(os.path.join(DEFAULT_REPO, ".git")):
+        return DEFAULT_REPO
+    return None
+
+
 def load_gate():
     import importlib.util
     if not os.path.exists(GATE_MODULE):
@@ -100,10 +118,11 @@ def main(argv: list[str]) -> int:
               f"The writers still gate at generation time; see PUBLISH-IDLE-SITE.md.")
         return 0
 
-    try:
-        root = repo_root()
-    except Exception as exc:
-        print(f"  !! page gate SKIPPED (fail-open): not in a git repo ({exc})")
+    staged_mode = "--staged" in args or not args
+    root = resolve_root(manual=not staged_mode)
+    if root is None:
+        print("  !! page gate SKIPPED (fail-open): not in a git repo and "
+              f"{DEFAULT_REPO} is not one either.")
         return 0
 
     if "--docs" in args:
