@@ -84,7 +84,12 @@
 #   --dry-run              Stage + gate + report; no upload.
 #   --verify-live          After the deploy, re-fetch the whole manifest and
 #                          compare edge-injection-canonicalised sha256 (exit 1 on
-#                          mismatch).
+#                          mismatch). A LONE mismatch after a real content change
+#                          is more often CF Pages edge propagation lag than a bad
+#                          upload — the 3x5s retry window can be outlasted, so the
+#                          publisher prints the pre-patch-sha discriminator with
+#                          the FAIL and names the revert path LAST. Do not revert
+#                          before running it (card t_616632d8).
 #   --keep-stage           Keep the staging dir and print its path.
 #   --log=FILE             Audit log (default ~/.hermes/logs/idle-site-deploys.log)
 #   -h | --help
