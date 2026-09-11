@@ -1,13 +1,76 @@
 # Doorway-cluster consolidation (Aug 2026 spam update remediation)
-# Zero-impression templated city clones -> /full/ directory hub
-/full/ai-agency-austin/ /full/ 301
-/full/ai-agency-chicago/ /full/ 301
-/full/ai-agency-denver/ /full/ 301
-/full/ai-agency-houston/ /full/ 301
-/full/ai-agency-phoenix/ /full/ 301
-/full/ai-agency-seattle/ /full/ 301
+# Zero-impression templated city clones retired. The old `/full/` target was a 301
+# into a 404: publisher prune policy (publish-idle-site.py EXCLUDE_DIRS) drops the
+# whole full/ tree from every artifact, so nothing under /full/ has ever been live.
+# t_2a6beb8e (2026-09-11): retargeted to / .
+/full/ai-agency-austin/ / 301
+/full/ai-agency-denver/ / 301
+/full/ai-agency-phoenix/ / 301
+/full/ai-agency-seattle/ / 301
 
 # Near-duplicate consolidation (Aug 2026): old page -> -2026 canonical
 # Per SEO brief t_b5e335f8: canonicalize before pointing new links at it
 /best-ai-agencies-for-small-business /best-ai-agencies-for-small-business-2026 301
 /best-ai-agencies-for-small-business.html /best-ai-agencies-for-small-business-2026 301
+
+# Legacy /full/* homepage links (t_2a6beb8e, 2026-09-11)
+# The homepage carried 17 links into the never-published /full/ tree (all 404 live,
+# 0/17 in sitemap.xml). It now links live canonical URLs; these rules exist only so
+# outside inbound links to the legacy paths still resolve. One explicit target per
+# rule, bare + trailing-slash form, no /full/* catch-all.
+#
+# verticals whose topic now has a live page:
+/full/ai-automation-for-healthcare /ai-automation-for-healthcare-practices-2026 301
+/full/ai-automation-for-healthcare/ /ai-automation-for-healthcare-practices-2026 301
+/full/ai-automation-for-saas /ai-saaspocalypse-agency-economics 301
+/full/ai-automation-for-saas/ /ai-saaspocalypse-agency-economics 301
+/full/ai-automation-for-ecommerce /shopify-ucp-agentic-commerce 301
+/full/ai-automation-for-ecommerce/ /shopify-ucp-agentic-commerce 301
+#
+# retired surfaces with no live equivalent -> / instead of a permanent 404:
+#   /full/ai-automation-for-real-estate  -- vertical never published (no live equivalent)
+#   /full/ai-automation-for-law-firms  -- vertical never published (no live equivalent)
+#   /full/ai-automation-for-restaurants  -- vertical never published (no live equivalent)
+#   /full/ai-agency-new-york  -- city-clone cluster retired (spam remediation)
+#   /full/ai-agency-los-angeles  -- city-clone cluster retired (spam remediation)
+#   /full/ai-agency-chicago  -- city-clone cluster retired (spam remediation)
+#   /full/ai-agency-houston  -- city-clone cluster retired (spam remediation)
+#   /full/ai-agency-dallas  -- city-clone cluster retired (spam remediation)
+#   /full/ai-agency-miami  -- city-clone cluster retired (spam remediation)
+#   /full/about  -- legacy clone page sha 0e512b6e (identical to 4 siblings)
+#   /full/contact  -- legacy clone page sha 0e512b6e (identical to 4 siblings)
+#   /full/privacy  -- legacy clone page sha 0e512b6e (identical to 4 siblings)
+#   /full/terms  -- legacy clone page sha 0e512b6e (identical to 4 siblings)
+#   /full/list-your-agency  -- legacy clone page sha 0e512b6e (identical to 4 siblings)
+/full/ai-automation-for-real-estate / 301
+/full/ai-automation-for-real-estate/ / 301
+/full/ai-automation-for-law-firms / 301
+/full/ai-automation-for-law-firms/ / 301
+/full/ai-automation-for-restaurants / 301
+/full/ai-automation-for-restaurants/ / 301
+/full/ai-agency-new-york / 301
+/full/ai-agency-new-york/ / 301
+/full/ai-agency-los-angeles / 301
+/full/ai-agency-los-angeles/ / 301
+/full/ai-agency-chicago / 301
+/full/ai-agency-chicago/ / 301
+/full/ai-agency-houston / 301
+/full/ai-agency-houston/ / 301
+/full/ai-agency-dallas / 301
+/full/ai-agency-dallas/ / 301
+/full/ai-agency-miami / 301
+/full/ai-agency-miami/ / 301
+#
+# the legacy hub path itself (old 301 target of the city-clone rules) -> /
+/full / 301
+/full/ / 301
+/full/about / 301
+/full/about/ / 301
+/full/contact / 301
+/full/contact/ / 301
+/full/privacy / 301
+/full/privacy/ / 301
+/full/terms / 301
+/full/terms/ / 301
+/full/list-your-agency / 301
+/full/list-your-agency/ / 301
