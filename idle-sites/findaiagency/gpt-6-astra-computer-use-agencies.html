@@ -121,6 +121,9 @@
         .related li { margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -139,7 +142,7 @@
 
         <h2>GPT-6 Astra vs Claude Opus 5 vs Claude Fable 5.1 vs Gemini 3.8 Flash vs GPT-5.6 Sol</h2>
         <p>Here is the field as of September 3, 2026. Pricing rows are verified against the model pages on this site, OpenAI's published model card, and launch coverage; benchmark figures are labeled by who reported them.</p>
-        <table>
+        <div class="table-wrap"><table>
             <thead>
                 <tr><th>Model</th><th>Released</th><th>Price per 1M tokens</th><th>Context in / out</th><th>Computer use</th><th>Access</th></tr>
             </thead>
@@ -150,7 +153,7 @@
                 <tr><td>Gemini 3.8 Flash</td><td>Sept 2, 2026</td><td>$0.75 in / $3.75 out*</td><td>1M (Flash family)**</td><td>Improved OSWorld-2.0 over 3.7 Flash, still trailing Claude Opus per Ars Technica</td><td>Public Gemini API, AI Studio, Antigravity</td></tr>
                 <tr><td>GPT-5.6 Sol</td><td>Aug 2026 promo</td><td>$4 in / $20 out***</td><td>1.05M in / 128K out</td><td>Prior OpenAI computer-use standard (GPT-5.4&rarr;5.6 lineage); independent trackers put Sol above Gemini 3.8 Flash on OSWorld 2.0</td><td>Public API + Bedrock; GPT-5.6 Cyber variants approval-gated via Daybreak Red</td></tr>
             </tbody>
-        </table>
+        </table></div>
         <p><em>*Gemini 3.8 Flash introductory rate through December 31, 2026; $1.50/$7.50 thereafter (Ars Technica; Thurrott). **Google lists no separate 3.8 context figure; 3.7 Flash documented a 1M-token window. ***GPT-5.6 Sol promotional through at least November 21, 2026; expected to revert to $5/$30 after the window.</em></p>
 
         <p><strong>Read the benchmark line carefully.</strong> OpenAI's launch claims — state-of-the-art on <strong>FrontierMath Tier 4 (98%), ARC-AGI 3 (99.9%), ExploitBench (100%), Agents' Last Exam, AutomationBench, ScreenSpot Pro, TerminalBench-4.0</strong>, plus major advances on Terminal-Bench Science 0.1 and HealthBench Pro — are <strong>vendor-reported and were not independently verified at publication</strong>. The 72.6% OSWorld V2-Offline figure is OpenAI's own test on its simulation release; Anthropic's higher 77.9% for Fable 5.1 sits on a different OSWorld release that Anthropic itself says should not be compared with earlier scores (The New Stack). Reported third-party numbers such as <strong>59.3% on Agents' Last Exam</strong> (kie.ai) and <strong>100% ExploitBench / 72.6% OSWorld</strong> (kie.ai, cited in launch coverage) come from launch-day trackers, not peer review. Treat every number as launch-week, lab-reported, and moving.</p>
