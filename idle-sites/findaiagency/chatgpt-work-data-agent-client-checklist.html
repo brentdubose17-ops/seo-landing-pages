@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPT Work Data Plugin: The Client Readiness Checklist (2026)</title>
+<meta name="description" content="The client checklist for OpenAI's Data Plugin in ChatGPT Work: source inventory, permission map, approver rule, logging questions, never-connect list.">
+<link rel="canonical" href="https://findaiagency.com/chatgpt-work-data-agent-client-checklist">
+<meta name="keywords" content="chatgpt work data plugin, is it safe to connect company data to chatgpt, data agent chatgpt work, chatgpt agent data privacy, ai readiness assessment for clients, who approves ai agent actions, data plugin permissions, never connect list ai agent">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="ChatGPT Work Data Plugin: The Client Readiness Checklist (2026)">
+<meta property="og:description" content="The client checklist for OpenAI's Data Plugin in ChatGPT Work: source inventory, permission map, approver rule, logging questions, never-connect list.">
+<meta property="og:url" content="https://findaiagency.com/chatgpt-work-data-agent-client-checklist">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Find AI Agency">
+<meta property="og:image" content="https://findaiagency.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://findaiagency.com/chatgpt-work-data-agent-client-checklist#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://findaiagency.com/chatgpt-work-data-agent-client-checklist"
+      },
+      "headline": "The ChatGPT Work Data Plugin: A Client Readiness Checklist for Agencies",
+      "description": "OpenAI's Data Plugin shipped in ChatGPT Work on September 10, 2026. A pre-connection checklist for agency clients: data-source inventory, permission mapping against the existing identity, the human approver rule for write actions, logging and retention questions, the never-connect list, and a two-week readiness engagement.",
+      "datePublished": "2026-09-10",
+      "dateModified": "2026-09-10",
+      "author": {"@type": "Organization", "name": "Find AI Agency"},
+      "publisher": {"@type": "Organization", "name": "Find AI Agency"},
+      "mainEntityOfPage": "https://findaiagency.com/chatgpt-work-data-agent-client-checklist",
+      "image": "https://findaiagency.com/og-image.png"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Data Plugin in ChatGPT Work?",
+          "acceptedAnswer": {"@type": "Answer", "text": "It is a plugin OpenAI announced on September 10, 2026 that lets a ChatGPT Work workspace connect to the data sources a team already uses and query them in conversation. OpenAI's own summary is: \"Just add the Data Plugin in ChatGPT Work, connect to the data sources and context you already use, and start the conversation.\" It reaches warehouses and databases including Amazon Redshift, ClickHouse, Databricks, BigQuery, MongoDB, Snowflake and Datadog, plus Google Drive and SharePoint files, and it can write to and refresh dashboards in Omni, Oracle BI, Power BI, Sigma, Tableau and ThoughtSpot."}
+        },
+        {
+          "@type": "Question",
+          "name": "Does the Data Plugin give ChatGPT new permissions to company data?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Not according to OpenAI's published description. OpenAI says queries \"enforce the connected account's existing permissions, including table, row, and column restrictions,\" and that \"a successful connection does not create additional source permissions.\" The practical risk is not that the plugin escalates rights on its own — it is that the connected account is usually provisioned for throughput rather than least privilege, so the agent's ceiling is whatever that service account can already reach."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is the analysed data copied anywhere?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes. OpenAI's Help Center article on the Data plugin states that analysed data \"is copied into the published site.\" Treat that as a second copy of the answer, outside the source system's own permission checks. Any workspace plan should say where that published site lives, who can open it, and how it is cleaned up or expired."}
+        },
+        {
+          "@type": "Question",
+          "name": "Does the Data Plugin only run when someone types @Data?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. The Help Center makes @Data optional, which means the plugin can be triggered implicitly by a normal question rather than by an explicit mention. A per-prompt opt-in is therefore not the control; the control has to be which connections are enabled for the workspace and which identity they run under."}
+        },
+        {
+          "@type": "Question",
+          "name": "Who approves the actions the agent takes?",
+          "acceptedAnswer": {"@type": "Answer", "text": "OpenAI has not named an approver role for this agent, and no write threshold is published. That leaves the control to the client: name one human approver per write class, keep at least one class that can never run unattended, and record every approval outside the chat. \"The agent asked me\" is not an approval record."}
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a client readiness engagement take?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Two weeks is enough to produce the six deliverables — data-source inventory, permission map, connected-identity audit, approver matrix, never-connect list and a written rollout gate — and to run the first vendor questions on logging and retention. The sequence below is the one we use; it assumes nothing is connected until the sign-off, and it starts with one read-only source, not the client's whole estate."}
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; margin-bottom: 6px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        blockquote p { margin: 0; font-style: italic; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+        .table-wrap table { margin: 0; min-width: 100%; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .faq-item p { margin: 0; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+        a, p, li { overflow-wrap: anywhere; }
+    </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>The ChatGPT Work Data Plugin: A Client Readiness Checklist for Agencies</h1>
+            <div class="meta"><span>Published September 10, 2026 &middot; Updated September 10, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>ChatGPT Work</span><span>Client readiness</span><span>Agent governance</span></div>
+        </header>
+
+        <p>On September 10, 2026, OpenAI announced that everyone can connect their own data to ChatGPT Work. The wording is flat and deliberately unremarkable: &ldquo;Now everyone can put data to work&hellip; Just add the Data Plugin in ChatGPT Work, connect to the data sources and context you already use, and start the conversation.&rdquo; Our own earliest verified artifact from that day is OpenAI&rsquo;s demo video, uploaded at 11:07 a.m. ET.</p>
+
+        <p>The reason this matters to an agency is not the connector list. It is that a plugin toggle moves the client conversation from &ldquo;should we use AI on our data&rdquo; to &ldquo;what do we have to fix before we let it.&rdquo; The first question is a software purchase. The second is a readiness engagement, and it is billable whether or not the client ever turns the plugin on.</p>
+
+        <p>Below is the checklist we run with a client before anything is connected: what shipped, what to inventory, how permissions actually resolve, who approves an action, what is (and is not) logged, and the list of sources that should stay unconnected even when the plugin can reach them.</p>
+
+        <h2 id="what-shipped-september-10-2026">What actually shipped on September 10, 2026</h2>
+
+        <p>The Data Plugin is not a new model or a new product line. It is a connection layer inside ChatGPT Work that reads from systems the client already runs and writes back into the reporting tools they already open. Two halves matter, and they carry different risk.</p>
+
+        <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Half</th><th>What it covers</th><th>Client risk it creates</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Read</strong></td><td>Amazon Redshift, ClickHouse, Databricks, BigQuery, MongoDB, Snowflake, Datadog; Google Drive and SharePoint files; context from dbt, GitHub, Snowflake Horizon, Databricks Genie Ontology and BI dashboards</td><td>Everything reachable by the identity the connection uses becomes queryable in a conversation</td></tr>
+                <tr><td><strong>Write</strong></td><td>Dashboards in Omni, Oracle BI, Power BI, Sigma, Tableau and ThoughtSpot can be written to and refreshed</td><td>An agent action can change a number someone else makes decisions from</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p>OpenAI describes the action surface in its own words: the agent can &ldquo;recommend next steps and identify who needs to be involved&hellip; share the findings through Slack or email and carry out the actions you approve through connected tools.&rdquo; That is a read-analyse-act loop, not a chat window. It is also the sentence that should drive the entire engagement, because the approval in it is an undefined human input.</p>
+
+        <h2 id="before-you-connect-the-data-source-inventory">Before you connect: the client data-source inventory</h2>
+
+        <p>Do this on a call, not by email. Walk the client through every system the plugin can reach and record four things per source: who owns it, who administers it, which identity a connection would use, and whether it is in scope for a pilot or out of scope entirely. If nobody can name the owner, that source is out of scope by default.</p>
+
+        <ol>
+            <li><strong>Warehouse and lake.</strong> Snowflake, BigQuery, Databricks, Amazon Redshift, ClickHouse. Ask which databases inside each one are actually business data and which are staging copies nobody curates.</li>
+            <li><strong>Operational and observability.</strong> MongoDB for application data; Datadog for telemetry. Telemetry routinely contains customer identifiers and internal hostnames — it is the bucket clients forget.</li>
+            <li><strong>File stores.</strong> Google Drive and SharePoint. This is where the real problem usually lives: folders with inherited sharing, personal drives, and contract or HR material alongside the marketing plan.</li>
+            <li><strong>Semantic and code context.</strong> dbt, GitHub, Snowflake Horizon, Databricks Genie Ontology. This is the metadata tier. It is low-risk to read and high-value to connect, because a semantic layer is what stops the agent guessing at column meanings.</li>
+            <li><strong>The BI estate.</strong> Power BI, Tableau, Sigma, Omni, ThoughtSpot, Oracle BI. This is the write surface. Every one of these needs a named approver before it is enabled, not after.</li>
+        </ol>
+
+        <p>Two questions expose most of the inventory risk before you look at any permission screen: <em>which of these systems is the copy of record, and which are copies of the copy?</em> Duplicated sources of truth are what make an agent&rsquo;s answer confidently wrong, and the Help Center guidance that a semantic layer is &ldquo;strongly recommended&rdquo; is the vendor saying the same thing more politely.</p>
+
+        <h2 id="who-can-read-who-can-write-permission-mapping">Who can read, who can write: mapping plugin scopes to the client&rsquo;s existing identity</h2>
+
+        <p>OpenAI&rsquo;s permission model is published, and on its own terms it is coherent. Administrators choose which connections exist and which roles get them, from Workspace settings &gt; Plugins, using the workspace&rsquo;s existing role-based access control. Plugins can be available or pre-installed, and installing a plugin is explicitly not the same as granting access to the apps behind it.</p>
+
+        <p>The load-bearing line is this one: &ldquo;Queries enforce the connected account&rsquo;s existing permissions, including table, row, and column restrictions.&rdquo; Paired with &ldquo;a successful connection does not create additional source permissions,&rdquo; that means the plugin cannot widen what the client&rsquo;s own accounts can already see. Which also means the agent&rsquo;s ceiling is exactly the ceiling of whichever account the connection runs as.</p>
+
+        <p>And that account is usually the wrong one. Service accounts and integration identities tend to be provisioned for throughput — a single credential that has to reach every dashboard and every table — not for least privilege. So the permission map is less about ChatGPT and more about auditing the identity you are about to hand it.</p>
+
+        <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Question for the client</th><th>What a good answer looks like</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Which account will each connection use?</td><td>A purpose-built identity per source, not a shared admin or a departed employee&rsquo;s login</td></tr>
+                <tr><td>Does that identity&rsquo;s reach match the pilot scope?</td><td>Row and column restrictions confirmed in the source system, not just in ChatGPT</td></tr>
+                <tr><td>Who can add a connection?</td><td>Named admins only, with the workspace settings change reviewed like any other access change</td></tr>
+                <tr><td>What happens when the plugin is pre-installed for everyone?</td><td>A written decision about whether that is intended, because install is not access but it is still visible</td></tr>
+                <tr><td>Can the client revoke one source without revoking the workspace?</td><td>A tested revocation path before go-live, not a plan to figure it out later</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h2 id="who-approves-an-action">Who approves an action &mdash; and why &ldquo;the agent asked me&rdquo; is not a control</h2>
+
+        <p>OpenAI notes that actions depend on the connected tool&rsquo;s supported actions, the user&rsquo;s permissions, and any approval requirements. What is not published is who the approver should be, or what size of action needs one. There is no named approver role and no write threshold for this agent. That is a gap the client has to fill in writing, and filling it is a deliverable you can charge for.</p>
+
+        <p>The rule we put in front of clients is deliberately blunt: <strong>one named human approver per write class, no unattended writes, and every approval recorded somewhere that is not the chat.</strong> &ldquo;The agent asked me and I said yes&rdquo; leaves no artefact, cannot be reviewed after the fact, and collapses the moment someone is on holiday.</p>
+
+        <ol>
+            <li><strong>Define write classes first.</strong> Refreshing an internal dashboard is a different class of action from posting findings into a client-visible Slack channel or emailing a summary to a distribution list.</li>
+            <li><strong>Name one approver per class.</strong> A person, not a team alias. Their name goes in the runbook next to the class they own.</li>
+            <li><strong>Keep one class that can never run unattended.</strong> Anything that leaves the organisation or changes a number someone else reports on stays behind a human.</li>
+            <li><strong>Record approvals outside the tool.</strong> A ticket, a log line, a weekly review — anything durable and inspectable.</li>
+            <li><strong>Plan for approval fatigue.</strong> When every action needs a click, people start clicking. Set a volume threshold at which the class moves to scheduled batch approval instead of per-action prompts.</li>
+        </ol>
+
+        <h2 id="what-gets-logged-and-for-how-long">What gets logged, where it lives, and for how long</h2>
+
+        <p>This is the part of the checklist where the honest answer is &ldquo;the vendor has not published one.&rdquo; We measured it rather than assumed it: across OpenAI&rsquo;s announcement page and the Help Center article on the Data plugin, the words <em>audit</em>, residency, log retention, training on connected data, encryption, prompt injection and DLP each appear zero times. No audit trail and no retention commitment is published for this agent.</p>
+
+        <p>Read that correctly. It is an absence of a published commitment, not evidence that no controls exist, and it is not a reason to call the product unsafe. It is a reason to make the logging question a contract question with the client and their other vendors, because the agent will be acting inside systems that already have their own logs.</p>
+
+        <ol>
+            <li><strong>Require the action log from the connected tools first.</strong> Tableau, Power BI and the rest log who changed a dashboard. Confirm the approval produces a row there before you rely on ChatGPT to tell you what happened.</li>
+            <li><strong>Ask the retention question in writing.</strong> How long does a conversation that touched client data persist, who can retrieve it, and what is the deletion path on offboarding.</li>
+            <li><strong>Account for the second copy.</strong> The Help Center states that analysed data &ldquo;is copied into the published site.&rdquo; A dashboard or published answer is a copy that lives outside the source system&rsquo;s permission checks — so say where it lives and who can open it.</li>
+            <li><strong>Treat implicit triggering as the default case.</strong> <code>@Data</code> is optional in the Help Center&rsquo;s own description, so a normal question can reach connected data without anyone invoking the plugin by name. A per-prompt opt-in is not your control; the enabled connection list is.</li>
+        </ol>
+
+        <h2 id="the-never-connect-list">The never-connect list</h2>
+
+        <p>This list is ours, not OpenAI&rsquo;s. It exists because &ldquo;the plugin can reach it&rdquo; and &ldquo;the plugin should reach it&rdquo; are different sentences, and the second one needs a human decision that survives staff turnover.</p>
+
+        <ol>
+            <li><strong>Regulated health and financial records.</strong> Anything under a compliance regime the client cannot re-paper in a week: patient data, payment instrument data, regulated lending or advisory records.</li>
+            <li><strong>HR and PII-dense stores.</strong> Employee files, payroll, performance notes, candidate pipelines, customer contact databases with identity documents attached.</li>
+            <li><strong>Single-source-of-truth ledgers.</strong> The one system whose numbers are the numbers — the general ledger, the billing system of record, the production inventory table. Read access to a copy, never the primary, and never write.</li>
+            <li><strong>Secrets and credential stores.</strong> Vaults, key stores, CI secrets, connection strings. If the agent can read them, a prompt-injection path becomes a credential path.</li>
+            <li><strong>Anything unowned.</strong> A source with no named owner and no named admin is out of scope until it has both — this is the rule that quietly removes the worst folder in the client&rsquo;s Drive from the pilot.</li>
+        </ol>
+
+        <h2 id="is-it-safe-to-connect-company-data-to-chatgpt">Is it safe to connect company data to ChatGPT?</h2>
+
+        <p>Not on the strength of anything published about this plugin, and not as a binary question. The permission half is published and it is coherent — queries inherit the connected account&rsquo;s existing permissions, and connecting does not create new ones — but the audit trail, the retention period, the residency answer and the approval control are not published, so safety here is a design decision the client makes, not a setting they toggle.</p>
+
+        <p>Three things are true at once, and a client conversation that holds all three is the one that ends in a scoped engagement:</p>
+
+        <ol>
+            <li><strong>What is published:</strong> admins choose connections and roles, queries enforce the connected account&rsquo;s existing table, row and column restrictions, a successful connection adds no new source permissions, and installing a plugin is not the same as granting app access.</li>
+            <li><strong>What is not published:</strong> audit, log retention, residency, encryption, prompt-injection handling, DLP, training on connected data, a named approver role and a write threshold. Not published is the accurate description; &ldquo;does not exist&rdquo; is a claim we cannot support.</li>
+            <li><strong>What the client controls regardless:</strong> which sources are enabled, which identity each connection uses, whether implicit triggering is acceptable, which human approves each write class, and where approvals and action logs are kept.</li>
+        </ol>
+
+        <p>Two honest notes on the question itself. First, we are not claiming to be first: an enterprise-framed governance analysis of this launch was published on September 10, 2026 by explainx.ai, covering the permission model, service-account breadth, injection and approval fatigue. What is still thin is the small-business and agency version — the data-source inventory, the never-connect list and the approval rule a ten-person client can actually operate. Second, the query itself is largely unclaimed for this product: across the twenty results we pulled for this question, none mentioned the Data agent at all.</p>
+
+        <h2 id="the-scoped-engagement">The scoped engagement: deliverables and the first two weeks</h2>
+
+        <p>Sell this as readiness, not as a software rollout. The deliverables do not depend on the plugin being enabled, and the client leaves with artefacts they need for every AI vendor they will evaluate next year.</p>
+
+        <h3>Six deliverables</h3>
+
+        <ol>
+            <li><strong>Data-source inventory</strong> — every reachable source with its owner, admin, business purpose and in-scope or out-of-scope status.</li>
+            <li><strong>Permission map</strong> — the connected identity per source, its row and column restrictions, and the delta between what it can reach and what the pilot needs.</li>
+            <li><strong>Connected-identity audit</strong> — the service accounts and integration logins in play, with a least-privilege target for each and a replacement list for shared credentials.</li>
+            <li><strong>Approver matrix</strong> — write classes, one named approver each, the no-unattended-writes class, and the approval record location.</li>
+            <li><strong>Never-connect list</strong> — signed off by the client, with the reasoning, so it survives the next change of staff.</li>
+            <li><strong>Readiness sign-off and rollout gate</strong> — what must be true before the first connection, and who signs it.</li>
+        </ol>
+
+        <h3>The first two weeks</h3>
+
+        <ol>
+            <li><strong>Days 1&ndash;2:</strong> run the inventory call. Capture owners and admins for every source, and mark anything unowned as out of scope on the spot.</li>
+            <li><strong>Days 3&ndash;4:</strong> build the permission map and audit the connected identities. Confirm row and column restrictions in the source systems, not in ChatGPT.</li>
+            <li><strong>Day 5:</strong> write the approver matrix and the never-connect list; get both signed.</li>
+            <li><strong>Days 6&ndash;7:</strong> send the logging and retention questions to the client&rsquo;s other vendors and to OpenAI&rsquo;s account contact, in writing. Record what comes back, including silence.</li>
+            <li><strong>Days 8&ndash;9:</strong> scope the pilot — one read-only source, one dashboard, one named approver, in a test workspace, with the revocation path tested before anyone asks a real question.</li>
+            <li><strong>Day 10:</strong> deliver the sign-off, the rollout gate, and a one-page decision record. Then, and only then, discuss expanding the connection list.</li>
+        </ol>
+
+        <p>The commercial point is straightforward. A client who toggles a plugin on their own gets a capability and no evidence. A client who runs this first gets a permission map, an approval rule and a list of things they decided not to connect &mdash; which is exactly what an auditor, an insurer or a nervous board member will ask for later.</p>
+
+        <div class="cta"><a class="btn" href="/">Get matched with a vetted AI agency &rarr;</a></div>
+
+        <h2 id="frequently-asked-questions">Frequently asked questions</h2>
+
+        <div class="faq-item">
+            <h3>What is the Data Plugin in ChatGPT Work?</h3>
+            <p>It is a plugin OpenAI announced on September 10, 2026 that lets a ChatGPT Work workspace connect to the data sources a team already uses and query them in conversation. OpenAI's own summary is: "Just add the Data Plugin in ChatGPT Work, connect to the data sources and context you already use, and start the conversation." It reaches warehouses and databases including Amazon Redshift, ClickHouse, Databricks, BigQuery, MongoDB, Snowflake and Datadog, plus Google Drive and SharePoint files, and it can write to and refresh dashboards in Omni, Oracle BI, Power BI, Sigma, Tableau and ThoughtSpot.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Does the Data Plugin give ChatGPT new permissions to company data?</h3>
+            <p>Not according to OpenAI's published description. OpenAI says queries "enforce the connected account's existing permissions, including table, row, and column restrictions," and that "a successful connection does not create additional source permissions." The practical risk is not that the plugin escalates rights on its own — it is that the connected account is usually provisioned for throughput rather than least privilege, so the agent's ceiling is whatever that service account can already reach.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Is the analysed data copied anywhere?</h3>
+            <p>Yes. OpenAI's Help Center article on the Data plugin states that analysed data "is copied into the published site." Treat that as a second copy of the answer, outside the source system's own permission checks. Any workspace plan should say where that published site lives, who can open it, and how it is cleaned up or expired.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Does the Data Plugin only run when someone types @Data?</h3>
+            <p>No. The Help Center makes @Data optional, which means the plugin can be triggered implicitly by a normal question rather than by an explicit mention. A per-prompt opt-in is therefore not the control; the control has to be which connections are enabled for the workspace and which identity they run under.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Who approves the actions the agent takes?</h3>
+            <p>OpenAI has not named an approver role for this agent, and no write threshold is published. That leaves the control to the client: name one human approver per write class, keep at least one class that can never run unattended, and record every approval outside the chat. "The agent asked me" is not an approval record.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How long does a client readiness engagement take?</h3>
+            <p>Two weeks is enough to produce the six deliverables — data-source inventory, permission map, connected-identity audit, approver matrix, never-connect list and a written rollout gate — and to run the first vendor questions on logging and retention. The sequence above is the one we use; it assumes nothing is connected until the sign-off, and it starts with one read-only source, not the client's whole estate.</p>
+        </div>
+
+        <h2 id="sources">Sources</h2>
+
+        <ol>
+            <li>OpenAI, &ldquo;Now everyone can put data to work,&rdquo; September 10, 2026 (direct fetch returns 403 to a scripted client; read via the Internet Archive capture of the same day) &mdash; <a href="https://openai.com/index/put-data-to-work/">https://openai.com/index/put-data-to-work/</a></li>
+            <li>OpenAI Developer Community, &ldquo;Introducing the Data Agent for ChatGPT Work,&rdquo; posted September 10, 2026 (17:22 ET) &mdash; <a href="https://community.openai.com/t/introducing-the-data-agent-for-chatgpt-work/1396488">https://community.openai.com/t/introducing-the-data-agent-for-chatgpt-work/1396488</a></li>
+            <li>OpenAI, &ldquo;Data agent in ChatGPT Work&rdquo; demo video, September 10, 2026 (uploaded 11:07 ET) &mdash; <a href="https://www.youtube.com/watch?v=MSiAd36bGeQ">https://www.youtube.com/watch?v=MSiAd36bGeQ</a></li>
+            <li>OpenAI Help Center, &ldquo;Using the Data plugin in ChatGPT Work and Codex&rdquo; (English route returns 403 to scripted clients; read via the localised route, same article id) &mdash; <a href="https://help.openai.com/en/articles/20001518-using-the-data-plugin-in-chatgpt-work-and-codex">https://help.openai.com/en/articles/20001518-using-the-data-plugin-in-chatgpt-work-and-codex</a></li>
+            <li>Blockchain.News, &ldquo;OpenAI Launches Data Agent in ChatGPT Work for Business Analytics&rdquo; &mdash; its article body carries a release date that conflicts with OpenAI&rsquo;s own; we use OpenAI&rsquo;s September 10, 2026 announcement &mdash; <a href="https://blockchain.news/news/openai-data-agent-chatgpt-work">https://blockchain.news/news/openai-data-agent-chatgpt-work</a></li>
+            <li>AWS Big Data Blog, &ldquo;Every team is a data team &mdash; bring Amazon Redshift analytics to ChatGPT Work,&rdquo; September 10, 2026 &mdash; <a href="https://aws.amazon.com/blogs/big-data/every-team-is-a-data-team-bring-amazon-redshift-analytics-to-chatgpt-work/">https://aws.amazon.com/blogs/big-data/every-team-is-a-data-team-bring-amazon-redshift-analytics-to-chatgpt-work/</a></li>
+            <li>explainx.ai, &ldquo;OpenAI Data Agent in ChatGPT Work: enterprise safety and governance,&rdquo; September 10, 2026 (enterprise-framed governance analysis; its claims are not re-verified here beyond its own text) &mdash; <a href="https://explainx.ai/blog/openai-data-agent-chatgpt-work-enterprise-safety-2026">https://explainx.ai/blog/openai-data-agent-chatgpt-work-enterprise-safety-2026</a></li>
+        </ol>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="https://mybusinessaiaudit.com/ai-agent-risk-checklist">The AI Agent Risk Checklist</a> (the companion governance checklist for data-connected agents &mdash; start here after this page)</li>
+                <li><a href="https://mybusinessaiaudit.com/claude-sandbox-incidents-2026-audit-lessons">Claude Sandbox Incidents: Audit Lessons for Small Business</a> (what an unlogged agent action looks like after the fact)</li>
+                <li><a href="https://mybusinessaiaudit.com/vibe-hacking-explained/">Vibe Hacking Explained</a> (the Anthropic September-2026 threat-report piece &mdash; why prompt paths become access paths)</li>
+                <li><a href="/how-to-vet-an-ai-agency">How to Vet an AI Agency: 7 Questions + 5 Clauses (2026)</a> (use this when the client asks who signs off on your readiness work)</li>
+                <li><a href="/openai-vertical-ai-bundles-agencies">OpenAI&rsquo;s Vertical Bundles: What ChatGPT for Financial Services Signals for Every Other Vertical</a> (the same launch week, from the deliverable-chain angle)</li>
+            </ul>
+        </div>
+    </article>
+</body>
+</html>
