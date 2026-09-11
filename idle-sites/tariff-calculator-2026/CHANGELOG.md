@@ -2,6 +2,67 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-11 — Site-wide phone/tablet horizontal-overflow fix: 23 of 33 pages scrolled sideways (kanban t_88c62f1c)
+
+- **Defect (measured before the change, live + local agree).** `documentElement.scrollWidth` exceeded
+  `innerWidth` on **23 of the 33 sitemap URLs** at 320/360/390/414px. The card had measured only the
+  homepage; the homepage was not representative. Worst: `/us-tariff-rates-2026-by-country` — an
+  **850px page at a 320px viewport**, and still 1006px at a 1000px viewport (the site was only clean
+  from **1024px** up, i.e. phones *and* tablets were affected). Homepage `/`: **349px at 320px** (the
+  card's reported defect), caused by one bare 3-column `<table>` (`Measure | Rejected offer (NOT
+  enacted) | What actually applies`) inside a `.notice-banner`, which the page's existing
+  `.info table { display:block; overflow-x:auto }` rule did not reach. Root class: **bare `<table>`
+  with no scroll container and no `overflow-wrap` guard anywhere in the site's CSS** (0 `.table-wrap`,
+  0 `.tw`, 0 `overflow-wrap` rules before this change); one page (`/drone-tariff-section-232-september-3`,
+  426px) had **no table in its offender list at all** — a 48-character unbreakable token
+  (`EU/Japan/Korea/Taiwan/Switzerland/Liechtenstein,`) in a `<p>`.
+- **Fix — one 5-line media query per page, inserted before `</head>` on the 23 offending pages:**
+  ```css
+  @media (max-width: 1100px) {
+      table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+      th, td, a, p, li { overflow-wrap: anywhere; }
+  }
+  ```
+  `overflow-wrap: anywhere` (not `break-word`) lowers each cell's min-content width so the tables
+  **compress to the container and the reader sees the whole table with no sideways scroll at all**;
+  the `display:block; overflow-x:auto` table remains as a genuine scroll backstop for content that
+  cannot be wrapped. Everything is inside the media query, so the 1280px desktop rendering is
+  untouched. The breakpoint is 1100px, not 600/900px, because the measured overflow persisted all the
+  way up to 1006px on the widest page. Deliberately **no** page-wide
+  `p, li, td, th, code { overflow-wrap: break-word; }` rule (that class of rule hangs Chromium's
+  `captureBeyondViewport` screenshots — recorded on card t_cc4b7740).
+- **Variants measured, not assumed** (worst page, 4 phone widths + 1280x900 fingerprint): A
+  `display:block`+`overflow-x:auto` only = 16/16 but tables need **464-558px of inner scroll**;
+  E/F `overflow-x:auto` without `display:block` = **no clamping at all** (page stayed 850px), so an
+  `overflow-x` on a `display:table` is not a backstop; C `overflow-wrap` alone = 16/16 but leaves no
+  backstop; **B/G = 16/16 with 0px inner scroll** and was shipped.
+- **Verification.** Per-page harness `tests/mobile-overflow-tariff.py` (new, this card) = **16/16 on
+  all 23 pages** (320/360/390/414px: `scrollWidth == innerWidth` and 0 page-level offenders, 0
+  page-level tokens; every table's far-right header reachable in-viewport; desktop fingerprint: all
+  id-bearing element boxes within 1px, identical table column widths, identical `docH`/`docSW`,
+  identical DOM element count). The copied `tests/mobile-overflow-390.py` mode A = **6/6** on the
+  homepage. Site-wide re-sweep after the change: **33/33 pages clean at 320/360/390/414px** and
+  **33/33 clean at 600/768/1000px**. Existing harnesses unchanged: **127/127 unit**
+  (`node --test tests/tariff-data.test.js`), `trq-dom-harness.js` 57/57, `canada-line-dom-harness.js`,
+  `drone-dom-harness.js`, `brazil-dom-harness.js` all pass, `deep-link-smoke.js` 6/6 — the change is
+  CSS-only, no rate data, no markup, no JS touched.
+- **Consistency gate: baseline 0 errors / 1 warning -> 0 errors / 0 warnings** over the 34-file
+  staged artifact. The single baseline warning was `how-to-calculate-import-duties-from-china.html`
+  carrying Article JSON-LD with **no `dateModified`**.
+- **`how-to-calculate-import-duties-from-china.html` — repo/live drift resolved.** Its **worktree
+  bytes were byte-identical to the live page** (sha256 `f1e2ddf4…`) while `HEAD` held different bytes
+  (`2c6d9c8e…`): an earlier publish of that page never got committed. The guard was applied to the
+  live bytes (not a rollback to `HEAD`, which would have reverted live content) and the file was
+  committed so the deploy model — which holds *undeclared* dirty files at `HEAD` — cannot roll the
+  live page back. Two JSON-LD date-hygiene lines were added in the same edit (`datePublished` to ISO
+  `2026-09-10`, `dateModified` `2026-09-10`), which is what clears the gate warning. No prose, rate,
+  FAQ or link content in that page was authored or altered here.
+- **Deploy:** `~/seo-pages/tools/deploy-idle-site.sh tariff-calculator-2026 --files=<23 html + 2 test files> --verify-live`
+  (no full-directory `wrangler pages deploy`; shared directory).
+- **Deliberately NOT done:** no visible "Updated"/byline or `sitemap.xml` `lastmod` bump (the change is
+  presentation-only — the gate agrees, 0 warnings), and the 10 pages that were already clean at all
+  four phone widths were left untouched.
+
 ## 2026-09-10 — Sept 8 preset `status` synced to the confirmed Sept 8–9 U.S. escalation (kanban t_b3e29762)
 
 - **`presets/canada-sept8-counter-tariffs.js` — `status` text only.** The stale closing paragraph ("Escalation risk (Sept 7–8, 2026) … President Trump has **threatened** additional measures … **possible** US product bans per USTR") is replaced by the **CONFIRMED** position already live on `/canada-september-8-counter-tariffs`: five proclamations under **Section 338** (Tariff Act of 1930) signed **Sept 8–9, 2026** banning imports of most Canadian **alcoholic beverages**, certain **dairy (incl. whey)** and **motorcycles**, with **mattresses / lamps / motorboats** added to the 50% duty list — effective **12:01 a.m. ET Sept 29, 2026** (Proclamations **11046 / 11047 / 11048**) — plus the **GSA** directive barring Canadian products from large long-term U.S. government contracts. Adds the no-deal statement (talks collapsed Aug 21, 2026; USTR Greer: Canada walked away from a near-final deal) and the **Sept 10** position (PM Carney called the bans "modest"; Canada will not retaliate further; the 629-item list is unchanged, no new Canadian countermeasures announced). Sept 6–7 threat items are retained only as dated background that the proclamations overtook. `revised` → `2026-09-10` (data-file revision stamp; the Finance Canada list itself was revised Aug 26).
