@@ -1,19 +1,23 @@
 # ~/seo-pages IS the published artifact: the Cloudflare Pages project
-# `seo-landing-pages` is a direct upload of this directory, and the daily
-# runner (seo-pipeline-runner.sh) does `git add -A`. So anything committed
-# here becomes a live URL, and the sitemap generator walks the directory.
+# `seo-landing-pages` is a direct upload of this directory, and the sitemap
+# generator walks the directory. Anything committed here becomes a live URL.
 #
 # Keep scratch, quarantine and tool state out of the tree.
 #
-# Deliberately NOT listed here yet, because tracked copies already exist and a
-# .gitignore that matches them could silently drop currently-published files
-# from the next whole-directory upload (see card t_0e949206 §6):
-#   .wrangler/     24 tracked files (findaiagency.com/.wrangler/cache/*, ...)
-#   *.bak-*         3 tracked files (idle-sites/ai-agency-pricing-calculator/*)
-# Cleaning those up is its own card.
+# `.wrangler/` and `*.bak-*` were added by card t_e95b8a1e, in the same commit
+# that deleted the 22 tracked `.wrangler/cache/*` files (wrangler's cached
+# Cloudflare account id + project name) and the 3 tracked `*.bak-*` page backups
+# that a now-dead pipeline had committed there. All 25 were live URLs; none were
+# in the sitemap, so removing them drops no advertised loc.
+#
+# Both are untracked now, so no pattern below matches a tracked file. That is a
+# requirement, not a nicety: a .gitignore pattern that matches an already-tracked
+# file silently drops it from the next whole-directory upload (card t_0e949206
+# §6). Proof at any time: `git ls-files -i -c --exclude-standard` prints nothing.
 
 .rejected/
 .quarantine/
+.wrangler/
 __pycache__/
 *.py[cod]
 .venv/
@@ -22,6 +26,7 @@ __pycache__/
 *.tmp
 *.orig
 *.rej
+*.bak-*
 *.swp
 *~
 node_modules/
