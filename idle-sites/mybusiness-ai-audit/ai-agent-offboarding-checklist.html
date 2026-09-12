@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Offboarding Checklist: Revoke, Rotate, Retire</title>
+    <meta name="description" content="AI agent offboarding checklist: the six phases — discover, disable, narrow, dispose, document, monitor — and the minimum evidence each phase has to produce.">
+    <meta name="keywords" content="AI agent offboarding checklist, AI agent offboarding, how to revoke an AI agent's credentials, what must be revoked AI agent, agent credentials lifetime, non-human identity offboarding, OWASP NHI1 improper offboarding, agentic AI pilot decommissioning">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mybusinessaiaudit.com/ai-agent-offboarding-checklist">
+    <meta property="og:title" content="AI Agent Offboarding Checklist: Revoke, Rotate, Retire">
+    <meta property="og:description" content="AI agent offboarding checklist: the six phases — discover, disable, narrow, dispose, document, monitor — and the minimum evidence each phase has to produce.">
+    <meta property="og:url" content="https://mybusinessaiaudit.com/ai-agent-offboarding-checklist">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="My Business AI Audit">
+    <meta property="og:image" content="https://mybusinessaiaudit.com/og-image.png">
+    <meta property="og:image:alt" content="AI agent offboarding checklist - six phases with the evidence each phase must produce">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://mybusinessaiaudit.com/ai-agent-offboarding-checklist/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://mybusinessaiaudit.com/ai-agent-offboarding-checklist"
+      },
+      "headline": "AI Agent Offboarding Checklist: Six Phases and the Evidence Each One Must Produce",
+      "description": "AI agent offboarding checklist: the six phases - discover, disable, narrow, dispose, document, monitor - and the minimum evidence each phase has to produce.",
+      "image": "https://mybusinessaiaudit.com/og-image.png",
+      "datePublished": "2026-09-11",
+      "dateModified": "2026-09-11",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://mybusinessaiaudit.com/og-image.png"
+        }
+      },
+      "about": [
+        "AI agent offboarding",
+        "non-human identity",
+        "credential revocation",
+        "agent decommissioning",
+        "AI agent audit"
+      ],
+      "keywords": "AI agent offboarding checklist, AI agent offboarding, how to revoke an AI agent's credentials, agent credentials lifetime, non-human identity offboarding"
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://mybusinessaiaudit.com/ai-agent-offboarding-checklist/#howto",
+      "name": "AI agent offboarding checklist: six phases",
+      "description": "The six phases of retiring an AI agent's non-human identity, in order, each with the minimum artifact an auditor will ask for.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Discover",
+          "text": "Inventory every agent that was ever given access, inventory the non-human identities behind them, and name a human owner for each."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Disable",
+          "text": "Revoke the agent's credentials, disabling the identity itself first, invalidate its tokens and refresh grants at the issuer, and rotate every secret the agent could read."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Narrow",
+          "text": "Reset tool, API and MCP scopes to nothing the agent still needs, remove it from privileged groups and IAM roles, and close the network egress it used."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Dispose",
+          "text": "Make and record a data-retention decision for embeddings, logs, transcripts and prompt or vector stores, then delete or archive them with evidence."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Document",
+          "text": "Record a named owner of record and a dated sign-off, and retain the evidence pack for audit."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 6,
+          "name": "Monitor",
+          "text": "Alert on any re-authentication, scheduled job or webhook that could re-animate the retired agent."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://mybusinessaiaudit.com/ai-agent-offboarding-checklist/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does a retired AI agent keep its access?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually, until someone runs the procedure above. Cancelling a pilot stops the budget and the stand-ups; it does not revoke its tokens, API keys or tool scopes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What must be revoked when an agent is retired?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Its identity, credentials, tokens, refresh grants and tool, API and MCP scopes - then rotate every secret it could read."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do agent credentials live?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As long as nobody revokes them. A key or refresh grant issued for a pilot does not expire with it, so an abandoned agent can still authenticate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who owns AI agent offboarding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A named individual in the identity system, not the pilot team that has moved on. Without an owner of record, the decommission closes quietly when the sponsor changes role."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you stop a retired agent being re-animated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Alert on any re-authentication by its identity, and cover the schedulers that could restart it: cron jobs, webhooks, CI runners, vendor-side triggers."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        .answer-box { background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 8px; padding: 24px; margin: 24px 0; }
+        .answer-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .answer-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; }
+        .cta { display: inline-block; background: #2563eb; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; margin: 8px 0; }
+        .update-box { margin: 32px 0; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 8px; }
+        .update-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .update-box .update-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .faq-item { margin-bottom: 18px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; color: #1a1a2e; }
+        .source { margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; color: #888; font-size: 0.85rem; }
+        .source a { color: #888; }
+        .checklist-item { margin: 0 0 18px 24px; }
+        .checklist-item li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        .risk-note { background: #fff7ed; border: 1px solid #fed7aa; border-left: 5px solid #f59e0b; border-radius: 8px; padding: 20px 24px; margin: 24px 0; }
+        .risk-note p { margin-bottom: 12px; }
+        .risk-note p:last-child { margin-bottom: 0; }
+        .risk-note strong { color: #9a3412; }
+        .score-table td:first-child { font-weight: 600; }
+        footer { margin-top: 24px; color: #888; font-size: 0.85rem; text-align: center; }
+        nav.site { margin-bottom: 20px; font-size: 0.9rem; }
+        nav.site a { margin-right: 16px; text-decoration: none; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } }
+    </style>
+<style>
+    /* page-specific: printable checkbox checklist + the five-minute box */
+    .five-minute { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #16a34a; border-radius: 8px; padding: 22px 24px; margin: 26px 0; }
+    .five-minute p { margin-bottom: 12px; }
+    .five-minute ol { margin: 0 0 0 22px; }
+    .five-minute li { margin-bottom: 6px; color: #14532d; }
+    .five-label { display: inline-block; background: #16a34a; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+    ul.checklist { list-style: none; margin: 0 0 12px 0; padding: 0; }
+    ul.checklist li { display: block; margin: 0 0 8px 0; padding-left: 28px; text-indent: -28px; color: #333; font-size: 1.05rem; }
+    ul.checklist input[type="checkbox"] { width: 16px; height: 16px; margin: 0 10px 0 0; vertical-align: -2px; accent-color: #2563eb; }
+    .evidence { background: #f8f9ff; border-left: 3px solid #c7d2fe; padding: 10px 14px; border-radius: 6px; margin: 0 0 22px 0; font-size: 0.98rem; color: #333; }
+    .evidence strong { color: #1e3a8a; }
+    @media print { .five-minute, .evidence { break-inside: avoid; } }
+</style>
+<style>
+/* card t_d42935ce: 320px mobile/tablet horizontal-overflow guard */
+@media (max-width: 1100px) {
+    table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+    h1, h2, h3, th, td, a, p, li, code { overflow-wrap: anywhere; }
+}
+</style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
+    <article>
+        <header>
+            <h1>AI Agent Offboarding Checklist: Six Phases and the Evidence Each One Must Produce</h1>
+            <div class="meta"><span>Published September 11, 2026</span><span>Updated September 11, 2026</span></div>
+            <div class="tagline"><span>AI agent offboarding</span> <span>Non-human identity</span></div>
+        </header>
+
+        <p>AI agent offboarding is the process of retiring an agent's non-human identity: disabling the identity, revoking its credentials, invalidating its tokens and refresh grants, scoping down its tools, closing its network egress, deciding its data's fate, and recording a named owner. Skip it and a production credential outlives the agent, with nobody accountable.</p>
+
+        <div class="five-minute">
+            <span class="five-label">Five-minute version</span>
+            <p>Do these seven, in order:</p>
+            <ol>
+                <li>Revoke the identity and its credentials, disabling it first.</li>
+                <li>Invalidate tokens, refresh grants and certificates.</li>
+                <li>Rotate every secret the agent could read.</li>
+                <li>Scope down tool, API and MCP grants.</li>
+                <li>Decide retention for embeddings, logs and prompt stores.</li>
+                <li>Record a named owner of record.</li>
+                <li>Alert on any re-animation attempt.</li>
+            </ol>
+        </div>
+
+        <p>In an August 2026 EMA survey of 202 enterprise IT and security leaders for Cequence Security, a vendor, 30% of the agentic AI pilots that never reached production had been paused indefinitely, discontinued or abandoned, and the report states most were not cleaned up, leaving their provisioned credentials and production access in place. That 30% covers non-producing pilots only; the cleanup finding is directional, not a measured share.</p>
+
+        <h2 id="checklist">The offboarding checklist: six phases</h2>
+
+        <h3 id="discover">1. Discover</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" disabled> Inventory every agent that ever had access.</li>
+            <li><input type="checkbox" disabled> Inventory the non-human identities behind them: service accounts, API keys, OAuth clients, self-created identities.</li>
+            <li><input type="checkbox" disabled> Name a human owner for each identity.</li>
+        </ul>
+        <p class="evidence"><strong>Minimum acceptable evidence:</strong> a dated register: each agent, identity ID, issuer, named owner.</p>
+
+        <h3 id="disable">2. Disable</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" disabled> Revoke the agent's credentials, disabling the identity first.</li>
+            <li><input type="checkbox" disabled> Invalidate tokens, refresh grants and certificates at the issuer.</li>
+            <li><input type="checkbox" disabled> Rotate every secret the agent could read.</li>
+        </ul>
+        <p class="evidence"><strong>Minimum acceptable evidence:</strong> an issuer-side revocation record and a timestamped identity status change.</p>
+
+        <h3 id="narrow">3. Narrow</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" disabled> Reset tool, API and MCP scopes to nothing it still needs.</li>
+            <li><input type="checkbox" disabled> Remove it from privileged groups and IAM roles &mdash; membership, not direct assignments.</li>
+            <li><input type="checkbox" disabled> Close the network egress the agent used.</li>
+        </ul>
+        <p class="evidence"><strong>Minimum acceptable evidence:</strong> a permission diff and an after-state membership export.</p>
+
+        <h3 id="dispose">4. Dispose</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" disabled> Decide retention for embeddings, logs, transcripts and prompt stores.</li>
+            <li><input type="checkbox" disabled> Delete or archive them, with evidence either way.</li>
+        </ul>
+        <p class="evidence"><strong>Minimum acceptable evidence:</strong> a dated retention decision naming what went, what stayed and why.</p>
+
+        <h3 id="document">5. Document</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" disabled> Record the owner of record by name.</li>
+            <li><input type="checkbox" disabled> A dated sign-off in a system of record, not a channel message.</li>
+            <li><input type="checkbox" disabled> The evidence pack, retained for audit.</li>
+        </ul>
+        <p class="evidence"><strong>Minimum acceptable evidence:</strong> a signed-off pack an auditor can reach.</p>
+
+        <h3 id="monitor">6. Monitor</h3>
+        <ul class="checklist">
+            <li><input type="checkbox" disabled> Re-authentication by the retired identity.</li>
+            <li><input type="checkbox" disabled> The scheduled job, webhook or CI runner that could re-animate it.</li>
+        </ul>
+        <p class="evidence"><strong>Minimum acceptable evidence:</strong> a tested alert rule and its last test date.</p>
+
+        <h2 id="standards">What the standards already require</h2>
+
+        <p>Offboarding is not a house rule. The <a href="https://owasp.org/www-project-non-human-identities-top-10">OWASP Non-Human Identities Top 10 (2025)</a> ranks NHI1:2025 Improper Offboarding as risk number one: &ldquo;the inadequate deactivation or removal of non-human identities (NHIs) such as service accounts and access keys when they are no longer needed.&rdquo;</p>
+
+        <p>The <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026">OWASP Top 10 for Agentic Applications 2026</a> names ASI03 Identity and Privilege Abuse with per-tool least-privilege profiles; the <a href="https://labs.cloudsecurityalliance.org/agentic/agentic-identity-governance-framework-v1">CSA Agent Identity Governance Framework v1, 2026</a> requires agents to be decommissioned completely; <a href="https://csrc.nist.gov/pubs/sp/800/207/final">NIST SP 800-207</a> sets least privilege per request, not per provisioning.</p>
+
+        <p>Two habits make it stick: give the agent its own scoped identity rather than a shared human one (<a href="/ai-agent-identity-governance">ten-point agent identity governance checklist</a>), and treat revocation as a runbook, not a one-off (<a href="/llmjacking-ai-api-key-theft">the credential nobody revoked</a>; front half of the lifecycle: <a href="/articles/ai-agent-permissions-audit">seven-point lockdown checklist</a>). The full procedure: the pillar guide to <a href="/ai-agent-decommissioning-checklist">agentic AI pilot decommissioning</a>.</p>
+
+        <div class="source">
+            <p>Source: EMA Research Report, August 2026, for Cequence Security; vendor-commissioned, so directional. OWASP's NHI project is vendor-sponsored.</p>
+        </div>
+
+        <h2 id="faq">Frequently asked questions</h2>
+
+        <div class="faq-item">
+            <h3>Does a retired AI agent keep its access?</h3>
+            <p>Usually, until someone runs the procedure above. Cancelling a pilot stops the budget and the stand-ups; it does not revoke its tokens, API keys or tool scopes.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What must be revoked when an agent is retired?</h3>
+            <p>Its identity, credentials, tokens, refresh grants and tool, API and MCP scopes &mdash; then rotate every secret it could read.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How long do agent credentials live?</h3>
+            <p>As long as nobody revokes them. A key or refresh grant issued for a pilot does not expire with it, so an abandoned agent can still authenticate.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Who owns AI agent offboarding?</h3>
+            <p>A named individual in the identity system, not the pilot team that has moved on. Without an owner of record, the decommission closes quietly when the sponsor changes role.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How do you stop a retired agent being re-animated?</h3>
+            <p>Alert on any re-authentication by its identity, and cover the schedulers that could restart it: cron jobs, webhooks, CI runners, vendor-side triggers.</p>
+        </div>
+
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
