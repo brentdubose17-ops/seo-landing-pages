@@ -58,7 +58,7 @@
           "name": "Are AI coding agents safe?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Not by default. AI coding agents are not inherently malicious, but they treat documentation and package names as trustworthy instructions and run install commands on your behalf. September 2026 research found Claude, OpenAI Codex, and Nous Research Hermes agents inside real corporate networks installing code that pointed to packages nobody owned. Coding agents are safe to the degree you control what they can install, run, and reach."
+            "text": "Not by default. AI coding agents treat documentation and package names as trustworthy instructions and run install commands on your behalf. September 2026 research found Claude, OpenAI Codex, and Nous Research Hermes agents inside real corporate networks installing code that pointed to packages nobody owned."
           }
         },
         {
@@ -66,7 +66,7 @@
           "name": "Should I let Claude or Codex install packages automatically?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Not until you add guardrails. Automatic installs are how unvetted code reaches your network: researchers found 227 install commands inside corporate documentation pointing at unregistered packages, and agents executed them. Turn off unattended installs, require human confirmation outside an allow-list, and restrict which registries and package names agents may fetch."
+            "text": "Not until you add guardrails. Automatic installs are how unvetted code reaches your network: researchers found 227 install commands in corporate documentation pointing at unregistered packages, and agents executed them. Turn off unattended installs, require human confirmation outside an allow-list, and restrict which registries and package names agents may fetch."
           }
         },
         {
@@ -74,7 +74,7 @@
           "name": "What is an AI agent supply chain attack?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "An AI agent supply chain attack places malicious or attacker-claimable code where an AI agent will read it, trust it, and execute it: package names in documentation files such as llms.txt, hallucinated ghost packages that no one owns, or repository-local config files like .claude/settings.json that run when a repo is opened. The June 2026 Miasma campaign against Microsoft GitHub repositories used that folder-open pattern to harvest credentials from AI developers."
+            "text": "An AI agent supply chain attack places malicious or attacker-claimable code where an AI agent will read, trust, and execute it: package names in files like llms.txt, hallucinated ghost packages no one owns, or repo-local config like .claude/settings.json that runs when a repo is opened. The June 2026 Miasma campaign against Microsoft GitHub repositories used that folder-open pattern to harvest credentials from AI developers."
           }
         },
         {
@@ -82,7 +82,7 @@
           "name": "Was there a GitHub supply chain attack in September 2026?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The reporting wave is September 2026; the incident itself is June 5-6, 2026, when GitHub disabled 73 repositories across four Microsoft organizations after the Miasma worm pushed a malicious commit to Azure/durabletask. Security Boulevard published its analysis on September 4, 2026, the same day Bruce Schneier flagged new research on coding agents installing untrusted code - two same-day warnings, not a new September incident."
+            "text": "The reporting wave is September 2026; the incident itself is June 5\u20136, 2026, when GitHub disabled 73 repositories across four Microsoft organizations after the Miasma worm pushed a malicious commit to Azure/durabletask. Security Boulevard published its analysis on September 4, 2026 \u2014 the same day Schneier flagged new research on coding agents installing untrusted code. Two same-day warnings, not a new September incident."
           }
         },
         {
@@ -90,7 +90,7 @@
           "name": "How do AI coding agents end up installing untrusted code?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Coding agents with shell access treat machine-readable files like llms.txt as authoritative setup documentation and run the install commands they contain. When a documented package name or domain was never registered - or was registered by an attacker - the agent installs and executes code nobody legitimate owns. The September 2026 research recorded 227 such install commands across 120 sites."
+            "text": "Coding agents with shell access treat machine-readable files like llms.txt as authoritative setup documentation and run the install commands they contain. When a documented package name or domain was never registered \u2014 or was claimed by an attacker \u2014 the agent executes code nobody legitimate owns."
           }
         },
         {
@@ -98,7 +98,7 @@
           "name": "What does SolarWinds have to do with AI agents?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Bruce Schneier drew the parallel on September 4, 2026: attackers compromise the trusted path, not the target. In SolarWinds, updates came from a trusted vendor. With coding agents, the trusted path is documentation, package registries, and repositories the agent treats as ground truth. Schneier's warning: this kind of thing will be exploited, in SolarWinds-style supply chain attacks."
+            "text": "Attackers compromise the trusted path, not the target \u2014 the parallel Schneier drew on September 4, 2026. In SolarWinds, updates came from a trusted vendor; with coding agents, the trusted path is documentation, registries, and repositories the agent treats as ground truth. His warning: \"This kind of thing will be exploited. Think Solar Winds\u2013style supply chain attacks.\""
           }
         }
       ]
