@@ -890,6 +890,15 @@
        single element on purpose (card t_0371431a). */
     #ds41-note { overflow-wrap: anywhere; }
 
+    /* #res-roi (the ROI paragraph in the unlocked results panel) is written by
+       calculatePricing() via textContent, i.e. plain text, so the house
+       `code, a` wrap rule does not reach it either. Measured 2026-09-12 with the
+       panel OPEN (the page only overflows after Calculate + unlock; a default-load
+       measurement reports 320/320 and misses it entirely): the paragraph's
+       min-content was 278px inside a 200px box and grew the document to 338px at a
+       320px viewport. Scoped to the single element on purpose (card t_4638147b). */
+    #res-roi { overflow-wrap: anywhere; }
+
     .result-card:hover { border-color: var(--border-glow); }
 
     .result-card.primary {
