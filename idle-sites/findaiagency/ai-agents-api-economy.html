@@ -23,7 +23,7 @@
   "headline": "AI Agents Are the API Economy's Biggest Customers: What Agencies Should Charge",
   "description": "AI agents are the fastest-growing API consumers, breaking per-seat pricing. How AI agencies should bill agent usage: retainer floors, usage overage, margin.",
   "datePublished": "2026-08-24",
-  "dateModified": "2026-08-24",
+  "dateModified": "2026-09-12",
   "author": {"@type": "Organization", "name": "ABD Legacy LLC"},
   "publisher": {"@type": "Organization", "name": "ABD Legacy LLC"},
   "mainEntityOfPage": "https://findaiagency.com/ai-agents-api-economy",
@@ -60,6 +60,11 @@
       "@type": "Question",
       "name": "How much do AI agent API calls cost?",
       "acceptedAnswer": {"@type": "Answer", "text": "The underlying token cost collapsed roughly 200x in 16 months: GPT-4 cost $30 per 1M input tokens in March 2023, and GPT-4o mini cost $0.15 per 1M by July 2024 (TokenCost AI Price Index). The real cost problem for agencies is forecast complexity, not list prices — retries, loops, and subagent fan-out all bill, and metered credits often don't roll over."}
+    },
+    {
+      "@type": "Question",
+      "name": "What does an OpenAI-hosted agent sandbox cost per client?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The container row lists $0.03 (1 GB), $0.12 (4 GB), $0.48 (16 GB) and $1.92 (64 GB) per 20-minute session per container, and eligible sessions bill by the minute with a 5-minute minimum, so this page's derived per-minute figures are $0.0015, $0.006, $0.024 and $0.096. Quote the container meter as its own pass-through line, separate from tokens and tool calls: one 4 GB container running 3 sessions a day for 22 working days is 66 sessions — $7.92 at the session unit, or $4.752 if each session bills 12 minutes at the derived per-minute rate. OpenAI publishes no per-minute dollar figure for this row, and its own guide says these usage counts are not a final bill, so re-baseline the line rather than fixing it."}
     }
   ]
 }
@@ -108,7 +113,7 @@
     <article>
         <header>
             <h1>AI Agents Are the API Economy's Biggest Customers: What Agencies Should Charge</h1>
-            <div class="meta"><span>Published August 24, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="meta"><span>Published August 24, 2026 &middot; Updated September 12, 2026</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>AI agents</span> <span>API economy</span> <span>agent-first pricing</span> <span>agency billing</span></div>
         </header>
 
@@ -166,6 +171,28 @@
             <li><strong>Trust is a service line.</strong> Accenture's payments survey found <strong>78% of payments leaders expect fraud to increase significantly with agentic payments</strong> and <strong>87% say trust is the key barrier</strong> (Accenture, May 27, 2026). Clients will pay for oversight, guardrails, and identity work around agents — that's billable scope, not overhead.</li>
         </ol>
 
+        <h2 id="agents-api-runtime-meter">The Runtime Line: When OpenAI Hosts the Harness</h2>
+        <h3>Which Harness Changes the Engagement</h3>
+        <p><strong>Managed harness.</strong> OpenAI manages sessions, orchestration, context compaction and recovery while your application "provides tools and chooses its execution environment" — the runtime becomes a vendor you integrate and price.</p>
+        <p><strong>Self-hosted.</strong> You run <code>codex exec-server</code> in your own or the client's environment, registering the executor with an environment ID and a restricted API key over WebSocket — real scope and a different operator.</p>
+        <p><strong>Partner sandbox.</strong> OpenAI's self-hosted sandbox guide lists nine providers — Blaxel, Cloudflare, Daytona, DigitalOcean, E2B, Modal, Oracle Cloud Infrastructure (OCI), Runloop, Vercel — and its provider setup pages put the compute hand-off procedurally, not in costs: "delete the session and stop the provider sandbox separately."</p>
+        <p><strong>The gate above all three:</strong> the Agents API "currently supports data residency only in the United States and does not support Zero Data Retention (ZDR)", and "Choosing a self-hosted sandbox does not make the Agents API ZDR-eligible."</p>
+
+        <h3>What Stays Agency Work</h3>
+        <ul>
+            <li><strong>Tool and MCP inventory, per session</strong> — the agent object is "the model, instructions, tools, and MCP servers available to the agent"; each tool you add is yours to re-test.</li>
+            <li><strong>Evals and acceptance testing</strong> — no product feature substitutes for your own test set.</li>
+            <li><strong>Data boundaries</strong> — residency, retention and the ZDR gate are yours to document; sessions and published artifacts are deleted afterwards, by the builder.</li>
+            <li><strong>Cost control</strong> — the spend-limits doc is generic: caps are org and project hard limits returning a 429 with <code>organization_spend_limit_exceeded</code> or <code>project_spend_limit_exceeded</code>, and "Enforcement is not instantaneous, so recorded spend can slightly exceed the configured amount." Nothing is Agents-API-specific, which is why it is yours to <a href="/ai-agent-cost-controls">instrument a hard stop</a> around.</li>
+            <li><strong>Client-side obligations</strong> — the <code>OpenAI-Beta: agents=v1</code> header, session deletion, stopping partner sandboxes separately, and a container expiry that "isn't configurable". Fan-out: the multi-agent guide defaults <code>max_concurrent_subagents</code> to <strong>6</strong>, excluding the coordinator — the <a href="/agent-fleet-cost-guardrails">6-concurrent-subagent cap</a>.</li>
+        </ul>
+
+        <h3>Pricing the Container Meter</h3>
+        <p><strong>Quote it in OpenAI's units first:</strong> <strong>1 GB $0.03 · 4 GB $0.12 · 16 GB $0.48 · 64 GB $1.92 per 20-minute session per container</strong>. Name the SKU honestly: the row is labelled "Hosted Shell and Code Interpreter", <code>Agents API</code> occurs <strong>0</strong> times in the pricing page's text, and the path from a sandbox to that row is a docs cross-reference, not a line item.</p>
+        <p><strong>Reconcile the unit, because the page does not.</strong> The changelog entry dated Jun 2, 2026 supersedes the session rate for eligible sessions: "billed per minute with a 5-minute minimum, instead of being billed at the full 20-minute session rate," and "The underlying per-minute rate will remain the same" — a change OpenAI says "will lower effective cost for customers." The footnote carries the per-minute rule; the supersession clause and the rate sentence are the changelog's. <code>Eligible</code> is defined nowhere we can read: quote it and stop.</p>
+        <p><strong>Then do the arithmetic, all of it DERIVED</strong> — this page's math on those statements, because OpenAI publishes no per-minute dollar figure for this row (its per-minute dollars are audio rates). Per-minute = tier ÷ 20: <strong>$0.0015 · $0.006 · $0.024 · $0.096</strong>. Floor = per-minute × 5: <strong>$0.0075 · $0.03 · $0.12 · $0.48</strong> — <strong>25%</strong> of the printed session price at every tier, so the session price is <strong>4.0×</strong> the floor and the units cross at exactly <strong>20 billed minutes</strong>. Stated assumptions: one 4 GB container, 3 sessions a day, 22 working days = <strong>66 sessions</strong> → <strong>$7.92</strong> at the session unit, or <strong>$4.752</strong> at 12 derived billed minutes.</p>
+        <p><strong>Decide who owns the gap.</strong> Usage is best-effort: it "can be <code>null</code> when unknown, and recorded counts may change as accounting arrives," "Missing usage does not mean zero usage," "These counts are not a final bill," and the fields "do not expose a separate cache-write count" where cache-write pricing applies. You cannot reconcile an invoice from OpenAI's numbers alone: your own session-and-retry instrumentation is the control, and the quote line is <strong>re-baselined, not fixed</strong> while the beta iterates. You can <a href="https://aiagencycalculator.com/ai-agent-api-cost-calculator" rel="noopener">run the runtime line on your own numbers</a>, and the token half is <a href="/ai-coding-agent-pricing">priced, not estimated</a>. The container line is never the total; for the product side, <a href="/openai-agents-for-everyone">OpenAI agents for everyone</a>.</p>
+
         <h2>How AI Agencies Should Bill Agent Usage</h2>
         <p>Here are five pricing moves you can implement this week:</p>
         <ol>
@@ -205,6 +232,10 @@
             <h3>How much do AI agent API calls cost?</h3>
             <p>The underlying token cost collapsed roughly 200x in 16 months: GPT-4 cost $30 per 1M input tokens in March 2023, and GPT-4o mini cost $0.15 per 1M by July 2024 (TokenCost AI Price Index). The real cost problem for agencies is forecast complexity, not list prices — retries, loops, and subagent fan-out all bill, and metered credits often don't roll over.</p>
         </div>
+            <div class="faq-item">
+                <h3>What does an OpenAI-hosted agent sandbox cost per client?</h3>
+                <p>The container row lists $0.03 (1 GB), $0.12 (4 GB), $0.48 (16 GB) and $1.92 (64 GB) per 20-minute session per container, and eligible sessions bill by the minute with a 5-minute minimum, so this page's derived per-minute figures are $0.0015, $0.006, $0.024 and $0.096. Quote the container meter as its own pass-through line, separate from tokens and tool calls: one 4 GB container running 3 sessions a day for 22 working days is 66 sessions — $7.92 at the session unit, or $4.752 if each session bills 12 minutes at the derived per-minute rate. OpenAI publishes no per-minute dollar figure for this row, and its own guide says these usage counts are not a final bill, so re-baseline the line rather than fixing it.</p>
+            </div>
 
         <div class="cta">
             <p><strong>Pricing agent workloads? Run your numbers before you quote.</strong></p>
@@ -244,8 +275,13 @@
             <li>Gartner — 60% of brands use agentic AI by 2028 (Jan 15, 2026): <a href="https://www.gartner.com/en/newsroom/press-releases/2026-01-15-gartner-predicts-60-percent-of-brands-will-use-agentic-ai-to-deliver-streamlined-one-to-one-interactions-by-2028" rel="noopener">gartner.com/en/newsroom/press-releases/2026-01-15-gartner-predicts-60-percent-of-brands-will-use-agentic-ai-to-deliver-streamlined-one-to-one-interactions-by-2028</a></li>
             <li>Gartner — AI agents outnumber sellers 10:1 by 2028 (Jul 28, 2026): <a href="https://www.gartner.com/en/newsroom/press-releases/2026-07-28-gartner-predicts-ai-agents-will-outnumber-sellers-10-to-1-by-2028-yet-fewer-than-40-percent-of-sellers-will-say-agents-improved-productivity" rel="noopener">gartner.com/en/newsroom/press-releases/2026-07-28-gartner-predicts-ai-agents-will-outnumber-sellers-10-to-1-by-2028-yet-fewer-than-40-percent-of-sellers-will-say-agents-improved-productivity</a></li>
             <li>MIT Sloan — Raskar, "Who will own the AI agent economy?" (Jul 13, 2026): <a href="https://mitsloan.mit.edu/ideas-made-to-matter/who-will-own-ai-agent-economy" rel="noopener">mitsloan.mit.edu/ideas-made-to-matter/who-will-own-ai-agent-economy</a></li>
+            <li>OpenAI, API pricing — built-in tools, container rates (read 2026-09-12): <a href="https://developers.openai.com/api/docs/pricing#built-in-tools" rel="noopener">developers.openai.com/api/docs/pricing#built-in-tools</a></li>
+            <li>OpenAI, API changelog — container session billing change, Jun 2, 2026 (read 2026-09-12): <a href="https://developers.openai.com/api/docs/changelog" rel="noopener">developers.openai.com/api/docs/changelog</a></li>
+            <li>OpenAI, Agents API observability guide — usage fields, cache-write gap, "not a final bill" (read 2026-09-12): <a href="https://developers.openai.com/api/docs/guides/agents-api/observability" rel="noopener">developers.openai.com/api/docs/guides/agents-api/observability</a></li>
+            <li>OpenAI, Agents API overview — managed harness, US-only residency, no ZDR (read 2026-09-12): <a href="https://developers.openai.com/api/docs/guides/agents-api/overview" rel="noopener">developers.openai.com/api/docs/guides/agents-api/overview</a></li>
+            <li>OpenAI, OpenAI-hosted environments — sandbox expiry and container rates (read 2026-09-12): <a href="https://developers.openai.com/api/docs/guides/agents-api/environments/openai-hosted" rel="noopener">developers.openai.com/api/docs/guides/agents-api/environments/openai-hosted</a></li>
         </ul>
-        <p style="font-size:0.85rem;color:#666;">Accuracy note: All facts, dates, and figures verified against the sources above 2026-08-24 (draft t_095bafd3; evidence gate PASS). Salesforce figures are list prices as of mid-2026; real bills stack platform seats, Einstein requests, and Data Cloud credits on top. Lloyds £100M is a 2026 expectation, not yet realized. Gartner figures are 2028 forecasts. No public dataset measures agents' absolute share of API traffic — growth framing only.</p>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: All facts, dates, and figures verified against the sources above 2026-08-24 (draft t_095bafd3; evidence gate PASS). The runtime-meter section was added 2026-09-12 and its OpenAI sources were re-read that day; the per-minute and floor figures there are this page's own derivation (tier ÷ 20, × 5), not OpenAI-published rates. Salesforce figures are list prices as of mid-2026; real bills stack platform seats, Einstein requests, and Data Cloud credits on top. Lloyds £100M is a 2026 expectation, not yet realized. Gartner figures are 2028 forecasts. No public dataset measures agents' absolute share of API traffic — growth framing only.</p>
     </article>
     <footer>
         <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
