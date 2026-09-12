@@ -62,7 +62,7 @@
           "name": "Is Tencent Hy4 preview open source?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes — Tencent released Hy4 preview weights on August 28, 2026 under the Apache 2.0 license, with no field-of-use clause and no geo carve-out. The weights are available on Hugging Face (tencent/Hy4-preview plus an FP8 variant), ModelScope, GitCode, and CNB. 'Open weights' is the precise description: you get the model weights, deployment recipes, and fine-tuning pipeline, not the full training data. Note that 770B parameters is a cluster-scale deployment — the FP8 checkpoint alone is about 770GB, which does not fit on an 8xH100 node (640GB); you need H200-class or multi-node tensor parallelism."
+            "text": "Yes — Tencent released Hy4 preview weights on August 28, 2026 under the Apache 2.0 license, with no field-of-use clause and no geo carve-out. The weights are available on Hugging Face (tencent/Hy4-preview plus an FP8 variant), ModelScope, GitCode, and CNB. \"Open weights\" is the precise description: you get the model weights, deployment recipes, and fine-tuning pipeline, not the full training data. Note that 770B parameters is a cluster-scale deployment — the FP8 checkpoint alone is about 770GB, which does not fit on an 8xH100 node (640GB); you need H200-class or multi-node tensor parallelism."
           }
         },
         {
@@ -86,7 +86,7 @@
           "name": "Can agencies self-host Tencent Hy4 preview?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Only with serious hardware. The FP8 checkpoint is about 770GB, so it does not fit on an 8xH100 node (640GB VRAM); you need 8xH200 (1.1TB) or multi-node tensor parallelism. Tencent ships official prebuilt vLLM (vllm/vllm-openai:hy4-preview) and SGLang (lmsysorg/sglang:hy4-preview) images with tensor-parallel 8 and speculative decoding enabled, both exposing an OpenAI-compatible endpoint. For most agencies the API is the practical route — Apache 2.0 matters because no vendor can revoke the right to run it, but 'open weights' and 'weights you can afford to serve' are different things at 770B scale."
+            "text": "Only with serious hardware. The FP8 checkpoint is about 770GB, so it does not fit on an 8xH100 node (640GB VRAM); you need 8xH200 (1.1TB) or multi-node tensor parallelism. Tencent ships official prebuilt vLLM (vllm/vllm-openai:hy4-preview) and SGLang (lmsysorg/sglang:hy4-preview) images with tensor-parallel 8 and speculative decoding enabled, both exposing an OpenAI-compatible endpoint. For most agencies the API is the practical route — Apache 2.0 matters because no vendor can revoke the right to run it, but \"open weights\" and \"weights you can afford to serve\" are different things at 770B scale."
           }
         },
         {
