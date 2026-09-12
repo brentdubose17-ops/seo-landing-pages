@@ -57,7 +57,7 @@
           "name": "How much does GPT-6 Astra cost per 1M tokens?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GPT-6 Astra API pricing is $10 per 1M input tokens and $50 per 1M output tokens on the standard tier, with cached input at $1 per 1M and cache writes at $12.50 per 1M. Prompts with more than 272K input tokens reprice the full request at 2x input and cache rates and 1.5x output ($20 input / $75 output / $2 cached / $25 cache writes per 1M). Batch and Flex are 50% of standard; Fast mode is 2x. Figures verified Sept 3, 2026 from OpenAI's official model and pricing documentation."
+            "text": "$10 per 1M input / $50 per 1M output / $1 cached input / $12.50 cache writes on the standard tier (≤272K input). Batch and Flex are 50% of standard; Fast mode is 2x."
           }
         },
         {
@@ -65,7 +65,7 @@
           "name": "Does GPT-6 Astra pricing double past 272K tokens?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Almost — the exact rule matters. OpenAI prices prompts with more than 272K input tokens at 2x the input and cache rates and 1.5x the output rate for the full request. So a long prompt goes from $10 to $20 per 1M input and $1 to $2 cached input, while output goes from $50 to $75 per 1M (1.5x, not 2x). The entire request is repriced once the 272K input threshold is crossed."
+            "text": "Input and cache rates double ($10→$20, $1→$2) but output goes 1.5x ($50→$75) — and the whole request is repriced once the 272K input threshold is crossed. The \"$10/$50 doubles\" shorthand is wrong on output."
           }
         },
         {
@@ -73,7 +73,7 @@
           "name": "What is the GPT-6 Astra context window?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GPT-6 Astra has a 1,050,000-token (1.05M) context window per OpenAI's official model documentation, with a 922,000-token maximum input and a 128,000-token maximum output. Coverage often rounds the context to 'about 1.1M tokens.'"
+            "text": "1,050,000 tokens per OpenAI's official model docs (922K max input, 128K max output). Press coverage commonly rounds it to about 1.1M tokens."
           }
         },
         {
@@ -81,7 +81,7 @@
           "name": "When is GPT-6 Astra available?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GPT-6 Astra is live in the OpenAI API and in ChatGPT Work and Codex as of Sept 4, 2026. OpenAI's developer account confirmed availability for all Pro, Enterprise, and Business Premium users; the model is documented for the Responses and Chat Completions APIs and is appearing in the ChatGPT model picker (as GPT-6 Pro) for Pro and Business plans. Enterprise access is enabled by workspace admins and is off by default at launch. Plus chat access is not included yet — OpenAI says Plus will follow as fast as it can. Astra usage is included in existing subscription allowances, with optional purchased credits for additional usage."
+            "text": "GPT-6 Astra is live in the OpenAI API and in ChatGPT Work and Codex as of Sept 4, 2026 — OpenAI's developer account confirmed availability for all Pro, Enterprise, and Business Premium users. It appears in the ChatGPT model picker as \"GPT-6 Pro\" and is showing up on Pro and Business plans first, with Plus chat access to follow. Enterprise admins control access for their workspace (off by default at launch). Astra usage is included in existing subscription allowances, with purchasable credits for more."
           }
         },
         {
@@ -89,7 +89,7 @@
           "name": "What is GPT-6 Astra Pro and who gets it?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GPT-6 Astra Pro is a higher Astra tier for ChatGPT Work and Codex. Users on Pro, Business, and Enterprise plans also get access to it, priced separately in Work/Codex credits (usage beyond the included subscription allowance is purchasable). Enterprise administrators can enable Astra for their workspace — access is off by default at launch. Codex CLI users need version 0.153.0 or newer for Astra."
+            "text": "GPT-6 Astra Pro is a higher Astra tier for ChatGPT Work and Codex. Users on Pro, Business, and Enterprise plans also get access to it, priced separately in Work/Codex credits on top of the included allowance. Enterprise administrators can enable Astra for their workspace — access is off by default at launch. Codex CLI users need version 0.153.0 or newer for Astra."
           }
         },
         {
@@ -97,7 +97,7 @@
           "name": "How does GPT-6 Astra compare to GPT-5.6 Sol on cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "On the standard tier, GPT-6 Astra at $10/$50 per 1M is 2.5x GPT-5.6 Sol's promotional $4/$20 rate on both input and output. On a 10K-in / 2K-out task, Astra bills about $0.20 vs Sol's $0.08. Above 272K input tokens Astra's full-request repricing ($20/$75) makes the gap larger, which is the cost-per-task example agencies should quote carefully for long-context work."
+            "text": "At standard rates Astra is 2.5x Sol's promotional $4/$20 on both axes (~$0.20 vs ~$0.08 on a 10K-in/2K-out task). Past 272K input the repricing rule widens the gap — the calculator models both bands."
           }
         },
         {
@@ -105,7 +105,7 @@
           "name": "Where does GPT-6 Astra show up in the pricing calculator?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GPT-6 Astra is a selectable Model Strategy on the AI Agency Pricing Calculator homepage, modeled as the premium OpenAI flagship tier, and the calculator's GPT-6 Astra long-context scenario shows sub-272K vs above-272K cost math using OpenAI's exact repricing rule."
+            "text": "It is a selectable Model Strategy on the homepage calculator, modeled as the premium OpenAI flagship tier, plus a GPT-6 Astra long-context scenario that applies the 272K repricing rule to sub- and above-272K workloads."
           }
         }
       ]
