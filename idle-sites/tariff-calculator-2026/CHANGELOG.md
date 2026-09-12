@@ -2,6 +2,35 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-11 — Publish /tariff-refund-status-2026/ (kanban t_bfbab407)
+
+- **New page `tariff-refund-status-2026/index.html`** (38,009 B) — the dated IEEPA tariff-refund status
+  log, built from the t_8b64a298 refund fact pack. Shipped as a **directory index** (`<slug>/index.html`)
+  rather than a flat file, because the card's canonical slug is the trailing-slash form: `/tariff-refund-status-2026/`
+  now serves a **bare 200** and `/tariff-refund-status-2026` 308s to it, matching the site's existing
+  `/news/` directory page. (A flat `tariff-refund-status-2026.html` would have made the slash form a 308 hop.)
+- **Figure provenance.** Every number on the page was re-derived from the Treasury Fiscal Data API
+  (`mts_table_4` filtered to `Customs Duties`, and `mts_table_1`) by a standalone script
+  (`fetch_verify_figures.py`, 12/12 checks) on the day of publication. Three fact-pack discrepancies were
+  handled explicitly rather than propagated:
+  - the "$20–25B for five months" framing is printed as the **six**-consecutive-month gross series
+    (Mar–Aug 2026) with the counting basis stated — no bare "five months in a row";
+  - the October-2025 **$31.354B peak is labelled NET**, with gross $33.090B given on the same row;
+  - the ≈$166B refund total is **attributed** (Yahoo Finance + Davis Wright Tremaine), not asserted —
+    no primary document carries the number.
+  The page states once, explicitly, that "tariff receipts" = MTS `Customs Duties` = **all** customs duties,
+  not IEEPA alone.
+- **No portal deadline is published, because none exists in any source.** CBP's CAPE notice (updated
+  2026-07-10) and its IEEPA refund FAQ (modified 2026-09-02) carry no deadline language; the page answers
+  the "tariff refund portal deadline" query with the per-entry rule instead (unliquidated, or within 80 days
+  of liquidation, so CBP can reliquidate by day 90 under 19 U.S.C. § 1501).
+- **Separation from the dividend explainer is enforced:** zero occurrences of `dividend`, `rebate`, `$5,000`
+  or `tariff-dividend-5000-explained` anywhere in the document (probed on the built bytes).
+- `sitemap.xml`: one new `<loc>` at priority 0.9 (36 → 37 locs). `llms.txt`: one new entry.
+- **Verified:** local gate `site_consistency.py tariff-refund-status-2026/index.html --expect-date 2026-09-11`
+  → 1 checked / 0 errors / 0 warnings; FAQ parity 6 visible `.faq-item` == 6 `FAQPage` `mainEntity` (0 text
+  drift); Playwright 320/360/390/414 px all `docSW == bodySW == innerWidth` with 0 offenders.
+
 ## 2026-09-11 — Wire the Section 232 metals hub into the homepage + the polysilicon and drone guides (kanban t_a2cf5886)
 
 - **Internal-link wiring only — no copy, rate, date or template change.** The `/section-232-metals-tariffs`
