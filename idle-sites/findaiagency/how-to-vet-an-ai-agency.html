@@ -96,7 +96,7 @@
           "name": "How do I vet an AI agency?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Start with custody and financial questions before capability questions: whose legal entity holds the AI API keys, the rotation interval, the named owner who is alerted when a key is used unexpectedly, the incident disclosure window, log retention, and how the agent is revoked after termination. Anthropic's September 2026 threat report documents one stolen AI API key reused for roughly three weeks and a developer token turning into full cloud admin in roughly three hours, so the answers worth having are about detection and revocation windows."
+            "text": "[GAP] Start with custody and financial questions before capability ones: whose entity holds the AI keys, the rotation interval, the alert owner, the disclosure window, and the revocation procedure. Everything in the seven questions above is answerable in writing in under a week by any competent agency - and the inability to answer is itself the finding."
           }
         },
         {
@@ -104,7 +104,7 @@
           "name": "How do I evaluate an AI agent?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Evaluate an AI agent the way you evaluate a person with system access: what it can reach (egress allowlist and sandbox-versus-production separation), what identity it holds and how long that identity lives, what it logs, and who can revoke it within an hour. Anthropic's report notes that AI API keys and session tokens are targets and that the integrations built around AI - sandboxes, proxies and resellers - are part of the attack surface."
+            "text": "[AC] Evaluate the agent the way you evaluate a new employee with system access, not the way you evaluate software: what can it reach (egress and sandbox boundaries), what identity does it hold and for how long, what does it log, and who can revoke it within an hour. The report's agent-driven cases - a token-to-admin escalation in roughly three hours, and a stolen key used for roughly three weeks - are the two failure modes those four tests are aimed at."
           }
         },
         {
@@ -112,7 +112,7 @@
           "name": "What is an AI vendor risk assessment?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A structured review of the model provider and of the agency that resells it: where the credentials live and who holds them, the rotation and alerting intervals, what a breach of the vendor would expose inside your environment, the disclosure track record, and the revocation path. Anthropic's September 2026 report makes it a client-side question - in its GTG-50020 case the keys lost were customers' keys stolen from customers' environments."
+            "text": "[AC] A structured review of the model provider and of the agency that resells it: where the credentials live and who holds them, the rotation and alerting intervals, what the vendor's own breach would expose in your environment, the disclosure track record, and the revocation path. This report's GTG-50020 case is the reason it is now a client-side question: the keys lost were \"customers' keys stolen from customers' environments\"."
           }
         },
         {
@@ -120,7 +120,7 @@
           "name": "Is a cheap AI reseller or API proxy safe?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Anthropic's customer guidance is that AI access should be purchased only through authorized channels. Its September 2026 report documents a fraudulent reseller operation offering cheap Claude access that was neither cheap nor actually Claude, where customer traffic was silently proxied to another model while the reseller installed a credential harvester and sold the victims' account credentials onward."
+            "text": "[GAP] Anthropic's guidance is \"AI access should be purchased only through authorized channels,\" and the report documents a reseller whose cheap Claude access \"turned out to be neither cheap nor actually Claude,\" complete with a credential harvester. If the discount requires routing your traffic through someone else's infrastructure, treat it as a supply-chain risk."
           }
         },
         {
@@ -128,7 +128,7 @@
           "name": "What should our AI vendor contract include?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Five clauses: (1) key ownership and custody, naming the legal entity, scope, rotation interval and sub-processors; (2) incident disclosure with a named owner, a window measured in hours and supplier breaches included; (3) logging scope, storage location, retention and handover format; (4) termination and revocation with a stated period and written confirmation; (5) named individuals rather than one contractor holding every credential."
+            "text": "[GAP] The five clauses above: key ownership and custody, incident disclosure with a window, log retention and handover, termination revocation with a stated period, and named individuals rather than a single contractor. Each maps to a documented September 2026 failure mode."
           }
         },
         {
@@ -136,7 +136,7 @@
           "name": "Who should I hire to secure AI agents?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Either an agency willing to put key custody, rotation alerting, disclosure windows and a tested kill switch into the contract, or an independent reviewer who reports to you rather than to the agency deploying the agent. Avoid any arrangement where the party running the agent is the only party assessing its security, because Anthropic's September 2026 report shows AI vendors themselves are targets and that the credentials lost are customers' keys stolen from customers' environments."
+            "text": "[GAP] Either an agency willing to put key custody and incident response in the contract (this page is the question set for that conversation) or an independent reviewer who reports to you rather than to the agency. Avoid any arrangement where the party deploying the agent is also the only party assessing its security."
           }
         }
       ]
