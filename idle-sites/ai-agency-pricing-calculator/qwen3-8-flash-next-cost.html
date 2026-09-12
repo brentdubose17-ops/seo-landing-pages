@@ -81,7 +81,7 @@
           "name": "Is Qwen3.8-Flash-Next the cheapest AI model to run agents?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "In the hosted tier it joins the $0.15 input crowd — GLM-5.3-Flash ($0.15/$0.50) and DeepSeek V4 Flash ($0.15-0.22/$0.35-0.66) — and is cheaper on output than both at list; roughly a quarter of DeepSeek V4 Pro off-peak. \"Cheapest\" depends on cache behavior, context length, and retries — model your own volume in the calculator."
+            "text": "In the hosted tier it joins the $0.15 input crowd — GLM-5.3-Flash ($0.15/$0.50) and DeepSeek V4 Flash (now billed as V4.1-Flash: $0.15/$0.60, cached input $0.003) — and is cheaper on output than both at list; roughly a quarter of DeepSeek V4 Pro off-peak. \"Cheapest\" depends on cache behavior, context length, and retries — model your own volume in the calculator."
           }
         }
       ]
@@ -190,13 +190,13 @@
                 <tr><td>Qwen3.7-Plus (Alibaba)</td><td>No (API)</td><td>17B (397B total)</td><td>$0.32</td><td>$1.28</td><td>Prior gen API tier</td></tr>
                 <tr><td>Qwen3.7-Flash (Alibaba)</td><td>No (API)</td><td>—</td><td>$0.03</td><td>$0.13</td><td>Smallest Alibaba API</td></tr>
                 <tr><td>Qwen3.8-Max (Alibaba)</td><td>No (API)</td><td>~A95B (2.4T total)</td><td>$2.00</td><td>$6.00</td><td>Flagship API tier</td></tr>
-                <tr><td>DeepSeek V4 Flash</td><td>Yes</td><td>13B</td><td>$0.15–$0.22</td><td>$0.35–$0.66</td><td>Date/peak-sensitive after Aug 16 raise</td></tr>
+                <tr><td>DeepSeek V4 Flash → V4.1-Flash</td><td>Yes</td><td>8B in / 16B out</td><td><strong>$0.15</strong></td><td><strong>$0.60</strong></td><td>V4-Flash retired 2026-09-10; the legacy IDs bill at V4.1-Flash rates (peak exactly 2×: $0.30/$1.20; cached input $0.003; 1M context)</td></tr>
                 <tr><td>DeepSeek V4 Pro 0813</td><td>Yes</td><td>49B</td><td>$0.66 (off-peak)</td><td>$1.98 (off-peak)</td><td>Off-peak rates; peak ~2x</td></tr>
                 <tr><td>Claude Opus 5 (Anthropic)</td><td>No</td><td>—</td><td>$5.00</td><td>$25.00</td><td>Top-tier API</td></tr>
                 <tr><td>GPT-5.6 Sol (OpenAI)</td><td>No</td><td>—</td><td>$5.00</td><td>$30.00</td><td>List; promo pricing may apply</td></tr>
             </tbody>
         </table></div>
-        <p>Rates verified 2026-08-27/28 via QwenCloud, OpenRouter, and Artificial Analysis; DeepSeek V4 Flash is date/peak-sensitive after the Aug 16 raise (up to 371% at peak). All USD per 1M tokens. Qwen3.8-Flash undercuts DeepSeek V4 Flash on official pricing and lands at <strong>roughly a quarter of DeepSeek V4 Pro's off-peak price</strong> — Intelligent Living frames it as matching V4 Pro's coding score (SWE-bench Pro 62.5 vs 55.4, vendor-reported) at about a quarter of the cost.</p>
+        <p>Rates verified 2026-08-27/28 via QwenCloud, OpenRouter, and Artificial Analysis; DeepSeek retired V4-Flash on 2026-09-10: the legacy IDs now serve <strong>V4.1-Flash</strong> at $0.15/$0.60 off-peak with $0.003 cached input (peak exactly 2×), and DeepSeek V4 Pro keeps its own unchanged row ($0.66/$1.98 off-peak) — so the August Flash band is historical. All USD per 1M tokens. Qwen3.8-Flash matches DeepSeek's current Flash input rate ($0.15) and undercuts it on output ($0.47 vs $0.60), and lands at <strong>roughly a quarter of DeepSeek V4 Pro's off-peak price</strong> — Intelligent Living frames it as matching V4 Pro's coding score (SWE-bench Pro 62.5 vs 55.4, vendor-reported) at about a quarter of the cost.</p>
 
         <h2>Open-weight vs API cost 2026: the agency decision</h2>
         <p>This release sharpens the open-weight vs API cost decision because both routes are now genuinely competitive at this tier.</p>
@@ -205,7 +205,7 @@
         <p><strong>The shortcut:</strong> below roughly tens of billions of tokens a month, take the API and bank the $0.15 floor. Above that, model the FP8 self-host path against the bill — SGLang shipped day-0 support.</p>
 
         <h2>Where it fits in the 2026 model-cost landscape</h2>
-        <p>DeepSeek's <strong>August 16 hike</strong> (up to 371% on V4 Flash output at peak) reopened the cheap tier; Qwen steps in at $0.15/$0.47 with a stronger active-parameter efficiency story. <strong>GLM-5.3-Flash</strong> (Z.ai, $0.15/$0.50 list, MIT weights) and <strong>Tencent Hy4 preview</strong> ($0.834/$2.501, Apache 2.0) made 1M context and cheap open weights table stakes; Qwen3.8-Flash is cheaper on output than both at list. The <strong>top tier has not moved</strong> — Claude Opus 5 and GPT-5.6 Sol are still 30-60x+ the cheap tier on raw tokens.</p>
+        <p>DeepSeek's <strong>August 16 hike</strong> (up to 371% on V4 Flash output at peak) reopened the cheap tier — then DeepSeek cut the Flash family again on <strong>Sept 10, 2026</strong> with V4.1-Flash ($0.15 in / $0.60 out off-peak, $0.003 cached input), so those Aug 16 Flash numbers are historical; Qwen steps in at $0.15/$0.47 with a stronger active-parameter efficiency story. <strong>GLM-5.3-Flash</strong> (Z.ai, $0.15/$0.50 list, MIT weights) and <strong>Tencent Hy4 preview</strong> ($0.834/$2.501, Apache 2.0) made 1M context and cheap open weights table stakes; Qwen3.8-Flash is cheaper on output than both at list. The <strong>top tier has not moved</strong> — Claude Opus 5 and GPT-5.6 Sol are still 30-60x+ the cheap tier on raw tokens.</p>
         <p>Independent data is positive but modest: Artificial Analysis scores it <strong>56 on its Intelligence Index vs a 29 median</strong>, at about half the median input price ($0.15 vs $0.30). All benchmarks (SWE-bench Pro 62.5, DeepSWE 58.7, GPQA Diamond 91.7) are <strong>vendor-reported, one day old, unreproduced as of August 28</strong> — treat as directional; the weights are public, so third-party runs are coming.</p>
 
         <h2>What this changes for your model line item</h2>
@@ -237,7 +237,7 @@
         </div>
         <div class="faq-item">
             <h3>Is Qwen3.8-Flash-Next the cheapest AI model to run agents?</h3>
-            <p>In the hosted tier it joins the $0.15 input crowd — GLM-5.3-Flash ($0.15/$0.50) and DeepSeek V4 Flash ($0.15-0.22/$0.35-0.66) — and is cheaper on output than both at list; roughly a quarter of DeepSeek V4 Pro off-peak. "Cheapest" depends on cache behavior, context length, and retries — model your own volume in the calculator.</p>
+            <p>In the hosted tier it joins the $0.15 input crowd — GLM-5.3-Flash ($0.15/$0.50) and DeepSeek V4 Flash (now billed as V4.1-Flash: $0.15/$0.60, cached input $0.003) — and is cheaper on output than both at list; roughly a quarter of DeepSeek V4 Pro off-peak. "Cheapest" depends on cache behavior, context length, and retries — model your own volume in the calculator.</p>
         </div>
 
         <div class="related">
@@ -264,7 +264,7 @@
             <li>SGLang docs: <a href="https://docs.sglang.io/cookbook/autoregressive/Qwen/Qwen3.8-Flash-Next" rel="noopener">docs.sglang.io</a></li>
             <li>OpenRouter API: <a href="https://openrouter.ai/api/v1/models?q=qwen3.8" rel="noopener">openrouter.ai/api/v1/models</a></li>
         </ul>
-        <p style="font-size:0.85rem;color:#666;">Accuracy note: Pricing per QwenCloud official rate confirmed 2026-08-27 and OpenRouter's live listing, USD per 1M tokens. 125B/6B/~95% sparsity per Alibaba's Aug 28 announcement and the model card (6/125 = 95.2%). QSA speedups and all benchmarks vendor-reported, unreproduced. DeepSeek V4 prices date/peak-sensitive after the Aug 16 raise. GLM-5.3-Flash and Tencent Hy4 rates per the site's own pricing posts. Per-task math uses 10K/2K tokens; model your own volume.</p>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: Pricing per QwenCloud official rate confirmed 2026-08-27 and OpenRouter's live listing, USD per 1M tokens. 125B/6B/~95% sparsity per Alibaba's Aug 28 announcement and the model card (6/125 = 95.2%). QSA speedups and all benchmarks vendor-reported, unreproduced. DeepSeek V4-Flash is retired as of 2026-09-10 (its IDs bill at V4.1-Flash rates: $0.15/$0.60 off-peak, $0.003 cached input, peak exactly 2×); DeepSeek V4 Pro rates are unchanged. GLM-5.3-Flash and Tencent Hy4 rates per the site's own pricing posts. Per-task math uses 10K/2K tokens; model your own volume.</p>
     </article>
     <footer>
         <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>

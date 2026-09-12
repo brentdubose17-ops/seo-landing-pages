@@ -24,7 +24,7 @@
       "headline": "DeepSeek V4 API Price Increase (Aug 16, 2026): New Peak/Off-Peak Rates",
       "description": "DeepSeek raised V4 API prices effective 16:00 UTC Aug 16, 2026: V4-Flash peak $0.44/$1.32, V4-Pro peak $1.32/$3.96 per 1M tokens. See the full before/after table and what it costs agencies.",
       "datePublished": "2026-08-16",
-      "dateModified": "2026-08-16",
+      "dateModified": "2026-09-12",
       "author": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "publisher": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "mainEntityOfPage": "https://aiagencycalculator.com/deepseek-v4-api-price-increase-2026",
@@ -52,7 +52,7 @@
         {
           "@type": "Question",
           "name": "What should agencies do about the DeepSeek price increase?",
-          "acceptedAnswer": {"@type": "Answer", "text": "Update cost assumptions immediately: use peak/off-peak rates in estimates, schedule non-urgent batch work off-peak, treat cache hits as the lever (off-peak cache-hit input is $0.007 Flash / $0.022 Pro), and re-benchmark alternatives (Gemini 3.7 Flash intro, Grok 4.6, Qwen 3.8 Max, self-hosted MIT-licensed V4 weights for sustained workloads)."}
+          "acceptedAnswer": {"@type": "Answer", "text": "Update cost assumptions immediately: use peak/off-peak rates in estimates, schedule non-urgent batch work off-peak, treat cache hits as the lever (the retired V4-Flash IDs now bill at V4.1-Flash's $0.003 cache-hit rate; V4 Pro is unchanged at $0.022), and re-benchmark alternatives (Gemini 3.7 Flash intro, Grok 4.6, Qwen 3.8 Max, self-hosted MIT-licensed V4 weights for sustained workloads)."}
         }
       ]
     }
@@ -111,11 +111,12 @@
         <h2>What the new DeepSeek V4 rates are (per 1M tokens)</h2>
         <div class="table-wrap"><table>
             <tr><th>Model</th><th>Input, cache hit</th><th>Input, cache miss</th><th>Output</th><th>Window</th></tr>
-            <tr><td><strong>V4-Flash</strong></td><td>$0.007</td><td>$0.22</td><td>$0.66</td><td>OFF-PEAK</td></tr>
-            <tr><td><strong>V4-Flash</strong></td><td>$0.014</td><td>$0.44</td><td>$1.32</td><td>PEAK</td></tr>
+            <tr><td><strong>V4-Flash</strong> <em>(superseded 2026-09-10)</em></td><td>$0.007</td><td>$0.22</td><td>$0.66</td><td>AUG 16 OFF-PEAK</td></tr>
+            <tr><td><strong>V4-Flash</strong> <em>(superseded 2026-09-10)</em></td><td>$0.014</td><td>$0.44</td><td>$1.32</td><td>AUG 16 PEAK</td></tr>
             <tr><td><strong>V4-Pro</strong></td><td>$0.022</td><td>$0.66</td><td>$1.98</td><td>OFF-PEAK</td></tr>
             <tr><td><strong>V4-Pro</strong></td><td>$0.044</td><td>$1.32</td><td>$3.96</td><td>PEAK</td></tr>
         </table></div>
+        <p><strong>Update (2026-09-12) — the two V4-Flash rows above are historical.</strong> DeepSeek retired V4-Flash on <strong>Sept 10, 2026</strong> and shipped <strong>DeepSeek V4.1-Flash</strong> under the API name <code>deepseek-flash</code>: off-peak <strong>$0.15 cache-miss input / $0.60 output / $0.003 cached input per 1M tokens</strong>, with the peak band exactly 2× (<strong>$0.30 / $1.20 / $0.006</strong>). The retired IDs <code>deepseek-v4-flash</code> and <code>deepseek-v4-flash-vision-exp</code> are still accepted — requests are served by V4.1-Flash and billed at the Flash price. <strong>V4 Pro is not retired:</strong> DeepSeek announced a Sept 14, 2026 reroute of <code>deepseek-v4-pro</code> to V4.1-Flash on Sept 10 and <strong>withdrew it on Sept 11, 2026</strong>, keeping V4 Pro service and billing unchanged — so the V4-Pro rows below are still current. Full analysis: <a href="/deepseek-v4-1-flash-pricing">DeepSeek V4.1-Flash pricing: the 100x cached-input spread and the withdrawn Sept 14 V4 Pro reroute</a>.</p>
         <p><strong>Previous (pre-hike, effective until 16:00 UTC Aug 16):</strong> V4-Flash $0.0028 (cache hit) / $0.14 (cache miss) / $0.28 output; V4-Pro $0.003625 / $0.435 / $0.87.</p>
 
         <h2>How much did prices actually go up?</h2>
@@ -132,7 +133,7 @@
         <ul>
             <li><strong>At peak, V4-Flash output ($1.32/1M) now sits above</strong> Gemini 3.7 Flash intro pricing ($0.75/$3.75 per 1M through 2026-12-31), Muse Glimmer hosted on Together AI ($0.35/$1.50), and within reach of Grok 4.6 ($2/$6) and Qwen 3.8 Max ($2/$6).</li>
             <li><strong>At peak, V4-Pro ($1.32 input / $3.96 output)</strong> overlaps Claude Sonnet 5 ($2/$10) on input and approaches premium frontier on output — the "cheap reasoning model" positioning is gone for peak-hour work.</li>
-            <li><strong>Cache hits and off-peak scheduling are now the levers.</strong> Off-peak cache-hit input is $0.007 (Flash) / $0.022 (Pro) — the only rates that stay near the old price level.</li>
+            <li><strong>Cache hits and off-peak scheduling are now the levers.</strong> Off-peak cache-hit input is $0.022 (V4 Pro, unchanged) — and the retired V4-Flash IDs now bill at V4.1-Flash's $0.003 cache-hit rate — the rates that stay near the old price level.</li>
             <li><strong>Margin impact:</strong> for an agency whose retainer was priced on the old Flash schedule, a peak-hour agentic workload now costs ~3–5x on the compute line. That changes project margins unless the estimate is re-baselined.</li>
         </ul>
 
@@ -165,7 +166,7 @@
         </div>
         <div class="faq-item">
             <h3>What should agencies do about the DeepSeek price increase?</h3>
-            <p>Update cost assumptions immediately: use peak/off-peak rates in estimates, schedule non-urgent batch work off-peak, treat cache hits as the lever (off-peak cache-hit input is $0.007 Flash / $0.022 Pro), and re-benchmark alternatives (Gemini 3.7 Flash intro, Grok 4.6, Qwen 3.8 Max, self-hosted MIT-licensed V4 weights for sustained workloads).</p>
+            <p>Update cost assumptions immediately: use peak/off-peak rates in estimates, schedule non-urgent batch work off-peak, treat cache hits as the lever (the retired V4-Flash IDs now bill at V4.1-Flash's $0.003 cache-hit rate; V4 Pro is unchanged at $0.022), and re-benchmark alternatives (Gemini 3.7 Flash intro, Grok 4.6, Qwen 3.8 Max, self-hosted MIT-licensed V4 weights for sustained workloads).</p>
         </div>
 
         <div class="related">
@@ -185,12 +186,14 @@
         <h2>Sources</h2>
         <ul>
             <li>DeepSeek official pricing page (live verified Aug 16, 2026 — new peak/off-peak table active): <a href="https://api-docs.deepseek.com/quick_start/pricing/" rel="noopener">api-docs.deepseek.com/quick_start/pricing</a></li>
+            <li>DeepSeek API pricing — V4.1-Flash sheet, legacy-ID billing and the withdrawn Sept 14 V4 Pro reroute (verified 2026-09-12): <a href="https://api-docs.deepseek.com/quick_start/pricing" rel="noopener">api-docs.deepseek.com/quick_start/pricing</a></li>
+            <li>DeepSeek news — Introducing DeepSeek-V4.1-Flash (Sept 10, 2026): <a href="https://www.deepseek.com/en/news/deepseek-v4-1-flash/" rel="noopener">deepseek.com/en/news/deepseek-v4-1-flash</a></li>
             <li>DeepSeek changelog, "DeepSeek-V4-Pro Update" (Aug 13, 2026 — GA + API Pricing Adjustment): <a href="https://api-docs.deepseek.com/updates" rel="noopener">api-docs.deepseek.com/updates</a></li>
             <li>TechStartups (Aug 13, 2026 — 50% to 1,100% above current): <a href="https://techstartups.com" rel="noopener">techstartups.com</a></li>
             <li>Elser AI (Aug 14, 2026 — 16:00 UTC confirmation + full table): <a href="https://elser.ai" rel="noopener">elser.ai</a></li>
             <li>Reuters + Bloomberg (Aug 13, 2026 — paywalled; registered-uncited corroboration)</li>
         </ul>
-        <p style="font-size:0.85rem;color:#666;">Accuracy note: All new rates, peak hours, and the effective date (16:00 UTC Aug 16, 2026) are verified against DeepSeek's official pricing page and changelog on Aug 16, 2026. Multiplier math (e.g., 5x, 12.1x) is derived from the published before/after rates, not a DeepSeek statement. The 50%–1,100% range is TechStartups' framing; "quadruples peak prices" is Bloomberg's framing (paywalled). DeepSeek reserves the right to adjust prices — re-verify before quoting. V4 weights remain MIT-licensed for self-host escape hatch purposes.</p>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: All new rates, peak hours, and the effective date (16:00 UTC Aug 16, 2026) are verified against DeepSeek's official pricing page and changelog on Aug 16, 2026. Multiplier math (e.g., 5x, 12.1x) is derived from the published before/after rates, not a DeepSeek statement. The 50%–1,100% range is TechStartups' framing; "quadruples peak prices" is Bloomberg's framing (paywalled). The two V4-Flash rows are the Aug 16, 2026 rates and are marked superseded: DeepSeek retired V4-Flash on Sept 10, 2026 and the legacy IDs now bill at V4.1-Flash rates ($0.15/$0.60 off-peak, $0.003 cached input). The V4-Pro rates remain current — the announced Sept 14 reroute was withdrawn on Sept 11, 2026. DeepSeek reserves the right to adjust prices — re-verify before quoting. V4 weights remain MIT-licensed for self-host escape hatch purposes.</p>
     </article>
     <footer>
         <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
