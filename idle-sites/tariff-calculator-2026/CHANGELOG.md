@@ -23,10 +23,12 @@ All notable changes to the calculator asset (tariffcalculator2026.com) are docum
   (steel, aluminium, copper semi-finished+derivative IN EFFECT; refined copper PENDING; the BIS
   proposed-derivative row), the refined-copper section, what the calculator models vs. does not,
   the separate Canada Section 338 / counter-tariff track, and the polysilicon + drones actions.
-  Reciprocal with the copper page: hub → status page (×5 anchors) and status page → hub.
-- **Head/SEO.** Article + FAQPage JSON-LD on both pages; meta descriptions 154c (status) and 153c
-  (hub); `dateModified` 2026-09-11 mirrored in the visible byline on both; both URLs added to
-  `sitemap.xml` (priority 0.9) and to `llms.txt`.
+  Reciprocal with the copper page: hub → status page (×7 anchors) and status page → hub.
+- **Head/SEO.** Article + FAQPage JSON-LD on both pages; meta descriptions 155c (status) and 153c
+  (hub); titles 59c both; `dateModified` 2026-09-11 mirrored in the visible byline on both; both
+  URLs added to `sitemap.xml` (priority 0.9, extension-less canonical form) and to `llms.txt`
+  (also the extension-less form — the pre-existing entries in that file use a trailing slash that
+  308-redirects).
 - **Mobile.** `.table-wrap` wrappers plus the site's `<1100px` guard; the 8-row status table and
   the 6-column scenario table scroll inside their own boxes instead of widening the page.
 
