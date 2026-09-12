@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Flooding Intake Controls for Agencies: Rate Limits</title>
+    <meta name="description" content="Agent flooding intake controls for agencies: stop your own intake being flooded and design client agents that don't overwhelm the client's queue.">
+    <meta name="keywords" content="agent flooding intake controls, agentic flooding controls, agentic flooding government services, AI agents overwhelm public services, rate limiting AI agents, idempotency keys for agents, prove-work submission controls, AI agency escalation design, client intake audit, agent design review checklist">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://findaiagency.com/agentic-flooding-controls-for-agencies">
+    <meta property="og:title" content="Agent Flooding Intake Controls for Agencies: Rate Limits">
+    <meta property="og:description" content="Agent flooding intake controls for agencies: stop your own intake being flooded and design client agents that don't overwhelm the client's queue.">
+    <meta property="og:url" content="https://findaiagency.com/agentic-flooding-controls-for-agencies">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Find AI Agency">
+    <meta property="og:image" content="https://findaiagency.com/og-image.png">
+    <meta property="og:image:alt" content="Agent flooding intake controls for agencies: rate limits, prove-work and idempotency design">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://findaiagency.com/agentic-flooding-controls-for-agencies/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://findaiagency.com/agentic-flooding-controls-for-agencies"
+      },
+      "headline": "Agentic Flooding Controls for Agencies: Designing Agents That Don’t Flood the Client’s Intake",
+      "description": "Agent flooding intake controls for agencies: stop your own intake being flooded and design client agents that don't overwhelm the client's queue.",
+      "image": "https://findaiagency.com/og-image.png",
+      "datePublished": "2026-09-11",
+      "dateModified": "2026-09-11",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://findaiagency.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://findaiagency.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://findaiagency.com/og-image.png"
+        }
+      },
+      "about": [
+        "agentic flooding",
+        "agent flooding intake controls",
+        "rate limiting AI agents",
+        "idempotency keys",
+        "escalation design"
+      ],
+      "keywords": "agent flooding intake controls, agentic flooding controls, agentic flooding government services, AI agents overwhelm public services, rate limiting AI agents, idempotency keys for agents, prove-work submission controls, AI agency escalation design, client intake audit"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://findaiagency.com/agentic-flooding-controls-for-agencies/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is agentic flooding?",
+          "acceptedAnswer": {"@type": "Answer", "text": "It is the AI-linked surge in the volume or complexity of requests reaching an intake queue. The term is from a 2026 preprint by Chris Schmitz, Lewis Hammond and Alan Chan, which documents 84 cases across 11 jurisdictions and 13 service domains. Documented cases, not a census, and no causal or quantitative claim."}
+        },
+        {
+          "@type": "Question",
+          "name": "How do you control agentic flooding on an agency’s own intake?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Rate limits keyed on account, declared agent and form rather than IP address; prove-work such as structured fields or an evidence attachment; entitlement quotas with a route for genuine new issues; idempotency keys so a replay returns the original receipt; near-duplicate detection routing paraphrased repeats to review; and an audit trail naming which limit fired."}
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between rate limiting and idempotency for agent traffic?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Rate limiting caps how fast work arrives; idempotency caps how much of it is the same work repeated. A rate limit alone lets an agent retry a timed-out submission eight times and still create eight records. An idempotency key — a hash of account, form and payload sent on every write — returns the original receipt on replay, so retries cost one review."}
+        },
+        {
+          "@type": "Question",
+          "name": "Should a client agent be allowed to escalate a complaint autonomously?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. Escalation forces a formal response, a deadline and a review obligation: it is the control that turns volume into harm. An agent may draft and file routine requests within an entitlement quota, but escalations, appeals, complaints and legal notices need a human-signed artifact and a tighter, separate rate limit. The extreme case is letters spanning over 4,000 pages."}
+        },
+        {
+          "@type": "Question",
+          "name": "What signals show AI agents overwhelming an intake queue?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Submission-to-completion ratio falling while volume rises; a near-duplicate rate above baseline on normalised field values rather than exact text; bursts outside business hours; uniform structure across unrelated senders; a lengthening tail of very long submissions; and account-age concentration. None is proof alone, and none should be reported as fraud: the volume is largely legitimate claimants who had previously abandoned filing."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code { background: #f4f4f8; padding: 2px 6px; border-radius: 4px; font-size: 0.92em; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; vertical-align: top; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .risk-note { margin: 24px 0; padding: 20px 24px; background: #fff8f0; border-left: 4px solid #e08b28; border-radius: 0 8px 8px 0; }
+        .risk-note p { font-size: 0.98rem; color: #4a4a4a; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+        .table-wrap table { margin: 0; min-width: 100%; }
+        a, p, li, th, td { overflow-wrap: anywhere; }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>Agentic Flooding Controls for Agencies: Designing Agents That Don&rsquo;t Flood the Client&rsquo;s Intake</h1>
+            <div class="meta"><span>Published September 11, 2026 &middot; Updated September 11, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>Intake controls</span><span>Rate limits</span><span>Idempotency</span><span>Escalation design</span><span>Design review</span></div>
+        </header>
+
+        <p><strong>The short version:</strong> on 10 September 2026 TechCrunch reported research by Chris Schmitz, Lewis Hammond and Alan Chan that names <strong>agentic flooding</strong> and documents <strong>84 cases across 11 jurisdictions and 13 service domains</strong>, driven mostly by LLMs generating plausible text (<a href="https://techcrunch.com/2026/09/10/ai-agents-are-flooding-public-services-with-new-requests/" rel="noopener">techcrunch.com</a>). For an agency that builds agents, that lands on <strong>two queues</strong>: your own intake, and the client&rsquo;s.</p>
+
+        <p>This is the agency-side companion to the explainer on <a href="https://mybusinessaiaudit.com/agentic-flooding-explained">why are government complaints rising and what the 84 documented cases mean for intake</a>: the client conversation, a checklist for the agents you ship, rate-limit and idempotency patterns, and an intake audit.</p>
+
+        <h2 id="what-it-is">1. What agentic flooding is &mdash; and what the research does not show</h2>
+
+        <p>The paper defines flooding as &ldquo;surges in the volume or complexity of requests they receive, which (1) strain their capacity and (2) are enabled by agents reducing the cost of interacting with such services&rdquo; (<a href="https://arxiv.org/html/2608.16603" rel="noopener">arXiv:2608.16603</a>).</p>
+
+        <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>What the record shows</th><th>Figure</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Documented cases</td><td>84 cases, 11 jurisdictions, 13 service domains</td><td>arXiv preprint</td></tr>
+                <tr><td>AI attribution</td><td>Officials assert AI involvement in 58 of 84 (69%); third parties alone in 26</td><td>arXiv preprint</td></tr>
+                <tr><td>Mechanism</td><td>LLMs generating legally sophisticated text in 87% of cases</td><td>arXiv preprint</td></tr>
+                <tr><td>UK Housing Ombudsman</td><td>2,618 determinations (FY2021-22) to 7,008 (FY2024-25)</td><td>Ombudsman accounts</td></tr>
+                <tr><td>US CFPB complaints</td><td>About 1,287,300 (2022) to 6,635,400 (2025); the CFPB says the rise &ldquo;coincide[s] with&rdquo; LLMs and AI agents</td><td>CFPB reports</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <div class="risk-note">
+            <p><strong>Documented cases, not a census; no proven causation.</strong> The paper says its &ldquo;data-gathering remains exploratory and diagnostic, and affords no causal or quantitative claims about either (a) the prevalence of flooding or (b) the role of agents,&rdquo; and TechCrunch reports that it &ldquo;stops short of saying AI is directly causing the surge of new applicants.&rdquo;</p>
+            <p>Schmitz adds that &ldquo;the vast majority of cases we find are people who are entitled to claim for something, claiming for that thing,&rdquo; while the paper warns that &ldquo;friction disproportionately deters poorer, less digitally literate, and otherwise vulnerable users.&rdquo;</p>
+        </div>
+
+        <h2 id="precedent">2. The precedent that transfers: the cost is the review</h2>
+
+        <p>TechCrunch&rsquo;s parallel is the bug-bounty inbox, where LLM-written reports &ldquo;rarely contained significant security issues, but companies were still obligated to vet the reports as they came in.&rdquo; When sending gets cheaper than reviewing, change the cost of sending: raise the submission floor, cap the entitlement, deduplicate the replay, price the escalation.</p>
+
+        <h2 id="script">3. The client conversation script</h2>
+
+        <p>Six questions establish whether a client has the problem.</p>
+
+        <ol>
+            <li>&ldquo;How many requests did intake receive last month, and how many reached a human review?&rdquo; &mdash; the gap is the queue, and the queue is the bill.</li>
+            <li>&ldquo;What changed in the mix &mdash; longer submissions, more complete ones, more escalations?&rdquo; &mdash; escalation is the expensive half.</li>
+            <li>&ldquo;Where does a request escalate, who authorises that, and what does escalation cost you?&rdquo; &mdash; if escalation shares a channel with routine requests, change that first.</li>
+            <li>&ldquo;If volume doubled next quarter, what breaks first &mdash; triage, review capacity, or the SLA?&rdquo;</li>
+            <li>&ldquo;Which submissions must never be gated, and who relies on the free channel?&rdquo; &mdash; surfaces the friction warning before you add a gate.</li>
+            <li>&ldquo;What do you log per submission &mdash; account, channel, agent identity, timestamps?&rdquo; &mdash; decides whether the audit takes a week or a quarter.</li>
+        </ol>
+
+        <blockquote>Use Schmitz&rsquo;s framing: <em>&ldquo;This could be the moment to say, &lsquo;we need to rethink pretty much everything about how this process looks.&rsquo;&rdquo;</em></blockquote>
+
+        <h2 id="checklist">4. Agent design review checklist &mdash; twelve controls</h2>
+
+        <p>Run this against every agent that can write to a client-owned queue: 1&ndash;5 identity and budget, 6&ndash;9 behaviour under failure, 10&ndash;12 evidence.</p>
+
+        <ol>
+            <li><strong>Declared identity.</strong> A stable client id, contact and purpose on every request.</li>
+            <li><strong>Per-run budget cap.</strong> Hard maximums on requests, tokens and retries, enforced in the client, not requested in a prompt.</li>
+            <li><strong>Write-path idempotency.</strong> Every submission carries a key; a replay returns the original receipt, not a second record.</li>
+            <li><strong>Per-identity rate limit.</strong> Keyed on account, agent and form, with documented backoff and an explicit <code>429</code>.</li>
+            <li><strong>Gated escalation.</strong> Escalations, appeals and legal notices need a human-signed artifact and a separate, tighter limit.</li>
+            <li><strong>Bounded retry.</strong> Honour <code>Retry-After</code>, add jitter, stop after a fixed count &mdash; retry storms turn one submission into a queue.</li>
+            <li><strong>Deduplicate before sending.</strong> Check whether this account has already filed the same matter.</li>
+            <li><strong>A real stop condition.</strong> Terminate when new information stops arriving, not on a loop counter alone.</li>
+            <li><strong>Output ceiling.</strong> A maximum submission length, and no bulk attachments unless the client asked.</li>
+            <li><strong>Append-only audit trail.</strong> Request id, agent identity, model, prompt hash, idempotency key, decision, retention.</li>
+            <li><strong>Kill switch with a named owner</strong> who can stop the agent in production at 2am.</li>
+            <li><strong>Legitimate-filer measurement.</strong> Drop-off for the low-digital-literacy cohort, per gate &mdash; volume cut at the same rate as completion is not a control.</li>
+        </ol>
+
+        <h2 id="patterns">5. Rate-limit and idempotency patterns that survive agent traffic</h2>
+
+        <p>Five patterns carry most of the load; deploy them in this order &mdash; the later ones change who can file.</p>
+
+        <ul>
+            <li><strong>Token bucket per account + agent + form,</strong> with the refill rate published and the firing key logged. Stops bursts and parallel retries that evade per-IP limits.</li>
+            <li><strong>Idempotency key on every write</strong> &mdash; a stored record of account, form and payload hash, retained for a window. Eight retries become one record and one review.</li>
+            <li><strong>Near-duplicate lane</strong> matching normalised fields and shingled similarity, not exact text, routing repeats to review rather than rejecting them.</li>
+            <li><strong>Entitlement quota:</strong> a fixed number of open matters per account with a route for new issues &mdash; the answer to the Hesse pattern, where MPs stated one submitter filed about 800 petitions.</li>
+            <li><strong>Prove-work ladder:</strong> structured fields, then a required evidence attachment, then a staged funnel the filer can save and resume.</li>
+        </ul>
+
+        <h2 id="audit">6. Agent flooding intake controls: auditing a client intake queue</h2>
+
+        <ol>
+            <li><strong>Baseline the funnel.</strong> Twelve months of submissions received, records reaching review, and records resolved &mdash; by channel, weekly; the ratio matters more than the total.</li>
+            <li><strong>Sample and code.</strong> 100 records from the busiest and quietest months, tagged for observable AI involvement: declared agent identity, boilerplate, uniform structure, no attachments, abnormal length.</li>
+            <li><strong>Measure review minutes per record</strong> before and after the change: falling minutes mean cheaper volume, rising minutes mean complexity.</li>
+            <li><strong>Name the top two templates</strong> from the sample.</li>
+            <li><strong>Change one control at a time,</strong> then re-measure volume and entitled-filer completion.</li>
+            <li><strong>Report the pair:</strong> throughput recovered and completion retained.</li>
+        </ol>
+
+        <p>Nothing here shows AI agents overwhelm intake queues; the paper says its work does not suggest severe operational risk. Attribution stays with the record: the AI link is officials&rsquo; assertion in 58 of 84 cases and third-party sources alone in 26, so an audit reports signals, not verdicts. The fields it needs &mdash; channel, account age, declared agent identity, timestamps &mdash; are what an <a href="/ai-agent-toolchain-security-audit">agent toolchain security audit</a> produces.</p>
+
+        <h2 id="obligations">7. What the agency owes the client &mdash; and itself</h2>
+
+        <ul>
+            <li><strong>Never ship autonomous escalation.</strong> It is the riskiest line item in a client agent: escalation creates the review obligation.</li>
+            <li><strong>Put the controls in the contract, not the runbook:</strong> rate limits, idempotency, escalation gating, audit log, kill-switch owner.</li>
+            <li><strong>Run the checklist on your own intake first</strong> &mdash; a pitch about surviving agent traffic means little from an unrate-limited contact form.</li>
+            <li><strong>Publish the friction cost:</strong> friction that falls on the least digitally literate filers is a reputational risk for the agency that designed the gate.</li>
+        </ul>
+
+        <div class="cta">
+            <p><strong>Need these controls specified for a client intake?</strong></p>
+            <a class="btn" href="/how-to-vet-an-ai-agency" data-umami-event="click_to_vet_guide">See how to vet an AI agency for this work &rarr;</a>
+        </div>
+
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>What is agentic flooding?</h3>
+            <p>It is the AI-linked surge in the volume or complexity of requests reaching an intake queue. The term is from a 2026 preprint by Chris Schmitz, Lewis Hammond and Alan Chan, which documents 84 cases across 11 jurisdictions and 13 service domains. Documented cases, not a census, and no causal or quantitative claim.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do you control agentic flooding on an agency&rsquo;s own intake?</h3>
+            <p>Rate limits keyed on account, declared agent and form rather than IP address; prove-work such as structured fields or an evidence attachment; entitlement quotas with a route for genuine new issues; idempotency keys so a replay returns the original receipt; near-duplicate detection routing paraphrased repeats to review; and an audit trail naming which limit fired.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is the difference between rate limiting and idempotency for agent traffic?</h3>
+            <p>Rate limiting caps how fast work arrives; idempotency caps how much of it is the same work repeated. A rate limit alone lets an agent retry a timed-out submission eight times and still create eight records. An idempotency key &mdash; a hash of account, form and payload sent on every write &mdash; returns the original receipt on replay, so retries cost one review.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Should a client agent be allowed to escalate a complaint autonomously?</h3>
+            <p>No. Escalation forces a formal response, a deadline and a review obligation: it is the control that turns volume into harm. An agent may draft and file routine requests within an entitlement quota, but escalations, appeals, complaints and legal notices need a human-signed artifact and a tighter, separate rate limit. The extreme case is letters spanning over 4,000 pages.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What signals show AI agents overwhelming an intake queue?</h3>
+            <p>Submission-to-completion ratio falling while volume rises; a near-duplicate rate above baseline on normalised field values rather than exact text; bursts outside business hours; uniform structure across unrelated senders; a lengthening tail of very long submissions; and account-age concentration. None is proof alone, and none should be reported as fraud: the volume is largely legitimate claimants who had previously abandoned filing.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="https://mybusinessaiaudit.com/agentic-flooding-explained">Agentic flooding in government services: what the 84 documented cases mean for intake</a></li>
+                <li><a href="/ai-agent-cost-controls">AI agent cost controls: the agency due-diligence checklist</a></li>
+                <li><a href="/agent-fleet-cost-guardrails">Agent fleet cost guardrails: budgets, caps, kill switches</a></li>
+                <li><a href="/best-ai-agencies-for-small-business-2026">Best AI agencies for small business 2026</a></li>
+            </ul>
+        </div>
+
+        <h2>Sources</h2>
+        <ul>
+            <li>TechCrunch &mdash; &ldquo;AI agents are flooding public services with new requests&rdquo; (10 September 2026): 84 cases, the bug-bounty parallel, the no-causation line. <a href="https://techcrunch.com/2026/09/10/ai-agents-are-flooding-public-services-with-new-requests/" rel="noopener">techcrunch.com</a></li>
+            <li>Schmitz, Hammond and Chan &mdash; &ldquo;Characterizing Agentic Flooding of Government Services&rdquo;, arXiv:2608.16603v2 (AIES, 12&ndash;14 October 2026): definition, counts, attribution, the friction warning. <a href="https://arxiv.org/html/2608.16603" rel="noopener">arxiv.org/html/2608.16603</a></li>
+            <li>Authors&rsquo; case database &mdash; the 4,000-page letter and intensive-petitioner cases: <a href="https://chrisschmitz.ai/flooding" rel="noopener">chrisschmitz.ai/flooding</a></li>
+            <li>UK Housing Ombudsman, Annual Report and Accounts 2024-25 &mdash; determinations 2,618 (FY2021-22) to 7,008 (FY2024-25). <a href="https://www.housing-ombudsman.org.uk/app/uploads/2025/12/Annual-Report-and-Accounts-2024-25.pdf" rel="noopener">housing-ombudsman.org.uk</a></li>
+            <li>CFPB Consumer Response Annual Reports 2025 and 2022 &mdash; 6,635,400 complaints and the &ldquo;coincide with&rdquo; wording (2025), about 1,287,300 in 2022: <a href="https://files.consumerfinance.gov/f/documents/cfpb_2025-cr-annual-report_2026-03.pdf" rel="noopener">files.consumerfinance.gov</a> <a href="https://files.consumerfinance.gov/f/documents/cfpb_2022-consumer-response-annual-report_2023-03.pdf" rel="noopener">2022</a></li>
+            <li>Hessischer Landtag Drucksache 21/3709 and Plenarprotokoll 21/62 &mdash; 2,641 petitions against 1,046. <a href="https://starweb.hessen.de/cache/DRS/21/9/03709.pdf" rel="noopener">starweb.hessen.de</a></li>
+            <li>TechCrunch &mdash; &ldquo;AI slop and fake reports are exhausting some security bug bounties&rdquo; (24 July 2025). <a href="https://techcrunch.com/2025/07/24/ai-slop-and-fake-reports-are-exhausting-some-security-bug-bounties/" rel="noopener">techcrunch.com</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: every figure is attributed to the document named beside it; sources retrieved 2026-09-11. The 84 are documented cases, not a census, and the paper makes no causal or quantitative claim about the prevalence of flooding or the role of agents. The CFPB&rsquo;s wording is that complaint increases &ldquo;coincide with&rdquo; LLMs and AI agents. Ombudsman figures are fiscal years. The section 5 patterns are engineering descriptions, not measurements of any client system.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
