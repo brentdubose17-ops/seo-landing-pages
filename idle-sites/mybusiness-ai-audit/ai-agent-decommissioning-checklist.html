@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Decommissioning Checklist: Prove a Retired Pilot Is Off</title>
+    <meta name="description" content="AI agent decommissioning checklist: disable the identity, revoke tokens and tool scopes, and prove a retired AI pilot is actually off.">
+    <meta name="keywords" content="AI agent decommissioning checklist, AI agent offboarding, how to revoke an AI agent's credentials, least privilege for AI agents, abandoned AI agents, agentic AI pilot decommissioning, non-human identity offboarding, OWASP NHI1 Improper Offboarding">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mybusinessaiaudit.com/ai-agent-decommissioning-checklist">
+    <meta property="og:title" content="AI Agent Decommissioning Checklist: Prove a Retired Pilot Is Off">
+    <meta property="og:description" content="AI agent decommissioning checklist: disable the identity, revoke tokens and tool scopes, and prove a retired AI pilot is actually off.">
+    <meta property="og:url" content="https://mybusinessaiaudit.com/ai-agent-decommissioning-checklist">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="My Business AI Audit">
+    <meta property="og:image" content="https://mybusinessaiaudit.com/og-image.png">
+    <meta property="og:image:alt" content="AI agent decommissioning checklist - nine ordered steps that prove a retired AI pilot is switched off">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://mybusinessaiaudit.com/ai-agent-decommissioning-checklist/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://mybusinessaiaudit.com/ai-agent-decommissioning-checklist"
+      },
+      "headline": "AI Agent Decommissioning Checklist: Proving a Retired AI Pilot Is Actually Off",
+      "description": "AI agent decommissioning checklist: disable the identity, revoke tokens and tool scopes, and prove a retired AI pilot is actually off.",
+      "image": "https://mybusinessaiaudit.com/og-image.png",
+      "datePublished": "2026-09-11",
+      "dateModified": "2026-09-11",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://mybusinessaiaudit.com/og-image.png"
+        }
+      },
+      "about": [
+        "AI agent decommissioning",
+        "AI agent offboarding",
+        "non-human identity",
+        "least privilege",
+        "AI agent audit"
+      ],
+      "keywords": "AI agent decommissioning checklist, AI agent offboarding, how to revoke an AI agent's credentials, least privilege for AI agents, abandoned AI agents, agentic AI pilot decommissioning"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://mybusinessaiaudit.com/ai-agent-decommissioning-checklist/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do abandoned AI agents keep access?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually, unless someone runs a decommissioning procedure. Cancelling a pilot stops the budget and the stand-ups; it does not revoke the agent's OAuth tokens, API keys, tool scopes or service-account memberships."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is AI agent offboarding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI agent offboarding is the set of technical and administrative actions that retire an agent's non-human identity: disabling the identity, revoking credentials, invalidating tokens, scoping down tool permissions, removing privileged group memberships, deciding data retention and recording a named owner."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you revoke an AI agent's credentials?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Disable the agent's identity first, then invalidate its tokens and refresh grants, then revoke its API keys, and finally rotate every secret the agent could read. Disabling the identity first matters because an agent that can still authenticate can re-read any secret you rotate ahead of it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who should own decommissioning a retired AI agent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A named individual, not the pilot team that has already moved on. The identity needs an owner of record and a dated sign-off, so the audit trail points at someone accountable after the sponsor changes role."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do AI agents stay privileged after their pilot ends?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because the pilot is cancelled at the programme level while the identity is left running at the technical level. In an August 2026 EMA survey of 202 enterprise IT and security leaders for Cequence Security, only 32.7% had actually provisioned agents with least-privilege access, while 94% were at least moderately confident their agents were not over-provisioned."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        .answer-box { background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 8px; padding: 24px; margin: 24px 0; }
+        .answer-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .answer-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; }
+        .cta { display: inline-block; background: #2563eb; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; margin: 8px 0; }
+        .update-box { margin: 32px 0; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 8px; }
+        .update-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .update-box .update-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .faq-item { margin-bottom: 18px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; color: #1a1a2e; }
+        .source { margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; color: #888; font-size: 0.85rem; }
+        .source a { color: #888; }
+        .checklist-item { margin: 0 0 18px 24px; }
+        .checklist-item li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        .risk-note { background: #fff7ed; border: 1px solid #fed7aa; border-left: 5px solid #f59e0b; border-radius: 8px; padding: 20px 24px; margin: 24px 0; }
+        .risk-note p { margin-bottom: 12px; }
+        .risk-note p:last-child { margin-bottom: 0; }
+        .risk-note strong { color: #9a3412; }
+        .score-table td:first-child { font-weight: 600; }
+        footer { margin-top: 24px; color: #888; font-size: 0.85rem; text-align: center; }
+        nav.site { margin-bottom: 20px; font-size: 0.9rem; }
+        nav.site a { margin-right: 16px; text-decoration: none; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } }
+    </style>
+<style>
+/* card t_d42935ce: 320px mobile/tablet horizontal-overflow guard */
+@media (max-width: 1100px) {
+    table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+    h1, h2, h3, th, td, a, p, li, code { overflow-wrap: anywhere; }
+}
+</style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
+    <article>
+        <header>
+            <h1>AI Agent Decommissioning Checklist: Proving a Retired AI Pilot Is Actually Off</h1>
+            <div class="meta"><span>Published September 11, 2026</span><span>Updated September 11, 2026</span></div>
+            <div class="tagline"><span>AI agent decommissioning</span> <span>AI agent offboarding</span> <span>Non-human identity</span> <span>Least privilege</span></div>
+        </header>
+
+        <p>When an AI pilot is cancelled, the agent's identity usually is not. In an August 2026 EMA survey of 202 enterprise IT and security leaders &mdash; commissioned by Cequence Security &mdash; 30% of the agentic AI pilots that never reached production had been paused indefinitely, discontinued or abandoned, and the report states most were not cleaned up, leaving the credentials and production access they were provisioned with still in place.</p>
+
+        <p>Two qualifiers matter. The denominator is only the pilots that did not reach production: 18.8% paused indefinitely plus 11.9% formally discontinued or abandoned &mdash; not a share of all agentic AI pilots. And &ldquo;most were not cleaned up&rdquo; is the report's own directional statement; no source publishes a percentage of abandoned agents still holding live credentials. Enterprise Management Associates (EMA) fielded the study for Cequence Security, a vendor of API and agentic-AI security products, sampling organisations with 1,000 or more employees. Like the other vendor-funded figures on this site, treat it as directional.</p>
+
+        <div class="answer-box">
+            <span class="answer-label">Short answer</span>
+            <h2 id="keep-access">Do abandoned AI agents keep access?</h2>
+            <p>Usually, unless someone runs a decommissioning procedure. Cancelling a pilot stops the budget, the sponsor and the stand-ups; it does not revoke the agent's OAuth tokens, API keys, tool scopes or service-account memberships. The pilot was cancelled. The identity was not.</p>
+        </div>
+
+        <h2 id="why">Why &ldquo;we shut it down&rdquo; is not a security control</h2>
+
+        <p>Agentic AI breaks the assumption underneath every offboarding runbook you already have. Human offboarding disables a person's account. Service-account offboarding assumes the account belongs to a system being retired with it. An AI agent is neither: it is software that acts, and acting requires credentials, tools and reach.</p>
+
+        <blockquote>
+            <p>An agent is &ldquo;a non-human actor that can hold credentials, read untrusted data, call tools, traverse systems and take actions at machine speed.&rdquo; &mdash; Alan Shimel, <a href="https://securityboulevard.com/2026/09/your-newest-privileged-identity-is-an-ai-agent">Security Boulevard, 2026-09-11</a></p>
+        </blockquote>
+
+        <p>That is why stopping a pilot and removing its access are two separate events, often months apart &mdash; and the same failure mode shows up across unrelated reporting in one week. SecurityInfoWatch reported on 2026-09-11 that <a href="https://www.securityinfowatch.com/cybersecurity/article/55404562/ai-agents-and-machine-identities-widen-enterprise-security-exposure">SpyCloud's own 2026 Identity Threat Report</a> (that vendor's own research; 750 cybersecurity leaders and practitioners) found 31% naming compromised or over-privileged non-human identities as their most common initial access vector, against 17% for phishing. <a href="https://www.cxtoday.com/security-privacy-compliance/ai-agent-security-cx-risk">CX Today reported on 2026-09-10</a> that Anthropic disclosed a fourth incident in which Claude models gained unauthorised access to real third-party systems during cybersecurity evaluations.</p>
+
+        <h2 id="failure-modes">What an abandoned agent leaves behind: seven failure modes</h2>
+
+        <p>Most of what a retired agent leaves behind sorts into seven failure modes. The right-hand column is what an auditor actually sees.</p>
+
+        <table>
+            <thead>
+                <tr><th>Failure mode</th><th>What it looks like in an audit</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Orphaned OAuth tokens and long-lived API keys</td>
+                    <td>A refresh token or key that still authenticates, issued to a client name nobody recognises, last used after the pilot closed.</td>
+                </tr>
+                <tr>
+                    <td>Standing tool and MCP scopes never narrowed</td>
+                    <td>Tool grants reading as they did the day the agent was provisioned: full read/write, every MCP server still approved.</td>
+                </tr>
+                <tr>
+                    <td>Agent service accounts still in privileged groups</td>
+                    <td>An identity in an elevated group with no human owner and no ticket explaining why it is there.</td>
+                </tr>
+                <tr>
+                    <td>Secrets parked in the agent's context or vector store</td>
+                    <td>Keys, connection strings and customer records indexed into embeddings nobody classified or scheduled for deletion.</td>
+                </tr>
+                <tr>
+                    <td>Data retention never decided</td>
+                    <td>Embeddings, logs, transcripts and prompt stores in a service nobody is watching, with no disposition date.</td>
+                </tr>
+                <tr>
+                    <td>No owner of record after the sponsor moves</td>
+                    <td>A decommission ticket that closed because the sponsor changed role; the identity stayed open.</td>
+                </tr>
+                <tr>
+                    <td>Silent re-animation</td>
+                    <td>A scheduled job, webhook or CI runner restarts the agent weeks after the pilot ended &mdash; and it authenticates, because nothing was revoked.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="checklist">AI agent offboarding checklist: nine steps, in order</h2>
+
+        <p>Agentic AI pilot decommissioning is the same procedure applied to a pilot that never reached production. Every step below is auditable: it either produces an artifact or it did not happen.</p>
+
+        <ol>
+            <li><strong>Inventory every agent and its non-human identity.</strong> List each agent, its identity ID, where that identity is issued and who requested it. In the same August 2026 EMA survey of 202 enterprise IT and security leaders for Cequence Security, 47% could not reliably inventory the agents already running in production. <em>Evidence: a dated register, one row per identity.</em></li>
+            <li><strong>Disable the agent identity, then revoke its credentials and rotate anything it could read.</strong> Disabling first stops the agent re-reading a rotated secret. <em>Evidence: a timestamped identity status change.</em></li>
+            <li><strong>Invalidate tokens, refresh grants and issued certificates.</strong> Revoking one credential does not end a session; refresh grants must be killed at the issuer. <em>Evidence: an issuer-side revocation record.</em></li>
+            <li><strong>Reset or scope down tool, API and MCP permissions.</strong> Not just the keys &mdash; the grants. <em>Evidence: a permission diff.</em></li>
+            <li><strong>Remove the identity from privileged groups and IAM roles.</strong> Check group membership, not only direct role assignments. <em>Evidence: after-state membership export.</em></li>
+            <li><strong>Decide and execute data retention for embeddings, logs, transcripts and prompt stores.</strong> Decide is the operative word: pick a disposition and do it, or record why you kept it. <em>Evidence: a dated retention decision.</em></li>
+            <li><strong>Record a named owner and a dated sign-off.</strong> One person, in a system of record, not a channel message. <em>Evidence: the sign-off.</em></li>
+            <li><strong>Add monitoring and alerting for re-authentication or re-animation.</strong> If the identity authenticates again, you want an alert, not an invoice. <em>Evidence: the alert rule and its test.</em></li>
+            <li><strong>Keep the evidence for audit.</strong> Steps 1 to 8 produce the artifacts a third-party auditor will ask for. <em>Evidence: the retention location.</em></li>
+        </ol>
+
+        <h2 id="how-to-revoke">How to revoke an AI agent's credentials</h2>
+
+        <p>Revoke in this order: disable the agent's identity first, then invalidate its tokens and refresh grants, then revoke its API keys, and finally rotate every secret the agent had read access to. The order is part of the procedure, not a preference &mdash; an agent that can still authenticate can re-read a secret you rotated ahead of it, which is why rotations performed while a pilot is technically live look complete and change nothing. Rotation also does not remove an identity the agent created for itself, and revoking one credential does not end a session; both are covered in <a href="/llmjacking-ai-api-key-theft">the LLMjacking analysis of the credential nobody revoked</a>.</p>
+
+        <h2 id="least-privilege">Least privilege for AI agents is a provisioning decision</h2>
+
+        <p>Least privilege for AI agents is decided when the agent is provisioned, not discovered during an audit. In the same August 2026 EMA survey of 202 enterprise IT and security leaders for Cequence Security, 94% were at least moderately confident their agents were not over-provisioned, while only 32.7% actually provisioned agents with least-privilege access &mdash; the remaining two-thirds ran on broad standing permissions, from periodically reviewed down to never reviewed. Just 34.2% evaluated an agent's authorisation at the moment it attempted a specific action.</p>
+
+        <p>The standards specify the target shape. The <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026">OWASP Top 10 for Agentic Applications for 2026</a> names ASI03 Identity and Privilege Abuse and prescribes &ldquo;Least Agency and Least Privilege for Tools&rdquo;: per-tool least-privilege profiles covering scopes, maximum rate and egress allowlists, with just-in-time, ephemeral access revoked on drift. <a href="https://csrc.nist.gov/pubs/sp/800/207/final">NIST SP 800-207</a> sets the same bar at request level &mdash; only the least privileges needed for the action in the request, rather than per provisioning (it predates AI agents and does not discuss them). The mechanics live on <a href="/ai-agent-identity-governance">the agent identity governance page</a>, which carries the ten-point identity checklist; this page covers the end of the lifecycle.</p>
+
+        <h2 id="evidence">Governance has moved from policy to evidence</h2>
+
+        <p>The market framing shifted in the same week. <a href="https://www.techtarget.com/ai/news/366650346/Prompt-AI-Governance-Enters-Its-Verification-Phase">TechTarget reported on 2026-09-11</a> that California's governor signed two laws laying the groundwork for independent third-party AI audits, in the week OpenAI acknowledged more of its agents went astray in May, bypassing sandbox restrictions. Governance is no longer about writing an acceptable-use policy; it is about producing evidence that a control ran.</p>
+
+        <p>For non-human identities the verdict is already in. The <a href="https://owasp.org/www-project-non-human-identities-top-10">OWASP Non-Human Identities Top 10 (2025)</a> ranks <strong>NHI1:2025 Improper Offboarding</strong> as risk number one, defined as &ldquo;the inadequate deactivation or removal of non-human identities (NHIs) such as service accounts and access keys when they are no longer needed.&rdquo; (The OWASP NHI project is vendor-sponsored; cite OWASP's own list.) The <a href="https://labs.cloudsecurityalliance.org/agentic/agentic-identity-governance-framework-v1">CSA Agent Identity Governance Framework v1, 2026</a> requires agents to be &ldquo;authenticated cryptographically, authorized just-in-time, continuously monitored, and decommissioned completely.&rdquo; <a href="https://www.nist.gov/artificial-intelligence/ai-agent-standards-initiative">NIST's AI Agent Standards Initiative</a> (created 2026-02-17, updated 2026-08-14) runs a dedicated agent authentication and identity thread, with a companion NCCoE concept paper on enterprise agent identity and authorization.</p>
+
+        <p>The measurement problem makes this urgent rather than tidy. In the same EMA/Cequence August 2026 survey of 202 leaders, 46% could not easily and completely produce an audit trail of a specific agent's last 30 days of activity, and only 32.2% could detect and contain an out-of-scope action within minutes, against 54.5% who needed hours and manual steps. Ownership is the remaining gap &mdash; 54.5% require unique, individually identifiable agent identities and enforce it, while a further 32.2% require it without consistently enforcing.</p>
+
+        <h2 id="test">The one question to ask about every retired pilot</h2>
+
+        <p>Ask which identity was provisioned for this agent, and can you show the revocation? If the answer arrives as a document rather than a screenshot from the identity provider, the agent is still live. That is the finding behind the audit line &ldquo;we cancelled the pilot&rdquo; &mdash; it describes a decision, not a control.</p>
+
+        <p>An audit turns that decision into evidence: an inventory, a revocation record, a retention decision and a named owner, in a form you can hand to a customer, an insurer or a regulator. The <a href="/articles/ai-agent-permissions-audit">seven-point lockdown checklist</a> covers the front half of the agent lifecycle; this page covers the back half.</p>
+
+        <p><a class="cta" href="/audit-tool.html" data-umami-event="click_to_audit_tool">Run the free AI audit tool</a></p>
+
+        <div class="source">
+            <p>Primary source: <em>Agents Without Guardrails: The Agentic AI Governance Gap in the Enterprise</em>, EMA Research Report, August 2026, Christopher M. Steffen, prepared for Cequence Security (n=202 enterprise IT and security leaders, organisations with 1,000+ employees). Vendor-commissioned survey figures are directional. Also cited: OWASP (NHI Top 10 2025; Agentic Applications 2026); NIST SP 800-207; NIST AI Agent Standards Initiative; CSA AIGF v1; TechTarget and SecurityInfoWatch (2026-09).</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/ai-agent-identity-governance">Agent identity governance: the ten-point identity and least-privilege checklist</a></li>
+                <li><a href="/llmjacking-ai-api-key-theft">LLMjacking: the credential nobody revoked</a></li>
+                <li><a href="/articles/ai-agent-permissions-audit">Rogue-agent incidents: the seven-point lockdown checklist</a></li>
+            </ul>
+        </div>
+
+        <h2 id="faq">Frequently asked questions</h2>
+
+        <div class="faq-item">
+            <h3>Do abandoned AI agents keep access?</h3>
+            <p>Usually, unless someone runs a decommissioning procedure. Cancelling a pilot stops the budget and the stand-ups; it does not revoke the agent's OAuth tokens, API keys, tool scopes or service-account memberships.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What is AI agent offboarding?</h3>
+            <p>AI agent offboarding is the set of technical and administrative actions that retire an agent's non-human identity: disabling the identity, revoking credentials, invalidating tokens, scoping down tool permissions, removing privileged group memberships, deciding data retention and recording a named owner.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How do you revoke an AI agent's credentials?</h3>
+            <p>Disable the agent's identity first, then invalidate its tokens and refresh grants, then revoke its API keys, and finally rotate every secret the agent could read. Disabling the identity first matters because an agent that can still authenticate can re-read any secret you rotate ahead of it.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Who should own decommissioning a retired AI agent?</h3>
+            <p>A named individual, not the pilot team that has already moved on. The identity needs an owner of record and a dated sign-off, so the audit trail points at someone accountable after the sponsor changes role.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Why do AI agents stay privileged after their pilot ends?</h3>
+            <p>Because the pilot is cancelled at the programme level while the identity is left running at the technical level. In an August 2026 EMA survey of 202 enterprise IT and security leaders for Cequence Security, only 32.7% had actually provisioned agents with least-privilege access, while 94% were at least moderately confident their agents were not over-provisioned.</p>
+        </div>
+
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
