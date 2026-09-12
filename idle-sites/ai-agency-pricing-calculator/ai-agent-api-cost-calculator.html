@@ -24,7 +24,7 @@
       "headline": "AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs",
       "description": "Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead — and compare per-token vs outcome-based pricing side-by-side.",
       "datePublished": "2026-08-24",
-      "dateModified": "2026-09-11",
+      "dateModified": "2026-09-12",
       "author": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "publisher": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "mainEntityOfPage": "https://aiagencycalculator.com/ai-agent-api-cost-calculator",
@@ -148,7 +148,7 @@
     <article>
         <header>
             <h1>AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</h1>
-            <div class="meta"><span>Published August 24, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="meta"><span>Published August 24, 2026 · Updated September 12, 2026</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>AI agent API costs</span> <span>Agent-first pricing</span> <span>Agency billing</span></div>
         </header>
 
@@ -336,6 +336,37 @@ Outcome-based mode:
         </table>
         </div>
         <p><strong>OpenAI's discount experiment (Jul 27 – Aug 14, 2026):</strong> when Terra and Luna were discounted 50% via OpenRouter, daily Terra token usage rose <strong>5.6x</strong> and Luna <strong>13.8x</strong>, while Sol at list price rose only <strong>1.1x</strong> (control); ~1/3 of users who tried a discounted model kept using it after expiry. Terra/Luna went from 0.7% to 7.8% of OpenRouter tokens. The same demand elasticity applies to any client workload you quote on a discounted model. See <a href="/openai-discounts-token-usage">OpenAI's discount experiment: what 13.8x usage growth means for agency pricing</a> for the full analysis.</p>
+
+        <h2 id="agents-api-container-session">Managed-harness containers: per 20-minute session per container (1, 4, 16, 64 GB)</h2>
+        <p>One runtime line does not belong in the per-1M table above, because its unit is not tokens &mdash; the same reason our per-task benchmarks sit in their own table rather than in the per-1M columns. This is the line an agency pays when OpenAI hosts the Codex harness: a per-container session price by memory tier, on top of model tokens and tool calls, with no Agents-API-specific fee and no <strong>Agents API</strong> row on the pricing page.</p>
+        <div class="tw">
+        <table>
+            <tr><th>Container memory</th><th>OpenAI printed rate (per 20-minute session per container)</th><th>Derived per-minute &middot; 5-min floor (derived, not published)</th><th>Note</th></tr>
+            <tr><td><strong>1 GB</strong></td><td>$0.03</td><td>$0.0015 &middot; $0.0075</td><td rowspan="4">developers.openai.com/api/docs/pricing#built-in-tools, read 2026-09-12; the row is labelled &quot;Hosted Shell and Code Interpreter&quot; and does not name the Agents API; the footnote bills container sessions OpenAI calls <strong>&quot;Eligible&quot;</strong> and they are <strong>billed by the minute, with a 5-minute minimum per session</strong>; the per-minute dollar figures are derived (tier &divide; 20), OpenAI publishes none; &quot;not a final bill&quot; (usage fields are best-effort, can be null).</td></tr>
+            <tr><td>4 GB</td><td>$0.12</td><td>$0.006 &middot; $0.03</td></tr>
+            <tr><td>16 GB</td><td>$0.48</td><td>$0.024 &middot; $0.12</td></tr>
+            <tr><td>64 GB</td><td>$1.92</td><td>$0.096 &middot; $0.48</td></tr>
+        </table>
+        </div>
+        <p><strong>Basis:</strong> the four printed prices are OpenAI's, read from <code>developers.openai.com/api/docs/pricing#built-in-tools</code> on 2026-09-12 &mdash; <strong>1 GB $0.03, 4 GB $0.12, 16 GB $0.48, 64 GB $1.92 per 20-minute session per container</strong>. Everything in the third column is this page's arithmetic on two quoted OpenAI statements, and is labelled <strong>derived</strong> because OpenAI prints no per-minute dollar figure for this row: per-minute = tier &divide; 20 (OpenAI's changelog for Jun 2, 2026 says eligible container sessions are billed per minute instead of at the full 20-minute session rate, and that &quot;the underlying per-minute rate will remain the same&quot;), and the floor = per-minute &times; 5 for the footnote's 5-minute minimum. At every tier the floor is 25% of the printed session price, the session price is 4.0&times; the floor, and the two units cross at exactly 20 billed minutes.</p>
+        <p><strong>Worked illustration (derived, assumptions stated):</strong> one 4 GB container running 3 sessions a day across 22 working days is 66 sessions a month. At the printed session unit that is 66 &times; $0.12 = <strong>$7.92</strong>. If each of those 66 sessions bills 12 minutes, the derived per-minute figure gives 66 &times; 12 &times; $0.006 = <strong>$4.752</strong> &mdash; cheaper than the session unit, because 12 minutes is short of the 20-minute crossover. Neither figure is a vendor quote. For what that line does to a client quote, see <a href="https://findaiagency.com/ai-agents-api-economy#agents-api-runtime-meter" rel="noopener">what this does to a client quote</a>.</p>
+        <h3>Inputs this meter needs, and what the estimator above does not take</h3>
+        <ul>
+            <li><strong>Containers in use</strong> &mdash; distinct containers per workload, not agents.</li>
+            <li><strong>Memory tier per container</strong> &mdash; 1, 4, 16 or 64 GB.</li>
+            <li><strong>Sessions per container per day.</strong></li>
+            <li><strong>Session length in minutes</strong> &mdash; this decides which of the two units is cheaper and where the 5-minute floor bites.</li>
+            <li><strong>Working days per month</strong> &mdash; the estimator's own default is 22.</li>
+        </ul>
+        <p>The estimator at the top of this page is a per-month token-and-call model with a retry/fan-out multiplier and an outcome mode. None of the five inputs above exists in it, and this block does not add them &mdash; the same unit problem that keeps <a href="/ai-model-cost-per-task-2026">our per-task benchmark table</a> out of the per-1M columns above.</p>
+        <h3>What the container row does not say</h3>
+        <ul>
+            <li><strong>OpenAI publishes no per-minute dollar figure.</strong> The derived column is this page's arithmetic (tier &divide; 20, &times; 5) and nothing more.</li>
+            <li><strong>&quot;Eligible&quot; is undefined.</strong> OpenAI never defines the qualifier on any surface read, so the printed rate and the billed rate are not provably the same sessions.</li>
+            <li><strong>The meter is not the bill.</strong> Session and turn usage is best-effort, can be <code>null</code>, &quot;Missing usage does not mean zero usage&quot;, and OpenAI states in writing that &quot;These counts are not a final bill&quot;; cache-write pricing cannot be reproduced from the usage fields.</li>
+            <li><strong>Tokens and tools bill separately</strong> at model and tool rates &mdash; the Agents API examples run on <code>gpt-6-astra</code> at $10.00/$50.00 per 1M short-context input/output &mdash; so the container line must never be presented as the total.</li>
+            <li><strong>Session length is your assumption, not a vendor rule.</strong> Nothing on any OpenAI surface read states that idle, retry or stalled time bills, so the minutes you enter are the agency's own estimate.</li>
+        </ul>
 
         <h2>What a realistic deployment costs (worked example)</h2>
         <p>Default calculator inputs — 10 agents, 200 calls/day, 22 days, 1.5× complexity, 8K in / 1.2K out tokens, Claude Sonnet 5 rates ($2/$10), 40% input cache hit, 25% overhead:</p>
