@@ -2,6 +2,34 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-11 — Publish /refined-copper-tariff-status and the /section-232-metals-tariffs hub (kanban t_43b0318b)
+
+- **New page `refined-copper-tariff-status.html`** — the refined-copper Section 232 status log, built
+  from the frozen t_19ff73b5 draft (1,315 words of prose + the AEO block = 1,363) with the 8-row
+  dated status table, the price-move table, the "how much is priced in" section, the worked
+  20-tonne duty scenario, the what-next / don't-over-apply sections and a 2-question FAQ.
+  Canonical `https://tariffcalculator2026.com/refined-copper-tariff-status`.
+- **AEO answer block** (t_6a894193, 288 characters) inserted as the first prose element, directly
+  under the H1 and above the warning banner, as a single plain text node in
+  `<p class="answer-block">` — no inner markup, not repeated in the FAQ.
+- **`NOT YET IN EFFECT — DO NOT BILL AGAINST IT`** banner rendered as a `.warning-banner` block
+  rather than a blockquote, so nothing in the copy can read as current law.
+- **Scenario ↔ calculator agreement.** 20 t × $14,230/t = $284,600; 0/10/15/25/30% →
+  $284,600 / $313,060 / $327,290 / $355,750 / $369,980; the 15% headline sentence matches
+  `presets/refined-copper-tariff-pending.js → scenario_reference` verbatim. CTA
+  `/?product=copper#calculator` is live (t_7ecb5089).
+- **New hub `section-232-metals-tariffs.html`** — the metals / Section 232 status hub the card
+  asked for (the three candidate slugs were 404 before this change). Per-metal status table
+  (steel, aluminium, copper semi-finished+derivative IN EFFECT; refined copper PENDING; the BIS
+  proposed-derivative row), the refined-copper section, what the calculator models vs. does not,
+  the separate Canada Section 338 / counter-tariff track, and the polysilicon + drones actions.
+  Reciprocal with the copper page: hub → status page (×5 anchors) and status page → hub.
+- **Head/SEO.** Article + FAQPage JSON-LD on both pages; meta descriptions 154c (status) and 153c
+  (hub); `dateModified` 2026-09-11 mirrored in the visible byline on both; both URLs added to
+  `sitemap.xml` (priority 0.9) and to `llms.txt`.
+- **Mobile.** `.table-wrap` wrappers plus the site's `<1100px` guard; the 8-row status table and
+  the 6-column scenario table scroll inside their own boxes instead of widening the page.
+
 ## 2026-09-11 — New calculator mode: PENDING refined-copper Section 232 duty scenario (kanban t_7ecb5089)
 
 - **Feature.** A third mode on the calculator, `Copper — pending duty scenario`, sits alongside
