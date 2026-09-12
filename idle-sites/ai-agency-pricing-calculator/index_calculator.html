@@ -724,6 +724,18 @@
       margin-top: 4px;
     }
 
+    /* Phone-width overflow, cause A (card t_b3f98516, measured 2026-09-12): with the
+       results panel OPEN the document was 460px wide at a 320px viewport and the 2-up
+       grid from the `@media (max-width: 640px)` rule below kept each .result-card at its
+       min-content width (card at x=190 w=160 right=349; the "$850/mo" value token is
+       118px inside a 91px content box). `min-width: 0` lets the 1fr track shrink below
+       the item's automatic minimum, and the wrap rule lets the label/value/sub text break
+       inside it. This is the rule index.html carries (card t_0371431a). Scoped to the
+       result-* classes deliberately: a page-wide `p, li, td, th` wrap rule makes
+       Chromium's captureBeyondViewport screenshot of a tall section hang (see CHANGELOG). */
+    .result-card { min-width: 0; }
+    .result-label, .result-value, .result-sub { overflow-wrap: break-word; }
+
     /* ── ROI & Pitch Box ── */
     .insight-box {
       border-radius: 12px;
@@ -950,6 +962,15 @@
       background-clip: text;
       font-weight: 700;
     }
+
+    /* Phone-width overflow, cause B (card t_b3f98516, measured 2026-09-12): the
+       Changelog paragraph in #routing-sources ends with a 56-char slash-joined source
+       list (9to5Mac/Engadget/MacRumors/TechCrunch/TNW/Unite.AI/Yahoo) set as PLAIN TEXT
+       -- 411px inside a 222-292px <p>, and Chromium does not break after a solidus. A
+       `code, a` guard cannot reach it (it is not an anchor) and this page carried 0
+       overflow-wrap rules at all. Scoped to the section's own paragraphs rather than
+       page-wide, for the same screenshot-hang reason as cause A above. */
+    #routing-sources p { overflow-wrap: break-word; }
 
     /* ── Responsive ── */
     @media (max-width: 640px) {
