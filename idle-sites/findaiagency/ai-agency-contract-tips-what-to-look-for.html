@@ -253,6 +253,53 @@
 
 <blockquote>If your contract doesn't specify who pays for drift remediation, you've agreed to an open-ended invoice. Model maintenance is a recurring cost, not a warranty claim — budget it explicitly.</blockquote>
 
+<h3>SLA and liability risk matrix</h3>
+
+<div class="table-wrap"><table>
+<tr>
+<th>Risk category</th>
+<th>Concrete failure</th>
+<th>Baseline protection</th>
+<th>Strong protection to negotiate</th>
+</tr>
+<tr>
+<td>Hallucination</td>
+<td>Chatbot states an incorrect refund policy</td>
+<td>Disclaimer + human review</td>
+<td>Accuracy SLA on curated test set, per-incident credits, indemnity for third-party claims</td>
+</tr>
+<tr>
+<td>Bias / discrimination</td>
+<td>Screening model penalizes a protected class</td>
+<td>One-time bias report</td>
+<td>Disparate-impact thresholds, quarterly audit rights, termination for material failure</td>
+</tr>
+<tr>
+<td>IP infringement in outputs</td>
+<td>Generated code copies a GPL repository</td>
+<td>Standard IP indemnity</td>
+<td>Super-cap or uncapped indemnity, plus agency IP insurance certificate</td>
+</tr>
+<tr>
+<td>Data breach</td>
+<td>Training corpus leaks customer PII</td>
+<td>General liability cap</td>
+<td>Carve-out above the cap, cyber insurance naming you as additional insured</td>
+</tr>
+<tr>
+<td>Model drift / degradation</td>
+<td>Quality falls 15% after a provider update</td>
+<td>None — usually unaddressed</td>
+<td>Defined drift monitoring, retraining cadence, remediation SLAs</td>
+</tr>
+<tr>
+<td>Model deprecation</td>
+<td>Provider retires your base model</td>
+<td>None</td>
+<td>90-day notice obligation, funded migration to a replacement model</td>
+</tr>
+</table></div>
+
 <h3>Model IDs are aliases, not products</h3>
 
 <p>The risk matrix above treats "provider retires your base model" as an event you can see coming: a sunset date is announced, and your 90-day notice obligation starts running. That is the easy case. The harder case is the one where the model string in your code never changes at all. A contract that names a model by its API alias is pinning a pointer, not a product. When the vendor re-points that alias, the model your system calls can change without a single line of code changing on your side — and without any notice you had a contractual right to receive. Nothing has to be deprecated for the "Model deprecation" row above to fail you. You can watch the mechanism work in the open today: DeepSeek's API documentation says the legacy names <code>deepseek-v4-flash</code> and <code>deepseek-v4-flash-vision-exp</code> are "still accepted", but that requests sent under those names are "served by the DeepSeek-V4.1-Flash model and billed at the Flash price". Same alias, different model, different price.</p>
