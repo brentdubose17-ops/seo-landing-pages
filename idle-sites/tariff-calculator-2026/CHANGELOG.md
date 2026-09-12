@@ -2,6 +2,26 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-11 — Wire the Section 232 metals hub into the homepage + the polysilicon and drone guides (kanban t_a2cf5886)
+
+- **Internal-link wiring only — no copy, rate, date or template change.** The `/section-232-metals-tariffs`
+  hub published in t_43b0318b had exactly one inbound internal link (from `/refined-copper-tariff-status`),
+  so it was effectively an orphan for crawlers and readers despite being in `sitemap.xml` and `llms.txt`.
+  Three pages now each carry exactly one link to it (anchor text: *Section 232 metals status hub*):
+  - `index.html` — appended to the existing `<li><strong>Section 232:</strong>` bullet in
+    *Exemptions & Proposed Tariffs*, where Section 232 and the metals (steel, aluminum, copper) are described.
+  - `polysilicon-section-232-tariff-advisory.html` — appended to the existing "Related guides" line
+    (now 4 links).
+  - `drone-tariff-section-232-september-3.html` — appended to the existing "Related guides" line (now 6 links).
+- **No date stamps touched.** polysilicon (`dateModified` 2026-08-08) and drone (2026-08-15) carry no
+  visible "Updated …" byline, so the link was added without introducing one; the gate's
+  visible-date/`dateModified` mirror rule is unaffected. `site_consistency.py --domain tariffcalculator2026.com`
+  reports **0 errors** for each edited file.
+- **Verified:** deploy `3df251ce-0378-4aa3-98c1-5cb69f562308`, **46 live rows compared / 0 mismatches**;
+  live `grep -c section-232-metals-tariffs` = 1 on each of the three pages; hub still 200 with **0**
+  self-anchors (its 3 metadata hits are canonical / `og:url` / Article JSON-LD — unchanged from before);
+  Chromium click-through from all three pages lands on the hub H1 with no JS errors.
+
 ## 2026-09-11 — Publish /refined-copper-tariff-status and the /section-232-metals-tariffs hub (kanban t_43b0318b)
 
 - **New page `refined-copper-tariff-status.html`** — the refined-copper Section 232 status log, built
