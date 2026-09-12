@@ -529,3 +529,26 @@ All notable changes to the calculator asset (tariffcalculator2026.com) are docum
 ## 2026-07-24 — Section 301 forced-labor matrix (60 economies) + de minimis suspension (kanban t_8f2b1c4d)
 
 - 12.5% / 10% flat + 5 mfn-capped rates, China stacks on pre-existing 301, USMCA exemption for qualified CA/MX goods, in-transit exception. $800 de minimis duty exemption suspended (CIT ruling upheld Aug 13, 2026) — every parcel over $0 assessed duty.
+
+## 2026-09-11 — New explainer: /tariff-dividend-5000-explained/ — the $5,000 "Trump dividend" funding arithmetic (kanban t_e8d0a53b)
+
+- **New page `/tariff-dividend-5000-explained/` (directory index, 56,025 B):** answers "is the $5,000 check real",
+  "when will it arrive" and "how would it be funded" from the parent fact pack t_5faa758f.
+  Above-the-fold status flag (NOT LAW — no payment scheduled / no date / no appropriation),
+  dated quote timeline (Sep 9 pledge, Sep 10 bill-planned + CBS "act of Congress", Sep 11
+  doubling down), a funding-gap table (cost side A–E2, revenue side F–N), a cost-to-revenue
+  ratio grid (4.11×–10.08×), the explicit reconciliation of the circulating "~10×" figure
+  (not CNBC's — it needs the all-adults base ÷ PWBM net-of-refunds), the legislative
+  requirement section (Const. art. I §9 cl. 7, 31 U.S.C. §1341, 18 U.S.C. §597) and a
+  6-question FAQ with FAQPage + Article schema.
+- **Figures re-derived, not trusted:** fetch_verify_figures.py re-fetches Treasury MTS T4
+  (FYTD net $167,308,212,393.62; gross $292,532,803,275.26), MTS T1 (FYTD deficit
+  $1,965,591,017,473.53), the PWBM 2026-09-09 update, Census ACS 2024 1-yr B05003
+  (245,275,126 adult citizens / 267,181,678 adults 18+) and the Vintage 2024 estimates —
+  43/43 checks pass.
+- **Card prohibitions held:** 0 links to /tariff-refund-status-2026/; no NYT link (unverifiable);
+  no "a bill has been introduced" (Moreno *plans* to introduce; Fox headline/body conflict noted);
+  the three tariff-revenue bases (Treasury all-customs FYTD net, PWBM new-tariff gross, PWBM net
+  of refunds) are never mixed in one sentence.
+- **Sitemap + llms.txt:** new URL registered (lastmod 2026-09-11).
+- **Deployed:** Cloudflare Pages (tariff-calculator-2026), verified live.
