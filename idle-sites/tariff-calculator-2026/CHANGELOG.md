@@ -26,7 +26,11 @@ All notable changes to the calculator asset (tariffcalculator2026.com) are docum
   of liquidation, so CBP can reliquidate by day 90 under 19 U.S.C. § 1501).
 - **Separation from the dividend explainer is enforced:** zero occurrences of `dividend`, `rebate`, `$5,000`
   or `tariff-dividend-5000-explained` anywhere in the document (probed on the built bytes).
-- `sitemap.xml`: one new `<loc>` at priority 0.9 (36 → 37 locs). `llms.txt`: one new entry.
+- `sitemap.xml`: one new `<loc>` at priority 0.9 (36 → 37 locs). `llms.txt`: one new entry, plus the
+  pre-existing `## Contact` block removed — its `[Contact](https://tariffcalculator2026.com/contact/)`
+  link was **verified dead (HTTP 404)** during live verification, and the block is now `## Site pages`
+  holding only `Home`. This is the only change outside the card's own new files; it is a dead-link
+  removal in a file this card already publishes, not new content.
 - **Verified:** local gate `site_consistency.py tariff-refund-status-2026/index.html --expect-date 2026-09-11`
   → 1 checked / 0 errors / 0 warnings; FAQ parity 6 visible `.faq-item` == 6 `FAQPage` `mainEntity` (0 text
   drift); Playwright 320/360/390/414 px all `docSW == bodySW == innerWidth` with 0 offenders.
