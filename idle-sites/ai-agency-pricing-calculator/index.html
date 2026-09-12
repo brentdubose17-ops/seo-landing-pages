@@ -403,6 +403,14 @@
         "@type": "Answer",
         "text": "For the one operator who has published the number, AI inference runs at about 6.4% of revenue. On Sept 9, 2026 @levelsio reported that his profit margin is 99.4% without AI inference and 93% with it (mostly Photo AI) — a 6.4-point gross-margin cost, and roughly 91% of his total cost of goods. It is one self-reported, unaudited data point, so treat it as an anchor rather than a benchmark, and run your own numbers in the inference-as-a-margin-line estimator above."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is my AI bill going up when model prices are falling?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A bill is billed tokens × price per token — the rate is only half the product, and agent workloads multiply the tokens. On 10,000 tasks a month at 150K context and 8K output per call, GPT-5.6 Sol at its promotional $4.00/$20.00 per 1M bills $105,600.00 ungoverned against $9,600.00 governed — $10.56 against $0.96 per completed task — on a rate card whose input price fell 20% and output price fell 33% (OpenAI, promotional through November 21, 2026). Re-reads, retries, unpruned context and the >272K long-context rule (2x input / 1.5x output on the full request) explain the gap. Bain's September 10, 2026 reading of the same paradox: model prices have fallen roughly tenfold each year while the effective cost per task often stays flat. The full arithmetic is on this site, and the five controls that close the gap are in the AI spend governance audit block."
+      }
     }
   ]
 }
@@ -2501,6 +2509,9 @@
       </ul>
       <div class="box-label" style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:10px;">Changelog</div>
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
+        <strong>2026-09-12:</strong> <strong>SEO/AEO pass on the "prices fell, bill rose" pair (kanban t_8988dbaa)</strong> &mdash; added the exact query as <strong>FAQ item 44</strong> on this page (visible item + its FAQPage entry) with the definition (<strong>billed tokens &times; price per token</strong>), the arithmetic (<strong>$105,600.00 ungoverned against $9,600.00 governed</strong> on the same 10,000-task workload, $10.56 against $0.96 per completed task) and the dated anchors (<strong>$4.00/$20.00 promotional through November 21, 2026</strong>; <strong>&gt;272K</strong> input tokens repriced at 2x input / 1.5x output for the full request), cited to OpenAI's model and pricing pages and to Bain's September 10, 2026 AI-in-Telecom analysis, and linked to the five governance controls on <a href="https://mybusinessaiaudit.com/ai-agent-risk-checklist#ai-spend-governance" style="color:var(--cyan-light);">mybusinessaiaudit.com/ai-agent-risk-checklist#ai-spend-governance</a>. On the <a href="/why-ai-bills-rise-when-prices-fall/" style="color:var(--cyan-light);">why AI bills rise</a> page the section-4 CTA now points at that block instead of the payments-side page (wallet allowances), which never walked the five controls its sentence promised.
+      </p>
+      <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
         <strong>2026-09-12:</strong> Made the <strong>Cache-Aware Agent Runs</strong> estimator band-aware (kanban t_fe90b3a6, ruling t_ffdc62d4). The <strong>DeepSeek Pricing Basis</strong> selector now exposes the <strong>published V4 Pro peak band</strong> (<strong>$0.044 hit / $1.32 miss / $3.96 out</strong> per 1M, Mon-Fri 01:00-04:00 and 06:00-10:00 UTC) — off-peak and launch were the only reachable bands while the page’s own copy already quoted a <strong>~6x peak cache-read gap</strong> against Claude Fable 5.1’s $0.25/1M (0.25 / 0.044 = 5.68x), so the UI could not produce a figure the prose asserted. The closing sentence of the results note is now band-aware: it cites the rate of the band actually selected instead of printing the off-peak $0.022 on a peak run. The <strong>Hybrid</strong> option on the Model Strategy dropdown is labelled <strong>(neutral baseline, 1.0x)</strong> so a preselected default is not read as a recommendation. The site-wide default was left alone by measurement, not preference: flipping it to <code>deepseek-flash</code> would cut the default quote from <strong>$2,750/mo to $2,300/mo</strong> and raise the default margin from <strong>60% to 68%</strong> for custom_agent/small at the markup defaults, which is a pricing recommendation rather than a modelling default (<code>MODEL_COMPUTE_FACTOR.hybrid = 1.0</code> is the anchor every other factor is defined against). No price, factor or assumption changed and the "Assumptions verified Aug 26, 2026" date is untouched — all three bands were already in <code>CACHE_PRICES</code>. Sources: <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener" style="color:var(--cyan-light);">DeepSeek API pricing (fetched 2026-09-11)</a>.
       </p>
       <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.7;">
@@ -3592,6 +3603,15 @@
         <div class="faq-answer">
           <div class="faq-answer-inner">
             For the one operator who has published the number, AI inference runs at about <strong>6.4% of revenue</strong>. On Sept 9, 2026 @levelsio reported that his profit margin is <strong>99.4% without AI inference</strong> and <strong>93% with it (mostly Photo AI)</strong> — a 6.4-point gross-margin cost, and roughly 91% of his total cost of goods. It is one self-reported, unaudited data point, so treat it as an anchor rather than a benchmark, and run your own numbers in the <a href="#inference-margin-estimator" style="color:var(--cyan-light);">inference-as-a-margin-line estimator</a> above.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button onclick="toggleFaq(this)"><strong>Why is my AI bill going up when model prices are falling?</strong>
+          <span class="faq-icon">+</span>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            A bill is <strong>billed tokens &times; price per token</strong> &mdash; the rate is only half the product, and agent workloads multiply the tokens. On 10,000 tasks a month at 150K context and 8K output per call, GPT-5.6 Sol at its promotional $4.00/$20.00 per 1M bills <strong>$105,600.00 ungoverned against $9,600.00 governed</strong> &mdash; $10.56 against $0.96 per completed task &mdash; on a rate card whose input price fell 20% and output price fell 33% (OpenAI, promotional through November 21, 2026). Re-reads, retries, unpruned context and the &gt;272K long-context rule (2x input / 1.5x output on the full request) explain the gap. Bain's September 10, 2026 reading of the same paradox: model prices have fallen roughly tenfold each year while the effective cost per task often stays flat. The <a href="/why-ai-bills-rise-when-prices-fall/" style="color:var(--cyan-light);">full arithmetic</a> is on this site, and the five controls that close the gap are in the <a href="https://mybusinessaiaudit.com/ai-agent-risk-checklist#ai-spend-governance" style="color:var(--cyan-light);">AI spend governance audit block</a>.
           </div>
         </div>
       </div>
