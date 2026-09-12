@@ -2,6 +2,63 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-11 — New calculator mode: PENDING refined-copper Section 232 duty scenario (kanban t_7ecb5089)
+
+- **Feature.** A third mode on the calculator, `Copper — pending duty scenario`, sits alongside
+  the ad valorem and TRQ tabs. Inputs: base-price market (**LME 3-month, USD/tonne** — pre-filled
+  at the sourced **$14,230/t** of Sept 11, 2026 — or **COMEX front month, USD/lb**, which ships
+  **no default** because no COMEX settlement is sourced, only the Sept 10 intraday move of 4%+ to
+  ~$6.585/lb), base price, quantity (metric tonnes), **proposed duty rate X% (0–30, default 10)**,
+  and destination (US / Canada / other). Outputs: duty base (US transaction value), duty if it
+  lands, **landed cost**, **delta vs no tariff** in dollars and percent, duty per tonne, plus a
+  0/10/15/25/30% ladder that mirrors the page copy exactly and the scenario sentence
+  *"if the duty lands at X%, landed cost on this shipment moves from $A to $B — up $C, or D%."*
+- **Status framing — non-negotiable, and it is on screen twice.** The static panel carries
+  `⛔ Status: PENDING — NOT IN EFFECT (as of September 11, 2026)` with *"no duty on refined copper
+  is currently collectible at the border"* and *"do not quote, bill, invoice or hedge against"*,
+  the mode tab is labelled *PENDING — not in effect*, and **every render** prints the pending flag
+  plus the Reuters basis (White House "has not yet made a decision on refined copper tariffs";
+  "continues to evaluate all options to reshore copper") and the Federal Register absence check
+  (no refined-copper instrument; the Apr 9 / Jun 4 proclamations contain no instance of the word
+  "refined"). The in-force Section 232 regime on **semi-finished and derivative** copper is stated
+  separately so the scenario is never read as current law.
+- **Rate band 0–30%, not 0–25%.** The reported (recommended, NOT adopted) schedule is 15% from
+  January 1, 2027 rising to **30% in 2028** (Reuters wire, Sept 10, 2026), so a 25% cap would make
+  the reported 2028 step unmodelable — and the page copy prints a 30% row. 15% is labelled the
+  reference case; 10% is the default input. Out-of-band input is clamped and says so.
+- **Page-copy agreement (acceptance).** 20 t at $14,230/t = **$284,600**; 0/10/15/25/30% →
+  **$284,600 / $313,060 / $327,290 / $355,750 / $369,980** (duty per tonne $0 / $1,423.00 /
+  $2,134.50 / $3,557.50 / $4,269.00). The 15% rendering produces the status page's headline
+  sentence verbatim. The numbers live in `presets/refined-copper-tariff-pending.js`
+  (`scenario_reference`) and are asserted by tests, so copy drift fails the suite.
+- **Files.** `presets/refined-copper-tariff-pending.js` (new data file, 14,018 B, sha256
+  `d30abdc61ae3e0b8…`; loaded before `tariff-data.js` so an actual instrument is a data-file edit:
+  `in_effect`, price, band, reference cases), `tariff-data.js` (`COPPER_PENDING` +
+  `copperLandedCost()`, pure and UMD, 111,439 B, sha256 `8b0e4bd3ebe7b35b…`), `index.html` (mode
+  tab, panel, `.cu-*` styles, wiring block `copper-wiring-t_7ecb5089` that **wraps** the TRQ
+  block's `setCalcMode`, 224,349 B, sha256 `3195da7c0e373b37…`). Deep links:
+  `/?mode=copper&market=lme&price=14230&qty=20&rate=15&dest=us#copper-calculator` and
+  **`/?product=copper#calculator`** — the status page's CTA, which now resolves.
+- **Defect fixed in passing (pre-existing, live since t_e2d32b63).** The deep-link `<code>` tokens
+  are single unbreakable strings: `?mode=trq…` pushed the document to **532px at a 320px viewport**
+  (8/12 on the site's own phone harness), and the new copper hint would have done the same (478px).
+  `.hint code { word-break: break-all; overflow-wrap: anywhere; }` fixes both. Live now **12/12** at
+  320/360/390/414px on `/`, `/?mode=copper`, `/?product=copper` and `/?mode=trq`.
+  `dateModified` (meta + `WebApplication` JSON-LD) moved 2026-09-10 → **2026-09-11**; the JSON-LD
+  description now names the pending copper scenario.
+- **Verification.** `node --test` **157/157 pass** (127 pre-existing + 30 new in
+  `tests/copper-data.test.js`); new `tests/copper-dom-harness.js` **88/88**, driving the real wiring
+  in a vm sandbox at 10%, 15% and 25% and through both deep-link shapes; existing harnesses
+  unchanged (`trq` 57, `drone` 35, `canada-line` 31, `brazil` 31, `deep-link-smoke` 6 — all 0 FAIL);
+  `tests/run-harnesses.sh` runs all six. Live end-to-end in a real browser: `?product=copper` renders
+  $313,060 at the 10% default, `rate=15` renders **$327,290** with the page headline, a real click at
+  25% renders $355,750, a market switch to COMEX clears the price then converts $6.585/lb to
+  $290,349 of base on 20 t, and the ad valorem mode still returns 40.3% / $40,300 on China
+  electronics (the drones deep link still preselects its category). Deployed declared-files-only
+  (`--files=index.html,tariff-data.js,presets/refined-copper-tariff-pending.js --verify-live`),
+  deployment `36eff9f9-c300-4bc3-8b15-cb5afa16cddd`, 44 manifest rows compared / 0 mismatches; live
+  bytes equal the worktree for all three files.
+
 ## 2026-09-11 — Preset `status` mis-attributed the Sept 29, 2026 import bans to Proclamations 11046/11047/11048 (kanban t_5e5baa16)
 
 - **Defect (live, verified by bytes).** `presets/canada-sept8-counter-tariffs.js` shipped this clause

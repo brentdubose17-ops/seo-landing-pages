@@ -818,6 +818,239 @@
   }
 
   /*
+   * Refined copper — PENDING Section 232 duty scenario (kanban t_7ecb5089)
+   * --------------------------------------------------------------------
+   * The White House had not decided on a refined-copper tariff as of
+   * 2026-09-11: the Reuters wire of Sept 10, 2026 ("has not yet made a
+   * decision on refined copper tariffs") plus a primary absence check
+   * (no refined-copper instrument in the Federal Register; the Apr 9 and
+   * Jun 4, 2026 copper proclamations cover semi-finished and derivative
+   * articles only and contain no instance of the word "refined").
+   *
+   * NOTHING IS COLLECTIBLE on refined copper. This layer models a
+   * proposal, never law — every result it produces carries
+   * `pending: true` / `inEffect: false` and the disclaimer.
+   *
+   * DATA FILE: prices, rate band, reference cases and the page-copy
+   * mirror live in presets/refined-copper-tariff-pending.js
+   * (window.COPPER_TARIFF_PRESET in the browser, require() in Node), so an
+   * actual instrument is a data-file edit with no calculator-logic change.
+   */
+  var COPPER_PENDING = (function () {
+    var preset = null;
+    if (typeof window !== 'undefined' && window.COPPER_TARIFF_PRESET) {
+      preset = window.COPPER_TARIFF_PRESET;
+    } else if (typeof require === 'function') {
+      try { preset = require('./presets/refined-copper-tariff-pending.js'); } catch (e) { preset = null; }
+    }
+    if (preset && preset.preset_key === 'refined-copper-tariff-pending') {
+      return preset;
+    }
+    // Safe fallback: expose the preset identity and no prices/rates rather
+    // than wrong numbers. The calculator renders a "data file not loaded"
+    // notice and refuses to produce a scenario.
+    return {
+      preset_key: 'refined-copper-tariff-pending',
+      preset_label: 'Refined copper \u2014 pending Section 232 duty scenario',
+      status: 'PENDING \u2014 NOT IN EFFECT',
+      status_short: 'Data unavailable',
+      in_effect: false,
+      as_of: null,
+      disclaimer: 'No refined-copper tariff is in effect, and this mode\u2019s preset data file did not load, so no scenario can be modelled.',
+      disclaimer_short: 'PENDING \u2014 not in effect. No duty is currently collectible.',
+      lb_per_tonne: 2204.6226218,
+      markets: [],
+      default_market: null,
+      quantity: { unit: 'metric tonnes (t)', unit_short: 't', default_t: null },
+      rate: { default_pct: 10, min_pct: 0, max_pct: 30, step_pct: 0.5, reference_pct: 15 },
+      reference_cases: [],
+      destinations: [],
+      default_destination: 'us',
+      value_basis_note: '',
+      scenario_reference: null,
+      sources: [],
+      verified: null
+    };
+  })();
+
+  // Thousands separators without depending on ICU/locale data.
+  function cuFmt(n, dp) {
+    if (n == null || !isFinite(n)) return '\u2014';
+    var digits = dp || 0;
+    var neg = n < 0;
+    var s = Math.abs(n).toFixed(digits);
+    var parts = s.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return (neg ? '-' : '') + parts.join('.');
+  }
+  function cuMoney(n, dp) {
+    if (n == null || !isFinite(n)) return '\u2014';
+    return '$' + cuFmt(n, dp == null ? 0 : dp);
+  }
+  function cuPctLabel(rate) {
+    return (Math.round(rate * 1000) / 10).toFixed(1) + '%';
+  }
+
+  /*
+   * copperLandedCost(opts) — the arithmetic behind the calculator's
+   * 'Copper — pending duty scenario' mode.
+   *
+   * @param opts { market: 'lme'|'comex'   — sets the price unit
+   *                                  (per tonne / per pound, default 'lme'),
+   *              price: number        — base price in the MARKET's own unit
+   *                                  (required; USD/t for LME, USD/lb for
+   *                                  COMEX — the conversion is done here),
+   *              quantityT: number    — quantity in metric tonnes (required),
+   *              ratePct: number      — proposed ad valorem duty in PERCENT
+   *                                  (0–30; clamped, see `clamped`),
+   *              rate: number         — alternative: a fraction (0.15 = 15%);
+   *                                  ratePct wins when both are passed,
+   *              destination: 'us'|'canada'|'other' (default 'us') }
+   * Returns {
+   *   market, marketLabel, priceBasis, priceInput, priceUnit, pricePerTonne,
+   *   quantityT, quantityLb,
+   *   dutyBaseUsd, noTariffLandedUsd, dutyUsd, landedUsd, deltaUsd, deltaPct,
+   *   dutyPerTonne, dutyPerLb,
+   *   rate, ratePct, ratePctLabel, requestedRatePct, clamped, clampNote,
+   *   rateIsReference,
+   *   destination, destinationLabel, destinationNote,
+   *   pending: true, inEffect: false, status, statusShort, asOf, verified,
+   *   disclaimer, valueBasisNote, headline, scenarioTable }
+   * or null when the price / quantity is not a positive number, when the
+   * market is unknown, or when the preset carries no prices.
+   *
+   * `headline` is the page-copy sentence: "if the duty lands at X%, landed
+   * cost on this shipment moves from $A to $B — up $C, or D%".
+   */
+  function copperLandedCost(opts) {
+    opts = opts || {};
+    var markets = COPPER_PENDING.markets || [];
+    if (!markets.length) return null;
+
+    var wantMarket = opts.market == null ? COPPER_PENDING.default_market : String(opts.market);
+    var market = null;
+    for (var i = 0; i < markets.length; i++) {
+      if (markets[i].value === wantMarket) { market = markets[i]; break; }
+    }
+    if (!market) return null;
+
+    var price = Number(opts.price);
+    if (opts.price == null || opts.price === '' || !isFinite(price) || price <= 0) return null;
+
+    var qty = Number(opts.quantityT);
+    if (opts.quantityT == null || opts.quantityT === '' || !isFinite(qty) || qty <= 0) return null;
+
+    var lbPerTonne = COPPER_PENDING.lb_per_tonne || 2204.6226218;
+    var perPound = market.price_basis === 'per_pound';
+    var pricePerTonne = perPound ? price * lbPerTonne : price;
+    var quantityLb = qty * lbPerTonne;
+    var dutyBaseUsd = pricePerTonne * qty;
+
+    // Rate: percent wins, fraction accepted for callers that prefer it.
+    var band = COPPER_PENDING.rate || {};
+    var minPct = band.min_pct == null ? 0 : band.min_pct;
+    var maxPct = band.max_pct == null ? 30 : band.max_pct;
+    var requestedPct = null;
+    if (opts.ratePct != null && opts.ratePct !== '') requestedPct = Number(opts.ratePct);
+    else if (opts.rate != null && opts.rate !== '') requestedPct = Number(opts.rate) <= 1 ? Number(opts.rate) * 100 : Number(opts.rate);
+    if (requestedPct == null || !isFinite(requestedPct)) requestedPct = band.default_pct;
+    var clamped = false;
+    var pct = requestedPct;
+    if (pct < minPct) { pct = minPct; clamped = true; }
+    if (pct > maxPct) { pct = maxPct; clamped = true; }
+    var rate = pct / 100;
+
+    // Destination: labels and notes only — the pending duty itself is a US
+    // measure, and nothing here is collectible in any destination.
+    var dests = COPPER_PENDING.destinations || [];
+    var wantDest = opts.destination == null ? COPPER_PENDING.default_destination : String(opts.destination);
+    var dest = null;
+    for (var d = 0; d < dests.length; d++) {
+      if (dests[d].value === wantDest) { dest = dests[d]; break; }
+    }
+    if (!dest) { dest = dests.length ? dests[0] : { value: wantDest, label: wantDest, note: '' }; }
+
+    var dutyUsd = dutyBaseUsd * rate;
+    var landedUsd = dutyBaseUsd + dutyUsd;
+
+    var headline;
+    if (pct === 0) {
+      headline = 'if the duty lands at 0% (today\u2019s state), landed cost on this shipment stays at ' +
+        cuMoney(dutyBaseUsd) + ' \u2014 no duty is currently collectible on refined copper.';
+    } else {
+      headline = 'if the duty lands at ' + cuFmt(pct, pct % 1 === 0 ? 0 : 1) + '%, landed cost on this shipment moves from ' +
+        cuMoney(dutyBaseUsd) + ' to ' + cuMoney(landedUsd) + ' \u2014 up ' + cuMoney(dutyUsd) + ', or ' +
+        cuPctLabel(rate) + '.';
+    }
+
+    var cases = COPPER_PENDING.reference_cases || [];
+    var scenarioTable = cases.map(function (c) {
+      var r = Number(c.pct) / 100;
+      var duty = dutyBaseUsd * r;
+      return {
+        pct: Number(c.pct),
+        label: c.label,
+        note: c.note,
+        dutyUsd: duty,
+        landedUsd: dutyBaseUsd + duty,
+        deltaUsd: duty,
+        deltaPct: r,
+        dutyPerTonne: pricePerTonne * r
+      };
+    });
+
+    return {
+      presetLabel: COPPER_PENDING.preset_label,
+      status: COPPER_PENDING.status,
+      statusShort: COPPER_PENDING.status_short,
+      asOf: COPPER_PENDING.as_of,
+      verified: COPPER_PENDING.verified,
+      pending: true,
+      inEffect: false,
+      disclaimer: COPPER_PENDING.disclaimer,
+      disclaimerShort: COPPER_PENDING.disclaimer_short,
+      basis: COPPER_PENDING.basis,
+      inForce: COPPER_PENDING.in_force,
+      market: market.value,
+      marketLabel: market.label,
+      priceBasis: market.price_basis,
+      priceUnit: market.unit_label,
+      priceInput: price,
+      pricePerTonne: pricePerTonne,
+      lbPerTonne: lbPerTonne,
+      quantityT: qty,
+      quantityLb: quantityLb,
+      dutyBaseUsd: dutyBaseUsd,
+      noTariffLandedUsd: dutyBaseUsd,
+      dutyUsd: dutyUsd,
+      landedUsd: landedUsd,
+      deltaUsd: dutyUsd,
+      deltaPct: rate,
+      dutyPerTonne: pricePerTonne * rate,
+      dutyPerLb: (pricePerTonne * rate) / lbPerTonne,
+      rate: rate,
+      ratePct: pct,
+      ratePctLabel: cuPctLabel(rate),
+      requestedRatePct: requestedPct,
+      clamped: clamped,
+      clampNote: clamped
+        ? 'Requested ' + cuFmt(requestedPct, requestedPct % 1 === 0 ? 0 : 1) + '% was clamped to the scenario band ' +
+          cuFmt(minPct) + '\u2013' + cuFmt(maxPct) + '%.'
+        : null,
+      rateMinPct: minPct,
+      rateMaxPct: maxPct,
+      rateIsReference: band.reference_pct != null && Number(band.reference_pct) === pct,
+      rateBandNote: band.band_note,
+      destination: dest.value,
+      destinationLabel: dest.label,
+      destinationNote: dest.note,
+      valueBasisNote: COPPER_PENDING.value_basis_note,
+      headline: headline,
+      scenarioTable: scenarioTable
+    };
+  }
+
+  /*
    * Brazil — Section 301 25% additional duty (IN EFFECT July 22, 2026)
    * ----------------------------------------------------------------
    * Separate USTR action: investigation initiated July 15, 2025 under
@@ -1603,6 +1836,8 @@
     CANADA_RETALIATION: CANADA_RETALIATION,
     TRQ_CANNED_VEG: TRQ_CANNED_VEG,
     trqCannedVegSurtax: trqCannedVegSurtax,
+    COPPER_PENDING: COPPER_PENDING,
+    copperLandedCost: copperLandedCost,
     BRAZIL_301: BRAZIL_301,
     TRUCKING_IMPACT: TRUCKING_IMPACT,
     REJECTED_DEAL_PRESET: REJECTED_DEAL_PRESET,

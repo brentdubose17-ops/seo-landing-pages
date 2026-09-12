@@ -15,18 +15,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tariff Calculator 2026 — Free Import Duty Calculator">
     <meta name="twitter:description" content="Calculate import duties instantly with 2026 Section 301 tariff rates for 60 countries.">
-    <meta name="dateModified" content="2026-09-10">
+    <meta name="dateModified" content="2026-09-11">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Tariff Calculator 2026",
         "url": "https://tariffcalculator2026.com",
-        "description": "Free import duty and tariff calculator for 2026 US tariffs including the Brazil 25% Section 301 duty (effective July 22, 2026; 1,600+ exempt HTS subheadings; 12.5% forced-labor stack to 37.5%), the Section 301 forced-labor framework covering 60 countries, the Canada Section 338 50% duty on ~$20B of Canadian goods (IN EFFECT Aug 22, 2026), and the Section 232 drone/UAS tariff (100% / 25%, effective Sept 3 2026)",
+        "description": "Free import duty and tariff calculator for 2026 US tariffs including the Brazil 25% Section 301 duty (effective July 22, 2026; 1,600+ exempt HTS subheadings; 12.5% forced-labor stack to 37.5%), the Section 301 forced-labor framework covering 60 countries, the Canada Section 338 50% duty on ~$20B of Canadian goods (IN EFFECT Aug 22, 2026), the Section 232 drone/UAS tariff (100% / 25%, effective Sept 3 2026), and a PENDING refined-copper Section 232 duty scenario (not in effect — no refined-copper duty is currently collectible)",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript",
-        "dateModified": "2026-09-10"
+        "dateModified": "2026-09-11"
     }
     </script>
     <script type="application/ld+json">
@@ -167,6 +167,22 @@
         .trq-table th, .trq-table td { padding: 7px 9px; border-bottom: 1px solid #e5e7eb; text-align: left; vertical-align: top; }
         .trq-table thead th { background: #e5e7eb; }
         .trq-permalink { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.82rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f9fafb; color: #374151; }
+
+        /* --- pending refined-copper duty scenario mode (t_7ecb5089) --- */
+        .cu-status { background: #fef2f2; border: 1px solid #fca5a5; border-left: 6px solid #b91c1c; border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; font-size: 0.9rem; color: #7f1d1d; }
+        .cu-status strong { color: #991b1b; }
+        .cu-headline { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 6px solid #2563eb; border-radius: 10px; padding: 12px 16px; margin: 14px 0 4px; font-size: 1rem; color: #1e3a8a; }
+        .cu-outcome { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 14px; }
+        .cu-outcome .box { border-radius: 10px; padding: 12px 14px; border: 1px solid #d1d5db; background: #fff; }
+        .cu-outcome .box .k { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.03em; color: #6b7280; }
+        .cu-outcome .box .v { font-size: 1.2rem; font-weight: 700; margin-top: 4px; }
+        .cu-outcome .box.pending { background: #fef2f2; border-color: #fca5a5; }
+        .cu-outcome .box.pending .v { color: #b91c1c; }
+        .cu-permalink { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.82rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #f9fafb; color: #374151; }
+        /* Deep-link strings are long unbreakable tokens: let them wrap on
+           phones instead of pushing the page sideways (t_7ecb5089; the TRQ
+           mode carried the same defect from t_e2d32b63). */
+        .hint code { word-break: break-all; overflow-wrap: anywhere; }
 
         .results { display: none; margin-top: 20px; }
         .results.show { display: block; }
@@ -320,6 +336,7 @@
     <div class="calculator" id="calculator">
         <div class="calc-modes" id="calcModes" role="tablist" aria-label="Calculator mode">
             <button type="button" class="calc-mode active" id="modeBtnAv" role="tab" aria-selected="true" onclick="setCalcMode('av')">Standard duty (ad valorem)<small>Country + category + value → estimated duty and landed cost</small></button>
+            <button type="button" class="calc-mode" id="modeBtnCu" role="tab" aria-selected="false" onclick="setCalcMode('copper')">Copper — pending duty scenario<small>LME/COMEX price + proposed rate → landed cost and the delta vs no tariff (PENDING — not in effect)</small></button>
             <button type="button" class="calc-mode" id="modeBtnTrq" role="tab" aria-selected="false" onclick="setCalcMode('trq')">TRQ surtax — canned vegetables<small>Tariff-rate quota: duty-free within quota, 50% / 45% / 40% above it (proposed)</small></button>
         </div>
         <div id="avModeWrap">
@@ -526,6 +543,74 @@
                 <label for="trqPermalink" style="font-size:0.8rem;color:#888;display:block;margin-top:10px;">Shareable link to this calculation</label>
                 <input type="text" id="trqPermalink" class="trq-permalink" readonly onclick="this.select()">
                 <div class="hint">Deep-link format: <code>?mode=trq&amp;volume=30000000&amp;unit=lb&amp;year=1&amp;category=corn&amp;quota=not-exhausted&amp;value=100000</code></div>
+            </div>
+        </div>
+
+        <a id="copper-calculator"></a>
+        <div id="copperPanel" style="display:none;">
+            <div class="cu-status" role="note">
+                <strong>⛔ Status: PENDING — NOT IN EFFECT (as of September 11, 2026).</strong>
+                <p style="margin: 8px 0 6px;">The White House <strong>has not decided</strong> on a refined-copper tariff. No proclamation, no Federal Register notice and no Commerce determination creates one, so <strong>no duty on refined copper is currently collectible at the border</strong> — cathode, anode or concentrate. <strong>Do not quote, bill, invoice or hedge against a refined-copper duty on the basis of this scenario.</strong> What <em>is</em> in force is the pre-existing Section 232 regime on <strong>semi-finished and derivative</strong> copper articles (50% on articles of the metal, 25% on derivative products, a temporarily-reduced 15% on a subset) — the unresolved question is whether refined cathode joins it. Keep <strong>what is in force</strong> apart from <strong>what is only a scenario</strong>.</p>
+                <p style="margin: 0; font-size: 0.85rem;">Sources: <a href="https://www.kitco.com/news/off-the-wire/2026-09-10/white-house-copper-tariff-plan-stalls-amid-affordability-concerns" target="_blank" rel="noopener">Reuters wire, September 10, 2026</a> · <a href="https://www.federalregister.gov/documents/2026/06/04/2026-11314/further-adjusting-the-tariff-regimes-for-imports-of-aluminum-steel-and-copper-into-the-united-states" target="_blank" rel="noopener">Federal Register — June 4, 2026 copper proclamation (no “refined”)</a> · <a href="https://www.federalregister.gov/documents/2026/04/09/2026-06960/strengthening-actions-taken-to-adjust-imports-of-aluminum-steel-and-copper-into-the-united-states" target="_blank" rel="noopener">Proclamation 11021, April 9, 2026</a>. Last verified September 11, 2026.</p>
+            </div>
+            <div class="form-row">
+                <label for="cuMarket">Base price market</label>
+                <select id="cuMarket" onchange="cuOnMarketChange()"></select>
+                <div class="hint" id="cuMarketHint"></div>
+            </div>
+            <div class="form-row">
+                <label for="cuPrice" id="cuPriceLabel">Base copper price</label>
+                <input type="number" id="cuPrice" min="0" step="1" placeholder="e.g. 14230" oninput="cuUpdateHints()">
+                <div class="hint" id="cuPriceHint"></div>
+            </div>
+            <div class="form-row">
+                <label for="cuQty">Quantity (metric tonnes)</label>
+                <input type="number" id="cuQty" min="0" step="1" placeholder="e.g. 20" oninput="cuUpdateHints()">
+                <div class="hint" id="cuQtyHint"></div>
+            </div>
+            <div class="form-row">
+                <label for="cuRate">Proposed duty rate X% (scenario, 0–30%)</label>
+                <input type="number" id="cuRate" min="0" max="30" step="0.5" placeholder="e.g. 10">
+                <div class="hint" id="cuRateHint"></div>
+            </div>
+            <div class="form-row">
+                <label for="cuDest">Destination</label>
+                <select id="cuDest" onchange="cuUpdateHints()"></select>
+                <div class="hint" id="cuDestHint"></div>
+            </div>
+            <button class="calc-btn" onclick="runCopper()">Model the pending copper duty</button>
+
+            <div class="results" id="cuResults">
+                <div class="result-card">
+                    <div class="result-item">
+                        <span class="result-label">Duty base — transaction value</span>
+                        <span class="result-value" id="cuOutBase">—</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Proposed duty rate (PENDING — not in effect)</span>
+                        <span class="result-value" id="cuOutRate">—</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Duty if it lands</span>
+                        <span class="result-value" id="cuOutDuty">—</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Landed cost if the duty lands</span>
+                        <span class="result-value total" id="cuOutLanded">—</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Delta vs no tariff (0%)</span>
+                        <span class="result-value" id="cuOutDelta">—</span>
+                    </div>
+                </div>
+                <div id="cuOutcome"></div>
+                <div class="cu-headline" id="cuOutHeadline">—</div>
+                <div id="cuFlags"></div>
+                <div id="cuRateWrap"></div>
+                <p class="hint" style="margin-top:10px;">Model note: the duty base is the US transaction value of the copper (no international freight or insurance), one ad valorem rate applied to it, no stacking. The measure modelled here is <strong>pending</strong> — the whole table is a scenario, not a priced-in measurement and not something you can bill against. Nothing on refined copper is currently collectible.</p>
+                <label for="cuPermalink" style="font-size:0.8rem;color:#888;display:block;margin-top:10px;">Shareable link to this scenario</label>
+                <input type="text" id="cuPermalink" class="cu-permalink" readonly onclick="this.select()">
+                <div class="hint">Deep-link format: <code>?mode=copper&amp;market=lme&amp;price=14230&amp;qty=20&amp;rate=15&amp;dest=us</code> — or simply <code>?product=copper</code> to open this scenario.</div>
             </div>
         </div>
     </div>
@@ -858,6 +943,7 @@ function estimateCssp() {
 
 <script src="presets/canada-sept8-counter-tariffs.js"></script>
 <script src="presets/canada-trq-canned-vegetables.js"></script>
+<script src="presets/refined-copper-tariff-pending.js"></script>
 <script src="tariff-data.js"></script>
 <script>
 (function () {
@@ -1908,6 +1994,392 @@ BLOG_ARTICLES.forEach(function (art) {
             }
         } else {
             syncUrl(false);
+        }
+    } catch (e) {}
+})();
+</script>
+
+<script>
+/* ---------------------------------------------------------------------------
+ * Pending refined-copper duty scenario - calculator wiring (kanban t_7ecb5089)
+ * block marker: copper-wiring-t_7ecb5089
+ *
+ * Data and arithmetic live in tariff-data.js: `T.COPPER_PENDING` (resolved
+ * from presets/refined-copper-tariff-pending.js) and `T.copperLandedCost()`.
+ * The measure is PENDING: every render carries the "not in effect / nothing
+ * currently collectible" flag and the scenario sentence the status page
+ * prints - "if the duty lands at X%, landed cost ... moves from $A to $B".
+ *
+ * This block WRAPS the TRQ block's setCalcMode with a third tab, so it must
+ * stay last in the document.
+ *
+ * Shareable deep links:
+ *   /?mode=copper&market=lme&price=14230&qty=20&rate=15&dest=us#copper-calculator
+ *   /?product=copper#calculator          (the status page's CTA)
+ * ------------------------------------------------------------------------- */
+(function () {
+    var SITE = 'https://tariffcalculator2026.com/';
+
+    function el(id) { try { return document.getElementById(id); } catch (e) { return null; } }
+    function num(v) { var n = parseFloat(v); return isFinite(n) ? n : null; }
+    function fmt(n, dp) {
+        if (n == null || !isFinite(n)) return '\u2014';
+        var d = dp || 0;
+        var neg = n < 0;
+        var parts = Math.abs(n).toFixed(d).split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return (neg ? '-' : '') + parts.join('.');
+    }
+    function money(n, dp) { return (n == null || !isFinite(n)) ? '\u2014' : '$' + fmt(n, dp == null ? 0 : dp); }
+    function pct1(r) { return (Math.round(r * 1000) / 10).toFixed(1) + '%'; }
+    function setAttr(node, name, value) { if (node && node.setAttribute) { try { node.setAttribute(name, value); } catch (e) {} } }
+    function data() { return window.TARIFF_DATA || null; }
+    function preset() { var t = data(); return t && t.COPPER_PENDING ? t.COPPER_PENDING : null; }
+
+    function marketRow(value) {
+        var p = preset();
+        if (!p || !p.markets) return null;
+        for (var i = 0; i < p.markets.length; i++) {
+            if (p.markets[i].value === value) return p.markets[i];
+        }
+        return null;
+    }
+    function market() {
+        var sel = el('cuMarket');
+        var p = preset();
+        var v = (sel && sel.value) ? sel.value : (p ? p.default_market : 'lme');
+        return marketRow(v) || (p && p.markets && p.markets.length ? p.markets[0] : null);
+    }
+    function destRow(value) {
+        var p = preset();
+        if (!p || !p.destinations) return null;
+        for (var i = 0; i < p.destinations.length; i++) {
+            if (p.destinations[i].value === value) return p.destinations[i];
+        }
+        return null;
+    }
+    function optionExists(sel, value) {
+        if (!sel || !sel.options) return false;
+        for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === value) return true; }
+        return false;
+    }
+
+    function cuEnsure() {
+        var p = preset();
+        if (!p) return;
+        var mSel = el('cuMarket'), dSel = el('cuDest');
+        if (mSel && (!mSel.options || !mSel.options.length)) {
+            (p.markets || []).forEach(function (it) {
+                var o = document.createElement('option');
+                o.value = it.value; o.textContent = it.label;
+                mSel.appendChild(o);
+            });
+            mSel.value = p.default_market || 'lme';
+        }
+        if (dSel && (!dSel.options || !dSel.options.length)) {
+            (p.destinations || []).forEach(function (it) {
+                var o = document.createElement('option');
+                o.value = it.value; o.textContent = it.label;
+                dSel.appendChild(o);
+            });
+            dSel.value = p.default_destination || 'us';
+        }
+    }
+
+    function cuOnMarketChange() {
+        var p = preset(), m = market();
+        var price = el('cuPrice');
+        if (price && m) {
+            if (m.default_price != null) price.value = String(m.default_price);
+            else price.value = '';
+        }
+        cuUpdateHints();
+    }
+
+    function cuUpdateHints() {
+        var p = preset(), m = market();
+        var price = el('cuPrice') ? num(el('cuPrice').value) : null;
+        var qty = el('cuQty') ? num(el('cuQty').value) : null;
+        var lbl = el('cuPriceLabel'), ph = el('cuPriceHint');
+        var qh = el('cuQtyHint'), rh = el('cuRateHint'), dh = el('cuDestHint'), mh = el('cuMarketHint');
+
+        if (lbl && m) lbl.textContent = 'Base copper price \u2014 ' + m.unit_label;
+        if (ph) {
+            if (price != null && price > 0 && m) {
+                var perTonne = m.price_basis === 'per_pound' ? price * 2204.6226218 : price;
+                ph.innerHTML = 'Base: <strong>' + money(price, m.price_basis === 'per_pound' ? 3 : 0) + ' ' +
+                    (m.price_basis === 'per_pound' ? 'per lb' : 'per tonne') + '</strong> = <strong>' + money(perTonne, 2) +
+                    ' per tonne</strong>' + (m.price_basis === 'per_pound' ? ' (converted at 2,204.6226218 lb/t).' : '.') +
+                    (m.default_price_label && Math.abs(price - m.default_price) < 0.5
+                        ? ' ' + m.default_price_label + '. ' + (m.default_price_source || '')
+                        : '');
+            } else if (m && m.hint) {
+                ph.innerHTML = m.hint;
+            } else {
+                ph.innerHTML = 'The base price of the copper, in the market\u2019s own unit. This is the duty base (US transaction value), not a retail or scrap price.';
+            }
+        }
+        if (mh) {
+            mh.innerHTML = m
+                ? 'LME quotes in <strong>USD per tonne</strong>, COMEX in <strong>USD per pound</strong> \u2014 the scenario converts so both end up in the same landed-cost figure. ' +
+                  (m.default_price != null ? 'Pre-filled with ' + m.default_price_label + ' \u2014 ' + (m.default_price_confidence || '') : 'No default: enter the COMEX level you are working from.')
+                : 'Preset data unavailable.';
+        }
+        if (qh) {
+            qh.innerHTML = (qty != null && qty > 0)
+                ? '= ' + fmt(qty * 2204.6226218) + ' lb of refined copper' + (p && p.quantity ? ' \u2014 ' + p.quantity.note : '')
+                : (p && p.quantity ? p.quantity.note : 'Quantity of refined copper in the shipment, in metric tonnes.');
+        }
+        if (rh) {
+            rh.innerHTML = p && p.rate
+                ? 'Band <strong>' + fmt(p.rate.min_pct) + '\u2013' + fmt(p.rate.max_pct) + '%</strong>. ' + p.rate.band_note +
+                  ' <a href="#copper-calculator">Status and sources \u2191</a>'
+                : 'Proposed ad valorem duty, in percent.';
+        }
+        if (dh) {
+            var dr = destRow(el('cuDest') ? el('cuDest').value : null);
+            dh.innerHTML = dr ? dr.note : '';
+        }
+    }
+
+    function setFlag(html, cls) {
+        var f = el('cuFlags');
+        if (!f) return;
+        var d = document.createElement('div');
+        d.className = 'flag ' + (cls || 'info');
+        d.innerHTML = html;
+        f.innerHTML = '';
+        f.appendChild(d);
+    }
+
+    function compute() {
+        var t = data();
+        if (!t || typeof t.copperLandedCost !== 'function') return { error: 'nodata' };
+        if (!preset() || !preset().markets || !preset().markets.length) return { error: 'nodata' };
+        var price = el('cuPrice') ? num(el('cuPrice').value) : null;
+        if (price == null || price <= 0) return { error: 'price' };
+        var qty = el('cuQty') ? num(el('cuQty').value) : null;
+        if (qty == null || qty <= 0) return { error: 'qty' };
+        var m = market();
+        var r = t.copperLandedCost({
+            market: m ? m.value : 'lme',
+            price: price,
+            quantityT: qty,
+            ratePct: el('cuRate') ? num(el('cuRate').value) : null,
+            destination: el('cuDest') ? el('cuDest').value : 'us'
+        });
+        if (!r) return { error: 'compute' };
+        return { result: r, market: m };
+    }
+
+    function buildQuery() {
+        var m = market();
+        var parts = ['mode=copper'];
+        parts.push('market=' + encodeURIComponent(m ? m.value : 'lme'));
+        var price = el('cuPrice') ? num(el('cuPrice').value) : null;
+        if (price != null && price > 0) parts.push('price=' + price);
+        var qty = el('cuQty') ? num(el('cuQty').value) : null;
+        if (qty != null && qty > 0) parts.push('qty=' + qty);
+        var rate = el('cuRate') ? num(el('cuRate').value) : null;
+        if (rate != null) parts.push('rate=' + rate);
+        var dest = el('cuDest') ? el('cuDest').value : '';
+        if (dest) parts.push('dest=' + encodeURIComponent(dest));
+        return '?' + parts.join('&') + '#copper-calculator';
+    }
+
+    function syncCuUrl(withHistory) {
+        var q = buildQuery();
+        var pl = el('cuPermalink');
+        if (pl) pl.value = SITE + q;
+        if (withHistory) {
+            try {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, '', q);
+                }
+            } catch (e) {}
+        }
+    }
+
+    function runCopper() {
+        var results = el('cuResults');
+        if (results) results.className = 'results show';
+        cuEnsure();
+        var c = compute();
+        if (c.error) {
+            if (c.error === 'nodata') {
+                setFlag('<strong>Scenario data unavailable</strong>The refined-copper preset data file did not load, so no scenario can be modelled. Nothing is collectible on refined copper in any case.', 'warn');
+            } else if (c.error === 'price') {
+                setFlag('<strong>Enter a base price</strong>Add the copper price in ' + (market() ? market().unit_label : 'the market\u2019s unit') + ' to model the scenario.', 'warn');
+            } else if (c.error === 'qty') {
+                setFlag('<strong>Enter a quantity</strong>Add the shipment quantity in metric tonnes to model the scenario.', 'warn');
+            } else {
+                setFlag('<strong>Could not compute</strong>Check the market, price and quantity.', 'warn');
+            }
+            var clear = ['cuOutBase', 'cuOutRate', 'cuOutDuty', 'cuOutLanded', 'cuOutDelta'];
+            for (var i = 0; i < clear.length; i++) { if (el(clear[i])) el(clear[i]).textContent = '\u2014'; }
+            if (el('cuOutcome')) el('cuOutcome').innerHTML = '';
+            if (el('cuRateWrap')) el('cuRateWrap').innerHTML = '';
+            if (el('cuOutHeadline')) el('cuOutHeadline').textContent = '\u2014';
+            return;
+        }
+
+        var r = c.result, m = c.market;
+        var unitT = (m && m.price_basis === 'per_pound') ? ' (converted from ' + money(r.priceInput, 3) + '/lb)' : '';
+
+        if (el('cuOutBase')) el('cuOutBase').textContent = money(r.dutyBaseUsd) + '  (' + fmt(r.quantityT) + ' t \u00d7 ' + money(r.pricePerTonne) + '/t' + unitT + ')';
+        if (el('cuOutRate')) el('cuOutRate').textContent = fmt(r.ratePct, r.ratePct % 1 === 0 ? 0 : 1) + '% \u2014 PENDING, not in effect' + (r.rateIsReference ? ' (reference case)' : '');
+        if (el('cuOutDuty')) el('cuOutDuty').textContent = money(r.dutyUsd) + '  (' + fmt(r.ratePct, r.ratePct % 1 === 0 ? 0 : 1) + '% of ' + money(r.dutyBaseUsd) + ')';
+        if (el('cuOutLanded')) el('cuOutLanded').textContent = money(r.landedUsd);
+        if (el('cuOutDelta')) {
+            el('cuOutDelta').textContent = r.ratePct === 0
+                ? '$0 \u2014 no duty (what applies today)'
+                : '+' + money(r.deltaUsd) + '  (+' + pct1(r.deltaPct) + ' vs the no-tariff base of ' + money(r.noTariffLandedUsd) + ')';
+        }
+
+        var outcome = el('cuOutcome');
+        if (outcome) {
+            outcome.innerHTML = '<div class="cu-outcome">'
+                + '<div class="box"><div class="k">No tariff \u2014 today</div><div class="v">' + money(r.noTariffLandedUsd) + '</div>'
+                + '<div class="hint">' + fmt(r.quantityT) + ' t at ' + money(r.pricePerTonne) + '/t, no duty</div></div>'
+                + '<div class="box pending"><div class="k">If ' + fmt(r.ratePct, r.ratePct % 1 === 0 ? 0 : 1) + '% lands (pending)</div><div class="v">' + money(r.landedUsd) + '</div>'
+                + '<div class="hint">+ ' + money(r.dutyUsd) + ' duty \u2014 not collectible today</div></div>'
+                + '<div class="box"><div class="k">Duty per tonne of copper</div><div class="v">' + money(r.dutyPerTonne, 2) + '</div>'
+                + '<div class="hint">' + money(r.dutyPerLb, 4) + ' per lb at ' + fmt(r.ratePct, r.ratePct % 1 === 0 ? 0 : 1) + '%</div></div>'
+                + '</div>';
+        }
+
+        if (el('cuOutHeadline')) {
+            el('cuOutHeadline').innerHTML = '<strong>Scenario:</strong> ' + r.headline +
+                ' <span style="color:#b91c1c;font-weight:700;">PENDING \u2014 not in effect; no refined-copper duty is currently collectible.</span>';
+        }
+
+        var flags = [];
+        flags.push('<strong>\u26D4 PENDING \u2014 NOT IN EFFECT (as of ' + (r.asOf || '2026-09-11') + ').</strong>' +
+            'No refined-copper tariff exists: no proclamation, no Federal Register notice and no Commerce determination creates one, so ' +
+            '<strong>no duty on refined copper is currently collectible at the border</strong> \u2014 cathode, anode or concentrate. ' +
+            'This output is a scenario, <em>not</em> a priced-in measurement and <em>not</em> something you can quote, bill or invoice against. ' +
+            '<a href="#copper-calculator">Status, basis and sources \u2191</a>');
+        flags.push('<strong>Why the state is pending</strong>' + (preset() && preset().basis ? preset().basis : '') +
+            ' What is in force is the pre-existing Section 232 regime on semi-finished and derivative copper articles; the open question is whether refined cathode joins it.');
+        if (m && m.default_price != null && Math.abs(r.priceInput - m.default_price) < 0.5) {
+            flags.push('<strong>Base price pre-filled: ' + m.default_price_label + '</strong>' + (m.default_price_source || '') + ' Confidence: ' + (m.default_price_confidence || 'n/a') + '.');
+        } else if (m && m.price_basis === 'per_pound') {
+            flags.push('<strong>COMEX: your number</strong>Only the intraday move is sourced (October futures -4%+ to about $6.585/lb on Sept 10, 2026); no COMEX settlement is reproduced here, so this scenario uses the level you entered.');
+        }
+        if (r.rateIsReference) {
+            flags.push('<strong>Reference case: 15%</strong>The reported (recommended, <em>not adopted</em>) schedule is 15% from January 1, 2027 rising to 30% in 2028. ' + ((preset() && preset().rate) ? preset().rate.basis : ''));
+        }
+        if (r.clamped && r.clampNote) {
+            flags.push('<strong>Rate clamped</strong>' + r.clampNote + ' ' + (r.rateBandNote || ''));
+        }
+        if (r.ratePct === 0) {
+            flags.push('<strong>0% is today\u2019s position</strong>This row is the only one that describes what is actually in force on refined copper: no duty. Nothing is collectible, and no cash is owed at the border for the duty modelled in the other rows.');
+        }
+        if (r.destinationNote) {
+            flags.push('<strong>Destination: ' + (r.destinationLabel || r.destination) + '</strong>' + r.destinationNote);
+        }
+        var fbox = el('cuFlags');
+        if (fbox) {
+            var fhtml = '';
+            for (var fi = 0; fi < flags.length; fi++) {
+                fhtml += '<div class="flag ' + (fi === 0 ? 'warn' : 'info') + '">' + flags[fi] + '</div>';
+            }
+            fbox.innerHTML = fhtml;
+        }
+
+        var wrap = el('cuRateWrap');
+        if (wrap) {
+            var rows = '';
+            (r.scenarioTable || []).forEach(function (row) {
+                var selected = Math.abs(row.pct - r.ratePct) < 0.001;
+                rows += '<tr' + (selected ? ' style="background:#eff6ff;"' : '') + '>'
+                    + '<td><strong>' + fmt(row.pct, row.pct % 1 === 0 ? 0 : 1) + '%</strong>' +
+                    (selected ? ' \u2190 your scenario' : '') + (row.note ? '<br><span style="color:#888;font-size:0.78rem;">' + row.label + '</span>' : '') + '</td>'
+                    + '<td>' + money(row.dutyUsd) + '</td>'
+                    + '<td>' + money(row.landedUsd) + '</td>'
+                    + '<td>' + (row.pct === 0 ? '\u2014' : '+' + money(row.deltaUsd) + ' (+' + pct1(row.deltaPct) + ')') + '</td>'
+                    + '<td>' + money(row.dutyPerTonne, 2) + '/t</td></tr>';
+            });
+            wrap.innerHTML = '<h4 style="margin:16px 0 2px;">If the duty lands at X% \u2014 landed cost by rate</h4>'
+                + '<table class="trq-table"><thead><tr><th>Rate (scenario)</th><th>Duty</th><th>Landed cost</th><th>Delta vs no tariff</th><th>Duty per tonne</th></tr></thead><tbody>'
+                + rows + '</tbody></table>'
+                + '<p class="hint">Every rate in this table is <strong>PENDING \u2014 none of them is in effect</strong>. The 0% row is what applies today on refined copper. Base: ' + fmt(r.quantityT) + ' t at ' + money(r.pricePerTonne) + '/t = ' + money(r.dutyBaseUsd) + ' of transaction value. ' + (r.valueBasisNote || '') + '</p>';
+        }
+
+        cuUpdateHints();
+        syncCuUrl(true);
+    }
+
+    function applyCopperVisibility(on) {
+        var cu = el('copperPanel'), btn = el('modeBtnCu');
+        if (cu) cu.style.display = on ? 'block' : 'none';
+        if (btn) { btn.className = on ? 'calc-mode active' : 'calc-mode'; setAttr(btn, 'aria-selected', on ? 'true' : 'false'); }
+    }
+
+    // Wrap the TRQ block's mode switcher (loaded above this script).
+    var origSetCalcMode = typeof window.setCalcMode === 'function' ? window.setCalcMode : null;
+
+    function setCalcMode(mode) {
+        if (String(mode) === 'copper') {
+            var av = el('avModeWrap'), trq = el('trqPanel');
+            if (av) av.style.display = 'none';
+            if (trq) trq.style.display = 'none';
+            var bAv = el('modeBtnAv'), bTrq = el('modeBtnTrq');
+            if (bAv) { bAv.className = 'calc-mode'; setAttr(bAv, 'aria-selected', 'false'); }
+            if (bTrq) { bTrq.className = 'calc-mode'; setAttr(bTrq, 'aria-selected', 'false'); }
+            applyCopperVisibility(true);
+            cuEnsure();
+            var p = preset(), filled = false;
+            if (el('cuQty') && !el('cuQty').value) { el('cuQty').value = String(p && p.quantity ? p.quantity.default_t : 20); filled = true; }
+            if (el('cuRate') && !el('cuRate').value) { el('cuRate').value = String(p && p.rate ? p.rate.default_pct : 10); filled = true; }
+            if (el('cuPrice') && !el('cuPrice').value) {
+                var m = market();
+                if (m && m.default_price != null) el('cuPrice').value = String(m.default_price);
+                else if (el('cuPrice').type === 'number') el('cuPrice').value = '';
+                filled = true;
+            }
+            cuUpdateHints();
+            syncCuUrl(false);
+            if (filled) runCopper();
+            return true;
+        }
+        var out = origSetCalcMode ? origSetCalcMode(mode) : null;
+        applyCopperVisibility(false);
+        return out;
+    }
+
+    window.setCalcMode = setCalcMode;
+    window.runCopper = runCopper;
+    window.cuOnMarketChange = cuOnMarketChange;
+    window.cuUpdateHints = cuUpdateHints;
+    window.cuEnsure = cuEnsure;
+
+    try {
+        cuEnsure();
+        var params = new URLSearchParams(window.location.search);
+        var mode = params.get('mode'), product = params.get('product');
+        if (mode === 'copper' || product === 'copper') {
+            setCalcMode('copper');
+            var mk = params.get('market');
+            var mSel = el('cuMarket');
+            if (mk && mSel && optionExists(mSel, mk)) mSel.value = mk;
+            var pr = params.get('price');
+            if (pr && el('cuPrice')) el('cuPrice').value = pr;
+            var q = params.get('qty');
+            if (q && el('cuQty')) el('cuQty').value = q;
+            var rt = params.get('rate');
+            if (rt && el('cuRate')) el('cuRate').value = rt;
+            var d = params.get('dest');
+            var dSel = el('cuDest');
+            if (d && dSel && optionExists(dSel, d)) dSel.value = d;
+            cuUpdateHints();
+            runCopper();
+            if (typeof setTimeout === 'function') {
+                setTimeout(function () {
+                    var a = el('copper-calculator');
+                    if (a && a.scrollIntoView) a.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 80);
+            }
         }
     } catch (e) {}
 })();
