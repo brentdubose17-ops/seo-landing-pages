@@ -2,6 +2,33 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-11 — Cross-link /tariff-refund-status-2026/ and /tariff-dividend-5000-explained/ from the hub (kanban t_d182ee81)
+
+- **Internal-link wiring only — one paragraph added, no copy, rate, date or template change.** Both pages
+  published earlier today (`t_bfbab407`, `t_e8d0a53b`) had **zero** inbound internal links: a full-site scan
+  (`tariff-refund-status-2026` and `tariff-dividend-5000-explained` occurrences across all 37 in-scope pages)
+  found self-references only — canonical / `og:url` / Article JSON-LD on the pages themselves. They were
+  reachable from `sitemap.xml` and `llms.txt` but orphaned for readers and crawlers.
+- **Where the links went.** The site has **no** standalone tariff-revenue page (checked in the tree and in the
+  live `sitemap.xml`: 38 locs, no revenue slug), so "the tariff-revenue / Section 122 hub content" resolves to
+  the hub that carries it — `index.html`, in the `<section class="info">` block
+  *What Changed: Section 301 Tariffs Now Cover 60 Countries*, whose only subject is the **Section 122** tariff
+  and its Section 301 replacement. A single new `<p>` was appended directly under that paragraph:
+  - `<a href="https://tariffcalculator2026.com/tariff-refund-status-2026/">IEEPA tariff refund status log (what has been paid, what is still claimable, how to file)</a>`
+  - `<a href="https://tariffcalculator2026.com/tariff-dividend-5000-explained/">the $5,000 "tariff dividend" explained: the funding arithmetic</a>`
+  Anchor text names *refund status* vs *dividend / not law*, and the paragraph closes by stating the difference
+  outright: a refund is duty money already paid coming back; the "dividend" would be a new payment that does
+  not exist yet. Trailing-slash URL form on both (bare 200; the flat form 308s).
+- **No figures added to the hub.** The inserted paragraph carries no dollar amount or date of its own — every
+  number stays on the two pages, each re-derived from the treasury primaries there — so the hub introduces no
+  new unverified claim.
+- **Single inbound link by design.** `grep -c` = **1** for each slug on `index.html` and **0** on every other
+  page, so both pages are reachable only from the hub (plus the site's own nav) and still carry **0** links to
+  each other in either direction (re-probed on the worktree and on live bytes).
+- **Verified:** local gate `site_consistency.py index.html --domain tariffcalculator2026.com` → 1 checked /
+  0 errors / 0 warnings (same verdict as the pre-edit baseline); diff vs the pre-edit copy is exactly one added
+  line (+878 B, sha256 `55817234…` → `295aae8d…`).
+
 ## 2026-09-11 — Publish /tariff-refund-status-2026/ (kanban t_bfbab407)
 
 - **New page `tariff-refund-status-2026/index.html`** (38,009 B) — the dated IEEPA tariff-refund status
