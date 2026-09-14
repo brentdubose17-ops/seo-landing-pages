@@ -2,6 +2,82 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-14 — Section 338 Canada: ban / snap-back / exclusion calculator mode wired into index.html (kanban t_46ab8765)
+
+- **Mode added:** `s338` — a **fourth tab** on the calculator: programme (Chapter 99
+  9903.03.12 / .13 / .14), customs value, entry before/after 2026-09-29, an annex-exclusion
+  switch, and the reader's **own** weighting for the ban being invalidated.
+  - Data + arithmetic: `presets/canada-338-ban-scenario.js` (UMD; ships `compute()`),
+    already committed in `cb0f020`, surfaced through `tariff-data.js` as `T.S338_BAN` /
+    `T.s338Scenario()`. The `S338_BAN` resolver sits immediately after `COPPER_PENDING`, in
+    the same shape (validate `preset_key`, fall back to a no-values object rather than wrong
+    numbers). **No existing mode's logic changed.**
+  - A prohibited entry reports **no duty** — the cell prints `— not collectible` — and the
+    stranded value instead. The snap-back restores the **50%** duty under Proclamation 11061
+    § 9(b); duty-free entry is not an outcome of the measure. `in_effect` is **true**, the
+    panel says **IN FORCE** with both dates (bans start 2026-09-29), and the copper mode's
+    "PENDING — not in effect" framing is deliberately **not** reused.
+  - Opens from the fourth tab, from the deep link
+    `?mode=s338&programme=…&value=…&entry=…&excl=…&pct=…&dest=…#section-338-calculator`, or
+    from the short form `?product=s338`.
+- **Four additions to `index.html` — 7 hunks in total, nothing else touched.** All four are
+  extracted **verbatim from the spec's fenced blocks** by a script that prints every anchor
+  count and aborts before writing unless each is exactly 1, so no payload was retyped:
+  1. `<script src="presets/canada-338-ban-scenario.js"></script>` immediately **before**
+     `tariff-data.js` (the load order is asserted by test, not assumed);
+  2. the `#modeBtnS338` tab, immediately after `#modeBtnCu`;
+  3. `#s338Panel` — with the `<a id="section-338-calculator">` deep-link anchor — immediately
+     after `#copperPanel`, i.e. as a **sibling** of the other three panels inside
+     `div#calculator`, never nested in one;
+  4. the wiring block as the **LAST script in the document**, stamped
+     `block marker: s338-wiring-t_46ab8765`. It **wraps** the copper block's `setCalcMode`
+     (and hides the 338 panel on the way through), so the last-script position is
+     load-bearing and a harness check pins it.
+- **Dates.** `index.html`'s JSON-LD `dateModified` and its visible "Updated" byline move
+  together **2026-09-11 → 2026-09-14** (today = the ship date). The dates gate requires the
+  two to agree, and the copper block's own `r.asOf || '2026-09-11'` fallback is deliberately
+  **untouched** — that is the copper preset's as-of date, not this page's.
+- **Tests.** `tests/s338-data.test.js` **14/14**. `tests/s338-live-harness.js` — **new** —
+  **28/28**: it extracts the wiring block out of the **shipped** `index.html` (not the spec),
+  requires the **shipped** `tariff-data.js` → preset, installs the real `<option>` values
+  parsed from the shipped `#s338Panel`, and drives the card's deep link plus a
+  **180-render matrix** asserting the mode's one hard rule — no duty figure on a prohibited
+  entry, in any programme, weighting or value. All 8 DOM harnesses: **293/293, 0 failures**.
+  Regression on the existing modes: `tariff-data.test.js` **127/127**,
+  `copper-data.test.js` **30/30** — both unchanged.
+- **Gates.** `site_consistency.py index.html --expect-date 2026-09-14` → 1 checked,
+  **0 errors, 0 warnings**. Every inline `<script>` block on the page passes `node --check`
+  (6 JS blocks; JSON-LD skipped as data).
+- **Deployed:** deployment id `d40836a1-8d20-42d4-b443-1a2262f06e40`, production, branch
+  `main`, from git HEAD `54438b9`, url `https://d40836a1.tariff-calculator-2026.pages.dev`.
+- **Live verification — the deployed bytes, not the worktree.** Raw (un-canonicalised)
+  sha256 over HTTPS, which on this zone is byte-identical to the artifact:
+  `index.html` **`8af9d04d9fc5c382…`** (244,270 B) and
+  `presets/canada-338-ban-scenario.js` **`f64adb40c07b3af3…`** (17,484 B) both match the
+  worktree exactly; `tariff-data.js` `4c548c2fa7786c51…` (113,931 B) likewise.
+  - The card's deep link, driven in real Chromium against production: fourth tab `active`,
+    `#s338Panel` visible, the other three panels hidden, **PROHIBITED**, duty
+    **"— not collectible"** with no digit in the cell, stranded **$250,000**, snap-back
+    **$125,000 (if the ban is invalidated)**, weighted **$31,250 at 25%**. Switching `entry`
+    to *before* → **$125,000** duty / **$375,000** landed. Setting *excluded* → **$0** duty,
+    EXCLUDED. A **real tab click** (no deep link at all) reproduces all of it, and
+    `?product=s338` opens the mode too.
+  - **The other three modes still calculate live**, driven through their own buttons:
+    standard duty 55.1% / **$55,100.00** on a $100k Canada→Food entry, copper 10% of
+    $284,600 = **$28,460** (still labelled PENDING, not in effect), TRQ 50% above quota =
+    **$2,233.18**. **56/56 live checks, 0 JS errors** on every flow.
+  - **Mobile: 0 overflow at 320 / 360 / 390 / 414 px**, on both the deep link and the plain
+    load (`tests/mobile-overflow-tariff.py` **12/12**); the new fourth tab is 240–334 px wide
+    and its right edge lands inside the viewport at every width.
+- **Note for the integration card (`t_91970bb1`).** The publisher stages and uploads the
+  **whole site tree** from git HEAD, so this deploy also published
+  `/section-338-canada-import-ban-usmca-legal-challenge` (35,450 B, sha256 `37dce8d5…`,
+  byte-identical to the verified draft). It is **not yet** in `sitemap.xml` or `llms.txt` and
+  has **no reverse link** from the hub, and its own `datePublished` / `dateModified` /
+  visible bylines still read **2026-09-15**. Those three stamps were deliberately left alone
+  here: the spec pins that page's gate to `--expect-date 2026-09-15`, so re-stamping is the
+  integration card's call, along with the sitemap and reverse-link work.
+
 ## 2026-09-11 — Cross-link /tariff-refund-status-2026/ and /tariff-dividend-5000-explained/ from the hub (kanban t_d182ee81)
 
 - **Internal-link wiring only — one paragraph added, no copy, rate, date or template change.** Both pages
