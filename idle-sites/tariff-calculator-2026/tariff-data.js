@@ -873,6 +873,60 @@
     };
   })();
 
+  /*
+   * Section 338 Canada — ban / snap-back / exclusion scenario (IN FORCE).
+   * The 50% duty has been in force since 2026-08-22; the import bans on the
+   * goods named in Proclamations 11061/11062/11063 take effect 2026-09-29.
+   * Unlike COPPER_PENDING this measure is NOT hypothetical: in_effect is true.
+   * What is conditional is one of three outcomes (before-ban entry / prohibited
+   * entry / snap-back on invalidation). Never render a duty on a prohibited
+   * entry — see the preset's `compute()`.
+   * DATA + ARITHMETIC: presets/canada-338-ban-scenario.js
+   * (window.S338_BAN_PRESET in the browser, require() in Node).
+   */
+  var S338_BAN = (function () {
+    var preset = null;
+    if (typeof window !== 'undefined' && window.S338_BAN_PRESET) {
+      preset = window.S338_BAN_PRESET;
+    } else if (typeof require === 'function') {
+      try { preset = require('./presets/canada-338-ban-scenario.js'); } catch (e) { preset = null; }
+    }
+    if (preset && preset.preset_key === 'canada-338-ban-scenario' && typeof preset.compute === 'function') {
+      return preset;
+    }
+    // Safe fallback: identity only, no programmes and no rates, so the UI
+    // renders "data file not loaded" instead of a plausible wrong number.
+    return {
+      preset_key: 'canada-338-ban-scenario',
+      preset_label: 'Section 338 Canada \u2014 ban, snap-back and exclusion scenario',
+      status: 'IN FORCE \u2014 50% duty from 2026-08-22; import bans from 2026-09-29',
+      status_short: 'Data unavailable',
+      in_effect: true,
+      as_of: null,
+      disclaimer: 'The Section 338 data file did not load, so no scenario can be modelled.',
+      disclaimer_short: 'IN FORCE \u2014 bans from 2026-09-29.',
+      duty_pct: 50,
+      ban_effective: '2026-09-29T00:01:00-04:00',
+      scope_effective: '2026-09-15T00:01:00-04:00',
+      itc_comments_due: '2026-11-08T17:15:00-04:00',
+      exclusion_headings: [],
+      programmes: [],
+      default_programme: null,
+      destinations: [],
+      default_destination: 'us',
+      weight_band: { min_pct: 0, max_pct: 100, step_pct: 5, default_pct: 0 },
+      scenario_reference: null,
+      sources: [],
+      verified: null,
+      compute: null
+    };
+  })();
+
+  /** Thin wrapper so callers use the T.* surface, as every other mode does. */
+  function s338Scenario(opts) {
+    return S338_BAN && typeof S338_BAN.compute === 'function' ? S338_BAN.compute(opts) : null;
+  }
+
   // Thousands separators without depending on ICU/locale data.
   function cuFmt(n, dp) {
     if (n == null || !isFinite(n)) return '\u2014';
@@ -1838,6 +1892,8 @@
     trqCannedVegSurtax: trqCannedVegSurtax,
     COPPER_PENDING: COPPER_PENDING,
     copperLandedCost: copperLandedCost,
+    S338_BAN: S338_BAN,
+    s338Scenario: s338Scenario,
     BRAZIL_301: BRAZIL_301,
     TRUCKING_IMPACT: TRUCKING_IMPACT,
     REJECTED_DEAL_PRESET: REJECTED_DEAL_PRESET,
