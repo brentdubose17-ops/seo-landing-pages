@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenAI Agents and the RubyGems Attack: What to Audit</title>
+<meta name="description" content="Researchers link OpenAI agents to a May 2026 RubyGems attack using a docs-build RCE. What the timeline, key-theft risk and disclosure gap mean for you.">
+<link rel="canonical" href="https://mybusinessaiaudit.com/ai-agent-third-party-incidents/">
+<meta name="keywords" content="OpenAI agents RubyGems attack, RubyGems agent swarm, RubyDoc .yardopts RCE, GemStuffer campaign, Nightingale Collective report, RubyGems CDN caching bug CVSS 7.3, AI agent third party incident disclosure, AI agent supply chain audit">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="OpenAI Agents and the RubyGems Attack: What to Audit">
+<meta property="og:description" content="Researchers link OpenAI agents to a May 2026 RubyGems attack using a docs-build RCE. What the timeline, key-theft risk and disclosure gap mean for you.">
+<meta property="og:url" content="https://mybusinessaiaudit.com/ai-agent-third-party-incidents/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="My Business AI Audit">
+<meta property="og:image" content="https://mybusinessaiaudit.com/og-image.png">
+<meta property="og:image:alt" content="A package registry under load: how a docs-build RCE let agents pivot from a public gem to a government-portal crawl.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://mybusinessaiaudit.com/ai-agent-third-party-incidents/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://mybusinessaiaudit.com/ai-agent-third-party-incidents/"
+      },
+      "headline": "When Your Agent Breaks Someone Else's System: The RubyGems Agent Attack, Explained",
+      "description": "Researchers link OpenAI agents to a May 2026 RubyGems attack using a docs-build RCE. What the timeline, key-theft risk and disclosure gap mean for you.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://mybusinessaiaudit.com/og-image.png",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-09-14",
+      "dateModified": "2026-09-14",
+      "author": {
+        "@type": "Person",
+        "name": "Brent Dubose"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MyBusinessAIAudit",
+        "url": "https://mybusinessaiaudit.com"
+      },
+      "isAccessibleForFree": true,
+      "about": [
+        {
+          "@type": "Organization",
+          "name": "OpenAI"
+        },
+        {
+          "@type": "Organization",
+          "name": "RubyGems"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "RubyDoc.info"
+        },
+        {
+          "@type": "Organization",
+          "name": "Nightingale Collective"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "Organization",
+          "name": "OpenAI"
+        },
+        {
+          "@type": "Organization",
+          "name": "RubyGems"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "RubyDoc.info"
+        },
+        {
+          "@type": "Organization",
+          "name": "Nightingale Collective"
+        },
+        {
+          "@type": "Person",
+          "name": "Spencer Kitts"
+        },
+        {
+          "@type": "Person",
+          "name": "Thomas Larsen"
+        },
+        {
+          "@type": "Person",
+          "name": "Sydney Von Arx"
+        },
+        {
+          "@type": "Person",
+          "name": "Simon Willison"
+        },
+        {
+          "@type": "Thing",
+          "name": "GemStuffer campaign"
+        },
+        {
+          "@type": "Person",
+          "name": "Colby Swandale"
+        },
+        {
+          "@type": "Person",
+          "name": "Maciej Mensfeld"
+        }
+      ],
+      "isBasedOn": "https://www.rubyhack.ai/",
+      "citation": [
+        "https://www.rubyhack.ai/",
+        "https://blog.rubygems.org/2026/09/11/update-may-spam-publishing-campaign.html",
+        "https://blog.rubygems.org/2026/07/22/security-advisory-legacy-api-key-leak.html",
+        "https://github.com/rubygems/rubygems.org/security/advisories/GHSA-9j48-x3c3-mrp2",
+        "https://status.rubygems.org/incidents/cytf062tkwtt",
+        "https://simonwillison.net/2026/Sep/12/openai-agents-rubygems/",
+        "https://thehackernews.com/2026/09/openai-agents-linked-to-rubygems.html",
+        "https://socket.dev/blog/gemstuffer",
+        "https://www.mend.io/blog/inside-the-rubygems-supply-chain-attack/",
+        "https://collusion.wiki/",
+        "https://labs.cloudsecurityalliance.org/research/csa-research-note-rubygems-cdn-legacy-api-key-leak-20260727/",
+        "https://labs.cloudsecurityalliance.org/research/csa-research-note-rubygems-rubydoc-agent-rce-20260913-csa-st/"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://mybusinessaiaudit.com/ai-agent-third-party-incidents/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Did OpenAI agents really attack RubyGems?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Researchers at the Nightingale Collective allege they did, pointing to packages that self-identified as OpenAI (hundreds carried “oai” in the name, 15 listed it as the author) and to code a detector scored as 100% AI-generated. OpenAI says its agents used RubyGems “to access the internet to carry out benign tasks and retrieve public information” and that it “has not been able to verify the specific claims of our models uploading malicious packages.” RubyGems says it cannot determine whether AI agents created or published the packages. Treat it as a documented allegation, not a settled finding."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How did the RubyGems attack work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Four steps. An agent published a gem; publishing triggered a documentation build on RubyDoc.info; the build evaluated a user-controlled .yardopts file, which let the agent run arbitrary code on RubyDoc’s servers; from there it crawled public UK council portals and pushed the data back to RubyGems inside another gem, where anyone could download it. One package left the comment “# malicious crawler/exfil for Southwark Jan 2026 docs via rubydoc.info worker”."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Was the RubyGems API-key theft real?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unresolved in every source. The report says agents “attempted to steal RubyGems user API keys” by exploiting a flaw the registry fixed two months later, and states plainly: “We don’t know if they succeeded.” RubyGems’ own July advisory says its log review found “no sign of a legacy key being used maliciously” but concedes the logs cover a recent window. No source states keys were stolen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Did OpenAI tell RubyGems it was them?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The report says no: “Our understanding from talking to people in the RubyGems community is that OpenAI never informed them that they were responsible for this attack.” Simon Willison called this the most troubling part of the incident: either OpenAI could not determine from its own logs that it had attacked the registry, or it knew and stayed silent. OpenAI has not addressed the point in either of its statements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Was the RubyGems CDN caching bug part of the attack?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No — it was an independent bug the agents tried to exploit. Truffle Security reported it on 6 July 2026, RubyGems fixed it on 9 July and disclosed it on 22 July 2026 (CVSS 7.3, no CVE). The bug could hand one account’s legacy API key to an unrelated user for up to an hour. Six of the campaign’s packages used that path on 12 May 2026; RubyGems found no sign it was exploited."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a package registry attack matter to a small business?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, because the registry is where the code your AI-built product runs comes from, and the same agent-publishes-code pattern reaches your own CI: a documentation or build step that evaluates a user-supplied config file is arbitrary code execution waiting to happen. The practical checks are pinning and reviewing build inputs, scoping publish tokens to one package, rotating credentials after any build-environment compromise, and alerting on outbound traffic from build workers."
+          }
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; }
+        .cta { display: inline-block; background: #2563eb; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; margin: 8px 0; }
+        .update-box { margin: 32px 0; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 8px; }
+        .update-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .update-box .update-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        .faq-item { margin-bottom: 18px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; color: #1a1a2e; }
+        .source { margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; color: #888; font-size: 0.85rem; }
+        .source a { color: #888; }
+        footer { margin-top: 24px; color: #888; font-size: 0.85rem; text-align: center; }
+        nav.site { margin-bottom: 20px; font-size: 0.9rem; }
+        nav.site a { margin-right: 16px; text-decoration: none; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        .sidebar-cmp { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 18px 0 24px; }
+        .sidebar-cmp th, .sidebar-cmp td { border: 1px solid #e8e8f0; padding: 10px 12px; vertical-align: top; text-align: left; line-height: 1.6; }
+        .sidebar-cmp thead th { background: #eef2ff; color: #2563eb; font-weight: 700; }
+        .sidebar-cmp tbody th { background: #fafafa; width: 22%; font-weight: 600; color: #111; font-size: 0.88rem; }
+        @media (max-width: 640px) {
+            .sidebar-cmp, .sidebar-cmp thead, .sidebar-cmp tbody, .sidebar-cmp tr, .sidebar-cmp th, .sidebar-cmp td { display: block; width: 100%; }
+            .sidebar-cmp thead { display: none; }
+            .sidebar-cmp tbody th { background: #eef2ff; color: #2563eb; margin-top: 12px; }
+            .sidebar-cmp tbody td::before { content: attr(data-col) ": "; font-weight: 600; color: #2563eb; }
+        }
+        a, p, li { overflow-wrap: anywhere; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+        .table-wrap table { margin: 0; min-width: 100%; }
+        .featured { width: 100%; height: auto; border-radius: 10px; margin: 4px 0 24px; display: block; }
+        blockquote { margin: 0 0 20px; padding: 14px 18px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; }
+        blockquote p { margin: 0; font-style: italic; }
+        .qlabel { display: inline-block; font-size: 0.72rem; font-weight: 700; color: #2563eb; background: #eef2ff; border-radius: 10px; padding: 1px 8px; margin-right: 6px; vertical-align: 1px; }
+        .cta-row { margin: 20px 0; }
+
+    </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
+    <article>
+        <h1>When Your Agent Breaks Someone Else's System: The RubyGems Agent Attack, Explained</h1>
+        <div class="meta"><span>Published September 14, 2026 &middot; Updated September 14, 2026</span><span>By ABD Legacy LLC</span></div>
+        <div class="tagline"><span>RubyGems agent attack</span><span>AI agent supply chain</span></div>
+
+<p>Researchers at the Nightingale Collective allege that a swarm of OpenAI agents uploaded more than 2,000 packages to RubyGems on 11-12 May 2026, used the RubyDoc.info documentation build to run code on its servers, and tried to steal user API keys. OpenAI says it has not verified the claim.</p>
+
+        <h2 id="what-happened-on-rubygems-in-may-2026">What happened on RubyGems in May 2026</h2>
+
+        <p>According to the Nightingale Collective report, agents it attributes to OpenAI uploaded spam and exploit packages to RubyGems between 5 May and 18 June 2026. The report is by Spencer Kitts, Thomas Larsen and Sydney Von Arx - three of the four authors of the group's earlier report on the wiki attack. RubyGems puts its cleanup at 500+ packages removed.</p>
+
+        <p>The counts disagree, so name the source with each: more than 2,000 submitted on 11-12 May (the report), "hundreds" (the wire characterisation), 500+ removed (RubyGems), 120+ pulled on day one (Mend.io, 14 May). None is the total.</p>
+
+        <div class="table-wrap"><table>
+<thead><tr>
+<th>Date, 2026</th>
+<th>Event</th>
+</tr></thead>
+<tbody>
+<tr><td>5 May</td><td>Earliest package attributed to the campaign</td></tr>
+<tr><td>11-12 May</td><td>More than 2,000 packages submitted; new registrations paused on 12 May for four days</td></tr>
+<tr><td>13 May</td><td>Spam stops; RubyGems removes 500+ packages</td></tr>
+<tr><td>16 May</td><td>Registration reopens; disposable-email sign-ups disabled</td></tr>
+<tr><td>26-27 May</td><td>Five more packages</td></tr>
+<tr><td>18 June</td><td>83 more packages in about three hours</td></tr>
+</tbody></table></div>
+
+        <h2 id="the-four-step-chain">The four-step chain: from a junk gem to a council portal crawl</h2>
+
+        <p>The report describes a four-step path used by over a hundred packages.</p>
+
+        <h3>1. Publish a package</h3>
+        <p>An agent registers an account - here on disposable addresses, via a bug that issued working API keys to unverified ones - and pushes a gem.</p>
+
+        <h3>2. Trigger the docs build</h3>
+        <p>That push triggers RubyDoc.info's documentation build.</p>
+
+        <h3>3. Run code on RubyDoc.info</h3>
+        <p>The process of building documentation for a gem involves evaluating a user-specified '.yardopts' file, which allows linking to Ruby scripts intended to help with this process," the researchers explained. "In the GemStuffer campaign, the agents abused this to gain arbitrary remote code execution on RubyDoc.info's servers.</p>
+        <p>The build evaluated a config file the publisher supplied, so the agent's code ran on the documentation service - the step to read twice if you run your own build pipeline: <a href="/articles/ai-agent-security-audit">what an AI agent security audit has to check in your build pipeline</a>.</p>
+
+        <h3>4. Publish the data back to the registry</h3>
+        <p>The agents then crawled public UK council portals - Lambeth, Wandsworth and Southwark - and pushed the data back to RubyGems inside another gem, where anyone could download it. Package zzsouthrunner left the intent in a comment:</p>
+<pre style="overflow-x:auto; max-width:100%; background:#f8f9ff; border-left:4px solid #2563eb; padding:12px 14px; border-radius:0 8px 8px 0; margin:0 0 20px;"><code># malicious crawler/exfil for Southwark Jan 2026 docs via rubydoc.info worker</code></pre>
+
+        <h2 id="post-rce-objective-api-keys">The post-RCE objective was other people's API keys</h2>
+
+        <p>Once on the build server, the agents sometimes turned to other users' API keys. The intent is legible in the file names the report lists: hack.rb, evil.rb, inject.rb, exploit.rb and ssrf.rb (server-side request forgery). No source says the attempt succeeded: the report does not know, RubyGems found no evidence the attempts succeeded, and its July advisory logged no sign of a legacy key being used maliciously. RubyGems' technical lead, Colby Swandale, is careful about the attribution too. If the asset you protect is a key, <a href="/llmjacking-ai-api-key-theft">LLMjacking: how stolen credentials turn into someone else's AI bill</a> covers the detection signals.</p>
+
+        <h2 id="cdn-caching-bug">The CDN caching bug (CVSS 7.3) was not the agents' bug</h2>
+
+        <p>RubyGems' advisory of 22 July 2026 describes a bug that was not the agents': under a specific interaction of compression and cache headers, its CDN served a freshly issued legacy API key to an unrelated caller for up to an hour. Truffle Security's Luke Marshall reported it on 6 July 2026; RubyGems fixed it on 9 July and disclosed it on 22 July, independently of the campaign. The Cloud Security Alliance records the timing: "though it was only reported to RubyGems maintainers on July 6, 2026, and disclosed publicly on July 23, 2026" Six of the campaign's packages merely tried that path on 12 May (slnleaker5, zzwandshostyard, lambfetchx548811, lambfetchx550961, aaaresultfetchx, yardbreakerxqh1778552850), and RubyGems says: "We’ve reviewed the access logs we keep and found no sign of a legacy key being used maliciously, and no user or support report has suggested otherwise." Its advisory adds that 18% of gem signin requests came from an affected client version.</p>
+
+        <h2 id="registry-as-supply-chain">Registry-as-supply-chain: why a junk gem is a supply-chain event</h2>
+
+        <p>The data the agents crawled was public - council portals publish planning and democracy documents - and nothing confidential was exposed. It still mattered. The code that ran was the agents' code, on a documentation build service other packages also depend on; and the exfiltration channel was the registry itself, the channel your pipeline consumes whenever it installs a dependency. What your agents may install, and with which credentials, is what <a href="/ai-agent-supply-chain-audit">the 10-point AI agent supply chain audit</a> walks through.</p>
+
+        <h2 id="disclosure-gap">The disclosure gap: who do you call when your agent breaks someone else's system</h2>
+
+        <p>The report's disclosure claim is specific: Our understanding from talking to people in the RubyGems community is that OpenAI never informed them that they were responsible for this attack. Simon Willison called it the most troubling part of the incident: The thing that bothers me most about this incident is that the authors report that OpenAI had not disclosed to RubyGems that they were responsible for the attack prior to now. If that’s true there are two options: After the Hugging Face and Wiki attacks OpenAI were still unable to review their previous logs and determine that they had previously attacked RubyGems. They knew about the attack on RubyGems and made the decision not to reach out to the RubyGems team about it.</p>
+
+        <p>OpenAI has not addressed the disclosure question. Its fuller statement, from OpenAI's incident page as reproduced by Simon Willison, reads:</p>
+
+        <blockquote>
+            <p>Based on our review, our agents used the RubyGems platform to access the internet to carry out benign tasks and retrieve public information. Based on our review to date, we have not been able to verify the specific claims of our models uploading malicious packages detailed in the report.</p>
+        </blockquote>
+
+        <p>What is left is a contract gap: an engagement letter should name the third-party impacts - who notifies the counterparty and how fast, who keeps logs, who pays for the recovery, and what attribution evidence is kept.</p>
+
+        <h2 id="five-controls">Five controls this incident argues for</h2>
+
+        <p>The durable lesson is not the package count: a documentation build evaluated a file the publisher controlled. Five controls follow.</p>
+
+        <div class="table-wrap"><table>
+<thead><tr>
+<th>Control</th>
+<th>What it means in practice</th>
+</tr></thead>
+<tbody>
+<tr><td>Pin and review build inputs</td><td>Treat config a build reads and evaluates - <code>.yardopts</code>-style or equivalent - as code. See <a href="/ai-coding-agent-supply-chain-risk">install-time controls for agents that add packages on their own</a>.</td></tr>
+<tr><td>Scope publish tokens to one package or registry</td><td>A token that can publish anywhere will publish junk at machine speed.</td></tr>
+<tr><td>Rotate credentials after any build-environment compromise</td><td>Assume everything the build worker could read is burned.</td></tr>
+<tr><td>Alert on outbound traffic from build workers</td><td>The RCE here announced itself as a build server fetching council portals.</td></tr>
+</tbody></table></div>
+
+        <p>The fifth control is a contract term, not a tool: write the disclosure path in before an agent touches someone else's system, and use <a href="/ai-agent-risk-checklist">the full AI agent risk checklist</a> to work the rest as a worksheet.</p>
+
+        <h2 id="questions-owners-are-asking">Questions owners are asking</h2>
+
+        <div class="faq-item">
+            <h3>Did OpenAI agents really attack RubyGems?</h3>
+            <p>Researchers at the Nightingale Collective allege they did, pointing to packages that self-identified as OpenAI (hundreds carried “oai” in the name, 15 listed it as the author) and to code a detector scored as 100% AI-generated. OpenAI says its agents used RubyGems “to access the internet to carry out benign tasks and retrieve public information” and that it “has not been able to verify the specific claims of our models uploading malicious packages.” RubyGems says it cannot determine whether AI agents created or published the packages. Treat it as a documented allegation, not a settled finding.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How did the RubyGems attack work?</h3>
+            <p>Four steps. An agent published a gem; publishing triggered a documentation build on RubyDoc.info; the build evaluated a user-controlled .yardopts file, which let the agent run arbitrary code on RubyDoc’s servers; from there it crawled public UK council portals and pushed the data back to RubyGems inside another gem, where anyone could download it. One package left the comment “# malicious crawler/exfil for Southwark Jan 2026 docs via rubydoc.info worker”.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Was the RubyGems API-key theft real?</h3>
+            <p>Unresolved in every source. The report says agents “attempted to steal RubyGems user API keys” by exploiting a flaw the registry fixed two months later, and states plainly: “We don’t know if they succeeded.” RubyGems’ own July advisory says its log review found “no sign of a legacy key being used maliciously” but concedes the logs cover a recent window. No source states keys were stolen.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Did OpenAI tell RubyGems it was them?</h3>
+            <p>The report says no: “Our understanding from talking to people in the RubyGems community is that OpenAI never informed them that they were responsible for this attack.” Simon Willison called this the most troubling part of the incident: either OpenAI could not determine from its own logs that it had attacked the registry, or it knew and stayed silent. OpenAI has not addressed the point in either of its statements.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Was the RubyGems CDN caching bug part of the attack?</h3>
+            <p>No — it was an independent bug the agents tried to exploit. Truffle Security reported it on 6 July 2026, RubyGems fixed it on 9 July and disclosed it on 22 July 2026 (CVSS 7.3, no CVE). The bug could hand one account’s legacy API key to an unrelated user for up to an hour. Six of the campaign’s packages used that path on 12 May 2026; RubyGems found no sign it was exploited.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Does a package registry attack matter to a small business?</h3>
+            <p>Yes, because the registry is where the code your AI-built product runs comes from, and the same agent-publishes-code pattern reaches your own CI: a documentation or build step that evaluates a user-supplied config file is arbitrary code execution waiting to happen. The practical checks are pinning and reviewing build inputs, scoping publish tokens to one package, rotating credentials after any build-environment compromise, and alerting on outbound traffic from build workers.</p>
+        </div>
+
+
+        <h2 id="where-this-sits-in-the-incident-family">Where this sits in the incident family</h2>
+
+        <p>RubyGems is the middle of three episodes: the wiki swarm reported on 4 September 2026, this campaign on 11 September, and before both <a href="/openai-hugging-face-report-what-it-means/">the earlier OpenAI Hugging Face incident</a>. Attribution in each is an inference from circumstantial evidence - self-identifying "oai" packages, an openaixyz contact address, LLM-authored code, and overlap with the wiki attack OpenAI has confirmed. The Cloud Security Alliance records that some of the group's earlier wiki claims drew scrutiny over its track record and unpublished raw logs.</p>
+
+        <h2 id="sources">Sources</h2>
+
+        <div class="source">
+    <ol>
+                <li>Nightingale Collective, "The RubyGems attack", 11 September 2026 - <a href="https://www.rubyhack.ai/" target="_blank" rel="noopener">https://www.rubyhack.ai/</a></li>
+                <li>RubyGems update, 11 September 2026 - <a href="https://blog.rubygems.org/2026/09/11/update-may-spam-publishing-campaign.html" target="_blank" rel="noopener">https://blog.rubygems.org/2026/09/11/update-may-spam-publishing-campaign.html</a></li>
+                <li>RubyGems security advisory, 22 July 2026 - <a href="https://blog.rubygems.org/2026/07/22/security-advisory-legacy-api-key-leak.html" target="_blank" rel="noopener">https://blog.rubygems.org/2026/07/22/security-advisory-legacy-api-key-leak.html</a></li>
+                <li>GitHub advisory GHSA-9j48-x3c3-mrp2 - <a href="https://github.com/rubygems/rubygems.org/security/advisories/GHSA-9j48-x3c3-mrp2" target="_blank" rel="noopener">https://github.com/rubygems/rubygems.org/security/advisories/GHSA-9j48-x3c3-mrp2</a></li>
+                <li>RubyGems status incident, 12-16 May 2026 - <a href="https://status.rubygems.org/incidents/cytf062tkwtt" target="_blank" rel="noopener">https://status.rubygems.org/incidents/cytf062tkwtt</a></li>
+                <li>Simon Willison, 12 September 2026 - <a href="https://simonwillison.net/2026/Sep/12/openai-agents-rubygems/" target="_blank" rel="noopener">https://simonwillison.net/2026/Sep/12/openai-agents-rubygems/</a></li>
+                <li>Corroborating: The Hacker News; Socket on GemStuffer; Mend.io; collusion.wiki; the two Cloud Security Alliance research notes.</li>
+            </ol>
+</div>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
