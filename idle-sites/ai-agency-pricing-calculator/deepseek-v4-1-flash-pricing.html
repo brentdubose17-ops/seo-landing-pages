@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeepSeek V4.1-Flash Pricing: $0.003/1M Cached and the Sept 14 Reroute That Was Withdrawn</title>
-    <meta name="description" content="DeepSeek V4.1-Flash (deepseek-flash) off-peak cached input is $0.003 per 1M against a $0.30 peak cache-miss rate - a 100x per-token spread. The Sept 14 V4 Pro reroute was withdrawn on Sept 11, so V4 Pro keeps its own rates. Price sheet, benchmark attributions, migration checklist.">
-    <meta name="keywords" content="DeepSeek V4.1 Flash pricing, deepseek-flash price, DeepSeek V4.1 Flash off-peak cache pricing, deepseek-v4-pro retired, DeepSeek V4.1 Flash vs GPT-5.6 Sol, cheapest 1M context model 2026, DeepSeek V4 Pro reroute withdrawn, DeepSeek cache hit pricing, DeepSeek API pricing 2026, deepseek-v4-flash still accepted, DeepSeek MIT weights">
+    <title>DeepSeek V4 Pro vs V4.1-Flash Pricing: Reroute Withdrawn</title>
+    <meta name="description" content="DeepSeek kept V4 Pro after Sept 14, 2026 - billing unchanged. Full V4 Pro vs V4.1-Flash price sheet, the withdrawn reroute, and agency cost math.">
+    <meta name="keywords" content="DeepSeek V4.1 Flash pricing, deepseek-flash price, DeepSeek V4.1 Flash off-peak cache pricing, deepseek-v4-pro retired, DeepSeek V4.1 Flash vs GPT-5.6 Sol, cheapest 1M context model 2026, DeepSeek V4 Pro reroute withdrawn, DeepSeek cache hit pricing, DeepSeek API pricing 2026, deepseek-v4-flash still accepted, DeepSeek V4 Pro API extension 2026, DeepSeek V4 Pro still available after September 14 2026, V4 Pro vs V4.1-Flash agency cost model, DeepSeek MIT weights">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aiagencycalculator.com/deepseek-v4-1-flash-pricing">
-    <meta property="og:title" content="DeepSeek V4.1-Flash Pricing: $0.003/1M Cached and the Sept 14 Reroute That Was Withdrawn">
-    <meta property="og:description" content="DeepSeek V4.1-Flash (deepseek-flash) off-peak cached input is $0.003 per 1M against a $0.30 peak cache-miss rate - a 100x per-token spread. The Sept 14 V4 Pro reroute was withdrawn on Sept 11, so V4 Pro keeps its own rates. Price sheet, benchmark attributions, migration checklist.">
+    <meta property="og:title" content="DeepSeek V4 Pro vs V4.1-Flash Pricing: Reroute Withdrawn">
+    <meta property="og:description" content="DeepSeek kept V4 Pro after Sept 14, 2026 - billing unchanged. Full V4 Pro vs V4.1-Flash price sheet, the withdrawn reroute, and agency cost math.">
     <meta property="og:url" content="https://aiagencycalculator.com/deepseek-v4-1-flash-pricing">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Aiagencycalculator">
@@ -22,9 +22,9 @@
     {
       "@type": "Article",
       "headline": "DeepSeek V4.1-Flash: the 100x cached-price spread and the Sept 14 reroute that lasted a day",
-      "description": "DeepSeek V4.1-Flash (deepseek-flash) off-peak cached input is $0.003 per 1M against a $0.30 peak cache-miss rate - a 100x per-token spread. The Sept 14 V4 Pro reroute was withdrawn on Sept 11, so V4 Pro keeps its own rates. Price sheet, benchmark attributions, migration checklist.",
+      "description": "DeepSeek kept V4 Pro after Sept 14, 2026 - billing unchanged. Full V4 Pro vs V4.1-Flash price sheet, the withdrawn reroute, and agency cost math.",
       "datePublished": "2026-09-11",
-      "dateModified": "2026-09-11",
+      "dateModified": "2026-09-14",
       "author": {
         "@type": "Organization",
         "name": "ABD Legacy LLC"
@@ -35,7 +35,7 @@
       },
       "mainEntityOfPage": "https://aiagencycalculator.com/deepseek-v4-1-flash-pricing",
       "image": "https://aiagencycalculator.com/og-image.png",
-      "keywords": "DeepSeek V4.1 Flash pricing, deepseek-flash price, DeepSeek V4.1 Flash off-peak cache pricing, deepseek-v4-pro retired, DeepSeek V4.1 Flash vs GPT-5.6 Sol, cheapest 1M context model 2026, DeepSeek V4 Pro reroute withdrawn, DeepSeek cache hit pricing, DeepSeek API pricing 2026, deepseek-v4-flash still accepted, DeepSeek MIT weights"
+      "keywords": "DeepSeek V4.1 Flash pricing, deepseek-flash price, DeepSeek V4.1 Flash off-peak cache pricing, deepseek-v4-pro retired, DeepSeek V4.1 Flash vs GPT-5.6 Sol, cheapest 1M context model 2026, DeepSeek V4 Pro reroute withdrawn, DeepSeek cache hit pricing, DeepSeek API pricing 2026, deepseek-v4-flash still accepted, DeepSeek V4 Pro API extension 2026, DeepSeek V4 Pro still available after September 14 2026, V4 Pro vs V4.1-Flash agency cost model, DeepSeek MIT weights"
     },
     {
       "@type": "FAQPage",
@@ -50,7 +50,7 @@
         },
         {
           "@type": "Question",
-          "name": "is deepseek-v4-pro retired",
+          "name": "Is deepseek-v4-pro retired?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "No. DeepSeek announced on 2026-09-10 that deepseek-v4-pro requests would be routed to V4.1-Flash from 04:00 UTC on Sept 14, 2026, then withdrew that plan on 2026-09-11. The current wording on DeepSeek's own API docs, pricing page and changelog is that DeepSeek will continue providing API services for DeepSeek V4 Pro after September 14, 2026 with the billing method remaining unchanged. deepseek-v4-pro keeps its own pricing row (model version DeepSeek-V4-Pro-0813) at $0.66 input, $1.98 output and $0.022 cached input off-peak. There is no Sept 14 migration and no retirement date in force."
@@ -78,6 +78,30 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "A cached input token on DeepSeek's own API costs $0.003 per 1M off-peak and $0.006 per 1M at peak - off-peak is exactly half of peak. Off-peak means every hour outside Monday to Friday 01:00-04:00 and 06:00-10:00 UTC. That $0.003 rate is the low end of the 100x per-token spread against the $0.30 per 1M peak cache-miss input rate; the same cached token costs more through third-party hosts on OpenRouter, whose cache-read rates vary by host and sit above DeepSeek's own. The spread is a per-token rate comparison, not a discount on your whole bill - it only pays out on the share of your traffic that actually hits the cache."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When was the DeepSeek V4 Pro deprecation reversed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The plan was withdrawn on 11 September 2026, the day after DeepSeek published it, by editing the changelog entry dated 2026-09-10 and the pricing-page footnote in place. There is no separate dated announcement for the reversal, which is why so little coverage caught it: the changelog's newest heading still reads 10 September. Archive snapshots of the pricing page bracket the edit to 11 September 2026 and press reporting picked it up the same day. The statement now in force is that DeepSeek will continue providing API services for DeepSeek V4 Pro after September 14, 2026 with the billing method remaining unchanged."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is DeepSeek V4 Pro still available after September 14, 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. As of 2026-09-14 the API documentation still reads: In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. deepseek-v4-pro keeps its own pricing row (model version DeepSeek-V4-Pro-0813) at $0.66 input, $1.98 output and $0.022 cached input per 1M off-peak, with peak rates exactly double. No retirement date is in force and there is no forced migration. Note that two of DeepSeek's own announcement pages still say V4 Pro is being phased out; the pricing page and changelog, which govern what the API bills, do not."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much more does V4 Pro cost than V4.1-Flash?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Per 1M tokens off-peak, V4 Pro costs 7.33x V4.1-Flash on cached input ($0.022 against $0.003), 4.40x on uncached input ($0.66 against $0.15) and 3.30x on output ($1.98 against $0.60); the peak band is exactly double on both models, so the ratios hold in either band. On a run of 100M uncached input plus 20M output tokens that is $105.60 against $27.00 - +$78.60, or +291% - which annualises to $943.20 if you run it monthly off-peak ($1,886.40 at peak). A budget built on the withdrawn reroute, which would have billed Pro traffic at Flash rates from 14 September 2026, understates the Pro line by 291%."
           }
         }
       ]
@@ -135,11 +159,22 @@
     <article>
         <header>
             <h1>DeepSeek V4.1-Flash: the 100x cached-price spread and the Sept 14 reroute that lasted a day</h1>
-            <div class="meta"><span>Published September 11, 2026 &middot; Updated September 11, 2026</span><span>By ABD Legacy LLC</span></div>
-            <div class="tagline"><span>DeepSeek V4.1 Flash pricing</span> <span>deepseek-flash rate</span> <span>Is deepseek-v4-pro retired</span> <span>Off-peak cached pricing</span></div>
+            <div class="meta"><span>Published September 11, 2026 &middot; Updated September 14, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>DeepSeek V4.1 Flash pricing</span> <span>deepseek-flash rate</span> <span>Is deepseek-v4-pro retired</span> <span>Off-peak cached pricing</span> <span>V4 Pro reroute withdrawn</span></div>
         </header>
 
 <p><strong>The short answer.</strong> DeepSeek V4.1-Flash is live on the API as <code>deepseek-flash</code>, and the two legacy Flash names - <code>deepseek-v4-flash</code> and <code>deepseek-v4-flash-vision-exp</code> - are still accepted: DeepSeek serves those requests with the V4.1-Flash model and bills them at the Flash price. The previously announced reroute of <code>deepseek-v4-pro</code> to V4.1-Flash, which was due to begin at 04:00 UTC, Sept 14, 2026, was withdrawn on 2026-09-11, so V4 Pro keeps serving at unchanged billing. What survives the retraction is the spread inside the Flash row itself - $0.003 per 1M cached input off-peak against $0.30 per 1M cache-miss input at peak, a 100x per-token rate gap.</p>
+
+<h2 id="verified-14-september-2026">V4 Pro stays: what we re-verified on 14 September 2026</h2>
+<p>This is the current status, re-checked against DeepSeek's own API documentation at <strong>13:38 UTC on 14 September 2026</strong> - not carried over from announcement week. The 14 September reroute did not happen, and the pricing page, the docs home page and the changelog all carry the same sentence:</p>
+<blockquote>"In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. Thank you for your understanding and support!"</blockquote>
+<p>That text is footnote (2) on <a href="https://api-docs.deepseek.com/quick_start/pricing/" rel="noopener">Models and Pricing</a> (23,359 bytes fetched 2026-09-14 13:38 UTC) and the same wording sits in the <a href="https://api-docs.deepseek.com/updates/" rel="noopener">changelog</a> (50,934 bytes fetched the same minute) under the entry dated <strong>2026-09-10</strong>. Four things follow from the citation itself:</p>
+<ul>
+<li><strong>The retraction is an edit, not an announcement.</strong> There is no dated DeepSeek post for it. The changelog's newest heading still reads 10 September, because the reversal was written into that existing entry - which is why so few trackers noticed it.</li>
+<li><strong>The wording is narrower than "price freeze".</strong> DeepSeek commits to the billing <em>method</em> staying unchanged and says it will give further notice of any change. No future rate is promised, and the pricing page reserves the right to adjust rates.</li>
+<li><strong>V4 Pro keeps its own row and its own model version</strong> - <code>deepseek-v4-pro</code>, model version <code>DeepSeek-V4-Pro-0813</code>, off-peak $0.66 input / $1.98 output / $0.022 cached input per 1M tokens.</li>
+<li><strong>Two official pages have still not been corrected.</strong> See <a href="#docs-contradiction">the contradiction section below</a> - it is the part most migration guides currently ranking for these queries still get wrong.</li>
+</ul>
 
 <h2>What shipped: DeepSeek-V4.1-Flash as <code>deepseek-flash</code></h2>
 <p>DeepSeek shipped DeepSeek-V4.1-Flash on <strong>2026-09-10</strong>. The launch note says to set your model to <code>deepseek-flash</code>, and the API docs repeat that as the model name.</p>
@@ -181,9 +216,40 @@
 <li><strong>What the API docs say now</strong> (pricing page, docs home page and changelog - all three): "In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes."</li>
 <li><strong>What that leaves in place:</strong> <code>deepseek-v4-pro</code> keeps its own pricing row and its own model version, DeepSeek-V4-Pro-0813, at unchanged rates. It is not retired, and there is no Sept 14 migration to plan for.</li>
 </ul>
-<p><strong>Two first-party pages, still contradicting each other.</strong> DeepSeek's marketing news page continues to advertise the reroute; the API docs - the pages that govern what the API actually bills - retract it. If you quote the news page as current, you will be wrong.</p>
 <p><strong>Why almost nobody noticed.</strong> The reversal was inserted into the <em>existing</em> 2026-09-10 changelog entry instead of being published as a new dated entry, so the changelog's newest heading still reads Sept 10 and a reader checking "what is new since the launch" sees nothing new. The withdrawal also came with no notice period, and DeepSeek publishes no versioned deprecation policy - the announcement gave four days, the reversal gave none. Independent trackers caught it: a pricing tracker published a before-and-after of the footnote, and a same-week analysis piece reached the same conclusion from the two first-party pages.</p>
 <p><strong>The operational lesson:</strong> on this platform, a dated first-party announcement is not a commitment until the API docs carry it, and even then it can be edited in place without a new changelog entry. Pin nothing to a future date you have not re-checked that week.</p>
+
+<h2 id="docs-contradiction">Two official pages still say V4 Pro is being phased out</h2>
+<p>DeepSeek corrected the surfaces that govern billing and left the ones that carry the announcement untouched. Both were live and uncorrected when we fetched them on <strong>14 September 2026 at 13:38 UTC</strong>:</p>
+<ul>
+<li><strong>api-docs <code>/news/news260910</code></strong> - 27,838 bytes, HTTP 200 - still reads: "Tests by multiple parties put V4.1-Flash ahead of V4-Pro on performance, cost, speed &amp; total runtime. <strong>We're phasing out V4-Pro.</strong>" and "Starting at 04:00 UTC on Sept 14, 2026, all <code>deepseek-v4-pro</code> requests will route to V4.1-Flash at V4.1-Flash rates."</li>
+<li><strong>deepseek.com <code>/en/news/deepseek-v4-1-flash/</code></strong> - 92,061 bytes, HTTP 200 - carries the phase-out wording twice and never mentions the retraction.</li>
+</ul>
+<p>Neither page contains the phrase "continue providing API services" - the sentence that now describes what the API bills. The pricing page and the changelog are the only first-party surfaces that carry it, so a reader who lands on the launch post or the corporate news page, both of which use the retirement framing, is reading a plan that was withdrawn three days before it was due to start.</p>
+<p><strong>What that means commercially.</strong> Any migration guide or agency cost model written from those two pages assumes <code>deepseek-v4-pro</code> traffic moves to V4.1-Flash rates from 14 September 2026. That assumption is void, and it is not a rounding difference: the Pro row is 3.30x to 7.33x the Flash row per bucket. The third-party guides ranking for "DeepSeek V4 Pro deprecation date 2026" were still describing the reroute as live when we checked on 14 September - two of them were last updated before the retraction was published.</p>
+<p><strong>The rule to take from it:</strong> on this platform the announcement pages behave like marketing and the API documentation behaves like the contract. Where the two disagree, the documentation is what your invoice follows - and it can be edited in place, without a new changelog entry, so re-verify it in the same week you quote.</p>
+
+<h2 id="update-cost-models">How to update your AI cost model for the V4 Pro extension</h2>
+<p>If your model contains the line "V4 Pro traffic billed at V4.1-Flash rates from 04:00 UTC, 14 September 2026", delete it. What replaced it is a premium on the Pro row, and the size of the correction depends on your cache-hit mix:</p>
+<div class="table-wrap">
+<table>
+<tr><th>Bucket (per 1M tokens, off-peak)</th><th>V4.1-Flash</th><th>V4 Pro</th><th>Pro premium</th></tr>
+<tr><td>Input, cache hit</td><td>$0.003</td><td><strong>$0.022</strong></td><td><strong>7.33x</strong></td></tr>
+<tr><td>Input, cache miss</td><td>$0.15</td><td><strong>$0.66</strong></td><td><strong>4.40x</strong></td></tr>
+<tr><td>Output</td><td>$0.60</td><td><strong>$1.98</strong></td><td><strong>3.30x</strong></td></tr>
+<tr><td>Peak band, all three buckets</td><td>2x the off-peak rate</td><td>2x the off-peak rate</td><td>unchanged by band</td></tr>
+</table>
+</div>
+<p><strong>Worked example - 100M uncached input plus 20M output tokens, off-peak:</strong> V4.1-Flash $27.00 against V4 Pro <strong>$105.60</strong> - <strong>+$78.60, or +291%</strong>. At one such run a month that is <strong>$943.20 a year</strong> on the Pro line. The same workload inside the peak band is $54.00 against $211.20 (+$157.20, $1,886.40 a year). A cache-heavy agent profile - 900M cached input, 100M uncached input, 30M output - lands at $35.70 on Flash against <strong>$145.20</strong> on Pro, <strong>+307%</strong>. Those two numbers are the cost consequence of the withdrawal stated plainly: a budget built on the reroute understates the Pro line by 291% off-peak, and by twice that at peak.</p>
+<p>Then work the five levers, in this order:</p>
+<ol>
+<li><strong>Keep Pro only where the premium buys something you can name.</strong> On Artificial Analysis's composite index, V4 Pro 0813 sits at 36 against V4.1-Flash's 40, so the 3.30x output premium has to be justified by task-level behaviour you have measured on your own prompts rather than by model tier. Re-run your eval before and after any switch.</li>
+<li><strong>Price the line by traffic mix, not by headline rate.</strong> The 7.33x multiple applies only to the share of input that hits the cache; the 4.40x applies to the rest. The same pair of rates produces two very different monthly numbers at a 40% hit rate and at a 90% one.</li>
+<li><strong>Schedule batch work off-peak.</strong> Off-peak is every hour outside Monday-Friday 01:00-04:00 and 06:00-10:00 UTC, and it halves every bucket on both models. It is the only lever here that is free.</li>
+<li><strong>Log the model version that answered.</strong> Aliases such as <code>deepseek-v4-flash</code> are still accepted and served by V4.1-Flash at the Flash price, and the response identifies <code>DeepSeek-V4-Pro-0813</code> or <code>DeepSeek-V4.1-Flash</code>. A rate card reconciled against a model ID that can change underneath it is not a rate card.</li>
+<li><strong>Re-verify the sheet before you re-quote, and write the position into the contract.</strong> DeepSeek reserves the right to adjust rates, the footnote promises further notice, and last time the notice arrived as an inline edit to an existing changelog entry. Date-stamp every figure you send a client. Our <a href="https://findaiagency.com/ai-agency-contract-tips-what-to-look-for" rel="noopener">contract notes</a> cover how to write model and rate changes in.</li>
+</ol>
+<p>To run your own numbers: the <a href="/#deepseek-v41-flash">AI Agency Pricing Calculator</a> carries the DeepSeek rows side by side - V4.1-Flash, the aliased legacy <code>deepseek-v4-flash</code> row, and the cache-aware V4 Pro row - and the <a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator</a> lets you put your own input, output and cached split against per-1M rates. Both are modelling aids, not quotes.</p>
 
 <h2>Migration checklist</h2>
 <p>Six checks, in order. The first four are the ones that cost money if you skip them.</p>
@@ -221,7 +287,7 @@
     <p>DeepSeek's own API prices deepseek-flash at $0.15 per 1M input tokens and $0.60 per 1M output tokens off-peak, with cache hits at $0.003 per 1M. Peak rates are exactly double - $0.30, $1.20 and $0.006 - during Monday to Friday 01:00-04:00 and 06:00-10:00 UTC; every other hour is off-peak. deepseek-v4-pro keeps its own live row at $0.66 input, $1.98 output and $0.022 cached input off-peak (peak $1.32, $3.96, $0.044). On OpenRouter the headline for deepseek/deepseek-v4.1-flash is the same off-peak pair as DeepSeek's - $0.15 in, $0.60 out, $0.003 cache read - while third-party hosts on OpenRouter list $0.30 in and $1.20 out.</p>
 </div>
 <div class="faq-item">
-    <h3>is deepseek-v4-pro retired</h3>
+    <h3>Is deepseek-v4-pro retired?</h3>
     <p>No. DeepSeek announced on 2026-09-10 that deepseek-v4-pro requests would be routed to V4.1-Flash from 04:00 UTC on Sept 14, 2026, then withdrew that plan on 2026-09-11. The current wording on DeepSeek's own API docs, pricing page and changelog is that DeepSeek will continue providing API services for DeepSeek V4 Pro after September 14, 2026 with the billing method remaining unchanged. deepseek-v4-pro keeps its own pricing row (model version DeepSeek-V4-Pro-0813) at $0.66 input, $1.98 output and $0.022 cached input off-peak. There is no Sept 14 migration and no retirement date in force.</p>
 </div>
 <div class="faq-item">
@@ -235,6 +301,18 @@
 <div class="faq-item">
     <h3>DeepSeek Flash off-peak cached pricing</h3>
     <p>A cached input token on DeepSeek's own API costs $0.003 per 1M off-peak and $0.006 per 1M at peak - off-peak is exactly half of peak. Off-peak means every hour outside Monday to Friday 01:00-04:00 and 06:00-10:00 UTC. That $0.003 rate is the low end of the 100x per-token spread against the $0.30 per 1M peak cache-miss input rate; the same cached token costs more through third-party hosts on OpenRouter, whose cache-read rates vary by host and sit above DeepSeek's own. The spread is a per-token rate comparison, not a discount on your whole bill - it only pays out on the share of your traffic that actually hits the cache.</p>
+</div>
+<div class="faq-item">
+    <h3>When was the DeepSeek V4 Pro deprecation reversed?</h3>
+    <p>The plan was withdrawn on 11 September 2026, the day after DeepSeek published it, by editing the changelog entry dated 2026-09-10 and the pricing-page footnote in place. There is no separate dated announcement for the reversal, which is why so little coverage caught it: the changelog's newest heading still reads 10 September. Archive snapshots of the pricing page bracket the edit to 11 September 2026 and press reporting picked it up the same day. The statement now in force is that DeepSeek will continue providing API services for DeepSeek V4 Pro after September 14, 2026 with the billing method remaining unchanged.</p>
+</div>
+<div class="faq-item">
+    <h3>Is DeepSeek V4 Pro still available after September 14, 2026?</h3>
+    <p>Yes. As of 2026-09-14 the API documentation still reads: In response to user demand, we have decided to continue providing API services for DeepSeek V4 Pro after September 14, 2026, with the billing method remaining unchanged. We will provide further notice should there be any changes. deepseek-v4-pro keeps its own pricing row (model version DeepSeek-V4-Pro-0813) at $0.66 input, $1.98 output and $0.022 cached input per 1M off-peak, with peak rates exactly double. No retirement date is in force and there is no forced migration. Note that two of DeepSeek's own announcement pages still say V4 Pro is being phased out; the pricing page and changelog, which govern what the API bills, do not.</p>
+</div>
+<div class="faq-item">
+    <h3>How much more does V4 Pro cost than V4.1-Flash?</h3>
+    <p>Per 1M tokens off-peak, V4 Pro costs 7.33x V4.1-Flash on cached input ($0.022 against $0.003), 4.40x on uncached input ($0.66 against $0.15) and 3.30x on output ($1.98 against $0.60); the peak band is exactly double on both models, so the ratios hold in either band. On a run of 100M uncached input plus 20M output tokens that is $105.60 against $27.00 - +$78.60, or +291% - which annualises to $943.20 if you run it monthly off-peak ($1,886.40 at peak). A budget built on the withdrawn reroute, which would have billed Pro traffic at Flash rates from 14 September 2026, understates the Pro line by 291%.</p>
 </div>
 
 <div class="cta">
@@ -256,10 +334,12 @@
 
 <h2>Sources</h2>
 <ul>
-<li>DeepSeek API docs - Models and Pricing (model name <code>deepseek-flash</code>, per-1M rates, peak windows, retraction wording): <a href="https://api-docs.deepseek.com/quick_start/pricing" rel="noopener">api-docs.deepseek.com/quick_start/pricing</a></li>
-<li>DeepSeek API docs - Change Log (the 2026-09-10 entry that later carried the withdrawal): <a href="https://api-docs.deepseek.com/updates" rel="noopener">api-docs.deepseek.com/updates</a></li>
+<li>DeepSeek API docs - Models and Pricing (model name <code>deepseek-flash</code>, per-1M rates, peak windows, retraction wording): <a href="https://api-docs.deepseek.com/quick_start/pricing/" rel="noopener">api-docs.deepseek.com/quick_start/pricing/</a> (23,359 bytes, fetched 2026-09-14 13:38 UTC)</li>
+<li>DeepSeek API docs - Change Log (the 2026-09-10 entry that later carried the withdrawal): <a href="https://api-docs.deepseek.com/updates/" rel="noopener">api-docs.deepseek.com/updates/</a> (50,934 bytes, fetched 2026-09-14 13:38 UTC)</li>
 <li>DeepSeek API docs home (model name and retraction wording): <a href="https://api-docs.deepseek.com/" rel="noopener">api-docs.deepseek.com</a></li>
-<li>DeepSeek news (2026-09-10 launch; still advertising the reroute): <a href="https://www.deepseek.com/en/news/deepseek-v4-1-flash/" rel="noopener">deepseek.com/en/news/deepseek-v4-1-flash/</a></li>
+<li>DeepSeek news (2026-09-10 launch; still advertising the phase-out, uncorrected as of 2026-09-14 13:38 UTC, 92,061 bytes): <a href="https://www.deepseek.com/en/news/deepseek-v4-1-flash/" rel="noopener">deepseek.com/en/news/deepseek-v4-1-flash/</a></li>
+<li>DeepSeek API docs news post (2026-09-10 launch; still reads "We're phasing out V4-Pro", 27,838 bytes, fetched 2026-09-14 13:38 UTC): <a href="https://api-docs.deepseek.com/news/news260910" rel="noopener">api-docs.deepseek.com/news/news260910</a></li>
+<li>PANews (2026-09-11T11:41Z) - the first public report of the reversal, crediting Star Market Daily: <a href="https://panews.io/articles/01a09045-be46-7632-8fd6-e486b08c3c21" rel="noopener">panews.io</a></li>
 <li>Hugging Face model card - DeepSeek-V4.1-Flash (MIT license, 1M-token context, architecture, native image and text input): <a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash" rel="noopener">huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash</a></li>
 <li>OpenRouter - model page and provider endpoints API (headline price, cache read, per-host rates, context length): <a href="https://openrouter.ai/deepseek/deepseek-v4.1-flash" rel="noopener">openrouter.ai/deepseek/deepseek-v4.1-flash</a> and <a href="https://openrouter.ai/api/v1/models/deepseek/deepseek-v4.1-flash/endpoints" rel="noopener">/api/v1/models/deepseek/deepseek-v4.1-flash/endpoints</a></li>
 <li>Artificial Analysis - V4.1 Flash (Reasoning, Max Effort), GPT-5.6 Sol (max), Claude Opus 5, DeepSeek V4 Pro 0813 (Intelligence Index, speed, cost per task): <a href="https://artificialanalysis.ai/models/deepseek-v4-1-flash" rel="noopener">artificialanalysis.ai/models/deepseek-v4-1-flash</a></li>
@@ -271,7 +351,7 @@
 <li>Competitor cache-read and headline rates quoted above (GPT-5.6 Sol $4/$20/$0.40, Claude Opus 5 $5/$25/$0.50, Kimi K3 $3/$15/$0.30) are press-reported, not read off the vendors' own sheets: <a href="https://venturebeat.com/technology/deepseek-v4-1-flash-debuts-with-0-003-1m-off-peak-cached-input-rate-and-benchmarks-eclipsing-gpt-5-6-sol-claude-opus-5" rel="noopener">VentureBeat</a>, with the Sol and Opus 5 headline pairs independently matching Artificial Analysis listings.</li>
 <li>Secondary pricing trackers used only where DeepSeek no longer publishes the old rows (predecessor Flash rates): <a href="https://www.usagepricing.com/blueprint/activity/deepseek-2026-09-11-v4-pro-retirement-reversed" rel="noopener">usagepricing.com</a> and <a href="https://asapai.co.kr/en/deepseek-v41-flash-retires-v4-pro" rel="noopener">asapai.co.kr</a> (both secondary; treat as medium confidence).</li>
 </ul>
-<p style="font-size:0.85rem;color:#666;">Accuracy note: every figure on this page traces to the research fact sheet compiled on 2026-09-11 (sources fetched 2026-09-11 between 22:00 and 22:12 UTC; fact sheet sha256 <code>9f3fbbe21866d9f9ab40c433fc50bb246e94f0c6ce06a2541944111e32b48703</code>). No hands-on model testing was performed for this page: benchmark numbers are reproduced from the party that measured them and are attributed in the tables above, and DeepSeek's own harness results are labelled vendor-reported. One claim carried by other coverage is deliberately absent here: the assertion that V4.1-Flash beats GPT-5.6 Sol and Claude Opus 5 - Artificial Analysis measures the opposite order on its composite index, and a separate reported AutomationBench figure could not be verified on Artificial Analysis's own page, so no part of it is repeated. Rates move frequently - re-verify before quoting, and note that DeepSeek has edited first-party pricing text in place within a single day.</p>
+<p style="font-size:0.85rem;color:#666;">Accuracy note: every figure on this page traces to the research fact sheet compiled on 2026-09-11 (sources fetched 2026-09-11 between 22:00 and 22:12 UTC; fact sheet sha256 <code>9f3fbbe21866d9f9ab40c433fc50bb246e94f0c6ce06a2541944111e32b48703</code>). No hands-on model testing was performed for this page: benchmark numbers are reproduced from the party that measured them and are attributed in the tables above, and DeepSeek's own harness results are labelled vendor-reported. One claim carried by other coverage is deliberately absent here: the assertion that V4.1-Flash beats GPT-5.6 Sol and Claude Opus 5 - Artificial Analysis measures the opposite order on its composite index, and a separate reported AutomationBench figure could not be verified on Artificial Analysis's own page, so no part of it is repeated. Rates move frequently - re-verify before quoting, and note that DeepSeek has edited first-party pricing text in place within a single day. Re-verified 2026-09-14 13:38 UTC (card t_acc02f0a): the pricing page (23,359 bytes) and the changelog (50,934 bytes) still carry the retraction wording, and the two pages named in the contradiction section (27,838 bytes and 92,061 bytes) still carry the phase-out wording. No price on this page changed in that re-check.</p>
     </article>
     <footer>
         <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
