@@ -2,6 +2,42 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-15 — "Will your IOR survive Sept 18?" checklist block on the calculator (kanban t_2548e571)
+
+- **New interactive block:** `#ior-survival-checklist` — the first info section under the
+  calculator, so an importer pricing a shipment meets the Sept 18 deadline before the
+  reference material. Four checkboxes (the four highest-void-risk elements of the six the
+  Federal Register notice enumerates — **1A** legal name, **1B** EIN/SSN/CBP number,
+  **2B** physical address, **2E** email), a live verdict panel, and a closing CTA to
+  `/cbp-ior-void-form-5106-september-18`.
+- **Wording is the published post's, not a paraphrase.** Each label is the corresponding
+  item from the post's 10-item checklist, and `tests/ior-checklist-dom-harness.js`
+  asserts that against the **post's own HTML on disk** (not a copy retyped in the test).
+- **Conditional copy carries the evidence pack's corrections, not the source card's
+  premises.** Unchecked → CBP **will** immediately void as of Sept 18, 2026 and the number
+  is *"invalid for any purpose, including entering imported merchandise into the United
+  States"*; the notice comes **with** the action and states **no cure period** (an absence
+  in the text, said that way); the freight-disruption framing is attributed to GDLSK
+  (Sept 3, 2026) as counsel commentary rather than stated as CBP text. All checked →
+  *"You are positioned for September 18"* plus re-verify-before-Friday and CBP's published
+  **5 business days** reinstatement turnaround. The card's "officer/responsible-party data"
+  element is deliberately **not** mirrored: CBP's own 5106 FAQ makes section 3 optional.
+- **Verdict switches on checkbox state, in the browser and in the harness.** 0–3 checked is
+  the at-risk copy (`.ior-verdict.warn`), 4 is the positioned copy (`.ior-verdict.ok`);
+  unchecking one flips it back. `window.renderIorChecklist()` returns
+  `{checked, total, state}` and returns `null` rather than lying if a box is missing.
+- **Placement rule honoured:** the new `<script>` sits **before** the s338 wiring block, so
+  s338's "wiring block is the LAST script before `</body>`" invariant (pinned by
+  `tests/s338-live-harness.js`) still holds. `index.html`'s `dateModified` (meta + JSON-LD)
+  and the block's visible *"Updated September 15, 2026"* byline move together to today.
+- **Tests.** `tests/ior-checklist-dom-harness.js` — **new** — 29/29 (extracts the shipped
+  wiring block, drives a stub DOM, pins the corrected fact base and the post-wording
+  mirror). `tests/ior-checklist-render.py` — **new** — 53/53 in Chromium (6 widths
+  320–1280: no page-level overflow, block inside the viewport, real clicks flip the
+  verdict, computed colour actually changes). All 9 DOM harnesses: **322/322, 0 failures**;
+  `site_consistency` on `index.html` clean.
+
+
 ## 2026-09-14 — Section 338 Canada: ban / snap-back / exclusion calculator mode wired into index.html (kanban t_46ab8765)
 
 - **Mode added:** `s338` — a **fourth tab** on the calculator: programme (Chapter 99

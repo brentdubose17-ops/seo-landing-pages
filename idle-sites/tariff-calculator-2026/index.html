@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tariff Calculator 2026 — Free Import Duty Calculator">
     <meta name="twitter:description" content="Calculate import duties instantly with 2026 Section 301 tariff rates for 60 countries.">
-    <meta name="dateModified" content="2026-09-14">
+    <meta name="dateModified" content="2026-09-15">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -26,7 +26,7 @@
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript",
-        "dateModified": "2026-09-14"
+        "dateModified": "2026-09-15"
     }
     </script>
     <script type="application/ld+json">
@@ -247,6 +247,27 @@
             table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
             th, td, a, p, li { overflow-wrap: anywhere; }
         }
+    </style>
+    <style>
+        /* Importers: 'Will your IOR survive Sept 18?' checklist block (card t_2548e571).
+           Scoped .ior-* classes only - no existing selector is redefined, and every
+           row is a flex line with min-width:0 on the label so long block-reference
+           text wraps instead of pushing the page sideways on phones (the defect
+           class fixed for the deep-link strings in t_7ecb5089). */
+        .ior-check { background: #fff; border: 1px solid #e5e7eb; border-left: 6px solid #b91c1c; border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; }
+        .ior-check h3 { font-size: 1.05rem; color: #1a365d; margin-bottom: 4px; }
+        .ior-check .ior-intro { font-size: 0.9rem; color: #555; margin-bottom: 10px; }
+        .ior-check .ior-list { list-style: none; margin: 0 0 14px; padding: 0; }
+        .ior-check .ior-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+        .ior-check .ior-item:last-child { border-bottom: none; }
+        .ior-check .ior-item input[type="checkbox"] { flex: 0 0 20px; width: 20px; height: 20px; margin-top: 2px; }
+        .ior-check .ior-item label { flex: 1 1 auto; min-width: 0; font-weight: 500; font-size: 0.95rem; color: #333; line-height: 1.45; cursor: pointer; }
+        .ior-verdict { border-radius: 10px; padding: 14px 16px; font-size: 0.92rem; }
+        .ior-verdict.warn { background: #fef2f2; border: 1px solid #fca5a5; color: #7f1d1d; }
+        .ior-verdict.ok { background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; }
+        .ior-verdict .ior-count { display: block; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.03em; opacity: 0.85; margin-bottom: 6px; }
+        .ior-cta { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 6px solid #2563eb; border-radius: 10px; padding: 14px 16px; margin: 16px 0 0; font-size: 0.95rem; color: #1e3a8a; }
+        .ior-caption { font-size: 0.82rem; color: #888; margin: 12px 0 0; }
     </style>
 </head>
 <body>
@@ -693,6 +714,28 @@
                 <div class="hint">Deep-link format: <code>?mode=s338&amp;programme=alcohol&amp;value=250000&amp;entry=after&amp;excl=no&amp;pct=25&amp;dest=us</code> — or simply <code>?product=s338</code>.</div>
             </div>
         </div>
+    </div>
+</section>
+
+<section class="info" id="ior-survival-checklist">
+    <h2>&#9888;&#65039; Will your IOR survive Sept 18?</h2>
+    <p><strong>On Friday, September 18, 2026, CBP begins voiding importer-of-record (IOR) numbers.</strong> The Federal Register notice that sets the date (doc 2026-16911, published August 19, 2026, tied to Executive Order 14411) is explicit: <strong>"if CBP determines that the information provided on a CBP Form 5106 is inaccurate or incomplete, CBP will, as of September 18, 2026, immediately void the associated IOR number."</strong> CBP is verifying <em>the record it already holds</em> — not the copy in your file drawer — so a record that was accurate when it was filed is exposed if the underlying facts have moved on. None of the duties this calculator estimates can be paid at all if the IOR number on the entry is void.</p>
+
+    <div class="ior-check">
+        <h3>Tick each element CBP holds for your IOR</h3>
+        <p class="ior-intro">Four of the six data elements the notice enumerates — these four carry the highest void risk.</p>
+        <ul class="ior-list">
+            <li class="ior-item"><input type="checkbox" id="iorBox1" class="ior-box"><label for="iorBox1">Legal name in block 1A matches your IRS records exactly, including suffix and punctuation.</label></li>
+            <li class="ior-item"><input type="checkbox" id="iorBox2" class="ior-box"><label for="iorBox2">EIN/SSN/CBP number in block 1B belongs to the IOR entity itself — not to a parent, an affiliate or a third party.</label></li>
+            <li class="ior-item"><input type="checkbox" id="iorBox3" class="ior-box"><label for="iorBox3">Physical address in block 2B is the actual place of business — not a registered agent, a customs broker, a freight forwarder, a P.O. box, a business service center, or another entity's address.</label></li>
+            <li class="ior-item"><input type="checkbox" id="iorBox4" class="ior-box"><label for="iorBox4">Email in block 2E belongs to the IOR and is actively monitored — the void notice is sent to the most recent address on file.</label></li>
+        </ul>
+        <div class="ior-verdict warn" id="iorVerdict" role="status" aria-live="polite">
+            <span class="ior-count" id="iorVerdictCount">0 of 4 verified</span>
+            <span id="iorVerdictText">CBP will immediately void the associated IOR number as of September 18, 2026 if it determines the Form 5106 information is inaccurate or incomplete.</span>
+        </div>
+        <p class="ior-cta"><strong>Full checklist and the voided-IOR procedure:</strong> <a href="cbp-ior-void-form-5106-september-18.html">CBP void IOR numbers Sept 18 — Form 5106 update 2026: the 10-item pre-deadline checklist, the two re-establishment routes, and what to do if a number is already voided</a>.</p>
+        <p class="ior-caption">Checked against the Federal Register notice (doc 2026-16911, 91 FR 53627), CBP's Create/Update Importer Identity Form (CBP Form 5106) and CBP's Voided Importer Record FAQs. Updated September 15, 2026. Estimates and deadlines only — confirm your own record with a licensed customs broker; this is not legal advice.</p>
     </div>
 </section>
 
@@ -2469,6 +2512,62 @@ BLOG_ARTICLES.forEach(function (art) {
 </script>
 
 <script>
+/* 'Will your IOR survive Sept 18?' checklist (card t_2548e571).
+   Live-updating verdict: 0-3 checked -> the void consequence copy; 4 checked ->
+   the positioned-but-re-verify copy. Text lives in constants here so the DOM
+   harness can assert the same strings the page ships. */
+(function () {
+    var BOX_IDS = ['iorBox1', 'iorBox2', 'iorBox3', 'iorBox4'];
+    var UNCHECKED_HTML = '<strong>CBP will immediately void the associated IOR number as of September 18, 2026</strong> if it determines that the Form 5106 information is inaccurate or incomplete. A voided number is <strong>"invalid for any purpose, including entering imported merchandise into the United States"</strong> — an entry cannot be made under it, and trade counsel (GDLSK, September 3, 2026) reads that as disrupting shipments until the number is reestablished. The written notice comes <em>with</em> the action, not before it: the notice contains no pre-void notice, no response window and no stated cure period. File corrections now — CBP publishes roughly 2 business days to activate a new IOR and 5 business days to update an existing one, so an update filed on September 17 will not be reflected by September 18.';
+    var CHECKED_HTML = '<strong>You are positioned for September 18 — now re-verify all four before Friday.</strong> A tick here is a statement about the facts, not about the record: CBP verifies what it already holds, so confirm each element against the record a customs broker can read in ACE rather than your own file copy. Any of these moving on — a new address, a new EIN, a switched inbox — re-opens the exposure. If a number is voided anyway, CBP&rsquo;s voided-importer-record route publishes <strong>5 business days</strong> to process a reinstatement application.';
+
+    function iorChecklistEls() {
+        var boxes = [], i;
+        for (i = 0; i < BOX_IDS.length; i++) {
+            var b = document.getElementById(BOX_IDS[i]);
+            if (b) boxes.push(b);
+        }
+        return {
+            boxes: boxes,
+            verdict: document.getElementById('iorVerdict'),
+            count: document.getElementById('iorVerdictCount'),
+            text: document.getElementById('iorVerdictText')
+        };
+    }
+
+    function renderIorChecklist() {
+        var e = iorChecklistEls();
+        if (!e.verdict || !e.count || !e.text || e.boxes.length !== BOX_IDS.length) return null;
+        var n = 0, i;
+        for (i = 0; i < e.boxes.length; i++) { if (e.boxes[i].checked) n++; }
+        var all = (n === e.boxes.length);
+        e.count.textContent = n + ' of ' + e.boxes.length + ' verified';
+        e.text.innerHTML = all ? CHECKED_HTML : UNCHECKED_HTML;
+        e.verdict.className = 'ior-verdict ' + (all ? 'ok' : 'warn');
+        return { checked: n, total: e.boxes.length, state: all ? 'positioned' : 'at-risk' };
+    }
+
+    function wireIorChecklist() {
+        var e = iorChecklistEls();
+        if (e.boxes.length !== BOX_IDS.length) return false;
+        for (var i = 0; i < e.boxes.length; i++) {
+            e.boxes[i].addEventListener('change', renderIorChecklist);
+        }
+        renderIorChecklist();
+        return true;
+    }
+
+    window.renderIorChecklist = renderIorChecklist;
+    window.iorChecklistStrings = { at_risk: UNCHECKED_HTML, positioned: CHECKED_HTML };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', wireIorChecklist);
+    } else {
+        wireIorChecklist();
+    }
+})();
+</script>
+<script>
 /* ---------------------------------------------------------------------------
  * Section 338 Canada - ban / snap-back / exclusion scenario - calculator wiring
  * block marker: s338-wiring-t_46ab8765
@@ -2687,5 +2786,6 @@ BLOG_ARTICLES.forEach(function (art) {
 })();
 </script>
 
+
+
 </body>
-</html>
