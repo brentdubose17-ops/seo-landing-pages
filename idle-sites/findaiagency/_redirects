@@ -237,3 +237,41 @@
 #   * /full/blog/ has NO valid single-hop target: /blog/ itself 404s (the directory has
 #     no index.html; only /blog/<slug>.html files are live), so a rule here would chain
 #     into a dead end.
+
+# Historical legacy-mirror-tree residue -> live equivalents (t_81e3163f, 2026-09-15)
+# Third and last piece of the t_c08fc72c residue class (after t_15dc449f's /guides + /directory
+# and t_23264866 + t_8a98245d's verticals). The provenance is measured here rather than assumed:
+# commit ec8c7201 (2026-05-13) added a DIRECTORY tree -- findaiagency.com/ai-agency-chicago/index.html
+# and findaiagency.com/ai-agency-services-list/index.html -- and b6d83898 ("retire the three mirror
+# trees", t_c2bad48b) deleted that whole tree. So both paths WERE published under that earlier build
+# scheme and their URLs are genuine index residue, which is exactly the case this file exists for.
+# That is the difference from the never-served /full/* tree above: nothing under /full/ has ever been
+# live (the publisher prune drops the whole tree from every artifact), which is why
+# /full/ai-agency-services-list stays deliberately 404 in the DECIDED AGAINST block above while its
+# bare form is routed here.
+# Measured before the change (2026-09-15, apex AND www, plain curl): all four paths returned 404 with
+# no Location. Both targets below return 200 and are sitemap locs, so no hop ends on a dead end.
+#
+#   /ai-agency-chicago         -- "Top AI Agencies in Chicago 2026". Part of the city-clone cluster
+#       retired for spam remediation, so this MIRRORS the /full/ai-agency-chicago rule above (one of
+#       10 identical city rules -> /). Re-checked this run instead of trusting the cluster note: the
+#       word "Chicago" occurs 0 times across all 146 live pages, i.e. the site publishes no city
+#       surface at all, and parking a national listing page under a city path would be an invented
+#       mapping -- so / , the same target its 9 siblings use.
+#   /ai-agency-services-list   -- "15 AI Agency Services Every Business Should Know About (2026)".
+#       Unlike the sibling residue paths this one HAS a live equivalent, and it is a functional
+#       match, not a topical stand-in: /best-ai-agencies-for-small-business-2026 carries "The Five
+#       AI Services SMBs Actually Buy (and What Each Costs)", whose numbered categories map onto the
+#       retired listicle's own items -- Customer Support Agents and Chatbots = retired #1 Custom AI
+#       Chatbot Development (+ #8 Customer Service Automation), Workflow Automation with LLM Layers
+#       = #2 Workflow Automation (n8n, Make, Zapier), Lead Scoring and Predictive Analytics = #3
+#       AI-Powered Lead Generation, Content Operations Pipelines = #7 Content Generation & SEO --
+#       and its "Service Category Comparison: Which AI Investment Fits Your Business?" is the retired
+#       close "How to Choose the Right Services for Your Business". Same reader (a business choosing
+#       which AI services to buy), same function. Runner-up /what-does-an-ai-automation-agency-do was
+#       rejected: its "The Core Service Stack" is the 7-phase shape of an agency engagement, not a
+#       service menu, so none of its items map.
+/ai-agency-chicago / 301
+/ai-agency-chicago/ / 301
+/ai-agency-services-list /best-ai-agencies-for-small-business-2026 301
+/ai-agency-services-list/ /best-ai-agencies-for-small-business-2026 301
