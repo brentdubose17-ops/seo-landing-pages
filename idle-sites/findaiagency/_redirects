@@ -83,3 +83,30 @@
 /full/terms/ / 301
 /full/list-your-agency / 301
 /full/list-your-agency/ / 301
+
+# Historical (pre-2026) tree residue -> closest live equivalent (t_15dc449f, 2026-09-15)
+# t_c08fc72c established that findaiagency.com's ENTIRE queryable index residue is
+# stale URLs from an older tree (a directory + /guides + vertical landing pages) that
+# no longer exists -- 6 of 7 index hits were dead, all on the www host; t_3d0025e1
+# then attached www so those historical URLs stop 522ing. Two of them (/guides and
+# /directory, both 404 today, identical on apex and www) are the paths that card
+# asked about. They are answered with a 301 rather than left a 404 because a crawler
+# re-fetching residual URLs would otherwise land on the 404 page and find no live
+# content on a domain whose live tree has zero index presence -- the hop is what
+# puts a real page in front of it. Each target is a sitemap loc, so the hop does not
+# end on a dead end. Paths with no live equivalent are NOT given a made-up target
+# here (see the retired-surface note above for how those are handled).
+#
+#   /guides    -- the old how-to hub. index.html still carries the literal "Guides"
+#                 section heading, i.e. the homepage IS the guides hub now. No
+#                 /blog/ index exists to point at (/blog/ is a directory with no
+#                 index.html and 404s), so / is the only live hub.
+#   /directory -- the old browse-agencies listing (the ?specialty=... form maps to
+#                 the same path; _redirects matches on path only, so the filter form
+#                 is covered by these rules). -2026 is the site's live
+#                 agency-selection surface: /best-ai-agencies-for-small-business was
+#                 already consolidated into it by the rules above.
+/guides / 301
+/guides/ / 301
+/directory /best-ai-agencies-for-small-business-2026 301
+/directory/ /best-ai-agencies-for-small-business-2026 301
