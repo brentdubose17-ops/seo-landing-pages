@@ -204,6 +204,14 @@
         .notice-banner .deadline { display: inline-block; background: #d97706; color: #fff; font-size: 0.8rem; font-weight: 700; padding: 2px 10px; border-radius: 12px; vertical-align: middle; margin-left: 6px; }
         .notice-banner p { font-size: 0.95rem; color: #78350f; margin-bottom: 8px; }
         .notice-banner a { color: #92400e; }
+        /* IOR / Form 5106 deadline row — card t_b5da7757 (hub status row). Deadline-gated: the row ships in
+           the standard notice-banner style; after Fri Sept 18, 2026 set data-state="past" on it (see the
+           HTML comment above the row) and it renders in the muted archived treatment instead of being
+           deleted. Nothing above this line changes for the six pre-existing rows. */
+        .notice-banner--ior[data-state="past"] .inner { background: #f1f5f9; border-color: #cbd5e1; border-left-color: #94a3b8; }
+        .notice-banner--ior[data-state="past"] h2, .notice-banner--ior[data-state="past"] p { color: #475569; }
+        .notice-banner--ior[data-state="past"] a { color: #64748b; }
+        .notice-banner--ior[data-state="past"] .deadline { background: #94a3b8; }
 
         .info { max-width: 780px; margin: 40px auto; padding: 0 20px; }
         .info h2 { font-size: 1.5rem; margin: 30px 0 15px; color: #1a365d; }
@@ -278,6 +286,20 @@
     <p>Calculate estimated import duties, tariffs, and total landed cost for shipments to the United States — including the new Section 301 forced-labor tariffs on 60 countries (effective July 24, 2026), the beef TRQ increase under Proclamation 11059 (300,000 metric tons added to the 2026 in-quota quantity for lean beef trimmings, Sept–Nov 2026), the Canada Section 338 50% duty on ~$20B of Canadian goods (IN EFFECT Aug 22, 2026 — covered products from hockey sticks to tongue depressors), Canada's 15/25/50% counter-tariffs on C$27.6B of US goods (IN EFFECT Sept 8, 2026), and the Section 232 drone / UAS tariff (100% on drones over 25 kg or with thermal imaging, 25% on other unmanned aircraft, effective September 3, 2026)</p>
 </header>
 
+<!-- IOR / Form 5106 deadline row — card t_b5da7757 (tariff status hub).
+     DEADLINE-GATED: active to Fri Sept 18, 2026; flip to data-state="past" afterwards rather than delete.
+     POST-DEADLINE FLIP: (1) set data-state="past" on the div below; (2) change the .deadline chip text to
+     "IN FORCE since Sept 18, 2026"; (3) change "Effective Friday, Sept 18, 2026, CBP will immediately void"
+     to "As of Sept 18, 2026, CBP voids" and "before Friday" to "before the deadline passes".
+     The muted archived styling is .notice-banner--ior[data-state="past"] in the page's style block. -->
+<div class="notice-banner notice-banner--ior" role="note" id="ior-5106-deadline" data-state="active">
+    <div class="inner">
+        <h2>🔴 CBP Importer Alert: Inaccurate Form 5106 Data Voids Your Importer-of-Record Number — Effective Friday, Sept 18, 2026 <span class="deadline">Effective Sept 18, 2026</span></h2>
+        <p><strong>Effective Friday, Sept 18, 2026, CBP will immediately void an importer-of-record (IOR) number when it determines that the Form 5106 information on file is inaccurate or incomplete.</strong> The required data elements are the legal name, the entity's own EIN/SSN/CBP number, the mailing address, the physical address if different, a phone number, and an email address. A voided IOR number is invalid for any purpose, including entering imported merchandise into the United States; CBP issues written notice <em>for</em> the action rather than before it, and the notice states no cure period. CBP's Voided Importer Record FAQs publish a five-business-day turnaround to process a reinstatement application.</p>
+        <p><strong>Verify your Form 5106 before Friday</strong> — legal name, EIN, mailing and physical address, phone and email — and correct anything that does not match your IRS records. <a href="https://tariffcalculator2026.com/cbp-ior-void-form-5106-september-18">Pre-deadline Form 5106 checklist and the voided-IOR procedure →</a></p>
+        <p style="font-size:0.85rem;color:#666;">Updated September 15, 2026. Sources: <a href="https://www.federalregister.gov/documents/2026/08/19/2026-16911/accuracy-of-importer-of-record-data-submitted-to-cbp" target="_blank" rel="noopener">Federal Register — Accuracy of Importer of Record Data Submitted to CBP (91 FR 53627, Aug 19, 2026)</a> · <a href="https://www.cbp.gov/trade/priority-issues/revenue/bonds/voided-importer-record-faqs" target="_blank" rel="noopener">CBP — Voided Importer Record FAQs</a> · <a href="https://www.cbp.gov/trade/programs-administration/entry-summary/cbp-form-5106" target="_blank" rel="noopener">CBP — Form 5106</a> · <a href="https://www.federalregister.gov/documents/2026/06/10/2026-11595/strengthening-customs-enforcement" target="_blank" rel="noopener">Executive Order 14411 (91 FR 35125, June 10, 2026)</a>.</p>
+    </div>
+</div>
 <div class="notice-banner" role="note" style="border-left-color:#dc2626;">
     <div class="inner">
         <h2>🆕 Ground Beef: 300,000 Metric Tons Added to the Beef Quota — Proclamation 11059 <span class="deadline">IN FORCE — Sept 1 to Nov 30, 2026</span></h2>
