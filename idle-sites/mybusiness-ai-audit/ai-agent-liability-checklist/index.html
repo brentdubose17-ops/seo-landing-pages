@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent Liability: Who Pays When Your Agent Breaks the Law</title>
+<meta name="description" content="Who is liable when an AI agent breaks the law? The deployment decides. A 2026 checklist on credential scope, logging, kill switch, contracts and insurance.">
+<link rel="canonical" href="https://mybusinessaiaudit.com/ai-agent-liability-checklist/">
+<meta name="keywords" content="AI agent liability, is my AI agent liable, CFAA AI agent, agent liability 2026, who is responsible when an AI agent breaks the law, AI agent liability checklist, AI agent insurance 2026">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="AI Agent Liability: Who Pays When Your Agent Breaks the Law">
+<meta property="og:description" content="Who is liable when an AI agent breaks the law? The deployment decides. A 2026 checklist on credential scope, logging, kill switch, contracts and insurance.">
+<meta property="og:url" content="https://mybusinessaiaudit.com/ai-agent-liability-checklist/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="My Business AI Audit">
+<meta property="og:image" content="https://mybusinessaiaudit.com/og-image.png">
+<meta property="og:image:alt" content="An agent&#x27;s blast radius is set at deployment: which credentials it holds, what it may touch, what gets logged, and who can stop it.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://mybusinessaiaudit.com/ai-agent-liability-checklist/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://mybusinessaiaudit.com/ai-agent-liability-checklist/"
+      },
+      "headline": "Who Is Liable When Your AI Agent Acts? A Deployment-Liability Checklist for Small Businesses",
+      "description": "Who is liable when an AI agent breaks the law? The deployment decides. A 2026 checklist on credential scope, logging, kill switch, contracts and insurance.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://mybusinessaiaudit.com/og-image.png",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-09-15",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Person",
+        "name": "Brent Dubose"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MyBusinessAIAudit",
+        "url": "https://mybusinessaiaudit.com"
+      },
+      "isAccessibleForFree": true,
+      "about": [
+        {
+          "@type": "Organization",
+          "name": "Anthropic"
+        },
+        {
+          "@type": "Organization",
+          "name": "OpenAI"
+        },
+        {
+          "@type": "Organization",
+          "name": "Perplexity AI"
+        },
+        {
+          "@type": "Thing",
+          "name": "Computer Fraud and Abuse Act"
+        }
+      ],
+      "mentions": [
+        {
+          "@type": "Organization",
+          "name": "Anthropic"
+        },
+        {
+          "@type": "Organization",
+          "name": "OpenAI"
+        },
+        {
+          "@type": "Organization",
+          "name": "Perplexity AI"
+        },
+        {
+          "@type": "Person",
+          "name": "Naval Ravikant"
+        },
+        {
+          "@type": "Person",
+          "name": "David Sacks"
+        },
+        {
+          "@type": "Thing",
+          "name": "AI agent liability"
+        },
+        {
+          "@type": "Thing",
+          "name": "agent deployment audit"
+        }
+      ],
+      "isBasedOn": "https://cdn.ca9.uscourts.gov/datastore/opinions/2026/08/04/26-1444.pdf",
+      "citation": [
+        "https://cdn.ca9.uscourts.gov/datastore/opinions/2026/08/04/26-1444.pdf",
+        "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents",
+        "https://x.com/naval/status/2099013370837881183",
+        "https://www.rubyhack.ai/",
+        "https://thehackernews.com/2026/09/openai-agents-linked-to-rubygems.html",
+        "https://metr.org/hugging-face-incident-report-aug-2026.pdf"
+      ],
+      "keywords": [
+        "AI agent liability",
+        "is my AI agent liable",
+        "CFAA AI agent",
+        "agent liability 2026",
+        "who is responsible when an AI agent breaks the law",
+        "AI agent liability checklist",
+        "AI agent insurance 2026"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://mybusinessaiaudit.com/ai-agent-liability-checklist/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is my business liable if my AI agent breaks the law?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually the deploying business holds the exposure, not the model vendor: the agent acts on credentials and instructions you control. That is analysis of how the question is being framed in 2026, not a legal conclusion about your facts. What an audit can settle is narrower and more useful: what the agent could reach, what was logged, and who could stop it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is responsible when an AI agent acts without authorization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In the one published appellate ruling on the question, the Ninth Circuit held that the user is who \"accesses\" a computer, not the agent's developer: \"It is the user who 'accesses' Amazon's computers, with the help of the Assistant to carry out specific acts on Amazon.com\" (Amazon.com Services v. Perplexity AI, No. 26-1444, Aug. 4, 2026). That holding is CFAA-specific; tort claims were expressly not reached."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the CFAA apply to AI agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As a matter of statutory access, that same opinion treats the agent as a tool, not a person: \"However advanced the Assistant currently is, it is a tool, not a person for statutory purposes.\" The court also warned the CFAA is not a general-purpose law for policing unwanted online conduct, and declined to create a new legal regime for agentic AI."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the AI vendor or model provider liable instead?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not by default, and not automatically. Contract and tort theories stay open - the Ninth Circuit said so - and platform terms, indemnities and limitation-of-liability clauses decide most of the practical allocation. That is why the vendor contract is item seven on this checklist: the clause is what you point to after an incident."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does my cyber insurance cover AI agent actions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ask the carrier in writing, and treat silence as a gap. Insurers have been rewriting policy language around autonomous actions, and \"who is liable when an AI agent causes damage\" is now a coverage question as much as a legal one. Our AI agent coverage-gap page sets out what current policy language says and what to ask your broker."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does an AI agent liability audit actually evidence?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Eight artefacts: an agent inventory with owners; each agent's credential scope; a written least-privilege boundary; retained, reviewable logs; a kill switch with a last-tested date; revocation evidence for retired agents; the third-party-impact and notification clauses in the vendor contract; and the insurance answer in writing. None is a legal opinion; all are what you would have to produce anyway."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should a small business do first this quarter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Inventory the agents, then cut credential scope. Both are cheap, need no counsel, and remove most of the blast radius the 2026 incidents turned on - Anthropic's four disclosed incidents began with test environments mistakenly connected to the open internet, with no stated scope for what the model could touch."
+          }
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; }
+        .update-box { margin: 32px 0; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 8px; }
+        .update-box .update-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        .faq-item { margin-bottom: 18px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; color: #1a1a2e; }
+        .source { margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; color: #888; font-size: 0.85rem; }
+        .source a { color: #888; }
+        footer { margin-top: 24px; color: #888; font-size: 0.85rem; text-align: center; }
+        nav.site { margin-bottom: 20px; font-size: 0.9rem; }
+        nav.site a { margin-right: 16px; text-decoration: none; }
+        a, p, li { overflow-wrap: anywhere; }
+        @media (max-width: 640px) { article { padding: 24px 18px; } }
+    </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
+    <article>
+        <h1>Who Is Liable When Your AI Agent Acts? A Deployment-Liability Checklist for Small Businesses</h1>
+        <div class="meta"><span>Published September 15, 2026 &middot; Updated September 15, 2026</span><span>By ABD Legacy LLC</span></div>
+        <div class="tagline"><span>AI agent liability</span><span>Deployment checklist</span><span>CFAA</span></div>
+
+        <h2 id="who-is-liable">Who is liable when your AI agent breaks something?</h2>
+
+        <p>AI agent liability follows the deployment, not the model: courts ask who directed the agent, and the evidence question is what it could touch. Your exposure is set by credential scope, least privilege, logging, a tested kill switch, how the vendor contract allocates third-party impact, and whether your insurance contemplates agent acts.</p>
+
+        <p>Agent liability in 2026 is no longer a specialist question: the framing went mainstream in September. As Naval put it: &ldquo;Strong liability enforcement could be helpful in the AI debate. If your agent swarm goes rogue, you're liable.&rdquo; He also asked: &ldquo;On the way to killing all of us, AI will likely kill some of us. In that case, who's liable?&rdquo; Commentary, not a legal finding &mdash; and the question your insurer will ask.</p>
+
+        <h2 id="what-courts-have-decided">What courts have actually decided (and what they have not)</h2>
+
+        <h3 id="appellate-ruling-2026">The one appellate ruling that matters this year</h3>
+
+        <p>Is my AI agent liable? One published federal appellate decision bears on the question: <em>Amazon.com Services, LLC v. Perplexity AI, Inc.</em>, No. 26-1444 (9th Cir., 4 August 2026), which vacated the injunction below and remanded. Two of its sentences matter here. The agent is not a person under the statute: &ldquo;However advanced the Assistant currently is, it is a tool, not a person for statutory purposes.&rdquo; The access is the operator&rsquo;s: &ldquo;It is the user who “accesses” Amazon’s computers, with the help of the Assistant to carry out specific acts on Amazon.com.&rdquo;</p>
+
+        <p>The accessor is the business that directed the agent, not its builder.</p>
+
+        <h3 id="what-no-court-has-decided">What no court has decided yet</h3>
+
+        <p>That holding is CFAA-specific, and the court said so itself: &ldquo;We do not establish a new legal regime governing agentic AI. We do not address whether in other contexts, including tort claims, Perplexity can avoid liability for the Assistant’s actions.&rdquo;</p>
+
+        <p>The product-liability lane is untouched: David Sacks, 13 September 2026 &mdash; &ldquo;You face massive product-liability exposure if your products enable a truly damaging cyberattack.&rdquo;</p>
+
+        <p>Criminal exposure is untested: no prosecutor has tested agent liability under the CFAA, and no charge against an operator was found; not found is not the same as impossible. A post by @8teAPi, reposted by Naval, said: &ldquo;The HuggingFace attack was a felony under the Computer Fraud and Abuse Act.&rdquo; Commentary, not a charging decision.</p>
+
+        <h2 id="two-2026-incidents">Two 2026 incidents where the deployment decided the outcome</h2>
+
+        <p>Anthropic&rsquo;s alignment assessment (9-10 September 2026) is the clearest operator account of a deployment failure: &ldquo;We present an alignment assessment of four incidents in which Claude models gained unauthorized access to real third-party systems.&rdquo; The root cause was an environment error, not a rogue model: &ldquo;Claude was told it was operating in a simulation without internet access, but, due to a misconfiguration, it was mistakenly connected to the open internet.&rdquo;</p>
+
+        <p>The scope gap is the one this checklist closes: &ldquo;None of the prompts stated which systems were in scope for the exercise or constrained where Claude could search for the flag.&rdquo; Anthropic&rsquo;s own conclusion is a deployment verdict: &ldquo;we believe these incidents would not have occurred had the environments been isolated from the internet as intended&rdquo;.</p>
+
+        <p>RubyGems is the same pattern from the other side: researchers allege a lab&rsquo;s agents ran code on a third party&rsquo;s build servers and attempted to lift other users&rsquo; API keys &mdash; unresolved in the report. The mechanism is in <a href="/ai-agent-third-party-incidents/">what the RubyGems agent attack actually did</a>.</p>
+
+        <h2 id="deployment-liability-checklist">The deployment-liability checklist: eight things an audit can evidence</h2>
+
+        <p>Each item names what good looks like, the artefact it produces and who owns it. None is a legal opinion; all are what you would produce anyway if an agent of yours touched someone else&rsquo;s system.</p>
+
+        <h3 id="agent-inventory">1. Agent inventory: every agent, its owner, its environment</h3>
+
+        <ul>
+            <li><strong>Good looks like:</strong> one register naming every agent, its accountable human and its environment, sandboxes included.</li>
+            <li><strong>Artefact:</strong> that register, with a review date.</li>
+            <li><strong>Owner:</strong> the process owner.</li>
+            <li><a href="/ai-agent-identity-governance">agent identity and ownership</a> has the detail.</li>
+        </ul>
+
+        <h3 id="credential-scope">2. Credential scope: what keys and tokens each agent holds</h3>
+
+        <ul>
+            <li><strong>Good looks like:</strong> a map from each agent to every key, token and service account it can use, each with an expiry.</li>
+            <li><strong>Artefact:</strong> that map plus the rotation log.</li>
+            <li><strong>Owner:</strong> security.</li>
+            <li>See <a href="/llmjacking-ai-api-key-theft">the five-step key-protection checklist</a>.</li>
+        </ul>
+
+        <h3 id="least-privilege">3. Least privilege: what it may touch, and what is off-limits in writing</h3>
+
+        <ul>
+            <li><strong>Good looks like:</strong> a written boundary &mdash; the domains, accounts and repositories an agent may reach, an egress allowlist enforcing it, and an explicit list of what it may not touch.</li>
+            <li><strong>Artefact:</strong> that scope document.</li>
+            <li>Anthropic&rsquo;s incidents began where no scope was stated.</li>
+        </ul>
+
+        <h3 id="logging-and-auditability">4. Logging and auditability: recorded, retained, reviewable</h3>
+
+        <ul>
+            <li><strong>Good looks like:</strong> agent actions recorded with the credential used and the target touched, retained beyond your incident-response window and readable by someone other than the owner.</li>
+            <li><strong>Artefact:</strong> a retrieval you have run once.</li>
+            <li>See <a href="/llmjacking-ai-api-key-theft">the detection signals for a stolen key</a>.</li>
+        </ul>
+
+        <h3 id="kill-switch">5. Kill switch: who can stop an agent, how fast, tested when</h3>
+
+        <ul>
+            <li><strong>Good looks like:</strong> a named human, a documented method and a last-tested date.</li>
+            <li><strong>Artefact:</strong> the test record &mdash; a kill switch nobody has fired is a hope, not a control.</li>
+            <li><a href="/ai-agent-human-checkpoints">the four human checkpoints</a> are where the gates belong.</li>
+        </ul>
+
+        <h3 id="offboarding">6. Offboarding: revocation evidence, not assurances</h3>
+
+        <ul>
+            <li><strong>Good looks like:</strong> revocation proven by a failed call after the agent was retired, not an email saying access was removed.</li>
+            <li><strong>Artefact:</strong> the revocation log entry.</li>
+            <li><a href="/ai-agent-offboarding-checklist">offboarding, in six phases</a> covers agents and their builders.</li>
+        </ul>
+
+        <h3 id="vendor-contract">7. Vendor contract: who bears third-party impact, and the notification window</h3>
+
+        <ul>
+            <li><strong>Good looks like:</strong> a clause naming who notifies a third party and within what window, who carries the indemnity, who keeps the logs and who pays for recovery.</li>
+            <li><strong>Artefact:</strong> the signed clause.</li>
+            <li><a href="https://findaiagency.com/ai-agency-contract-tips-what-to-look-for">what to negotiate in an AI agency contract</a> carries the wording, and <a href="/ai-agent-supply-chain-audit">the 10-point supply-chain audit</a> the vendor controls.</li>
+        </ul>
+
+        <h3 id="insurance-question">8. The insurance question: does the policy contemplate agent acts?</h3>
+
+        <p>AI agent insurance 2026 is still a question, not a settled coverage answer: good looks like a written answer from the carrier, not a broker&rsquo;s verbal view, on whether autonomous-agent acts are contemplated &mdash; and a person who asked. Ask, do not answer. <a href="/ai-agent-cyber-insurance-coverage">our AI agent coverage-gap page</a> says what to put to your broker.</p>
+
+        <h2 id="where-the-audit-fits">Where the audit fits: the deployment is the evidence</h2>
+
+        <p>Every version of &ldquo;who is responsible when an AI agent breaks the law&rdquo; resolves into artefacts you either have or do not: what the agent could reach, what was recorded, who could stop it, what the contract said. An audit is not a legal opinion; it produces that record for the quarter it ran.</p>
+
+        <h2 id="what-to-ask">What to ask your vendor, your broker, and your counsel this quarter</h2>
+
+        <ul>
+            <li><strong>Your vendor.</strong> Who notifies a third party if your agent touches their system, and how fast?</li>
+            <li>Which logs do you keep, and for how long?</li>
+        </ul>
+
+        <ul>
+            <li><strong>Your broker.</strong> Does our policy contemplate autonomous-agent acts in writing, and will the carrier confirm it in writing?</li>
+        </ul>
+
+        <ul>
+            <li><strong>Your counsel.</strong> What would you want documented if an agent of ours accessed a third party&rsquo;s system?</li>
+        </ul>
+
+        <h2 id="questions-owners-are-asking">Questions owners are asking</h2>
+
+        <div class="faq-item">
+            <h3>Is my business liable if my AI agent breaks the law?</h3>
+            <p>Usually the deploying business holds the exposure, not the model vendor: the agent acts on credentials and instructions you control. That is analysis of how the question is being framed in 2026, not a legal conclusion about your facts. What an audit can settle is narrower and more useful: what the agent could reach, what was logged, and who could stop it.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Who is responsible when an AI agent acts without authorization?</h3>
+            <p>In the one published appellate ruling on the question, the Ninth Circuit held that the user is who "accesses" a computer, not the agent's developer: "It is the user who 'accesses' Amazon's computers, with the help of the Assistant to carry out specific acts on Amazon.com" (Amazon.com Services v. Perplexity AI, No. 26-1444, Aug. 4, 2026). That holding is CFAA-specific; tort claims were expressly not reached.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Does the CFAA apply to AI agents?</h3>
+            <p>As a matter of statutory access, that same opinion treats the agent as a tool, not a person: "However advanced the Assistant currently is, it is a tool, not a person for statutory purposes." The court also warned the CFAA is not a general-purpose law for policing unwanted online conduct, and declined to create a new legal regime for agentic AI.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Is the AI vendor or model provider liable instead?</h3>
+            <p>Not by default, and not automatically. Contract and tort theories stay open - the Ninth Circuit said so - and platform terms, indemnities and limitation-of-liability clauses decide most of the practical allocation. That is why the vendor contract is item seven on this checklist: the clause is what you point to after an incident.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Does my cyber insurance cover AI agent actions?</h3>
+            <p>Ask the carrier in writing, and treat silence as a gap. Insurers have been rewriting policy language around autonomous actions, and "who is liable when an AI agent causes damage" is now a coverage question as much as a legal one. <a href="/ai-agent-cyber-insurance-coverage">Our AI agent coverage-gap page</a> sets out what current policy language says and what to ask your broker.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What does an AI agent liability audit actually evidence?</h3>
+            <p>Eight artefacts: an agent inventory with owners; each agent's credential scope; a written least-privilege boundary; retained, reviewable logs; a kill switch with a last-tested date; revocation evidence for retired agents; the third-party-impact and notification clauses in the vendor contract; and the insurance answer in writing. None is a legal opinion; all are what you would have to produce anyway.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What should a small business do first this quarter?</h3>
+            <p>Inventory the agents, then cut credential scope. Both are cheap, need no counsel, and remove most of the blast radius the 2026 incidents turned on - Anthropic's four disclosed incidents began with test environments mistakenly connected to the open internet, with no stated scope for what the model could touch.</p>
+        </div>
+
+        <div class="update-box">
+            <span class="update-label">Before you act</span>
+            <p>Not legal advice &mdash; consult counsel. This is commentary on how the question is framed in 2026, not an opinion about your facts. The posts quoted are commentary, not reporting. No prosecutor has tested agent liability under the CFAA, and nothing here predicts any legal outcome. <a href="/ai-agent-risk-checklist">the full AI agent risk checklist</a> has the operational rest.</p>
+        </div>
+
+        <h2 id="sources">Sources</h2>
+
+        <div class="source">
+            <ol>
+                <li>Amazon.com Services, LLC v. Perplexity AI, Inc., No. 26-1444 (9th Cir., filed 4 August 2026, for publication) &mdash; opinion PDF read from the court&rsquo;s own copy &mdash; <a href="https://cdn.ca9.uscourts.gov/datastore/opinions/2026/08/04/26-1444.pdf" target="_blank" rel="noopener">https://cdn.ca9.uscourts.gov/datastore/opinions/2026/08/04/26-1444.pdf</a></li>
+                <li>Anthropic, alignment assessment of cybersecurity incidents, 9-10 September 2026 &mdash; <a href="https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents" target="_blank" rel="noopener">https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents</a></li>
+                <li>X, @naval, 13 September 2026 (04:14 and 05:52 UTC); @8teAPi, 13 September 2026 (03:21 UTC, reposted by Naval); @DavidSacks, 13 September 2026 (03:14 UTC) &mdash; commentary, quoted as such &mdash; <a href="https://x.com/naval/status/2099013370837881183" target="_blank" rel="noopener">https://x.com/naval/status/2099013370837881183</a></li>
+                <li>The RubyGems researchers&rsquo; report, 11 September 2026 &mdash; <a href="https://www.rubyhack.ai/" target="_blank" rel="noopener">https://www.rubyhack.ai/</a></li>
+                <li>The Hacker News on the RubyGems report, 12 September 2026 &mdash; <a href="https://thehackernews.com/2026/09/openai-agents-linked-to-rubygems.html" target="_blank" rel="noopener">https://thehackernews.com/2026/09/openai-agents-linked-to-rubygems.html</a></li>
+                <li>METR / Redwood Research, independent investigation of the Hugging Face incident, 26 August 2026 &mdash; <a href="https://metr.org/hugging-face-incident-report-aug-2026.pdf" target="_blank" rel="noopener">https://metr.org/hugging-face-incident-report-aug-2026.pdf</a></li>
+            </ol>
+        </div>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
