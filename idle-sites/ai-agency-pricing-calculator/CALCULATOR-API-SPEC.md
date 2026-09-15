@@ -970,7 +970,115 @@ Umami event `claude_code_limits_estimated` fires on submit with
   no promo-current language in the rendered section, no horizontal overflow, no uncaught
   JS errors.
 
+## 14. Parallel Agent Compute Cost Estimator (NEW 2026-09-15)
+
+**Location:** `index.html` § `#parallel-agent-compute` (kanban t_5de39b46).
+**Fact basis:** research brief t_6687dbf2 / `DOSSIER-cursor-projects-agency-pattern.md`
+(24 sources, 51/51 verbatim quotes, gate exit 0). Primary vendor sources: `cursor.com/blog/projects`,
+`cursor.com/changelog/projects` (both Sept 10, 2026), `cursor.com/docs/account/pricing` (fetched 2026-09-15).
+
+**Why two lines.** Cursor Projects (beta, Sept 10, 2026) puts a coordinator agent over parallel
+subagents that "run as many in parallel as the work needs" on the Project's own cloud computer.
+The vendor bills that agent layer as **API-priced tokens for the selected model, with a required
+spend limit** (over-limit usage on-demand at the same rates). It publishes **no Projects price, no
+compute-minute metric and no credits currency** on the Cursor side — so the honest field is not
+"compute minutes", it is **concurrent cloud agents x token spend**, with the rate user-editable and
+defaulted to a labelled placeholder. The seat layer is the published one and is shown separately.
+There is **no published concurrent-agent ceiling**: do not publish a concurrency cap.
+
+### 14.1 Inputs
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `paSeats` | Coding-agent seats (licences) | number | `5` | 0–500, step 1 |
+| `paSeatPrice` | Seat licence price ($ per seat / month) | number | `40` | 0–1000, step 1 |
+| `paAgents` | Concurrent cloud agents (parallel subagents) | number | `4` | 0–500, step 1 |
+| `paComputePerAgent` | Token spend per active agent ($ / agent / month) — **PLACEHOLDER** | number | `60` | 0–5000, step 5 |
+
+Published anchors carried in the copy: **Cursor Teams Standard $40/user/mo, Teams Premium
+$120/user/mo (5x Agent limits)**; individual plans Pro $20 / Pro+ $60 / Ultra $200. The
+placeholder default sits at the low end of Cursor's published **individual-plan** usage guidance
+($60–$100/mo for daily agent users; $200+/mo for multiple agents or automation), presented as
+plan guidance, never as a vendor compute rate.
+
+### 14.2 Model
+
+```
+seatLine     = seats x seatPrice            // published per-seat licence line
+computeLine  = agents x perAgent            // parallel agent compute (API-priced tokens)
+total        = seatLine + computeLine       // seat + compute, kept separate
+computeShare = total > 0 ? computeLine / total x 100 : 0
+perSeat      = seats > 0 ? total / seats : 0
+seatMultiple = (seats > 0 && seatPrice > 0 && computeLine > 0) ? perSeat / seatPrice : 1
+```
+
+### 14.3 Outputs
+
+| Field ID | Label | Notes |
+|----------|-------|-------|
+| `pa-seat-line` / `pa-seat-line-sub` | Per-seat licence line | `seats x seatPrice`, sub names the published line |
+| `pa-compute-line` / `pa-compute-line-sub` | Parallel agent compute | **card `pa-compute-card` is `display:none` while `computeLine === 0`**; sub flags the rate as the user's input |
+| `pa-total` / `pa-total-sub` | Total monthly (seat + compute) | sub shows `$seat licence + $compute` — at zero compute it reads `(seat-only total — unchanged from the licence line)` |
+| `pa-compute-share` / `pa-compute-share-sub` | Compute share of the bill | 1 dp % |
+| `pa-per-seat` / `pa-per-seat-sub` | Effective cost per seat | `n/a` when `seats === 0`; sub shows `N.NNx the $P/seat sticker price` |
+| `pa-note` | How to read this | four branches: nothing modelled / seat-only / compute-only / both lines |
+
+**Invariants (asserted in `tests/parallel-agent-compute-verify.mjs`):** zero-valued inputs
+reproduce the seat-only total exactly and hide the compute card; the compute line appears only
+when `agents x perAgent > 0`; no `NaN`/`Infinity` at any input combination.
+
+### 14.4 Worked examples (shipped function, mock DOM)
+
+| # | Seats x $/seat | Agents x $/agent | Seat line | Compute line | Total | Compute share | Effective $/seat |
+|---|----------------|------------------|-----------|--------------|-------|---------------|------------------|
+| A (defaults) | 5 x $40 | 4 x $60 | $200.00/mo | $240.00/mo | **$440.00/mo** | 54.5% | $88.00 (2.20x) |
+| Z | 0 x $0 | 0 x $0 | $0.00/mo | hidden ($0.00) | $0.00/mo | 0.0% | n/a |
+| S | 10 x $120 | 0 x $500 | $1,200.00/mo | hidden | $1,200.00/mo | 0.0% | $120.00 (1.00x) |
+| D | 3 x $40 | 20 x $200 | $120.00/mo | $4,000.00/mo | $4,120.00/mo | 97.1% | $1,373.33 (34.33x) |
+| O | 2 x $40 | 1 x $60 | $80.00/mo | $60.00/mo | $140.00/mo | 42.9% | $70.00 (1.75x) |
+| C | 0 x $0 | 6 x $100 | $0.00/mo | $600.00/mo | $600.00/mo | 100.0% | n/a |
+
+### 14.5 Analytics
+
+Umami event `parallel_agents_estimated` with `{seats, seat_price, agents, per_agent}`.
+
+### 14.6 Tests
+
+- `node tests/parallel-agent-compute-verify.mjs` -> **86 assertions, exit 0**. Extracts the shipped
+  `calculateParallelAgents()` source out of `index.html` and runs it against a mock DOM (so the
+  assertions are made against the bytes that ship), covering the six rows above, a zero-input
+  invariance sweep (six seat configs), the singular/plural copy paths, the hidden-card rule, the
+  Umami payload and the honesty guards (the copy must not state an unpublished rate as a price).
+- `python3 tests/parallel-agent-compute-browser-verify.py <url>` -> **116 assertions, exit 0** in
+  Chromium at 1280x900 / 390x844 / 320x800 / 414x896: the input defaults, the worked cases in a real
+  browser, the hidden compute card, no `NaN`/`Infinity`, no horizontal overflow, no uncaught JS errors.
+
+### 14.7 Change control
+
+The changelog entry in §HTML (`#routing-sources` Update log) needed `overflow-wrap:anywhere` on its
+own `<p>`: the `tests/parallel-agent-compute-verify.mjs` token is unbreakable and pushed 30px of
+horizontal overflow at a 320px viewport (measured before/after: 30px -> 0px).
+
 ## Changelog
+
+- **2026-09-15** — **Parallel Agent Compute Cost Estimator added** (kanban t_5de39b46; fact basis
+  research brief t_6687dbf2 / `DOSSIER-cursor-projects-agency-pattern.md`, 24 sources, 51/51 verbatim
+  quotes). New section `#parallel-agent-compute` + `calculateParallelAgents()` pricing the two lines
+  a coding-agent bill has, separately: the published **per-seat licence** (Teams Standard
+  $40/user/mo, Teams Premium $120/user/mo) and the **parallel agent compute** the coordinator's
+  subagents burn (API-priced tokens for the selected model, required spend limit), entered as
+  **concurrent cloud agents x token spend per agent** with the rate **user-editable and defaulted to
+  a labelled placeholder** ($60 — the low end of Cursor's published individual-plan band of
+  $60–$100/mo for daily agent users). Cursor publishes no Projects price, no compute-minute metric
+  and no credits currency, so no vendor compute rate is asserted anywhere in the copy. Outputs: seat
+  line, compute line, total (seat + compute), compute share, effective cost per seat. Zero-valued
+  inputs reproduce the seat-only total exactly and hide the compute card. Also: FAQ item + FAQPage
+  twin (44 -> 45 Q, `faq-parity-sweep.py` 43 MATCH + 2 CITE, 0 drift), WebApplication `featureList`,
+  meta keywords (+10 terms), on-page Update-log entry, Umami `parallel_agents_estimated`. Verified:
+  `node tests/parallel-agent-compute-verify.mjs` **86/86**, browser harness **116/116** at four
+  viewports, `node --check` on the inline script, JSON-LD parse on both blocks, id uniqueness
+  (282 ids, 0 duplicates), house `site_consistency.py` **0 errors / 0 warnings** with the sitemap
+  cross-check.
 
 - **2026-09-14** — **Claude Code estimator rebased on the permanent 125 index** (kanban
   t_e03f5d47; fact basis research brief t_19294d02, primary = Anthropic Help Center
