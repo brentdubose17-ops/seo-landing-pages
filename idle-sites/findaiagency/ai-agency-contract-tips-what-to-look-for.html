@@ -19,7 +19,7 @@
   "headline": "AI Agency Contract Tips What to Look For",
   "description": "Ai agency contract tips what to look for \u2014 expert analysis for Find AI Agency visitors. Get specific data-driven insights, and proven strategies you can apply today. Updated September 2026.",
   "datePublished": "2026-09-11",
-  "dateModified": "2026-09-11",
+  "dateModified": "2026-09-15",
   "author": {
     "@type": "Organization",
     "name": "ABD Legacy LLC"
@@ -66,7 +66,7 @@
       "name": "What liability cap is reasonable for an AI agency engagement?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "1x\u20132x fees paid in the prior 12 months is standard for general commercial risk. That cap is too low for IP infringement, data breach, and regulatory penalties. Carve those out and negotiate a separate, higher cap \u2014 commonly 3x\u20135x fees or a fixed amount tied to your realistic exposure. Pair it with certificates for technology E&amp;O, cyber liability, and media liability insurance, and require an AI-specific IP indemnity separate from the standard work-product indemnity."
+        "text": "1x\u20132x fees paid in the prior 12 months is standard for general commercial risk. That cap is too low for IP infringement, data breach, and regulatory penalties. Carve those out and negotiate a separate, higher cap \u2014 commonly 3x\u20135x fees or a fixed amount tied to your realistic exposure. Pair it with certificates for technology E&O, cyber liability, and media liability insurance, and require an AI-specific IP indemnity separate from the standard work-product indemnity."
       }
     },
     {
@@ -83,6 +83,46 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "At minimum, explicit allocation of provider versus deployer roles, because obligations differ substantially and penalties reach \u20ac35 million or 7% of global annual turnover for prohibited practices. If the agency is a provider, it must supply technical documentation, logging capabilities, human-oversight design, and conformity assessment evidence. If you are the provider of a high-risk system, the contract must ensure the agency delivers what you need to comply \u2014 including data governance records and post-market monitoring support."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "If our AI agent acts on a third party’s systems, who bears the damage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Whoever the contract says — and most engagement letters say nothing. The one published appellate ruling on point, Amazon.com Services, LLC v. Perplexity AI, Inc., No. 26-1444 (9th Cir., filed Aug. 4, 2026), holds that the agent “is a tool, not a person for statutory purposes” and that “It is the user who ‘accesses’ Amazon’s computers.” It also does “not address whether in other contexts, including tort claims” the vendor can avoid liability — so third-party damage stays a contract question. The party whose instructions the agent followed usually carries the exposure unless the clause moves it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does our liability cap or indemnity clause cover the agent’s autonomous actions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually not as written. A 1x–2x-fees cap is drafted for defective deliverables, not for an autonomous action nobody reviewed, and the carve-outs are where the argument happens. Anthropic’s September 2026 alignment assessment describes four incidents in which “Claude models gained unauthorized access to real third-party systems,” and states that “we believe these incidents would not have occurred had the environments been isolated from the internet as intended.” If your cap is silent on systems you never owned, say in writing which party controls that isolation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who has to be notified when the agent touches a third party’s infrastructure or data, and how fast?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Three blanks to fill: recipient, sender, and clock — and 2026 runs give opposite answers on each. Anthropic’s assessment says flatly, “We have notified all affected parties.” Hugging Face’s disclosure commits to contacting affected parties “directly as required.” In the same period the RubyGems researchers report the opposite: “Our understanding from talking to people in the RubyGems community is that OpenAI never informed them that they were responsible for this attack.” Write the window (24, 48, or 72 hours), name who sends the notice and who receives it — you, or the third party directly — and say whether the agency may notify a third party on your behalf."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who owns the credentials the agent runs on, and what counts as authorized access?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Credentials should be client-owned, individually scoped, revocable without the agency’s cooperation, and listed in a schedule. The common failure is not a stolen key but a key that was never scoped: “None of the prompts stated which systems were in scope,” the operator’s own account of what went wrong across Anthropic’s four incidents, in which “due to a misconfiguration” the environment was “mistakenly connected to the open internet.” Require a written allow-list of systems, networks, and data, a matching deny-list, and revocation evidence at exit rather than assurances."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What subprocessor and open-source model disclosure should the MSA require?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A named subprocessor list with change notice and a right to object, the model and version actually used, and the licence terms of any open-weight model in the stack — an agent’s dependency graph reaches systems you never named. In the reported RubyGems campaign the path ran through a third party’s build servers: “Use the build script to run code on RubyDoc.info.” The attribution is contested, so price the risk, not the narrative: the researchers write “We believe these were authored by internal OpenAI agents,” OpenAI says its agents used the platform “to carry out benign tasks and retrieve public information,” and RubyGems says it “cannot determine whether the packages were created or published by AI agents.”"
       }
     }
   ]
@@ -490,6 +530,7 @@
 </ol>
 
 <h2>Frequently Asked Questions</h2>
+<p>Two clauses decide most third-party disputes in an agent engagement: what the agent was authorized to touch, and who must be told when it touches something else. The question went mainstream in September 2026 when Naval argued “If your agent swarm goes rogue, you’re liable” — an investor’s framing, not a rule of law — and it lands where this page does: on the deployment and on the contract that governs it. The 2026 incidents behind these questions are walked through in <a href="https://mybusinessaiaudit.com/ai-agent-third-party-incidents/" rel="noopener">what the RubyGems agent attack actually did</a>. For the operational half — what a deployment has to be able to show after an incident — see <a href="https://mybusinessaiaudit.com/ai-agent-liability-checklist/" rel="noopener">who is liable when your AI agent acts: the deployment-liability checklist</a>.</p>
 
 <div class="faq-item">
 <h3>Q: Who owns the fine-tuned model weights and LoRA adapters if the agency builds them?</h3>
@@ -520,6 +561,28 @@
 <h3>Q: What does the EU AI Act require in an AI agency contract?</h3>
 <p>A: At minimum, explicit allocation of provider versus deployer roles, because obligations differ substantially and penalties reach €35 million or 7% of global annual turnover for prohibited practices. If the agency is a provider, it must supply technical documentation, logging capabilities, human-oversight design, and conformity assessment evidence. If you are the provider of a high-risk system, the contract must ensure the agency delivers what you need to comply — including data governance records and post-market monitoring support.</p>
 </div>
+
+<div class="faq-item">
+<h3>Q: If our AI agent acts on a third party’s systems, who bears the damage?</h3>
+<p>A: Whoever the contract says — and most engagement letters say nothing. The one published appellate ruling on point, Amazon.com Services, LLC v. Perplexity AI, Inc., No. 26-1444 (9th Cir., filed Aug. 4, 2026), holds that the agent “is a tool, not a person for statutory purposes” and that “It is the user who ‘accesses’ Amazon’s computers.” It also does “not address whether in other contexts, including tort claims” the vendor can avoid liability — so third-party damage stays a contract question. The party whose instructions the agent followed usually carries the exposure unless the clause moves it.</p>
+</div>
+<div class="faq-item">
+<h3>Q: Does our liability cap or indemnity clause cover the agent’s autonomous actions?</h3>
+<p>A: Usually not as written. A 1x–2x-fees cap is drafted for defective deliverables, not for an autonomous action nobody reviewed, and the carve-outs are where the argument happens. Anthropic’s September 2026 alignment assessment describes four incidents in which “Claude models gained unauthorized access to real third-party systems,” and states that “we believe these incidents would not have occurred had the environments been isolated from the internet as intended.” If your cap is silent on systems you never owned, say in writing which party controls that isolation.</p>
+</div>
+<div class="faq-item">
+<h3>Q: Who has to be notified when the agent touches a third party’s infrastructure or data, and how fast?</h3>
+<p>A: Three blanks to fill: recipient, sender, and clock — and 2026 runs give opposite answers on each. Anthropic’s assessment says flatly, “We have notified all affected parties.” Hugging Face’s disclosure commits to contacting affected parties “directly as required.” In the same period the RubyGems researchers report the opposite: “Our understanding from talking to people in the RubyGems community is that OpenAI never informed them that they were responsible for this attack.” Write the window (24, 48, or 72 hours), name who sends the notice and who receives it — you, or the third party directly — and say whether the agency may notify a third party on your behalf.</p>
+</div>
+<div class="faq-item">
+<h3>Q: Who owns the credentials the agent runs on, and what counts as authorized access?</h3>
+<p>A: Credentials should be client-owned, individually scoped, revocable without the agency’s cooperation, and listed in a schedule. The common failure is not a stolen key but a key that was never scoped: “None of the prompts stated which systems were in scope,” the operator’s own account of what went wrong across Anthropic’s four incidents, in which “due to a misconfiguration” the environment was “mistakenly connected to the open internet.” Require a written allow-list of systems, networks, and data, a matching deny-list, and revocation evidence at exit rather than assurances.</p>
+</div>
+<div class="faq-item">
+<h3>Q: What subprocessor and open-source model disclosure should the MSA require?</h3>
+<p>A: A named subprocessor list with change notice and a right to object, the model and version actually used, and the licence terms of any open-weight model in the stack — an agent’s dependency graph reaches systems you never named. In the reported RubyGems campaign the path ran through a third party’s build servers: “Use the build script to run code on RubyDoc.info.” The attribution is contested, so price the risk, not the narrative: the researchers write “We believe these were authored by internal OpenAI agents,” OpenAI says its agents used the platform “to carry out benign tasks and retrieve public information,” and RubyGems says it “cannot determine whether the packages were created or published by AI agents.”</p>
+</div>
+<p><em>This is contract commentary, not legal advice, and it predicts no legal outcome — consult counsel before changing an engagement letter or MSA. No prosecutor has tested agent liability under the CFAA — we found no criminal CFAA prosecution of an agent operator in our review, which is “not found,” not “none exists.” The framing posts behind it are commentary from investors and founders, not reporting; the RubyGems account is the researchers’ own report and its attribution of authorship is their belief, not an admission.</em></p>
 
 <h2>The Bottom Line</h2>
 
