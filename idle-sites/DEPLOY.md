@@ -22,6 +22,8 @@ both landed:
 |---|---|
 | `t_c9f00cdb` | this front end (`tools/deploy-idle-site.sh`, worktree staging + dirty-file guard) and this doc; migrated the daily pipeline to it |
 | `t_f589374f` | `publish-idle-site.py` (git-HEAD staging + prune + gate + flock + beacon-aware verify), `site_consistency.py`, `cf-beacon-strip.py`, `publish-baselines/`, `PUBLISH-IDLE-SITE.md` |
+| `t_dd25c667` | the `llms.txt` index **convention** (`llms_index.py`: entry shape, additions-only splice, redirect-shadow rules) and its rent-lane generator + `--audit-llms` census |
+| `t_0521345c` | the idle lane's **index generation** in `publish-idle-site.py` (step 5 below), the content-lane redirect-shadow classification in the same audit, and `--no-llms-sync` |
 
 Two paths meant two answers to "which files may ship", and the docs disagreed.
 **Decision taken by `t_b9f85aaa`: keep `deploy-idle-site.sh` as the single entry
@@ -79,11 +81,24 @@ body still the older copy) and had to be re-deployed by its owner.
    but uncommitted change is not rolled back); one that differs is a genuine
    in-flight edit and stays at `HEAD`.
 4. **Prune** the excluded paths (see "Prune policy").
-5. **Gate.** `site_consistency.py` over the staged artifact + sitemap; non-zero ⇒
+5. **Generate the site's `llms.txt` index from the staged tree** (card
+   `t_0521345c`, 2026-09-15). Additions-only: every page the staged artifact
+   serves that the index does not list gets its entry, spliced in at the end of
+   the article list, before the upload — so the entry ships in the **same**
+   `wrangler` call as the page. This is why the lane needs no writer-side edit
+   (an undeclared worktree edit to `llms.txt` would be invisible to the deploy
+   and reverted by the next HEAD-staged one). `--no-llms-sync` skips it.
+   A page whose own URL a `_redirects` rule rewrites to another page of the same
+   site (`findaiagency`'s `/best-ai-agencies-for-small-business` → `-2026`) is
+   NOT indexed: that URL can never serve its own bytes, and the target is
+   already listed. The step is also mirrored into the worktree `llms.txt` when
+   that file is clean vs `HEAD` (the audit reads the worktree), never when it
+   holds an uncommitted edit, and it can never trip `--strict-dirty`.
+6. **Gate.** `site_consistency.py` over the staged artifact + sitemap; non-zero ⇒
    `REFUSING TO PUBLISH`, nothing is uploaded, exit 1.
-6. **Deploy** from the staging dir under a per-project `flock` (so two workers
+7. **Deploy** from the staging dir under a per-project `flock` (so two workers
    cannot deploy the same project at the same time).
-7. **Verify** (with `--verify-live`): re-fetch every staged asset and compare
+8. **Verify** (with `--verify-live`): re-fetch every staged asset and compare
    **edge-injection-canonicalised** sha256 (beacon + email obfuscation); CF Pages
    control files are skipped, and an asset whose own URL a `_redirects` rule
    rewrites is verified against the file that URL actually serves and reported as
@@ -98,6 +113,7 @@ body still the older copy) and had to be re-deployed by its owner.
 | undeclared dirty, not live | **the `HEAD` bytes ship; the in-flight edit does not** (no block, no leak) |
 | untracked + undeclared | dropped from the artifact, reported (if it is live, this deploy removes it) |
 | committed, unchanged | committed bytes |
+| `llms.txt` (any state) | **generated from the staged tree** by the publisher (step 5). Existing lines are never rewritten; the worktree copy is mirrored only when it is clean vs `HEAD`. Exempt from `LIVE-BUT-UNCOMMITTED` / `--strict-dirty`: its difference from `HEAD` is by design |
 | declared but excluded (`tests/`, `CHANGELOG.md`, …) | nothing — reported loudly and ignored; the rest of the publish proceeds |
 
 ## Options
@@ -110,6 +126,8 @@ body still the older copy) and had to be re-deployed by its owner.
 --allow-dirty=GLOB[..]   undeclared dirty files matching these globs ALSO ship from the worktree
 --exclude-dirty=GLOB[..] accepted for compatibility; undeclared files are already held at HEAD
 --no-live-check          do not compare uncommitted files against live bytes
+--no-llms-sync           do not generate the site's llms.txt index from the staged tree
+                         (escape hatch; the live index keeps whatever bytes HEAD holds)
 --strict-redirects       fail (instead of verify) an asset whose own URL a _redirects rule rewrites
 --strict-include         abort (rc 2) when --files names an excluded path instead of ignoring it
 --strict-dirty           refuse (rc 1) when a dirty file is live byte-for-byte with its uncommitted

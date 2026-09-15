@@ -21,10 +21,14 @@
 #      --allow-dirty) — that is this run's own work,
 #   3. prune known dead weight (tests/, full/, deploy_main/, .wrangler/,
 #      CHANGELOG.md, node_modules/, editor leftovers) — one prune policy,
-#   4. run the consistency gate (site_consistency.py) over the staged artifact;
+#   4. generate the site's llms.txt index from the STAGED tree (additions-only,
+#      card t_0521345c) — the entry ships in the SAME upload as the page, so the
+#      idle lane needs no writer-side index edit and a HEAD-staged publish can no
+#      longer revert one (the publisher's own --no-llms-sync skips it),
+#   5. run the consistency gate (site_consistency.py) over the staged artifact;
 #      a non-zero gate blocks the deploy and reports REFUSING TO PUBLISH,
-#   5. deploy from the staging dir under a per-project flock,
-#   6. re-fetch and compare edge-injection-canonicalised sha256 for the whole
+#   6. deploy from the staging dir under a per-project flock,
+#   7. re-fetch and compare edge-injection-canonicalised sha256 for the whole
 #      manifest (--verify-live), skipping CF Pages control files; a file whose URL
 #      a _redirects rule rewrites is verified against the file that URL serves and
 #      reported as a visible `skip` (card t_040d3b82) instead of failing forever
@@ -256,7 +260,14 @@ fi
 if [ ${#HELD[@]} -gt 0 ]; then
   echo
   echo "   [undeclared dirty: NOT published — the committed HEAD bytes ship instead]"
-  for h in "${HELD[@]}"; do echo "     - ${h%%|*}  [${h##*|}]"; done
+  for h in "${HELD[@]}"; do
+    if [ "${h%%|*}" = "llms.txt" ]; then
+      echo "     - llms.txt  [${h##*|}]  (the publisher GENERATES this from the staged tree"
+      echo "                 before the upload — card t_0521345c; nothing to declare)"
+    else
+      echo "     - ${h%%|*}  [${h##*|}]"
+    fi
+  done
   echo "   (this is the anti-race rule: another worker's in-flight edit cannot ship,"
   echo "    and it no longer blocks this deploy either)"
 fi
