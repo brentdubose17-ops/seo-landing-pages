@@ -31,7 +31,7 @@
       "description": "Leaked AWS IAM keys with AdministratorAccess let attackers burn a business's AI budget. Learn what LLMjacking is and how to protect LLM API keys.",
       "image": "https://mybusinessaiaudit.com/og-image.png",
       "datePublished": "2026-09-04",
-      "dateModified": "2026-09-04",
+      "dateModified": "2026-09-15",
       "author": {
         "@type": "Organization",
         "name": "ABD Legacy LLC",
@@ -82,7 +82,7 @@
           "name": "How do I know if my AI API key was stolen?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Look for corroborating signals: IAM users or keys you did not create, Marketplace agreements or Bedrock subscriptions you never approved, inference spend climbing with no new workload, calls from unfamiliar IPs, and spikes in access-denied errors. None alone proves theft; together they warrant investigation."
+            "text": "Look for corroborating signals: IAM users or keys you did not create, Marketplace agreements or Bedrock subscriptions you never approved, inference spend climbing with no new workload, calls from unfamiliar IPs, and spikes in access-denied errors. None alone proves theft; together they warrant investigation. The signal that fires for a key nobody is watching is the invoice itself: a billing alert or a charge on an account, project or environment you have already retired or stopped using, where you expected to spend nothing. That is what surfaced the case above on 13 September 2026, and it was the only notice the account holder got."
           }
         },
         {
@@ -143,7 +143,7 @@
     <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
     <article>
         <h1>LLMjacking: How Leaked Cloud Keys Let Attackers Burn Your AI Budget</h1>
-        <div class="meta"><span>Published September 4, 2026</span><span>My Business AI Audit</span></div>
+        <div class="meta"><span>Published September 4, 2026 &middot; Updated September 15, 2026</span><span>My Business AI Audit</span></div>
         <div class="tagline"><span>LLMjacking</span><span>AI API key theft</span><span>LLM API key security</span></div>
 
         <p>LLMjacking is what happens when a leaked cloud credential becomes someone else's free AI budget. On September 3, 2026, Cybersecurity News reported an intrusion &mdash; documented by security researchers at FortiGuard Labs &mdash; in which a leaked AWS IAM access key with AdministratorAccess let an attacker run paid AI model inference through the victim's own account and bill it to the victim. Can someone steal your AI API access? <strong>Yes.</strong> The warning signs are quiet, and for many small businesses the first signal is an invoice.</p>
@@ -237,11 +237,40 @@
             <li><strong>Keep a record for your provider and insurer.</strong> Whether <a href="/ai-agent-cyber-insurance-coverage">cyber insurance covers AI agents</a> depends on what you can document.</li>
         </ol>
 
+        <h2 id="dormant">Dormant and orphaned keys: the key that outlives the server</h2>
+
+        <p>Everything above describes a theft and a spend that happen close together. In the September 2026 case the leaked IAM key was used within days of leaking, and in Anthropic's GTG-50014 case cited above, one stolen key was reused for roughly three weeks of secondary attacks. This section exists for the other shape, and the time differential is the whole point of it: a key that was compromised, then sat unused for months while the infrastructure it belonged to had already been shut down, and was only spent long after everyone had stopped watching that environment.</p>
+
+        <h3>A billing alert on an account that had already been retired</h3>
+
+        <p>On 13 September 2026 at 17:59 UTC (13:59 ET), the developer known as @levelsio described that pattern in his own account. He wrote that he had killed his OpenClaw VPS servers months earlier, but that day received a billing alert on a separate Claude account, <code>claudeforopenclaw@</code>. He checked his own terminals and his VPS sessions and confirmed that none of them used the API. He then closed the account.</p>
+
+        <p>The chain that connects those two events is his own inference rather than a finding, and he is explicit about that: &ldquo;I guess at some point it got hacked and the Claude key inside OpenClaw got exposed and then they waited for months before using it on Fable 5.1.&rdquo; No vendor has disclosed an intrusion here and no forensic account of the path has been published, so read the months of dormancy as the operator's own stated guess, not as a documented attack path. What is not a guess is the control that contained it &mdash; &ldquo;good I kept it on its own separate one.&rdquo; That account was kept separate by design, and because it was separate, the alert landed somewhere he could close on the spot instead of in the account his business actually runs on. <a href="https://x.com/levelsio/status/2099196383538356635">His post is here</a>, and <a href="https://twiscan.com/en/x/levelsio/2099196383538356635">mirrored at twiscan</a> if you cannot read X directly.</p>
+
+        <h3>What Anthropic says about the direction of travel</h3>
+
+        <p>Anthropic's September 2026 report, <em>Countering misuse of AI</em>, is direct about where this is heading: &ldquo;Organizations should treat AI keys and agent integrations with the same level of seriousness as they do production credentials &mdash; because attackers treat them with the same level of seriousness, too.&rdquo; It adds that &ldquo;AI access should be purchased only through authorized channels,&rdquo; and that providers will &ldquo;share threat information and best practices&rdquo; with their partners &mdash; see <a href="https://www.anthropic.com/threat-intelligence-report-september-2026">the report itself</a>. Its supply-chain finding is the one that lands here: access to AI in the form of &ldquo;compromised API keys, session tokens, and devices&rdquo; has become an objective for criminal groups in its own right, and those groups resell it through brokers. A credential attached to something you have already retired is inventory, not history.</p>
+
+        <p>One caution on figures: no reliable number has been published for how many AI API keys are stolen, or for what share of them sit dormant before they are used, so nothing in this section carries a percentage.</p>
+
+        <h3>Four controls for credentials you have already retired</h3>
+
+        <p>The five steps earlier are about keys you still use. These four are about the keys attached to servers, accounts and projects you have already shut down, and if you have decommissioned anything in the last year they are worth running this week.</p>
+
+        <ol>
+            <li><strong>Inventory keys per environment, not per vendor.</strong> One list per cloud account, per project, and per environment that has been retired, with a named owner for each. Our <a href="/anthropic-threat-report-2026-small-business/">breakdown of Anthropic's September 2026 report for a small business</a> makes the same point as the first of its seven controls: inventory every AI key you own, and everyone who holds one.</li>
+            <li><strong>Revoke keys as part of the decommission, not as follow-up work nobody owns.</strong> Retiring the server, the account or the project does not revoke the credentials that were issued to it; that is a separate action, and it needs an owner and a date. This control is about API keys. For the agent-identity version of the same problem, see our <a href="/ai-agent-decommissioning-checklist">AI agent decommissioning checklist</a>.</li>
+            <li><strong>Alert on any spend from a retired environment.</strong> Expected spend there is zero, which turns any charge into a signal instead of a variance. The decommissioning checklist puts the principle better than we can: &ldquo;If the identity authenticates again, you want an alert, not an invoice.&rdquo;</li>
+            <li><strong>Keep high-risk AI accounts financially isolated so a leak cannot auto-recharge.</strong> A separate account, a separate payment method, prepaid credit where the provider offers it, and auto-reload left off. The operator in the case above noted that his account &ldquo;didn't have auto reload on&rdquo; &mdash; a second brake on the same incident, independent of the account being a separate one.</li>
+        </ol>
+
+        <p>And the honest answer to &ldquo;how would I know?&rdquo; is the signal that did the work in this case: the invoice. A billing alert on an environment you believed was empty is the detection signal, because nothing else is watching a deployment you have retired. That signal now sits in the FAQ answer at the end of this page.</p>
+
         <h2 id="bigger">The bigger picture: AI credentials are the new attack surface</h2>
 
         <p>LLMjacking is the second act of a story this site has tracked all month. Anthropic's September 2026 threat report named the pattern too: in its GTG-50014 case, one stolen AI API key was reused for roughly three weeks of secondary attacks against other organizations &mdash; our breakdown of <a href="/anthropic-threat-report-2026-small-business/">what that report means for a 20-person business</a> walks the case and the seven controls it hands you. On August 31 we covered <a href="/ai-crawler-credential-theft">AI crawler credential theft</a>: scanners posing as ClaudeBot and GPTBot, with exact user-agent strings, hunting exposed <code>.env</code> files and cloud keys on sites that trust crawler names. LLMjacking is what stolen keys are for &mdash; running paid models on someone else's account &mdash; so a key harvested by a fake crawler and a key leaked into a repository end in the same place: billed to you.</p>
 
-        <p>The fix lives at the identity layer. Our guide to <a href="/ai-agent-identity-governance">AI agent identity governance</a> covers centrally managed, short-lived identities for AI agents &mdash; including the Okta Agent SSO approach that went GA in August &mdash; so credentials are issued, scoped, and revoked instead of living in files. The pattern repeats across providers, as our <a href="/openai-hugging-face-report-what-it-means">OpenAI Hugging Face AI agent hack</a> analysis showed. For a full sweep, see the <a href="/ai-agent-security-risks">AI agent security risks</a> primer and the <a href="/ai-agent-risk-checklist">AI agent risk checklist</a>, which now include IAM and API-key audit items.</p>
+        <p>The fix lives at the identity layer. Our guide to <a href="/ai-agent-identity-governance">AI agent identity governance</a> covers centrally managed, short-lived identities for AI agents &mdash; including the Okta Agent SSO approach that went GA in August &mdash; so credentials are issued, scoped, and revoked instead of living in files. The pattern repeats across providers, as our <a href="/openai-hugging-face-report-what-it-means">OpenAI Hugging Face AI agent hack</a> analysis showed. For a full sweep, see the <a href="/ai-agent-security-risks">AI agent security risks</a> primer and the <a href="/ai-agent-risk-checklist">AI agent risk checklist</a>, which now include IAM and API-key audit items. The same asymmetry shows up when the compromise starts in someone else's code rather than yours: our explainer on <a href="/ai-agent-third-party-incidents/">the RubyGems agent attack and what to audit when a third-party dependency is the one that gets compromised</a> works through that case.</p>
 
         <h2 id="bottom">Bottom line for small businesses</h2>
 
@@ -269,7 +298,7 @@
 
         <div class="faq-item">
             <h3>How do I know if my AI API key was stolen?</h3>
-            <p>Look for corroborating signals: IAM users or keys you did not create, Marketplace agreements or Bedrock subscriptions you never approved, inference spend climbing with no new workload, calls from unfamiliar IPs, and spikes in access-denied errors. None alone proves theft; together they warrant investigation.</p>
+            <p>Look for corroborating signals: IAM users or keys you did not create, Marketplace agreements or Bedrock subscriptions you never approved, inference spend climbing with no new workload, calls from unfamiliar IPs, and spikes in access-denied errors. None alone proves theft; together they warrant investigation. The signal that fires for a key nobody is watching is the invoice itself: a billing alert or a charge on an account, project or environment you have already retired or stopped using, where you expected to spend nothing. That is what surfaced the case above on 13 September 2026, and it was the only notice the account holder got.</p>
         </div>
 
         <div class="faq-item">
