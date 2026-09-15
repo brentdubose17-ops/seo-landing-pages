@@ -19,7 +19,7 @@ independent estimators in one page:
 | 4 | **Agent Wallet & Spend Cap Estimator** (NEW 2026-08-07) | `calculateWallet()` | `#wallet-estimator` |
 | 5 | **ChatGPT Business Seat Cost Estimator** (NEW 2026-08-25) | `calculateChatgptSeats()` | `#chatgpt-seats-estimator` |
 | 6 | **Compute Supply Scenario** (NEW 2026-08-29) | `calculateSupply()` | `#compute-supply-estimator` |
-| 7 | **Claude Code Usage Limit Cost Impact Estimator** (NEW 2026-08-30) | `calculateClaudeCodeLimits()` | `#claude-code-limits-estimator` |
+| 7 | **Claude Code Usage Limit Cost Impact Estimator** (NEW 2026-08-30; **index rebased 2026-09-14**) | `calculateClaudeCodeLimits()` | `#claude-code-limits-estimator` |
 | 8 | **AI Inference as a Margin Line Estimator** (NEW 2026-09-10) | `calculateInferenceMargin()` | `#inference-margin-estimator` |
 
 All calculators are client-side. No API keys, no server round-trips (except the
@@ -895,7 +895,105 @@ decompositions sum exactly: `floorCostTriggered + reReadCost + wasteCost = month
 Local headless check: defaults render `$105,600.00` ungoverned and `$9,600.00` governed, no
 overflow at 320/360/390/414 px.
 
+## 13. Claude Code Weekly-Limit Cost Impact Estimator — index basis (NEW 2026-08-30, rebased 2026-09-14)
+
+**Location:** `index.html` § `#claude-code-limits-estimator` (kanban t_8f20add6, then
+t_e03f5d47). **Basis:** Anthropic Help Center article 15910845 (update stamp
+`2026-09-14T06:59:42Z`) via the verified fact pack, research brief t_19294d02.
+
+**Why the rebase:** the estimator shipped on 2026-08-30 with the promotion still
+running, so its inputs read as a future-tense event and its usage input was
+expressed as a percentage of *today's boosted cap*. The promotion ended
+**2026-09-13 23:59 PT** and the permanent level took effect **2026-09-14**, so
+"today's boosted cap" no longer existed and no input may be planned against it.
+
+**The index — the only sourced formulation.** No Anthropic surface publishes a
+per-plan weekly hour or message count, so every figure is a ratio:
+
+```
+pre-promotion baseline   100   (before May 13, 2026)
+promotion allowance      150   (May 13 - Sept 13, 2026, 11:59 PM PT - ENDED)
+permanent allowance      125   (from Sept 14, 2026 - in force today)
+```
+
+`125/100 = +25.0000%` (the vendor's own headline) · `125/150 = 0.833333 -> -16.6667%`
+(the vendor's own rounded "17%") · `150/125 = 1.2` (+20% headroom to re-hold the
+promotion-era capacity) · returning 125 -> 150 would need **+20%**, not +25%.
+
+### 13.1 Inputs
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `ccPlan` | Plan | select | `pro` | Pro / Max / Team / Seat-based Enterprise |
+| `ccBasis` | Weekly allowance you are measuring against | select | **`permanent` (index 125)** | `permanent` 125 (in force since Sept 14, 2026) · `promo` 150 (May 13 – Sept 13, 2026, ended 11:59 PM PT) · `baseline` 100 (before May 13, 2026) |
+| `ccUsageToday` | Your weekly Claude Code usage (% of the selected index basis) | number | `100` | 1–200, step 1 |
+| `ccSeatPrice` | Seat price ($/month) | number | `100` | 1–10,000, step 1 |
+| `ccSeats` | Number of seats | number | `5` | 1–500, step 1 |
+
+Constants (JS): `const CC_INDEX = { baseline: 100, promo: 150, permanent: 125 }`,
+`const CC_BASIS_LABEL = {...}`, `const RATIO = 125 / 150`, `const MULT = 150 / 125`.
+
+### 13.2 Model
+
+```
+usageIdx          = CC_INDEX[basis] x usagePct / 100   // the workload in index units
+usageOnPermanent  = usageIdx / 125 x 100               // same workload, % of the permanent index
+headroom          = 100 - usageOnPermanent             // pp of the 125 index (negative = over)
+eqCost            = seats x seatPrice x MULT           // seat line to hold promotion-era capacity
+costDelta         = eqCost - seats x seatPrice         // +20%
+```
+
+Outputs: `cc-newcap` (125/150 = 83.3%), `cc-usage-new` (workload on the 125 index),
+`cc-capacity-cut` (headroom, or `N% over`), `cc-eq-cost` (seat line x 1.2), `cc-note`.
+Umami event `claude_code_limits_estimated` fires on submit with
+`{plan, basis, usage_pct, seats, seat_price}` (the `basis` key replaced `usage_today`).
+
+**Worked cases** (seats 5, seat price $100/mo):
+
+| Basis | Usage | On the 125 index | Headroom | Cost to hold promo capacity |
+|-------|-------|------------------|----------|------------------------------|
+| `permanent` 125 | 100% | 100% | 0% (exactly at the cap) | $600/mo (+$100) |
+| `promo` 150 | 60% | **72%** | 28% | $600/mo (+$100) |
+| `promo` 150 | 100% | **120%** | 20% over | $600/mo (+$100) |
+| `baseline` 100 | 100% | 80% | 20% | $600/mo (+$100) |
+
+### 13.3 Tests
+
+- `node tests/claude-code-limits-verify.mjs` -> **59 assertions, exit 0**. Extracts the
+  shipped `calculateClaudeCodeLimits()` source out of `index.html` and runs it against a
+  mock DOM, so the assertions are made against the bytes that ship. Covers all four
+  table rows above, the four ratio constants, the retired strings (`today's boosted`,
+  `% of today's cap`, `Front-load spike work before Sept 13`), the three bases, the
+  default `selected` option, id uniqueness and the Umami payload.
+- `python3 tests/claude-code-limits-browser-verify.py [url]` -> **50 assertions, exit 0**
+  at 1280x900 and 390x844 in Chromium: default basis, option labels, both worked cases,
+  no promo-current language in the rendered section, no horizontal overflow, no uncaught
+  JS errors.
+
 ## Changelog
+
+- **2026-09-14** — **Claude Code estimator rebased on the permanent 125 index** (kanban
+  t_e03f5d47; fact basis research brief t_19294d02, primary = Anthropic Help Center
+  article 15910845 with update stamp `2026-09-14T06:59:42Z`). The promotion ended
+  Sept 13, 2026 at 11:59 PM PT and the permanent +25%-over-baseline level took effect
+  Sept 14, 2026, so no input may be expressed as a percentage of "today's boosted cap"
+  any more. Added the `ccBasis` index-basis selector (default **permanent 125**;
+  `promo` 150 and `baseline` 100 available for comparison), relabelled `ccUsageToday`
+  to **% of the selected index basis**, rewrote the seat-price tooltip, the four result
+  cards, the estimator intro/footnote, both FAQ answers (visible + FAQPage) and the
+  assumptions footer; the retired advice "front-load spike work before Sept 13" is gone.
+  The canonical **100 -> 150 -> 125** math, `125/150 = 0.8333` and `150/125 = 1.2` are
+  unchanged and still shown. Dated changelog rows that described the old inputs are
+  kept and marked **SUPERSEDED 2026-09-14**. `index_calculator.html`'s
+  "is the boost still active" FAQ (answer: *Yes — through August 31, 2026*) was the
+  same defect on the second calculator surface: question rephrased, answer rewritten to
+  the promotion's end state, assumptions footer rebased. Verified: `node --check` on
+  every inline script, JSON-LD parse on all blocks, house `site_consistency.py` **0
+  errors / 0 warnings** on both files, `faq-parity-sweep.py` **42 MATCH + 2 CITE**
+  (index.html, unchanged class profile) and **20 MATCH** (index_calculator.html, clean),
+  `node tests/claude-code-limits-verify.mjs` **59/59**, live-browser harness **50/50**,
+  plus the pre-existing `token-governance-verify.mjs` **123/123** and
+  `inference-margin-verify.mjs` **46/46** re-run green.
 
 - **2026-09-10** — GPT-Live-1 calculator **shareable `#p=` deep links fixed**
   (task t_d76a69db). A link produced by "Copy shareable link" lost the backend
