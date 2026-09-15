@@ -174,3 +174,66 @@
 /full/ai-automation-for-medical-practices/ /ai-automation-for-healthcare-practices-2026 301
 /contact /about 301
 /contact/ /about 301
+
+# Bare-path PARITY close for the 5 remaining /ai-automation-for-* verticals, whose
+# /full/ sibling already redirects (t_8a98245d, 2026-09-15).
+# Reason: family completeness, not a new family. This file already carried bare-path
+# rules for 5 of the 10 /ai-automation-for-* verticals (added by t_23264866 the same
+# day) and left the other 5 404ing, so the same family was half covered and the
+# half-covered set looked deliberate. Re-measured before writing (2026-09-15, apex AND
+# www, plain curl): the 5 paths below returned 404 with no Location in both forms;
+# every target below returned 200 and is a sitemap loc, so no hop ends on a dead end.
+# Every target MIRRORS the /full/ sibling rule already in this file -- same vertical,
+# same live page, one explicit target per rule, bare + trailing-slash, no new mapping.
+#
+# Why NOT /ai-agency-vertical-selection-2026 (live 200 today, card t_f20a5dda)? This was
+# checked on purpose, because t_23264866 section 3 flagged it as a possible better target
+# once it shipped. Its LIVE served text contains ZERO occurrences of "law firm", "legal",
+# "restaurant" or "financial service": it is a niche-SELECTION guide for agency operators
+# whose worked shortlist is vet clinics, pest control, self-storage, HOA management,
+# funeral homes and linen rental. That is a different surface for a different reader from a
+# "services for <vertical>" landing path, so retargeting these paths at it would be an
+# invented mapping. The existing mirrors are topical matches and stay.
+#   /ai-automation-for-healthcare         -- /full/ sibling -> /ai-automation-for-healthcare-practices-2026
+#   /ai-automation-for-saas               -- /full/ sibling -> /ai-saaspocalypse-agency-economics
+#   /ai-automation-for-law-firms          -- /full/ sibling -> / (never published)
+#   /ai-automation-for-restaurants        -- /full/ sibling -> / (never published)
+#   /ai-automation-for-financial-services -- /full/ sibling -> / (never published).
+#       Re-checked this run against all 146 published pages rather than trusting the
+#       earlier note: "law firm" occurs in 0 of them, "restaurant" in 2 as a passing
+#       mention, and the "financial service" hits are news analysis of vendor bundle
+#       strategy (openai-vertical-ai-bundles-agencies, 20 hits) -- NOT an automation-for-
+#       financial-services surface -- so no stand-in was invented for any of the three.
+/ai-automation-for-healthcare /ai-automation-for-healthcare-practices-2026 301
+/ai-automation-for-healthcare/ /ai-automation-for-healthcare-practices-2026 301
+/ai-automation-for-saas /ai-saaspocalypse-agency-economics 301
+/ai-automation-for-saas/ /ai-saaspocalypse-agency-economics 301
+/ai-automation-for-law-firms / 301
+/ai-automation-for-law-firms/ / 301
+/ai-automation-for-restaurants / 301
+/ai-automation-for-restaurants/ / 301
+/ai-automation-for-financial-services / 301
+/ai-automation-for-financial-services/ / 301
+
+# DECIDED AGAINST rules: the remaining never-published /full/* paths (t_8a98245d,
+# 2026-09-15). Recorded here so the question is not re-opened by the next card:
+#   /full/ai-agency-services-list        /full/ai-agency-vs-freelancer
+#   /full/best-ai-agencies-ecommerce     /full/best-ai-agencies-for-enterprise
+#   /full/best-ai-agencies-for-startups  /full/best-ai-agencies-healthcare
+#   /full/what-does-an-ai-agency-do      /full/blog/     /full/index.html
+# All 9 re-measured 404 on apex AND www (plain curl, both forms where applicable) and are
+# LEFT 404. Reason is reachability, not target availability: nothing under /full/ has ever
+# been published (the publisher prune drops the whole tree from every artifact, so every
+# /full/ path measures 404), which means these cannot be historical index residue -- and
+# index residue is the case every other rule in this file exists for. A fleet-wide grep
+# also finds ZERO inbound links to any of them outside the site's own never-served full/
+# tree. With no residue and no link there is nothing to route, so a rule would only serve
+# a blind guess -- the "just in case" this card rules out. Two facts recorded so the next
+# card does not re-derive them:
+#   * /full/what-does-an-ai-agency-do is the ONE of the nine with a live near-equivalent
+#     (/what-does-an-ai-automation-agency-do, 200, sitemap loc -- same question, same
+#     function). It is still left 404 on the reachability rule above. If this path ever
+#     gains an inbound link or shows up as index residue, that page is its target.
+#   * /full/blog/ has NO valid single-hop target: /blog/ itself 404s (the directory has
+#     no index.html; only /blog/<slug>.html files are live), so a rule here would chain
+#     into a dead end.
