@@ -110,3 +110,67 @@
 /guides/ / 301
 /directory /best-ai-agencies-for-small-business-2026 301
 /directory/ /best-ai-agencies-for-small-business-2026 301
+
+# Historical vertical landing pages -> closest live equivalent (t_23264866, 2026-09-15)
+# Second half of the t_c08fc72c residue list (the same report t_15dc449f worked from:
+# findaiagency.com's ENTIRE queryable index residue is stale URLs from an older tree --
+# 6 of 7 index hits dead, all www-based, and the domain had zero live URLs in the index).
+# The four residue URLs still 404ing are closed here, plus the /full/ siblings the Aug-2026
+# sweep missed. Measured before the change (2026-09-15, apex AND www, plain curl): every
+# path below returned 404 with no Location; every target below returned 200 and is a
+# sitemap loc, so no chain ends on a dead end.
+#
+# Why the bare-path rules appear at all: the Aug-2026 never-published sweep above only
+# walked the /full/ tree, so the bare (shorter, more linkable) form of the same vertical
+# was left 404ing. These mirror the /full/ rules already in this file, one explicit target
+# per rule, bare + trailing-slash form, no wildcard.
+#
+#   /ai-automation-for-ecommerce   -- /full/ sibling already consolidates to
+#                 /shopify-ucp-agentic-commerce, the live ecommerce surface. Bare path
+#                 mirrors it (near-mechanical: same vertical, same live page).
+#   /ai-automation-for-real-estate -- vertical never published; /full/ sibling already
+#                 points at / (no live equivalent exists -- do not invent a stand-in).
+#   /ai-automation-for-construction -- never published AND never swept: the /full/ form
+#                 was omitted from the never-published sweep and also 404s. Re-checked all
+#                 10 /full/ai-automation-for-* paths: only construction, dental-practices
+#                 and medical-practices were missing. No live page covers construction AI
+#                 automation as a vertical (grep across the live tree: only passing uses of
+#                 the word, e.g. data-center construction), so both forms -> /, exactly as
+#                 real-estate / law-firms / restaurants / financial-services were handled.
+#   /ai-automation-for-{dental,medical}-practices -- never published and omitted from the
+#                 sweep in BOTH trees. These get a real live target rather than /: the
+#                 practice-level automation vertical is live at
+#                 /ai-automation-for-healthcare-practices-2026 (sitemap loc, 200), dental
+#                 and medical practices ARE healthcare practices, and that page is written
+#                 for practice-level automation (scheduling, patient engagement, billing,
+#                 and it names dental / medical specialties). Functional match from
+#                 evidence inside the tree, not a topical stand-in.
+#   /contact      -- judgement call for the card, recorded here. The live site deliberately
+#                 publishes NO contact surface: about.html says "This site publishes no
+#                 contact address and carries no contact form, so there is no advertised
+#                 inbox attached to findaiagency.com". So there is no contact page to
+#                 restore, and nothing live links /contact (the only in-tree hrefs to it
+#                 are in the never-published full/ tree, and those are already handled by
+#                 /full/contact -> / above). Decision: 301 -> /about, because about.html
+#                 carries the "Privacy, terms and contact" section AND the no-inbox
+#                 explanation -- i.e. the old contact URL's function (how to reach this
+#                 publisher + the legal/contact terms) now lives there, in one hop, instead
+#                 of a dead end or a made-up contact page.
+/ai-automation-for-ecommerce /shopify-ucp-agentic-commerce 301
+/ai-automation-for-ecommerce/ /shopify-ucp-agentic-commerce 301
+/ai-automation-for-real-estate / 301
+/ai-automation-for-real-estate/ / 301
+/ai-automation-for-construction / 301
+/ai-automation-for-construction/ / 301
+/full/ai-automation-for-construction / 301
+/full/ai-automation-for-construction/ / 301
+/ai-automation-for-dental-practices /ai-automation-for-healthcare-practices-2026 301
+/ai-automation-for-dental-practices/ /ai-automation-for-healthcare-practices-2026 301
+/ai-automation-for-medical-practices /ai-automation-for-healthcare-practices-2026 301
+/ai-automation-for-medical-practices/ /ai-automation-for-healthcare-practices-2026 301
+/full/ai-automation-for-dental-practices /ai-automation-for-healthcare-practices-2026 301
+/full/ai-automation-for-dental-practices/ /ai-automation-for-healthcare-practices-2026 301
+/full/ai-automation-for-medical-practices /ai-automation-for-healthcare-practices-2026 301
+/full/ai-automation-for-medical-practices/ /ai-automation-for-healthcare-practices-2026 301
+/contact /about 301
+/contact/ /about 301
