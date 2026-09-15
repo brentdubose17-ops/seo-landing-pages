@@ -2,6 +2,46 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-15 — Sept 18 CBP Form 5106 / IOR-void deadline row on the tariff status hub (kanban t_b5da7757)
+
+- **New dated status row at the top of the hub banner stack:** `#ior-5106-deadline`, the
+  **first** `.notice-banner` on `index.html`, immediately under the header — so a returning
+  visitor meets the Sept 18 compliance cliff before the calculator. Same component as the
+  six pre-existing rows (`.notice-banner` > `.inner` > `h2` + `.deadline` chip + source
+  line), same typography, spacing and date-stamp treatment; no new CSS is used for the
+  active state, so the row cannot read as bolted on.
+- **Copy is the published post's fact base, not the source card's premises.**
+  The row prints the **six** required Form 5106 data elements (legal name, the entity's own
+  EIN/SSN/CBP number, mailing address, physical address if different, phone, email) — not
+  four, and **not** "responsible-party/officer data" (section 3 is optional per CBP's own
+  5106 FAQ). It prints CBP's live **five-business-day** reinstatement turnaround from the
+  Voided Importer Record FAQs (verified in the served bytes of that page, not from memory),
+  and the notice's written notice **for** the action with **no cure period** as an absence.
+  It does **not** repeat the "cargo stops moving" framing (counsel commentary).
+- **Deadline-gated by construction.** The row carries `data-state="active"` plus five
+  `.notice-banner--ior[data-state="past"]` rules that render the muted archived treatment
+  (grey header rule, slate text, grey chip) — a one-attribute flip after Friday Sept 18,
+  2026, no deletion and no rewrite. The flip procedure is written into an HTML comment
+  directly above the row. Verified in Chromium: flipping the attribute changes the row's
+  computed `h2` colour, `.inner` background/border and chip background, and flipping back
+  restores the active rendering exactly.
+- **Verification.** `tests/` site harnesses **9/9, 0 failures** (322 PASS), data tests
+  127/30/14 PASS 0 FAIL, `site_consistency` on `index.html` **0 errors 0 warnings**.
+  Custom harness (workspace `t_b5da7757/verify_row.py`) **19/19**: above the fold at
+  1280x900 / 1440x900 / 768x1024 / 414x896 / 390x844 (h2 *and* chip), zero new overflow at
+  every width 320-1440, and an isolation proof — all 130 pre-existing id-bearing elements
+  survive, none changed width/left by >1px, everything above the insertion unmoved and
+  everything below shifted by one uniform delta (491/492px).
+- **Live.** `index.html` 257,270 B, sha256 `77a4225fcc56df55…`; CF deployment
+  `0c82989b-1ea0-47e9-b5f8-5042c664b74e` from HEAD `bbee3a5`, live rows 55 compared /
+  0 mismatches. Served bytes are byte-identical to the artifact (raw sha256 match on an
+  `Accept: */*` fetch; canonicalised sha256 `8a9ba00bdf558bf4…` both sides). IndexNow ping
+  200. Commit `8cb64a5`.
+- **Fold note.** On phones narrower than 390px (360x740, 320x568) the row starts a few px
+  below the fold — the hub's own header is 722px/847px tall at those widths, so *no* row on
+  the page (including all six pre-existing ones) can be above it. At 390x844 and up the row
+  is fully visible without scrolling.
+
 ## 2026-09-15 — "Will your IOR survive Sept 18?" checklist block on the calculator (kanban t_2548e571)
 
 - **New interactive block:** `#ior-survival-checklist` — the first info section under the
