@@ -155,7 +155,7 @@
 </style>
 </head>
 <body>
-    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool.html">Free AI Audit</a></nav>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool">Free AI Audit</a></nav>
     <article>
         <header>
             <h1>AI Infrastructure Security: Why Attackers Now Target Gateways, Not Models</h1>
@@ -208,7 +208,7 @@
 
         <h2>The Pattern That Matters for Your Business</h2>
         <p>Initial access differed by workload, but the observed objectives were consistent: credential collection, durable access mechanisms, and resource monetization. Microsoft's guidance to defenders is to monitor AI workloads according to their <em>control-plane role</em>, not as isolated applications — gateway, retrieval, and orchestration services concentrate credentials, database access, workflow execution, and container privileges in one runtime.[1]</p>
-        <p>You may not run LiteLLM, RAGFlow, or Kestra. But your AI stack has the same shape. ChatGPT Enterprise and Copilot admin consoles, Zapier and Make automations, AI support agents, internal RAG tools, and any custom AI integration all concentrate credentials and data access in a handful of control points. The question for an <a href="/articles/ai-agent-security-audit.html">AI agent security audit</a> is no longer just "what can the model do?" — it's "what can the infrastructure around the model do, and who can reach it?"</p>
+        <p>You may not run LiteLLM, RAGFlow, or Kestra. But your AI stack has the same shape. ChatGPT Enterprise and Copilot admin consoles, Zapier and Make automations, AI support agents, internal RAG tools, and any custom AI integration all concentrate credentials and data access in a handful of control points. The question for an <a href="/articles/ai-agent-security-audit">AI agent security audit</a> is no longer just "what can the model do?" — it's "what can the infrastructure around the model do, and who can reach it?"</p>
 
         <h2>The AI Infrastructure Security Audit Checklist: 12 Control Points</h2>
         <p>Microsoft's research gives audits a concrete new checklist area. Here is the infrastructure-level checklist it implies, written for a small business without a dedicated security team:</p>
@@ -247,7 +247,7 @@
             <li><strong>Test the management surface.</strong> Check which admin interfaces are reachable from the internet, whether they require authentication, and whether the underlying tools are patched against known CVEs (start with CVE-2026-42271, CVE-2026-48710, CVE-2026-49869).</li>
             <li><strong>Audit secret concentration.</strong> List every API key, token, and connection string your AI stack holds, where it's stored, who can read it, and whether keys are scoped with spend limits.</li>
             <li><strong>Constrain and monitor.</strong> Set deny-by-default egress, block raw-IP and non-standard-port connections, and add alerts for AI services spawning shells or accessing secret files.</li>
-            <li><strong>Re-audit on change.</strong> Every new AI tool, vendor, or workflow is a new control point. The <a href="/articles/ai-agent-safeguards-fail.html">safeguards that failed</a> in these cases were all configurable before the intrusion.</li>
+            <li><strong>Re-audit on change.</strong> Every new AI tool, vendor, or workflow is a new control point. The <a href="/articles/ai-agent-safeguards-fail">safeguards that failed</a> in these cases were all configurable before the intrusion.</li>
         </ol>
 
         <h2>Frequently Asked Questions</h2>
@@ -282,8 +282,8 @@
 
         <div class="cta">
             <p><strong>Not sure where the credentials in your AI stack actually live? Run the audit.</strong></p>
-            <a class="btn" href="/audit-tool.html" data-umami-event="click_to_audit_tool">Run the free AI audit tool →</a>
-            <p class="secondary"><a href="/articles/ai-agent-security-audit.html">AI agent security audit</a> · <a href="/articles/5-signs-need-ai-audit.html">5 signs your business needs an AI audit</a></p>
+            <a class="btn" href="/audit-tool" data-umami-event="click_to_audit_tool">Run the free AI audit tool →</a>
+            <p class="secondary"><a href="/articles/ai-agent-security-audit">AI agent security audit</a> · <a href="/articles/5-signs-need-ai-audit">5 signs your business needs an AI audit</a></p>
         </div>
 
         <h2>Bottom Line: Audit the Control Plane, Not Just the Model</h2>
