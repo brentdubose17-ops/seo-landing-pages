@@ -29,7 +29,7 @@
       "headline": "The $0.05 Voice Agent: What GPT-Live-1 Changes for Agencies Reselling AI Receptionists",
       "description": "GPT-Live-1 bills two meters: $0.05 per minute of voice plus backend tokens at the backend model's rates. Margin math for an AI receptionist reseller, the concurrent-session ceiling, the migration rewrite, and the regulated-workflow caveat.",
       "datePublished": "2026-09-10",
-      "dateModified": "2026-09-10",
+      "dateModified": "2026-09-15",
       "author": {"@type": "Organization", "name": "Find AI Agency"},
       "publisher": {"@type": "Organization", "name": "Find AI Agency"},
       "image": "https://findaiagency.com/og-image.png"
@@ -136,7 +136,7 @@
     <article>
         <header>
             <h1>The $0.05 Voice Agent: What GPT-Live-1 Changes for Agencies Reselling AI Receptionists</h1>
-            <div class="meta"><span>Published September 10, 2026 &middot; Updated September 10, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="meta"><span>Published September 10, 2026 &middot; Updated September 15, 2026</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>Agency margin</span><span>Voice agents</span><span>Capacity planning</span></div>
         </header>
 
@@ -287,6 +287,24 @@
             <li><strong>The 2.5&times; peak factor and the 8/10/12-hour windows are our planning assumptions.</strong> OpenAI publishes no call-arrival profile; substitute your client's own histogram before you commit to a tier.</li>
             <li><strong>Telephony, STT/TTS alternatives and labour are outside every number here.</strong> OpenAI's meter covers the voice layer and the backend model only.</li>
         </ul>
+
+        <h2 id="background-tool-calls">Four quote inputs when the model runs tools in the background</h2>
+
+        <p>Google shipped Gemini 3.8 Live and Gemini 3.8 Live Extended Thinking on September 15, 2026. Google's own line on the pair: these models &ldquo;work in the background to manage tools while you keep chatting.&rdquo; [Google-published] A separate Google announcement on September 14, 2026 at 18:50 ET covered a Deep Research integration in Gemini Live and never mentions these models. [Google-published] For an agency quoting an AI receptionist, background tool execution moves four inputs in the quote below.</p>
+
+        <p><strong>The published meter underneath all four.</strong> Google's Gemini API pricing page carries the rate for these models: <strong>$0.005 per minute of audio input</strong> and <strong>$0.018 per minute of audio output</strong>, stated there as $3.00 per million audio input tokens and $12.00 per million audio output tokens under the row label &ldquo;Output price (including thinking tokens).&rdquo; [Google-published] One published row covers Gemini 3.8 Live, 3.8 Live Extended Thinking and gemini-3.1-flash-live-preview, so Google publishes no separate rate for the Extended Thinking model, and the row carries no estimated-pricing footnote &mdash; these are Google's own stated figures, not estimates. Source: <a href="https://ai.google.dev/gemini-api/docs/pricing">Google, Gemini API pricing</a>, retrieved for this update. Derived planning figures, ours and not Google's: a fully bidirectional minute at Google's rounded per-minute rates is $0.023, and a full-duplex 10-minute session is $0.23. The cross-vendor comparison sits on <a href="https://aiagencycalculator.com/gpt-live-1-voice-agent-cost">what GPT-Live-1 actually costs per voice agent minute</a>, and the published row in context is on <a href="https://aiagencycalculator.com/gemini-3-8-flash-api-pricing">our Gemini pricing surface</a>.</p>
+
+        <p><strong>(a) The latency budget: the wait moves from the answer to the narration.</strong> Google's wording is that 3.8 Live &ldquo;is the default option for most low-latency voice agent experiences and real-time dialogue without reasoning-induced delays,&rdquo; while Extended Thinking &ldquo;reasons and speaks simultaneously&rdquo; and uses &ldquo;live progress narration to walk users through multi-step background tasks as they progress.&rdquo; [Google-published] Our read, not Google's: the latency assumption in a quote stops being &ldquo;how long until the agent answers&rdquo; and becomes &ldquo;how long the caller listens to the agent narrate work that is still running&rdquo; &mdash; and because reasoning bills inside the audio-output line, extended thinking is priced as audio-output minutes rather than as a separate meter. Budget narration time per call the way you already budget talk time.</p>
+
+        <p><strong>(b) Tool-call retry cost and failure handling: an open question.</strong> Google publishes no retry cost, no error-rate allowance and no failure-handling economics for these models, and we found no per-session price anywhere. [Our analysis] What is sourced is the mechanic: &ldquo;It executes tools and API calls in the background while continuing the conversation, so the model can acknowledge requests and keep chatting while tasks finish in the background.&rdquo; [Google-published] So the quote has to carry answers the vendor has not published: who absorbs a failed background call, whether a retry is narrated to the caller, and which failures the agent may attempt again without a human. Put those answers in the contract, not the estimate.</p>
+
+        <p><strong>(c) The cost of an interrupted or abandoned session: an open question.</strong> Google publishes no per-session and no per-hour figure for these models, and nothing on what happens to background work when the caller hangs up. [Our analysis] The sourced mechanics are narrow: billing is per minute of audio, and background work is decoupled from the conversation while the call is live. [Google-published] Whether that work continues &mdash; and bills &mdash; after the session ends is not stated anywhere we could find, so treat an abandoned session as a line your quote cannot yet bound.</p>
+
+        <p><strong>(d) The client-facing SLA that follows &mdash; ours, not Google's.</strong> Nothing above supports an SLA promising completion times or a retry allowance; an agency that writes one is inventing a number no vendor has published. [Our analysis] What the published material supports is narrower and still sellable: the published per-minute rate as the metered basis, the narration behaviour as the caller experience and a named escalation path for a background task that does not complete. Put those three in the client agreement and keep the vendor's retry and abandonment answers as your own back-to-back terms.</p>
+
+        <p><strong>Before you quote, ask the vendor one question:</strong> which exact model ID and which surface the agent actually runs on, because Google's availability is per-model &mdash; Gemini 3.8 Live reaches everyone through Search Live while Extended Thinking carries a separate rollout, with Workspace business customers still &ldquo;coming soon&rdquo; and Workspace Docs live only for Google AI Pro and Ultra subscribers. [Google-published]</p>
+
+        <p class="label">Model names, availability and the per-minute rates on this row are Google-published; the derived per-minute and per-session figures, the latency reading, the retry and abandonment framing and the SLA are our analysis, labelled as such above.</p>
 
         <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 
