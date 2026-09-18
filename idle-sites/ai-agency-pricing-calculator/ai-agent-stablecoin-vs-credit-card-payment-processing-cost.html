@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stablecoin vs Credit Card Fees for AI Agents (2026 Math)</title>
+    <meta name="description" content="Stripe charges 2.9% + 30¢ on cards and 0.8% on stablecoins; an x402 settlement costs $0.001. The per-transaction math, and where each rail loses money.">
+    <meta name="keywords" content="stablecoin vs credit card fees for AI agents, AI agent payment processing cost, payment processing fees for AI agents, x402 transaction fees, Stripe stablecoin payments fees, Cloudflare wallets pricing, credit card fees for AI agents, AI agent payment cost per transaction">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aiagencycalculator.com/ai-agent-stablecoin-vs-credit-card-payment-processing-cost">
+    <meta property="og:title" content="Stablecoin vs Credit Card Fees for AI Agents (2026 Math)">
+    <meta property="og:description" content="Stripe charges 2.9% + 30¢ on cards and 0.8% on stablecoins; an x402 settlement costs $0.001. The per-transaction math, and where each rail loses money.">
+    <meta property="og:url" content="https://aiagencycalculator.com/ai-agent-stablecoin-vs-credit-card-payment-processing-cost">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aiagencycalculator">
+    <meta property="og:image" content="https://aiagencycalculator.com/og-image.png">
+    <meta property="og:image:alt" content="Comparison table: card fees at 2.9% plus 30 cents against stablecoin and x402 settlement costs for AI agent payments">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="Stripe charges 2.9% + 30¢ on cards and 0.8% on stablecoins; an x402 settlement costs $0.001. The per-transaction math, and where each rail loses money.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://aiagencycalculator.com/ai-agent-stablecoin-vs-credit-card-payment-processing-cost#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://aiagencycalculator.com/ai-agent-stablecoin-vs-credit-card-payment-processing-cost"
+      },
+      "headline": "AI Agent Payment Costs: Stablecoin Rails vs 2.9% + 30¢ Card Fees",
+      "description": "Stripe charges 2.9% + 30¢ on cards and 0.8% on stablecoins; an x402 settlement costs $0.001. The per-transaction math, and where each rail loses money.",
+      "datePublished": "2026-09-18",
+      "dateModified": "2026-09-18",
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://aiagencycalculator.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://aiagencycalculator.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://aiagencycalculator.com/og-image.png"
+        }
+      },
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "Card acceptance rate",
+          "value": "2.9% + $0.30",
+          "unitText": "per successful transaction",
+          "measurementTechnique": "vendor-published rate, stripe.com/pricing, read 2026-09-18"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Stablecoin acceptance rate",
+          "value": "0.8%",
+          "unitText": "per successful transaction",
+          "measurementTechnique": "vendor-published promotional rate through 2027-01-01 (1.0% thereafter), stripe.com/pricing, read 2026-09-18"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "x402 facilitator settlement price",
+          "value": "$0.001",
+          "unitText": "per onchain transaction above 1,000/month",
+          "measurementTechnique": "vendor-published price, docs.cdp.coinbase.com x402 facilitator, read 2026-09-18"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Ticket at which a 2.9% + 30c card fee equals the sale",
+          "value": "$0.308960",
+          "unitText": "AOV USD",
+          "measurementTechnique": "derived: 0.30 / (1 - 0.029)"
+        }
+      ],
+      "wordCount": 2140
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://aiagencycalculator.com/ai-agent-stablecoin-vs-credit-card-payment-processing-cost#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does a card payment cost on an AI agent transaction?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The published US card rate is 2.9% plus 30¢ per successful transaction. On a $1.00 ticket that is 32.90% of the sale; on the measured $0.321443 average x402 ticket a card charge is $0.309322, or 96.23%. The fixed 30¢ does not scale down with the ticket."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does Stripe charge for stablecoin payments?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "0.8% per successful transaction, published as a promotional rate through 1 January 2027, with “+ 0.2% thereafter” — 1.0% from 2 January 2027 unless extended. Neither line carries a monthly or setup fee, so the comparison is entirely per transaction."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is x402 free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The protocol carries zero protocol fees. The hosted facilitator is free only to a threshold: the first 1,000 onchain transactions each month cost nothing, then each additional onchain transaction is $0.001. Payment verification is always free; the fee follows settlement, not requests."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "At what transaction size does the card fee consume the whole sale?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "$0.308960. Below that ticket a 2.9% + 30¢ charge is larger than the amount collected, so the transaction loses money before any margin applies. The measured average x402 ticket is $0.321443, of which 96.23% goes to a card fee."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can an agency pay for APIs with Cloudflare Wallets today?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Only handle reservation is live, and Cloudflare's documentation states that “a reserved handle does not yet let you send, receive, or hold funds”. Full access arrives “in the coming months”, and no wallet fee schedule has been published."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When is a stablecoin rail actually cheaper for an agency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Per transaction, the stablecoin line is always cheaper than the card line on these published rates: 0.8% against 2.9% + 30¢ wins at every positive ticket. The flat-fee rail crosses the percentage rail only above a $0.125 ticket, where one $0.001 settlement costs more than 0.8% of the amount."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What costs do none of these fee lines include?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On-ramp and off-ramp spread, stablecoin float and treasury work, reconciliation labour, transaction screening, gas volatility, and the loss of chargeback recourse on irreversible settlement. No vendor prices those on a fee schedule, so a blended cost is always higher than the headline rate."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+
+        <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-right: 6px; margin-bottom: 6px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .answer-box { margin: 0 0 24px; padding: 20px 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; }
+        .answer-box h2 { margin: 0 0 10px; font-size: 1.15rem; border: none; padding: 0; }
+        .answer-box p { margin-bottom: 0; color: #333; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        caption { caption-side: top; text-align: left; font-size: 0.85rem; color: #666; padding-bottom: 8px; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; vertical-align: top; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .alert { margin: 24px 0; padding: 18px 22px; background: #fff7ed; border: 1px solid #fdba74; border-left: 4px solid #f97316; border-radius: 0 8px 8px 0; }
+        .alert strong { color: #9a3412; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .cta .secondary { display: inline-block; margin-top: 10px; color: #2563eb; font-size: 0.95rem; font-weight: 600; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; margin-left: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+        .table-wrap table { margin: 0; }
+        a, p, li, code, th, td { overflow-wrap: anywhere; }
+        div.alert { overflow-wrap: break-word; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.82rem; } th, td { padding: 8px 6px; } }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>AI Agent Payment Costs: Stablecoin Rails vs 2.9% + 30¢ Card Fees</h1>
+            <div class="meta"><span>Published September 18, 2026</span><span>Updated September 18, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>Stablecoin vs credit card fees for AI agents</span> <span>Agent payment processing cost</span> <span>x402 transaction fees</span> <span>Stripe stablecoin fees</span></div>
+        </header>
+
+        <div class="alert">
+            <strong>Rates re-read September 18, 2026.</strong> Stripe for the card, stablecoin, bank and Klarna prices; Coinbase's x402 docs for the facilitator price; Cloudflare's wallet docs for availability. Where a vendor publishes no price, the table says so. [1][5][6]
+        </div>
+
+        <div class="answer-box">
+            <h2>What does an AI agent payment cost per transaction?</h2>
+            <p><strong>The fixed fee, not the percentage, decides it.</strong> Stripe's published card rate is 2.9% + 30&cent; and its stablecoin rate is 0.8%; a card charge equals the entire sale below an AOV of $0.308960, and the measured average x402 ticket is $0.321443, on which a card charge is $0.309322 &mdash; 96.23% of the sale [1][4]. Both rails that clear that floor are priced in public: 0.8% stablecoin acceptance (1.0% from 2 January 2027) and $0.001 x402 settlement above 1,000 free onchain transactions a month [1][5].</p>
+        </div>
+
+        <h2 id="rates">What each rail actually charges (published rates only)</h2>
+        <p>Stripe publishes both rails on one page. Cards: &ldquo;Accept widely used credit and debit cards, prepaid cards, and digital wallets for online payments. <strong>2.9% + 30&cent;</strong> per successful transaction&rdquo;, with &ldquo;+ 1.5% for international transactions&rdquo; and &ldquo;+ 1% if currency conversion is required&rdquo; on top. Stablecoins: &ldquo;<strong>0.8%</strong> per successful transaction. Promotional rate through January 1, 2027; + 0.2% thereafter&rdquo;. The same page prices &ldquo;2.6% + 30&cent;&rdquo; instant bank payments, &ldquo;5.99% + 30&cent;&rdquo; Klarna, and the agent primitive at &ldquo;<strong>$0.15</strong> per SPT issued&rdquo; [1]. Stripe defines the workload as agents transacting &ldquo;on behalf of the people they serve&rdquo; [2].</p>
+        <p>The protocol rail: x402 charges &ldquo;Zero protocol fees&rdquo;, while the hosted CDP facilitator publishes &ldquo;The first 1,000 onchain Facilitator transactions each month are free, then each additional onchain transaction costs $0.001.&rdquo;, with verification always free and the fee following settlement, not requests [4][5]. Neither vendor charges a monthly or setup fee [1], so the comparison is entirely per transaction &mdash; which is why the fixed 30&cent; decides the outcome. For an agent's token spend rather than its payment rail, see the <a href="/ai-agent-api-cost-calculator">AI agent API cost calculator</a>.</p>
+
+        <h2 id="fee-table">The fee table: one ticket, every published line</h2>
+        <p>One $20.00 ticket, each published rate applied. The rows are not substitutes: card, bank, Klarna and stablecoin are acceptance costs, SPT is a per-checkout primitive, and x402 is a machine-payment settlement cost.</p>
+
+<div class="table-wrap"><table>
+  <caption>One $20.00 ticket, each published rate applied. Rates re-read 18 September 2026.</caption>
+  <thead><tr><th>Rail</th><th>Published rate</th><th>Cost on a $20.00 ticket</th><th>Share of the sale</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Card (domestic)</strong> [1]</td><td>2.9% + 30&cent;</td><td>$0.88</td><td>4.40%</td></tr>
+    <tr><td><strong>Card (international + FX)</strong> [1]</td><td>2.9% + 30&cent; + 1.5% + 1%</td><td>$1.38</td><td>6.90%</td></tr>
+    <tr><td><strong>Instant bank payments</strong> [1]</td><td>2.6% + 30&cent;</td><td>$0.82</td><td>4.10%</td></tr>
+    <tr><td><strong>Klarna</strong> [1]</td><td>5.99% + 30&cent;</td><td>$1.50</td><td>7.49%</td></tr>
+    <tr><td><strong>Stripe stablecoin acceptance</strong> [1]</td><td>0.8% (to 1 Jan 2027), then 1.0%</td><td>$0.16 &middot; $0.20 from 2027</td><td>0.80%</td></tr>
+    <tr><td><strong>x402 settlement, hosted CDP facilitator</strong> [5]</td><td>$0.001 per onchain transaction above 1,000/month</td><td>$0.0010</td><td>0.005%</td></tr>
+    <tr><td><strong>Shared Payment Tokens</strong> (agent primitive) [1]</td><td>$0.15 per SPT issued</td><td>$0.15 per token issued</td><td>0.75%</td></tr>
+  </tbody>
+</table></div>
+
+        <h2 id="fixed-fee">Where the fixed 30&cent; breaks: the $0.321443 average ticket</h2>
+        <p>Percentage-only thinking misses the mechanism. A 2.9% + 30&cent; charge equals the whole sale at an AOV of <strong>$0.308960</strong> &mdash; the 30&cent; divided by the 97.1% of the ticket the percentage leaves behind. The protocol's own counter is the uncomfortable part: 75.41M transactions and $24.24M of volume in the last 30 days, read on 18 September 2026, is an average ticket of <strong>$0.321443</strong>, on which a card charge costs $0.309322 &mdash; 96.23% of the sale [4].</p>
+
+<div class="table-wrap"><table>
+  <caption>Fee per transaction by ticket size, from the published rates above. Negative net = the fee exceeds the sale.</caption>
+  <thead><tr><th>Ticket (AOV)</th><th>Card fee</th><th>Card, share of sale</th><th>Stablecoin 0.8%</th><th>Stablecoin, share</th><th>x402 + CDP</th><th>x402, share</th><th>Card: net kept</th></tr></thead>
+  <tbody>
+    <tr><td>$0.10</td><td>$0.3029</td><td>302.90%</td><td>$0.0008</td><td>0.80%</td><td>$0.0009</td><td>0.90%</td><td>$-0.2029</td></tr>
+    <tr><td>$0.32</td><td>$0.3093</td><td>96.65%</td><td>$0.0026</td><td>0.80%</td><td>$0.0009</td><td>0.28%</td><td>$0.0107</td></tr>
+    <tr><td>$0.50</td><td>$0.3145</td><td>62.90%</td><td>$0.0040</td><td>0.80%</td><td>$0.0009</td><td>0.18%</td><td>$0.1855</td></tr>
+    <tr><td>$1.00</td><td>$0.3290</td><td>32.90%</td><td>$0.0080</td><td>0.80%</td><td>$0.0009</td><td>0.09%</td><td>$0.6710</td></tr>
+    <tr><td>$5.00</td><td>$0.4450</td><td>8.90%</td><td>$0.0400</td><td>0.80%</td><td>$0.0009</td><td>0.02%</td><td>$4.5550</td></tr>
+    <tr><td>$20.00</td><td>$0.8800</td><td>4.40%</td><td>$0.1600</td><td>0.80%</td><td>$0.0009</td><td>0.00%</td><td>$19.1200</td></tr>
+    <tr><td>$100.00</td><td>$3.2000</td><td>3.20%</td><td>$0.8000</td><td>0.80%</td><td>$0.0009</td><td>0.00%</td><td>$96.8000</td></tr>
+    <tr><td>$500.00</td><td>$14.8000</td><td>2.96%</td><td>$4.0000</td><td>0.80%</td><td>$0.0009</td><td>0.00%</td><td>$485.2000</td></tr>
+  </tbody>
+</table></div>
+
+        <p>Three published windows give three different average tickets, so none is &ldquo;the&rdquo; industry average: the facilitator's &ldquo;more than 100 million transactions and $28 million in payment volume&rdquo; is a lifetime upper bound of $0.280000 [5]; the 30-day counter implies $0.321443 [4]; a third-party study of the same network counted $52.7M across 198.9M settlements, a $0.265 ticket [9]. Ticket size decides whether the fee is a cost or a loss; <a href="/ai-agent-cost-blowups">AI agent cost blowups</a> covers uncapped agent spending.</p>
+
+        <h2 id="agency-margin">Three agency workloads, modelled monthly</h2>
+        <p>Fees only matter as a margin line. Four workload shapes, costed from the published rates above.</p>
+
+<div class="table-wrap"><table>
+  <caption>Four agency workload shapes, monthly. Card = 2.9% + 30&cent;; stablecoin = Stripe acceptance at 0.8%; x402 = $0.001 per onchain transaction above the free tier.</caption>
+  <thead><tr><th>Workload</th><th>Card cost / month</th><th>Stablecoin 0.8%</th><th>x402 + CDP</th><th>Saving vs card (stablecoin)</th><th>Saving / year</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Agent micropayments</strong><br>($0.32 ticket &times; 75,000/mo)</td><td>$23,199.14</td><td>$192.87</td><td>$74.00</td><td><strong>$23,006.27</strong></td><td>$276,075</td></tr>
+    <tr><td><strong>API / inference metering</strong><br>($1.00 ticket &times; 10,000/mo)</td><td>$3,290.00</td><td>$80.00</td><td>$9.00</td><td><strong>$3,210.00</strong></td><td>$38,520</td></tr>
+    <tr><td><strong>AI receptionist bookings</strong><br>($20.00 ticket &times; 2,000/mo)</td><td>$1,760.00</td><td>$320.00</td><td>$1.00</td><td><strong>$1,440.00</strong></td><td>$17,280</td></tr>
+    <tr><td><strong>Cross-border agent payments</strong><br>($20.00 ticket &times; 2,000/mo)</td><td>$2,760.00</td><td>$320.00</td><td>$1.00</td><td><strong>$2,440.00</strong></td><td>$29,280</td></tr>
+  </tbody>
+</table></div>
+
+        <p>Read it as margin. On the AI receptionist shape, processing falls from 4.40% of the $40,000 processed each month to 0.80%: $1,760 to $320, or $17,280 a year, before the excluded costs below. On the micropayment shape the card rail is not a margin item at all &mdash; the fee is 96.23% of the volume. Annualised, these are big enough to reprice a retainer: <a href="/total-cost-of-ownership-ai-automation-3-year-model">the three-year total cost of ownership model</a> is where to put them.</p>
+
+        <h2 id="excluded">What the zero-fee framing leaves out</h2>
+        <p>None of those rates is the whole bill. x402's zero-protocol-fee line describes the protocol, not merchant acceptance: Stripe's stablecoin rate is 0.8% today and 1.0% from 2 January 2027, and the facilitator's $0.001 buys a hosted service that &ldquo;validates signed payments, screens transactions, submits settlement onchain, and reports the result to your resource server&rdquo; [1][5]. Five cost lines sit outside every table here, because no vendor prices them: on-ramp and off-ramp spread, stablecoin float and treasury handling, reconciliation labour, transaction screening, and gas volatility [5].</p>
+        <p>Two caveats. Irreversible settlement removes chargeback recourse, a risk transfer whose price may only surface in a dispute. And demand is smaller than the fee tables imply: TRM Labs found that between 0.6% and 7.5% of the protocol's transaction volume can be tied to AI agents, even as Amazon builds AgentCore Payments with Coinbase and Stripe [9]. <a href="/hidden-costs-of-ai-automation">Hidden costs of AI automation</a> lists the wider version of these lines.</p>
+
+        <h2 id="cloudflare">Cloudflare Wallets: a real rail, no published price, not payable today</h2>
+        <p>Cloudflare's wallet programme is why this comparison is timely and why it cannot be priced yet. Only handle reservation is live, and the documentation is explicit: &ldquo;a reserved handle does not yet let you send, receive, or hold funds.&rdquo; What is announced is functionality, not a schedule: full access, &ldquo;including onramping and offramping funds and the ability to issue Virtual Wallets, will be available in the coming months&rdquo; [6][7]. The agent-side design is capped spending &mdash; a spending cap, an approved merchant list, and a maximum transaction size the agent cannot raise on its own [7].</p>
+        <p>The wallets documentation carries no fee figure of any kind &mdash; no published price for Cloudflare Wallets exists &mdash; which is why every rate here comes from Stripe and the x402 facilitator. The rail-level comparison is on <a href="/cloudflare-wallets">Cloudflare Agent Wallets vs Stripe Link</a>; the agency-pricing version is findaiagency.com's <a href="https://findaiagency.com/cloudflare-agent-wallets-agency-pricing" rel="noopener">AI Agent Payments in 2026</a>.</p>
+
+        <h2 id="do-this">What an agency should do this quarter</h2>
+        <p>Five moves, all available at the rates published today.</p>
+        <ul>
+            <li><strong>Keep sub-dollar agent payments off the card rail.</strong> Below $0.308960 the fee exceeds the sale; up to $1 it is still a third or more of it.</li>
+            <li><strong>Split rails by job.</strong> Cards for human checkout with dispute rights; stablecoin acceptance for cross-border tickets; x402 for machine-to-machine metering, where a flat $0.001 beats any percentage above a $0.125000 ticket [5].</li>
+            <li><strong>Cost the excluded lines before promising a saving:</strong> on-ramp spread, treasury handling, screening and reconciliation are yours to run.</li>
+            <li><strong>Do not bill clients for Cloudflare Wallets yet:</strong> no published fees, no ability to move funds, no date beyond &ldquo;in the coming months&rdquo; [6][7].</li>
+            <li><strong>Put an expiry date on every rate you quote.</strong> 0.8% becomes 1.0% on 2 January 2027 and moves every figure in these tables [1].</li>
+        </ul>
+        <p>The same math shows up client-side, in what an agency can charge for the work (<a href="/cost-of-hiring-an-ai-agency">the true cost of hiring an AI agency</a>) and in who owns the checkout an agent pays through (<a href="https://findaiagency.com/shopify-ucp-agentic-commerce" rel="noopener">Shopify's UCP bet</a>).</p>
+
+        <div class="cta">
+            <a class="btn" href="/ai-agent-api-cost-calculator" data-umami-event="click_to_agent_api_cost_calculator">Model Your Agent Cost Per Transaction &rarr;</a><br>
+            <a class="secondary" href="https://aiagencycalculator.com/">Open the AI Agency Pricing Calculator &rarr;</a>
+        </div>
+
+        <h2 id="faq">Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>How much does a card payment cost on an AI agent transaction?</h3>
+            <p>The published US card rate is 2.9% plus 30&cent; per successful transaction. On a $1.00 ticket that is 32.90% of the sale; on the measured $0.321443 average x402 ticket a card charge is $0.309322, or 96.23%. The fixed 30&cent; does not scale down with the ticket.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What does Stripe charge for stablecoin payments?</h3>
+            <p>0.8% per successful transaction, published as a promotional rate through 1 January 2027, with &ldquo;+ 0.2% thereafter&rdquo; &mdash; 1.0% from 2 January 2027 unless extended. Neither line carries a monthly or setup fee, so the comparison is entirely per transaction.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is x402 free?</h3>
+            <p>The protocol carries zero protocol fees. The hosted facilitator is free only to a threshold: the first 1,000 onchain transactions each month cost nothing, then each additional onchain transaction is $0.001. Payment verification is always free; the fee follows settlement, not requests.</p>
+        </div>
+        <div class="faq-item">
+            <h3>At what transaction size does the card fee consume the whole sale?</h3>
+            <p>$0.308960. Below that ticket a 2.9% + 30&cent; charge is larger than the amount collected, so the transaction loses money before any margin applies. The measured average x402 ticket is $0.321443, of which 96.23% goes to a card fee.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Can an agency pay for APIs with Cloudflare Wallets today?</h3>
+            <p>No. Only handle reservation is live, and Cloudflare's documentation states that &ldquo;a reserved handle does not yet let you send, receive, or hold funds&rdquo;. Full access arrives &ldquo;in the coming months&rdquo;, and no wallet fee schedule has been published.</p>
+        </div>
+        <div class="faq-item">
+            <h3>When is a stablecoin rail actually cheaper for an agency?</h3>
+            <p>Per transaction, the stablecoin line is always cheaper than the card line on these published rates: 0.8% against 2.9% + 30&cent; wins at every positive ticket. The flat-fee rail crosses the percentage rail only above a $0.125 ticket, where one $0.001 settlement costs more than 0.8% of the amount.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What costs do none of these fee lines include?</h3>
+            <p>On-ramp and off-ramp spread, stablecoin float and treasury work, reconciliation labour, transaction screening, gas volatility, and the loss of chargeback recourse on irreversible settlement. No vendor prices those on a fee schedule, so a blended cost is always higher than the headline rate.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/cloudflare-wallets">Cloudflare Agent Wallets vs Stripe Link: Which Do Agencies Need?</a></li>
+                <li><a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</a></li>
+                <li><a href="/ai-agent-cost-blowups">AI Agent Cost Blowups: Loops, Data-Center Bans &amp; Real Pricing</a></li>
+                <li><a href="/hidden-costs-of-ai-automation">Hidden Costs of AI Automation</a></li>
+                <li><a href="/total-cost-of-ownership-ai-automation-3-year-model">Total Cost of Ownership AI Automation 3 Year Model</a></li>
+                <li><a href="/cost-of-hiring-an-ai-agency">The True Cost of Hiring an AI Agency in 2026</a></li>
+            </ul>
+        </div>
+
+        <h2 id="sources">Sources &amp; Methodology</h2>
+        <p>Every rate is quoted from the vendor's own page, fetched 18 September 2026; where a vendor publishes no price, this page says so instead of estimating. The tables are computed from those rates.</p>
+        <ul>
+            <li>[1] Stripe &mdash; pricing, 2026-09-18: <a href="https://stripe.com/pricing" rel="noopener">stripe.com/pricing</a></li>
+            <li>[2] Stripe &mdash; agentic commerce docs: <a href="https://docs.stripe.com/agentic-commerce" rel="noopener">docs.stripe.com/agentic-commerce</a></li>
+            <li>[3] Stripe &mdash; newsroom, September 2026: <a href="https://stripe.com/newsroom" rel="noopener">stripe.com/newsroom</a></li>
+            <li>[4] x402 &mdash; protocol site, live counter read 2026-09-18: <a href="https://www.x402.org/" rel="noopener">x402.org</a></li>
+            <li>[5] Coinbase &mdash; CDP x402 Facilitator docs: <a href="https://docs.cdp.coinbase.com/x402/core-concepts/facilitator" rel="noopener">docs.cdp.coinbase.com</a></li>
+            <li>[6] Cloudflare &mdash; Wallets documentation: <a href="https://developers.cloudflare.com/wallets/" rel="noopener">developers.cloudflare.com/wallets/</a></li>
+            <li>[7] Cloudflare &mdash; press release, 4 August 2026: <a href="https://www.cloudflare.com/press/press-releases/2026/cloudflare-gives-ai-agents-an-identity-and-a-wallet/" rel="noopener">cloudflare.com</a></li>
+            <li>[8] Cloudflare &mdash; blog, Wallets: <a href="https://blog.cloudflare.com/wallets/" rel="noopener">blog.cloudflare.com/wallets/</a></li>
+            <li>[9] The Currency Analytics &mdash; TRM Labs x402 write-up (third-party, never our measurement): <a href="https://thecurrencyanalytics.com/crypto-exchanges/trm-labs-only-7-5-of-coinbase-x402s-52-7m-in-transactions-tied-to-ai-agents-293190" rel="noopener">thecurrencyanalytics.com</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: the card, stablecoin, instant-bank, Klarna and Shared Payment Token prices are read from stripe.com/pricing on 18 September 2026; the x402 free tier, the $0.001 per-onchain-transaction price, the verification-versus-settlement rule, batch settlement and the &ldquo;more than 100 million transactions and $28 million in payment volume&rdquo; claim are from Coinbase's CDP facilitator documentation; the counter values (75.41M transactions, $24.24M volume) are the protocol site's live figures and will move. The break-even, average ticket, per-ticket grid and workload tables are computed from those rates, not quoted. The $52.7M / 198.9M settlement figures are TRM Labs' via The Currency Analytics, labelled third-party. No traffic, impression, ranking or conversion data is claimed anywhere on this page. This is cost modelling, not custody, tax or compliance advice.</p>
+
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
