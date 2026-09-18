@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Vendor Risk Assessment After Opus 4.6's Guardrail Bypass</title>
     <meta name="description" content="Anthropic's Opus 4.6 ignored its guardrails in 10 of 10 TechCrunch tests. That's an AI vendor risk assessment problem. What to test and contract for.">
-    <meta name="keywords" content="AI vendor risk assessment, AI agency vendor risk, AI third party risk, AI vendor due diligence">
+    <meta name="keywords" content="AI vendor risk assessment, AI agency vendor risk, AI third party risk, AI vendor due diligence, AI model governance, AI vendor lock-in">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://findaiagency.com/ai-vendor-risk-assessment">
     <meta property="og:title" content="AI Vendor Risk Assessment After Opus 4.6's Guardrail Bypass">
@@ -24,12 +24,12 @@
       "headline": "Before You Pitch Claude to Clients: What the Opus 4.6 Guardrail Bypass Means for AI Agency Vendor Risk",
       "description": "Anthropic's Opus 4.6 ignored its guardrails in 10 of 10 TechCrunch tests. That's an AI vendor risk assessment problem. What to test and contract for.",
       "datePublished": "2026-08-25",
-      "dateModified": "2026-09-11",
+      "dateModified": "2026-09-18",
       "author": {"@type": "Organization", "name": "Find AI Agency"},
       "publisher": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "mainEntityOfPage": "https://findaiagency.com/ai-vendor-risk-assessment",
       "image": "https://findaiagency.com/og-image.png",
-      "keywords": "AI vendor risk assessment, AI agency vendor risk, AI third party risk, AI vendor due diligence"
+      "keywords": "AI vendor risk assessment, AI agency vendor risk, AI third party risk, AI vendor due diligence, AI model governance, AI vendor lock-in"
     },
     {
       "@type": "FAQPage",
@@ -76,6 +76,7 @@
         strong { color: #111; }
         a { color: #2563eb; text-decoration: none; }
         a:hover { text-decoration: underline; }
+        a, p, li, th, td, code { overflow-wrap: anywhere; }
         blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
         table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
         th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
@@ -101,7 +102,7 @@
     <article>
         <header>
             <h1>Before You Pitch Claude to Clients: What the Opus 4.6 Guardrail Bypass Means for AI Agency Vendor Risk</h1>
-            <div class="meta"><span>Published August 25, 2026</span><span>Updated September 11, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="meta"><span>Published August 25, 2026</span><span>Updated September 18, 2026</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>AI security</span> <span>vendor risk</span></div>
         </header>
 
@@ -142,6 +143,22 @@
         <h2>Legal precedent: supply-chain-risk designations are reviewable, not final</h2>
         <p>On August 27, 2026, U.S. District Judge Rita Lin (Northern District of California) ruled that the Pentagon's designation of Anthropic as a "supply chain risk" was unlawful First Amendment retaliation, vacated the designation, and blocked the blacklist that would have barred federal agencies and defense contractors from using Claude. For vendor risk assessments, the ruling is the citable precedent that a government supply-chain-risk listing is <strong>not a final verdict</strong> — it can be reviewed and struck down. Track litigation status, not just list membership: the Aug 27 ruling vacated only the 10 U.S.C. § 3252 designation, while the Pentagon's separate designation under 41 U.S.C. § 4713 (FASCSA) was never before that court and remains in effect — it went directly to the U.S. Court of Appeals for the D.C. Circuit, <em>Anthropic PBC v. U.S. Department of War</em>, No. 26-1049, where the court denied an emergency stay on April 8, 2026 and heard argument on May 19, 2026 with no merits ruling as of Sept 11, 2026. Defense contractors whose contracts carry FAR 52.204-30 or DFARS 252.239-7018 obligations must still treat Claude as a restricted vendor and refrain from covered use, and the Pentagon is not required to resume buying it; civilian agencies can procure Claude again. <a href="/anthropic-blacklist-ruling-federal-access">What the blacklist ruling changes for agencies →</a> · <a href="https://mybusinessaiaudit.com/articles/anthropic-pentagon-ruling-vendor-risk" rel="noopener">How to update your AI vendor risk assessment after the ruling (My Business AI Audit)</a></p>
 
+        <div class="update-box">
+            <span class="update-label">Update &mdash; September 18, 2026</span>
+            <h2 id="model-swappability-vendor-risk">Vendor risk when the model is a configuration setting</h2>
+            <p>Everything above scores how a vendor <em>behaves</em>: whether a model respects its own guardrails under adversarial prompts, and whether a government can restrict it. There is a third failure mode attached to the same question &mdash; <strong>can I trust this vendor?</strong> &mdash; in which nothing goes wrong at all. The vendor's model can be replaced underneath you by a party you never contracted with, and the integration your client paid for keeps working exactly as before.</p>
+            <p>In September 2026, code researcher <strong>pdfu</strong> posted two demonstrations of private hooks in iOS 27 and macOS Golden Gate, reported by <a href="https://www.macrumors.com/2026/09/14/siri-can-be-swapped-out-for-chatgpt-claude/" rel="noopener">MacRumors</a> and <a href="https://www.cnet.com/tech/services-and-software/siri-ai-will-have-deep-integration-with-chatgpt-and-claude-models-leaked-build-shows/" rel="noopener">CNET</a>. <strong>Model Delegation</strong> lets a third-party model register as a Siri extension, the same slot the built-in ChatGPT extension occupies. <strong>Model Manager Services</strong> goes a layer deeper: an <code>Inference Providing</code> protocol that can replace Apple's own server-side Siri model outright, with the answer still delivered in Siri's own interface and voice.</p>
+            <p>Read that as a procurement fact rather than a product. Apple is the vendor demonstrating that the reasoning layer is replaceable configuration while the interface stays put. Any client who has standardised on a single provider for a workflow that runs behind somebody else's interface has bought the same arrangement, usually without the exit terms.</p>
+            <p><strong>Nothing here is switched on</strong>, and that caveat is why it belongs in a vendor risk assessment rather than a news roundup. The mechanism relies on a private entitlement, <code>com.apple.developer.model-delegation</code>, that Apple has not opened to third-party developers; no public entitlement exists; the &ldquo;Ask&hellip;&rdquo; menu ships with the ChatGPT extension only in the macOS 27 Golden Gate Release Candidate; Apple has announced neither mechanism, and Apple, OpenAI and Anthropic had not responded to press requests as of September 14, 2026. Infrastructure shipped, capability off &mdash; the pattern is what you plan for, not the feature.</p>
+            <p><strong>What changes in the assessment.</strong> Lock-in was already on the checklist. What moves is where it can live: not only in a model you chose, but in a platform your client already runs, where the model becomes a configuration value instead of a line in your proposal. Three questions follow, and none of them is about the model itself.</p>
+            <ul>
+                <li><strong>Who holds the switch.</strong> On the delegation path the third-party model interprets the request and the system action still executes through the platform's own layer; on the replacement path the model receives the platform's planner prompt, its tool definitions and the results those tools return, including personal data &mdash; and the demonstration shows that session logged in the model vendor's own interface. Same user experience, two different trust boundaries.</li>
+                <li><strong>What leaves whose infrastructure.</strong> Only one of those paths moves your client's data outside the platform vendor's system. If the client's contract and privacy notice describe processing by one vendor, an operating-system default can change that answer without anyone signing anything.</li>
+                <li><strong>What you keep when you switch.</strong> If the model is configuration, then prompts, tool definitions, evaluation sets and the audit trail are the assets that survive a swap. Own them, version them and keep them portable before you need to exercise them.</li>
+            </ul>
+            <p>The sentence to carry into the next proposal is therefore not <em>which model do we standardise on</em> but <em>how cheaply can we switch, and what do we keep when we do</em>. The cost side of that &mdash; the routing decisions you no longer price and the platform prompt you no longer write &mdash; is worked through in <a href="/ai-agent-workload-routing">AI Agent Workload Routing 2026: Fable 5.1 vs Cache-Priced Loops</a>. The mechanisms themselves, the entitlement gate and the four questions for a client proposal are covered in <a href="/siri-model-delegation-multi-model-architecture">Siri Model Delegation in iOS 27: Built, Not Switched On</a>.</p>
+        </div>
+
         <h2>Frequently asked questions</h2>
         <div class="faq-item">
             <h3>What is an AI vendor risk assessment?</h3>
@@ -175,6 +192,8 @@
                 <li><a href="/ai-agency-security-vetting">AI Agency Security Vetting: 13 Questions After OpenAI's Astra Pause</a></li>
                 <li><a href="/ai-security-review-pitch">How to Pitch AI Security Reviews After the Astra Pause</a></li>
                 <li><a href="/claude-watermark-ai-agencies">Claude Watermark &amp; AI Provenance: What Agencies Must Know</a></li>
+                <li><a href="/siri-model-delegation-multi-model-architecture">Siri Model Delegation in iOS 27: Built, Not Switched On</a></li>
+                <li><a href="/ai-agent-workload-routing">AI Agent Workload Routing 2026: Fable 5.1 vs Cache-Priced Loops</a></li>
             </ul>
         </div>
 
@@ -187,8 +206,10 @@
             <li>Claude Platform Docs: Model deprecations — <a href="https://platform.claude.com/docs/en/about-claude/model-deprecations" rel="noopener">platform.claude.com</a></li>
             <li>Colorado HB26-1263 (Conversational AI Service Operator Requirements) — <a href="https://leg.colorado.gov/bills/HB26-1263" rel="noopener">leg.colorado.gov</a></li>
             <li>Pew Research Center: "Teens, Social Media and AI Chatbots 2025" (December 9, 2025) — <a href="https://www.pewresearch.org/internet/2025/12/09/teens-social-media-and-ai-chatbots-2025" rel="noopener">pewresearch.org</a></li>
+            <li>MacRumors: "Apple's Siri AI Can Be Swapped Out for Claude, ChatGPT, Code Shows" (September 14, 2026) &mdash; <a href="https://www.macrumors.com/2026/09/14/siri-can-be-swapped-out-for-chatgpt-claude/" rel="noopener">macrumors.com</a></li>
+            <li>CNET: "Siri AI Will Have Deep Integration With ChatGPT and Claude Models, Leaked Build Shows" (September 14, 2026) &mdash; <a href="https://www.cnet.com/tech/services-and-software/siri-ai-will-have-deep-integration-with-chatgpt-and-claude-models-leaked-build-shows/" rel="noopener">cnet.com</a></li>
         </ul>
-        <p style="font-size:0.85rem;color:#666;">Accuracy note: TechCrunch reported Opus 3 "has not been deprecated"; Anthropic's own documentation shows Opus 3 was retired January 5, 2026. The 0.1% role-play figure is reported by TechCrunch from Anthropic research, not independently verified. Colorado HB26-1263 is effective January 1, 2027 — not yet in force.</p>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: TechCrunch reported Opus 3 "has not been deprecated"; Anthropic's own documentation shows Opus 3 was retired January 5, 2026. The 0.1% role-play figure is reported by TechCrunch from Anthropic research, not independently verified. Colorado HB26-1263 is effective January 1, 2027 — not yet in force. The September 18, 2026 update adds the model-swappability lens and the two September 14, 2026 reports it cites; the Opus 4.6 test results, the deprecation dates and the litigation status above are unchanged.</p>
     </article>
     <footer>
         <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
