@@ -6,7 +6,7 @@
 <title>AI Agent Liability: Who Pays When Your Agent Breaks the Law</title>
 <meta name="description" content="Who is liable when an AI agent breaks the law? The deployment decides. A 2026 checklist on credential scope, logging, kill switch, contracts and insurance.">
 <link rel="canonical" href="https://mybusinessaiaudit.com/ai-agent-liability-checklist/">
-<meta name="keywords" content="AI agent liability, is my AI agent liable, CFAA AI agent, agent liability 2026, who is responsible when an AI agent breaks the law, AI agent liability checklist, AI agent insurance 2026">
+<meta name="keywords" content="AI agent liability, is my AI agent liable, CFAA AI agent, agent liability 2026, who is responsible when an AI agent breaks the law, AI agent liability checklist, AI agent insurance 2026, AI agent delegation liability, model delegation liability">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="AI Agent Liability: Who Pays When Your Agent Breaks the Law">
 <meta property="og:description" content="Who is liable when an AI agent breaks the law? The deployment decides. A 2026 checklist on credential scope, logging, kill switch, contracts and insurance.">
@@ -38,7 +38,7 @@
         "height": 630
       },
       "datePublished": "2026-09-15",
-      "dateModified": "2026-09-15",
+      "dateModified": "2026-09-18",
       "author": {
         "@type": "Person",
         "name": "Brent Dubose"
@@ -106,7 +106,9 @@
         "https://thehackernews.com/2026/09/openai-agents-linked-to-rubygems.html",
         "https://metr.org/hugging-face-incident-report-aug-2026.pdf",
         "https://www.genre.com/us/knowledge/publications/2026/august/priced-for-the-worst-the-market-for-lemons-and-the-retreat-from-ai-cover-en",
-        "https://www.ajg.com/gallagherre/-/media/files/gallagher/gallagherre/news-and-insights/2026/may/global-insurtech-report-2026-q1-ai-digital-risks.pdf"
+        "https://www.ajg.com/gallagherre/-/media/files/gallagher/gallagherre/news-and-insights/2026/may/global-insurtech-report-2026-q1-ai-digital-risks.pdf",
+        "https://www.macrumors.com/2026/09/14/siri-can-be-swapped-out-for-chatgpt-claude/",
+        "https://www.cnet.com/tech/services-and-software/siri-ai-will-have-deep-integration-with-chatgpt-and-claude-models-leaked-build-shows/"
       ],
       "keywords": [
         "AI agent liability",
@@ -115,7 +117,9 @@
         "agent liability 2026",
         "who is responsible when an AI agent breaks the law",
         "AI agent liability checklist",
-        "AI agent insurance 2026"
+        "AI agent insurance 2026",
+        "AI agent delegation liability",
+        "model delegation liability"
       ]
     },
     {
@@ -177,6 +181,22 @@
             "@type": "Answer",
             "text": "Inventory the agents, then cut credential scope. Both are cheap, need no counsel, and remove most of the blast radius the 2026 incidents turned on - Anthropic's four disclosed incidents began with test environments mistakenly connected to the open internet, with no stated scope for what the model could touch."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is responsible when one AI agent delegates to another?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Start with which layer holds the record, because the two paths leave different evidence. On the delegation path, the third-party model interprets the request and the system action still executes through Siri's own layer. On the replacement path, the third-party model receives Apple's Siri planner prompt and tool definitions, and the demonstration shows the session logged in the model vendor's own interface. That second path moves reasoning and data access outside the platform vendor for the duration of the request, and OS-level delegation adds a party the deploying business never contracted with. No court has addressed it, so read this as how the question is being framed rather than a legal conclusion: the answer an audit can evidence is which layer produced the output the business acted on."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should we audit multi-model or delegated assistant workflows?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Audit artefacts, and write the delegation boundary down before you need it. Four things to be able to produce: the consent state - whether the person or the tenant selected the answering provider, and where that choice is recorded; provider identity at the time of the action - which model answered, not only which assistant did; whether the session left the platform vendor's infrastructure, and how long the third party retains it; and the vendor contract's allocation of third-party impact, including its notification window. The honest limit is that Model Delegation requires a private entitlement, com.apple.developer.model-delegation, which Apple has not opened to third-party developers, so there is no ship-ready control surface to audit yet. The question to answer this quarter is narrower: can your logs distinguish Siri answered from a delegated model answered? If they cannot, that is the finding."
+          }
         }
       ]
     }
@@ -207,7 +227,8 @@
         footer { margin-top: 24px; color: #888; font-size: 0.85rem; text-align: center; }
         nav.site { margin-bottom: 20px; font-size: 0.9rem; }
         nav.site a { margin-right: 16px; text-decoration: none; }
-        a, p, li { overflow-wrap: anywhere; }
+        a, p, li, code { overflow-wrap: anywhere; }
+        .update-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
         @media (max-width: 640px) { article { padding: 24px 18px; } }
     </style>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
@@ -216,7 +237,7 @@
     <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool">Free AI Audit</a></nav>
     <article>
         <h1>Who Is Liable When Your AI Agent Acts? A Deployment-Liability Checklist for Small Businesses</h1>
-        <div class="meta"><span>Published September 15, 2026 &middot; Updated September 15, 2026</span><span>By ABD Legacy LLC</span></div>
+        <div class="meta"><span>Published September 15, 2026 &middot; Updated September 18, 2026</span><span>By ABD Legacy LLC</span></div>
         <div class="tagline"><span>AI agent liability</span><span>Deployment checklist</span><span>CFAA</span></div>
 
         <h2 id="who-is-liable">Who is liable when your AI agent breaks something?</h2>
@@ -372,6 +393,25 @@
         </div>
 
         <div class="update-box">
+            <span class="update-label">Update &mdash; September 2026</span>
+            <h2 id="delegation-liability">Delegation liability: two questions added for September 2026</h2>
+
+            <p><strong>September 2026 &mdash; Apple has built, but not opened, OS-level model delegation; the audit question for this quarter is log readiness.</strong> Two private hooks are described: Model Delegation, which lets a third-party model register as a Siri extension, and Model Manager Services, whose <code>Inference Providing</code> protocol can replace Apple&rsquo;s server-side Siri model. They come from a private iOS 27 build reported on September 14, 2026, and neither mechanism is user-facing today: no public entitlement exists. Both answers below are analysis of how the question is being framed in 2026, not a legal opinion about your facts.</p>
+
+            <div class="faq-item">
+                <h3>Who is responsible when one AI agent delegates to another?</h3>
+                <p>Start with which layer holds the record, because the two paths leave different evidence. On the delegation path, the third-party model interprets the request and the system action still executes through Siri&rsquo;s own layer. On the replacement path, the third-party model receives Apple&rsquo;s Siri planner prompt and tool definitions, and the demonstration shows the session logged in the model vendor&rsquo;s own interface. That second path moves reasoning and data access outside the platform vendor for the duration of the request, and OS-level delegation adds a party the deploying business never contracted with. No court has addressed it, so read this as how the question is being framed rather than a legal conclusion: the answer an audit can evidence is which layer produced the output the business acted on.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How should we audit multi-model or delegated assistant workflows?</h3>
+                <p>Audit artefacts, and write the delegation boundary down before you need it. Four things to be able to produce: the consent state &mdash; whether the person or the tenant selected the answering provider, and where that choice is recorded; provider identity at the time of the action &mdash; which model answered, not only which assistant did; whether the session left the platform vendor&rsquo;s infrastructure, and how long the third party retains it; and the vendor contract&rsquo;s allocation of third-party impact, including its notification window. The honest limit is that Model Delegation requires a private entitlement, <code>com.apple.developer.model-delegation</code>, which Apple has not opened to third-party developers, so there is no ship-ready control surface to audit yet. The question to answer this quarter is narrower: can your logs distinguish <code>Siri answered</code> from <code>a delegated model answered</code>? If they cannot, that is the finding.</p>
+            </div>
+
+            <p>Sources for this block: <a href="https://www.macrumors.com/2026/09/14/siri-can-be-swapped-out-for-chatgpt-claude/" target="_blank" rel="noopener">MacRumors, September 14, 2026</a> and <a href="https://www.cnet.com/tech/services-and-software/siri-ai-will-have-deep-integration-with-chatgpt-and-claude-models-leaked-build-shows/" target="_blank" rel="noopener">CNET, September 14, 2026</a>, both reporting code posted by researcher pdfu on September 13, 2026. The delegation-versus-replacement mechanics, written up for client work, are on <a href="https://findaiagency.com/siri-model-delegation-multi-model-architecture" target="_blank" rel="noopener">findaiagency.com &mdash; Siri Model Delegation in iOS 27: Built, Not Switched On</a>.</p>
+        </div>
+
+        <div class="update-box">
             <span class="update-label">Before you act</span>
             <p>Not legal advice &mdash; consult counsel. This is commentary on how the question is framed in 2026, not an opinion about your facts. The posts quoted are commentary, not reporting. No prosecutor has tested agent liability under the CFAA, and nothing here predicts any legal outcome. <a href="/ai-agent-risk-checklist">the full AI agent risk checklist</a> has the operational rest.</p>
         </div>
@@ -388,6 +428,7 @@
                 <li>METR / Redwood Research, independent investigation of the Hugging Face incident, 26 August 2026 &mdash; <a href="https://metr.org/hugging-face-incident-report-aug-2026.pdf" target="_blank" rel="noopener">https://metr.org/hugging-face-incident-report-aug-2026.pdf</a></li>
                 <li>Gen Re, Priced for the Worst &ndash; The Market for Lemons and the Retreat from AI Cover (part 4 of 4), 26 August 2026 &mdash; insurer publication reporting that carriers have filed to exclude AI-related losses from standard liability policies, and that Verisk/ISO said in July 2026 it is weighing additional wording options for agentic AI &mdash; <a href="https://www.genre.com/us/knowledge/publications/2026/august/priced-for-the-worst-the-market-for-lemons-and-the-retreat-from-ai-cover-en" target="_blank" rel="noopener">https://www.genre.com/us/knowledge/publications/2026/august/priced-for-the-worst-the-market-for-lemons-and-the-retreat-from-ai-cover-en</a></li>
                 <li>Gallagher Re, Global InsurTech Report 2026 Q1 (AI and digital risks), May 2026 &mdash; broker publication reporting that traditional lines of business are moving to exclude coverage of AI risks, including Verisk/ISO Generative AI exclusions CG 40 47 and CG 40 48 &mdash; <a href="https://www.ajg.com/gallagherre/-/media/files/gallagher/gallagherre/news-and-insights/2026/may/global-insurtech-report-2026-q1-ai-digital-risks.pdf" target="_blank" rel="noopener">https://www.ajg.com/gallagherre/-/media/files/gallagher/gallagherre/news-and-insights/2026/may/global-insurtech-report-2026-q1-ai-digital-risks.pdf</a></li>
+                <li>MacRumors &mdash; Apple&rsquo;s Siri AI Can Be Swapped Out for Claude, ChatGPT, Code Shows (September 14, 2026), and CNET (September 14, 2026), reporting code posted by researcher pdfu on September 13, 2026; both read for the delegation-liability update above, which is analysis of how the question is framed in 2026 and not legal advice &mdash; <a href="https://www.macrumors.com/2026/09/14/siri-can-be-swapped-out-for-chatgpt-claude/" target="_blank" rel="noopener">https://www.macrumors.com/2026/09/14/siri-can-be-swapped-out-for-chatgpt-claude/</a> &middot; <a href="https://www.cnet.com/tech/services-and-software/siri-ai-will-have-deep-integration-with-chatgpt-and-claude-models-leaked-build-shows/" target="_blank" rel="noopener">https://www.cnet.com/tech/services-and-software/siri-ai-will-have-deep-integration-with-chatgpt-and-claude-models-leaked-build-shows/</a></li>
             </ol>
         </div>
     </article>
