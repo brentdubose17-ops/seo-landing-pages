@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</title>
-    <meta name="description" content="Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead — and compare per-token vs outcome-based pricing side-by-side, with agent-first pricing guidance built in.">
-    <meta name="keywords" content="AI agent API cost, agent API cost calculator, AI agent cost estimator, agent workload cost, agent-first pricing, AI agency API costs, token cost calculator, AI agent pricing, API cost per agent, outcome-based pricing, pay per completed task, OpenAI outcome-based pricing, per-resolution pricing, AI pricing models 2026, pay for AI only when it works">
+    <!-- DESCRIPTION-TAG RULE (t_406c2d35 / t_cb92c963): the meta, og:description and
+         twitter:description family carries ONE intent lead, byte-identical, <=500 chars.
+         Nothing accretes here; page-detail price lists belong in the body. -->
+    <meta name="description" content="Estimate AI agent cost per month on 2026 list rates: self-hosted token math plus managed agents — OpenAI Agents API sessions, tool calls, containers and storage, with dated sources.">
+    <meta name="keywords" content="AI agent API cost, agent API cost calculator, AI agent cost estimator, agent workload cost, managed agents cost, OpenAI Agents API pricing, managed agent session cost, agent-first pricing, AI agency API costs, token cost calculator, AI agent pricing, API cost per agent, outcome-based pricing, pay per completed task, OpenAI outcome-based pricing, per-resolution pricing, AI pricing models 2026, pay for AI only when it works">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aiagencycalculator.com/ai-agent-api-cost-calculator">
     <meta property="og:title" content="AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs" />
-    <meta property="og:description" content="Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead — and compare per-token vs outcome-based pricing side-by-side.">
+    <meta property="og:description" content="Estimate AI agent cost per month on 2026 list rates: self-hosted token math plus managed agents — OpenAI Agents API sessions, tool calls, containers and storage, with dated sources." />
     <meta property="og:url" content="https://aiagencycalculator.com/ai-agent-api-cost-calculator">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Aiagencycalculator">
     <meta property="og:image" content="https://aiagencycalculator.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs" />
+    <meta name="twitter:description" content="Estimate AI agent cost per month on 2026 list rates: self-hosted token math plus managed agents — OpenAI Agents API sessions, tool calls, containers and storage, with dated sources." />
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -22,9 +27,9 @@
     {
       "@type": "Article",
       "headline": "AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs",
-      "description": "Estimate what your AI agent workloads really cost per month: agents × API calls × tokens × provider rates, plus overhead — and compare per-token vs outcome-based pricing side-by-side.",
+      "description": "Estimate AI agent cost per month on 2026 list rates: self-hosted token math plus managed agents — OpenAI Agents API sessions, tool calls, containers and storage, with dated sources.",
       "datePublished": "2026-08-24",
-      "dateModified": "2026-09-12",
+      "dateModified": "2026-09-18",
       "author": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "publisher": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "mainEntityOfPage": "https://aiagencycalculator.com/ai-agent-api-cost-calculator",
@@ -68,6 +73,16 @@
           "@type": "Question",
           "name": "How much should I mark up API costs when billing clients?",
           "acceptedAnswer": {"@type": "Answer", "text": "A transparent 10–20% pass-through margin is the defensible norm — the margin compensates for forecasting risk, monitoring, and re-baselining, not just the tokens. If you price per outcome instead, set the per-resolution price at or below established benchmarks (Intercom Fin $0.99, Salesforce Agentforce $2) while keeping your loaded cost per resolution well under it."}
+        },
+        {
+          "@type": "Question",
+          "name": "What does an OpenAI Agents API session cost?",
+          "acceptedAnswer": {"@type": "Answer", "text": "There is no per-session fee: OpenAI states there are no additional fees for using the Agents API, so a session bills as model tokens at your chosen model's rates, plus tool calls (web search $10.00 per 1,000 calls, file search $2.50 per 1,000 calls), plus container-minutes when you use a hosted sandbox ($0.03 / $0.12 / $0.48 / $1.92 per 20-minute session at 1, 4, 16 and 64 GB, billed by the minute with a 5-minute minimum), plus $0.05 per minute if you put the GPT-Live-1 voice front end on it. Worked example: a 6-minute voice support session on a GPT-6 Astra backend with a 4 GB container and two web searches comes to $0.9660 per session, of which the voice layer alone is $0.3000. Rates checked September 18, 2026."}
+        },
+        {
+          "@type": "Question",
+          "name": "Does OpenAI charge a per-session or per-step fee for agents?",
+          "acceptedAnswer": {"@type": "Answer", "text": "No. OpenAI publishes no per-session fee for the Agents API and denies one in writing — there are no additional fees for using the Agents API — and its pricing page carries no Agents API section at all. There is no published per-step or per-turn rate either: what you pay per step is that step's tokens and its tool calls. The session duration cap, session concurrency cap and free tier are also not published; the only published clock is a one-hour sandbox idle timeout that OpenAI says is not configurable."}
         }
       ]
     }
@@ -141,20 +156,33 @@
         .note { font-size: 0.82rem; color: #888; margin-top: 10px; }
         .formula { background: #fff; border: 1px dashed #c0c8d8; border-radius: 8px; padding: 14px 18px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88rem; color: #333; margin: 12px 0 4px; overflow-x: auto; white-space: pre-wrap; }
         .badge { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.78rem; padding: 3px 10px; border-radius: 20px; font-weight: 600; margin-right: 8px; }
-        @media (max-width: 600px) { .calc .grid { grid-template-columns: 1fr; } }
+        .preset-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+        .preset-btn { background: #fff; border: 1px solid #cfe3ff; color: #1d4ed8; font-size: 0.85rem; font-weight: 600; padding: 7px 12px; border-radius: 8px; cursor: pointer; font-family: inherit; line-height: 1.35; text-align: left; }
+        .preset-btn:hover { background: #f0f7ff; }
+        .preset-btn.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+        .status { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; }
+        .status.ok { background: #e7f7ee; color: #157347; }
+        .status.np { background: #fdf3e3; color: #b45309; }
+        .notpub { margin: 14px 0 0; padding: 14px 16px; background: #fffaf0; border: 1px solid #f2dcb3; border-radius: 10px; font-size: 0.88rem; color: #5a4415; }
+        .notpub h4 { font-size: 0.95rem; color: #8a5a00; margin-bottom: 8px; }
+        .notpub ul { margin: 0 0 0 20px; }
+        .notpub li { margin-bottom: 7px; font-size: 0.86rem; color: #5a4415; }
+        @media (max-width: 600px) { .calc .grid { grid-template-columns: 1fr; } .preset-btn { width: 100%; } }
     </style>
 </head>
 <body>
     <article>
         <header>
             <h1>AI Agent API Cost Calculator: Estimate Monthly Agent Workload Costs</h1>
-            <div class="meta"><span>Published August 24, 2026 · Updated September 12, 2026</span><span>By ABD Legacy LLC</span></div>
-            <div class="tagline"><span>AI agent API costs</span> <span>Agent-first pricing</span> <span>Agency billing</span></div>
+            <div class="meta"><span>Published August 24, 2026 · Updated September 18, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>AI agent API costs</span> <span>Managed agents</span> <span>Agent-first pricing</span> <span>Agency billing</span></div>
         </header>
 
         <p><strong>The short answer:</strong> a moderately active AI agent costs <strong>roughly $50–$150/month in raw API spend</strong> on mid-tier 2026 models, and a full agent deployment is easy to model once you separate the four cost drivers: number of agents, calls per agent per day, tokens (or price) per call, and agency overhead. This calculator walks an agency owner through each driver and turns it into a defensible monthly number — plus a suggested client price using agent-first pricing.</p>
 
         <p>This page is the pricing companion to <a href="https://findaiagency.com/ai-agents-api-economy" rel="noopener">"AI Agents Are the API Economy's Biggest Customers: What Agencies Should Charge"</a> — the full analysis of the PYMNTS report is there; the math is here. AI agents are the fastest-growing class of API consumers (PYMNTS, Aug 24, 2026), OpenRouter passed 1 trillion tokens/day in late 2025, and Cloudflare's Matthew Prince cites a single agent task querying ~5,000 sites versus ~5 for a human. That machine-scale consumption is exactly what an agency is paying for — and what it should bill for, deliberately.</p>
+
+        <p><strong>The short answer for a managed session:</strong> since September 10, 2026 OpenAI also sells the agent <em>as a service</em> — the <a href="https://findaiagency.com/ai-agents-api-economy#managed-agents-sept-2026" rel="noopener">Agents API, a managed Codex harness</a> — and that changes the shape of the bill without changing what you quote on. A managed session is still tokens at your chosen model's rates, but it adds three meters the application code used to be: tool calls (web search $10.00 per 1,000 calls; file search $2.50 per 1,000 calls, plus $0.10 per GB per day of retrieval storage after the first free GB), container-minutes ($0.03 / $0.12 / $0.48 / $1.92 per 20-minute session at 1, 4, 16 and 64 GB, billed by the minute with a 5-minute minimum), and — only if you put a voice front end on it — GPT-Live-1 at $0.05 per minute of open session, which is <strong>$3.00 per open hour</strong>. There is <strong>no per-session fee</strong>: OpenAI states there are no additional fees for using the Agents API, and its pricing page carries no Agents API section at all. The managed block at the bottom of the calculator models all of it, with three scenario presets — a prototype agent, a production cloud agent on managed infrastructure, and an agency-managed deployment.</p>
 
         <p><strong>Capacity context:</strong> Anthropic's reported <strong>$45 billion Nscale commitment</strong> and its <strong>SpaceX Colossus 1 compute deal</strong> signal real Claude capacity growth — but also pricing pressure ahead of the record IPO. For the full breakdown, see <a href="https://findaiagency.com/anthropic-45b-compute-deal" rel="noopener">Anthropic's $45B Nscale compute deal: what it means for Claude capacity and pricing</a>.</p>
 
@@ -162,9 +190,10 @@
             <h2>Agent API Cost Estimator</h2>
             <div class="field full" style="margin-bottom:14px;">
                 <label>Calculator mode</label>
-                <div class="radio-row">
+                <div class="radio-row" style="flex-wrap:wrap;">
                     <label><input type="radio" name="mode" value="usage" checked> API/usage-based</label>
                     <label><input type="radio" name="mode" value="outcome"> Outcome-based</label>
+                    <label><input type="radio" name="mode" value="managed"> Managed session (Agents API)</label>
                 </div>
                 <div class="note" id="modeNote" style="margin-top:6px;"></div>
             </div>
@@ -248,6 +277,7 @@
                 </div>
             </div>
 
+            <div class="note" id="selfHostedNote" style="display:none; color:#444; font-size:0.85rem; background:#f0f7ff; border:1px solid #cfe3ff; border-radius:8px; padding:10px 12px; margin-top:16px;"></div>
             <div class="results" id="results">
                 <div class="row total"><span class="k">Monthly raw API cost</span><span class="v" id="rRaw">—</span></div>
                 <div class="row"><span class="k">Total API calls / month</span><span class="v" id="rCalls">—</span></div>
@@ -279,6 +309,117 @@
                 <div class="row"><span class="k">Outcome-based per completed task</span><span class="v" id="rOutcomePerTask">—</span></div>
                 <div class="note" id="outcomeNote" style="color:#444; font-size:0.85rem; background:#f0f7ff; border:1px solid #cfe3ff; border-radius:8px; padding:10px 12px; margin-top:12px;">
                     <strong>Availability:</strong> OpenAI's outcome-based pricing is currently limited to select enterprise customers and is not generally available. When it is available, it shifts retry/failure risk to the vendor: cheaper when your success rate is low or your workload burns many calls per completion, riskier at high volume if the per-outcome price exceeds your effective per-token cost. Market references: Intercom Fin $0.99/resolved conversation, Zendesk Verified Resolutions ~$1.20–$1.50, HubSpot Customer Agent $0.50, Salesforce Agentforce $2/conversation.
+                </div>
+            </div>
+
+            <div id="managedPanel" style="display:none; margin-top:26px; border-top:2px dashed #cfe3ff; padding-top:18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                    <h3 style="margin:0; font-size:1.2rem; color:#1a1a2e;">Managed agent session &mdash; OpenAI Agents API</h3>
+                    <span class="badge" style="background:#eef7ff;">New Sept 18, 2026</span>
+                </div>
+                <p class="note" style="margin:8px 0 14px;">The rows above model a self-hosted / raw-API workload (agents &times; calls &times; tokens) and stay live. This block models the <strong>managed</strong> shape instead: OpenAI hosts the Codex harness, so one session bills as the model tokens it burns <em>plus</em> its tool calls <em>plus</em> its container-minutes <em>plus</em> the GPT-Live-1 voice front end at $0.05/minute. There is <strong>no per-session fee</strong> &mdash; OpenAI's own wording is that there are no additional fees for using the Agents API. Rates read 2026-09-18.</p>
+                <div class="field full" style="margin-bottom:10px;">
+                    <label>Scenario preset</label>
+                    <div class="preset-row">
+                        <button type="button" class="preset-btn" id="presetPrototype" onclick="applyManagedPreset('prototype')">(a) Prototype agent</button>
+                        <button type="button" class="preset-btn" id="presetProduction" onclick="applyManagedPreset('production')">(b) Production cloud agent &middot; managed infra</button>
+                        <button type="button" class="preset-btn" id="presetAgency" onclick="applyManagedPreset('agency')">(c) Agency-managed deployment</button>
+                    </div>
+                    <div class="note" id="presetNote"></div>
+                </div>
+                <div class="grid">
+                    <div class="field full">
+                        <label for="mModel">Backend model <span class="hint">(the Agents API passes tokens through at the selected model's rates)</span></label>
+                        <select id="mModel">
+                            <option value="gpt-5.6-luna">GPT-5.6 Luna &mdash; $0.20 in / $0.02 cached / $1.20 out per 1M</option>
+                            <option value="gpt-5.6-terra">GPT-5.6 Terra &mdash; $2.00 in / $0.20 cached / $12.00 out per 1M</option>
+                            <option value="gpt-6-astra" selected>GPT-6 Astra &mdash; $10.00 in / $1.00 cached / $50.00 out per 1M (short context)</option>
+                            <option value="gpt-5.6-sol">GPT-5.6 Sol &mdash; $4.00 in / $0.40 cached / $20.00 out per 1M (promo to Nov 21, 2026)</option>
+                            <option value="grok-4.6">Grok 4.6 &mdash; $2.00 in / $0.50 cached / $6.00 out per 1M</option>
+                            <option value="deepseek-v4.1-flash">DeepSeek V4.1-Flash off-peak &mdash; $0.15 in / $0.003 cached / $0.60 out per 1M</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="mSessionsPerDay">Sessions per day</label>
+                        <input type="number" id="mSessionsPerDay" value="1000" min="0" max="100000" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="mDays">Days per month <span class="hint">(working days; also the days file storage is billed)</span></label>
+                        <input type="number" id="mDays" value="30" min="1" max="31" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="mUncachedIn">Uncached input tokens per session</label>
+                        <input type="number" id="mUncachedIn" value="30000" min="0" max="100000000" step="1000">
+                    </div>
+                    <div class="field">
+                        <label for="mCachedIn">Cached input tokens per session <span class="hint">(context reuse)</span></label>
+                        <input type="number" id="mCachedIn" value="60000" min="0" max="100000000" step="1000">
+                    </div>
+                    <div class="field">
+                        <label for="mOutTok">Output tokens per session</label>
+                        <input type="number" id="mOutTok" value="5000" min="0" max="10000000" step="500">
+                    </div>
+                    <div class="field">
+                        <label for="mWebSearches">Web searches per session <span class="hint">($10.00 / 1k calls)</span></label>
+                        <input type="number" id="mWebSearches" value="2" min="0" max="1000" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="mFileSearches">File-search calls per session <span class="hint">($2.50 / 1k calls)</span></label>
+                        <input type="number" id="mFileSearches" value="0" min="0" max="1000" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="mStorageGB">File-search storage, GB <span class="hint">($0.10 / GB / day; first 1 GB free)</span></label>
+                        <input type="number" id="mStorageGB" value="0" min="0" max="10000" step="0.5">
+                    </div>
+                    <div class="field">
+                        <label for="mContainerTier">Hosted container <span class="hint">(per 20-minute session, by memory tier)</span></label>
+                        <select id="mContainerTier">
+                            <option value="none">No container &mdash; no-environment session</option>
+                            <option value="1">1 GB &mdash; $0.03 per 20-minute session</option>
+                            <option value="4" selected>4 GB &mdash; $0.12 per 20-minute session</option>
+                            <option value="16">16 GB &mdash; $0.48 per 20-minute session</option>
+                            <option value="64">64 GB &mdash; $1.92 per 20-minute session</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="mContainerMin">Container minutes per session <span class="hint">(not published &mdash; your estimate; 5-minute minimum applies)</span></label>
+                        <input type="number" id="mContainerMin" value="6" min="0" max="1440" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="mVoiceMin">GPT-Live-1 voice minutes per session <span class="hint">($0.05/min; 0 = no voice front end)</span></label>
+                        <input type="number" id="mVoiceMin" value="6" min="0" max="1440" step="0.5">
+                    </div>
+                </div>
+                <div class="results" id="managedResults" style="border-color:#cfe3ff; background:#f7fbff;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px; margin-bottom:6px;">
+                        <h4 style="color:#1d4ed8; margin:0;">Managed session &mdash; line items</h4>
+                        <span class="badge" style="background:#eef7ff;">rates read 2026-09-18</span>
+                    </div>
+                    <div class="row"><span class="k">Per-session fee (Agents API)</span><span class="v" id="mOutFee">&mdash;</span></div>
+                    <div class="row"><span class="k">Model token pass-through</span><span class="v" id="mOutTokens">&mdash;</span></div>
+                    <div class="row"><span class="k">Web search calls</span><span class="v" id="mOutWeb">&mdash;</span></div>
+                    <div class="row"><span class="k">File-search calls</span><span class="v" id="mOutFileSearch">&mdash;</span></div>
+                    <div class="row"><span class="k">Per-step / per-turn fee</span><span class="v" id="mOutStep">&mdash;</span></div>
+                    <div class="row"><span class="k">Hosted container minutes</span><span class="v" id="mOutContainer">&mdash;</span></div>
+                    <div class="row"><span class="k">GPT-Live-1 voice front end</span><span class="v" id="mOutVoice">&mdash;</span></div>
+                    <div class="row total"><span class="k">Per session</span><span class="v" id="mOutPerSession">&mdash;</span></div>
+                    <div class="row"><span class="k">Sessions per month</span><span class="v" id="mOutSessions">&mdash;</span></div>
+                    <div class="row"><span class="k">Sessions subtotal (per session &times; sessions/month)</span><span class="v" id="mOutSessionsTotal">&mdash;</span></div>
+                    <div class="row"><span class="k">File-search storage, monthly (long-running)</span><span class="v" id="mOutStorage">&mdash;</span></div>
+                    <div class="row total"><span class="k">Managed monthly total</span><span class="v" id="mOutTotal">&mdash;</span></div>
+                    <div class="note" id="mOutRate"></div>
+                </div>
+                <div class="notpub" id="managedNotPublished">
+                    <h4>Fields OpenAI does not publish &mdash; shown as states, never as estimated prices</h4>
+                    <ul>
+                        <li><span class="status ok">VERIFIED $0</span> <strong>Per-session fee</strong> &mdash; no charge. OpenAI states there are no additional fees for using the Agents API, and its pricing page carries no Agents API section at all. This row is <em>not</em> an estimate.</li>
+                        <li><span class="status np">NOT PUBLISHED</span> <strong>Per-step / per-turn fee</strong> &mdash; no per-step rate exists on any OpenAI surface read. What a step costs is that step's tokens, and its tool calls bill at the web-search and file-search meters above.</li>
+                        <li><span class="status np">NOT PUBLISHED</span> <strong>Session duration cap</strong> &mdash; none published for the Agents API. The only published clock is a one-hour sandbox idle timeout, which OpenAI says is not configurable.</li>
+                        <li><span class="status np">NOT PUBLISHED</span> <strong>Session concurrency cap</strong> &mdash; none published for the Agents API. (GPT-Live-1 does publish concurrency: 25 / 50 / 200 / 300 / 500 across Tiers 1&ndash;5, and its free tier cannot call the model.)</li>
+                        <li><span class="status np">NOT PUBLISHED</span> <strong>Free tier</strong> &mdash; none published for the Agents API.</li>
+                        <li><span class="status np">YOUR ESTIMATE</span> <strong>Container minutes per session</strong> &mdash; OpenAI publishes the container rate and a 5-minute minimum but no session-length rule for agents, so the minutes you enter are your own assumption, and the field is labelled as one.</li>
+                    </ul>
+                    <p style="margin:10px 0 0; font-size:0.85rem; color:#5a4415;">Sources for every rate on this block: OpenAI API pricing (<code>developers.openai.com/api/docs/pricing</code>), the Agents API overview (<code>/api/docs/guides/agents-api/overview</code>) and the voice latency &amp; cost guide (<code>/api/docs/guides/voice-latency-cost</code>), all read 2026-09-18. The model token pass-through uses your selected model's own input, cached-input and output rates &mdash; no rate is invented anywhere on this page.</p>
                 </div>
             </div>
         </div>
@@ -338,7 +479,7 @@ Outcome-based mode:
         <p><strong>OpenAI's discount experiment (Jul 27 – Aug 14, 2026):</strong> when Terra and Luna were discounted 50% via OpenRouter, daily Terra token usage rose <strong>5.6x</strong> and Luna <strong>13.8x</strong>, while Sol at list price rose only <strong>1.1x</strong> (control); ~1/3 of users who tried a discounted model kept using it after expiry. Terra/Luna went from 0.7% to 7.8% of OpenRouter tokens. The same demand elasticity applies to any client workload you quote on a discounted model. See <a href="/openai-discounts-token-usage">OpenAI's discount experiment: what 13.8x usage growth means for agency pricing</a> for the full analysis.</p>
 
         <h2 id="agents-api-container-session">Managed-harness containers: per 20-minute session per container (1, 4, 16, 64 GB)</h2>
-        <p>One runtime line does not belong in the per-1M table above, because its unit is not tokens &mdash; the same reason our per-task benchmarks sit in their own table rather than in the per-1M columns. This is the line an agency pays when OpenAI hosts the Codex harness: a per-container session price by memory tier, on top of model tokens and tool calls, with no Agents-API-specific fee and no <strong>Agents API</strong> row on the pricing page.</p>
+        <p>One runtime line does not belong in the per-1M table above, because its unit is not tokens &mdash; the same reason our per-task benchmarks sit in their own table rather than in the per-1M columns. This is the line an agency pays when OpenAI hosts the Codex harness: a per-container session price by memory tier, on top of model tokens and tool calls, with no Agents-API-specific fee and no <strong>Agents API</strong> row on the pricing page. The full managed-session meter set — tool calls, container minutes, retrieval storage, voice minutes and the token pass-through — is priced in <a href="#managed-agent-session-cost">the September 2026 managed-session section below</a>.</p>
         <div class="tw">
         <table>
             <tr><th>Container memory</th><th>OpenAI printed rate (per 20-minute session per container)</th><th>Derived per-minute &middot; 5-min floor (derived, not published)</th><th>Note</th></tr>
@@ -368,6 +509,50 @@ Outcome-based mode:
             <li><strong>Session length is your assumption, not a vendor rule.</strong> Nothing on any OpenAI surface read states that idle, retry or stalled time bills, so the minutes you enter are the agency's own estimate.</li>
         </ul>
 
+        <h2 id="managed-agent-session-cost">What a managed agent session costs under the Agents API (September 2026)</h2>
+        <p>OpenAI shipped the <strong>Agents API</strong> in public beta on <strong>September 10, 2026</strong>: the Codex harness as managed infrastructure, with OpenAI owning sessions, orchestration, context compaction and recovery. The pricing question the launch raises is not <em>what does a session cost</em> but <em>which meter does this session hit</em>. OpenAI's own answer is that the platform adds nothing — the company's stated position is that there are no additional fees for using the Agents API — so the six rows below are the whole bill, and five of them have a published rate.</p>
+        <div class="tw">
+        <table>
+            <tr><th>Meter</th><th>Published rate (read Sept 18, 2026)</th><th>What triggers it</th></tr>
+            <tr><td><strong>Per-session fee</strong></td><td><strong>$0.00</strong> — verified, <em>not</em> an estimate</td><td>Nothing. There is no agents row and no agents section on OpenAI's pricing page; the platform fee is affirmatively denied.</td></tr>
+            <tr><td><strong>Model token pass-through</strong></td><td>Your selected model's own input, cached-input and output rates</td><td>Every turn's prompt and completion. Cached input is the only discount — GPT-6 Astra is $10.00/1M in and $50.00/1M out, against $1.00/1M for cached input.</td></tr>
+            <tr><td><strong>Web search</strong></td><td>$10.00 per 1,000 calls, <em>plus</em> search-content tokens at model rates</td><td>Each search the agent runs. The tokens the search returns bill twice over — once as the call, once as context.</td></tr>
+            <tr><td><strong>File search</strong></td><td>$2.50 per 1,000 calls; storage $0.10 per GB per day, first 1 GB free</td><td>Calls bill per session. <strong>Storage bills per day</strong>, whether or not a session runs — it is the only line on this page that accrues while the agent is idle.</td></tr>
+            <tr><td><strong>Hosted container (sandbox)</strong></td><td>1 GB $0.03 · 4 GB $0.12 · 16 GB $0.48 · 64 GB $1.92, per 20-minute session</td><td>Billed by the minute with a 5-minute minimum, on hosted sandboxes only — a no-environment session pays nothing here.</td></tr>
+            <tr><td><strong>GPT-Live-1 voice front end</strong></td><td>$0.05 per minute of open session, billed per second without rounding up</td><td>Wall-clock voice time, silence included, which is <strong>$3.00 per open hour</strong>. Backend model and tool usage bill separately, so a "$0.05/minute voice agent" is a front-end price, not a total.</td></tr>
+        </table>
+        </div>
+        <p><strong>Not published — and therefore not guessed at:</strong> per-step or per-turn fee, session duration cap, session concurrency cap, free tier. The only published clock is a one-hour sandbox idle timeout that OpenAI says is not configurable, and the only published caps anywhere in this stack are GPT-Live-1's concurrent sessions (25 / 50 / 200 / 300 / 500 across Tiers 1–5, with no free tier). The calculator prints each of those as a <em>state</em> instead of a default, and labels container-minutes-per-session as your own estimate, because OpenAI publishes the container rate and its 5-minute minimum but no session-length rule for agents.</p>
+
+        <h3>The three presets, hand-checked</h3>
+        <p>Preset buttons in the calculator set every input below; the arithmetic is reproduced here so you can check it without clicking anything. All rates are OpenAI's, read 2026-09-18; every line is this page's arithmetic on those rates.</p>
+        <div class="formula">(a) Prototype agent — GPT-5.6 Luna backend, no container, no voice
+  tokens   (60,000 × $0.20 + 120,000 × $0.02 + 9,000 × $1.20) ÷ 1M      = $0.0252
+  web      4 ÷ 1,000 × $10.00                                          = $0.0400
+  per session                                                          = $0.0652
+  440 sessions (20/day × 22 days)                                      = $28.69 / month
+
+(b) Production cloud agent on managed infra — GPT-Live-1 voice + GPT-6 Astra backend
+  voice    6.0 min × $0.05/min                                         = $0.3000
+  tokens   (30,000 × $10.00 + 60,000 × $1.00 + 5,000 × $50.00) ÷ 1M    = $0.6100
+  sandbox  6 min at $0.12 per 20-min session (5-min minimum applies)   = $0.0360
+  web      2 ÷ 1,000 × $10.00                                          = $0.0200
+  per session                                                          = $0.9660
+  30,000 sessions (1,000/day × 30 days)                                = $28,980.00 / month
+
+(c) Agency-managed deployment — five clients, GPT-5.6 Terra backend, retrieval
+  voice    8.0 min × $0.05/min                                         = $0.4000
+  tokens   (40,000 × $2.00 + 80,000 × $0.20 + 6,000 × $12.00) ÷ 1M     = $0.1680
+  sandbox  8 min at $0.12 per 20-min session                           = $0.0480
+  web      3 ÷ 1,000 × $10.00                                          = $0.0300
+  file     5 ÷ 1,000 × $2.50                                           = $0.0125
+  per session                                                          = $0.6585
+  4,400 sessions (200/day × 22 days)                                   = $2,897.40
+  storage  (2 GB − 1 GB free) × $0.10/GB/day × 22 days                 = $2.20
+  managed month total                                                  = $2,899.60</div>
+        <p><strong>The finding that matters for a quote:</strong> on preset (b) the voice layer is <strong>31%</strong> of the session bill on a frontier backend — and <strong>81%</strong> of it if you swap the backend for a cheap one. The same 6-minute session on GPT-5.6 Luna instead of GPT-6 Astra costs <strong>$0.3692</strong> instead of $0.9660, of which $0.3000 is still voice. Model routing moves the token line; only closing idle voice sessions, or not using voice, moves the voice line. These two figures are the same ones on <a href="https://findaiagency.com/ai-agents-api-economy#managed-agents-sept-2026" rel="noopener">the managed-agents section of the API-economy analysis</a>, so the two pages cannot quietly disagree.</p>
+        <p>Two practical notes on quoting from this block. First, the managed monthly total is an <strong>infrastructure</strong> number: the overhead and markup sliders in the estimator above apply to it exactly as they do to the self-hosted rows, because monitoring, re-baselining and accountability are still yours. Second, if the deployment takes phone calls, the binding constraint may be concurrency rather than cost — GPT-Live-1 caps at 25 concurrent sessions on Tier 1, so see <a href="/gpt-live-1-voice-agent-cost" data-umami-event="click_to_gpt_live_1_voice_agent_cost">concurrent-session sizing for a voice line</a> and the <a href="/gpt-live-1-cost-calculator" data-umami-event="click_to_gpt_live_1_cost_calculator">GPT-Live-1 voice + backend cost calculator</a> before you promise a number.</p>
+
         <h2>What a realistic deployment costs (worked example)</h2>
         <p>Default calculator inputs — 10 agents, 200 calls/day, 22 days, 1.5× complexity, 8K in / 1.2K out tokens, Claude Sonnet 5 rates ($2/$10), 40% input cache hit, 25% overhead:</p>
         <ul>
@@ -383,6 +568,7 @@ Outcome-based mode:
             <li><strong>GPT-5.6 Sol ($4/$20, cache $0.40):</strong> same workload ≈ <strong>$2,936/month raw</strong>, ≈ $3,670 loaded, ≈ <strong>$2.78 per resolution</strong> — above Salesforce's $2/conversation anchor.</li>
         </ul>
         <p>Model choice is the single biggest lever in the model — which is why routing small tasks to cheap models is a margin decision, not a footnote.</p>
+        <p><strong>The same question, managed.</strong> If OpenAI hosts the harness instead, the unit changes and the calculator's third mode takes over. Preset (b) — a production voice support line on managed infrastructure — prices at <strong>$0.9660 per session</strong> and <strong>$28,980.00 a month</strong> at 1,000 sessions a day, with the voice layer alone taking <strong>31%</strong> of that session (81% if you drop to a cheap backend). Preset (a), a prototype agent with no sandbox, comes to $0.0652 a session. The per-line arithmetic for all three presets, and the meters the self-hosted rows above cannot see — tool calls, container minutes, retrieval storage and voice minutes — are in <a href="#managed-agent-session-cost">the managed-session section above</a>.</p>
 
         <h2>Why the PYMNTS picture makes this math urgent</h2>
         <p>PYMNTS reported (Aug 24, 2026) that AI agents are the fastest-growing class of API consumers — and that the API economy's pricing, identity, and trust infrastructure "were not designed for this" and "are being rebuilt now." Three consequences for an agency's cost model:</p>
@@ -445,6 +631,15 @@ Outcome-based mode:
             <p>A transparent 10–20% pass-through margin is the defensible norm — the margin compensates for forecasting risk, monitoring, and re-baselining, not just the tokens. If you price per outcome instead, set the per-resolution price at or below established benchmarks (Intercom Fin $0.99, Salesforce Agentforce $2) while keeping your loaded cost per resolution well under it.</p>
         </div>
 
+        <div class="faq-item">
+            <h3>What does an OpenAI Agents API session cost?</h3>
+            <p>There is no per-session fee: OpenAI states there are no additional fees for using the Agents API, so a session bills as model tokens at your chosen model's rates, plus tool calls (web search $10.00 per 1,000 calls, file search $2.50 per 1,000 calls), plus container-minutes when you use a hosted sandbox ($0.03 / $0.12 / $0.48 / $1.92 per 20-minute session at 1, 4, 16 and 64 GB, billed by the minute with a 5-minute minimum), plus $0.05 per minute if you put the GPT-Live-1 voice front end on it. Worked example: a 6-minute voice support session on a GPT-6 Astra backend with a 4 GB container and two web searches comes to $0.9660 per session, of which the voice layer alone is $0.3000. Rates checked September 18, 2026.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Does OpenAI charge a per-session or per-step fee for agents?</h3>
+            <p>No. OpenAI publishes no per-session fee for the Agents API and denies one in writing — there are no additional fees for using the Agents API — and its pricing page carries no Agents API section at all. There is no published per-step or per-turn rate either: what you pay per step is that step's tokens and its tool calls. The session duration cap, session concurrency cap and free tier are also not published; the only published clock is a one-hour sandbox idle timeout that OpenAI says is not configurable.</p>
+        </div>
+
         <div class="related">
             <h3>Related reading</h3>
             <ul>
@@ -475,8 +670,15 @@ Outcome-based mode:
             <li>OpenAI API pricing (platform docs, verified Aug 28, 2026 — Terra $2/$12, Luna $0.20/$1.20, Sol $4/$20 promo): <a href="https://platform.openai.com/docs/pricing" rel="noopener">platform.openai.com/docs/pricing</a></li>
             <li>Per-1M model rates as of Aug 28, 2026 (DeepSeek, Google, Together AI, SpaceXAI, Anthropic, OpenAI) — see <a href="/ai-model-cost-per-task-2026">AI Model Cost per Task 2026</a> for the full table and dated sources</li>
             <li>DeepSeek API docs, Models &amp; Pricing — <code>deepseek-flash</code> off-peak $0.15 input / $0.60 output / $0.003 cached input per 1M, peak exactly 2× (Sept 10, 2026 sheet; the legacy <code>deepseek-v4-flash</code> IDs are aliases billed at the Flash price): <a href="https://api-docs.deepseek.com/quick_start/pricing" rel="noopener">api-docs.deepseek.com/quick_start/pricing</a></li>
+            <li>OpenAI, &ldquo;Introducing the Agents API&rdquo; (Sept 10, 2026) — public beta, the open-source Codex harness as a managed service, and the platform-fee position: <a href="https://openai.com/index/introducing-the-agents-api/" rel="noopener">openai.com/index/introducing-the-agents-api</a> (this host is 403'd by openai.com; the copy read for this page was the Wayback capture of 2026-09-16, cross-checked against the live developer docs below)</li>
+            <li>OpenAI, Agents API overview — what is managed (sessions, orchestration, context compaction, recovery) and that tokens bill at the selected model's rates: <a href="https://developers.openai.com/api/docs/guides/agents-api/overview" rel="noopener">developers.openai.com/api/docs/guides/agents-api/overview</a></li>
+            <li>OpenAI, API pricing — read 2026-09-18 for every managed-session rate on this page: web search $10.00 / 1k calls, file search $2.50 / 1k calls with storage $0.10 / GB per day (1 GB free), containers 1/4/16/64 GB $0.03 / $0.12 / $0.48 / $1.92 per 20-minute session billed by the minute with a 5-minute minimum, and GPT-6 Astra $10.00 in / $1.00 cached / $50.00 out per 1M: <a href="https://developers.openai.com/api/docs/pricing" rel="noopener">developers.openai.com/api/docs/pricing</a></li>
+            <li>OpenAI, Voice latency and cost — GPT-Live-1 is $0.05 per minute of session, billed per second without rounding up, and billable time includes silence and backend work: <a href="https://developers.openai.com/api/docs/guides/voice-latency-cost" rel="noopener">developers.openai.com/api/docs/guides/voice-latency-cost</a></li>
+            <li>OpenAI, GPT-Live-1 model page — concurrency caps 25 / 50 / 200 / 300 / 500 across Tiers 1–5, free tier unsupported: <a href="https://developers.openai.com/api/docs/models/gpt-live-1" rel="noopener">developers.openai.com/api/docs/models/gpt-live-1</a></li>
+            <li>OpenAI, OpenAI-hosted environments — the one-hour sandbox idle timeout, &ldquo;This timeout isn&rsquo;t configurable&rdquo;: <a href="https://developers.openai.com/api/docs/guides/agents-api/environments/openai-hosted" rel="noopener">developers.openai.com/api/docs/guides/agents-api/environments/openai-hosted</a></li>
         </ul>
         <p style="font-size:0.85rem;color:#666;">Accuracy note: The calculator uses published 2026 list rates (Aug 28, 2026 snapshot, plus DeepSeek&#39;s Sept 10, 2026 V4.1-Flash sheet) and user-supplied inputs; all figures are estimates, not guarantees. GPT-5.6 Terra ($2/$12) and Luna ($0.20/$1.20) are OpenAI's official Jul 30, 2026 list prices; the usage multiples (Luna 13.8x, Terra 5.6x, Sol 1.1x control) and ~1/3 retention are OpenRouter's measured discount-window data (Jul 27 – Aug 14, 2026), attributed as such (research brief t_5c8841ca). The "fastest-growing class of API consumers" framing follows PYMNTS (Aug 24, 2026) — no public dataset measures agents' absolute share of API traffic. Salesforce and Intercom prices are list prices as of mid-2026; real bills can stack additional platform fees. Outcome-based mode: OpenAI's outcome-based pricing (Aug 30–31, 2026 reporting via TNW/The Information) is limited to select enterprise accounts, not generally available, and unannounced; the per-outcome market references (Intercom $0.99, Zendesk ~$1.20–$1.50, HubSpot $0.50, Salesforce $2) are list prices as of mid-2026 and real contract terms vary (research brief t_9974fbbc). Re-verify provider rates before quoting clients — 2026 pricing moves weekly (Gemini 3.8 Flash Sept 2, GPT-5.6 Terra/Luna Jul 30, GPT-5.6 Sol Aug 21, DeepSeek Aug 16, DeepSeek V4.1-Flash Sept 10, Gemini 3.7 Flash Aug 13, Grok 4.6 Aug 12, Claude Sonnet 5 Aug 10).</p>
+        <p style="font-size:0.85rem;color:#666;">Managed-session mode (added Sept 18, 2026): every rate in that block is published by OpenAI and was read on 2026-09-18 from developers.openai.com/api/docs/pricing, the Agents API overview and the voice latency &amp; cost guide. The per-session fee is published as <strong>zero</strong> — OpenAI states there are no additional fees for using the Agents API — and is therefore rendered as a verified state, not an estimate; no placeholder price appears anywhere in the managed block. The session duration cap, the session concurrency cap, the per-step fee and the free tier are <strong>not published</strong> by OpenAI and are rendered as states rather than defaults, and container-minutes-per-session is labelled as the reader's own estimate because OpenAI publishes the container rate and its 5-minute minimum but no session-length rule for agents. The three preset totals ($0.0652, $0.9660 and $0.6585 per session) are this page's arithmetic on those published rates: they are reproducible line by line in the calculator, and they match the September 2026 research pack (card t_ee08c89d) and the figures published on findaiagency.com. A managed monthly total is infrastructure cost only — it excludes the agency's own overhead, governance and accountability work, which the sliders above still model.</p>
     </article>
     <footer>
         <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
@@ -621,6 +823,245 @@ Outcome-based mode:
         bindVal('markup', 'markupVal', '%');
 
         calc();
+    })();
+    </script>
+    <script>
+    /* ---------------------------------------------------------------------------
+       Managed-session layer — OpenAI Agents API.  Card t_0ab1b49c, 2026-09-18.
+       The self-hosted estimator's own script above is NOT edited. This block
+       registers a SECOND 'change' listener on the mode radio group (registered
+       after the original, so it runs last and owns the managed panel's visibility
+       and the mode note while managed mode is active), plus its own bindings for
+       the inputs inside #managedPanel.
+       Every rate here is a published one, read 2026-09-18; nothing is estimated.
+       --------------------------------------------------------------------------- */
+    /* >>> managed-session-core-t_0ab1b49c >>> */
+    var MANAGED_RATES = {
+        asOf: '2026-09-18',
+        source: 'developers.openai.com/api/docs/pricing, /api/docs/guides/agents-api/overview, /api/docs/guides/voice-latency-cost (read 2026-09-18)',
+        models: {
+            'gpt-5.6-luna':        { label: 'GPT-5.6 Luna',                   rate: '$0.20 in / $0.02 cached / $1.20 out per 1M',   dIn: 0.20,  dCached: 0.02,  dOut: 1.20 },
+            'gpt-5.6-terra':       { label: 'GPT-5.6 Terra',                  rate: '$2.00 in / $0.20 cached / $12.00 out per 1M',  dIn: 2.00,  dCached: 0.20,  dOut: 12.00 },
+            'gpt-6-astra':         { label: 'GPT-6 Astra',                    rate: '$10.00 in / $1.00 cached / $50.00 out per 1M', dIn: 10.00, dCached: 1.00,  dOut: 50.00 },
+            'gpt-5.6-sol':         { label: 'GPT-5.6 Sol',                    rate: '$4.00 in / $0.40 cached / $20.00 out per 1M',  dIn: 4.00,  dCached: 0.40,  dOut: 20.00 },
+            'grok-4.6':            { label: 'Grok 4.6',                       rate: '$2.00 in / $0.50 cached / $6.00 out per 1M',   dIn: 2.00,  dCached: 0.50,  dOut: 6.00 },
+            'deepseek-v4.1-flash': { label: 'DeepSeek V4.1-Flash (off-peak)', rate: '$0.15 in / $0.003 cached / $0.60 out per 1M', dIn: 0.15,  dCached: 0.003, dOut: 0.60 }
+        },
+        webSearchPer1k: 10.00,
+        fileSearchPer1k: 2.50,
+        fileStoragePerGBDay: 0.10,
+        fileStorageFreeGB: 1,
+        containers: { '1': { gb: 1, usd: 0.03 }, '4': { gb: 4, usd: 0.12 }, '16': { gb: 16, usd: 0.48 }, '64': { gb: 64, usd: 1.92 } },
+        containerSessionMinutes: 20,
+        containerMinMinutes: 5,
+        voicePerMin: 0.05,
+        perSessionFee: 0.00
+    };
+
+    var MANAGED_PRESETS = {
+        prototype: {
+            name: 'Prototype agent',
+            note: '(a) One build-stage agent with no hosted environment: 20 test sessions a day over 22 working days. Session shape is the small-agent case from the September 2026 research pack - 180,000 cumulative input tokens of which 120,000 are cached, 9,000 output tokens, 4 web searches, no container, no voice. Backend GPT-5.6 Luna.',
+            inputs: { model: 'gpt-5.6-luna', sessionsPerDay: 20, days: 22, uncachedIn: 60000, cachedIn: 120000, out: 9000, webSearches: 4, fileSearches: 0, storageGB: 0, containerTier: 'none', containerMin: 0, voiceMin: 0 }
+        },
+        production: {
+            name: 'Production cloud agent on managed infra',
+            note: '(b) A GPT-Live-1 voice front end over a GPT-6 Astra backend on OpenAI-hosted infrastructure: 1,000 support sessions a day for 30 days, 6-minute sessions, a 4 GB container for the same 6 minutes, 2 web searches. The per-session figure this produces, $0.9660, is the same number published on findaiagency.com.',
+            inputs: { model: 'gpt-6-astra', sessionsPerDay: 1000, days: 30, uncachedIn: 30000, cachedIn: 60000, out: 5000, webSearches: 2, fileSearches: 0, storageGB: 0, containerTier: '4', containerMin: 6, voiceMin: 6 }
+        },
+        agency: {
+            name: 'Agency-managed deployment',
+            note: '(c) Five client deployments on one managed stack: 200 sessions a day, 22 working days, 8-minute sessions with voice, retrieval (5 file-search calls a session) and a 4 GB container, plus 2 GB of retrieval storage kept online all month. Backend GPT-5.6 Terra.',
+            inputs: { model: 'gpt-5.6-terra', sessionsPerDay: 200, days: 22, uncachedIn: 40000, cachedIn: 80000, out: 6000, webSearches: 3, fileSearches: 5, storageGB: 2, containerTier: '4', containerMin: 8, voiceMin: 8 }
+        }
+    };
+
+    /* Pure: raw numbers in, raw numbers out. No DOM, no formatting. */
+    function managedCalc(o) {
+        var m = MANAGED_RATES.models[o.model];
+        if (!m) { return null; }
+        function n(v) { var x = typeof v === 'number' ? v : parseFloat(v); return isNaN(x) ? 0 : x; }
+
+        var sessionsPerDay = Math.max(0, n(o.sessionsPerDay));
+        var days = Math.max(1, n(o.days));
+        var sessions = sessionsPerDay * days;
+
+        var uncachedIn = Math.max(0, n(o.uncachedIn));
+        var cachedIn = Math.max(0, n(o.cachedIn));
+        var out = Math.max(0, n(o.out));
+        var tokens = (uncachedIn * m.dIn + cachedIn * m.dCached + out * m.dOut) / 1e6;
+
+        var webCalls = Math.max(0, n(o.webSearches));
+        var web = webCalls / 1000 * MANAGED_RATES.webSearchPer1k;
+        var fileCalls = Math.max(0, n(o.fileSearches));
+        var fileSearch = fileCalls / 1000 * MANAGED_RATES.fileSearchPer1k;
+
+        var tier = MANAGED_RATES.containers[String(o.containerTier)] || null;
+        var containerMinutes = Math.max(0, n(o.containerMin));
+        var billableMinutes = (tier && containerMinutes > 0)
+            ? Math.max(containerMinutes, MANAGED_RATES.containerMinMinutes)
+            : 0;
+        var container = tier ? tier.usd * billableMinutes / MANAGED_RATES.containerSessionMinutes : 0;
+
+        var voiceMinutes = Math.max(0, n(o.voiceMin));
+        var voice = voiceMinutes * MANAGED_RATES.voicePerMin;
+
+        var fee = MANAGED_RATES.perSessionFee;
+        var perSession = fee + tokens + web + fileSearch + container + voice;
+        var sessionsTotal = perSession * sessions;
+
+        var storageGB = Math.max(0, n(o.storageGB));
+        var billableGB = Math.max(0, storageGB - MANAGED_RATES.fileStorageFreeGB);
+        var storage = billableGB * MANAGED_RATES.fileStoragePerGBDay * days;
+
+        return {
+            model: o.model,
+            modelLabel: m.label,
+            modelRate: m.rate,
+            sessionsPerDay: sessionsPerDay,
+            days: days,
+            sessions: sessions,
+            uncachedIn: uncachedIn,
+            cachedIn: cachedIn,
+            out: out,
+            tokens: tokens,
+            fee: fee,
+            webCalls: webCalls,
+            web: web,
+            fileCalls: fileCalls,
+            fileSearch: fileSearch,
+            containerTier: tier ? tier.gb : null,
+            containerUSDPer20Min: tier ? tier.usd : 0,
+            containerMinutes: containerMinutes,
+            billableMinutes: billableMinutes,
+            containerFloored: !!(tier && containerMinutes > 0 && containerMinutes < MANAGED_RATES.containerMinMinutes),
+            container: container,
+            voiceMinutes: voiceMinutes,
+            voice: voice,
+            perSession: perSession,
+            sessionsTotal: sessionsTotal,
+            storageGB: storageGB,
+            billableGB: billableGB,
+            storage: storage,
+            total: sessionsTotal + storage
+        };
+    }
+    /* <<< managed-session-core-t_0ab1b49c <<< */
+
+    function mgdEl(id) { return document.getElementById(id); }
+    function mgdNum(id) { var x = parseFloat(mgdEl(id).value); return isNaN(x) ? 0 : x; }
+    function mgdDec(x) { return String(x).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, ''); }
+    /* group thousands on the INTEGER part only, so a fractional dollar never gets a comma */
+    function mgdGroup(s) { var p = String(s).split('.'); p[0] = p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ','); return p.join('.'); }
+    function mgdCount(x) { return mgdGroup(String(Math.round(x))); }
+    function mgdUSD4(x) { return '$' + mgdGroup(x.toFixed(4)); }
+    function mgdUSD2(x) { return '$' + mgdGroup(x.toFixed(2)); }
+
+    var MANAGED_INPUTS = ['mModel', 'mSessionsPerDay', 'mDays', 'mUncachedIn', 'mCachedIn', 'mOutTok', 'mWebSearches', 'mFileSearches', 'mStorageGB', 'mContainerTier', 'mContainerMin', 'mVoiceMin'];
+
+    function mgdRead() {
+        return {
+            model: mgdEl('mModel').value,
+            sessionsPerDay: mgdNum('mSessionsPerDay'),
+            days: mgdNum('mDays'),
+            uncachedIn: mgdNum('mUncachedIn'),
+            cachedIn: mgdNum('mCachedIn'),
+            out: mgdNum('mOutTok'),
+            webSearches: mgdNum('mWebSearches'),
+            fileSearches: mgdNum('mFileSearches'),
+            storageGB: mgdNum('mStorageGB'),
+            containerTier: mgdEl('mContainerTier').value,
+            containerMin: mgdNum('mContainerMin'),
+            voiceMin: mgdNum('mVoiceMin')
+        };
+    }
+
+    function renderManaged() {
+        var r = managedCalc(mgdRead());
+        if (!r) { return null; }
+        mgdEl('mOutFee').textContent = mgdUSD2(r.fee) + ' \u2014 verified, not charged';
+        mgdEl('mOutTokens').textContent = mgdUSD4(r.tokens) + ' \u00b7 ' + r.modelLabel + ' at ' + r.modelRate;
+        mgdEl('mOutWeb').textContent = r.webCalls > 0
+            ? mgdUSD4(r.web) + ' \u00b7 ' + mgdCount(r.webCalls) + ' searches \u00d7 $10.00 per 1k'
+            : '\u2014 no web searches in this scenario';
+        mgdEl('mOutFileSearch').textContent = r.fileCalls > 0
+            ? mgdUSD4(r.fileSearch) + ' \u00b7 ' + mgdCount(r.fileCalls) + ' calls \u00d7 $2.50 per 1k'
+            : '\u2014 no file-search calls in this scenario';
+        mgdEl('mOutStep').textContent = 'not published \u2014 no per-step rate exists';
+        mgdEl('mOutContainer').textContent = r.containerTier
+            ? mgdUSD4(r.container) + ' \u00b7 ' + r.containerTier + ' GB, ' + mgdDec(r.containerMinutes) + ' min at $' + r.containerUSDPer20Min.toFixed(2) + ' per 20 min' + (r.containerFloored ? ' (5-min minimum applied)' : '')
+            : '\u2014 no container (no-environment session)';
+        mgdEl('mOutVoice').textContent = r.voiceMinutes > 0
+            ? mgdUSD4(r.voice) + ' \u00b7 ' + mgdDec(r.voiceMinutes) + ' min \u00d7 $0.05/min'
+            : '\u2014 no voice front end';
+        mgdEl('mOutPerSession').textContent = mgdUSD4(r.perSession);
+        mgdEl('mOutSessions').textContent = mgdCount(r.sessions) + ' sessions (' + mgdCount(r.sessionsPerDay) + '/day \u00d7 ' + mgdDec(r.days) + ' days)';
+        mgdEl('mOutSessionsTotal').textContent = mgdUSD2(r.sessionsTotal);
+        mgdEl('mOutStorage').textContent = r.storage > 0
+            ? mgdUSD2(r.storage) + ' \u00b7 ' + mgdDec(r.billableGB) + ' billable GB \u00d7 $0.10/GB \u00d7 ' + mgdDec(r.days) + ' days'
+            : (r.storageGB > 0 ? '$0.00 \u2014 within the free 1 GB' : '\u2014 no file-search storage');
+        mgdEl('mOutTotal').textContent = mgdUSD2(r.total);
+        mgdEl('mOutRate').textContent = 'Backend: ' + r.modelLabel + ' at ' + r.modelRate + '. Line check: fee ' + mgdUSD4(r.fee) + ' + tokens ' + mgdUSD4(r.tokens) + ' + web ' + mgdUSD4(r.web) + ' + file search ' + mgdUSD4(r.fileSearch) + ' + container ' + mgdUSD4(r.container) + ' + voice ' + mgdUSD4(r.voice) + ' = ' + mgdUSD4(r.perSession) + ' per session. Monthly = ' + mgdUSD2(r.sessionsTotal) + ' of sessions + ' + mgdUSD2(r.storage) + ' of storage. Rates and sources read ' + MANAGED_RATES.asOf + '; the container billing minute, the file-search meters, the voice minute and every model rate come from OpenAI\'s published pricing, and the per-session fee is published as zero rather than assumed.';
+        return r;
+    }
+
+    function applyManagedPreset(key) {
+        var p = MANAGED_PRESETS[key];
+        if (!p) { return null; }
+        var i = p.inputs;
+        mgdEl('mModel').value = i.model;
+        mgdEl('mSessionsPerDay').value = i.sessionsPerDay;
+        mgdEl('mDays').value = i.days;
+        mgdEl('mUncachedIn').value = i.uncachedIn;
+        mgdEl('mCachedIn').value = i.cachedIn;
+        mgdEl('mOutTok').value = i.out;
+        mgdEl('mWebSearches').value = i.webSearches;
+        mgdEl('mFileSearches').value = i.fileSearches;
+        mgdEl('mStorageGB').value = i.storageGB;
+        mgdEl('mContainerTier').value = i.containerTier;
+        mgdEl('mContainerMin').value = i.containerMin;
+        mgdEl('mVoiceMin').value = i.voiceMin;
+        mgdEl('presetNote').textContent = p.name + '. ' + p.note;
+        var buttons = document.querySelectorAll('.preset-btn');
+        for (var b = 0; b < buttons.length; b++) { buttons[b].classList.remove('active'); }
+        var btn = mgdEl(key === 'prototype' ? 'presetPrototype' : key === 'production' ? 'presetProduction' : 'presetAgency');
+        if (btn) { btn.classList.add('active'); }
+        return renderManaged();
+    }
+
+    (function () {
+        var managedReady = false;
+
+        function showManagedPanel(on) {
+            mgdEl('managedPanel').style.display = on ? 'block' : 'none';
+            mgdEl('selfHostedNote').style.display = on ? 'block' : 'none';
+        }
+
+        var modeRadios = document.querySelectorAll('input[name="mode"]');
+        for (var i = 0; i < modeRadios.length; i++) {
+            (function (radio) {
+                radio.addEventListener('change', function () {
+                    if (radio.value !== 'managed') { showManagedPanel(false); return; }
+                    if (!managedReady) {
+                        applyManagedPreset('production');
+                        managedReady = true;
+                    }
+                    showManagedPanel(true);
+                    mgdEl('modeNote').textContent = 'Managed session mode models OpenAI\u2019s Agents API: one session bills as the model tokens it burns, plus its tool calls, plus its container-minutes, plus the GPT-Live-1 voice front end \u2014 with no per-session fee. The self-hosted / raw-API rows above stay live so you can compare both deployment shapes side by side.';
+                    mgdEl('selfHostedNote').textContent = 'Above: the self-hosted / raw-API rows (agents \u00d7 calls \u00d7 tokens) for the inputs you entered \u2014 kept live for comparison with the managed session block below.';
+                    renderManaged();
+                });
+            })(modeRadios[i]);
+        }
+
+        for (var k = 0; k < MANAGED_INPUTS.length; k++) {
+            (function (id) {
+                mgdEl(id).addEventListener('input', renderManaged);
+                mgdEl(id).addEventListener('change', renderManaged);
+            })(MANAGED_INPUTS[k]);
+        }
+
+        renderManaged();
     })();
     </script>
 </body>
