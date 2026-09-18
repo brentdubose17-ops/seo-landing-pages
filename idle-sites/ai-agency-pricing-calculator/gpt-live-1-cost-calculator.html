@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPT-Live-1 Cost Calculator: Voice + Backend Cost Per Call (2026)</title>
-    <meta name="description" content="GPT-Live-1 costs two meters, not one: $0.05 per minute of voice plus a separate backend reasoning bill. Calculate both, per call, per day and per month — and size the concurrent sessions you need for your call volume.">
-    <meta name="keywords" content="gpt-live-1 pricing, gpt-live-1 cost calculator, gpt-live-1 cost per minute, openai voice api cost, full duplex voice agent cost, 0.05 per minute voice api, voice agent backend cost, concurrent session rate limits voice api, voice api capacity planning, gpt-live-1 backend model cost, live sessions pricing, ai phone agent cost calculator">
+    <meta name="description" content="GPT-Live-1 is in the developer API at $0.05 per minute of voice, billed by the second, plus a separate backend reasoning bill. Price both meters per call, day and month, add the Agents API managed lines, and size the concurrent sessions you need.">
+    <meta name="keywords" content="gpt-live-1 pricing, gpt-live-1 cost calculator, gpt-live-1 cost per minute, openai voice api cost, full duplex voice agent cost, 0.05 per minute voice api, voice agent backend cost, concurrent session rate limits voice api, voice api capacity planning, gpt-live-1 backend model cost, live sessions pricing, ai phone agent cost calculator, gpt-live-1 api access, gpt-live-1 developer pricing, agents api managed session cost, gpt-live-1 cost per 5 minute call">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aiagencycalculator.com/gpt-live-1-cost-calculator">
     <meta property="og:title" content="GPT-Live-1 Cost Calculator: Voice + Backend Cost Per Call (2026)" />
-    <meta property="og:description" content="The $0.05 per minute is only half the bill. Model voice seconds plus backend reasoning tokens, then size the concurrent sessions your call volume needs.">
+    <meta property="og:description" content="GPT-Live-1 is in the developer API at $0.05 per minute of voice, billed by the second, plus a separate backend reasoning bill. Price both meters per call, day and month, add the Agents API managed lines, and size the concurrent sessions you need.">
     <meta property="og:url" content="https://aiagencycalculator.com/gpt-live-1-cost-calculator">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="AI Agency Pricing Calculator" />
@@ -22,14 +22,14 @@
     {
       "@type": "Article",
       "headline": "GPT-Live-1 Cost Calculator: Voice + Backend Cost Per Call (2026)",
-      "description": "GPT-Live-1 costs two meters, not one: $0.05 per minute of voice plus a separate backend reasoning bill. Calculate both, per call, per day and per month — and size the concurrent sessions you need for your call volume.",
+      "description": "GPT-Live-1 is in the developer API at $0.05 per minute of voice, billed by the second, plus a separate backend reasoning bill. Price both meters per call, day and month, add the Agents API managed lines, and size the concurrent sessions you need.",
       "datePublished": "2026-09-10",
-      "dateModified": "2026-09-10",
+      "dateModified": "2026-09-18",
       "author": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "publisher": {"@type": "Organization", "name": "ABD Legacy LLC"},
       "mainEntityOfPage": "https://aiagencycalculator.com/gpt-live-1-cost-calculator",
       "image": "https://aiagencycalculator.com/og-image.png",
-      "keywords": "gpt-live-1 pricing, gpt-live-1 cost per minute, voice agent backend cost, concurrent session rate limits voice api"
+      "keywords": "gpt-live-1 pricing, gpt-live-1 cost per minute, voice agent backend cost, concurrent session rate limits voice api, gpt-live-1 api access, gpt-live-1 developer pricing, agents api managed session cost, gpt-live-1 cost per 5 minute call"
     },
     {
       "@type": "WebApplication",
@@ -44,6 +44,7 @@
         "Total cost per call, per day and per month with the month convention printed",
         "Concurrency planner against the 25/50/200/300/500 concurrent-session tier ceilings",
         "GPT-Realtime-2.1 token-metering comparison with break-even token rate",
+        "Managed-session overlay: the Agents API per-session fee, the container-minute and web-search lines, priced next to the two meters",
         "Shareable parameter link and machine-readable JSON export"
       ],
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
@@ -90,6 +91,16 @@
           "@type": "Question",
           "name": "Is $0.05 per minute the whole bill for a phone agent?",
           "acceptedAnswer": {"@type": "Answer", "text": "No. Billed voice time includes periods when the user speaks, the assistant speaks, both are silent, or the backend is working, so idle time and thinking time are billed at $0.05 per minute; muting the microphone does not close the session. On top of that, backend model calls, tool calls and web search are billed separately. The two-meter total in this calculator is the number to quote, not the voice rate alone."}
+        },
+        {
+          "@type": "Question",
+          "name": "Is GPT-Live-1 available to developers through the API, or only inside ChatGPT?",
+          "acceptedAnswer": {"@type": "Answer", "text": "It is available to developers. GPT-Live-1 shipped to the API on September 10, 2026 with a published rate of $0.05 per minute of session time billed by the second, so there is no ChatGPT-only gate and no waitlist. The limit is surface, not access: the model card lists Live Sessions (v1/live/sessions) as its supported endpoint and marks Chat Completions, Responses, Realtime, Batch and the transcription endpoints as not supported for this model ID."}
+        },
+        {
+          "@type": "Question",
+          "name": "What does a 5-minute GPT-Live-1 call cost, and what does 1,000 voice minutes a month cost?",
+          "acceptedAnswer": {"@type": "Answer", "text": "A 5-minute call is 300 billed seconds = $0.2500 of voice, plus the backend: 6 reasoning turns of 1,500 input / 300 output tokens on GPT-5.6 Terra add $0.0396, for $0.2896 two-meter. Managed infrastructure adds $0.0400 to the same call - a $0.0000 per-session fee, 5 minutes of 4 GB container at the derived $0.0060 a minute, and one web search at $0.0100 - so $0.3296 all-in. A 1,000-voice-minute month is 200 of those calls: $50.00 of voice, $7.92 of Terra backend, $57.92 two-meter and $65.92 with the managed lines on top."}
         }
       ]
     }
@@ -174,7 +185,7 @@
         <h1>GPT-Live-1 Cost Calculator: What a Voice Agent Really Costs Per Call</h1>
         <div class="meta">
             <span>Published September 10, 2026</span>
-            <span>Updated September 10, 2026</span>
+            <span>Updated September 18, 2026</span>
             <span>By ABD Legacy LLC</span>
         </div>
         <div class="tagline">
@@ -182,10 +193,13 @@
             <span class="badge">Billed by the second</span>
             <span class="badge">Backend billed separately</span>
             <span class="badge">Concurrency-planned</span>
+            <span class="badge">In the API since Sep 10, 2026</span>
         </div>
     </header>
 
     <p><strong>The short answer:</strong> GPT-Live-1 is billed on <em>two meters</em>, and the $0.05 per minute you have read about is only the first one. Voice time is $0.05 per minute, billed by the second, with no round-up &mdash; but the agent's backend reasoning, tool calls and web search are billed separately at the backend model's normal token rates. On the default case on this page (4-minute calls, 1,000 calls a day, 6 reasoning turns per call on GPT-5.6 Terra) voice alone is <strong>$200.00 per day</strong> and the backend adds <strong>$39.60 per day</strong> on top. Change the backend from Terra to GPT-6 Astra and the backend line becomes <strong>$180.00 per day</strong> &mdash; within 10% of the voice bill, for a model that is doing the thinking, not the talking.</p>
+
+    <p><strong>Developer access is live.</strong> GPT-Live-1 has been callable from the API since <strong>September 10, 2026</strong> &mdash; the full-duplex voice model behind ChatGPT's voice mode, now at a published <strong>$0.05 per minute of session time, billed by the second</strong>. There is no ChatGPT-only gate and no waitlist, so what changes for a developer is the integration surface (<a href="#developer-api-access">what the API exposes</a>) and the fact that the voice layer can now be dropped onto a managed Agents API session, where container, tool and storage lines bill alongside it (<a href="#managed-session-overhead">managed-session overhead</a>).</p>
 
     <p>That failure mode is the reason this calculator exists. Nearly every published breakdown of the GPT-Live-1 API stops at the $0.05 per minute figure, which is a <em>voice</em> number. A production phone agent is a voice session plus a reasoning workload, and the second half scales with how hard the caller's request is, not with how long the call lasts. It also has a capacity dimension nobody models: GPT-Live session limits are measured in <strong>concurrent sessions</strong>, not dollars, so a deployment can run out of session headroom before it runs out of budget.</p>
 
@@ -411,7 +425,7 @@ required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 36
             <pre class="export" id="rExportJSON">&mdash;</pre>
         </div>
 
-        <p class="note">Nothing on this page is financial advice or a quote from OpenAI. The $0.05 per minute rate, the backend token rates, the 15-second init rule (WebRTC) and the 25/50/200/300/500 concurrent-session ceilings are OpenAI-published as of 2026-09-10; every volume, token-shape, cache, tool, idle-share, peak-factor and month input is a modelling assumption you can change.</p>
+        <p class="note">Nothing on this page is financial advice or a quote from OpenAI. The $0.05 per minute rate, the backend token rates, the 15-second init rule (WebRTC) and the 25/50/200/300/500 concurrent-session ceilings are OpenAI-published as of 2026-09-10; every volume, token-shape, cache, tool, idle-share, peak-factor and month input is a modelling assumption you can change. The Agents API managed lines quoted on this page (no per-session fee, web search $10.00 per 1,000 calls, file search $2.50 per 1,000 calls plus $0.10 per GB per day, and containers at $0.03 / $0.12 / $0.48 / $1.92 per 20-minute session at 1 / 4 / 16 / 64 GB with a 5-minute minimum) were read from OpenAI's pricing page on 2026-09-18; the container per-minute figures are derived from the printed session price.</p>
     </div>
 
     <h2>How the two meters work</h2>
@@ -467,7 +481,76 @@ required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 36
         <li><strong>Any other service in your call path</strong> &mdash; telephony, transcription you run yourself, your own retrieval stack. OpenAI's cost guide says to include them in your estimate.</li>
         <li><strong>Idle voice time</strong> &mdash; already inside the $0.05, and easy to forget: it is roughly $0.05 per idle minute, and closing the session is what stops it.</li>
         <li><strong>Custom voices</strong> &mdash; sales-gated with no published rate, so they are deliberately not modelled.</li>
+        <li><strong>Managed-infrastructure meters</strong> &mdash; if the session runs on the Agents API, container-minutes, web search and file-search storage bill on top of both meters above. The next two sections price them.</li>
     </ul>
+
+    <h2 id="developer-api-access">Developer access: what the API exposes since September 10, 2026</h2>
+
+    <p>GPT-Live-1 shipped to the API on <strong>September 10, 2026</strong> at a published rate, so the developer question is no longer <em>whether</em> the model can be called but <em>how</em>. Three facts from OpenAI's own model card decide the integration shape:</p>
+
+    <ul>
+        <li><strong>One endpoint.</strong> GPT-Live-1 answers on the Live Sessions endpoint (<code>v1/live/sessions</code>) and is documented as <em>not supported</em> on Chat Completions, Responses, Realtime, Batch and the transcription endpoints. A voice front end on this model is a Live Sessions integration, not a model-ID swap on an existing Realtime path.</li>
+        <li><strong>Two transports, one of which carries a floor.</strong> WebRTC for browser audio and WebSockets for server-side audio. Only the WebRTC path documents the 15-second session-creation charge, and that amount is credited against duration &mdash; a <code>max(session_seconds, 15)</code> floor, not an adder.</li>
+        <li><strong>Access is open; capacity is metered and capped.</strong> Concurrent sessions run 25 / 50 / 200 / 300 / 500 across Tiers 1&ndash;5, and the Free tier cannot call the model at all. At this page's default volume the voice bill is $200.00 a day while Tier 1 qualification starts at $100 a month of spend, so session headroom binds long before spend does.</li>
+    </ul>
+
+    <p>Nothing on this page assumes a ChatGPT-only model and nothing here is gated on one. The rate, the init rule, the tier ceilings and the delegation rules are reproduced from the developer-facing pages listed under Sources, and the same numbers are what the calculator above is built on.</p>
+
+    <h2 id="five-minute-call-and-1000-minute-month">Worked examples: a 5-minute call and a 1,000-minute month</h2>
+
+    <p>Both figures use the default call shape on this page &mdash; 6 reasoning turns of 1,500 input / 300 output tokens per call on a GPT-5.6 Terra backend, WebRTC transport, with 30% of the session billed to silence and backend wait. The voice half is the published $0.05 per minute with no round-up; the backend half is our arithmetic on Terra's published rates ($2.00 per 1M input, $12.00 per 1M output); the managed rows are OpenAI's published Agents API rates listed under Sources.</p>
+
+    <p><strong>One 5-minute call.</strong></p>
+
+    <div class="table-wrap"><table>
+        <thead><tr><th>One 5:00 call</th><th class="num">Cost</th><th>How it is derived</th></tr></thead>
+        <tbody>
+            <tr><td>Voice meter</td><td class="num">$0.2500</td><td>300 billed seconds &divide; 60 &times; $0.05/min</td></tr>
+            <tr><td>Backend meter &mdash; GPT-5.6 Terra</td><td class="num">$0.0396</td><td>6 turns &times; (1,500 in &times; $2.00 + 300 out &times; $12.00) per 1M</td></tr>
+            <tr><td><strong>Two-meter total</strong></td><td class="num"><strong>$0.2896</strong></td><td>voice + backend</td></tr>
+            <tr><td>Managed &mdash; per-session fee</td><td class="num">$0.0000</td><td>OpenAI publishes no Agents API session fee</td></tr>
+            <tr><td>Managed &mdash; 4 GB container, 5 min</td><td class="num">$0.0300</td><td>5-minute minimum &times; the derived $0.0060/min at the $0.12 per 20-minute tier</td></tr>
+            <tr><td>Managed &mdash; one web search</td><td class="num">$0.0100</td><td>$10.00 per 1,000 calls</td></tr>
+            <tr><td><strong>Managed total</strong></td><td class="num"><strong>$0.3296</strong></td><td>two-meter total + $0.0400 of managed overhead</td></tr>
+        </tbody>
+    </table></div>
+
+    <p>The managed rows price the same session on OpenAI's infrastructure instead of yours. They do not change the voice rate: the container and search lines are extra meters sitting alongside the $0.05, which is exactly why a &ldquo;$0.05-a-minute voice agent&rdquo; is a front-end price and not a total.</p>
+
+    <p><strong>A 1,000-minute month</strong> is 200 of those 5-minute calls, so the whole table above scales by 200:</p>
+
+    <div class="table-wrap"><table>
+        <thead><tr><th>1,000 voice minutes (200 &times; 5:00 calls)</th><th class="num">Cost</th><th>How it is derived</th></tr></thead>
+        <tbody>
+            <tr><td>Voice meter</td><td class="num">$50.00</td><td>1,000 minutes &times; $0.05/min &mdash; the figure to quote for the voice layer alone</td></tr>
+            <tr><td>Backend meter &mdash; GPT-5.6 Terra</td><td class="num">$7.92</td><td>200 calls &times; $0.0396</td></tr>
+            <tr><td><strong>Two-meter total</strong></td><td class="num"><strong>$57.92</strong></td><td>voice + backend</td></tr>
+            <tr><td>Managed overhead &mdash; container + search</td><td class="num">$8.00</td><td>200 sessions &times; ($0.0300 + $0.0100); per-session fee $0.0000</td></tr>
+            <tr><td><strong>Managed total</strong></td><td class="num"><strong>$65.92</strong></td><td>$57.92 + $8.00</td></tr>
+        </tbody>
+    </table></div>
+
+    <p>A month figure needs no month convention because the input is already a total of billed minutes; the per-day and per-month rows in the calculator above do, which is why every one of them prints its day count. The example also shows which half of a voice-agent bill the voice layer is: <strong>86.3% of the two-meter total</strong> at this call shape, falling to 75.8% once the managed container and search lines are on it. The model's reasoning is the smaller half here &mdash; change the backend to GPT-6 Astra and it stops being smaller, which is the failure mode the calculator's backend-share row exists to surface.</p>
+
+    <p>The same two worked examples, the managed overlay and the estimator that produces them are on the long-form <a href="/gpt-live-1-voice-agent-cost">GPT-Live-1 voice agent cost breakdown</a>; both pages run one cost model, so a figure quoted from either reconciles with the other.</p>
+
+    <h2 id="managed-session-overhead">Managed-session and tool overhead when the agent runs on OpenAI's infrastructure</h2>
+
+    <p>Since <strong>September 10, 2026</strong> a GPT-Live-1 front end can sit on an <strong>Agents API</strong> session, where OpenAI hosts the orchestration, the container and the tool loop. That adds meters but not a platform fee: OpenAI states there are no additional fees for using the Agents API, so the published per-session price is <strong>$0.00</strong> &mdash; a verified zero, not an unpublished estimate. The lines that do bill are these:</p>
+
+    <div class="table-wrap"><table>
+        <thead><tr><th>Managed line</th><th class="num">Published rate</th><th>Unit, minimum and note</th></tr></thead>
+        <tbody>
+            <tr><td>GPT-Live-1 voice front end</td><td class="num">$0.05 / min</td><td>Billed per second with no round-up, so $3.00 per open hour; silence, backend wait and a muted microphone are all inside the clock</td></tr>
+            <tr><td>Per-session fee</td><td class="num">$0.00</td><td>No Agents API session fee is published &mdash; this row is a verified zero</td></tr>
+            <tr><td>Web search</td><td class="num">$10.00 / 1,000 calls</td><td>Per call, plus the search-content tokens at the backend model's input rate</td></tr>
+            <tr><td>File search</td><td class="num">$2.50 / 1,000 calls</td><td>Per call, plus $0.10 per GB per day of retrieval storage after the first free GB</td></tr>
+            <tr><td>Hosted container</td><td class="num">$0.03 / $0.12 / $0.48 / $1.92</td><td>Per 20-minute session at 1 / 4 / 16 / 64 GB, billed by the minute with a 5-minute minimum</td></tr>
+            <tr><td>Backend model tokens</td><td class="num">That model's rates</td><td>Input, cached input and output tokens for the delegated reasoner &mdash; the second meter above</td></tr>
+        </tbody>
+    </table></div>
+
+    <p class="note">The container-per-minute figures used in the worked examples above ($0.0060 a minute at 4 GB) are <strong>derived from OpenAI's printed session price</strong> &mdash; OpenAI publishes the 20-minute session tier and the 5-minute minimum, not a per-minute dollar figure. Session duration caps, session concurrency caps and the free tier are likewise not published for the Agents API. The full managed-session meter set, including file-search storage and three scenario presets, is priced in the <a href="/ai-agent-api-cost-calculator#managed-agent-session-cost" data-umami-event="click_to_managed_agent_session_rows">managed-session rows on the AI agent API cost calculator</a>, and the commercial read of the same shift is on <a href="https://findaiagency.com/ai-agents-api-economy#managed-agents-sept-2026" rel="noopener">findaiagency's Agents API economy page</a>.</p>
 
     <h2>Methodology and provenance</h2>
 
@@ -511,6 +594,14 @@ required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 36
         <h3>Is $0.05 per minute the whole bill for a phone agent?</h3>
         <p>No. Billed voice time includes periods when the user speaks, the assistant speaks, both are silent, or the backend is working, so idle time and thinking time are billed at $0.05 per minute; muting the microphone does not close the session. On top of that, backend model calls, tool calls and web search are billed separately. The two-meter total in this calculator is the number to quote, not the voice rate alone.</p>
     </div>
+    <div class="faq-item">
+        <h3>Is GPT-Live-1 available to developers through the API, or only inside ChatGPT?</h3>
+        <p>It is available to developers. GPT-Live-1 shipped to the API on September 10, 2026 with a published rate of $0.05 per minute of session time billed by the second, so there is no ChatGPT-only gate and no waitlist. The limit is surface, not access: the model card lists Live Sessions (v1/live/sessions) as its supported endpoint and marks Chat Completions, Responses, Realtime, Batch and the transcription endpoints as not supported for this model ID.</p>
+    </div>
+    <div class="faq-item">
+        <h3>What does a 5-minute GPT-Live-1 call cost, and what does 1,000 voice minutes a month cost?</h3>
+        <p>A 5-minute call is 300 billed seconds = $0.2500 of voice, plus the backend: 6 reasoning turns of 1,500 input / 300 output tokens on GPT-5.6 Terra add $0.0396, for $0.2896 two-meter. Managed infrastructure adds $0.0400 to the same call - a $0.0000 per-session fee, 5 minutes of 4 GB container at the derived $0.0060 a minute, and one web search at $0.0100 - so $0.3296 all-in. A 1,000-voice-minute month is 200 of those calls: $50.00 of voice, $7.92 of Terra backend, $57.92 two-meter and $65.92 with the managed lines on top.</p>
+    </div>
 
     <h2>Sources</h2>
     <ul>
@@ -521,12 +612,15 @@ required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 36
         <li><a href="https://developers.openai.com/api/docs/guides/live" rel="noopener nofollow" target="_blank">Live sessions guide</a> and <a href="https://developers.openai.com/api/docs/guides/live-conversations" rel="noopener nofollow" target="_blank">conversations guide</a>: duration billing, transports, session lifecycle and usage events.</li>
         <li><a href="https://developers.openai.com/api/docs/guides/live-delegation" rel="noopener nofollow" target="_blank">Delegation guide</a> and <a href="https://developers.openai.com/api/docs/guides/voice-webrtc" rel="noopener nofollow" target="_blank">WebRTC guide</a>: backend model choice, service tiers, the GPT-5.6 Terra example.</li>
         <li><a href="https://developers.openai.com/api/docs/guides/voice-websockets" rel="noopener nofollow" target="_blank">WebSocket guide</a> and <a href="https://developers.openai.com/api/docs/guides/rate-limits" rel="noopener nofollow" target="_blank">rate-limit guide</a>: the server-side transport and the tier qualification thresholds.</li>
+        <li><a href="https://openai.com/index/introducing-the-agents-api/" rel="noopener nofollow" target="_blank">OpenAI &mdash; Introducing the Agents API</a> (September 10, 2026): managed sessions on the Codex harness, and the statement that there are no additional fees for using the Agents API.</li>
+        <li><a href="https://developers.openai.com/api/docs/pricing" rel="noopener nofollow" target="_blank">OpenAI API pricing &mdash; managed lines</a> (read 2026-09-18): web search $10.00 per 1,000 calls; file search $2.50 per 1,000 calls plus $0.10 per GB per day of retrieval storage; hosted containers $0.03 / $0.12 / $0.48 / $1.92 per 20-minute session at 1 / 4 / 16 / 64 GB, billed by the minute with a 5-minute minimum.</li>
     </ul>
 
     <div class="related">
         <h2>Related calculators and cost breakdowns</h2>
         <ul>
             <li><a href="/ai-agent-api-cost-calculator">AI Agent API Cost Calculator</a> &mdash; per-token vs outcome-based pricing for agent workloads.</li>
+            <li><a href="/ai-agent-api-cost-calculator#managed-agent-session-cost">Managed agent sessions (OpenAI Agents API)</a> &mdash; per-session fee, tool calls, container-minutes and retrieval storage, on the same date.</li>
             <li><a href="/ai-model-cost-per-task-2026">AI model cost per task (2026)</a> &mdash; what a single completed task costs on each frontier model.</li>
             <li><a href="/astra-model-cost-outlook">GPT-6 Astra cost outlook</a> &mdash; the expensive-reasoner case modelled above.</li>
             <li><a href="/ai-agent-cost-blowups">AI agent cost blowups</a> &mdash; how agent bills escape their first estimate.</li>
@@ -535,7 +629,7 @@ required_concurrent  = (calls_per_day / operating_hours) * avg_call_seconds / 36
     </div>
 
     <footer>
-        <p>ABD Legacy LLC &middot; aiagencycalculator.com &middot; Rates and limits as of 2026-09-10. Not affiliated with OpenAI.</p>
+        <p>ABD Legacy LLC &middot; aiagencycalculator.com &middot; Rates as published 2026-09-10; page updated 2026-09-18. Not affiliated with OpenAI.</p>
     </footer>
 </article>
 
