@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopify Agentic Commerce Audit: Catalog Readiness Checklist</title>
+    <meta name="description" content="A step-by-step checklist for auditing a Shopify catalog against AI agent discovery: reachability, identity keys, attribute mapping and schema tests.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mybusinessaiaudit.com/articles/shopify-agentic-commerce-audit">
+    <meta property="og:title" content="Shopify Agentic Commerce Audit: Catalog Readiness Checklist">
+    <meta property="og:description" content="A step-by-step checklist for auditing a Shopify catalog against AI agent discovery: reachability, identity keys, attribute mapping and schema tests.">
+    <meta property="og:url" content="https://mybusinessaiaudit.com/articles/shopify-agentic-commerce-audit">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="My Business AI Audit">
+    <meta property="og:image" content="https://mybusinessaiaudit.com/og-image.png">
+    <meta property="og:image:alt" content="Checklist for auditing a Shopify catalog against AI agent discovery surfaces">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shopify Agentic Commerce Audit: Catalog Readiness Checklist">
+    <meta name="twitter:description" content="A step-by-step checklist for auditing a Shopify catalog against AI agent discovery: reachability, identity keys, attribute mapping and schema tests.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://mybusinessaiaudit.com/articles/shopify-agentic-commerce-audit#article",
+      "headline": "Shopify Agentic Commerce Audit: A Catalog Readiness Checklist for AI Agents",
+      "description": "A step-by-step checklist for auditing a Shopify catalog against AI agent discovery: reachability, identity keys, attribute mapping and schema tests.",
+      "datePublished": "2026-09-18",
+      "dateModified": "2026-09-18",
+      "mainEntityOfPage": "https://mybusinessaiaudit.com/articles/shopify-agentic-commerce-audit",
+      "isAccessibleForFree": true,
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://mybusinessaiaudit.com/og-image.png",
+        "width": 1200,
+        "height": 630
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "My Business AI Audit"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "My Business AI Audit",
+        "url": "https://mybusinessaiaudit.com"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "AI commerce & discovery",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Universal Commerce Protocol"
+        },
+        {
+          "@type": "Thing",
+          "name": "Agentic commerce"
+        }
+      ],
+      "keywords": "Shopify agentic commerce audit, Shopify catalog audit, agent readiness checklist, UCP catalog over MCP, product feed audit, AI agent product discovery, merchant listing structured data, SMB AI audit"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://mybusinessaiaudit.com/articles/shopify-agentic-commerce-audit#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is GTIN required for a Shopify catalog to be discoverable by AI agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, not on this surface. A scan of Shopify's seven catalog documentation pages returns zero mentions of gtin, mpn or barcode, and the live catalog responses captured for this audit contain none of the three either. The UCP schema allows an optional variant barcodes array and ACP requires only an id and a title. GTIN and MPN are recommended properties in Google's merchant-listing markup, which is where cross-retailer identity gets fixed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What endpoints does Shopify expose to AI agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Two UCP catalog endpoints over MCP: a cross-merchant one at https://catalog.shopify.com/api/ucp/mcp and a per-store one at https://STORE_DOMAIN/api/ucp/mcp. Both are keyless, but every request carries an agent profile URL, and the storefront origin answers /.well-known/ucp with a business profile manifest declaring which catalog capabilities the shop supports."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which tools does the catalog expose?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "search_catalog for natural-language discovery, lookup_catalog for retrieval by identifier, and get_product for a single product with all option combinations, availability signals and checkout links. A live storefront tools/list call on 2026-09-18 listed 13 tools in total: those three alongside cart, checkout and order tools."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many identifiers can one lookup resolve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ten on the per-store surface and 50 on the cross-merchant one. Both ceilings were tested: an 11-identifier storefront request and a 52-identifier global request were rejected with an error naming the limit. The specification requires product and variant id lookup, while SKU, handle and barcode lookup are optional."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the catalog API give agents real-time inventory?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Availability travels as a discovery signal, and ACP lists inventory reservation as an explicit non-goal: reservation, if any, happens during checkout, and checkout responses are authoritative even when they disagree with feed data."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do AI agents read my product page's JSON-LD?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only on surfaces that read pages, chiefly Google Search's merchant listings. The string json-ld does not appear in Shopify's catalog documentation or in the UCP and ACP specifications. Product markup with a nested Offer and a price above zero matters on Google; it is not the catalog API's contract."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a merchant see how products rank inside AI agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not through these APIs. Nothing in the catalog, UCP or ACP documentation exposes per-agent ranking or impression data, so rank questions are untestable from the merchant side. Test reachability, identity and attribute mapping instead."
+          }
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .lede { font-size: 1.12rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; }
+        code { background: #f4f4f8; padding: 1px 5px; border-radius: 4px; font-size: 0.92em; }
+        pre { background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 8px; padding: 14px 16px; overflow-x: auto; margin: 0 0 20px; }
+        pre code { background: none; padding: 0; font-size: 0.85rem; line-height: 1.5; }
+        .faq-item { margin-bottom: 18px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; color: #1a1a2e; }
+        .source { margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; color: #888; font-size: 0.85rem; }
+        .source a { color: #888; }
+        footer { margin-top: 24px; color: #888; font-size: 0.85rem; text-align: center; }
+        nav.site { margin-bottom: 20px; font-size: 0.9rem; }
+        nav.site a { margin-right: 16px; text-decoration: none; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; margin-left: 0; }
+        .related li { margin-bottom: 10px; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 18px 0 24px; }
+        th, td { border: 1px solid #e8e8f0; padding: 10px 12px; vertical-align: top; text-align: left; line-height: 1.6; }
+        thead th { background: #eef2ff; color: #2563eb; font-weight: 700; }
+        tbody th { background: #fafafa; font-weight: 600; color: #111; }
+        a, p, li, td, th { overflow-wrap: anywhere; }
+        @media (max-width: 640px) { table, thead, tbody, tr, th, td { display: block; width: 100%; } thead { display: none; } tbody th { background: #eef2ff; color: #2563eb; } td::before { content: attr(data-col) ": "; font-weight: 600; color: #2563eb; } }
+    </style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+</head>
+<body>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool">Free AI Audit</a></nav>
+    <article>
+        <h1>Shopify Agentic Commerce Audit: A Catalog Readiness Checklist for AI Agents</h1>
+        <div class="meta"><span>Published September 18, 2026 &middot; Updated September 18, 2026</span><span>My Business AI Audit</span></div>
+
+<p class="lede"><strong>Shopify's agentic discovery surface is documented, inspectable and testable, so a catalog audit does not have to be an opinion.</strong> This checklist runs seven checks in the order failures cascade: whether an agent can reach the catalog at all, whether every record carries a stable identity, whether the attribute mapping survives a filter, whether you can tell what the merchant wrote from what Shopify generated, whether the page carries the markup the page-reading surfaces require, whether the availability signals say what a buyer will assume, and whether the integration respects the documented operational rules. Every measurement below was taken on 2026-09-18 against live stores.</p>
+
+<p>One correction before the first check. The identity layer Shopify's own catalog documentation commits to is its GIDs and UPIDs, plus <code>handle</code> and <code>url</code>. A case-insensitive scan of the seven Shopify catalog documentation pages used for this audit returns 0 occurrences of <em>gtin</em>, 0 of <em>mpn</em> and 0 of <em>barcode</em>, and the live catalog responses captured for this page contain the same three zeros. The UCP schema does define an optional variant <code>barcodes</code> array, and ACP requires only <code>id</code> and <code>title</code> on a variant. So "no GTINs in the catalog API" is not a finding against a merchant. GTIN and MPN matter on Google's merchant-listing structured data, which is a different pipe with a different contract (Step 5).</p>
+
+<h2>Three pipes, three jobs</h2>
+
+<p>The most common audit error is treating "AI agents" as one surface. Three separate contracts carry product data, with three schemas and three failure modes.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Pipe</th><th>Transport</th><th>Read by</th><th>Carries</th><th>Typical failure</th></tr></thead>
+<tbody>
+<tr><th>JSON-LD <code>Product</code>/<code>Offer</code> on the product page</th><td data-col="Transport">HTML</td><td data-col="Read by">Google Search merchant listings and any crawler that renders the page</td><td data-col="Carries"><code>name</code>, <code>image</code>, a nested <code>offers</code>, <code>gtin</code>/<code>mpn</code> where they exist, availability</td><td data-col="Typical failure">markup present but stale; no <code>Offer</code>; price of zero</td></tr>
+<tr><th>UCP catalog over MCP</th><td data-col="Transport"><code>POST</code> JSON-RPC to <code>/api/ucp/mcp</code></td><td data-col="Read by">Shopify's agent surfaces and any third-party agent that speaks UCP</td><td data-col="Carries">GID/UPID identity, <code>title</code>, <code>description</code>, <code>price_range</code>, <code>media</code>, <code>variants[]</code>, taxonomy <code>categories</code></td><td data-col="Typical failure">thin records; wrong taxonomy leaf; unavailable items silently absent</td></tr>
+<tr><th>ACP product feed</th><td data-col="Transport">merchant-pushed REST</td><td data-col="Read by">agentic checkout flows</td><td data-col="Carries">product and variant ids, price, <code>availability</code>, optional <code>barcodes</code>, seller</td><td data-col="Typical failure">stale feed; assuming the feed reserves stock</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>ACP states the rationale for the middle pipe plainly: &ldquo;Agents use the merchant-provided content instead of scraping storefront HTML.&rdquo;</p>
+
+<p>Blur them and the findings stop meaning anything: a store can ship flawless product markup and still be missing from the catalog API, or be perfectly indexed by Google and invisible to an agent shopping inside a chat assistant. Every check below names the pipe it tests.</p>
+
+<h2>How to run this audit</h2>
+
+<ul>
+<li><strong>One pipe per check, named in the finding.</strong> "Not in the catalog API" and "not in Google's merchant listings" are different defects with different owners.</li>
+<li><strong>Keep the raw response, dated.</strong> Two of the four storefronts probed here answered <code>/.well-known/ucp</code> with 404 on 2026-09-18, and endpoint URLs are documented as subject to change.</li>
+<li><strong>Three verdicts, not two.</strong> PASS, FAIL and NOT TESTABLE. Nothing in the fetched documentation exposes per-agent ranking, so "how do we rank inside ChatGPT" is NOT TESTABLE rather than failed.</li>
+<li><strong>The person who ran the request signs the finding.</strong> A finding built from a vendor's screenshot is a quote, not a test.</li>
+</ul>
+
+<h2>Step 1 — Reachability: can an agent open the catalog?</h2>
+
+<p>&ldquo;Shopify provides two catalog interfaces for AI agents to discover and retrieve products. Global Catalog searches across all Shopify merchants, while Storefront Catalog is scoped to a single merchant&#x27;s store. Both implement the UCP Catalog capability , but they differ in scope, authentication, and available features.&rdquo;</p>
+
+<p>The endpoints are <code>POST https://catalog.shopify.com/api/ucp/mcp</code> for the cross-merchant surface and <code>POST https://STORE_DOMAIN/api/ucp/mcp</code> for a single store. Both are keyless but profile-gated: &ldquo;The /api/ucp/mcp endpoint requires an agent profile . Every request must include a meta.ucp-agent.profile URL pointing to your agent&#x27;s UCP profile. The returned tools depend on the capabilities your agent advertises.&rdquo;</p>
+
+<p>The merchant-side half of that handshake is a published business profile: &ldquo;Business profile: Published by the merchant or platform operating the commerce API, typically at /.well-known/ucp on the business origin.&rdquo; &ldquo;On Shopify, this exists at the merchant storefront ( {shop}.myshopify.com/.well-known/ucp ).&rdquo; Google uses the same manifest shape for its own commerce surfaces.</p>
+
+<h3>The test</h3>
+
+<ol>
+<li><code>GET https://STORE_DOMAIN/.well-known/ucp</code> — expect HTTP 200 and a JSON manifest whose <code>capabilities</code> name <code>dev.ucp.shopping.catalog.search</code> and <code>dev.ucp.shopping.catalog.lookup</code>. Measured 2026-09-18: allbirds.com and deathwishcoffee.com served 4.6 KB manifests with both, plus the <code>dev.shopify.catalog</code> extension; gymshark.com and shopify.com returned 404.</li>
+<li><code>tools/list</code> against the store's <code>/api/ucp/mcp</code> with <code>meta.ucp-agent.profile</code> set — expect <code>search_catalog</code>, <code>lookup_catalog</code> and <code>get_product</code> in the list. Measured: the storefront returned 13 tools, the three catalog tools among them.</li>
+<li><code>tools/call search_catalog</code> with <code>{"catalog":{"query":"running shoes"}}</code> — expect products rather than an error.</li>
+</ol>
+
+<p>Pass means all three, and the first one runs first because a 404 there reproduces itself in every later check. A request missing the profile fails loudly, which is evidence in itself: the two stores answered a profile-less catalog call with HTTP 422, code <code>-32001</code> &ldquo;UCP discovery failed&rdquo; and <code>data.code</code> &ldquo;invalid_profile_url&rdquo;, while a profile-less <code>tools/list</code> still answered 200.</p>
+
+<h2>Step 2 — Identity: a stable key on every record</h2>
+
+<p>Search results arrive keyed and clustered on Shopify's own identifiers: &ldquo;Find products by keyword. Use this when a buyer describes what they want in natural language. Global Catalog returns products from across all Shopify merchants, clustered by Universal Product ID (UPID); Storefront Catalog returns products scoped to a single store.&rdquo; The routing-facing fields are documented separately, which matters to anyone building links or an id map: &ldquo;URL-safe slug for SEO-friendly URLs (e.g., &#x27;blue-runner-pro&#x27;). Use id for stable API references.&rdquo; &ldquo;Canonical product page URL.&rdquo; The purchasable unit is the variant, whose GID is what a checkout receives: &ldquo;Global ID (GID) uniquely identifying this variant. Used as item.id in checkout.&rdquo;</p>
+
+<p>Batch behaviour is documented and was confirmed to be enforced: &ldquo;Array of product or variant identifiers (1 to 50). Accepts gid://shopify/p/{upid} , gid://shopify/ProductVariant/{id} , and http or https Shopify product URLs.&rdquo; The per-store ceiling is lower than the cross-merchant one — the storefront lookup schema caps a request at 10 ids, the global schema at 50 — and the protocol sets a lower floor than either: &ldquo;Implementations MUST support lookup by product ID and variant ID. Implementations MAY additionally support secondary identifiers such as SKU or handle, provided these are also fields on the returned product object.&rdquo;</p>
+
+<h3>The test</h3>
+
+<ol>
+<li>Take ten product ids out of a <code>search_catalog</code> response and re-request them through <code>lookup_catalog</code>. Assert that the resolved count equals the requested count, or that every unresolved id produced a message. Measured 2026-09-18: two valid product GIDs from a store's own search response resolved to <strong>one</strong> product, with no message for the other, while an obviously invalid id produced an explicit <code>not_found</code> message. A 200 status is not evidence that a batch resolved.</li>
+<li>Probe the ceilings in the request, not just the documentation. Measured: an 11-identifier storefront request and a 52-identifier global request were both rejected, with error text naming the limit.</li>
+<li>Probe identifier types rather than assuming them. The protocol makes product and variant ids mandatory and SKU, handle and barcode lookup optional, so a design that depends on SKU lookup is unverified until tested. Measured: ten variant GIDs taken from the storefront's own search resolved to zero products on that surface.</li>
+<li>Do not mix namespaces. Measured: two storefront product GIDs sent to the cross-merchant endpoint came back as <code>not_found</code> messages naming each id, because the global surface keys on its own UPID form.</li>
+</ol>
+
+<h2>Step 3 — Attribute mapping: does the filter find the product?</h2>
+
+<p>Discovery filters are taxonomy-driven, not keyword-driven. &ldquo;Filter by product category. Each item is a taxonomy category GID (for example, &quot;gid://shopify/TaxonomyCategory/123&quot; ). Multiple values use OR logic.&rdquo; Attributes are a short, named list rather than free text — Shopify's extension supports <code>Color</code>, <code>Size</code> and <code>Target gender</code>, and unsupported attribute names are ignored and returned in <code>messages</code>. Filters combine additively: &ldquo;Filter criteria to narrow search results. All specified filters combine with AND logic.&rdquo;</p>
+
+<p>A Shopify-specific extension (<code>dev.shopify.catalog</code>) is what turns a base UCP response into a merchant-usable record: when it is active, products carry merchant-curated collections and gift-card flags, and variants carry checkout prerequisites, selling plans and a direct checkout URL.</p>
+
+<h3>The test</h3>
+
+<ol>
+<li>Pick three products from three different taxonomy leaves and query each with its leaf category GID plus a keyword. A product that disappears is a mapping defect, not a ranking result.</li>
+<li>Run one query per supported attribute and reconcile hit counts against a manual collection count in the admin. A filter that was silently ignored looks identical to an attribute that matched nothing.</li>
+<li>Read the <code>messages</code> array of every response — the only place the difference between "filtered" and "ignored" is visible.</li>
+<li>Re-run one query with <code>filters.available=false</code> and diff the two sets. The documented default returns only sale-ready items (&ldquo;Filter by availability. Defaults to true (only sale-ready items). Set to false to include unavailable items.&rdquo;), yet the live probe for this page returned 10 products and 100 variants of which 88 carried <code>availability.available=false</code>, so verify the default per store rather than assuming it.</li>
+</ol>
+
+<h2>Step 4 — Inferred fields: what did Shopify write?</h2>
+
+<p>&ldquo;Some Global Catalog response fields are generated or enriched by Shopify, and are marked Inferred in the reference. These fields might not always be present or might vary in accuracy depending on available product data. Treat them as discovery and merchandising signals, not as merchant-authored source text.&rdquo; &ldquo;Some fields might be inferred by Shopify&#x27;s AI and might not always be present or have varying accuracy depending on available product data. Inferred fields are marked throughout the Catalog MCP and API reference docs with the Inferred label.&rdquo;</p>
+
+<p>On the cross-merchant surface the inferred set is enumerated:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Field</th><th>What Shopify generates</th></tr></thead>
+<tbody>
+<tr><th>description</th><td data-col="What Shopify generates">Product description generated or enriched by Shopify.</td></tr>
+<tr><th>options</th><td data-col="What Shopify generates">Product options normalized for catalog discovery and variant selection.</td></tr>
+<tr><th>metadata.attributes</th><td data-col="What Shopify generates">Product attributes such as material, style, and occasion.</td></tr>
+<tr><th>metadata.tech_specs</th><td data-col="What Shopify generates">Technical specifications.</td></tr>
+<tr><th>metadata.top_features</th><td data-col="What Shopify generates">Top product features.</td></tr>
+<tr><th>metadata.unique_selling_points</th><td data-col="What Shopify generates">Unique selling propositions.</td></tr>
+<tr><th>variants[].condition</th><td data-col="What Shopify generates">Product condition labels, such as &quot;new&quot; or &quot;secondhand&quot; .</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>The test</h3>
+
+<ul>
+<li>Pull the same product from <code>search_catalog</code>, from the per-store surface and from the product page. Three descriptions can be three different texts; only one of them is the merchant's copy.</li>
+<li>Grade the inferred set as signals, not as data quality. An absent inferred attribute is not a defect a merchant can be marked down for.</li>
+<li>Where the merchant's own wording carries a claim, a price statement or a disclaimer, verify it on the page and in the feed. The inferred description is generated, so it is not the place to check compliance.</li>
+</ul>
+
+<h2>Step 5 — Schema validation: the page-side contract</h2>
+
+<p>Page markup is a real pipe, but a narrower one than it is usually described as. Measured: the string <em>json-ld</em> appears 0 times across Shopify's seven catalog documentation pages and the UCP and ACP specifications — 22 files scanned. So "AI agents read your JSON-LD" is only true for a named surface: Google Search's merchant listings, plus any crawler that renders the page. Google's requirement statement is blunt: &ldquo;You must include the required properties for your content to be eligible for display as a rich result. You can also include the recommended properties to add more information to your structured data, which could provide a better user experience.&rdquo;</p>
+
+<p>On Google the required properties are <code>name</code>, <code>image</code> and a nested <code>offers</code>, and for merchant listings the merchant has to be the seller. GTIN and MPN sit in the recommended list, not the required one, which is where the circulating checklists invert the story: &ldquo;While you can use the generic gtin property for all GTINs, we recommend that you use the most specific GTIN that applies to your product, as this is the most accurate representation of the product.&rdquo; The price rule is also stricter here than for plain product snippets: &ldquo;Unlike product snippets, merchant listing experiences require a price greater than zero.&rdquo;</p>
+
+<h3>The test</h3>
+
+<ol>
+<li>Run three product pages through the Rich Results Test: a top seller, a variant-heavy product, and a product with no barcode at all.</li>
+<li>Confirm one <code>Product</code> block per page with a nested <code>Offer</code> and a price above zero, and check variant-level identifiers and prices on the variant-heavy product. A parent-only markup block leaves the variants an agent must choose between without identity.</li>
+<li>Record which identifiers exist rather than scoring them pass or fail. A catalog with zero barcode coverage can still be fully discoverable through the catalog API; "no cross-retailer identity" is a Google-surface gap with a Google-surface fix.</li>
+</ol>
+
+<p>One more uncoupled claim, since it leads most third-party scorecards: the string <code>/products.json</code> appears 0 times across the same seven Shopify catalog pages. It is a long-standing theme endpoint, useful to scrapers, but nothing in the documentation of the agentic catalog makes it a floor signal.</p>
+
+<h2>Step 6 — Availability: a signal, not a reservation</h2>
+
+<p>The single most over-promised item in agentic commerce is stock. ACP is explicit: &ldquo;Availability in a feed does not reserve inventory. Reservation semantics, if any, occur during checkout.&rdquo; and &ldquo;Agents MUST treat checkout responses as authoritative even when they differ from feed data.&rdquo; What a merchant can honestly offer is a quality signal, with a fulfillment state rather than a boolean: &ldquo;Qualifies available with fulfillment state. Well-known values: `in_stock`, `backorder`, `preorder`, `out_of_stock`, `discontinued`.&rdquo; ACP's variant state list is wider still: &ldquo;Extensible fulfillment state for the variant. Known values include in_stock, limited_stock, backorder, preorder, out_of_stock, and discontinued.&rdquo;</p>
+
+<p>The documented shape of that object, from the catalog reference, is:</p>
+
+<pre><code>{"availability": {"available": true, "status": "in_stock", "running_low": false}}</code></pre>
+
+<p>In the live per-store responses captured for this page the object carried only <code>available</code> — the <code>status</code> and <code>running_low</code> keys documented for the cross-merchant surface did not appear on any of the 100 variants returned. Test for the ladder; do not assume the boolean is the whole contract.</p>
+
+<p>Feeds behave differently from a search call, and the difference decides how a merchant withdraws a product: &ldquo;is an upsert operation. Products omitted from the request remain unchanged.&rdquo; A feed's own timestamp is the freshness evidence an agent has: &ldquo;RFC 3339 timestamp for the most recent update applied to the feed.&rdquo;</p>
+
+<h3>The test</h3>
+
+<ol>
+<li>Call <code>get_product</code> and confirm every variant carries an availability object with a fulfillment state, not a bare boolean.</li>
+<li>Check that the store's states cover the ladder it needs. Preorder, backorder and discontinued cannot be expressed by a flag alone.</li>
+<li>Test the withdrawal path. Omit a product from a feed update, read the feed back and record what happened: the documented behaviour is an upsert, so removal needs a full replacement or an explicit unavailable/discontinued state rather than silence.</li>
+<li>Capture the feed's last-updated timestamp. If nobody can produce it, the feed is untestable.</li>
+</ol>
+
+<h2>Step 7 — Operational rules that fail an integration</h2>
+
+<p>Three documented rules fail the integration rather than the catalog, and they are the fastest way to catch an agency-built dashboard that quietly breaks the terms it depends on. Images may not be cached or re-used — they must be rendered in real time, in connection with the merchant's own listing — and catalog results may not be cached at all, because they carry merchant preferences on pricing, availability and presentation. Catalog queries are also rate-limited, and keyless access cannot buy a higher limit: &ldquo;Catalog queries are subject to rate limits. Keyless catalog access doesn&#x27;t support rate limit increases. To request a rate limit increase, go to the Shopify Help Center , select Chat with us , log in, and choose your Partner organization to contact us.&rdquo;</p>
+
+<h3>The test</h3>
+
+<ul>
+<li>Ask whoever built any catalog dashboard what it stores. A nightly snapshot of catalog results is a documented violation, not a caching optimisation, and rehosted images are the same class of defect.</li>
+<li>Since keyless access cannot get a rate-limit increase, check that the integration batches lookups to the documented ceilings instead of re-running a search for one product.</li>
+<li>Record the agent profile URL the integration sends. The tool set returned depends on the capabilities that profile advertises, so two agents hitting the same store can legitimately receive different tools.</li>
+</ul>
+
+<h2>The audit checklist</h2>
+
+<p>Eighteen checks, the surface each one tests, and the evidence that closes it.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>#</th><th>Check</th><th>How to test it</th><th>Pass condition</th></tr></thead>
+<tbody>
+<tr><th>1</th><td data-col="Check">Reachability</td><td data-col="How to test it">GET <code>https://STORE_DOMAIN/.well-known/ucp</code></td><td data-col="Pass condition">200, manifest names <code>catalog.search</code> and <code>catalog.lookup</code></td></tr>
+<tr><th>2</th><td data-col="Check">MCP endpoint</td><td data-col="How to test it"><code>tools/list</code> on <code>/api/ucp/mcp</code> with an agent profile</td><td data-col="Pass condition">the three catalog tools are present</td></tr>
+<tr><th>3</th><td data-col="Check">Profile gating</td><td data-col="How to test it">Repeat that call with no profile</td><td data-col="Pass condition">documented error path, not a silent success</td></tr>
+<tr><th>4</th><td data-col="Check">Search</td><td data-col="How to test it"><code>search_catalog</code> with a natural-language query</td><td data-col="Pass condition">products returned, each with an id</td></tr>
+<tr><th>5</th><td data-col="Check">Lookup fidelity</td><td data-col="How to test it">Re-request the returned ids via <code>lookup_catalog</code></td><td data-col="Pass condition">resolved count equals requested count, or a message per miss</td></tr>
+<tr><th>6</th><td data-col="Check">Identifier namespace</td><td data-col="How to test it">Send storefront GIDs to the global endpoint, and the reverse</td><td data-col="Pass condition"><code>not_found</code> messages confirm ids are per-surface</td></tr>
+<tr><th>7</th><td data-col="Check">Routing fields</td><td data-col="How to test it">Fetch each product's <code>handle</code> and <code>url</code></td><td data-col="Pass condition">both resolve 200 on the storefront</td></tr>
+<tr><th>8</th><td data-col="Check">Taxonomy mapping</td><td data-col="How to test it">One query per product using its leaf category GID</td><td data-col="Pass condition">every product is found, or the mapping is the defect</td></tr>
+<tr><th>9</th><td data-col="Check">Attribute filters</td><td data-col="How to test it">One query per supported attribute (Color, Size, Target gender)</td><td data-col="Pass condition">hit counts reconcile with a manual collection</td></tr>
+<tr><th>10</th><td data-col="Check">Filter diagnostics</td><td data-col="How to test it">Read the <code>messages</code> array of every response</td><td data-col="Pass condition">no entries reporting ignored filter values</td></tr>
+<tr><th>11</th><td data-col="Check">Availability default</td><td data-col="How to test it">Re-run one query with <code>filters.available=false</code></td><td data-col="Pass condition">the difference matches a manual sale-ready check</td></tr>
+<tr><th>12</th><td data-col="Check">Inferred fields</td><td data-col="How to test it">Diff <code>search_catalog</code> text against the page copy</td><td data-col="Pass condition">the merchant's own wording is identified, not assumed</td></tr>
+<tr><th>13</th><td data-col="Check">Page markup</td><td data-col="How to test it">Rich Results Test on a top seller, a variant-heavy product, a barcode-free product</td><td data-col="Pass condition">one Product block, nested Offer, price above zero</td></tr>
+<tr><th>14</th><td data-col="Check">Cross-retailer identity</td><td data-col="How to test it">Barcode and mpn coverage in the page markup</td><td data-col="Pass condition">reported as a Google-recommended gap, never an API failure</td></tr>
+<tr><th>15</th><td data-col="Check">Availability shape</td><td data-col="How to test it"><code>get_product</code> on a variant</td><td data-col="Pass condition">a fulfillment state, not a bare boolean</td></tr>
+<tr><th>16</th><td data-col="Check">Feed semantics</td><td data-col="How to test it">Omit a product from an update, then read the feed back</td><td data-col="Pass condition">documented upsert behaviour confirmed and written down</td></tr>
+<tr><th>17</th><td data-col="Check">Feed freshness</td><td data-col="How to test it">Read the feed's <code>updated_at</code></td><td data-col="Pass condition">present, RFC 3339 and recent</td></tr>
+<tr><th>18</th><td data-col="Check">Operational rules</td><td data-col="How to test it">Ask the integration's owner what their dashboard stores</td><td data-col="Pass condition">no cached results, no rehosted images, lookups batched</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>What this audit cannot tell you</h2>
+
+<ul>
+<li><strong>Nothing about per-agent ranking.</strong> The fetched documentation exposes no ranking or impression data for third-party agents, so a claim about position inside a given assistant is speculation, not a finding.</li>
+<li><strong>Nothing about real-time stock.</strong> Reservation is a documented non-goal; checkout is the authoritative source.</li>
+<li><strong>Nothing about the ChatGPT merchant surface.</strong> <code>chatgpt.com/merchants</code> answered HTTP 403 to every fetch attempted for this audit on 2026-09-18, so no claim about it appears here.</li>
+<li><strong>Nothing permanent.</strong> Endpoint paths and field lists are versioned and move; re-run the captures against the vendor's current documentation before a client build.</li>
+</ul>
+
+<p>The most-shared framing of this surface is published commentary, not a vendor standard, and it is worth citing correctly. The useful line in it is &ldquo;An AI agent consuming the Catalog API reads records, not pages. Your carefully crafted collection-page copy does not travel through this channel. Only the structured product record does.&rdquo; Third-party scorecards mix the pipes in the other direction — one circulating rubric makes <code>/products.json</code> and GTIN coverage floor signals, which the documented surfaces above do not support. Use those rubrics for ideas; audit against the primary schema.</p>
+
+<h2>Frequently asked questions</h2>
+
+<div class="faq-item">
+            <h3>Is GTIN required for a Shopify catalog to be discoverable by AI agents?</h3>
+            <p>No, not on this surface. A scan of Shopify&#x27;s seven catalog documentation pages returns zero mentions of gtin, mpn or barcode, and the live catalog responses captured for this audit contain none of the three either. The UCP schema allows an optional variant barcodes array and ACP requires only an id and a title. GTIN and MPN are recommended properties in Google&#x27;s merchant-listing markup, which is where cross-retailer identity gets fixed.</p>
+        </div>
+<div class="faq-item">
+            <h3>What endpoints does Shopify expose to AI agents?</h3>
+            <p>Two UCP catalog endpoints over MCP: a cross-merchant one at https://catalog.shopify.com/api/ucp/mcp and a per-store one at https://STORE_DOMAIN/api/ucp/mcp. Both are keyless, but every request carries an agent profile URL, and the storefront origin answers /.well-known/ucp with a business profile manifest declaring which catalog capabilities the shop supports.</p>
+        </div>
+<div class="faq-item">
+            <h3>Which tools does the catalog expose?</h3>
+            <p>search_catalog for natural-language discovery, lookup_catalog for retrieval by identifier, and get_product for a single product with all option combinations, availability signals and checkout links. A live storefront tools/list call on 2026-09-18 listed 13 tools in total: those three alongside cart, checkout and order tools.</p>
+        </div>
+<div class="faq-item">
+            <h3>How many identifiers can one lookup resolve?</h3>
+            <p>Ten on the per-store surface and 50 on the cross-merchant one. Both ceilings were tested: an 11-identifier storefront request and a 52-identifier global request were rejected with an error naming the limit. The specification requires product and variant id lookup, while SKU, handle and barcode lookup are optional.</p>
+        </div>
+<div class="faq-item">
+            <h3>Does the catalog API give agents real-time inventory?</h3>
+            <p>No. Availability travels as a discovery signal, and ACP lists inventory reservation as an explicit non-goal: reservation, if any, happens during checkout, and checkout responses are authoritative even when they disagree with feed data.</p>
+        </div>
+<div class="faq-item">
+            <h3>Do AI agents read my product page&#x27;s JSON-LD?</h3>
+            <p>Only on surfaces that read pages, chiefly Google Search&#x27;s merchant listings. The string json-ld does not appear in Shopify&#x27;s catalog documentation or in the UCP and ACP specifications. Product markup with a nested Offer and a price above zero matters on Google; it is not the catalog API&#x27;s contract.</p>
+        </div>
+<div class="faq-item">
+            <h3>Can a merchant see how products rank inside AI agents?</h3>
+            <p>Not through these APIs. Nothing in the catalog, UCP or ACP documentation exposes per-agent ranking or impression data, so rank questions are untestable from the merchant side. Test reachability, identity and attribute mapping instead.</p>
+        </div>
+
+<h2>Sources</h2>
+
+<div class="source">
+<p>Primary: <a href="https://shopify.dev/docs/agents/catalog">Shopify — Agentic commerce: Catalogs</a>, with the <a href="https://shopify.dev/docs/agents/catalog/global-catalog">Global Catalog</a> and <a href="https://shopify.dev/docs/agents/catalog/storefront-catalog">Storefront Catalog</a> pages and their extensions; <a href="https://shopify.dev/docs/agents/profiles">Shopify — About profiles</a>; the <a href="https://ucp.dev/latest/specification/overview/">UCP specification</a> including the catalog search and lookup schemas; the <a href="https://github.com/agentic-commerce-protocol/agentic-commerce-protocol/blob/main/rfcs/rfc.product_feeds.md">ACP product-feed RFC</a> and its JSON Schema; <a href="https://developers.google.com/search/docs/appearance/structured-data/merchant-listing">Google Search Central — Merchant listing (Product, Offer) structured data</a> and the <a href="https://developers.google.com/merchant/ucp/">Google Merchant UCP guide</a>.</p>
+<p>Live probes, all captured 2026-09-18: <code>GET /.well-known/ucp</code> on allbirds.com, deathwishcoffee.com, gymshark.com and shopify.com; <code>tools/list</code>, <code>search_catalog</code>, <code>lookup_catalog</code> and <code>get_product</code> JSON-RPC calls against <code>https://www.allbirds.com/api/ucp/mcp</code> and <code>https://catalog.shopify.com/api/ucp/mcp</code>; and a case-insensitive count of <em>gtin</em>, <em>mpn</em>, <em>barcode</em>, <em>json-ld</em> and <em>/products.json</em> across the seven saved Shopify catalog pages and the UCP and ACP specifications.</p>
+<p>Secondary and comparison only: Taylor Sicard's June 2026 essay on the Shopify Catalog API, re-shared to X on 16 September 2026; a third-party agentic-storefronts rubric at catalogscan.com, cited as a scorecard and not as a standard. Nothing on this page is legal, tax or platform-policy advice; platform APIs change and endpoint behaviour should be re-verified against the vendor's current documentation before a client build.</p>
+</div>
+
+<div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/ai-data-readiness-what-to-check-before-starting">AI Data Readiness: What to Check Before Starting</a></li>
+                <li><a href="/ai-opportunity-assessment-for-retail-businesses">AI Opportunity Assessment for Retail Businesses</a></li>
+                <li><a href="/articles/ai-agent-safeguards-fail">AI Agents Tried to Hack a Website During Official Safety Tests</a></li>
+                <li><a href="/ai-agent-risk-checklist">AI Agent Risk Checklist: what autonomous agents are allowed to do</a></li>
+            </ul>
+        </div>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
