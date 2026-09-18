@@ -422,6 +422,49 @@
                     <p style="margin:10px 0 0; font-size:0.85rem; color:#5a4415;">Sources for every rate on this block: OpenAI API pricing (<code>developers.openai.com/api/docs/pricing</code>), the Agents API overview (<code>/api/docs/guides/agents-api/overview</code>) and the voice latency &amp; cost guide (<code>/api/docs/guides/voice-latency-cost</code>), all read 2026-09-18. The model token pass-through uses your selected model's own input, cached-input and output rates &mdash; no rate is invented anywhere on this page.</p>
                 </div>
             </div>
+            <div id="reliabilityBlock" style="margin-top:26px; border-top:2px dashed #cfe3ff; padding-top:18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                    <h3 id="agent-reliability-durable-execution" style="margin:0; font-size:1.2rem; color:#1a1a2e;">Agent reliability / durable execution</h3>
+                    <span class="badge" style="background:#eef7ff;">New Sept 18, 2026</span>
+                </div>
+                <p class="note" style="margin:8px 0 14px;">Every mode above prices work that <em>succeeds</em>. This row prices the layer that keeps an agent going when something fails &mdash; the compute a failed session re-runs while its state is recovered and the retry finishes. It is <strong>additive</strong>: the reliability layer is added to whichever headline total your calculator mode is showing. It is <strong>not a per-session charge</strong> (the Agents API per-session fee is published as <strong>$0.00</strong> above, and stays that way), and it is not a vendor quote: no durable-execution platform publishes a list price, which is why the flat fee below defaults to $0.00. All five inputs are this page's model &mdash; replace them with your own logs.</p>
+                <div class="grid">
+                    <div class="field">
+                        <label for="relSessionsMo">Agent sessions per month <span class="hint">(preset: 1,000 sessions/day &times; 30)</span></label>
+                        <input type="number" id="relSessionsMo" value="30000" min="0" max="1000000" step="100">
+                    </div>
+                    <div class="field">
+                        <label for="relFailRate">Session failure rate <span class="hint">(%) &mdash; tune to your own logs</span></label>
+                        <input type="number" id="relFailRate" value="3" min="0" max="100" step="0.5">
+                    </div>
+                    <div class="field">
+                        <label for="relRecoveryMin">Mean recovery time per failed session <span class="hint">(minutes) &mdash; tune to your own logs</span></label>
+                        <input type="number" id="relRecoveryMin" value="12" min="0" max="1440" step="1">
+                    </div>
+                    <div class="field">
+                        <label for="relRetryMult">Retry multiplier <span class="hint">(&times; session compute; 1 = no re-run cost)</span></label>
+                        <input type="number" id="relRetryMult" value="1.5" min="1" max="10" step="0.1">
+                    </div>
+                    <div class="field">
+                        <label for="relPlatformFee">Orchestration platform fee <span class="hint">($/month, flat &mdash; no published durable-execution list price)</span></label>
+                        <input type="number" id="relPlatformFee" value="0" min="0" max="100000" step="10">
+                    </div>
+                </div>
+                <div class="results" id="reliabilityResults" style="border-color:#cfe3ff; background:#f7fbff;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px; margin-bottom:6px;">
+                        <h4 style="color:#1d4ed8; margin:0;">Reliability / durable execution &mdash; line items</h4>
+                        <span class="badge" style="background:#eef7ff;">model defaults &mdash; tune to your own logs</span>
+                    </div>
+                    <div class="row"><span class="k">Failed sessions / month</span><span class="v" id="rRelFailed">&mdash;</span></div>
+                    <div class="row"><span class="k">Recovery time / month (failed sessions)</span><span class="v" id="rRelHours">&mdash;</span></div>
+                    <div class="row"><span class="k">Retry compute (failed sessions repriced)</span><span class="v" id="rRelRetry">&mdash;</span></div>
+                    <div class="row"><span class="k">Orchestration platform fee, monthly</span><span class="v" id="rRelFee">&mdash;</span></div>
+                    <div class="row total"><span class="k">Reliability layer &mdash; monthly</span><span class="v" id="rReliabilityMo">&mdash;</span></div>
+                    <div class="row total"><span class="k">All-in monthly (headline total + reliability)</span><span class="v" id="rAllInMo">&mdash;</span></div>
+                    <div class="note" id="relRate"></div>
+                </div>
+                <p style="margin:12px 0 0; font-size:0.85rem; color:#5a4415;">Market anchor &mdash; Temporal's $550M Series E at a $12.55B valuation, 14 September 2026 (<a href="https://temporal.io/blog/temporal-raises-usd550m-series-e-at-usd12-55b-valuation-ai" rel="noopener" target="_blank">Temporal</a> &middot; <a href="https://thenextweb.com/news/temporal-550m-series-e-12-55bn-valuation-lightspeed" rel="noopener" target="_blank">The Next Web</a>). The round funds the layer Temporal calls Durable Execution, which keeps applications, &ldquo;including AI agents&rdquo;, &ldquo;running when something fails&rdquo; &mdash; the argument for pricing reliability as its own line, not for buying one vendor's stack.</p>
+            </div>
         </div>
 
         <h2>How the math works</h2>
@@ -1062,6 +1105,141 @@ Outcome-based mode:
         }
 
         renderManaged();
+    })();
+    </script>
+    <script>
+    /* ---------------------------------------------------------------------------
+       Agent reliability / durable execution layer. Card t_876d8d3a, 2026-09-18.
+       Nothing above this block is edited: the self-hosted estimator's script and
+       the managed-session script keep their own listeners and ids, and this block
+       only READS the headline total your calculator mode is showing. It registers
+       no listener on any existing element; it listens at document level, in the
+       bubble phase, so it runs AFTER the page's own handlers have written the new
+       totals (a capture-phase listener would read the previous mode's value).
+       Per-agent-minute rate 0.0483 is DERIVED from this page's own managed preset
+       (b): $0.9660 per session / 20 minutes = $0.0483 per agent-minute.
+       --------------------------------------------------------------------------- */
+    /* >>> reliability-row-t_876d8d3a >>> */
+    (function () {
+        var REL_PER_AGENT_MIN = 0.0483; /* DERIVED: page preset (b) 0.9660 / 20 min */
+
+        function relEl(id) { return document.getElementById(id); }
+        function relNum(id) {
+            var el = relEl(id);
+            if (!el) { return 0; }
+            var v = parseFloat(el.value);
+            return isNaN(v) ? 0 : v;
+        }
+        function relGroup(s) {
+            var p = String(s).split('.');
+            p[0] = p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return p.join('.');
+        }
+        function relCount(x) { return relGroup(String(Math.round(x))); }
+        function relDec(x) { return String(x).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, ''); }
+        function relUSD2(x) { return '$' + relGroup(x.toFixed(2)); }
+        function relUSD4(x) { return '$' + relGroup(x.toFixed(4)); }
+
+        /* Pure: raw numbers in, raw numbers out. No DOM, no formatting. */
+        function reliabilityCalc(o) {
+            function n(v) { var x = typeof v === 'number' ? v : parseFloat(v); return isNaN(x) ? 0 : x; }
+            var sessions = Math.max(0, n(o.sessions));
+            var failRate = Math.min(100, Math.max(0, n(o.failRate)));
+            var recoveryMin = Math.max(0, n(o.recoveryMin));
+            var retryMult = Math.min(10, Math.max(1, n(o.retryMult)));
+            var fee = Math.max(0, n(o.fee));
+            var failed = sessions * failRate / 100;
+            var minutes = failed * recoveryMin;
+            var retry = minutes * REL_PER_AGENT_MIN * retryMult;
+            return {
+                sessions: sessions,
+                failRate: failRate,
+                recoveryMin: recoveryMin,
+                retryMult: retryMult,
+                fee: fee,
+                failed: failed,
+                minutes: minutes,
+                hours: minutes / 60,
+                retry: retry,
+                total: retry + fee
+            };
+        }
+
+        function relRead() {
+            return {
+                sessions: relNum('relSessionsMo'),
+                failRate: relNum('relFailRate'),
+                recoveryMin: relNum('relRecoveryMin'),
+                retryMult: relNum('relRetryMult'),
+                fee: relNum('relPlatformFee')
+            };
+        }
+
+        /* The headline total the current calculator mode is displaying. */
+        function relActiveMode() {
+            var radios = document.querySelectorAll('input[name="mode"]');
+            var mode = 'usage';
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) { mode = radios[i].value; }
+            }
+            var id = mode === 'managed' ? 'mOutTotal' : (mode === 'outcome' ? 'rOutcomeMonth' : 'rLoaded');
+            var label = mode === 'managed'
+                ? 'managed session mode'
+                : (mode === 'outcome' ? 'outcome-based mode' : 'API/usage-based mode');
+            return { mode: mode, id: id, label: label };
+        }
+
+        function relMoney(txt) {
+            if (!txt) { return null; }
+            var cleaned = String(txt).replace(/[^0-9.\-]/g, '');
+            if (cleaned === '' || cleaned === '-' || cleaned === '.' || cleaned === '-.') { return null; }
+            var v = parseFloat(cleaned);
+            return isNaN(v) ? null : v;
+        }
+
+        function relModeTotal() {
+            var m = relActiveMode();
+            var el = relEl(m.id);
+            var v = el ? relMoney(el.textContent) : null;
+            return { mode: m.mode, id: m.id, label: m.label, value: v };
+        }
+
+        function renderReliability() {
+            var out = relEl('rReliabilityMo');
+            if (!out) { return null; } /* page revision without this block: do nothing */
+            var r = reliabilityCalc(relRead());
+            var modeTotal = relModeTotal();
+
+            relEl('rRelFailed').textContent = relCount(r.failed) + ' sessions';
+            relEl('rRelHours').textContent = relDec(r.hours) + ' hours';
+            relEl('rRelRetry').textContent = relUSD2(r.retry);
+            relEl('rRelFee').textContent = r.fee > 0
+                ? relUSD2(r.fee) + ' flat, monthly'
+                : '$0.00 \u2014 no published durable-execution list price';
+            relEl('rReliabilityMo').textContent = relUSD2(r.total) + ' /mo';
+            relEl('rAllInMo').textContent = (modeTotal.value === null)
+                ? '\u2014 headline total not yet computed'
+                : relUSD2(modeTotal.value + r.total) + ' /mo \u00b7 ' + modeTotal.label;
+
+            relEl('relRate').textContent = 'Line check: ' + relCount(r.sessions) + ' sessions \u00d7 ' + relDec(r.failRate)
+                + '% = ' + relDec(r.failed) + ' failed sessions \u00d7 ' + relDec(r.recoveryMin)
+                + ' min = ' + relDec(r.minutes) + ' agent-minutes \u00d7 ' + relUSD4(REL_PER_AGENT_MIN)
+                + ' per agent-minute \u00d7 ' + relDec(r.retryMult) + ' retry multiplier = ' + relUSD2(r.retry)
+                + ', plus a flat orchestration fee of ' + relUSD2(r.fee) + ' = ' + relUSD2(r.total)
+                + ' per month. The ' + relUSD4(REL_PER_AGENT_MIN) + ' rate is this page\u2019s own arithmetic on its managed preset (b): '
+                + '$0.9660 per session \u00f7 20 minutes. Nothing here is a vendor list price \u2014 the five inputs are the model\u2019s defaults, and your logs are the better source. '
+                + 'All-in adds this layer to the headline total your current mode shows (' + modeTotal.label
+                + '); it never replaces or re-prices a row above.';
+            return r;
+        }
+
+        /* Bubble phase, deliberately: the page's own listeners are registered on the
+           inputs and radios themselves, so they run first and this reads final values. */
+        document.addEventListener('input', renderReliability);
+        document.addEventListener('change', renderReliability);
+        document.addEventListener('click', renderReliability);
+
+        renderReliability();
     })();
     </script>
 </body>
