@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The AI Vendor Outage Playbook: What Agencies Do When ChatGPT, Claude, and Grok Go Down</title>
     <meta name="description" content="ChatGPT, Claude, and Grok went down together Sept 3, 2026. The agency playbook: monitoring, fallback models, multi-vendor routing, SLA credits, client comms.">
-    <meta name="keywords" content="AI vendor outage playbook, AI outage September 3 2026, ChatGPT down, Claude API down, why is Grok down, are AI APIs reliable, which AI vendor has best uptime, AI API reliability, fallback model, multi-vendor routing, circuit breaker, AI agency uptime, AI vendor failover, Claude API outage, ChatGPT outage">
+    <meta name="keywords" content="AI vendor outage playbook, AI outage September 3 2026, ChatGPT down, Claude API down, why is Grok down, are AI APIs reliable, which AI vendor has best uptime, AI API reliability, fallback model, multi-vendor routing, circuit breaker, agent reliability, durable execution, agent failure cost, AI agency uptime, AI vendor failover, Claude API outage, ChatGPT outage">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://findaiagency.com/ai-vendor-outage-playbook">
     <meta property="og:title" content="The AI Vendor Outage Playbook: What Agencies Do When ChatGPT, Claude, and Grok Go Down">
@@ -26,12 +26,12 @@
       "headline": "The AI Vendor Outage Playbook: What Agencies Do When ChatGPT, Claude, and Grok Go Down",
       "description": "ChatGPT, Claude, and Grok went down together Sept 3, 2026. The agency playbook: monitoring, fallback models, multi-vendor routing, SLA credits, client comms.",
       "datePublished": "2026-09-03",
-      "dateModified": "2026-09-03",
+      "dateModified": "2026-09-18",
       "author": {"@type": "Organization", "name": "Find AI Agency"},
       "publisher": {"@type": "Organization", "name": "Find AI Agency"},
       "mainEntityOfPage": "https://findaiagency.com/ai-vendor-outage-playbook",
       "image": "https://findaiagency.com/og-image.png",
-      "keywords": "AI vendor outage playbook, AI outage September 3 2026, ChatGPT down, Claude API down, why is Grok down, are AI APIs reliable, which AI vendor has best uptime, AI API reliability, multi-vendor routing, circuit breaker"
+      "keywords": "AI vendor outage playbook, AI outage September 3 2026, ChatGPT down, Claude API down, why is Grok down, are AI APIs reliable, which AI vendor has best uptime, AI API reliability, multi-vendor routing, circuit breaker, agent reliability, durable execution, agent failure cost"
     },
     {
       "@type": "FAQPage",
@@ -121,6 +121,9 @@
         .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
         .related ul { list-style: none; padding: 0; }
         .related li { margin-bottom: 10px; }
+        .update-box { margin: 32px 0; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 12px; }
+        .update-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .update-box .update-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
         footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } table { font-size: 0.85rem; } th, td { padding: 8px 10px; } }
         a, p, li, th, td { overflow-wrap: anywhere; }
@@ -130,9 +133,18 @@
     <article>
         <header>
             <h1>The AI Vendor Outage Playbook: What to Do When ChatGPT, Claude, and Grok Go Down Together</h1>
-            <div class="meta"><span>Published September 3, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="meta"><span>Published September 3, 2026</span><span>Updated September 18, 2026</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>AI vendor outage playbook</span><span>ChatGPT down</span><span>Claude API down</span><span>why is Grok down</span><span>are AI APIs reliable</span></div>
         </header>
+
+        <div class="update-box">
+            <span class="update-label">Update &mdash; September 18, 2026</span>
+            <h2 id="agent-reliability-cost-september-2026">The cost angle: reliability is the line AI pricing models are missing (September 2026)</h2>
+            <p>Everything above is about staying up. This is about what recovery costs. Per-seat and per-token pricing models contain no line for orchestration or reliability — you are billed for seats, tokens and API calls, never for a session that hangs, a workflow that stops half-finished, or the retry storm that follows.</p>
+            <p>Those three are what eat a fixed-fee project's margin. A failed run bills the same compute twice, recovering state costs hours the quote never covered, and the client sees a late deliverable instead of a vendor invoice.</p>
+            <p>On 14 September 2026 Temporal announced "a $550M Series E at a $12.55B valuation" co-led by Lightspeed, funding what it calls Durable Execution: "State gets preserved and work recovers from failures automatically," so an application can "pick right back up where it left off after an outage." The round targets agents that work "for days, weeks, or months," and Temporal says its annualised revenue run rate has passed $250m, as reported by The Next Web (<a href="https://temporal.io/blog/temporal-raises-usd550m-series-e-at-usd12-55b-valuation-ai" rel="noopener">Temporal, 14 September 2026</a> · <a href="https://thenextweb.com/news/temporal-550m-series-e-12-55bn-valuation-lightspeed" rel="noopener">The Next Web</a>).</p>
+            <p>Billable at that scale means quotable at yours. Our sibling cost anchor models it: <a href="https://aiagencycalculator.com/ai-agent-api-cost-calculator#agent-reliability-durable-execution" rel="noopener">what agent reliability actually costs</a> adds failed sessions, recovery minutes and a retry multiplier to the monthly total you already show a client.</p>
+        </div>
 
         <p><strong>What happened.</strong> On the morning of <strong>September 3, 2026</strong>, the three AI vendors most agencies build on went down <strong>at the same time</strong>: OpenAI's <strong>ChatGPT and Codex</strong>, Anthropic's <strong>Claude</strong> (Claude.ai, Claude Code, Claude Cowork, and the <strong>Claude API</strong>), and xAI's <strong>Grok</strong> (Axios; DataCenterDynamics; 9to5Google; CNET; Gizmodo). User reports started around 9:00–9:30 a.m. ET; by mid-morning all three vendors had active status-page incidents; and by early afternoon everything was nominally back to normal. No single common cause was ever confirmed. The 09-03-2026 simultaneous outage is now the reference case for why <strong>AI API reliability</strong> has to be designed, not assumed — and why a single backup vendor is not a backup plan.</p>
 
