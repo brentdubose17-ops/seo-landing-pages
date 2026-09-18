@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agent Workload Routing 2026: Fable 5.1 vs Cache-Priced Loops</title>
     <meta name="description" content="Long AI agent runs cost far more than headline per-token prices suggest because agents re-read context on every step. Claude Fable 5.1's $0.25 cache reads vs DeepSeek V4 Pro — the 2026 cache-gap math and a workload-to-model decision table for agencies.">
-    <meta name="keywords" content="AI agent cost, model cost routing, DeepSeek V4 Pro pricing, Claude Fable 5.1 price, Claude API pricing 2026, cache read pricing, prompt caching, AI agency model selection, agent workload routing, long agent runs, AI pricing calculator, Gemini 3.8 Flash">
+    <meta name="keywords" content="AI agent cost, model cost routing, DeepSeek V4 Pro pricing, Claude Fable 5.1 price, Claude API pricing 2026, cache read pricing, prompt caching, AI agency model selection, agent workload routing, long agent runs, AI pricing calculator, Gemini 3.8 Flash, Siri model delegation, Model Manager Services, multi-model assistant architecture">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://findaiagency.com/ai-agent-workload-routing">
     <meta property="og:title" content="AI Agent Workload Routing 2026: Fable 5.1 vs Cache-Priced Loops">
@@ -24,12 +24,12 @@
       "headline": "AI Agent Workload Routing 2026: Fable 5.1 vs Cache-Priced Loops",
       "description": "Long AI agent runs cost far more than headline per-token prices suggest because agents re-read context on every step. Claude Fable 5.1's $0.25 cache reads vs DeepSeek V4 Pro cache-gap math, a workload-to-model decision table, and pricing-calculator guidance for AI agencies.",
       "datePublished": "2026-08-16",
-      "dateModified": "2026-09-02",
+      "dateModified": "2026-09-18",
       "author": {"@type": "Organization", "name": "Find AI Agency"},
       "publisher": {"@type": "Organization", "name": "Find AI Agency"},
       "mainEntityOfPage": "https://findaiagency.com/ai-agent-workload-routing",
       "image": "https://findaiagency.com/og-image.png",
-      "keywords": "AI agent cost, model cost routing, DeepSeek V4 Pro pricing, Claude Fable 5.1 price, Claude API pricing 2026, cache read pricing, prompt caching, AI agency model selection"
+      "keywords": "AI agent cost, model cost routing, DeepSeek V4 Pro pricing, Claude Fable 5.1 price, Claude API pricing 2026, cache read pricing, prompt caching, AI agency model selection, Siri model delegation, Model Manager Services, multi-model assistant architecture"
     },
     {
       "@type": "FAQPage",
@@ -99,14 +99,14 @@
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
     .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
     .table-wrap table { margin: 0; min-width: 100%; }
-    a, p, li, th, td { overflow-wrap: anywhere; }
+    a, p, li, th, td, code { overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
     <article>
         <header>
             <h1>AI Agent Workload Routing: When to Pay for Premium Models vs Cache-Priced Loops</h1>
-            <div class="meta"><span>Published August 16, 2026</span><span>Updated September 2, 2026 (Gemini 3.8 Flash)</span><span>By ABD Legacy LLC</span></div>
+            <div class="meta"><span>Published August 16, 2026</span><span>Updated September 18, 2026 (Siri model delegation)</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>AI pricing / model selection</span></div>
         </header>
 
@@ -114,6 +114,7 @@
 
         <p>This guide gives agencies a practical routing rule: <strong>pay premium prices for the high-value steps where quality decides the outcome, and run the routine loops on cache-priced models where the context is re-read every step.</strong> It uses the verified DeepSeek vs Fable 5 comparison from <a href="https://x.com/JulianGoldieSEO/status/2089064335717159410" rel="noopener">Julian Goldie's August 16, 2026 post</a>, updated for Anthropic's Sept 1 Fable 5.1 pricing, and it is built to feed directly into an agency pricing calculator.</p>
 
+        <blockquote><strong>Model update &mdash; September 18, 2026 (Siri model delegation):</strong> the model-routing decision now exists one layer up, inside the operating system. Everything on this page prices models <em>your</em> code picks; Apple's iOS 27 hooks let the platform vendor pick between models for the user instead, with the assistant keeping the interface. Two of those hooks &mdash; <strong>Model Delegation</strong> and <strong>Model Manager Services</strong> &mdash; and what they mean for a routing and pricing model are covered in <a href="#platform-level-model-routing">when the platform vendor does the routing</a> below. Neither is user-facing or open to third-party developers today.</blockquote>
         <blockquote><strong>Model update — September 2, 2026:</strong> Google released <a href="/gemini-3-8-flash-pricing-coding-agents">Gemini 3.8 Flash</a> — its third Flash in six weeks — and now recommends Flash for software engineering and autonomous agent workloads. The headline routing effect is a new floor on the coding/agent workhorse tier: $0.75/$3.75 per 1M input/output through December 31, 2026 (stepping to $1.50/$7.50), with Google reporting 3.8 Flash at the top of the DeepSWE v1.1 leaderboard at a fraction of the cost of larger frontier models. For the workload table below, the Google column gets a strict upgrade: route Google coding and agent work to the Flash tier by default, and do not price against an assumed Gemini Pro flagship — the release cadence says Flash, not Pro, is Google's workhorse for the rest of 2026.</blockquote>
 
         <h2>Why long agent runs ignore the headline price</h2>
@@ -188,6 +189,25 @@
             <li><strong>Keep a premium path for escalations.</strong> Even a cache-priced default workflow should fall back to the premium tier for security, architecture, and final review steps.</li>
         </ul>
 
+        <h2 id="platform-level-model-routing">When the platform vendor does the routing</h2>
+        <p>Every row in the decision table above assumes your agency chooses the model. In September 2026 Apple demonstrated the other arrangement: the platform vendor choosing, inside the operating system, with the assistant as the only interface the user ever sees. Code researcher <strong>pdfu</strong> posted two demonstrations on September 13, 2026 showing private hooks in iOS 27 and macOS Golden Gate, reported by MacRumors and CNET the following day. Each hook moves the routing decision to a place your cost model cannot reach &mdash; which changes not the table above, but which of its numbers you are able to quote.</p>
+        <p><strong>Model Delegation</strong> lets a third-party model register as a Siri extension in the same slot the built-in ChatGPT extension occupies. In the demonstration, the user asks Siri to &ldquo;Ask Claude&rdquo; to set a reminder, Claude interprets the natural-language request, and Siri creates the reminder. When a task needs an Apple system feature, control routes back to Siri's own execution layer. The mechanism requires a private entitlement, <code>com.apple.developer.model-delegation</code>, which Apple has not opened to third-party developers.</p>
+        <p><strong>Model Manager Services</strong> goes a layer deeper. An <code>Inference Providing</code> protocol lets an inference provider replace Apple's own server-side Siri model outright. In the second demonstration GPT-5.6 receives Apple's native Siri planner prompt and tool definitions, calls Siri tools, requests system actions and works with the results those tools return, including personal data &mdash; while Siri presents the answer in its own interface and voice. That session is logged in the model vendor's platform, not only in Apple's.</p>
+        <p><strong>Nothing here is switched on for users.</strong> The &ldquo;Ask&hellip;&rdquo; implementation supports only the ChatGPT extension in the macOS 27 Golden Gate Release Candidate, Claude is not user-selectable, no public entitlement exists, and Apple has announced neither mechanism. Read it as <em>infrastructure shipped, capability off</em>, not as a user-facing model picker.</p>
+        <div class="table-wrap"><table>
+            <thead>
+                <tr><th>Routing layer</th><th>Who picks the model</th><th>What it does to your cost model</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Your own orchestration</strong> (the routing above)</td><td>Your agency, per step</td><td>Fully priceable: cache read &times; hit share, cache miss &times; miss share, output &times; steps</td></tr>
+                <tr><td><strong>Model Delegation</strong> (extension)</td><td>The user, per ask</td><td>Not priceable: the entitlement is private and unopened, and execution still returns to the platform's own layer</td></tr>
+                <tr><td><strong>Model Manager Services</strong> (inference provider)</td><td>Platform configuration, not the user</td><td>The vendor prices the call: the model runs on the vendor's planner prompt and in the vendor's logs, not on your per-step cache line</td></tr>
+            </tbody>
+        </table></div>
+        <p><strong>Two consequences for the table above.</strong> First, a platform-routed step is a third tier you cannot price with the three price lines: you did not choose the model, you cannot see the cache-hit rate, and the prompt the model receives is the platform's planner prompt rather than your system prompt &mdash; so the cache-read arithmetic that dominates your own loops does not transfer to it. Second, delegation and replacement are different trust boundaries. An extension hands execution back to the platform's layer; an inference provider puts the third-party model in the data path, where it works with tool results that include personal data. Only one of the two moves your client's data into another vendor's logs.</p>
+        <p>That makes the OS-level layer a vendor-risk question before it is a cost question &mdash; the exposure <a href="/ai-vendor-risk-assessment">our AI vendor risk assessment framework</a> scores &mdash; and the full read on both mechanisms, the gate on the entitlement, and the four questions to bring to your next client proposal are in <a href="/siri-model-delegation-multi-model-architecture">Siri Model Delegation in iOS 27: Built, Not Switched On</a>.</p>
+        <p>The operating rule does not change; its scope does. Keep the model decision in your own layer while you still can, keep your step definitions provider-agnostic so a platform-level default cannot strand them, and re-check the routing table monthly &mdash; the same discipline the price movements above already forced on you.</p>
+
         <div class="cta">
             <p><strong>Price agent runs the way they actually run — cache reads included</strong></p>
             <a class="btn" href="/best-ai-agencies-for-small-business-2026" data-umami-event="click_to_directory">Browse Vetted AI Agencies →</a>
@@ -228,6 +248,8 @@
                 <li><a href="/how-much-does-an-ai-agency-cost-in-2026">How Much Does an AI Agency Cost in 2026?</a></li>
                 <li><a href="/grok-4-6-500k-context-agent-model">Grok 4.6 Ships: 500K-Context Model Matches GPT-5.6 Sol at 50%+ Lower Price</a></li>
                 <li><a href="/grok-bot-vs-claude-code">Grok Bot vs Claude Code (2026): Which AI Agent Should Agencies Use?</a></li>
+                <li><a href="/siri-model-delegation-multi-model-architecture">Siri Model Delegation in iOS 27: Built, Not Switched On</a></li>
+                <li><a href="/ai-vendor-risk-assessment">AI Vendor Risk Assessment After Opus 4.6's Guardrail Bypass</a></li>
             </ul>
         </div>
 
