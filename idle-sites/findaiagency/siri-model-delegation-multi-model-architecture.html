@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siri Model Delegation in iOS 27: Built, Not Switched On</title>
+    <meta name="description" content="iOS 27's private Siri hooks let a third-party model register as an extension or replace Apple's server-side model. What that means for an agency proposal.">
+    <meta name="keywords" content="Siri model delegation, Model Manager Services, multi-model assistant architecture, iOS 27 Siri extension, Apple Inference Providing protocol, AI vendor lock-in, AI agent liability, model choice configuration layer">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://findaiagency.com/siri-model-delegation-multi-model-architecture">
+    <meta property="og:title" content="Siri Model Delegation in iOS 27: Built, Not Switched On">
+    <meta property="og:description" content="iOS 27's private Siri hooks let a third-party model register as an extension or replace Apple's server-side model. What that means for an agency proposal.">
+    <meta property="og:url" content="https://findaiagency.com/siri-model-delegation-multi-model-architecture">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Find AI Agency">
+    <meta property="og:image" content="https://findaiagency.com/og-image.png">
+    <meta property="og:image:alt" content="Siri Model Delegation: Apple Built a Swappable Model Layer — and Kept the Switch">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Siri Model Delegation: Apple Built a Swappable Model Layer — and Kept the Switch",
+      "description": "iOS 27's private Siri hooks let a third-party model register as an extension or replace Apple's server-side model. What that means for an agency proposal.",
+      "datePublished": "2026-09-18",
+      "dateModified": "2026-09-18",
+      "author": {
+        "@type": "Organization",
+        "name": "Find AI Agency"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Find AI Agency"
+      },
+      "mainEntityOfPage": "https://findaiagency.com/siri-model-delegation-multi-model-architecture",
+      "image": "https://findaiagency.com/og-image.png",
+      "keywords": "Siri model delegation, Model Manager Services, multi-model assistant architecture, iOS 27 Siri extension, Apple Inference Providing protocol, AI vendor lock-in, AI agent liability, model choice configuration layer"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can you replace Siri with ChatGPT?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not as a user-facing setting today. In the macOS 27 Golden Gate release candidate the “Ask…” menu is limited to the ChatGPT extension, and no public entitlement lets another developer register a model there. The demos show the reverse: an inference provider replacing Apple's server-side model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Model Delegation in iOS 27?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It lets a third-party model register as a Siri extension through App Intents — the slot the built-in ChatGPT extension occupies. In the demonstrated build Claude interprets the request and hands the system action back, so Siri creates the reminder. It needs the private entitlement com.apple.developer.model-delegation, unopened by Apple."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Model Manager Services?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is the second mechanism: an Inference Providing protocol that lets an inference provider replace Apple's own server-side Siri model rather than answer one request inside it. In the demonstration GPT-5.6 Terra receives Apple's planner prompt and tool definitions, calls system tools and works with the personal data they return."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Siri model delegation available to third-party developers or in the EU?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No developer entitlement is open, and Apple has not announced either mechanism or said whether third-party developers will get access. Both founding reports describe the EU Digital Markets Act as the backdrop, in MacRumors's phrasing that it may have helped shape Apple's approach."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does multi-model assistant architecture mean for an agency stack?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It means the model choice becomes a configuration layer with an owner. Multi-model assistant architecture is the routing decision agencies already make on cost, moved into the assistant a client's staff use all day: a default model, a routing rule, a fallback, and a log saying which model answered."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7447174f-6224-427c-a9bc-00eb356236d6"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        code { background: #f4f4f8; padding: 1px 6px; border-radius: 4px; font-size: 0.92em; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        blockquote { margin: 24px 0; padding: 16px 24px; background: #f8f9ff; border-left: 4px solid #2563eb; border-radius: 0 8px 8px 0; font-style: italic; color: #444; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .cta { margin: 32px 0 8px; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; text-align: center; }
+        .cta a.btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .cta a.btn:hover { background: #1d4ed8; }
+        .faq-item { margin: 20px 0; padding: 20px; background: #f8f9ff; border-radius: 10px; }
+        .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        footer { margin-top: 40px; padding: 24px 0 0; text-align: center; font-size: 0.85rem; color: #888; border-top: 1px solid #eee; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.6rem; } }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 20px 0; }
+    .table-wrap table { margin: 0; min-width: 100%; }
+    a, p, li, th, td, h1, h2, h3 { overflow-wrap: anywhere; }
+    </style>
+</head>
+<body>
+    <article>
+        <header>
+            <h1>Siri Model Delegation: Apple Built a Swappable Model Layer — and Kept the Switch</h1>
+            <div class="meta"><span>Published September 18, 2026</span><span>Updated September 18, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="tagline"><span>AI platforms / model selection</span></div>
+        </header>
+        <p><strong>Apple shipped a swappable model layer inside Siri and left the switch off.</strong> That is your client's question, one layer down.</p>
+        <p>Two private hooks in iOS 27 and macOS 27 Golden Gate let a third-party model take Siri's place at two depths: one registers a model as a Siri extension and answers inside Siri's own surface, and the other replaces the server-side model behind Siri while Siri keeps its interface and voice.</p>
+        <p>At least ten published writeups already name both mechanisms. What none of them cover is the decision this creates for a client: switching cost, procurement language, and the questions worth asking now.</p>
+        <h2>What the iOS 27 code actually shows</h2>
+        <p>Code researcher <code>pdfu</code> posted two demonstrations on September 13, 2026; MacRumors and CNET reported them the next day, and iOS 27 was released on September 14, 2026.</p>
+        <strong>Hook one — Model Delegation.</strong> MacRumors's description is blunt: “One mechanism called Model Delegation allows Claude to appear as a Siri extension in the same way as the existing built-in ChatGPT extension.” The demo matters: the user asks Siri to “Ask Claude” to set a reminder, and “Claude then interprets the natural language reminder request and Siri subsequently creates the reminder.” Coverage files this under “Siri Claude model delegation”; the hook itself is model-agnostic. Claude also handled a request Siri cannot serve — creating a CSV file. The hook needs a private entitlement: “The mechanism requires Apple's private com.apple.developer.model-delegation entitlement”, which Apple has not opened.
+        <strong>Hook two — Model Manager Services.</strong> Here the platform swaps the model that answers everything. MacRumors's finding is the deeper one: “An inference provider in "Model Manager Services" apparently allows Apple's own server-side Siri model to be completely replaced by another model, such as GPT-5.6.” In the demo's data path, “GPT-5.6 receives Apple's native Siri planner prompt and tool definitions, allowing it to call Siri tools, request system actions, and work with the results those tools return, including personal data.” The second demo has GPT-5.6 Terra find emails, summarise them and message a contact through Messages; the answer still arrives in Siri's voice, and the session is logged in the model vendor's platform.
+        <p>Two labels, two depths. Delegation adds a model inside the assistant; replacement <em>becomes</em> the assistant's model for the request. Both are server-side: nothing published shows the on-device model being swapped.</p>
+        <h2>Delegation vs replacement: two different trust boundaries</h2>
+        <p>The two hooks collapse easily into one headline, but they are not the same risk: they move the trust boundary to different places.</p>
+        <strong>On the delegation path, Apple's execution layer stays in the middle.</strong> The third-party model interprets the request; when it needs a system action, “control routes back to Siri's own execution layer.” A reminder is still created by Siri.
+        <strong>On the replacement path, the third-party model is in the data path.</strong> It receives the planner prompt and tool definitions, calls system tools, and works with what they return, including personal data. Same interface, same voice, different log.
+        <div class="table-wrap"><table><thead><tr><th>Question</th><th>Model Delegation (extension)</th><th>Model Manager Services (inference provider)</th></tr></thead><tbody><tr><td>Who holds the execution layer</td><td>Siri — the system action runs through Apple's layer</td><td>The provider model reasons; Siri presents the result</td></tr><tr><td>What the third-party model sees</td><td>The request it was asked to interpret</td><td>Planner prompt, tool definitions, and tool results including personal data</td></tr></tbody></table></div>
+        <p>If you route workloads across models by cost, this is that decision moved up a layer: the routing table now sits in your client's operating system. Our <a href="/ai-agent-workload-routing">workload-to-model routing guide</a> covers the cost half; this is the platform half.</p>
+        <h2>What is live and what is not</h2>
+        <p>State the gap precisely: infrastructure shipped, capability off.</p>
+        <p>iClarified is unambiguous — “None of this is enabled for users yet.” MacRumors narrows it further: the “Ask…” menu “implementation”, and “Apple has not yet opened up the model delegation entitlement to third parties and it isn't front-facing to users” The outside analysis agrees from the framework side: “Apple hasn't opened Model Delegation or Model Manager Services to third-party developers” Apple has announced neither mechanism, and Apple, OpenAI and Anthropic had not responded to press requests as of September 14, 2026.</p>
+        <p>One independent developer published a working experimental implementation of the delegation path, and its own documentation is why not to over-read it: it requires macOS with security protections disabled, handles text only, and has no verified system-wide default.</p>
+        <p>So the honest 2026 answer: not by you, not yet, and not through any surface procurement can buy. What changed is that the architecture assumes the model is swappable.</p>
+        <h2>Why this is the same question your client asked last quarter</h2>
+        <p>Your client asked a version of this last quarter: which model should we build on, and what happens if we picked wrong. The standard answer keeps the workflow portable — versioned prompts, evals, a second provider kept warm. Siri model delegation is that answer inside a platform vendor's own product.</p>
+        <p>That is the reframing worth putting in front of a client: model choice is becoming a <em>configuration layer</em> rather than a <em>platform commitment</em> — cheaper to change and governable, but only if the abstraction exists in your client's stack, and today it exists in a leaked build instead.</p>
+        <p>The lock-in question moves with it. The interesting version is not which lab you picked, it is <strong>who owns the switch</strong>. If the platform chooses the assistant's model, the switching cost and the governance sit with the platform; if the client's stack chooses it, both sit with the client. Only one of those contracts can be priced.</p>
+        <p>Both founding reports describe the Digital Markets Act as the backdrop, and MacRumors's wording is careful: it “The European Union's Digital Markets Act may have helped shape Apple's approach here, as it requires Apple to give third parties effective access to iOS hardware and software features available to Apple's own services, and the European Commission has specifically said this principle extends to Siri.” Apple's approach. Apple has not said the DMA produced this design, and commenters asked why the capability is <em>not</em> available in the EU.</p>
+        <h2>Four questions for the next client proposal</h2>
+        <p>Four questions a client's procurement or legal reviewer would ask. None has a vendor-supplied answer today: ask them now and you are the agency that saw it coming.</p>
+        <ol><li><strong>Who holds the entitlement?</strong> Model Delegation is gated on a private entitlement Apple has not opened, so a delegated assistant is a platform capability rather than a vendor relationship you can contract.</li><li><strong>What leaves whose infrastructure?</strong> Delegation keeps the system action inside the platform assistant's own layer; replacement hands the third-party model the planner prompt, the tool definitions and the personal data the tools return. That is what a data-protection review asks.</li><li><strong>What is logged, and where can you read it?</strong> The replacement demo's session is visible in the model vendor's platform, not only in the device history. Can your logs distinguish <em>the assistant answered</em> from <em>a delegated model answered</em>? If not, you have no incident artefact, and the fix is a logging change, not a policy.</li><li><strong>What does the exit cost?</strong> Swapping a model behind an assistant is cheap for the platform and expensive for anyone whose workflows were built on the assistant's behaviour. Price the exit before the switch is offered.</li></ol>
+        <p>The last question is where our <a href="/ai-vendor-risk-assessment">AI vendor risk assessment</a> applies: a model that can be swapped out from under you is the same subject as a vendor whose behaviour changes on you — can I trust this vendor — with a different failure mode.</p>
+        <h2>Who is accountable when the OS hands the action back</h2>
+        <p>The output-ownership argument is already running in public. On Hacker News (226 points, 161 comment blocks, September 14, 2026) one commenter asked who users will blame when a non-Apple model's answers are garbage, and another drew the technical line: being able to swap the model in code is not the same as letting end users choose it. That is commentary, not a finding.</p>
+        <p>For an audit the useful framing is narrower than blame, because the two hooks produce two evidence trails. Delegation keeps the system action, and the record, in the platform assistant's own layer. Replacement left the planner prompt, the tool definitions and the tool-returned personal data with a third party, and the session is visible in that vendor's dashboard.</p>
+        <p>That is why “who is liable when a delegated AI agent acts” is, today, a question about artefacts rather than blame: which logs exist, whose consent state was recorded, and whether anyone can prove which model produced an answer the user read as Siri's. No court has addressed OS-level model delegation and the entitlement is unopened, so this quarter's deliverable is log readiness, not a policy. Our canonical treatment of accountability lives at <a href="https://mybusinessaiaudit.com/ai-agent-liability-checklist/">who is liable when your AI agent acts</a>; this page is the mechanism behind it.</p>
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+            <h3>Can you replace Siri with ChatGPT?</h3>
+            <p>Not as a user-facing setting today. In the macOS 27 Golden Gate release candidate the “Ask…” menu is limited to the ChatGPT extension, and no public entitlement lets another developer register a model there. The demos show the reverse: an inference provider replacing Apple's server-side model.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is Model Delegation in iOS 27?</h3>
+            <p>It lets a third-party model register as a Siri extension through App Intents — the slot the built-in ChatGPT extension occupies. In the demonstrated build Claude interprets the request and hands the system action back, so Siri creates the reminder. It needs the private entitlement com.apple.developer.model-delegation, unopened by Apple.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is Model Manager Services?</h3>
+            <p>It is the second mechanism: an Inference Providing protocol that lets an inference provider replace Apple's own server-side Siri model rather than answer one request inside it. In the demonstration GPT-5.6 Terra receives Apple's planner prompt and tool definitions, calls system tools and works with the personal data they return.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is Siri model delegation available to third-party developers or in the EU?</h3>
+            <p>No developer entitlement is open, and Apple has not announced either mechanism or said whether third-party developers will get access. Both founding reports describe the EU Digital Markets Act as the backdrop, in MacRumors's phrasing that it may have helped shape Apple's approach.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What does multi-model assistant architecture mean for an agency stack?</h3>
+            <p>It means the model choice becomes a configuration layer with an owner. Multi-model assistant architecture is the routing decision agencies already make on cost, moved into the assistant a client's staff use all day: a default model, a routing rule, a fallback, and a log saying which model answered.</p>
+        </div>
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="/ai-agent-workload-routing">AI Agent Workload Routing for Agencies</a></li>
+                <li><a href="/ai-vendor-risk-assessment">AI Vendor Risk Assessment Checklist</a></li>
+                <li><a href="/ai-agent-switching-costs">AI Agent Switching Costs</a></li>
+                <li><a href="/ai-vendor-outage-playbook">The AI Vendor Outage Playbook</a></li>
+            </ul>
+        </div>
+        <h2>Sources</h2>
+        <ul>
+            <li>MacRumors — “Apple's Siri AI Can Be Swapped Out for Claude, ChatGPT, Code Shows” (Tim Hardwick, September 14, 2026, 4:37 a.m. PDT): <a href="https://www.macrumors.com/2026/09/14/siri-can-be-swapped-out-for-chatgpt-claude/" rel="noopener">www.macrumors.com</a></li>
+            <li>CNET — “Siri AI Will Have Deep Integration With ChatGPT and Claude Models, Leaked Build Shows” (Tyler Graham, September 14, 2026, 5:35 p.m. ET): <a href="https://www.cnet.com/tech/services-and-software/siri-ai-will-have-deep-integration-with-chatgpt-and-claude-models-leaked-build-shows/" rel="noopener">www.cnet.com</a></li>
+            <li>iClarified — “Hidden iOS 27 Code Shows Siri AI Can Be Replaced by ChatGPT or Claude [Video]” (both demo videos; names the private entitlement): <a href="https://www.iclarified.com/102203/hidden-ios-27-code-shows-siri-ai-can-be-replaced-by-chatgpt-or-claude-video" rel="noopener">www.iclarified.com</a></li>
+            <li>pdfu (@itspdfu) — first demonstration post, September 13, 2026 (Claude / Model Delegation): <a href="https://x.com/itspdfu/status/2099122424209916015" rel="noopener">x.com</a></li>
+            <li>pdfu (@itspdfu) — second demonstration post, September 13, 2026 (GPT-5.6 Terra / Model Manager Services): <a href="https://x.com/itspdfu/status/2099122424914592012" rel="noopener">x.com</a></li>
+            <li>TLDR AI — September 15, 2026 newsletter, subject line leading with “Siri model swapping”: <a href="https://tldr.tech/ai/2026-09-15" rel="noopener">tldr.tech</a></li>
+            <li>explainx.ai — analysis of both mechanisms (September 14, 2026; source of the “control routes back to Siri” framing): <a href="https://www.explainx.ai/blog/apple-siri-model-delegation-claude-chatgpt-ios-27-2026" rel="noopener">www.explainx.ai</a></li>
+            <li>opoinstall.com — App Intents architecture analysis of the delegation path: <a href="https://www.opoinstall.com/blog/apple-tests-siri-model-delegation-app-intents" rel="noopener">www.opoinstall.com</a></li>
+            <li>byteiota — developer framing of the delegation entitlement: <a href="https://byteiota.com/ios27-siri-model-delegation/" rel="noopener">byteiota.com</a></li>
+            <li>GitHub — mpociot/claude-siri-ai (independent experimental implementation, with its own documented limits): <a href="https://github.com/mpociot/claude-siri-ai" rel="noopener">github.com</a></li>
+            <li>Hacker News — discussion thread, 226 points, 161 comments, September 14, 2026 (commentary only): <a href="https://news.ycombinator.com/item?id=49695409" rel="noopener">news.ycombinator.com</a></li>
+        </ul>
+        <p style="font-size:0.85rem;color:#666;">Accuracy note: this page describes private frameworks in iOS 27 and macOS 27 Golden Gate as reported September 13–15, 2026, from two demonstrations by code researcher pdfu. Neither mechanism is user-facing: the “Ask…” menu ships with the ChatGPT extension only in the release candidate, the entitlement com.apple.developer.model-delegation is private and unopened, and Apple has announced neither mechanism. The replacement findings concern Apple's server-side Siri model; nothing published shows the on-device model being swapped. The EU Digital Markets Act is described as backdrop, in MacRumors's wording, not as a confirmed cause. Details in shipping frameworks change without notice — re-verify before building a client proposal on them. Sources were fetched and checked on September 18, 2026.</p>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://findaiagency.com">Find AI Agency</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
