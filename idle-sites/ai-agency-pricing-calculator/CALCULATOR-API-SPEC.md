@@ -2,7 +2,7 @@
 
 **Site:** aiagencycalculator.com
 **Source asset:** `~/seo-pages/idle-sites/ai-agency-pricing-calculator/index.html`
-**Last updated:** 2026-09-10 (AI inference as a share of gross margin consumed — task t_9b19d6a2)
+**Last updated:** 2026-09-18 (Payment Rail Cost Estimator §15 spec added — task t_e9bb3df9; calculator code unchanged since 2026-09-15, task t_5de39b46)
 
 ---
 
@@ -1059,7 +1059,120 @@ The changelog entry in §HTML (`#routing-sources` Update log) needed `overflow-w
 own `<p>`: the `tests/parallel-agent-compute-verify.mjs` token is unbreakable and pushed 30px of
 horizontal overflow at a 320px viewport (measured before/after: 30px -> 0px).
 
+## 15. Payment Rail Cost Estimator (SPEC - NEW 2026-09-18; NOT YET IMPLEMENTED)
+
+Status: **specification only**. Written by kanban t_e9bb3df9 (content-ops) alongside the published
+rate page `/ai-agent-stablecoin-vs-credit-card-payment-processing-cost`. No code was added to any
+page by that card: this section is the build order for a follow-up implementation card.
+
+Purpose: price the **per-transaction cost of one payment rail** for an agent workload, from
+vendor-published rates only. It is the interactive counterpart of the article's static grid: the same
+arithmetic, driven by the reader's own ticket size.
+
+### 15.1 Host and shape
+
+- Preferred host: a section on `/ai-agent-stablecoin-vs-credit-card-payment-processing-cost`
+  (`#rail-estimator`), because that page owns the rate table and the staleness triggers.
+  Acceptable alternative: a second section on `ai-agent-api-cost-calculator.html`, which already
+  hosts per-token agent cost estimators. The implementing card decides; do not duplicate the
+  estimator on both.
+- Client-side only. No API keys, no server round-trip, no new dependency.
+
+### 15.2 Inputs
+
+| Field ID | Label | Type | Default | Constraint |
+|----------|-------|------|---------|------------|
+| `railKind` | Payment rail | select | `card` | `card` \| `card_intl` \| `instant_bank` \| `klarna` \| `stablecoin` \| `x402` |
+| `railTicket` | Average transaction value (AOV, $) | number | `0.32` | 0.01-10,000, step 0.01 |
+| `railTxns` | Transactions per month | number | `75000` | 1-10,000,000, step 1 |
+| `railPromo` | Apply the promotional stablecoin rate | checkbox | checked | only affects `stablecoin` |
+| `railIntl` | International card + currency conversion | checkbox | unchecked | only affects `card` (adds 1.5% + 1%) |
+
+Every rate is a vendor-published rate read on **2026-09-18** and the UI must print that date next to
+the selector. No input may default to an estimated rate; if a vendor publishes nothing (Cloudflare
+Wallets), the rail is **absent from the selector** rather than modelled with a guess.
+
+### 15.3 Model (Decimal arithmetic; rates are 2026-09-18 reads)
+
+```
+card          = 0.029  * AOV + 0.30
+card_intl     = (0.029 + 0.015 + 0.010) * AOV + 0.30
+instant_bank  = 0.026  * AOV + 0.30
+klarna        = 0.0599 * AOV + 0.30
+stablecoin    = (0.008 if promo else 0.010) * AOV          # 0.8% promo through 2027-01-01, 1.0% after
+x402_monthly  = max(0, txns - 1000) * 0.001                 # first 1,000 onchain txns/month are free
+x402_per_txn  = x402_monthly / txns                         # 0 when txns <= 1000
+monthly(rail) = per_txn(rail) * txns
+```
+
+Sources: card / stablecoin / instant-bank / Klarna rates from stripe.com/pricing; x402 free tier and
+$0.001 per onchain transaction from the CDP Facilitator documentation (verification is always free;
+the fee follows settlement, not requests). Both are quoted with their read date in the UI.
+
+### 15.4 Outputs (2-decimal money except where noted)
+
+| Result ID | Meaning |
+|-----------|---------|
+| `rRailMonthly` | Cost per month for the selected rail at the entered ticket and volume |
+| `rRailPerTxn` | Cost per transaction, 6 decimals |
+| `rRailPct` | Cost as a share of the ticket (this is the number that exposes the fixed-fee floor) |
+| `rRailNet` | AOV minus per-transaction cost; **negative** means the fee exceeds the sale |
+| `rRailBreakEven` | AOV at which the selected rail's fee equals the sale (`card`: `0.30 / (1 - 0.029)` = `$0.308960`; `x402`: n/a) |
+| `rRailCompare` | Side-by-side of the selected rail against stablecoin and x402 at the same ticket (the article's three-column grid, recomputed) |
+| `railNote` | Required note, verbatim from the article's guardrails (see 15.5) |
+
+### 15.5 Mandatory note text (shipped with every result)
+
+> Rates are vendor-published and re-read 18 September 2026. The 0.8% stablecoin rate is promotional
+> through 1 January 2027 and becomes 1.0% afterwards. Cloudflare Wallets are not payable today and no
+> fee schedule has been published, so they are not modelled here. On-ramp and off-ramp spread,
+> stablecoin treasury handling, reconciliation labour, transaction screening, gas volatility and the
+> loss of chargeback recourse on irreversible settlement are excluded. This is cost modelling, not
+> custody, tax or compliance advice.
+
+### 15.6 Guardrails (bind the implementation)
+
+1. The card rail is never rendered as a flat "3%" — it is `2.9% + 30c`, and the fixed 30c must be
+   visible as its own component in any breakdown.
+2. No sentence may describe stablecoin rails as free, zero-cost or near-zero end to end; the
+   merchant-acceptance rate is 0.8% (1.0% from 2027-01-01).
+3. Cloudflare Wallets may not appear as a priced rail. The availability sentence ("a reserved handle
+   does not yet let you send, receive, hold funds") belongs next to any mention.
+4. No volume, impression, traffic or ranking claim may be derived from the estimator.
+5. Zero/blank inputs must render a note, never `NaN`, `Infinity` or an empty result card.
+
+### 15.7 Acceptance tests for the implementing card
+
+- The published break-evens reproduce exactly: card break-even `$0.308960`, x402-vs-stablecoin
+  crossover `$0.125000`, and the card fee at a `$0.321443` ticket = `$0.309322` (96.23% of the sale).
+- The eight-point grid in the article (`$0.10, $0.32, $0.50, $1, $5, $20, $100, $500`) reproduces
+  cell-for-cell at the card / stablecoin / x402 settings.
+- The promo toggle moves the stablecoin row from 0.8% to 1.0% and nothing else.
+- The x402 rail is `$0.00` at 1,000 transactions/month and `$0.001 x (n - 1000)` above it.
+- Mock-DOM harness plus a browser harness at 320/360/390/414 px (no horizontal overflow), and the
+  house gate (`site_consistency.py`) at 0 errors.
+
+### 15.8 Staleness triggers for this estimator
+
+| trigger | what it invalidates |
+|---------|---------------------|
+| any change on stripe.com/pricing | every card / stablecoin / bank / Klarna constant and the break-evens |
+| 2027-01-01 | the 0.8% promo constant (becomes 1.0%) and `railPromo`'s meaning |
+| a change to the CDP free tier or the $0.001 price | the x402 branch and its crossover |
+| Cloudflare publishing a wallet fee schedule | the "not modelled" decision in 15.2 (revisit the selector) |
+
 ## Changelog
+
+- **2026-09-18** — **Payment Rail Cost Estimator SPEC added (not implemented)** (kanban
+  t_e9bb3df9, research leg t_6436b7a4 / angle t_5e432f9a). New §15 specs a client-side estimator
+  pricing one payment rail per transaction from vendor-published rates only (card 2.9% + 30c,
+  +1.5% international +1% FX, instant bank 2.6% + 30c, Klarna 5.99% + 30c, stablecoin 0.8% promo
+  then 1.0%, x402 $0.001 per onchain transaction above 1,000/month free), with the eight-point grid
+  and the break-evens (`$0.308960` card floor, `$0.125000` x402/stablecoin crossover) as its
+  acceptance tests. **No page code was changed by this card**; the same card published the article
+  that owns the rate table,
+  `/ai-agent-stablecoin-vs-credit-card-payment-processing-cost`. Cloudflare Wallets are excluded from
+  the selector by design: no published fee schedule and no ability to move funds yet.
 
 - **2026-09-15** — **Parallel Agent Compute Cost Estimator added** (kanban t_5de39b46; fact basis
   research brief t_6687dbf2 / `DOSSIER-cursor-projects-agency-pattern.md`, 24 sources, 51/51 verbatim
