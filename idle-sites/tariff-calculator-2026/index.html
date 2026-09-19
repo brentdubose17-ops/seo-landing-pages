@@ -266,7 +266,8 @@
         }
     </style>
     <style>
-        /* Importers: 'Will your IOR survive Sept 18?' checklist block (card t_2548e571).
+        /* Importers: IOR-survival-checklist block (card t_2548e571; post-deadline flip
+           t_f8163375 - see the FLIP note in the wiring block below).
            Scoped .ior-* classes only - no existing selector is redefined, and every
            row is a flex line with min-width:0 on the label so long block-reference
            text wraps instead of pushing the page sideways on phones (the defect
@@ -753,8 +754,8 @@
 </section>
 
 <section class="info" id="ior-survival-checklist">
-    <h2>&#9888;&#65039; Will your IOR survive Sept 18?</h2>
-    <p><strong>On Friday, September 18, 2026, CBP begins voiding importer-of-record (IOR) numbers.</strong> The Federal Register notice that sets the date (doc 2026-16911, published August 19, 2026, tied to Executive Order 14411) is explicit: <strong>"if CBP determines that the information provided on a CBP Form 5106 is inaccurate or incomplete, CBP will, as of September 18, 2026, immediately void the associated IOR number."</strong> CBP is verifying <em>the record it already holds</em> — not the copy in your file drawer — so a record that was accurate when it was filed is exposed if the underlying facts have moved on. None of the duties this calculator estimates can be paid at all if the IOR number on the entry is void.</p>
+    <h2>&#9888;&#65039; Your IOR is voidable since Sept 18, 2026 — is your record accurate?</h2>
+    <p><strong>As of Friday, September 18, 2026, CBP voids importer-of-record (IOR) numbers whose Form 5106 information is inaccurate or incomplete.</strong> The Federal Register notice that sets the date (doc 2026-16911, published August 19, 2026, tied to Executive Order 14411) is explicit: <strong>"if CBP determines that the information provided on a CBP Form 5106 is inaccurate or incomplete, CBP will, as of September 18, 2026, immediately void the associated IOR number."</strong> CBP is verifying <em>the record it already holds</em> — not the copy in your file drawer — so a record that was accurate when it was filed is exposed if the underlying facts have moved on. None of the duties this calculator estimates can be paid at all if the IOR number on the entry is void.</p>
 
     <div class="ior-check">
         <h3>Tick each element CBP holds for your IOR</h3>
@@ -767,10 +768,10 @@
         </ul>
         <div class="ior-verdict warn" id="iorVerdict" role="status" aria-live="polite">
             <span class="ior-count" id="iorVerdictCount">0 of 4 verified</span>
-            <span id="iorVerdictText">CBP will immediately void the associated IOR number as of September 18, 2026 if it determines the Form 5106 information is inaccurate or incomplete.</span>
+            <span id="iorVerdictText">As of September 18, 2026, CBP voids the associated IOR number immediately if it determines that the Form 5106 information is inaccurate or incomplete.</span>
         </div>
         <p class="ior-cta"><strong>Full checklist and the voided-IOR procedure:</strong> <a href="cbp-ior-void-form-5106-september-18.html">CBP void IOR numbers Sept 18 — Form 5106 update 2026: the 10-item pre-deadline checklist, the two re-establishment routes, and what to do if a number is already voided</a>.</p>
-        <p class="ior-caption">Checked against the Federal Register notice (doc 2026-16911, 91 FR 53627), CBP's Create/Update Importer Identity Form (CBP Form 5106) and CBP's Voided Importer Record FAQs. Updated September 15, 2026. Estimates and deadlines only — confirm your own record with a licensed customs broker; this is not legal advice.</p>
+        <p class="ior-caption">Checked against the Federal Register notice (doc 2026-16911, 91 FR 53627), CBP's Create/Update Importer Identity Form (CBP Form 5106) and CBP's Voided Importer Record FAQs. Updated September 19, 2026. Estimates and deadlines only — confirm your own record with a licensed customs broker; this is not legal advice.</p>
     </div>
 </section>
 
@@ -2556,14 +2557,48 @@ BLOG_ARTICLES.forEach(function (art) {
 </script>
 
 <script>
-/* 'Will your IOR survive Sept 18?' checklist (card t_2548e571).
+/* ior-survival-checklist wiring (kanban t_2548e571; post-deadline flip t_f8163375).
    Live-updating verdict: 0-3 checked -> the void consequence copy; 4 checked ->
-   the positioned-but-re-verify copy. Text lives in constants here so the DOM
-   harness can assert the same strings the page ships. */
+   the record-check copy. Text lives in constants here so the DOM harness can
+   assert the same strings the page ships.
+
+   POST-DEADLINE FLIP (applied 2026-09-19 by t_f8163375): the Fri Sept 18, 2026
+   CBP Form 5106 / IOR-voiding deadline has passed, so every surface of this
+   section now reads IN FORCE rather than prospective - the h2, the opening
+   clause of the paragraph, the static verdict placeholder, and BOTH verdict
+   strings. Flips applied:
+     h2         "Will your IOR survive Sept 18?" -> "Your IOR is voidable since
+                Sept 18, 2026 - is your record accurate?"
+     opening    "On Friday, September 18, 2026, CBP begins voiding ..." -> "As of
+                Friday, September 18, 2026, CBP voids ..."
+     at_risk    "CBP will immediately void the associated IOR number as of
+                September 18, 2026" -> "As of September 18, 2026, CBP voids the
+                associated IOR number immediately"
+     positioned "You are positioned for September 18 - now re-verify all four
+                before Friday." -> "All four elements match your own file - the
+                open question is whether they match the record CBP holds."
+                (re-dating it to a NEW future date was rejected on purpose: the
+                date has passed, so being positioned now means "verifiable
+                against the record CBP holds")
+   Also flipped: the stale at_risk tail "an update filed on September 17 will not
+   be reflected by September 18" (impossible once the date passed) -> "a
+   correction filed today does not reach the record CBP checks for several
+   business days"; and the block caption "Updated September 15, 2026" ->
+   "Updated September 19, 2026" (t_56b4971e left that caption alone because the
+   block's content had not changed - it has now).
+   Kept VERBATIM and deliberately NOT re-dated: the four checkboxes, the verdict
+   switch in both directions, the Federal Register quote inside the paragraph
+   ("CBP will, as of September 18, 2026, immediately void ..." - that describes
+   what the agency wrote, not a claim about the future), the corrected fact base
+   (invalid for any purpose / no pre-void notice / no stated cure period / trade
+   counsel GDLSK Sept 3 2026 attribution / 2 business days to activate + 5 to
+   update / 5 business days to process a reinstatement), the CTA href, and the
+   stale-label exemption on the row above (t_56b4971e) plus the flipped post
+   (t_3e502ceb). */
 (function () {
     var BOX_IDS = ['iorBox1', 'iorBox2', 'iorBox3', 'iorBox4'];
-    var UNCHECKED_HTML = '<strong>CBP will immediately void the associated IOR number as of September 18, 2026</strong> if it determines that the Form 5106 information is inaccurate or incomplete. A voided number is <strong>"invalid for any purpose, including entering imported merchandise into the United States"</strong> — an entry cannot be made under it, and trade counsel (GDLSK, September 3, 2026) reads that as disrupting shipments until the number is reestablished. The written notice comes <em>with</em> the action, not before it: the notice contains no pre-void notice, no response window and no stated cure period. File corrections now — CBP publishes roughly 2 business days to activate a new IOR and 5 business days to update an existing one, so an update filed on September 17 will not be reflected by September 18.';
-    var CHECKED_HTML = '<strong>You are positioned for September 18 — now re-verify all four before Friday.</strong> A tick here is a statement about the facts, not about the record: CBP verifies what it already holds, so confirm each element against the record a customs broker can read in ACE rather than your own file copy. Any of these moving on — a new address, a new EIN, a switched inbox — re-opens the exposure. If a number is voided anyway, CBP&rsquo;s voided-importer-record route publishes <strong>5 business days</strong> to process a reinstatement application.';
+    var UNCHECKED_HTML = '<strong>As of September 18, 2026, CBP voids the associated IOR number immediately</strong> if it determines that the Form 5106 information is inaccurate or incomplete. A voided number is <strong>"invalid for any purpose, including entering imported merchandise into the United States"</strong> — an entry cannot be made under it, and trade counsel (GDLSK, September 3, 2026) reads that as disrupting shipments until the number is reestablished. The written notice comes <em>with</em> the action, not before it: the notice contains no pre-void notice, no response window and no stated cure period. File corrections now — CBP publishes roughly 2 business days to activate a new IOR and 5 business days to update an existing one, so a correction filed today does not reach the record CBP checks for several business days.';
+    var CHECKED_HTML = '<strong>All four elements match your own file — the open question is whether they match the record CBP holds.</strong> A tick here is a statement about the facts, not about the record: CBP verifies what it already holds, so confirm each element against the record a customs broker can read in ACE rather than your own file copy. Any of these moving on — a new address, a new EIN, a switched inbox — re-opens the exposure at any time, because since September 18, 2026 CBP voids on a determination about the record it holds. If a number is voided anyway, CBP&rsquo;s voided-importer-record route publishes <strong>5 business days</strong> to process a reinstatement application.';
 
     function iorChecklistEls() {
         var boxes = [], i;
