@@ -2,6 +2,22 @@
 
 All notable changes to the calculator asset (tariffcalculator2026.com) are documented here.
 
+## 2026-09-19 — the two live FMCSA status pages join the /news/ hub, and the pair is made mutual (kanban t_ded4d40b)
+
+- **Distribution backfill, no new URL.** `/fmcsa-motus-phishing-sites-biennial-update-pause`
+  (published 2026-09-15) and `/non-domiciled-cdl-court-fight-2026` (published 2026-09-16) were live,
+  in `sitemap.xml` and in `llms.txt`, but absent from `/news/` and effectively unlinked: the CDL
+  page's only inbound internal link was the Motus page, and the Motus page had none.
+- **Shipped:** two `<div class="feed-item">` rows at the top of the hub's existing
+  `Earlier advisories & explainers` feed, newest-first (CDL Sept 16, then Motus Sept 15), tag
+  `Trucking` (an existing value), anchor text = each page's own `<title>`, desc = each page's own
+  meta description. No new section type, no new tag, no new URL.
+- **Reciprocal + entry point:** the Motus advisory added to the `Related:` line of the CDL page
+  (making the pair mutual — it was one-way, Motus -> CDL) and to the `Related:` line of
+  `/canada-tariff-trucking-freight-impact`, so the pair has a non-hub entry point.
+- **Not touched:** `sitemap.xml` (owned by t_43315060 / t_290898c5), `llms.txt`
+  (publisher-regenerated), and the long-standing cosmetic FAQ quote-character warning on the Motus page.
+
 ## 2026-09-19 — /news/ gains the dated H.R. 5334 enactment advisory: one new "Client Advisory" section at the top of the advisory hub, linking the corrected authority hub (kanban t_655573c4)
 
 - **What shipped:** the last distribution surface for the H.R. 5334 event. `/news/` — the site's dated advisory hub — measured **37,819 B / HTTP 200 / 0 occurrences of `5334`** at 02:47 ET, because the enactment had landed on the authority hub (`t_26b5a4dd`) and the 11 sibling pages (`t_da62362c`) but never on the hub's own news surface. One new `<div class="advisory">` section now sits **above the current top entry** (Canada 15/25/50%), in the house shape: tag + status chip, H2 `Client Advisory: H.R. 5334 Signed Into Law — Up to 500% Duty Authority on Russian Goods, Due Within 30 Days of Enactment`, a `What changed` alert, six `What importers should know now` bullets, a `Key dates` list, a closing CTA and a six-item `Sources` block with the re-verification note. **No new URL** — `/news/` is already in `sitemap.xml` and `llms.txt`, so nothing there needed touching. The section links the corrected hub three times, including the alert's inline pointer.
