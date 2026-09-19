@@ -95,7 +95,16 @@
 #                          the FAIL and names the revert path LAST. Do not revert
 #                          before running it (card t_616632d8).
 #   --keep-stage           Keep the staging dir and print its path.
-#   --log=FILE             Audit log (default ~/.hermes/logs/idle-site-deploys.log)
+#   --log=FILE             Audit log of THIS front end
+#                          (default ~/.hermes/logs/idle-site-deploys.log)
+#   --log-dir=DIR          Passed through to the publisher as --log-dir: the
+#                          publisher's own event log and manifest are written into
+#                          DIR instead of ~/.hermes/scripts/logs (card t_120d3c85).
+#                          For harnesses that drive this REAL front end and must
+#                          read the events/manifest of their own run instead of a
+#                          line window of the shared production log. Absent = the
+#                          default path, and that default is asserted by
+#                          tests/t_d5f7f382/test_publisher_regression.py.
 #   -h | --help
 #
 # EXIT CODES  0 ok · 1 gate refusal / deploy failure / live mismatch · 2 usage error
@@ -116,6 +125,12 @@ set -uo pipefail
 PUBLISHER="$HOME/.hermes/scripts/publish-idle-site.py"
 IDLE_DIR="$HOME/seo-pages/idle-sites"
 LOG_DEFAULT="$HOME/.hermes/logs/idle-site-deploys.log"
+# Where the PUBLISHER keeps its event log + manifests. Overridable with --log-dir
+# for a harness (card t_120d3c85); the default is what production uses and is
+# byte-identical to before that card.
+PUB_LOG_DIR_DEFAULT="$HOME/.hermes/scripts/logs"
+PUB_LOG_DIR="$PUB_LOG_DIR_DEFAULT"
+PUB_LOG_DIR_SET=0
 TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
 die() { echo "ERROR: $*" >&2; exit 2; }
@@ -151,6 +166,10 @@ while [ $# -gt 0 ]; do
     --branch=*)        BRANCH="${1#--branch=}" ;;
     --base-url=*)      BASE_URL="${1#--base-url=}" ;;
     --log=*)           LOG="${1#--log=}" ;;
+    --log-dir=*)       PUB_LOG_DIR="${1#--log-dir=}"; PUB_LOG_DIR_SET=1
+                       [ -n "$PUB_LOG_DIR" ] || die "--log-dir= needs a directory" ;;
+    --log-dir)         shift; PUB_LOG_DIR="${1:-}"; PUB_LOG_DIR_SET=1
+                       [ -n "$PUB_LOG_DIR" ] || die "--log-dir needs a directory" ;;
     --no-live-check)   LIVE_CHECK=0 ;;
     --strict-redirects) STRICT_REDIRECTS=1 ;;
     --strict-include)  STRICT_INCLUDE=1 ;;
@@ -203,6 +222,9 @@ done
 [ "$STRICT_INCLUDE" = 1 ] && ARGS+=(--strict-include)
 [ "$STRICT_DIRTY" = 1 ]   && ARGS+=(--strict-dirty)
 [ "$KEEP_STAGE" = 1 ] && ARGS+=(--keep-staging)
+# card t_120d3c85: only forwarded when the caller asked for it, so an ordinary
+# production invocation's argv is byte-identical to what it was before the seam.
+[ "$PUB_LOG_DIR_SET" = 1 ] && ARGS+=(--log-dir "$PUB_LOG_DIR")
 
 # --- undeclared dirty files: allow-dirty ships, everything else is held at HEAD ---------
 dirty_rows="$(git -C "$REPO" status --porcelain -uall -- "$SITE_REL" 2>/dev/null)"
@@ -287,6 +309,6 @@ case "$rc" in
      log_line "DELEGATED-FAIL site=$SITE_KEY branch=$BRANCH project=${PROJECT:-$SITE_KEY} declared=$(printf '%s,' "${DECLARED[@]}") rc=$rc err=${err:-$(tail -2 <<< "$out" | tr '\n' ' ')}" ;;
 esac
 echo
-echo "   audit: $LOG   |   publisher log: ~/.hermes/scripts/logs/publish-idle-site.log"
-echo "          manifest: ~/.hermes/scripts/logs/publish-manifest-$SITE_KEY.json"
+echo "   audit: $LOG   |   publisher log: $PUB_LOG_DIR/publish-idle-site.log"
+echo "          manifest: $PUB_LOG_DIR/publish-manifest-$SITE_KEY.json"
 exit "$rc"
