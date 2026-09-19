@@ -1059,11 +1059,21 @@ The changelog entry in §HTML (`#routing-sources` Update log) needed `overflow-w
 own `<p>`: the `tests/parallel-agent-compute-verify.mjs` token is unbreakable and pushed 30px of
 horizontal overflow at a 320px viewport (measured before/after: 30px -> 0px).
 
-## 15. Payment Rail Cost Estimator (SPEC - NEW 2026-09-18; NOT YET IMPLEMENTED)
+## 15. Payment Rail Cost Estimator (SPEC 2026-09-18; IMPLEMENTED 2026-09-19)
 
-Status: **specification only**. Written by kanban t_e9bb3df9 (content-ops) alongside the published
-rate page `/ai-agent-stablecoin-vs-credit-card-payment-processing-cost`. No code was added to any
-page by that card: this section is the build order for a follow-up implementation card.
+Status: **implemented 2026-09-19** by kanban t_3cd51b47 (content-ops). Written by kanban t_e9bb3df9
+(content-ops) alongside the published rate page
+`/ai-agent-stablecoin-vs-credit-card-payment-processing-cost`; that card added no page code, and this
+section was its build order for the follow-up card. The implementation ships as the `#rail-estimator`
+section on that page (§15.1's preferred host; page 32,115 -> 57,805 B, commit `820b20b`, deploy
+`92912f93-1a58-430a-aebd-9546fd442c6f`), with `tests/rail-estimator-verify.mjs` (84 assertions, 0
+failed) and `tests/rail-estimator-browser-verify.py` (185 assertions, 0 failed) covering §15.7. Two
+points the build settled that this section left open are recorded here: §15.4's `rRailCompare` grid is
+priced at the article's own x402 volume — the published `$0.0009` cell is
+`$0.001 x (10,000 - 1,000) / 10,000`, i.e. **10,000** onchain transactions a month, not the `railTxns`
+default of 75,000, which would render `$0.0010` and move every share column — and money is carried as
+integer micro-dollars with rates in parts-per-100,000, so the published figures are exact rather than
+float approximations.
 
 Purpose: price the **per-transaction cost of one payment rail** for an agent workload, from
 vendor-published rates only. It is the interactive counterpart of the article's static grid: the same
@@ -1162,6 +1172,23 @@ the fee follows settlement, not requests). Both are quoted with their read date 
 | Cloudflare publishing a wallet fee schedule | the "not modelled" decision in 15.2 (revisit the selector) |
 
 ## Changelog
+
+- **2026-09-19** — **Payment Rail Cost Estimator IMPLEMENTED** (kanban t_3cd51b47, spec §15). The
+  estimator is live as `#rail-estimator` on
+  `/ai-agent-stablecoin-vs-credit-card-payment-processing-cost` — §15.1's preferred host, **not**
+  duplicated on `ai-agent-api-cost-calculator.html`. Page 32,115 → **57,805 B**, commit `820b20b`,
+  deploy `92912f93-1a58-430a-aebd-9546fd442c6f`. Three pure insertions into the page's own shell
+  (a `<style>` addition, the section, one `<script>`); no existing table, FAQ pair, rate string or
+  selector was edited. §15.7 verified in full: `tests/rail-estimator-verify.mjs` **84 assertions / 0
+  failed** against the shipped source in a mock DOM (the three published break-evens, the 64-cell
+  eight-point grid reproduced cell-for-cell, the promo toggle moving the 16 stablecoin cells and
+  nothing else, the x402 tiers, the zero/blank note paths, the fixed 30¢ as its own component, the
+  §15.5 note verbatim) and `tests/rail-estimator-browser-verify.py` **185 assertions / 0 failed** in
+  Chromium at 1280×900 / 414×896 / 390×844 / 360×800 / 320×800 against the live URL, no horizontal
+  overflow. `site_consistency.py` on the page: **1 checked / 0 errors / 0 warnings**. One
+  specification question the build had to settle is recorded in §15's status note: the eight-point
+  grid's x402 column is priced at **10,000** onchain transactions a month (the volume behind the
+  article's own `$0.0009` cell), not the `railTxns` default of 75,000.
 
 - **2026-09-18** — **Payment Rail Cost Estimator SPEC added (not implemented)** (kanban
   t_e9bb3df9, research leg t_6436b7a4 / angle t_5e432f9a). New §15 specs a client-side estimator
