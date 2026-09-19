@@ -31,7 +31,7 @@
       "headline": "AI Agent Payment Costs: Stablecoin Rails vs 2.9% + 30¢ Card Fees",
       "description": "Stripe charges 2.9% + 30¢ on cards and 0.8% on stablecoins; an x402 settlement costs $0.001. The per-transaction math, and where each rail loses money.",
       "datePublished": "2026-09-18",
-      "dateModified": "2026-09-18",
+      "dateModified": "2026-09-19",
       "author": {
         "@type": "Organization",
         "name": "ABD Legacy LLC",
@@ -76,7 +76,7 @@
           "measurementTechnique": "derived: 0.30 / (1 - 0.029)"
         }
       ],
-      "wordCount": 2139
+      "wordCount": 2721
     },
     {
       "@type": "FAQPage",
@@ -187,13 +187,42 @@
         a, p, li, code, th, td { overflow-wrap: anywhere; }
         div.alert { overflow-wrap: break-word; }
         @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } table { font-size: 0.82rem; } th, td { padding: 8px 6px; } }
+        /* Payment rail cost estimator — kanban t_3cd51b47, 2026-09-19.
+           Additive only: no existing selector above is redefined. */
+        .calc { background: #f8f9ff; border: 1px solid #e8e8f0; border-radius: 12px; padding: 24px; margin: 24px 0; }
+        .calc h2 { border-bottom: none; margin: 0 0 12px; padding: 0; font-size: 1.35rem; }
+        .calc p.lede { font-size: 0.95rem; color: #555; margin-bottom: 18px; }
+        .calc .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
+        .calc .field { display: flex; flex-direction: column; min-width: 0; }
+        .calc .field.full { grid-column: 1 / -1; }
+        .calc label { font-size: 0.85rem; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; overflow-wrap: break-word; }
+        .calc label .hint { font-weight: 400; color: #777; }
+        .calc input[type="number"], .calc select { padding: 8px 10px; border: 1px solid #d0d5e0; border-radius: 6px; font-size: 0.95rem; background: #fff; color: #1a1a2e; width: 100%; max-width: 100%; }
+        .calc .checks-row { display: flex; flex-direction: column; gap: 10px; }
+        .calc .checks-row label { display: flex; align-items: flex-start; gap: 8px; font-weight: 400; font-size: 0.92rem; margin-bottom: 0; }
+        .calc .checks-row label .lbl { min-width: 0; overflow-wrap: break-word; }
+        .calc .checks-row input[type="checkbox"] { accent-color: #2563eb; margin-top: 5px; flex: 0 0 auto; }
+        .calc .results { margin-top: 20px; background: #fff; border: 1px solid #e8e8f0; border-radius: 10px; padding: 20px; }
+        .calc .results .row { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px solid #f0f0f5; font-size: 0.98rem; }
+        .calc .results .row:last-child { border-bottom: none; }
+        .calc .results .row .k { color: #555; min-width: 0; }
+        .calc .results .row .v { font-weight: 600; color: #111; text-align: right; }
+        .calc .results .row.total .v { color: #2563eb; font-size: 1.15rem; }
+        .calc .results .row.zero { color: #9a3412; font-size: 0.92rem; }
+        .calc .compare { margin-top: 22px; }
+        .calc .compare table { font-size: 0.88rem; }
+        .calc .note-block { margin-top: 20px; padding: 16px 18px; background: #fff7ed; border: 1px solid #fdba74; border-left: 4px solid #f97316; border-radius: 0 8px 8px 0; }
+        .calc .note-block p { margin: 0 0 10px; font-size: 0.88rem; color: #7c2d12; }
+        .calc .note-block p:last-child { margin-bottom: 0; }
+        .calc p#rRailCrossover { font-size: 0.92rem; color: #555; margin: 18px 0 0; }
+        @media (max-width: 600px) { .calc { padding: 18px 14px; } .calc .grid { grid-template-columns: 1fr; } .calc .results { padding: 16px 12px; } .calc .results .row { font-size: 0.92rem; gap: 10px; } .calc .results .row .v { text-align: right; } }
     </style>
 </head>
 <body>
     <article>
         <header>
             <h1>AI Agent Payment Costs: Stablecoin Rails vs 2.9% + 30¢ Card Fees</h1>
-            <div class="meta"><span>Published September 18, 2026</span><span>Updated September 18, 2026</span><span>By ABD Legacy LLC</span></div>
+            <div class="meta"><span>Published September 18, 2026</span><span>Updated September 19, 2026</span><span>By ABD Legacy LLC</span></div>
             <div class="tagline"><span>Stablecoin vs credit card fees for AI agents</span> <span>Agent payment processing cost</span> <span>x402 transaction fees</span> <span>Stripe stablecoin fees</span></div>
         </header>
 
@@ -246,6 +275,85 @@
 </table></div>
 
         <p>Three published windows give three different average tickets, so none is &ldquo;the&rdquo; industry average: the facilitator's &ldquo;more than 100 million transactions and $28 million in payment volume&rdquo; is a lifetime upper bound of $0.280000 [5]; the 30-day counter implies $0.321443 [4]; a third-party study of the same network counted $52.7M across 198.9M settlements, a $0.265 ticket [9]. Ticket size decides whether the fee is a cost or a loss; <a href="/ai-agent-cost-blowups">AI agent cost blowups</a> covers uncapped agent spending.</p>
+
+        <p>The table above is static. The estimator below runs the same arithmetic from your own ticket and volume, and carries the fixed component as its own line, because on a sub-dollar ticket that is the component that decides the outcome.</p>
+
+        <div class="calc" id="rail-estimator">
+            <h2>Payment rail cost estimator</h2>
+            <p class="lede">Six published rails, one ticket, your volume. Every rate below is a vendor-published rate read on <strong>18 September 2026</strong>; nothing is estimated, and a rail with no published price is absent from the selector rather than modelled with a guess.</p>
+            <div class="grid">
+                <div class="field full">
+                    <label for="railKind">Payment rail <span class="hint">(rates read 18 September 2026)</span></label>
+                    <select id="railKind">
+                        <option value="card" selected>Card (domestic) &mdash; 2.9% + 30&cent;</option>
+                        <option value="card_intl">Card (international + FX) &mdash; 2.9% + 30&cent; + 1.5% + 1%</option>
+                        <option value="instant_bank">Instant bank payments &mdash; 2.6% + 30&cent;</option>
+                        <option value="klarna">Klarna &mdash; 5.99% + 30&cent;</option>
+                        <option value="stablecoin">Stripe stablecoin acceptance &mdash; 0.8% promotional, 1.0% from 2027</option>
+                        <option value="x402">x402 settlement, hosted CDP facilitator &mdash; $0.001 per onchain transaction</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="railTicket">Average transaction value (AOV, $) <span class="hint">(0.01&ndash;10,000)</span></label>
+                    <input type="number" id="railTicket" value="0.32" min="0.01" max="10000" step="0.01">
+                </div>
+                <div class="field">
+                    <label for="railTxns">Transactions per month <span class="hint">(1&ndash;10,000,000)</span></label>
+                    <input type="number" id="railTxns" value="75000" min="1" max="10000000" step="1">
+                </div>
+                <div class="field full checks">
+                    <div class="checks-row">
+                        <label for="railPromo"><input type="checkbox" id="railPromo" checked> <span class="lbl">Apply the promotional stablecoin rate <span class="hint">(0.8% through 1 January 2027; unchecked prices the 1.0% that applies from 2 January 2027)</span></span></label>
+                        <label for="railIntl"><input type="checkbox" id="railIntl"> <span class="lbl">International card + currency conversion <span class="hint">(adds 1.5% and 1% to the card rail only)</span></span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results" id="rail-results">
+                <div class="row total"><span class="k">Cost per month &mdash; <span id="rRailName">Card (domestic)</span></span><span class="v" id="rRailMonthly">$23,196.00</span></div>
+                <div class="row"><span class="k">Cost per transaction</span><span class="v" id="rRailPerTxn">$0.309280</span></div>
+                <div class="row"><span class="k">Share of the ticket</span><span class="v" id="rRailPct">96.65%</span></div>
+                <div class="row"><span class="k">Net kept per sale (AOV &minus; fee)</span><span class="v" id="rRailNet">$0.01</span></div>
+                <div class="row"><span class="k">Break-even AOV (fee equals the whole sale)</span><span class="v" id="rRailBreakEven">$0.308960</span></div>
+                <div class="row zero" style="display:none;"><span class="k" id="railZeroNote">&nbsp;</span></div>
+            </div>
+
+            <div class="table-wrap compare">
+                <table>
+                    <caption id="railBreakdownCaption">The selected rail, split into its published components on a $0.32 ticket. The fixed component is carried separately from the percentage, because it does not scale with the ticket.</caption>
+                    <thead><tr><th>Component</th><th>Published rate</th><th>On a $0.32 ticket</th></tr></thead>
+                    <tbody id="railBreakdownBody">
+                        <tr><td>Percentage component</td><td>2.9%</td><td>$0.009280</td></tr>
+                        <tr><td>Fixed component per successful transaction</td><td>30&cent;</td><td>$0.300000</td></tr>
+                        <tr><td><strong>Total per transaction</strong></td><td>2.9% + 30&cent;</td><td><strong>$0.309280</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-wrap compare">
+                <table>
+                    <caption id="railCompareCaption">The article's eight-point grid, recomputed at the published rates. The x402 column is priced at 10,000 onchain transactions a month &mdash; $0.0009 each &mdash; which is the volume behind the article's own x402 row; the x402 branch of the result card above uses your transaction count.</caption>
+                    <thead><tr><th>Ticket (AOV)</th><th id="railCmpRailHead">Card fee</th><th id="railCmpRailShareHead">Card, share of sale</th><th id="railCmpStableHead">Stablecoin 0.8%</th><th id="railCmpStableShareHead">Stablecoin, share</th><th>x402 + CDP</th><th>x402, share</th><th id="railCmpNetHead">Card: net kept</th></tr></thead>
+                    <tbody id="railCompareBody">
+                        <tr><td>$0.10</td><td>$0.3029</td><td>302.90%</td><td>$0.0008</td><td>0.80%</td><td>$0.0009</td><td>0.90%</td><td>$-0.2029</td></tr>
+                        <tr><td>$0.32</td><td>$0.3093</td><td>96.65%</td><td>$0.0026</td><td>0.80%</td><td>$0.0009</td><td>0.28%</td><td>$0.0107</td></tr>
+                        <tr><td>$0.50</td><td>$0.3145</td><td>62.90%</td><td>$0.0040</td><td>0.80%</td><td>$0.0009</td><td>0.18%</td><td>$0.1855</td></tr>
+                        <tr><td>$1.00</td><td>$0.3290</td><td>32.90%</td><td>$0.0080</td><td>0.80%</td><td>$0.0009</td><td>0.09%</td><td>$0.6710</td></tr>
+                        <tr><td>$5.00</td><td>$0.4450</td><td>8.90%</td><td>$0.0400</td><td>0.80%</td><td>$0.0009</td><td>0.02%</td><td>$4.5550</td></tr>
+                        <tr><td>$20.00</td><td>$0.8800</td><td>4.40%</td><td>$0.1600</td><td>0.80%</td><td>$0.0009</td><td>0.00%</td><td>$19.1200</td></tr>
+                        <tr><td>$100.00</td><td>$3.2000</td><td>3.20%</td><td>$0.8000</td><td>0.80%</td><td>$0.0009</td><td>0.00%</td><td>$96.8000</td></tr>
+                        <tr><td>$500.00</td><td>$14.8000</td><td>2.96%</td><td>$4.0000</td><td>0.80%</td><td>$0.0009</td><td>0.00%</td><td>$485.2000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="rRailCrossover">The flat rail crosses the percentage rail at a <strong><span id="rRailCrossoverValue">$0.125000</span></strong> ticket &mdash; where one $0.001 settlement is worth more than 0.8% of the amount. Above that ticket the flat fee is the cheaper of the two; below it the percentage rail is.</p>
+
+            <div class="note-block">
+                <p id="railNote">Rates are vendor-published and re-read 18 September 2026. The 0.8% stablecoin rate is promotional through 1 January 2027 and becomes 1.0% afterwards. Cloudflare Wallets are not payable today and no fee schedule has been published, so they are not modelled here. On-ramp and off-ramp spread, stablecoin treasury handling, reconciliation labour, transaction screening, gas volatility and the loss of chargeback recourse on irreversible settlement are excluded. This is cost modelling, not custody, tax or compliance advice.</p>
+                <p>Cloudflare Wallets are absent from the selector for that reason, not because they are unpriced by choice: only handle reservation is live, and Cloudflare's own documentation states that &ldquo;a reserved handle does not yet let you send, receive, or hold funds&rdquo;, while its wallets documentation publishes no fee figure of any kind. A reserved handle is not a rail you can be billed for.</p>
+            </div>
+        </div>
 
         <h2 id="agency-margin">Four agency workloads, modelled monthly</h2>
         <p>Fees only matter as a margin line. Four workload shapes, costed from the published rates above.</p>
@@ -348,5 +456,274 @@
     <footer>
         <p>&copy; 2026 <a href="https://aiagencycalculator.com">Aiagencycalculator</a> &mdash; A property of ABD Legacy LLC. All rights reserved.</p>
     </footer>
+    <script>
+    /* ---------------------------------------------------------------------------
+       Payment Rail Cost Estimator — section #rail-estimator on
+       /ai-agent-stablecoin-vs-credit-card-payment-processing-cost.
+       Card t_3cd51b47, 2026-09-19. Built to CALCULATOR-API-SPEC.md §15.2-§15.5:
+       the spec is the build order, so the inputs, the model, the outputs, the
+       note text and the guardrails are taken from it rather than re-designed.
+       Nothing above this block is edited by it.
+
+       Every constant is a vendor-published rate read 2026-09-18 and is declared
+       with its source; nothing here is estimated. Money is carried as INTEGER
+       MICRO-DOLLARS (1e-6 USD) and rates as PARTS-PER-100,000 of the ticket
+       (2.9% = 2900), so the published acceptance figures ($0.308960,
+       $0.125000, $0.309322) are exact integers rather than float approximations.
+
+       The eight-point comparison grid is priced at the article's own x402
+       volume: $0.001 x (10,000 - 1,000) / 10,000 = $0.0009 per transaction,
+       which is the volume that reproduces the article's x402 column exactly.
+       --------------------------------------------------------------------------- */
+    (function () {
+        'use strict';
+
+        /* >>> rail-estimator-t_3cd51b47 >>> */
+        /* --- published rates, read 2026-09-18 (stripe.com/pricing) ------------- */
+        var RATES = {
+            card:         { pct: 2900, fixed: 300000 },   /* 2.9% + 30c                     */
+            card_intl:    { pct: 5400, fixed: 300000 },   /* 2.9% + 30c + 1.5% + 1%         */
+            instant_bank: { pct: 2600, fixed: 300000 },   /* 2.6% + 30c                     */
+            klarna:       { pct: 5990, fixed: 300000 },   /* 5.99% + 30c                    */
+            stablecoin:   { pct:  800, fixed:      0 },   /* 0.8% promo -> 1.0% 2027-01-02  */
+            x402:         { pct:    0, fixed:      0 }    /* flat facilitator fee, below    */
+        };
+        var STABLE_PROMO = 800;      /* 0.8%, promotional through 2027-01-01          */
+        var STABLE_STD   = 1000;     /* 1.0%, the rate from 2027-01-02                */
+        var X402_FREE_TXNS = 1000;   /* first 1,000 onchain txns/month cost nothing   */
+        var X402_PER_TXN   = 1000;   /* $0.001 per onchain transaction above the tier */
+        var GRID_TXNS      = 10000;  /* the article's grid volume (see header note)   */
+        var GRID_TICKETS   = ['0.10', '0.32', '0.50', '1', '5', '20', '100', '500'];
+        var SHORT_NAME = {
+            card: 'Card', card_intl: 'Card + FX', instant_bank: 'Instant bank',
+            klarna: 'Klarna', stablecoin: 'Stablecoin', x402: 'x402'
+        };
+
+        function $(id) { return document.getElementById(id); }
+
+        function setText(id, text) {
+            var el = $(id);
+            if (el) { el.textContent = text; }
+        }
+
+        /* "0.321443" -> 321443 micro-dollars, without ever touching a float. */
+        function dollarsToMicro(raw) {
+            var s = String(raw === null || raw === undefined ? '' : raw).trim();
+            if (s.charAt(0) === '$') { s = s.slice(1).trim(); }
+            if (s === '' || s === '.' || s === '-') { return 0; }
+            if (!/^-?\d*(\.\d*)?$/.test(s)) {
+                var f = parseFloat(s);
+                return isFinite(f) ? Math.round(f * 1e6) : 0;
+            }
+            var neg = s.charAt(0) === '-';
+            if (neg) { s = s.slice(1); }
+            var parts = s.split('.');
+            var whole = parts[0] === '' ? '0' : parts[0];
+            var frac = ((parts[1] || '') + '000000').slice(0, 6);
+            var micro = parseInt(whole, 10) * 1e6 + parseInt(frac, 10);
+            if (!isFinite(micro)) { return 0; }
+            return neg ? -micro : micro;
+        }
+
+        function txnsValue(raw) {
+            var n = parseFloat(String(raw === null || raw === undefined ? '' : raw).trim());
+            if (!isFinite(n) || n <= 0) { return 0; }
+            return Math.round(n);
+        }
+
+        /* 6-decimal money with thousands separators; negatives read -$0.01 here. */
+        function fmtMoney(micro, dp) {
+            var neg = micro < 0;
+            var abs = neg ? -micro : micro;
+            var bits = (abs / 1e6).toFixed(dp).split('.');
+            bits[0] = bits[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return (neg ? '-$' : '$') + bits.join('.');
+        }
+        /* The article's grid prints negatives as $-0.2029, so its cells do too. */
+        function fmtGridMoney(micro, dp) {
+            var s = fmtMoney(micro, dp);
+            return s.charAt(0) === '-' ? '$-' + s.slice(2) : s;
+        }
+        function fmtShare(partMicro, wholeMicro) {
+            if (!wholeMicro) { return 'n/a'; }
+            return (partMicro / wholeMicro * 100).toFixed(2) + '%';
+        }
+        /* 2900 -> "2.9%", 5990 -> "5.99%", 1000 -> "1.0%" (parts-per-100,000). */
+        function rateLabel(pct) {
+            var frac = String(pct % 1000 + 1000).slice(1).replace(/0+$/, '');
+            return Math.floor(pct / 1000) + '.' + (frac === '' ? '0' : frac) + '%';
+        }
+
+        function railRate(kind, promo, intl) {
+            if (kind === 'card' && intl) { return RATES.card_intl.pct; }
+            if (kind === 'stablecoin') { return promo ? STABLE_PROMO : STABLE_STD; }
+            return RATES[kind].pct;
+        }
+        function railFixed(kind) { return RATES[kind].fixed; }
+
+        function railName(kind, promo, intl) {
+            if (kind === 'card') {
+                return intl ? 'Card (international + currency conversion)' : 'Card (domestic)';
+            }
+            if (kind === 'card_intl') { return 'Card (international + currency conversion)'; }
+            if (kind === 'instant_bank') { return 'Instant bank payments'; }
+            if (kind === 'klarna') { return 'Klarna'; }
+            if (kind === 'stablecoin') {
+                return 'Stripe stablecoin acceptance (' + rateLabel(promo ? STABLE_PROMO : STABLE_STD) + ')';
+            }
+            return 'x402 settlement (hosted CDP facilitator)';
+        }
+
+        /* §15.3: max(0, txns - 1000) * $0.001, the only volume-dependent branch. */
+        function x402MonthlyMicro(txns) {
+            return txns > X402_FREE_TXNS ? (txns - X402_FREE_TXNS) * X402_PER_TXN : 0;
+        }
+        function perTxnMicro(kind, aovMicro, txns, promo, intl) {
+            if (kind === 'x402') {
+                return txns > 0 ? Math.round(x402MonthlyMicro(txns) / txns) : 0;
+            }
+            return Math.round(aovMicro * railRate(kind, promo, intl) / 100000) + railFixed(kind);
+        }
+        /* fee == sale  =>  fixed = AOV * (1 - rate)  =>  AOV = fixed / (1 - rate). */
+        function breakEvenMicro(kind, promo, intl) {
+            var fixed = railFixed(kind);
+            var pct = railRate(kind, promo, intl);
+            if (kind === 'x402' || fixed === 0 || pct === 0) { return -1; }
+            return Math.round(fixed * 100000 / (100000 - pct));
+        }
+        function breakEvenText(kind, promo, intl) {
+            if (kind === 'x402') {
+                return 'n/a \u2014 the facilitator fee is flat and does not scale with the ticket';
+            }
+            var be = breakEvenMicro(kind, promo, intl);
+            if (be < 0) {
+                return 'n/a \u2014 a percentage-only rail never reaches the whole sale';
+            }
+            return fmtMoney(be, 6);
+        }
+
+        /* Breakdown: the fixed component is its own row, never folded into a rate. */
+        function renderBreakdown(kind, aovMicro, promo, intl, txns) {
+            var body = $('railBreakdownBody');
+            if (!body) { return; }
+            var aov = aovMicro > 0 ? aovMicro : 0;
+            var money = function (micro) { return aov > 0 ? fmtMoney(micro, 6) : 'n/a'; };
+            var rows = [];
+            var cap = $('railBreakdownCaption');
+
+            if (kind === 'x402') {
+                var perTxn = txns > 0 ? perTxnMicro(kind, aov, txns, promo, intl) : 0;
+                rows.push('<tr><td>Flat fee per onchain transaction above 1,000/month</td><td>$0.001</td><td>' +
+                    (txns > 0 ? fmtMoney(perTxn, 6) : 'n/a') + '</td></tr>');
+                rows.push('<tr><td>Fixed component per successful transaction</td><td>None published</td><td>$0.000000</td></tr>');
+                rows.push('<tr><td><strong>Total per transaction</strong></td><td>$0.001 per onchain transaction</td><td><strong>' +
+                    (txns > 0 ? fmtMoney(perTxn, 6) : 'n/a') + '</strong></td></tr>');
+                rows.push('<tr><td>Monthly facilitator fee at ' + txns.toLocaleString('en-US') + ' transactions</td><td>max(0, n &minus; 1,000) &times; $0.001</td><td><strong>' +
+                    (txns > 0 ? fmtMoney(x402MonthlyMicro(txns), 2) : 'n/a') + '</strong></td></tr>');
+                if (cap) { cap.textContent = 'The x402 branch, split by component. Verification is free; the fee follows settlement, not requests.'; }
+                body.innerHTML = rows.join('');
+                return;
+            }
+
+            var pct = railRate(kind, promo, intl);
+            var fixed = railFixed(kind);
+            var pctPart = Math.round(aov * pct / 100000);
+            var pctNote = kind === 'card_intl' ? '2.9% domestic + 1.5% international + 1% currency conversion'
+                : (kind === 'card' && intl ? '2.9% domestic + 1.5% international + 1% currency conversion' : rateLabel(pct));
+            rows.push('<tr><td>Percentage component</td><td>' + pctNote + '</td><td>' + money(pctPart) + '</td></tr>');
+            rows.push('<tr><td>Fixed component per successful transaction</td><td>' +
+                (fixed > 0 ? '30&cent;' : 'None published') + '</td><td>' + money(fixed) + '</td></tr>');
+            rows.push('<tr><td><strong>Total per transaction</strong></td><td>' + rateLabel(pct) +
+                (fixed > 0 ? ' + 30&cent;' : '') + '</td><td><strong>' + money(pctPart + fixed) + '</strong></td></tr>');
+            if (cap) {
+                cap.textContent = 'The selected rail, split into its published components on a $' +
+                    (aov / 1e6).toFixed(2) + ' ticket. The fixed component is carried separately from the percentage, because it does not scale with the ticket.';
+            }
+            body.innerHTML = rows.join('');
+        }
+
+        /* The article's eight-point grid, recomputed (rRailCompare). */
+        function renderCompare(kind, promo, intl) {
+            var body = $('railCompareBody');
+            if (!body) { return; }
+            var rate = railRate(kind, promo, intl);
+            var fixed = railFixed(kind);
+            var stableRate = promo ? STABLE_PROMO : STABLE_STD;
+            var x402per = Math.round(x402MonthlyMicro(GRID_TXNS) / GRID_TXNS);
+            var short = SHORT_NAME[kind] || 'Rail';
+            var rows = [];
+            for (var i = 0; i < GRID_TICKETS.length; i++) {
+                var t = dollarsToMicro(GRID_TICKETS[i]);
+                var fee = Math.round(t * rate / 100000) + fixed;
+                var stable = Math.round(t * stableRate / 100000);
+                rows.push('<tr><td>' + fmtMoney(t, 2) + '</td>' +
+                    '<td>' + fmtMoney(fee, 4) + '</td>' +
+                    '<td>' + fmtShare(fee, t) + '</td>' +
+                    '<td>' + fmtMoney(stable, 4) + '</td>' +
+                    '<td>' + fmtShare(stable, t) + '</td>' +
+                    '<td>' + fmtMoney(x402per, 4) + '</td>' +
+                    '<td>' + fmtShare(x402per, t) + '</td>' +
+                    '<td>' + fmtGridMoney(t - fee, 4) + '</td></tr>');
+            }
+            body.innerHTML = rows.join('');
+            setText('railCmpRailHead', short + ' fee');
+            setText('railCmpRailShareHead', short + ', share of sale');
+            setText('railCmpStableHead', 'Stablecoin ' + rateLabel(stableRate));
+            setText('railCmpStableShareHead', 'Stablecoin, share');
+            setText('railCmpNetHead', short + ': net kept');
+        }
+
+        function calculateRailEstimator() {
+            var kindEl = $('railKind');
+            var kind = kindEl ? kindEl.value : 'card';
+            if (!RATES[kind]) { kind = 'card'; }
+            var promoEl = $('railPromo');
+            var promo = promoEl ? !!promoEl.checked : true;
+            var intlEl = $('railIntl');
+            var intl = intlEl ? !!intlEl.checked : false;
+            var ticketEl = $('railTicket');
+            var txnsEl = $('railTxns');
+            var aov = ticketEl ? dollarsToMicro(ticketEl.value) : 0;
+            var txns = txnsEl ? txnsValue(txnsEl.value) : 0;
+
+            var valid = aov > 0 && txns > 0;
+            var perTxn = valid ? perTxnMicro(kind, aov, txns, promo, intl) : 0;
+            var monthly = valid ? (kind === 'x402' ? x402MonthlyMicro(txns) : perTxn * txns) : 0;
+
+            setText('rRailName', railName(kind, promo, intl));
+            setText('rRailMonthly', valid ? fmtMoney(monthly, 2) : 'n/a');
+            setText('rRailPerTxn', valid ? fmtMoney(perTxn, 6) : 'n/a');
+            setText('rRailPct', valid ? fmtShare(perTxn, aov) : 'n/a');
+            setText('rRailNet', valid ? fmtMoney(aov - perTxn, 2) : 'n/a');
+            setText('rRailBreakEven', breakEvenText(kind, promo, intl));
+
+            var zero = $('railZeroNote');
+            if (zero) {
+                zero.textContent = 'Enter an average transaction value above $0.00 and at least one transaction per month. The published rates are charged per transaction, so there is no fee to price at a zero ticket or a zero volume.';
+                var row = zero.parentNode;
+                if (row && row.style) { row.style.display = valid ? 'none' : 'flex'; }
+            }
+
+            var xo = $('rRailCrossoverValue');
+            if (xo) {
+                /* $0.001 flat vs the 0.8% rate it is measured against = 1000/800
+                   dollars = $0.125000; independent of the promo toggle. */
+                xo.textContent = fmtMoney(Math.round(X402_PER_TXN * 100000 / STABLE_PROMO), 6);
+            }
+
+            renderBreakdown(kind, valid ? aov : 0, promo, intl, valid ? txns : 0);
+            renderCompare(kind, promo, intl);
+        }
+
+        var WIRED = ['railKind', 'railTicket', 'railTxns', 'railPromo', 'railIntl'];
+        for (var w = 0; w < WIRED.length; w++) {
+            var el = $(WIRED[w]);
+            if (!el) { continue; }
+            el.addEventListener('change', calculateRailEstimator);
+            el.addEventListener('input', calculateRailEstimator);
+        }
+        calculateRailEstimator();
+    })();
+    </script>
 </body>
 </html>
