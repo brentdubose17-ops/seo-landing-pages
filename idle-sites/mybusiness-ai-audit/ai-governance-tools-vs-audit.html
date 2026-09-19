@@ -69,6 +69,17 @@
             table { font-size: 0.8rem; }
             th, td { padding: 6px 7px; }
         }
+
+        /* 320px tier (t_f3213346 QA): at a 320px viewport the 700px tier's
+           6px/7px padding still pushed the 3-column table past the article's
+           content box (table right edge 321 of a 321px viewport, article
+           scrollWidth 309 > clientWidth 296). Tighten once more below 380px:
+           re-measured table right edge 292 of 320, article 296 == 296, 0
+           offending elements. 360/390/1280 measurements are unchanged. */
+        @media (max-width: 380px) {
+            table { font-size: 0.75rem; }
+            th, td { padding: 4px 4px; }
+        }
 </style>
     <script type="application/ld+json">
 {
