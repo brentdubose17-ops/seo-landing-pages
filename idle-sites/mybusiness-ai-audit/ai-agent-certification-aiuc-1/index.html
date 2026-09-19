@@ -6,7 +6,7 @@
 <title>AI Agent Certification: What AIUC-1 Actually Proves</title>
 <meta name="description" content="AI agent certification explained: what the AIUC-1 standard tests, what an audit report proves, how often agents are retested, and what to ask a vendor.">
 <link rel="canonical" href="https://mybusinessaiaudit.com/ai-agent-certification-aiuc-1/">
-<meta name="keywords" content="AI agent certification, AIUC-1 standard, do I need an AI agent audit, SOC 2 for AI agents, how often should AI agents be audited, AI agent insurance vs certification">
+<meta name="keywords" content="AI agent certification, AIUC-1 standard, do I need an AI agent audit, SOC 2 for AI agents, how often should AI agents be audited, AI agent insurance vs certification, who audits AI models, embedded evaluation, independent AI evaluation, AI red-team audit">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="AI Agent Certification: What AIUC-1 Actually Proves">
 <meta property="og:description" content="AI agent certification explained: what the AIUC-1 standard tests, what an audit report proves, how often agents are retested, and what to ask a vendor.">
@@ -136,7 +136,11 @@
         "do I need an AI agent audit",
         "SOC 2 for AI agents",
         "how often should AI agents be audited",
-        "AI agent insurance vs certification"
+        "AI agent insurance vs certification",
+        "who audits AI models",
+        "embedded evaluation",
+        "independent AI evaluation",
+        "AI red-team audit"
       ]
     },
     {
@@ -189,6 +193,38 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "No. A certificate is evidence about tested behaviour; a policy is financial protection after a loss. AIUC says insurers are offering AI-specific coverage to certified agents, and ElevenLabs took agent insurance off its February 2026 certification."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who audits AI models?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No single regulator does; named third parties do, and who pays them decides what the result is worth. AIUC-1 agent certification runs through authorised auditors such as Schellman (the first authorised AIUC-1 auditor, 3 February 2026), while Anthropic pays Accenture’s Faculty directly to evaluate Anthropic — the embedded-evaluator arrangement it announced on 18 September 2026."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Anthropic independently evaluated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — but independently of its own research teams, not of its money. Anthropic’s 18 September 2026 post says it funds Accenture’s Faculty directly to evaluate and red-team its models, and states that no standards yet govern what an embedded evaluator may access or how it should report what it finds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are AI safety evaluations independent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only when the party paying has no financial tie to the vendor and cannot suppress the findings. The AI Evaluator Forum letter signed by over 100 experts and reported by CNBC on 18 September 2026 asks for exactly that — no payment contingent on the findings, no ownership by frontier labs, no other significant commercial business with them — and a vendor-funded evaluation does not meet it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does an AI red-team audit include?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Adversarial tests on a defined scenario set, not a document review: AIUC-1 runs an agent through jailbreak scenarios (including indirect ones hidden in content it reads), hallucination probes and data-leak tests, at 1,000 to 5,000 scenarios per the standard’s site. Faculty’s scope adds alignment assessments and model-safeguard testing alongside red-teaming."
           }
         }
       ]
@@ -298,7 +334,7 @@
             <li><strong>Will you share it?</strong> A certificate without the report is a logo, not a finding.</li>
         </ul>
 
-        <p>Agency buyers: <a href="https://findaiagency.com/ai-agent-certification-vs-insurance">what to demand in the contract</a>.</p>
+        <p>Agency buyers: <a href="https://findaiagency.com/ai-agent-certification-vs-insurance">what to demand in the contract</a>. For the difference between a certification the vendor buys and an evaluation the vendor funds, work through <a href="#the-buyers-test">the buyer&rsquo;s test</a> below.</p>
 
         <div class="update-box">
             <span class="update-label">Update &mdash; September 2026</span>
@@ -327,12 +363,12 @@
 
         <ol>
             <li><strong>Who pays the evaluator?</strong> Ask who invoices whom, and whether any part of the fee depends on what the evaluator finds. Anthropic answers this one in writing &mdash; it funds Accenture&rsquo;s work directly. The evaluators&rsquo; own minimum condition is narrower than independence: an organisation &ldquo;should not accept any form of payment or other reward contingent on the evaluator&rsquo;s findings&rdquo;. A paid evaluation is not automatically worthless; an undisclosed payment is.</li>
-            <li><strong>Who wrote the test?</strong> Ask for the scenario set and who defined it. AIUC&rsquo;s own account is that its tests are buyer-defined &mdash; the company says it asks its consortium, not vendors. On the embedded side, Anthropic says no standards yet govern what an evaluator may see, so scope is negotiated between the funder and the evaluator rather than published. If the evaluated company writes the questions, a second signature does not turn a self-assessment into an audit: see <a href="/ai-agent-benchmark-gaming-trust/">how agents game the benchmarks they are measured on</a>.</li>
+            <li><strong>Who wrote the test?</strong> Ask for the scenario set and who defined it. AIUC&rsquo;s own account is that its tests are buyer-defined &mdash; the company says it asks its consortium, not vendors. On the embedded side, Anthropic says no standards yet govern what an evaluator may see, so scope is negotiated between the funder and the evaluator rather than published. If the evaluated company writes the questions, a second signature does not turn a self-assessment into an audit: see <a href="/ai-agent-benchmark-gaming-trust/">how agents game the benchmarks they are measured on</a>. The vendor-side version of the same question is Anthropic&rsquo;s <a href="https://findaiagency.com/anthropic-frontier-ai-development-metrics-governance" target="_blank" rel="noopener">September 2026 metrics proposal</a> &mdash; measures published so a third party could check them.</li>
             <li><strong>Is the report public?</strong> A certificate without the report is a logo, not a finding. Ask for the report, its date and its scope, and for who else may read it. Nothing published says the Faculty evaluation will produce a public report, and Anthropic&rsquo;s own caveat is that no standard yet governs how embedded evaluators report what they find. If you are going to be the only reader, note that in the procurement file.</li>
             <li><strong>What happens on a failed result?</strong> Look for the consequence, not the promise: a qualified or adverse report and re-testing (the AIUC-1 path described on this page), disclosure to buyers, a contract remedy &mdash; or nothing at all. No source on the embedded arrangement names a deliverable, a report or a consequence of a failed result. An evaluation with no defined consequence is a subscription, not a control.</li>
         </ol>
 
-        <p>Four questions you cannot get answered are themselves an answer: if the vendor will not say who pays, who wrote the test, who can read the report, or what happens when something fails, then <em>independently evaluated</em> is doing more work than the evidence behind it. For putting that in writing with a supplier, see <a href="https://findaiagency.com/ai-agent-certification-vs-insurance" target="_blank" rel="noopener">what to demand in the contract</a>.</p>
+        <p>Four questions you cannot get answered are themselves an answer: if the vendor will not say who pays, who wrote the test, who can read the report, or what happens when something fails, then <em>independently evaluated</em> is doing more work than the evidence behind it. For putting that in writing with a supplier, see <a href="https://findaiagency.com/ai-agent-certification-vs-insurance" target="_blank" rel="noopener">what to demand in the contract</a>. On the agency side, <a href="https://findaiagency.com/ai-vendor-risk-assessment" target="_blank" rel="noopener">what to disclose when you tell a client an agent was independently evaluated</a> is worked through on Find AI Agency.</p>
 
         <h2 id="questions-owners-are-asking">Questions owners are asking</h2>
 
@@ -364,6 +400,27 @@
         <div class="faq-item">
             <h3>Is AI agent insurance the same as certification?</h3>
             <p>No. A certificate is evidence about tested behaviour; a policy is financial protection after a loss. AIUC says insurers are offering AI-specific coverage to certified agents, and ElevenLabs took agent insurance off its February 2026 certification.</p>
+        </div>
+
+
+        <div class="faq-item">
+            <h3>Who audits AI models?</h3>
+            <p>No single regulator does; named third parties do, and who pays them decides what the result is worth. AIUC-1 agent certification runs through authorised auditors such as Schellman (the first authorised AIUC-1 auditor, 3 February 2026), while Anthropic pays Accenture&rsquo;s Faculty directly to evaluate Anthropic &mdash; the embedded-evaluator arrangement it announced on 18 September 2026.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Is Anthropic independently evaluated?</h3>
+            <p>Yes &mdash; but independently of its own research teams, not of its money. Anthropic&rsquo;s 18 September 2026 post says it funds Accenture&rsquo;s Faculty directly to evaluate and red-team its models, and states that no standards yet govern what an embedded evaluator may access or how it should report what it finds.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Are AI safety evaluations independent?</h3>
+            <p>Only when the party paying has no financial tie to the vendor and cannot suppress the findings. The AI Evaluator Forum letter signed by over 100 experts and reported by CNBC on 18 September 2026 asks for exactly that &mdash; no payment contingent on the findings, no ownership by frontier labs, no other significant commercial business with them &mdash; and a vendor-funded evaluation does not meet it.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What does an AI red-team audit include?</h3>
+            <p>Adversarial tests on a defined scenario set, not a document review: AIUC-1 runs an agent through jailbreak scenarios (including indirect ones hidden in content it reads), hallucination probes and data-leak tests, at 1,000 to 5,000 scenarios per the standard&rsquo;s site. Faculty&rsquo;s scope adds alignment assessments and model-safeguard testing alongside red-teaming.</p>
         </div>
 
         <div class="update-box">
