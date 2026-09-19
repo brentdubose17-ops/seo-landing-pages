@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Governance Tools vs an AI Audit: What Each One Actually Proves</title>
+    <meta name="description" content="Governance tools and audits leave different artifacts behind. Row by row: what a governance tool proves, what an audit produces, and which of the two you can hand a reviewer.">
+    <meta name="keywords" content="AI governance tools vs audit, AI agent audit evidence, agent governance tooling, AI agent least privilege, agent approval records, AI agent inventory, AI agent accountability, audit vs monitoring">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mybusinessaiaudit.com/ai-governance-tools-vs-audit">
+    <meta property="og:title" content="AI Governance Tools vs an AI Audit: What Each One Actually Proves">
+    <meta property="og:description" content="Governance tools and audits leave different artifacts behind. Row by row: what a governance tool proves, what an audit produces, and which of the two you can hand a reviewer.">
+    <meta property="og:url" content="https://mybusinessaiaudit.com/ai-governance-tools-vs-audit">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="My Business AI Audit">
+    <meta property="og:image" content="https://mybusinessaiaudit.com/og-image.png">
+    <meta property="og:image:alt" content="Comparison table: what an AI governance tool proves versus what an AI audit produces">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.8; color: #1a1a2e; max-width: 760px; margin: 0 auto; padding: 40px 24px; background: #fafafa; }
+        article { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 16px; color: #111; line-height: 1.25; letter-spacing: -0.02em; font-weight: 800; }
+        h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #1a1a2e; padding-bottom: 6px; border-bottom: 2px solid #f0f0f5; }
+        h3 { font-size: 1.2rem; margin: 24px 0 10px; color: #333; }
+        p { margin-bottom: 18px; color: #333; font-size: 1.05rem; }
+        .meta { color: #666; font-size: 0.9rem; margin-bottom: 28px; border-bottom: 1px solid #eee; padding-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .tagline { margin-bottom: 20px; }
+        .tagline span { display: inline-block; background: #eef2ff; color: #2563eb; font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+        .answer-box { background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 8px; padding: 24px; margin: 24px 0; }
+        .answer-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .answer-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        ul, ol { margin: 0 0 18px 24px; }
+        li { margin-bottom: 8px; color: #333; font-size: 1.05rem; }
+        strong { color: #111; }
+        a { color: #2563eb; }
+        .cta { display: inline-block; background: #2563eb; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; margin: 8px 0; }
+        .update-box { margin: 32px 0; padding: 24px; background: #f8f9ff; border: 1px solid #e8e8f0; border-left: 5px solid #2563eb; border-radius: 8px; }
+        .update-box h2 { border-bottom: none; margin-top: 0; font-size: 1.3rem; }
+        .update-box .update-label { display: inline-block; background: #2563eb; color: #fff; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e8e8f0; }
+        th { background: #f8f9ff; font-weight: 600; color: #1a1a2e; }
+        tr:hover { background: #fafbff; }
+        .faq-item { margin-bottom: 18px; }
+        .faq-item h3 { font-size: 1.05rem; margin: 0 0 6px; color: #1a1a2e; }
+        .source { margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; color: #888; font-size: 0.85rem; }
+        .source a { color: #888; }
+        .checklist-item { margin: 0 0 18px 24px; }
+        .checklist-item li { margin-bottom: 14px; color: #333; font-size: 1.05rem; }
+        .risk-note { background: #fff7ed; border: 1px solid #fed7aa; border-left: 5px solid #f59e0b; border-radius: 8px; padding: 20px 24px; margin: 24px 0; }
+        .risk-note p { margin-bottom: 12px; }
+        .risk-note p:last-child { margin-bottom: 0; }
+        .risk-note strong { color: #9a3412; }
+        footer { margin-top: 24px; color: #888; font-size: 0.85rem; text-align: center; }
+        nav.site { margin-bottom: 20px; font-size: 0.9rem; }
+        nav.site a { margin-right: 16px; text-decoration: none; }
+        .related { margin-top: 40px; padding-top: 24px; border-top: 2px solid #e8e8f0; }
+        .related h3 { font-size: 1.1rem; margin-bottom: 12px; }
+        .related ul { list-style: none; padding: 0; }
+        .related li { margin-bottom: 10px; }
+        @media (max-width: 600px) { body { padding: 16px 12px; } article { padding: 24px 16px; } h1 { font-size: 1.7rem; } }
+
+        /* Comparison-table mobile fit (added by the ai-governance-tools-vs-audit note).
+           Measured at a 390px viewport: the stock 10px/14px cell padding left the
+           3-column table 13px wider than the screen, so tighten padding and type
+           below 700px. Re-measured with qa_layout.py -> no horizontal overflow. */
+        @media (max-width: 700px) {
+            table { font-size: 0.8rem; }
+            th, td { padding: 6px 7px; }
+        }
+</style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://mybusinessaiaudit.com/ai-governance-tools-vs-audit/#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://mybusinessaiaudit.com/ai-governance-tools-vs-audit"
+      },
+      "headline": "AI Governance Tools vs an AI Audit: What Each One Actually Proves",
+      "description": "Governance tools and audits leave different artifacts behind. Row by row: what a governance tool proves, what an audit produces, and which of the two you can hand a reviewer.",
+      "image": "https://mybusinessaiaudit.com/og-image.png",
+      "datePublished": "2026-09-19",
+      "dateModified": "2026-09-19",
+      "wordCount": 1310,
+      "author": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ABD Legacy LLC",
+        "url": "https://mybusinessaiaudit.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://mybusinessaiaudit.com/og-image.png"
+        }
+      },
+      "about": [
+        "AI governance tools",
+        "AI agent audit",
+        "agent least privilege",
+        "agent approval records",
+        "audit evidence"
+      ],
+      "keywords": "AI governance tools vs audit, AI agent audit evidence, agent governance tooling, AI agent least privilege, agent approval records, AI agent inventory, AI agent accountability, audit vs monitoring"
+    }
+  ]
+}
+    </script>
+</head>
+<body>
+    <nav class="site"><a href="/">My Business AI Audit</a><a href="/blog/">Blog</a><a href="/audit-tool">Free AI Audit</a></nav>
+    <article>
+        <h1>AI Governance Tools vs an AI Audit: What Each One Actually Proves</h1>
+        <div class="meta"><span>Published September 19, 2026</span><span>My Business AI Audit</span></div>
+        <div class="tagline"><span>AI governance tools</span><span>Agent audit evidence</span><span>Least privilege</span><span>Approval records</span></div>
+
+        <p>This week’s agent-governance products sell detection and enforcement: they watch your agents, decide what they may do, and can stop them. An audit asks three different questions — who was accountable for a specific action, what was in scope, and what evidence survives — and buying the first does not produce the second.</p>
+
+        <p>WSO2 announced Agent Manager’s general availability on September 15, 2026; InfoQ covered it on September 18: “WSO2 has announced the general availability of WSO2 Agent Manager, an open-source platform designed to provide centralized governance, identity management, security controls, and operational oversight for AI agents running across different models, frameworks, and deployment environments.” Opal Security launched Opal Zero on September 17, 2026: “Opal Zero decides each agent request the moment it’s made, against the security team’s policy and organizational context, then enforces it as carefully scoped permissions in the gateway already in place.” iProov published HAPS — reported by Biometric Update on September 18 — an experimental specification for binding human presence and approval to a machine-readable action, with a partial reference implementation on GitHub and an invitation for critique rather than any reported deployment. That report draws the line that matters: “AI agents can access tools and services, but that does not prove a human intended or approved the actions they take.” SiliconANGLE’s September 17 report from Workiva’s Amplify event — sponsored-event coverage, not independent reporting — carried the finding from Josh Robinson, chief audit executive at Vast Space LLC: “Enterprise audit teams are finding that the evidence trail they depend on does not survive contact with AI agents.” TechTarget’s September 18 analysis of agent autonomy and CIO controls, and CIO.com’s September 18 round-up of sixteen governance tools, cover the same market from the buyer’s side. None of these products performs an audit or satisfies a regulator.</p>
+
+        <h2>What each one leaves behind</h2>
+        <p>Each row below is an artifact rather than a quality claim: what you would hand a reviewer or a client if they asked. Behind it sits the question the checklist’s new <a href="https://mybusinessaiaudit.com/ai-agent-risk-checklist#silent-delegation">silent-delegation section</a> asks of a specific agent.</p>
+        <table>
+            <thead>
+                <tr><th>Aspect</th><th>What a governance tool proves</th><th>What an audit produces</th></tr>
+            </thead>
+            <tbody>
+                <tr><th scope="row">Agent inventory and scope</th><td>The register it keeps: the agents it has onboarded and the permissions it issued them. Its reach is its boundary — an agent nobody registered stays invisible to it.</td><td>A dated scope record per agent: which systems, actions and data are in bounds, which actions wait for a human, and who granted that authority and when — with live permissions that still match the page.</td></tr>
+                <tr><th scope="row">Monitoring and detection</th><td>Signals: policy violations, anomalous action patterns, and a dashboard of what the agents did. The evidence is a log entry in the tool’s store.</td><td>A test you can run unassisted: take one agent-initiated change and produce the approver, timestamp, target and outcome for it from records you already hold.</td></tr>
+                <tr><th scope="row">Least-privilege enforcement</th><td>The enforcement decision: what the gateway allowed or denied at the moment the request was made, against the policy you configured.</td><td>The authority behind whichever actions were allowed: the evidence that the person whose approval was required gave it, and that their remit covered this action.</td></tr>
+                <tr><th scope="row">Approval and override records</th><td>The approval step it ran and the record it kept: which policy fired, and which request passed through it.</td><td>The approval stored alongside the action itself, plus a documented reversal path: who can undo it, how, and how long a reversal takes to become possible — logged against the same entry.</td></tr>
+                <tr><th scope="row">Accountability attribution</th><td>Attribution as configured: an agent identity, a role, a policy, a team.</td><td>One accountable person attached to the agent record — a name, not a queue and not the vendor — with a stated split between the decisions it may take unattended and those that require a person.</td></tr>
+                <tr><th scope="row">Evidentiary retention and independence</th><td>Retention for the life of the licence, in a store the vendor operates, with export on request.</td><td>A retention period in writing that outlasts your incident-response cycle, in a store that sits outside the agent team’s control, still readable 90 days later, and held independently of the tool that produced it.</td></tr>
+            </tbody>
+        </table>
+
+        <p>A governance tool hands you its console, the policy you configured, an alert history and a log export while the licence lasts — artifacts describing what the tool saw, held in the vendor’s store; what it does not hand you is a record of authority, a named owner, or anything that outlives the subscription. An audit hands you the scope record, the approval record for a named action, the override path, the named owner and a retention commitment: documents that stand on their own when the tool is not in the room. Buy the tool for control: it is the fastest way to constrain what your agents can do this quarter. Commission the audit for evidence: what a reviewer asks for is not a dashboard but a record naming the action, the approver and the authority, carried by the person who answers for it.</p>
+
+        <div class="source">
+            <p><strong>Sources.</strong></p>
+            <p>WSO2 Agent Manager — InfoQ, “WSO2 Releases Agent Manager as Enterprises Look to Control Growing AI Agent Sprawl”, by Craig Risi (September 18, 2026) (<a href="https://www.infoq.com/news/2026/09/ws02-agent-manager/" rel="noopener">infoq.com</a>). General availability announced September 15, 2026, as reported by AI Stack Current (page dated September 16, 2026). The outlet’s own article slug is ws02-agent-manager, not wso2.</p>
+            <p>Opal Zero — Opal Security release, “Opal Security Launches Opal Zero to Make Least Privilege a Reality for Enterprise AI Agents” (dateline September 17, 2026) (<a href="https://www.opal.dev/media-press/opal-zero-launch" rel="noopener">opal.dev</a>). Business Wire syndicated the release on September 18, 2026. Capability described as the release states it.</p>
+            <p>iProov HAPS — Biometric Update, “iProov’s experimental HAPS protocol aims to close governance gaps for AI agents”, by Joel R. McConvey (September 18, 2026, 12:36 pm EDT) (<a href="https://www.biometricupdate.com/202609/iproovs-experimental-haps-protocol-aims-to-close-governance-gaps-for-ai-agents" rel="noopener">biometricupdate.com</a>). The specification is published on GitHub under Apache-2.0 with a partial Rust reference implementation and test vectors; iProov reports no deployment, customer or standard-body status. The vendor’s own release was not retrievable at the time of writing, so Biometric Update is the cited source.</p>
+            <p>NetSuite audit-assurance gap — SiliconANGLE, “AI agents erase the paper trail, reshaping audit assurance”, by Jonathan Anthony (updated 16:22 EDT, September 17, 2026) (<a href="https://siliconangle.com/2026/09/17/netsuite-ai-agents-new-audit-assurance-gap-amplify/" rel="noopener">siliconangle.com</a>). Sponsored-event coverage: theCUBE is a paid media partner for Workiva’s Amplify event. The finding is attributed to Josh Robinson, chief audit executive at Vast Space LLC, not to the outlet or the sponsor.</p>
+            <p>AI agent autonomy — TechTarget, “AI agent autonomy puts CIO controls to the test”, by Liz Hughes (published September 18, 2026) (<a href="https://www.techtarget.com/it-strategy/news/366650717/AI-agent-autonomy-puts-CIO-controls-to-the-test" rel="noopener">techtarget.com</a>).</p>
+            <p>16 governance tools — CIO.com, “16 governance tools for securing your AI fleet”, by Peter Wayner (Feature September 18, 2026) (<a href="https://www.cio.com/article/4223016/16-governance-tools-for-securing-your-ai-fleet-2.html" rel="noopener">cio.com</a>). A vendor round-up; the tools are described as their vendors pitch them, so no single product description in it is treated here as a verified capability.</p>
+            <p>Info-Tech Research Group — PR Newswire, “AI Agents Are Influencing Product Decisions Without Explicit Human Authorization, Warns Info-Tech Research Group” (September 18, 2026) (<a href="https://www.prnewswire.com/news-releases/ai-agents-are-influencing-product-decisions-without-explicit-human-authorization-warns-info-tech-research-group-302883560.html" rel="noopener">prnewswire.com</a>). Cited as the trigger for the checklist’s silent-delegation section; no figure from it is used in this note.</p>
+        </div>
+
+        <div class="related">
+            <h3>Related reading</h3>
+            <ul>
+                <li><a href="https://mybusinessaiaudit.com/ai-agent-risk-checklist">AI Agent Risk Checklist: The full agent risk checklist</a> (the pillar this note supports, including the September 2026 silent-delegation section)</li>
+                <li><a href="https://mybusinessaiaudit.com/ai-agent-liability-checklist/">Who Is Liable When Your AI Agent Acts? A Deployment-Liability Checklist for Small Businesses</a> (the deployment-liability checklist and its agent inventory, kill-switch and logging items)</li>
+                <li><a href="https://mybusinessaiaudit.com/ai-agent-human-checkpoints">AI Agent Human Checkpoints: Twilight vs Dark Factory</a> (where an approval gate goes, and what it should leave behind)</li>
+                <li><a href="https://mybusinessaiaudit.com/agent-spend-governance-audit">Approved Merchants and Spending Caps: The Agent-Spend Governance Audit</a> (the same record question for agents that can buy rather than only act)</li>
+                <li><a href="https://findaiagency.com/ai-vendor-risk-assessment" rel="noopener">AI Vendor Risk Assessment After Opus 4.6’s Guardrail Bypass</a> (findaiagency.com — the vendor-diligence questions to ask before you buy the tool)</li>
+            </ul>
+        </div>
+    </article>
+    <footer>
+        <p>&copy; 2026 <a href="https://mybusinessaiaudit.com">My Business AI Audit</a> &mdash; ABD Legacy LLC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
