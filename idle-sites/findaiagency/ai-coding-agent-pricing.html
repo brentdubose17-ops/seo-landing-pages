@@ -281,6 +281,43 @@
 
         <p>The rankings also admit what they don't measure: "They score depth of hooks, subagents and workflow dynamics. They don't measure the things that actually eat a quarter: onboarding friction, cost per session, or what happens to your repo when an agent goes wrong and nobody notices." Treat the ranking as the shortlist — and the cost-per-session math above as the budget line.</p>
 
+        <p><strong>The ranking above is a quality ranking — it grades how well a harness runs, and it prices nothing.</strong> Machine Brief (Aug 24, 2026) and explainx.ai score session management, hooks, and autonomy; neither puts a number on what a run costs. The harness-matched cost column comes from <strong>HarnessTax</strong> (Pan et al., UC Berkeley · Arena, September 2026), which re-ran seven models inside three harnesses — Claude Code, Codex CLI, and Pi — on identical tasks, replicates, and route class. On the cleanest same-model row, <strong>GPT-5.6 Sol costs $1.540276 per rollout in Claude Code against $0.440661 in Pi — 3.495376×</strong>. Read that as a <strong>max/min</strong> of the study's <code>standardized cost/rollout</code> column across one model's three harnesses. It is not the study's headline ratio: the headline is a <strong>geometric mean of cost ratios</strong> — about 2.0× for Claude Code against Pi and 1.6× against Codex on SWE-bench Lite. A per-model max/min and a mean of ratios are different statistics, and they should never be quoted for each other.</p>
+
+        <p><strong>Same model, same tasks, three harnesses — standardized cost per rollout on SWE-bench Lite (USD, at the study's display precision):</strong></p>
+
+        <div class="table-wrap"><table>
+            <thead>
+                <tr><th>Model</th><th>Pi</th><th>Codex CLI</th><th>Claude Code</th><th>Max/min</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Claude Fable 5</strong></td><td>$0.666</td><td>$0.890</td><td>$1.329</td><td>1.996860×</td></tr>
+                <tr><td><strong>Claude Opus 4.8</strong></td><td>$0.473</td><td>$0.694</td><td>$0.976</td><td>2.064653×</td></tr>
+                <tr><td><strong>Claude Sonnet 4.6</strong></td><td>$0.679</td><td>$0.745</td><td>$0.669</td><td>1.112535×</td></tr>
+                <tr><td><strong>Claude Haiku 4.5</strong></td><td>$0.374</td><td>$0.392</td><td>$0.426</td><td>1.140788×</td></tr>
+                <tr><td><strong>GPT-5.6 Sol</strong></td><td>$0.441</td><td>$0.561</td><td>$1.540</td><td>3.495376×</td></tr>
+                <tr><td><strong>GPT-5.6 Luna</strong></td><td>$0.030</td><td>$0.035</td><td>$0.152</td><td>5.086069×</td></tr>
+                <tr><td><strong>Kimi K3</strong></td><td>$0.455</td><td>$0.845</td><td>$0.784</td><td>1.856507×</td></tr>
+            </tbody>
+        </table></div>
+
+        <p>Each line is model-matched: the three cost cells are the same model on the same 30 tasks under the same price list, so the spread between them is a harness effect rather than a model effect. The max/min column takes the highest and lowest of that line's three cells — the high side is Claude Code on five of the seven models, and Codex CLI on Claude Sonnet 4.6 and Kimi K3 — and every ratio is computed from the unrounded values behind the published cells, not from the rounded ones shown.</p>
+
+        <p><strong>What that ratio does to our own published numbers.</strong> Our per-task benchmark page lists GPT-5.6 Sol at <strong>$4.00/$20.00 per 1M</strong> (official promotional rate, Aug 21 – Nov 21, 2026), which our 10K-in / 2K-out arithmetic values at <strong>$0.08</strong> per task. Apply the 3.495376× max/min and the same task lands at <strong>$0.279630</strong> — a <strong>$0.199630</strong> delta per task. Luna is the study's widest spread: our own $0.20/$1.20 rows put that task at $0.0044, which its 5.086069× max/min takes to <strong>$0.022379</strong>. That is a benchmark cost ratio recomputed against published per-1M rates — a planning input, not a measured bill.</p>
+
+        <p><strong>Scope and assumptions, as the study states them:</strong></p>
+        <ul>
+            <li><strong>21 model–harness pairs</strong> = 7 models × 3 harnesses (Claude Code, Codex CLI, Pi), over 42 published rows.</li>
+            <li><strong>30 randomly sampled tasks per benchmark</strong>, 3 runs per task.</li>
+            <li>Each harness's <strong>native configuration at its high-effort setting</strong>, capped at <strong>100 agent turns</strong>.</li>
+            <li>Costs use a <strong>fixed direct-API price list dated September 1, 2026</strong>, applied identically across harnesses; the published column is <code>standardized cost/rollout</code>, repriced under <code>agentbrane-research-2026-09-01-v3</code>, and <strong>need not equal what was actually paid</strong>.</li>
+            <li><strong>95% confidence intervals from 10,000 bootstrap resamples.</strong></li>
+            <li>SWE-bench Lite task containers ran with <strong>external network access blocked and the default web tools disabled</strong>.</li>
+        </ul>
+
+        <p><strong>Why one harness costs more for the same model.</strong> The mechanism is measured, not asserted. The study's context dataset (<code>system-agent-context-swe.06f521bdb1.json</code>) records a mean first-call context of <strong>27,010.79 tokens in Claude Code against 1,972.18 in Pi — 13.695899×</strong>, built on <strong>23 declared tools against 4</strong> and <strong>76,995 tool-schema characters against 2,873</strong>, across <strong>n = 630 attempts per harness</strong>. That same file pins the harness versions the runs used: Pi 0.85.1, Codex CLI 0.146.0, and Claude Code 2.1.224. A harness that declares 23 tool definitions re-sends that schema on every rollout, so most of the gap is paid before the model reads a line of your repository. Portkey named the effect a "harness tax" (April 13, 2026); the harness-matched measurement above is this study's.</p>
+
+        <p><strong>The scope fence that travels with every number above:</strong> "These findings can be limited to the two open-source benchmarks we test, which the models may have encountered during training."</p>
+
         <h2>Cursor vs Claude Code vs Copilot: what the OpenAI split changes</h2>
         <p><strong>On August 28, 2026, OpenAI notified SpaceX that it intends to wind down the contract providing OpenAI models to Cursor, with a proposed shutoff date of November 12, 2026</strong> — after SpaceX completed its $60B all-stock acquisition of Cursor on August 14, 2026. OpenAI also said it will not provide future models to Cursor, including its upcoming <strong>Astra</strong> model, citing an inability to be confident SpaceX will use its technology within OpenAI's terms of service (OpenAI, Aug 28, 2026; Business Insider, Aug 28, 2026; TNW, Aug 29, 2026).</p>
         <p><strong>Cursor says OpenAI models served about 5% of its user traffic.</strong> Cursor co-founder and CEO Michael Truell responded on August 29, 2026 that "OpenAI models serve about 5% of Cursor user traffic, and we're speaking with the OpenAI team to resolve this" — meaning the other ~95% already flows through Anthropic Claude, Google Gemini, and xAI Grok, including Grok 4.5, which Cursor and SpaceXAI shipped in July 2026 and which is available on every Cursor plan (wccftech, Aug 29, 2026; Cryptobriefing, Aug 29, 2026; Cursor docs).</p>
